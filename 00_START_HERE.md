@@ -3,6 +3,8 @@
 
 **Design date:** 2026-09-15 America/Chicago. **Status:** proposed target design, grounded in a source audit; not an implementation or production certification.
 
+**Repository revision 0.2:** the supplied design pack is now maintained directly in the `ephi` repository root. Begin with [README.md](README.md) for current package checks and [13_Package_Review.md](13_Package_Review.md) for the review. The original application archive, original mission attachment and companion master were not included in this delivery. Historical application results below have not been rerun here.
+
 **Decision:** retain EPHI's analytical investment, repair the verified integrity/product gaps, and build one complete engineer decision loop on the installed NiceGUI Base platform. The primary product is a work queue plus a canonical episode workspace, not a collection of dashboards.
 
 Read `01_Product_and_Architecture.md` for the one-page architecture and requirements. Implement using `03_Application_Contracts.md` through `09_Delivery_and_Gates.md`. `02_Source_Audit.md` contains actual findings and evidence limitations. `10_Traceability_and_Decisions.md` maps the mission's A–S outputs and all requirements. `11_Developer_Start.md` is the execution handoff. `12_Sources_and_Evidence.md` provides pinned references, reproducibility instructions and unexecuted gates.

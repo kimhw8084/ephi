@@ -74,7 +74,7 @@
 | Template target-browser approval | Pin inspected candidate; run installed-browser/human gates | G08/G09/G12 |
 | Retention and disaster policy | Explicit proposed defaults; company approval and restore test | G10/G12 |
 
-These are implementation bindings and evidence obligations, not unanswered product architecture questions. Work can begin on W0/W1 without inventing them.
+These are implementation bindings and evidence obligations, not unanswered product architecture questions. W0/W1 can begin once the absent original application source is restored and its identity verified; package review alone cannot satisfy that prerequisite. Repository corrections and their gate mappings are recorded in [13_Package_Review.md](13_Package_Review.md).
 
 ## S3. Remaining risk register
 

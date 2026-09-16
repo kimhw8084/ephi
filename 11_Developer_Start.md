@@ -2,6 +2,10 @@
 
 Implement this design in vertical slices. The authoritative product choices are in this pack; source-derived behavior and proposed changes are distinguished in `02_Source_Audit.md`. Do not blindly reuse earlier chat claims or a floating GitHub main.
 
+## Repository prerequisite
+
+This repository currently contains the design and audit evidence only. The original application archive named in [README.md](README.md) must be obtained and hash-verified before application work. The companion master is unnecessary for reading this maintained split design; the original mission attachment is unavailable for an independent completeness check. Run the package checker first, then keep newly executed source/framework results separate from the imported evidence. Do not reconstruct 409 inventoried Python files from excerpts or substitute a new demo for the audited application.
+
 ## First branch: W0 and the smallest W1 slice
 
 1. Verify the EPHI ZIP hash and baseline. Restore the same source; inspect package dependencies; run the full suite and optional integrations required by the chosen target. Read the four audit probes. Add regression tests for F03 open-work continuity, F04 as-of supersession and F05 recovery validity; define the revised qualified recovery policy.

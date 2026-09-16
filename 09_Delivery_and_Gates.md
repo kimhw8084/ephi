@@ -52,6 +52,21 @@ Keep analytical CPU out of the UI event loop; the Base adapter may isolate short
 
 Tests must include units/null/NaN/infinite handling; DST/offset timestamps; late corrected events; no/weak/conflicting reference; contemporaneous/future control eligibility; duplicate material through rework; missing WIP; unknown alternatives; overlapping episodes/claims; new source mapping; stale plan; canceled check; concurrent assignment; old worker completing after lease loss; crash between artifact and publication; crash after local effect before external delivery; model/LLM outage; cross-user cache isolation; permission revocation during an open page.
 
+The repository review adds the following explicit regression obligations. They are acceptance specifications, not executed application tests:
+
+| Case | Expected result | Gate |
+|---|---|---|
+| Upstream available before cutoff, but ingested/published afterward | Excluded from AS_KNOWN; eligible SOURCE_REPLAY clearly labeled | G02 |
+| New head/workflow commits between two brief reads | One coherent snapshot; historical reads never mix in current workflow | G05/G07 |
+| Same command ID/payload arrives concurrently or after lost response | Exactly one local effect/audit/outbox set; same committed receipt after current authorization | G05/G07 |
+| Same command ID with different command type, target or payload | Idempotency conflict, no second effect | G05/G07 |
+| Analysis refresh races with ownership change | Current owner/work state survives publication | G04/G05 |
+| Row ordering changes between attention pages | Stable retained row-version snapshot or explicit expiry; no silent skips/duplicates | G07/G10 |
+| Grant revoked before receipt replay, page continuation, download or notification | No disclosure under the revoked grant | G07 |
+| Correction changes value period; later approval; concurrent successor | Correct as-known totals and no branched or cyclic supersession | G02/G11 |
+| Decimal rates/amounts and rounding boundaries | Exact approved rounding with no binary-float accumulation | G11 |
+| Terminal job cleanup followed by retry/replay | Archived effect identity prevents duplicate application | G05/G10 |
+
 Boundaries: domain policies use fast unit/property tests; adapters use contract tests against a real transactional backend; workers use deterministic fault injection; scientific methods use existing replay/golden qualification; UI uses Base component tests plus installed-browser interactions. An optional module skip is acceptable only for an explicitly excluded capability. Production columnar workflows require PyArrow/Polars integration qualification rather than importing successfully by accident.
 
 ## O2. Family scientific acceptance policy

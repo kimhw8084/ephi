@@ -96,6 +96,10 @@ These are new EPHI contracts, not existing NiceGUI Base APIs. The principal cont
 
 Every response returns `request_id`, `generated_at`, `known_at`, `revision_vector`, `capabilities`, `warnings` and typed data. List endpoints include a stable cursor and `query_snapshot_id`. Time-series results include unit, reference identity, aggregation/downsampling method and raw-row availability.
 
+`known_at` identifies the server-recorded publication represented by the response; it is not interchangeable with a source's claimed availability time. Historical responses also identify `temporal_mode` and `knowledge_cutoff` under E2 in [04_Data_and_Runtime.md](04_Data_and_Runtime.md). The revision vector is an opaque identity comparison contract, not a lexicographically sortable timestamp.
+
+`expected_workflow_version` is mandatory for mutations of an existing workflow. Commands on checks, claims, plans or qualification aggregates also carry their own expected versions; null is valid only for a documented create/no-existing-aggregate operation. Decision-dependent commands require `viewed_revisions`. Compare the relevant components at execution: closure/recovery/check execution must reject stale prerequisites, while a historical note or observed external action may retain an old decision reference without asserting current scientific validity. Return refreshed permitted context for reconciliation, never silently rebase the user's decision.
+
 `CapabilityStatus` has `state=READY|PARTIAL|STALE|UNAVAILABLE|INSUFFICIENT|ERROR|NOT_QUALIFIED`, source IDs, observed/available/watermark times, age limit, reason codes and affected outputs. `NOT_AUTHORIZED` is handled separately from absence and need not reveal an inaccessible source's existence. Unknown numeric values are null with reason, never default zero.
 
 ## D1. Query contracts
@@ -103,7 +107,7 @@ Every response returns `request_id`, `generated_at`, `known_at`, `revision_vecto
 | Query | Required inputs | Output / limits | Authority and failure behavior |
 |---|---|---|---|
 | `ListAttention` | scope, filters, order, cursor, page_size<=100 | rows, counts for allowed scope, next cursor, snapshot ID; default 50 | Indexed work projection; no rendering all episodes. Unknown filter/sort -> validation error |
-| `GetEpisodeBrief` | episode ID, latest or immutable snapshot ID | header, independent health/work states, summary, next work, revision vector | Authoritative published state + workflow read in one read transaction; inaccessible/absent indistinguishable |
+| `GetEpisodeBrief` | episode ID, latest or immutable snapshot ID | header, independent health/work states, summary, next work, revision vector | Coherent single-statement or repeatable-read snapshot as specified in E4; historical workflow pinned to decision snapshot; inaccessible/absent indistinguishable |
 | `GetEpisodeEvidence` | episode, revision, hypothesis/polarity/channel/group, cursor | grouped evidence summary or paged members, provenance IDs | Preserve dependency groups; no refusion |
 | `GetTimeline` | episode, revision, event window, mode | bounded aligned tracks, onset interval, arrivals/actions | Source materialization; unsupported raw resolution -> asynchronous job or explicit limit |
 | `GetExposure` | episode, exposure rev, class/route/lot filters, cursor | mutually explained classes, material records, execution IDs, total union count | Invalid/missing WIP yields unavailable future fields, not 0 |
@@ -143,11 +147,17 @@ Every write checks capability and scope, validates expected versions, persists a
 
 Within one bounded transaction: resolve authoritative scope; load command receipt by `(scope, subject, command_id)`; if same command hash return prior result; differing hash -> `IDEMPOTENCY_CONFLICT`. Lock/read aggregate; validate expected version and domain preconditions; append event and update aggregate/read projection; insert outbox item and receipt; commit; then return receipt with new versions. No external connector/network calls inside this transaction.
 
+The payload hash covers the command type, canonical target/scope, expected versions, viewed revisions and normalized domain payload. It excludes transport/request IDs and credentials. Check current authorization before returning any prior receipt and redact its result under current permissions; revocation does not authorize another effect or disclose the original response.
+
+Concurrent first attempts can both miss a receipt. Enforce its composite uniqueness in the database. If a duplicate-key race occurs, roll back the entire losing transaction, then read the committed receipt in a fresh transaction and apply the same hash/authorization checks. No partial effect from the losing attempt survives. If an expected-version conflict occurs during an identical in-flight retry, resolve the committed receipt before reporting a conflict. For an ambiguous commit outcome, the client retries the same command ID and payload. A user-edited payload is a new command ID. Serializable/deadlock retries restart the whole bounded transaction with the same ID and recheck preconditions.
+
 An external action cannot be atomically committed with an EPHI transaction. For supported downstream requests use a durable outbox, external idempotency key and reconciliation. The action state is `REQUESTED`, `ACKNOWLEDGED`, `OBSERVED_EFFECTIVE`, `FAILED` or `UNKNOWN`. A timeout means unknown until reconciled, not successful or safe to repeat blindly.
+
+In V1, downstream requests are approved work requests, tickets and notifications only. Equipment holds, routing, recipes and disposition remain actions performed by authorized humans in external systems. EPHI records proposals and observations; its outbox is not an actuator. Cancellation or expiration of an unexecuted proposal is recorded explicitly and cannot be inferred from a delivery timeout.
 
 ## D4. Error and degraded contract
 
-`NOT_FOUND` for absent or inaccessible entity; `FORBIDDEN_ACTION` for a visible entity's unauthorized command; `VERSION_CONFLICT` includes refreshed allowed context; `IDEMPOTENCY_CONFLICT`; `INVALID_TRANSITION`; `SOURCE_NOT_READY`; `NOT_QUALIFIED`; `QUERY_TOO_BROAD`; `JOB_PENDING`; `VALIDATION_FAILED`; `DEPENDENCY_UNAVAILABLE`; `RETRYABLE_STORAGE_FAILURE` with no false success.
+`NOT_FOUND` for absent or inaccessible entity; `FORBIDDEN_ACTION` for a visible entity's unauthorized command; `VERSION_CONFLICT` includes refreshed allowed context; `IDEMPOTENCY_CONFLICT`; `INVALID_TRANSITION`; `SOURCE_NOT_READY`; `NOT_QUALIFIED`; `QUERY_TOO_BROAD`; `QUERY_SNAPSHOT_EXPIRED` with a restart-query instruction; `JOB_PENDING`; `VALIDATION_FAILED`; `DEPENDENCY_UNAVAILABLE`; `RETRYABLE_STORAGE_FAILURE` with no false success.
 
 Use HTTP 404/403/409/422/503 and 202 for accepted jobs as appropriate; UI handles the same domain errors through its service adapter. A missing exposure source is a capability state on a known episode, not the same 404 as a missing episode. Do not leak raw SQL, tokens or upstream error text.
 

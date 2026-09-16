@@ -169,7 +169,7 @@ Source details show last successful coverage and retry state. Worker details sho
 | Permission denied | No hidden data in client payload, tooltips, export or cached snippets |
 | Conflict | Retain draft, show changed fields/revision, require explicit reconcile; never overwrite silently |
 | Offline/reconnecting | Read-only last context marked stale, draft preservation, permission/revision recheck before writes |
-| Historical snapshot | Prominent “as known at” label; no new action against old data without revalidation |
+| Historical snapshot | Prominent temporal-mode/cutoff label; historical workflow and capabilities stay pinned; current activity is separately labeled; no new decision-dependent action against old data without revalidation |
 
 Hover and focus reveal the same supplementary information; essential content is directly visible. Escape closes one overlay and restores triggering focus. Drawers maintain unsaved-change protection. Keyboard navigation uses Base registries and accessible controls; chart selection always has an equivalent table/filter route. Reduced-motion preference is honored. Accessibility target is WCAG 2.2 AA; focus visibility, non-drag alternatives and target sizing are explicitly tested [U1]. This is a target, not a claim of achieved conformance.
 

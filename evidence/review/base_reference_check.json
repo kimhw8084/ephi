@@ -1,0 +1,71 @@
+{
+  "status": "SOURCE_REFERENCE_CHECK_PASS",
+  "checked_at_utc": "2026-09-16T03:46:07.959021+00:00",
+  "repository": "kimhw8084/nicegui-base",
+  "visibility": "PUBLIC",
+  "commit": "000298562d6bcbf6df304edbd41b98b30fe4bfcf",
+  "method": "Read pinned files using GitHub contents API through gh; parse package metadata and inspect contracts, exports, tokens and golden example. No imports or installation.",
+  "framework_version": "3.0.0a8",
+  "nicegui_requirement": "nicegui==3.15.0",
+  "requires_python": ">=3.11,<3.14",
+  "files": [
+    {
+      "path": "AGENTS.md",
+      "url": "https://github.com/kimhw8084/nicegui-base/blob/000298562d6bcbf6df304edbd41b98b30fe4bfcf/AGENTS.md",
+      "bytes": 5951,
+      "sha256": "b3b5462373fa217fa887895914ffb6581de62313d5eea72e6800d2b675b04da7"
+    },
+    {
+      "path": "pyproject.toml",
+      "url": "https://github.com/kimhw8084/nicegui-base/blob/000298562d6bcbf6df304edbd41b98b30fe4bfcf/pyproject.toml",
+      "bytes": 3284,
+      "sha256": "8b66fe0d77d631143a83f234cbfdc4401fc0259ec21f8da67ba2ba1d93229840"
+    },
+    {
+      "path": "source/nicegui_base/ai/construction_manifest.json",
+      "url": "https://github.com/kimhw8084/nicegui-base/blob/000298562d6bcbf6df304edbd41b98b30fe4bfcf/source/nicegui_base/ai/construction_manifest.json",
+      "bytes": 35164,
+      "sha256": "3ae85f2e554f7080fbf81f68b1df7cf69ed5e917ca82427ddaf06ab31625a724"
+    },
+    {
+      "path": "source/nicegui_base/__init__.py",
+      "url": "https://github.com/kimhw8084/nicegui-base/blob/000298562d6bcbf6df304edbd41b98b30fe4bfcf/source/nicegui_base/__init__.py",
+      "bytes": 19431,
+      "sha256": "7366f8a70c0a6ee43f9891a38a3e7965a932cba554978818fc25b32fdc195214"
+    },
+    {
+      "path": "source/nicegui_base/design/tokens.py",
+      "url": "https://github.com/kimhw8084/nicegui-base/blob/000298562d6bcbf6df304edbd41b98b30fe4bfcf/source/nicegui_base/design/tokens.py",
+      "bytes": 11074,
+      "sha256": "1364a171a095c5c9cc5e0fa1cdf4ed3cc34f0d0378a0c4c51f38bd11d472c702"
+    },
+    {
+      "path": "examples/nicegui_base/golden_analysis_workspace.py",
+      "url": "https://github.com/kimhw8084/nicegui-base/blob/000298562d6bcbf6df304edbd41b98b30fe4bfcf/examples/nicegui_base/golden_analysis_workspace.py",
+      "bytes": 1440,
+      "sha256": "8fc851d348ec06f43715156f152b7d1a55e54d45e6e70ca3344af30fefa2899e"
+    },
+    {
+      "path": "source/nicegui_base/workspace/__init__.py",
+      "url": "https://github.com/kimhw8084/nicegui-base/blob/000298562d6bcbf6df304edbd41b98b30fe4bfcf/source/nicegui_base/workspace/__init__.py",
+      "bytes": 192,
+      "sha256": "1cfd509479eab78b21c5bb7150dbbb6a2022d8bef09b48682036a077ed88376d"
+    },
+    {
+      "path": "source/nicegui_base/runtime/__init__.py",
+      "url": "https://github.com/kimhw8084/nicegui-base/blob/000298562d6bcbf6df304edbd41b98b30fe4bfcf/source/nicegui_base/runtime/__init__.py",
+      "bytes": 938,
+      "sha256": "b9719ae98a9ba1ac3afac46f506a919c852748f9b8ac62ed5543aede5b100d1e"
+    },
+    {
+      "path": "source/nicegui_base/jobs/__init__.py",
+      "url": "https://github.com/kimhw8084/nicegui-base/blob/000298562d6bcbf6df304edbd41b98b30fe4bfcf/source/nicegui_base/jobs/__init__.py",
+      "bytes": 160,
+      "sha256": "35665bf3fe0b4135fe6fbed6ae6ca72f7f9d8315c98aceef81c8770827cd8a7c"
+    }
+  ],
+  "installed_imports": "NOT_RUN",
+  "constructor_binding_manifest": "PENDING_W0",
+  "framework_tests": "NOT_RUN",
+  "browser_tests": "NOT_RUN"
+}

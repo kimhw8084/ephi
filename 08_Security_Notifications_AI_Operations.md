@@ -35,6 +35,8 @@ Roles are defaults; companies map real groups to these capabilities. Read-only u
 
 Cache keys include principal scope/grant version, query, scientific revision and policy. No cross-user cache is allowed unless the result is proven identical under the full access scope. Revoke access by invalidating session/grant version and protected subscriptions; client storage is not an access control.
 
+Artifact hashes and immutable IDs establish identity, not permission. Downloads, exports, query cursors and replayed command receipts enforce current scope before disclosure. Notification recipients are rechecked at dispatch time; an earlier subscription cannot retain revoked access. Bound any download-link lifetime under the approved authorization policy, and do not embed unrestricted object-store URLs in cached DTOs.
+
 ## L2. Data handling and audit
 
 Database credentials and identity validation configuration belong in approved secret delivery, not source/YAML/UI. TLS, cookie/session policy, ingress trust and network access follow company controls and are tested at deployment. Authentication cookies used for state-changing requests require appropriate CSRF/session protection; WebSocket origin/session authorization must be explicitly tested. Do not assume the existing HTTP middleware covers every UI transport.

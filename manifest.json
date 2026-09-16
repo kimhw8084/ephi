@@ -1,10 +1,23 @@
 {
-  "title": "EPHI 1.0 Engineering Decision System Design Pack",
-  "design_revision": "0.1",
+  "title": "EPHI Engineering Decision System — Reviewed Design Repository",
+  "design_revision": "0.2",
   "design_date": "2026-09-15",
   "timezone": "America/Chicago",
   "status": "DESIGN_HANDOFF_NOT_IMPLEMENTED_NOT_PRODUCTION_QUALIFIED",
-  "ephi_archive_sha256": "5e9ad8f63b3158adc530af69fc650aec606cbfa64896ba73840cdcf994a2b6e3",
+  "repository": "https://github.com/kimhw8084/ephi",
+  "imported_design_pack": {
+    "filename": "EPHI_1.0_Design_Pack.zip",
+    "sha256": "88e3fdbd02d1796203b8b39a700cd72a7e39087704faa811b7920622574b4e7d",
+    "original_manifest": "evidence/import/original_manifest.json",
+    "original_manifest_sha256": "888539466d4765d13a8d6cff1bb3a83795ffb2619c3bb8898cbafe542541b3c8",
+    "original_design_revision": "0.1"
+  },
+  "original_application_source": {
+    "filename": "ephi_v0.19.1_production_hardened(1).zip",
+    "sha256": "5e9ad8f63b3158adc530af69fc650aec606cbfa64896ba73840cdcf994a2b6e3",
+    "included": false,
+    "modified": false
+  },
   "nicegui_base_inspected_candidate": {
     "repository": "kimhw8084/nicegui-base",
     "commit": "000298562d6bcbf6df304edbd41b98b30fe4bfcf",
@@ -13,32 +26,33 @@
     "full_template_tests_run": false,
     "browser_tests_run": false
   },
-  "source_test_result": {
+  "historical_source_test_result": {
     "passed": 275,
     "skipped": 1,
-    "skip_reason": "optional PyArrow integration unavailable"
+    "skip_reason": "optional PyArrow integration unavailable",
+    "rerun_in_this_repository": false
   },
-  "baseline_probes": "Four synthetic observed behaviors reproduced; no EPHI fixes applied.",
-  "source_modified": false,
-  "github_writes_performed": false,
-  "companion_master": {
-    "filename": "EPHI_1.0_Master_Design.md",
-    "bytes": 151086,
-    "sha256": "07162cc8cb71c00984292796ad8c76553b7340cafb956db8abcdbc077e161f07"
-  },
-  "not_run_or_unavailable": [
-    "NiceGUI Base full source suite and installed runtime smoke",
-    "Rendered browser, visual regression and accessibility qualification",
-    "Company source/identity/transactional backend integration",
-    "Optional PyArrow/Polars integration paths",
-    "Proposed runtime failure, load and disaster-recovery qualification",
-    "Real family scientific qualification and manufacturing ROI validation"
-  ],
+  "review_evidence": "evidence/review/package_review.json",
   "files": [
     {
+      "path": ".gitattributes",
+      "bytes": 119,
+      "sha256": "6476552d9f3d7ec04cc3ca4c7516e8cc251464f10bbced1501468c8de93c929a"
+    },
+    {
+      "path": ".github/workflows/package.yml",
+      "bytes": 946,
+      "sha256": "633ff8df785bce5b9c63a90a646e975734330ed6899586aa2e13243849f20929"
+    },
+    {
+      "path": ".gitignore",
+      "bytes": 304,
+      "sha256": "648492eb1969ce04671d676ccfd1e2a1259d41a19269238120c59c9d6b66e3ad"
+    },
+    {
       "path": "00_START_HERE.md",
-      "bytes": 4041,
-      "sha256": "bddcedd5430ef957c6a6e255333b7c90e2c54cd67c583cc7fca69088641ad819"
+      "bytes": 4462,
+      "sha256": "6298ef998b93917f80bdd1457e1e556ecf17b15289b9f59841ad6d4c848a67ac"
     },
     {
       "path": "01_Product_and_Architecture.md",
@@ -47,23 +61,23 @@
     },
     {
       "path": "02_Source_Audit.md",
-      "bytes": 11789,
-      "sha256": "33a32c402b428791b8f99797e9a81451b9d1a38163cc38b9f49439001d7c2676"
+      "bytes": 12066,
+      "sha256": "0499ca78e02ab56f18bed0dd4183d1c2c7eb9cc1c8d609dd65df39969510e720"
     },
     {
       "path": "03_Application_Contracts.md",
-      "bytes": 15177,
-      "sha256": "a3c1e18aab0b89d3ed7d26d14e3aeafdb78b1742e72bc6b2554779f44d36dce0"
+      "bytes": 17826,
+      "sha256": "7b9628138522c25bd595550cf18ed2db8a165a1bec07cd20bf5a9fd714ecde70"
     },
     {
       "path": "04_Data_and_Runtime.md",
-      "bytes": 18071,
-      "sha256": "414c7b539dbc0c271b84ddd73b0866eecfe1d5891bc13471edf02932eee1a707"
+      "bytes": 22545,
+      "sha256": "207369afebb3435c8765c7e57d6f895e6af361c5c57450b83ec916c8c9cc8ced"
     },
     {
       "path": "05_UX_and_Interaction_Design.md",
-      "bytes": 23294,
-      "sha256": "8f3856da05419c8b0f481ab0faeaf109c4c040a5d994a86c181f08e50d925336"
+      "bytes": 23406,
+      "sha256": "ed4dee728c06aef55ad187d95eda027b4ce6667ad04fd6c7bce63b94f68d511e"
     },
     {
       "path": "06_Investigation_and_Recovery_Logic.md",
@@ -77,28 +91,53 @@
     },
     {
       "path": "08_Security_Notifications_AI_Operations.md",
-      "bytes": 9849,
-      "sha256": "dda8531d96f49f663d9a5fca8368e3c4eaa774313a1591f2e9b9bce7873982a7"
+      "bytes": 10273,
+      "sha256": "5b9a23fc2d7372a5b6cd1b9dd64a3a3503350084c3d61f4ab00201c2b1aacd22"
     },
     {
       "path": "09_Delivery_and_Gates.md",
-      "bytes": 16792,
-      "sha256": "460e9f18262f969cacdf6547be78c69d813932814aad754682b4f9f4a0c9632f"
+      "bytes": 18324,
+      "sha256": "40e2fad240dcaf7b6d4cc1c65b3d3c6d57d58b04984b8e9cb28c4dccb79a62ab"
     },
     {
       "path": "10_Traceability_and_Decisions.md",
-      "bytes": 7894,
-      "sha256": "1c477d2aa1fab7c87493af66e8565bb6421d3231a18a0507d5c5d2da5fdf5175"
+      "bytes": 8109,
+      "sha256": "c1aedda41b6f085ccca34b78a999c7f11e752bac6c5d51865af3fe79ea6dcae2"
     },
     {
       "path": "11_Developer_Start.md",
-      "bytes": 2889,
-      "sha256": "bec508c94f3c719d30299dc8ef3240465a9cd19ab6a0ecd499f27374a3c9b14e"
+      "bytes": 3512,
+      "sha256": "f43a14d6c98f992f546f219e671b620994f9ffa86988fd62e9db657f35545e0f"
     },
     {
       "path": "12_Sources_and_Evidence.md",
-      "bytes": 5954,
-      "sha256": "f0b7b880f72006649c52da2fc8422ebe46abf531758501b072e5e0d09b3a28b4"
+      "bytes": 6815,
+      "sha256": "d34b83c265fdf0d7f2b8814e852ffa0d031462ed26457d90b05af603a19da504"
+    },
+    {
+      "path": "13_Package_Review.md",
+      "bytes": 7059,
+      "sha256": "e9b2730f7772c0ed1a49674d69ea75a3101ff035bb77146261ec11212adb92a5"
+    },
+    {
+      "path": "AGENTS.md",
+      "bytes": 959,
+      "sha256": "0803c825a0dbaf0266aa44b5ce9c6a30d8eac93737369aae3dc9715d3bb49767"
+    },
+    {
+      "path": "CONTRIBUTING.md",
+      "bytes": 1668,
+      "sha256": "d6001031c8e4360536e911e6bc58f65d1a9b3c1fa172622f663ec25ff667621c"
+    },
+    {
+      "path": "README.md",
+      "bytes": 4342,
+      "sha256": "0cf7fd8caf860e63f691d7c93d28b668638d9e591240c7f32b2a34de34c9645a"
+    },
+    {
+      "path": "evidence/README.md",
+      "bytes": 1765,
+      "sha256": "66ec81400420571f684fe23d3ddba7332883a0e9ee0a39dc6855bd6619f9a730"
     },
     {
       "path": "evidence/audit_environment.json",
@@ -126,6 +165,11 @@
       "sha256": "b28a49ffa86902c74ddb25b1f887c8d2b4f459ad5ab6a6a92a7350066b39a067"
     },
     {
+      "path": "evidence/import/original_manifest.json",
+      "bytes": 5253,
+      "sha256": "888539466d4765d13a8d6cff1bb3a83795ffb2619c3bb8898cbafe542541b3c8"
+    },
+    {
       "path": "evidence/pytest.log",
       "bytes": 543,
       "sha256": "e64674c6d2cd5826e5ec7650d5a8394ab5cdf5df680acfe8b4f87f9350288549"
@@ -136,6 +180,16 @@
       "sha256": "6b3c1b471db45e562d0157a5297fc8e4ab2ebfc02d35ee8c3047b6b96ad6f4a2"
     },
     {
+      "path": "evidence/review/base_reference_check.json",
+      "bytes": 3453,
+      "sha256": "79351a0696b782c30a194bedd1ac536ae30ec66bbf963c0159ca10c03cb3e558"
+    },
+    {
+      "path": "evidence/review/package_review.json",
+      "bytes": 3075,
+      "sha256": "e40c88179a27da2ee672d644798ea9e2b3bc123743fbafe50f7dbf7a01a42678"
+    },
+    {
       "path": "evidence/source_excerpts.md",
       "bytes": 8796,
       "sha256": "5bd0bca1e8ddbd104e0d51daf734d93b6bca8f0c8170ddeb92e7d16c2a0b2bc6"
@@ -144,7 +198,17 @@
       "path": "evidence/source_inventory.json",
       "bytes": 264378,
       "sha256": "d995b28e9196c0a2145655905e5c3ddac6c1821c42af0e5a9a79aee0737cef75"
+    },
+    {
+      "path": "tests/test_package.py",
+      "bytes": 4524,
+      "sha256": "240751ed087c4ffe26cdbe82e54e6372bbbb1fbee94bf2d66ad2793e4f91eacf"
+    },
+    {
+      "path": "tools/check_package.py",
+      "bytes": 11246,
+      "sha256": "642b4202dffad801be8e0c4cc796826e1a8833c335ce894b5d516ac810a09076"
     }
   ],
-  "manifest_note": "Hashes exclude this manifest itself. Companion master is delivered separately, not duplicated inside the ZIP."
+  "manifest_note": "Current repository files excluding this manifest and ignored local artifacts. Imported evidence remains bound to the preserved original manifest. Hashes establish byte identity, not source correctness or production acceptance."
 }

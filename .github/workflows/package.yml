@@ -1,0 +1,34 @@
+name: Package integrity
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Package checks (Python ${{ matrix.python }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ['3.11', '3.12', '3.13', '3.14']
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Validate package and imported evidence
+        run: python tools/check_package.py
+      - name: Test checker failure detection
+        run: python -m unittest discover -s tests -v
+      - name: Check whitespace and unchanged checkout
+        run: |
+          git diff --check
+          test -z "$(git status --porcelain)"

@@ -16,6 +16,10 @@ Store UTC instants; display chosen site timezone with explicit UTC offset on exa
 
 Distinguish `event_at`, `source_available_at`, `ingested_at`, `computed_at`, `published_at`, and `knowledge_cutoff`. Eligibility for an as-known computation requires both the relevant event window and availability no later than cutoff. Late evidence creates a new revision. It never edits a previously shown decision snapshot.
 
+There are three explicit temporal modes. **AS_KNOWN** reconstructs what EPHI had durably published at the cutoff, including the then-recorded workflow events and capability states. Source availability alone cannot backdate EPHI knowledge: an input must also have been ingested by the cutoff, and a displayed conclusion must have been published by it. **SOURCE_REPLAY** simulates eligible source information at a historical cutoff, using independently established source-availability times, a stated engine/policy version and an isolated replay namespace. It must not be labeled a decision actually shown at that time. **RESTATED** evaluates an earlier event period with later-known corrections and labels the later cutoff. Unknown original availability remains unknown; importing an old row today cannot manufacture a historical availability time.
+
+Example: a January 1 measurement is available upstream January 2, ingested by EPHI January 4 and published January 5. It cannot appear in EPHI's January 3 AS_KNOWN decision. A later SOURCE_REPLAY may use it at January 3 if the January 2 availability is supported. Only the new replay result and its execution time are recorded today.
+
 ## E3. Logical schema and ownership
 
 All entities include schema version, created_at and scope unless specified. Foreign keys enforce same-scope ownership. The following fields are normative logical design; physical migration files are implementation work.
@@ -56,6 +60,12 @@ Publish operational results only against their stated analytical revision. A lat
 
 Episode brief reads the current head and workflow within one database read transaction and returns a revision vector. Expensive evidence and chart artifacts are then fetched by immutable references. A client may display “new revision available”; it must not silently splice a new exposure population into an old causal comparison.
 
+For PostgreSQL, use one SQL statement for a coherent joined brief, or a short read-only `REPEATABLE READ` transaction for multiple reads. A transaction at the default `READ COMMITTED` level alone does not give successive statements one snapshot [E4]. Historical decision reads use their stored workflow/capability snapshot, not a join to today's workflow. Current activity can be shown separately with its own label and revision.
+
+Analytical publishers and workflow commands serialize updates through the same per-episode row lock, with a documented consistent lock order. Update only owned projection fields; an analytical refresh cannot overwrite a newer owner or work state from an earlier full-row payload. Enforce aggregate versions and unique semantic constraints in the database. Cross-aggregate invariants such as claim allocation use a common locked parent or serializable transactions with bounded whole-transaction retries. Read isolation is not a substitute for write-invariant enforcement.
+
+Attention pagination binds a cursor to an immutable ordered row-version snapshot, query/filter/sort identity, effective authorization scope and expiry. Persist the bounded result snapshot or query retained versioned projections; a timestamp plus mutable rows is insufficient. Revalidate current permissions on every page, invalidate on a grant change, and return `QUERY_SNAPSHOT_EXPIRED` when retained state is unavailable. Do not retain a database transaction across browser requests. Refresh intentionally starts a new snapshot.
+
 Workflow commands should make their small attention-state updates in the same transaction, ensuring read-your-write. Analytical projections can lag; their visible `published_at` and capability freshness explain that lag.
 
 ## E5. Temporal value correction — mandatory F04 fix
@@ -63,6 +73,10 @@ Workflow commands should make their small attention-state updates in the same tr
 For cutoff `t`, an entry is active when it was known at or before `t` and **no superseding entry known at or before `t` replaces it**. Do not call a present-day `active_entries()` and then filter out future rows. Apply this rule to episode reports, program summaries, exports and claim detail alike.
 
 Example fixture: original cost 10 known January 1; correction 20 known January 3. January 2 report remains 10; January 4 report is 20. A decision-time report links the cutoff explicitly. A restated report uses latest-known values and is labeled restated. Supersession chains cannot branch or cross claim/category. Different currencies cannot be summed without an approved, dated FX policy.
+
+Use immutable server-recorded knowledge time and a per-chain sequence; do not trust caller-supplied `computed_at` as the time EPHI learned a correction. Supersession must reference an existing earlier entry in the same scope/group/category/currency and be acyclic, with one successor enforced transactionally. Select the active leaf at the knowledge cutoff before filtering its effective event period, so a correction that moves an event between periods does not resurrect the old value. An explicit voiding revision can remove a claim without deleting its history.
+
+Monetary amounts and approved rates use exact decimal arithmetic, database `NUMERIC`, and decimal strings in JSON. The rate policy specifies precision, currency scale and rounding stage. Reject non-finite amounts and unsupported currencies; do not sum binary floats or round each intermediate operation. Approval, attribution and rate revisions must also be eligible at the report cutoff; a later approval cannot appear in an earlier validated total.
 
 ## E6. Exposure identity and input requirements
 
@@ -73,6 +87,8 @@ Require explicit asset/context/operation/route identity, as-of-filtered eligible
 ## E7. Retention and recovery
 
 Proposed operational defaults: retain workflow/decision/qualification/value evidence and its required source references for 24 months; keep hot diagnostic logs 30 days and terminal job operational rows 90 days after durable receipt archival. These are design defaults requiring company retention approval, not compliance assertions. Legal/quality holds override deletion. Open episodes and referenced artifacts are never collected by simple age alone.
+
+Archive command and effect deduplication identities with their receipts, and keep them queryable for the supported retry/replay horizon. Removing a terminal job row must not make its already-applied logical effect executable again. Expired commands outside that horizon are rejected for reconciliation, not treated as new requests. Retention must preserve the source/revision dependencies of any retained historical query or report an explicit unavailable-history state.
 
 Snapshot/backup must produce a consistent set of state versions and referenced immutable artifacts. Ordinary CAS on individual keys is insufficient for a consistent disaster-recovery snapshot, as the shipped `SnapshotStateStore` already states. Restore to an isolated clean namespace, verify hashes/versions/referential completeness, replay accepted post-snapshot inputs, then switch traffic after reconciliation. Proposed target: zero lost acknowledged commands under a single web/worker process crash; disaster RPO<=15 minutes and RTO<=60 minutes only after a production-like restore rehearsal. Cross-region disaster continuity is outside V1 unless required.
 
@@ -116,3 +132,4 @@ Refresh only changed panels. Pause row reordering during selection, editing or k
 [E1] PostgreSQL current SELECT documentation, queue-oriented use and limitations of SKIP LOCKED: `https://www.postgresql.org/docs/current/sql-select.html` (accessed 2026-09-15).
 [E2] NiceGUI official documentation, event loop and CPU/I/O helpers: `https://nicegui.io/documentation` (accessed 2026-09-15). Integrate through NiceGUI Base public lifecycle/async authorities, not direct application imports of NiceGUI.
 [E3] FastAPI lifespan documentation: `https://fastapi.tiangolo.com/advanced/events/` (accessed 2026-09-15). Composition startup/shutdown owns pools and adapters; mounted-app lifecycle needs an explicit tested owner.
+[E4] [PostgreSQL 18 transaction isolation](https://www.postgresql.org/docs/18/transaction-iso.html) (checked 2026-09-15). Supports the statement/read-snapshot distinction; selecting PostgreSQL 18 documentation does not bind the company's eventual server version.

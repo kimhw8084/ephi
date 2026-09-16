@@ -1,0 +1,59 @@
+# EPHI
+
+Engineering decision support for equipment, process and measurement-system health.
+
+**Status: reviewed design handoff. Application implementation and production qualification are pending.** This repository contains the EPHI 1.0 design, historical source-audit evidence, and executable package checks. It does not yet contain an installable EPHI application.
+
+EPHI's intended workflow is **Detect → Explain → Prioritize → Contain → Investigate → Act → Verify recovery → Learn → Prove value**. Manufacturing actions remain human controlled in approved external systems.
+
+## Start here
+
+- [Design overview](00_START_HERE.md): product choices, scope and original source identity.
+- [Package review and readiness](13_Package_Review.md): what was checked, what changed, and what blocks implementation.
+- [Developer handoff](11_Developer_Start.md): prerequisites and the first implementation slice.
+- [Delivery gates](09_Delivery_and_Gates.md): acceptance criteria from baseline through a qualified family release.
+
+## Contents
+
+| Document | Purpose |
+|---|---|
+| [01 · Product and architecture](01_Product_and_Architecture.md) | Requirements, boundaries and invariants |
+| [02 · Historical source audit](02_Source_Audit.md) | Observed strengths and F01–F14 findings |
+| [03 · Application contracts](03_Application_Contracts.md) | Queries, commands, revisions and concurrency |
+| [04 · Data and runtime](04_Data_and_Runtime.md) | Persistence, time, jobs and recovery |
+| [05 · UX and interaction](05_UX_and_Interaction_Design.md) | Navigation, workspaces and degraded states |
+| [06 · Investigation and recovery](06_Investigation_and_Recovery_Logic.md) | Planner and scientific recovery rules |
+| [07 · NiceGUI Base integration](07_NiceGUI_Base_Integration.md) | Pinned framework and integration boundaries |
+| [08 · Security and operations](08_Security_Notifications_AI_Operations.md) | Authorization, notifications and optional AI |
+| [09 · Delivery and gates](09_Delivery_and_Gates.md) | Tests, migration, rollout and rollback |
+| [10 · Traceability and decisions](10_Traceability_and_Decisions.md) | Requirements, decisions and unresolved bindings |
+| [11 · Developer start](11_Developer_Start.md) | First implementation slice |
+| [12 · Sources and evidence](12_Sources_and_Evidence.md) | Provenance and reproducibility limits |
+| [13 · Package review](13_Package_Review.md) | Repository preparation and corrections |
+
+The numbered chapters are the maintained design. [manifest.json](manifest.json) records current file hashes. [Historical evidence](evidence/README.md) is preserved separately from [this review's evidence](evidence/review/package_review.json).
+
+## Validate this repository
+
+Python 3.11 or newer; no third-party packages or application credentials are needed:
+
+```bash
+python3 tools/check_package.py
+python3 -m unittest discover -s tests -v
+```
+
+Checks cover file integrity, local Markdown links and code fences, JSON/Python syntax, requirement coverage, and consistency of the imported audit evidence. CI runs these package checks on Python 3.11–3.14. This is distinct from the proposed application's pinned Python 3.11–3.13 runtime.
+
+The historical **275 passed / 1 skipped** result belongs to the original application audit. It is not this repository's test result. The application tests and behavioral probes require the absent original source.
+
+## Before implementation
+
+1. Obtain the original `ephi_v0.19.1_production_hardened(1).zip` from its owner and verify SHA-256 `5e9ad8f63b3158adc530af69fc650aec606cbfa64896ba73840cdcf994a2b6e3`. The supplied design ZIP is a different artifact.
+2. Reproduce that source baseline in isolation and record dependencies. Preserve existing scientific modules and fix the documented integrity defects through regression tests.
+3. Resolve the installed APIs of [NiceGUI Base at the inspected commit](https://github.com/kimhw8084/nicegui-base/tree/000298562d6bcbf6df304edbd41b98b30fe4bfcf), then follow W0/W1. Company bindings and target qualification remain explicit gates.
+
+There is no application installation or launch command yet. Publication of this design does not complete W0 or qualify a deployment.
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for evidence preservation and validation. No project license has been selected.
