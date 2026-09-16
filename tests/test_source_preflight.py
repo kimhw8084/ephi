@@ -93,7 +93,13 @@ class SourcePreflightTests(unittest.TestCase):
         self.assertEqual(result["baseline"]["test_execution"]["status"], "NOT_RUN")
         self.assertEqual(result["historical_test_result"]["passed"], 275)
         self.assertEqual(result["historical_test_result"]["skipped"], 1)
-        self.assertEqual((self.stage / SOURCE_ROOT / "src/module.py").read_text(), "print('fixture')\n")
+        expected_source_path = self.stage / SOURCE_ROOT
+        reported_staging_path = Path(result["staging"]["source_root"])
+        reported_baseline_path = Path(result["baseline"]["source_root"])
+        self.assertEqual(reported_staging_path, expected_source_path)
+        self.assertEqual(reported_baseline_path, expected_source_path)
+        self.assertTrue(reported_staging_path.exists())
+        self.assertEqual((reported_staging_path / "src/module.py").read_text(), "print('fixture')\n")
 
     def test_preserved_evidence_path_is_rejected_without_writes(self):
         evidence = self.root / "evidence"

@@ -324,6 +324,8 @@ def preflight(
                 staged_source = temporary / expected_source_root
                 baseline = discover_baseline(staged_source)
                 os.replace(temporary, stage_dir)
+                staged_source = stage_dir / expected_source_root
+                baseline["source_root"] = staged_source.as_posix()
             except Exception:
                 if temporary.exists():
                     shutil.rmtree(temporary)
