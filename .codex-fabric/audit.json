@@ -1,0 +1,299 @@
+{
+  "accepted_at": "2026-09-16T21:06:37Z",
+  "changed_files": [
+    {
+      "additions": 13,
+      "deletions": 1,
+      "path": "11_Developer_Start.md",
+      "status": "M"
+    },
+    {
+      "additions": 19,
+      "deletions": 1,
+      "path": "README.md",
+      "status": "M"
+    },
+    {
+      "additions": 14,
+      "deletions": 4,
+      "path": "manifest.json",
+      "status": "M"
+    },
+    {
+      "additions": 125,
+      "deletions": 0,
+      "path": "tests/test_source_preflight.py",
+      "status": "A"
+    },
+    {
+      "additions": 388,
+      "deletions": 0,
+      "path": "tools/source_preflight.py",
+      "status": "A"
+    }
+  ],
+  "checks": [
+    {
+      "command": "/bin/zsh -lc \"pwd && printf '%s\\\\n' '--- AGENTS.md ---' && sed -n '1,240p' AGENTS.md && printf '%s\\\\n' '--- RTK.md ---' && sed -n '1,260p' /Users/haewonkim/.codex/RTK.md && printf '%s\\\\n' '--- law.md ---' && sed -n '1,260p' /Users/haewonkim/.codex/law.md && printf '%s\\\\n' '--- required project docs ---' && for f in README.md 00_START_HERE.md 02_Source_Audit.md 09_Delivery_and_Gates.md 11_Developer_Start.md 13_Package_Review.md; do printf '\\\\n### %s\\\\n' \\\"\"'$f\"; sed -n '\"'1,260p' \\\"\"'$f\"; done'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,320p' 09_Delivery_and_Gates.md\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk rg -n \"source|archive|staging|preflight|SOURCE_REQUIRED|W0|historical|275|F03|F04|F05|manifest\" README.md 00_START_HERE.md 02_Source_Audit.md 09_Delivery_and_Gates.md 11_Developer_Start.md 13_Package_Review.md CONTRIBUTING.md .gitignore manifest.json 2>/dev/null'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,320p' tools/check_package.py && rtk sed -n '1,260p' tests/test_check_package.py\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short && rtk find tools tests -maxdepth 2 -type f -print | sort'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk --version && rtk git status --short && rtk rg --files tools tests | sort && rtk sed -n '1,360p' tests/test_package.py && rtk sed -n '1,360p' tools/check_package.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,220p' .gitignore && rtk sed -n '1,220p' manifest.json && rtk sed -n '1,220p' CONTRIBUTING.md && rtk sed -n '1,220p' evidence/README.md && rtk rg -n \\\"artifacts|evidence/review|ignored|manifest\\\" .github tools tests README.md 13_Package_Review.md\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest tests.test_source_preflight -v'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest tests.test_source_preflight -v'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'from tests.test_source_preflight import SourcePreflightTests; case=SourcePreflightTests(\\\"test_safe_archive_is_staged_and_baseline_is_discovered\\\"); case.setUp(); actual=case.make_archive([(f\\\"{case.SOURCE_ROOT}/\\\", \\\"\\\"), (f\\\"{case.SOURCE_ROOT}/src/module.py\\\", \\\"print(\\\\\\\\\\\"fixture\\\\\\\\\\\")\\\\\\\\n\\\"), (f\\\"{case.SOURCE_ROOT}/tests/test_module.py\\\", \\\"def test_fixture():\\\\\\\\n    assert True\\\\\\\\n\\\"), (f\\\"{case.SOURCE_ROOT}/requirements.txt\\\", \\\"fixture-dependency==1\\\\\\\\n\\\")]); print(case.run_preflight(expected_hash=actual)); case.doCleanups()'\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'from tests.test_source_preflight import SourcePreflightTests; case=SourcePreflightTests(\\\"test_safe_archive_is_staged_and_baseline_is_discovered\\\"); case.setUp(); actual=case.make_archive([(f\\\"{SOURCE_ROOT}/\\\", \\\"\\\") for SOURCE_ROOT in [\\\"fixture_source_release\\\"]]); print(case.run_preflight(expected_hash=actual)); case.doCleanups()'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest tests.test_source_preflight -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest tests.test_source_preflight -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff -- tools/source_preflight.py tests/test_source_preflight.py README.md 11_Developer_Start.md && rtk git status --short'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,420p' tools/source_preflight.py && rtk sed -n '1,260p' tests/test_source_preflight.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/source_preflight.py --output artifacts/source-preflight.json'",
+      "exit_code": 2,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest discover -s tests -v'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest tests.test_source_preflight -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest discover -s tests -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk mkdir -p artifacts/w0 && set +e\nrtk python3 tools/source_preflight.py --output artifacts/source-preflight.json > artifacts/w0/source-preflight-cli.log 2>&1\ncli_status=$?\nrtk python3 -m unittest tests.test_source_preflight -v > artifacts/w0/source-preflight-tests.log 2>&1\npreflight_tests_status=$?\nrtk python3 tools/check_package.py > artifacts/w0/package-check.log 2>&1\npackage_status=$?\nrtk python3 -m unittest discover -s tests -v > artifacts/w0/repository-tests.log 2>&1\nrepository_tests_status=$?\nrtk git diff --check > artifacts/w0/diff-check.log 2>&1\ndiff_status=$?\nprint \"cli_status=$cli_status\" >> artifacts/w0/source-preflight-cli.log\nprint \"preflight_tests_status=$preflight_tests_status\" >> artifacts/w0/source-preflight-tests.log\nprint \"package_status=$package_status\" >> artifacts/w0/package-check.log\nprint \"repository_tests_status=$repository_tests_status\" >> artifacts/w0/repository-tests.log\nprint \"diff_status=$diff_status\" >> artifacts/w0/diff-check.log\nprint \"cli_status=$cli_status preflight_tests_status=$preflight_tests_status package_status=$package_status repository_tests_status=$repository_tests_status diff_status=$diff_status\"'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git status --short && rtk git diff --stat && rtk git diff -- manifest.json && rtk sed -n '1,120p' artifacts/source-preflight.json && rtk sed -n '1,80p' artifacts/w0/source-preflight-cli.log && rtk sed -n '1,80p' artifacts/w0/source-preflight-tests.log && rtk find artifacts -maxdepth 3 -type f | sort\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short && rtk git status --short -- evidence evidence/import && rtk git diff --check && rtk python3 tools/check_package.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    }
+  ],
+  "codex": {
+    "cli_version": "codex-cli 0.154.0",
+    "configured_model": "gpt-5.6-luna",
+    "event_count": 73,
+    "provider_reported_model": null,
+    "reasoning_effort": "xhigh",
+    "terminal_type": "turn.completed",
+    "usage": {
+      "cache_hit_percent": 92.36,
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 1906432,
+      "fresh_input_tokens": 157651,
+      "input_tokens": 2064083,
+      "non_reasoning_output_tokens": 13727,
+      "output_tokens": 35293,
+      "reasoning_output_tokens": 21566,
+      "total_processed_tokens": 2099376
+    },
+    "warnings": []
+  },
+  "commits": [
+    {
+      "sha": "4b483a6b5c272faa1a04f9dba482e254510b6dad",
+      "subject": "fabric: capture completed model changes [CF-48a882d753701fef0e7e3c87]"
+    }
+  ],
+  "diff": {
+    "additions": 559,
+    "changed_files": 5,
+    "commit_count": 1,
+    "deletions": 6
+  },
+  "error_code": null,
+  "evidence_manifest": {
+    "count": 3,
+    "items": [
+      {
+        "bytes": 4753,
+        "path": "11_Developer_Start.md",
+        "sha256": "a38d7e099e19f6dc31d163a8b9a76b59e95579dc9b4b466be6e76f6bc35c7d48"
+      },
+      {
+        "bytes": 6016,
+        "path": "README.md",
+        "sha256": "fec5acb24ccfbbc6c802d7806d05edea8aded6f21d8ffba889974064342140ea"
+      },
+      {
+        "bytes": 7632,
+        "path": "manifest.json",
+        "sha256": "16a947b2bfa76ef581f5b3f3caca27147d5800ec39ad46d6b934d3d09bf2cb7f"
+      }
+    ],
+    "version": 1
+  },
+  "evidence_publisher_release": "1.2.2",
+  "fabric_capture": {
+    "applied": true,
+    "commit_message": "fabric: capture completed model changes [CF-48a882d753701fef0e7e3c87]",
+    "commit_sha": "4b483a6b5c272faa1a04f9dba482e254510b6dad",
+    "paths_before": 5,
+    "status_before": [
+      " M 11_Developer_Start.md",
+      " M README.md",
+      " M manifest.json",
+      "?? tests/test_source_preflight.py",
+      "?? tools/source_preflight.py"
+    ],
+    "transient_untracked_removed": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "fabric_release": "1.2.2",
+  "failure_class": null,
+  "finished_at": "2026-09-16T21:18:05Z",
+  "git": {
+    "base_is_ancestor": true,
+    "base_sha": "fb9710e42b64f3a0ff58599011dd9fa8d06100d8",
+    "branch": "codex/ephi-w0-source-preflight-v1",
+    "head_sha": "4b483a6b5c272faa1a04f9dba482e254510b6dad",
+    "remote_exact_head": true,
+    "remote_head_sha": "4b483a6b5c272faa1a04f9dba482e254510b6dad",
+    "target_branch": "main",
+    "target_drifted_since_acceptance": false,
+    "target_head_observed_after_execution": "fb9710e42b64f3a0ff58599011dd9fa8d06100d8",
+    "work_branch": "codex/ephi-w0-source-preflight-v1",
+    "worktree_clean": true
+  },
+  "instructions": {
+    "files": [
+      {
+        "bytes": 959,
+        "path": "AGENTS.md",
+        "sha256": "0803c825a0dbaf0266aa44b5ce9c6a30d8eac93737369aae3dc9715d3bb49767"
+      }
+    ],
+    "total_bytes": 959,
+    "warning": null
+  },
+  "job_id": "CF-48a882d753701fef0e7e3c87",
+  "kind": "codex-fabric-audit-evidence",
+  "locator": {
+    "branch": "codex-fabric/evidence/ephi/ephi-w0-source-preflight-v1",
+    "path": ".codex-fabric/audit.json",
+    "ref": "refs/heads/codex-fabric/evidence/ephi/ephi-w0-source-preflight-v1"
+  },
+  "operation": "BUILD",
+  "policy": {
+    "environment_policy_sha256": "e077daca74297b3c30bee8989f00f8ca5338f7610b4d016a6c48db524205d064",
+    "fabric_release": "1.2.2",
+    "policy_sha256": "44756118cd7fda0c45cd23ba1d31a48a3f4f2422d687df15264ba4406f40e1f2",
+    "registry_sha256": "cfc765f3211c37c7967a138f3b2d89a99341939b15b2623f92744d007f625d6f"
+  },
+  "project_id": "ephi",
+  "recovery": {
+    "model_rerun_safe": false,
+    "recovery_required": false,
+    "retry_safe": false,
+    "retry_scope": null,
+    "worktree_retained": true
+  },
+  "request": "ephi-w0-source-preflight-v1",
+  "schema_version": 1,
+  "started_at": "2026-09-16T21:06:37Z",
+  "status": "EXECUTED_CHANGE",
+  "timing": {
+    "execution_seconds": 688,
+    "queue_seconds": 0,
+    "total_seconds": 688
+  },
+  "transport": {
+    "bytes": 2883,
+    "envelope": "FABRIC/2",
+    "prompt_bytes": 2577,
+    "prompt_sha256": "723ed7020d25a380775abc7390e8b499b7e57ecd3507b43f953d55e2139af777",
+    "sha256": "48a882d753701fef0e7e3c873e04fbdbd7be617b9fcc3a91ac8e64bf83806e3d"
+  }
+}
