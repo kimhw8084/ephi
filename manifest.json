@@ -1,0 +1,150 @@
+{
+  "title": "EPHI 1.0 Engineering Decision System Design Pack",
+  "design_revision": "0.1",
+  "design_date": "2026-09-15",
+  "timezone": "America/Chicago",
+  "status": "DESIGN_HANDOFF_NOT_IMPLEMENTED_NOT_PRODUCTION_QUALIFIED",
+  "ephi_archive_sha256": "5e9ad8f63b3158adc530af69fc650aec606cbfa64896ba73840cdcf994a2b6e3",
+  "nicegui_base_inspected_candidate": {
+    "repository": "kimhw8084/nicegui-base",
+    "commit": "000298562d6bcbf6df304edbd41b98b30fe4bfcf",
+    "framework_version": "3.0.0a8",
+    "nicegui_version_required": "3.15.0",
+    "full_template_tests_run": false,
+    "browser_tests_run": false
+  },
+  "source_test_result": {
+    "passed": 275,
+    "skipped": 1,
+    "skip_reason": "optional PyArrow integration unavailable"
+  },
+  "baseline_probes": "Four synthetic observed behaviors reproduced; no EPHI fixes applied.",
+  "source_modified": false,
+  "github_writes_performed": false,
+  "companion_master": {
+    "filename": "EPHI_1.0_Master_Design.md",
+    "bytes": 151086,
+    "sha256": "07162cc8cb71c00984292796ad8c76553b7340cafb956db8abcdbc077e161f07"
+  },
+  "not_run_or_unavailable": [
+    "NiceGUI Base full source suite and installed runtime smoke",
+    "Rendered browser, visual regression and accessibility qualification",
+    "Company source/identity/transactional backend integration",
+    "Optional PyArrow/Polars integration paths",
+    "Proposed runtime failure, load and disaster-recovery qualification",
+    "Real family scientific qualification and manufacturing ROI validation"
+  ],
+  "files": [
+    {
+      "path": "00_START_HERE.md",
+      "bytes": 4041,
+      "sha256": "bddcedd5430ef957c6a6e255333b7c90e2c54cd67c583cc7fca69088641ad819"
+    },
+    {
+      "path": "01_Product_and_Architecture.md",
+      "bytes": 11184,
+      "sha256": "35df464240e2f9e6a22385b1061447725a30038b6271cce3e4687b60f3f4c199"
+    },
+    {
+      "path": "02_Source_Audit.md",
+      "bytes": 11789,
+      "sha256": "33a32c402b428791b8f99797e9a81451b9d1a38163cc38b9f49439001d7c2676"
+    },
+    {
+      "path": "03_Application_Contracts.md",
+      "bytes": 15177,
+      "sha256": "a3c1e18aab0b89d3ed7d26d14e3aeafdb78b1742e72bc6b2554779f44d36dce0"
+    },
+    {
+      "path": "04_Data_and_Runtime.md",
+      "bytes": 18071,
+      "sha256": "414c7b539dbc0c271b84ddd73b0866eecfe1d5891bc13471edf02932eee1a707"
+    },
+    {
+      "path": "05_UX_and_Interaction_Design.md",
+      "bytes": 23294,
+      "sha256": "8f3856da05419c8b0f481ab0faeaf109c4c040a5d994a86c181f08e50d925336"
+    },
+    {
+      "path": "06_Investigation_and_Recovery_Logic.md",
+      "bytes": 12110,
+      "sha256": "a6fd1ea39a0bfa293d2f50a22a3b591534e5f5129ab39de9b9a29fcf61e96938"
+    },
+    {
+      "path": "07_NiceGUI_Base_Integration.md",
+      "bytes": 9308,
+      "sha256": "c385e09338245ba383085043e66e8ac6a7c3b338d354f191e61511fd86fe614e"
+    },
+    {
+      "path": "08_Security_Notifications_AI_Operations.md",
+      "bytes": 9849,
+      "sha256": "dda8531d96f49f663d9a5fca8368e3c4eaa774313a1591f2e9b9bce7873982a7"
+    },
+    {
+      "path": "09_Delivery_and_Gates.md",
+      "bytes": 16792,
+      "sha256": "460e9f18262f969cacdf6547be78c69d813932814aad754682b4f9f4a0c9632f"
+    },
+    {
+      "path": "10_Traceability_and_Decisions.md",
+      "bytes": 7894,
+      "sha256": "1c477d2aa1fab7c87493af66e8565bb6421d3231a18a0507d5c5d2da5fdf5175"
+    },
+    {
+      "path": "11_Developer_Start.md",
+      "bytes": 2889,
+      "sha256": "bec508c94f3c719d30299dc8ef3240465a9cd19ab6a0ecd499f27374a3c9b14e"
+    },
+    {
+      "path": "12_Sources_and_Evidence.md",
+      "bytes": 5954,
+      "sha256": "f0b7b880f72006649c52da2fc8422ebe46abf531758501b072e5e0d09b3a28b4"
+    },
+    {
+      "path": "evidence/audit_environment.json",
+      "bytes": 8732,
+      "sha256": "de4d2ca0104e21b41af0316d767a4d19dcd3123776d2da3a53cf1441fc15047c"
+    },
+    {
+      "path": "evidence/behavior_probes.json",
+      "bytes": 1192,
+      "sha256": "5b17f4caff743c2f4839eccff8a9e7a168b0113d7ad2f1ce67057d5e71c09be1"
+    },
+    {
+      "path": "evidence/behavior_probes.log",
+      "bytes": 1192,
+      "sha256": "5b17f4caff743c2f4839eccff8a9e7a168b0113d7ad2f1ce67057d5e71c09be1"
+    },
+    {
+      "path": "evidence/behavior_probes.py",
+      "bytes": 5635,
+      "sha256": "805a63ab3887b430c42b4b6208d1f1dffab9fc8536a7882d024b707e05a4d951"
+    },
+    {
+      "path": "evidence/design_pack_checks.json",
+      "bytes": 842,
+      "sha256": "b28a49ffa86902c74ddb25b1f887c8d2b4f459ad5ab6a6a92a7350066b39a067"
+    },
+    {
+      "path": "evidence/pytest.log",
+      "bytes": 543,
+      "sha256": "e64674c6d2cd5826e5ec7650d5a8394ab5cdf5df680acfe8b4f87f9350288549"
+    },
+    {
+      "path": "evidence/pytest_results.xml",
+      "bytes": 37790,
+      "sha256": "6b3c1b471db45e562d0157a5297fc8e4ab2ebfc02d35ee8c3047b6b96ad6f4a2"
+    },
+    {
+      "path": "evidence/source_excerpts.md",
+      "bytes": 8796,
+      "sha256": "5bd0bca1e8ddbd104e0d51daf734d93b6bca8f0c8170ddeb92e7d16c2a0b2bc6"
+    },
+    {
+      "path": "evidence/source_inventory.json",
+      "bytes": 264378,
+      "sha256": "d995b28e9196c0a2145655905e5c3ddac6c1821c42af0e5a9a79aee0737cef75"
+    }
+  ],
+  "manifest_note": "Hashes exclude this manifest itself. Companion master is delivered separately, not duplicated inside the ZIP."
+}

@@ -1,0 +1,15 @@
+# Original delivery stays local; the extracted package is versioned.
+/EPHI_1.0_Design_Pack.zip
+
+# Local validation output and environments.
+/artifacts/
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.DS_Store
+.env
+.env.*
+!.env.example
+
+# Imported evidence/*.log files are intentional historical artifacts.

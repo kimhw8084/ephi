@@ -1,0 +1,337 @@
+{
+  "zip_sha256": "5e9ad8f63b3158adc530af69fc650aec606cbfa64896ba73840cdcf994a2b6e3",
+  "python": "3.13.5",
+  "libraries": {
+    "pytest": "9.0.2",
+    "fastapi": "0.128.2",
+    "pydantic": "2.13.4",
+    "numpy": "2.3.5",
+    "pandas": "2.2.3",
+    "polars": "NOT_INSTALLED",
+    "scipy": "1.17.0",
+    "scikit-learn": "1.8.0",
+    "nicegui": "NOT_INSTALLED",
+    "pyarrow": "NOT_INSTALLED"
+  },
+  "explicit_routes": 53,
+  "routes": [
+    {
+      "method": "get",
+      "path": "/healthz",
+      "function": "healthz",
+      "line": 73
+    },
+    {
+      "method": "get",
+      "path": "/version",
+      "function": "version",
+      "line": 77
+    },
+    {
+      "method": "get",
+      "path": "/v1/attention",
+      "function": "attention",
+      "line": 85
+    },
+    {
+      "method": "get",
+      "path": "/v1/episodes",
+      "function": "episodes",
+      "line": 89
+    },
+    {
+      "method": "get",
+      "path": "/v1/episodes/{episode_id}",
+      "function": "episode",
+      "line": 95
+    },
+    {
+      "method": "get",
+      "path": "/v1/episodes/{episode_id}/evidence",
+      "function": "episode_evidence",
+      "line": 102
+    },
+    {
+      "method": "get",
+      "path": "/v1/episodes/{episode_id}/exposure",
+      "function": "exposure_snapshot",
+      "line": 114
+    },
+    {
+      "method": "get",
+      "path": "/v1/episodes/{episode_id}/priority",
+      "function": "priority_assessment",
+      "line": 119
+    },
+    {
+      "method": "get",
+      "path": "/v1/episodes/{episode_id}/material-exposure",
+      "function": "material_exposure",
+      "line": 124
+    },
+    {
+      "method": "get",
+      "path": "/v1/episodes/{episode_id}/notification",
+      "function": "notification",
+      "line": 132
+    },
+    {
+      "method": "post",
+      "path": "/v1/episodes/{episode_id}/workflow",
+      "function": "mutate_workflow",
+      "line": 139
+    },
+    {
+      "method": "post",
+      "path": "/v1/episodes/{episode_id}/close",
+      "function": "close_episode",
+      "line": 154
+    },
+    {
+      "method": "get",
+      "path": "/v1/episodes/{episode_id}/closure-feedback",
+      "function": "closure_feedback",
+      "line": 169
+    },
+    {
+      "method": "get",
+      "path": "/v1/episodes/{episode_id}/audit",
+      "function": "episode_audit",
+      "line": 175
+    },
+    {
+      "method": "get",
+      "path": "/v1/episodes/{episode_id}/historical-analogues",
+      "function": "historical_analogues",
+      "line": 182
+    },
+    {
+      "method": "get",
+      "path": "/v1/episodes/{episode_id}/historical-recurrence",
+      "function": "historical_recurrence",
+      "line": 191
+    },
+    {
+      "method": "get",
+      "path": "/v1/episodes/{episode_id}/investigation-seed",
+      "function": "investigation_seed",
+      "line": 200
+    },
+    {
+      "method": "get",
+      "path": "/v1/episodes/{episode_id}/rca-candidates",
+      "function": "rca_candidates",
+      "line": 209
+    },
+    {
+      "method": "get",
+      "path": "/v1/episodes/{episode_id}/value-ledger",
+      "function": "value_ledger",
+      "line": 218
+    },
+    {
+      "method": "get",
+      "path": "/v1/episodes/{episode_id}/value-summary",
+      "function": "value_summary",
+      "line": 229
+    },
+    {
+      "method": "get",
+      "path": "/v1/value/program-summary",
+      "function": "program_value_summary",
+      "line": 240
+    },
+    {
+      "method": "get",
+      "path": "/v1/operations/status",
+      "function": "operations_status",
+      "line": 250
+    },
+    {
+      "method": "get",
+      "path": "/v1/operations/controls",
+      "function": "operations_controls",
+      "line": 256
+    },
+    {
+      "method": "get",
+      "path": "/v1/operations/certification",
+      "function": "operations_certification",
+      "line": 262
+    },
+    {
+      "method": "get",
+      "path": "/v1/operations/slo",
+      "function": "operations_slo",
+      "line": 268
+    },
+    {
+      "method": "get",
+      "path": "/v1/qualification/families/{family_id}",
+      "function": "qualification_summary",
+      "line": 291
+    },
+    {
+      "method": "post",
+      "path": "/v1/qualification/families/{family_id}/plan",
+      "function": "qualification_register_plan",
+      "line": 295
+    },
+    {
+      "method": "get",
+      "path": "/v1/qualification/families/{family_id}/golden",
+      "function": "qualification_golden_list",
+      "line": 306
+    },
+    {
+      "method": "get",
+      "path": "/v1/qualification/families/{family_id}/golden/{intake_id}/history",
+      "function": "qualification_golden_history",
+      "line": 310
+    },
+    {
+      "method": "post",
+      "path": "/v1/qualification/families/{family_id}/golden",
+      "function": "qualification_golden_submit",
+      "line": 317
+    },
+    {
+      "method": "post",
+      "path": "/v1/qualification/families/{family_id}/golden/{intake_id}/review",
+      "function": "qualification_golden_review",
+      "line": 326
+    },
+    {
+      "method": "get",
+      "path": "/v1/qualification/families/{family_id}/shadow/queue",
+      "function": "qualification_shadow_queue",
+      "line": 338
+    },
+    {
+      "method": "post",
+      "path": "/v1/qualification/families/{family_id}/shadow/queue",
+      "function": "qualification_shadow_enqueue",
+      "line": 342
+    },
+    {
+      "method": "post",
+      "path": "/v1/qualification/families/{family_id}/shadow/claim",
+      "function": "qualification_shadow_claim",
+      "line": 352
+    },
+    {
+      "method": "post",
+      "path": "/v1/qualification/families/{family_id}/shadow/{episode_id}/complete",
+      "function": "qualification_shadow_complete",
+      "line": 362
+    },
+    {
+      "method": "get",
+      "path": "/v1/qualification/families/{family_id}/shadow/metrics",
+      "function": "qualification_shadow_metrics",
+      "line": 386
+    },
+    {
+      "method": "post",
+      "path": "/v1/qualification/families/{family_id}/gates",
+      "function": "qualification_gate_record",
+      "line": 390
+    },
+    {
+      "method": "get",
+      "path": "/v1/qualification/families/{family_id}/promotion",
+      "function": "qualification_promotion_list",
+      "line": 400
+    },
+    {
+      "method": "post",
+      "path": "/v1/qualification/families/{family_id}/promotion/generate",
+      "function": "qualification_promotion_generate",
+      "line": 404
+    },
+    {
+      "method": "post",
+      "path": "/v1/qualification/families/{family_id}/promotion/approve",
+      "function": "qualification_promotion_approve",
+      "line": 415
+    },
+    {
+      "method": "get",
+      "path": "/v1/qualification/families/{family_id}/manifests",
+      "function": "qualification_manifest_history",
+      "line": 427
+    },
+    {
+      "method": "get",
+      "path": "/v1/qualification/families/{family_id}/manifests/current",
+      "function": "qualification_manifest_current",
+      "line": 431
+    },
+    {
+      "method": "get",
+      "path": "/v1/qualification/families/{family_id}/export",
+      "function": "qualification_export",
+      "line": 435
+    },
+    {
+      "method": "get",
+      "path": "/v1/qualification/families/{family_id}/audit",
+      "function": "qualification_audit",
+      "line": 439
+    },
+    {
+      "method": "get",
+      "path": "/v1/launch/families/{family_id}/campaigns/{campaign_id}",
+      "function": "launch_campaign_readiness",
+      "line": 449
+    },
+    {
+      "method": "get",
+      "path": "/v1/launch/families/{family_id}/campaigns/{campaign_id}/events",
+      "function": "launch_campaign_events",
+      "line": 456
+    },
+    {
+      "method": "get",
+      "path": "/v1/launch/families/{family_id}/campaigns/{campaign_id}/reconciliation",
+      "function": "launch_campaign_reconciliation",
+      "line": 463
+    },
+    {
+      "method": "get",
+      "path": "/v1/launch/families/{family_id}/campaigns/{campaign_id}/slo",
+      "function": "launch_campaign_slo",
+      "line": 470
+    },
+    {
+      "method": "get",
+      "path": "/v1/launch/families/{family_id}/campaigns/{campaign_id}/retention",
+      "function": "launch_campaign_retention",
+      "line": 477
+    },
+    {
+      "method": "get",
+      "path": "/v1/launch/families/{family_id}/campaigns/{campaign_id}/export",
+      "function": "launch_campaign_export",
+      "line": 484
+    },
+    {
+      "method": "get",
+      "path": "/v1/launch/families/{family_id}/campaigns/{baseline_campaign_id}/compare/{candidate_campaign_id}",
+      "function": "launch_campaign_compare",
+      "line": 491
+    },
+    {
+      "method": "post",
+      "path": "/v1/missed-events",
+      "function": "create_missed_event",
+      "line": 498
+    },
+    {
+      "method": "get",
+      "path": "/v1/missed-events",
+      "function": "missed_events",
+      "line": 505
+    }
+  ]
+}

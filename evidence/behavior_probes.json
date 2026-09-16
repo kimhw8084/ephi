@@ -1,0 +1,29 @@
+[
+  {
+    "id": "F03",
+    "scenario": "Technical episode resolves while engineering investigation remains open",
+    "workflow": "INVESTIGATING",
+    "visible_in_attention": false,
+    "required_product_behavior": "Remain discoverable as open engineering work."
+  },
+  {
+    "id": "F02",
+    "scenario": "Recompose advisory around populated source repository without restoring its separate checkpoint",
+    "outcome": "KeyError",
+    "interpretation": "Persisting source rows alone is insufficient; version/workflow state must be restored or repository backed."
+  },
+  {
+    "id": "F04",
+    "scenario": "Value summary as_of before a later superseding correction",
+    "expected_operating_cost": 10,
+    "actual_operating_cost": 0.0,
+    "interpretation": "active_entries removes the old row before as_of filtering; historical summaries require as-of-aware supersession."
+  },
+  {
+    "id": "F05",
+    "scenario": "Low-confidence OBSERVE assessments attributed to data pipeline change after active episode",
+    "assessment_count": 5,
+    "actual_episode_state": "RESOLVED",
+    "required_product_behavior": "Do not count data-unreliable assessments as affirmative recovery evidence."
+  }
+]
