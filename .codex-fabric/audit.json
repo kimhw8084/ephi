@@ -1,0 +1,234 @@
+{
+  "accepted_at": "2026-09-17T12:53:38Z",
+  "changed_files": [
+    {
+      "additions": 13,
+      "deletions": 1,
+      "path": "11_Developer_Start.md",
+      "status": "M"
+    },
+    {
+      "additions": 19,
+      "deletions": 1,
+      "path": "README.md",
+      "status": "M"
+    },
+    {
+      "additions": 14,
+      "deletions": 4,
+      "path": "manifest.json",
+      "status": "M"
+    },
+    {
+      "additions": 131,
+      "deletions": 0,
+      "path": "tests/test_source_preflight.py",
+      "status": "A"
+    },
+    {
+      "additions": 390,
+      "deletions": 0,
+      "path": "tools/source_preflight.py",
+      "status": "A"
+    }
+  ],
+  "checks": [
+    {
+      "command": "/bin/zsh -lc \"pwd; printf '%s\\\\n' '--- status ---'; git status --short --branch; printf '%s\\\\n' '--- instructions ---'; sed -n '1,240p' /Users/haewonkim/.codex/RTK.md; sed -n '1,240p' /Users/haewonkim/.codex/law.md; printf '%s\\\\n' '--- repo docs ---'; sed -n '1,240p' README.md; printf '%s\\\\n' '--- package review ---'; sed -n '1,260p' 13_Package_Review.md\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git status --short --branch; rtk git log --graph --decorate --oneline --all -n 30; rtk git show --no-ext-diff --stat --oneline --decorate HEAD; rtk git rev-parse HEAD; rtk git rev-parse bdf75beb0a03b5fa19a693ba9f13b13dee074d2e; rtk git show -s --format='%H%n%P%n%B' bdf75beb0a03b5fa19a693ba9f13b13dee074d2e; rtk git show -s --format='%H%n%P%n%B' 4b483a6b5c272faa1a04f9dba482e254510b6dad; rtk git show -s --format='%H%n%P%n%B' fb9710e42b64f3a0ff58599011dd9fa8d06100d8; printf '%s\\\\n' '--- ancestry ---'; rtk git merge-base --is-ancestor 4b483a6b5c272faa1a04f9dba482e254510b6dad bdf75beb0a03b5fa19a693ba9f13b13dee074d2e; rtk git merge-base --is-ancestor fb9710e42b64f3a0ff58599011dd9fa8d06100d8 4b483a6b5c272faa1a04f9dba482e254510b6dad; printf '%s\\\\n' '--- audit paths ---'; rtk git ls-files .codex-fabric/audit.json; if test -e .codex-fabric/audit.json; then rtk ls -l .codex-fabric/audit.json; fi; printf '%s\\\\n' '--- refs ---'; rtk git branch -avv\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk find . -maxdepth 3 -type f -not -path './.git/*' -print | sort; printf '%s\\\\n' '--- fabric references ---'; rtk rg -n --hidden --glob '\"'!.git/**'\"' --glob '\"'!evidence/**'\"' --glob '\"'!manifest.json'\"' 'audit|fabric|publish|VERIFY|CHG-85|source_preflight' . .codex-fabric 2>/dev/null | head -240; printf '%s\\\\n' '--- candidate diff/base ---'; rtk git diff --stat fb9710e42b64f3a0ff58599011dd9fa8d06100d8..bdf75beb0a03b5fa19a693ba9f13b13dee074d2e; rtk git diff --name-status fb9710e42b64f3a0ff58599011dd9fa8d06100d8..bdf75beb0a03b5fa19a693ba9f13b13dee074d2e; printf '%s\\\\n' '--- candidate commits ---'; rtk git show --stat --oneline 4b483a6b5c272faa1a04f9dba482e254510b6dad; rtk git show --stat --oneline bdf75beb0a03b5fa19a693ba9f13b13dee074d2e; printf '%s\\\\n' '--- git config/remotes ---'; rtk git remote -v; rtk git config --get-regexp '\"'^(remote'\"\\\\..*|branch\\\\..*)'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk --version; rtk which rtk; command -v codex-fabric || true; command -v fabric || true; command -v codex || true; printf '%s\\\\n' '--- likely runtime binaries ---'; rtk rg --files /Users/haewonkim/.codex /Users/haewonkim/.codex-fabric 2>/dev/null | rg '/(fabric|codex|publish|audit|verify)[\"'^/]*$|/(bin|scripts)/'\"' | head -240; printf '%s\\\\n' '--- fabric workspace metadata ---'; if test -d /Users/haewonkim/.codex-fabric; then rtk find /Users/haewonkim/.codex-fabric -maxdepth 3 -type f -print | sort | head -240; fi; printf '%s\\\\n' '--- environment hints ---'; env | rg -i 'fabric|codex|job|change|branch|project' | sed 's/=.*\"'$/=<set>/'\"'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,220p' /Users/haewonkim/.codex-fabric/bin/fabricctl; rtk sed -n '1,260p' /Users/haewonkim/.codex-fabric/bin/projectos-integrate-stdin; rtk sed -n '1,220p' /Users/haewonkim/.codex-fabric/bin/receive-stdin; printf '%s\\\\n' '--- release metadata ---'; rtk /Users/haewonkim/.codex-fabric/bin/fabricctl --version; rtk /Users/haewonkim/.codex-fabric/bin/fabricctl --help; printf '%s\\\\n' '--- runtime help ---'; rtk python3 /Users/haewonkim/.codex-fabric/releases/1.2.2/fabric.py --help\"",
+      "exit_code": 2,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"printf '%s\\\\n' '--- active runtime ---'; rtk readlink /Users/haewonkim/.codex-fabric/current; rtk /Users/haewonkim/.codex-fabric/bin/fabricctl status; printf '%s\\\\n' '--- active config ---'; rtk sed -n '1,260p' /Users/haewonkim/.codex-fabric/projects.yaml; rtk sed -n '1,260p' /Users/haewonkim/.codex-fabric/config/execution.toml; printf '%s\\\\n' '--- matching job records ---'; rtk rg -l --hidden -g '*.json' -g '*.jsonl' -g '*.log' 'CHG-85|ephi-w0-source-preflight|bdf75beb0a03b5fa19a693ba9f13b13dee074d2e|f5128c7f1cb205bc54641e2f' /Users/haewonkim/.codex-fabric/results /Users/haewonkim/.codex-fabric/state /Users/haewonkim/.codex-fabric 2>/dev/null | head -120; printf '%s\\\\n' '--- current result files ---'; rtk find /Users/haewonkim/.codex-fabric/results/CF-f5128c7f1cb205bc54641e2f -maxdepth 1 -type f -print 2>/dev/null | sort; for f in /Users/haewonkim/.codex-fabric/results/CF-f5128c7f1cb205bc54641e2f/*; do test -f \\\"\"'$f\" && { printf '\"'\\\\n--- %s ---\\\\n' \\\"\"'$f\"; rtk sed -n '\"'1,220p' \\\"\"'$f\"; }; done'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"printf '%s\\\\n' '--- job status ---'; rtk /Users/haewonkim/.codex-fabric/bin/fabricctl status CF-f5128c7f1cb205bc54641e2f; printf '%s\\\\n' '--- job record ---'; rtk sed -n '1,320p' /Users/haewonkim/.codex-fabric/jobs/CF-f5128c7f1cb205bc54641e2f.running/job.json; printf '%s\\\\n' '--- current runtime evidence symbols ---'; rtk rg -n 'publish-evidence|publish_evidence|refresh-evidence|audit\\\\.json|fabric_release|base_sha|target_branch|remote_exact_head|base_is_ancestor|target_drifted_since_acceptance|observed_target' /Users/haewonkim/.codex-fabric/current/fabric.py /Users/haewonkim/.codex-fabric/libexec 2>/dev/null | head -320; printf '%s\\\\n' '--- runtime release identity ---'; rtk rg -n 'VERSION|RELEASE|1\\\\.2\\\\.|__version__|evidence' /Users/haewonkim/.codex-fabric/current/fabric.py | head -120; printf '%s\\\\n' '--- prior ephi result summaries ---'; for d in /Users/haewonkim/.codex-fabric/results/CF-bec27940b3f3a3a104109529 /Users/haewonkim/.codex-fabric/results/CF-d92b7d58aace964aaef8b771 /Users/haewonkim/.codex-fabric/results/CF-48a882d753701fef0e7e3c87; do printf '\\\\n[%s]\\\\n' \\\"\"'$d\"; for f in \"$d\"/job-summary.json \"$d\"/result.json; do if test -f \"$f\"; then rtk sed -n '\"'1,260p' \\\"\"'$f\"; fi; done; done'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"printf '%s\\\\n' '--- native bundle builder ---'; rtk sed -n '2218,2525p' /Users/haewonkim/.codex-fabric/current/fabric.py; printf '%s\\\\n' '--- native execution/postcondition path ---'; rtk sed -n '3120,3335p' /Users/haewonkim/.codex-fabric/current/fabric.py; printf '%s\\\\n' '--- Project OS validation ---'; rtk sed -n '180,315p' /Users/haewonkim/.codex-fabric/libexec/projectos_integrate.py; printf '%s\\\\n' '--- prior native audit schema ---'; rtk git show codex-fabric/evidence/ephi/ephi-w0-source-preflight-v1:.codex-fabric/audit.json; printf '%s\\\\n' '--- prior verify audit schema ---'; rtk git show codex-fabric/evidence/ephi/ephi-w0-source-preflight-verify1:.codex-fabric/audit.json\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git merge --ff-only bdf75beb0a03b5fa19a693ba9f13b13dee074d2e; rtk git status --short --branch; rtk git rev-parse HEAD; rtk git show -s --format='%H%n%P%n%s' HEAD; rtk git show -s --format='%H%n%P%n%s' HEAD\"'^; rtk git merge-base --is-ancestor fb9710e42b64f3a0ff58599011dd9fa8d06100d8 HEAD; rtk git merge-base --is-ancestor 4b483a6b5c272faa1a04f9dba482e254510b6dad HEAD; rtk git diff --exit-code fb9710e42b64f3a0ff58599011dd9fa8d06100d8 HEAD -- evidence evidence/import; rtk git ls-files .codex-fabric/audit.json'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest; rtk git status --short; rtk git diff --stat; rtk git diff -- manifest.json; rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'set +e\nrtk python3 -m unittest tests.test_source_preflight -v\npreflight_tests_status=$?\nrtk python3 tools/check_package.py\npackage_status=$?\nrtk python3 -m unittest discover -s tests -v\nrepository_tests_status=$?\nrtk python3 tools/source_preflight.py --output artifacts/source-preflight.json\nsource_status=$?\nrtk git diff --check\ndiff_status=$?\nrtk python3 -c '\"'import json; p=json.load(open(\\\"artifacts/source-preflight.json\\\")); print(\\\"source_status=%s archive_present=%s error_code=%s status=%s\\\" % (p.get(\\\"status\\\"), p.get(\\\"archive_present\\\"), p.get(\\\"error_code\\\"), p.get(\\\"status\\\")))'\nrtk git status --short --branch\nrtk git diff --check\nprintf 'preflight_tests_status=%s package_status=%s repository_tests_status=%s source_status=%s diff_status=%s\\\\n' \\\"\"'$preflight_tests_status\" \"$package_status\" \"$repository_tests_status\" \"$source_status\" \"$diff_status\"\nexit 0'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"printf '%s\\\\n' '--- exact candidate identity ---'; test \\\"\"'$(rtk git rev-parse HEAD)\" = bdf75beb0a03b5fa19a693ba9f13b13dee074d2e; rtk git diff --exit-code bdf75beb0a03b5fa19a693ba9f13b13dee074d2e HEAD -- .; rtk git show -s --format='\"'HEAD=%H%nPARENT=%P%nSUBJECT=%s' HEAD; rtk git show -s --format='R1=%H%nPARENT=%P%nSUBJECT=%s' 4b483a6b5c272faa1a04f9dba482e254510b6dad; rtk git show -s --format='BASE=%H%nPARENT=%P%nSUBJECT=%s' fb9710e42b64f3a0ff58599011dd9fa8d06100d8; printf '%s\\\\n' '--- preserved evidence identity ---'; rtk git rev-parse bdf75beb0a03b5fa19a693ba9f13b13dee074d2e:evidence; rtk git rev-parse HEAD:evidence; rtk git rev-parse bdf75beb0a03b5fa19a693ba9f13b13dee074d2e:evidence/import; rtk git rev-parse HEAD:evidence/import; rtk git diff --exit-code bdf75beb0a03b5fa19a693ba9f13b13dee074d2e HEAD -- evidence evidence/import; printf '%s\\\\n' '--- candidate delta ---'; rtk git diff --name-status fb9710e42b64f3a0ff58599011dd9fa8d06100d8..HEAD; printf '%s\\\\n' '--- no audit / clean state ---'; rtk git ls-files .codex-fabric/audit.json; rtk git status --porcelain=v1; printf '%s\\\\n' '--- native publisher field construction ---'; rtk sed -n '3158,3200p' /Users/haewonkim/.codex-fabric/current/fabric.py; printf '%s\\\\n' '--- active Fabric job ---'; rtk /Users/haewonkim/.codex-fabric/bin/fabricctl status CF-f5128c7f1cb205bc54641e2f\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"if test -e .codex-fabric/audit.json; then echo 'audit_present=YES'; else echo 'audit_present=NO'; fi\nif test -e artifacts/source-preflight.json; then echo 'source_preflight_artifact=present'; else echo 'source_preflight_artifact=missing'; fi\nrtk git status --short --branch\nrtk git rev-parse HEAD\nrtk git show -s --format='%P' HEAD\nrtk git diff --check\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    }
+  ],
+  "codex": {
+    "cli_version": "codex-cli 0.154.0",
+    "configured_model": "gpt-5.6-luna",
+    "event_count": 36,
+    "provider_reported_model": null,
+    "reasoning_effort": "xhigh",
+    "terminal_type": "turn.completed",
+    "usage": {
+      "cache_hit_percent": 90.01,
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 826368,
+      "fresh_input_tokens": 91729,
+      "input_tokens": 918097,
+      "non_reasoning_output_tokens": 5264,
+      "output_tokens": 10150,
+      "reasoning_output_tokens": 4886,
+      "total_processed_tokens": 928247
+    },
+    "warnings": []
+  },
+  "commits": [
+    {
+      "sha": "bdf75beb0a03b5fa19a693ba9f13b13dee074d2e",
+      "subject": "fix: report promoted source root in preflight"
+    },
+    {
+      "sha": "4b483a6b5c272faa1a04f9dba482e254510b6dad",
+      "subject": "fabric: capture completed model changes [CF-48a882d753701fef0e7e3c87]"
+    }
+  ],
+  "diff": {
+    "additions": 567,
+    "changed_files": 5,
+    "commit_count": 2,
+    "deletions": 6
+  },
+  "error_code": null,
+  "evidence_manifest": {
+    "count": 3,
+    "items": [
+      {
+        "bytes": 4753,
+        "path": "11_Developer_Start.md",
+        "sha256": "a38d7e099e19f6dc31d163a8b9a76b59e95579dc9b4b466be6e76f6bc35c7d48"
+      },
+      {
+        "bytes": 6016,
+        "path": "README.md",
+        "sha256": "fec5acb24ccfbbc6c802d7806d05edea8aded6f21d8ffba889974064342140ea"
+      },
+      {
+        "bytes": 7632,
+        "path": "manifest.json",
+        "sha256": "edce597cbeae51b5e48926ced1e7a634a70234aeea4e60fc5ac00039fb2e5d5a"
+      }
+    ],
+    "version": 1
+  },
+  "evidence_publisher_release": "1.2.3-resume-candidate",
+  "fabric_capture": {
+    "applied": false,
+    "paths_before": 0,
+    "transient_untracked_removed": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "fabric_release": "1.2.3-resume-candidate",
+  "failure_class": null,
+  "finished_at": "2026-09-17T12:57:13Z",
+  "git": {
+    "base_is_ancestor": true,
+    "base_sha": "fb9710e42b64f3a0ff58599011dd9fa8d06100d8",
+    "branch": "codex/ephi-w0-source-preflight-verify2",
+    "head_sha": "bdf75beb0a03b5fa19a693ba9f13b13dee074d2e",
+    "remote_exact_head": true,
+    "remote_head_sha": "bdf75beb0a03b5fa19a693ba9f13b13dee074d2e",
+    "target_branch": "main",
+    "target_drifted_since_acceptance": false,
+    "target_head_observed_after_execution": "fb9710e42b64f3a0ff58599011dd9fa8d06100d8",
+    "work_branch": "codex/ephi-w0-source-preflight-verify2",
+    "worktree_clean": true
+  },
+  "instructions": {
+    "files": [
+      {
+        "bytes": 959,
+        "path": "AGENTS.md",
+        "sha256": "0803c825a0dbaf0266aa44b5ce9c6a30d8eac93737369aae3dc9715d3bb49767"
+      }
+    ],
+    "total_bytes": 959,
+    "warning": null
+  },
+  "job_id": "CF-f5128c7f1cb205bc54641e2f",
+  "kind": "codex-fabric-audit-evidence",
+  "locator": {
+    "branch": "codex-fabric/evidence/ephi/ephi-w0-source-preflight-verify2",
+    "path": ".codex-fabric/audit.json",
+    "ref": "refs/heads/codex-fabric/evidence/ephi/ephi-w0-source-preflight-verify2"
+  },
+  "operation": "VERIFY",
+  "policy": {
+    "environment_policy_sha256": "e077daca74297b3c30bee8989f00f8ca5338f7610b4d016a6c48db524205d064",
+    "fabric_release": "1.2.3-resume-candidate",
+    "policy_sha256": "44756118cd7fda0c45cd23ba1d31a48a3f4f2422d687df15264ba4406f40e1f2",
+    "registry_sha256": "cfc765f3211c37c7967a138f3b2d89a99341939b15b2623f92744d007f625d6f"
+  },
+  "project_id": "ephi",
+  "recovery": {
+    "model_rerun_safe": false,
+    "recovery_required": false,
+    "retry_safe": false,
+    "retry_scope": null,
+    "worktree_retained": true
+  },
+  "request": "ephi-w0-source-preflight-verify2",
+  "schema_version": 1,
+  "started_at": "2026-09-17T12:53:38Z",
+  "status": "EXECUTED_CHANGE",
+  "timing": {
+    "execution_seconds": 215,
+    "queue_seconds": 0,
+    "total_seconds": 215
+  },
+  "transport": {
+    "bytes": 2443,
+    "envelope": "FABRIC/2",
+    "prompt_bytes": 2126,
+    "prompt_sha256": "1c724f14f77105c3540a98149e80129467e56ca75d6c421114ed86c9b6d031d5",
+    "sha256": "f5128c7f1cb205bc54641e2f8ba0729d38464458647e257c77499261a800ba60"
+  }
+}
