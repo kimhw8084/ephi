@@ -1,0 +1,131 @@
+{
+  "schema_version": 1,
+  "kind": "codex-fabric-audit-evidence",
+  "project_id": "ephi",
+  "request": "ephi-w0-source-preflight-verify1",
+  "operation": "VERIFY",
+  "status": "VERIFIED",
+  "fabric_job": {
+    "job_id": "CF-bec27940b3f3a3a104109529",
+    "fabric_release": "1.2.3-resume-candidate",
+    "transport_sha256": "bec27940b3f3a3a104109529bdea9206967fb10f5f374fc0116a99604f1444c9",
+    "prompt_sha256": "a15ab4f06b90b93d4ebfda9830151809e99172eba0e1d046a9a03e6a1c6f9fab",
+    "work_branch": "codex/ephi-w0-source-preflight-verify1",
+    "base": "fb9710e42b64f3a0ff58599011dd9fa8d06100d8",
+    "target": "main"
+  },
+  "resulting_candidate": {
+    "sha": "bdf75beb0a03b5fa19a693ba9f13b13dee074d2e",
+    "subject": "fix: report promoted source root in preflight",
+    "parent": "4b483a6b5c272faa1a04f9dba482e254510b6dad",
+    "base": "fb9710e42b64f3a0ff58599011dd9fa8d06100d8",
+    "carried_forward_unchanged": true,
+    "fast_forwarded_from_base": true,
+    "candidate_delta_from_base": [
+      "11_Developer_Start.md",
+      "README.md",
+      "manifest.json",
+      "tests/test_source_preflight.py",
+      "tools/source_preflight.py"
+    ],
+    "candidate_file_identities": {
+      "11_Developer_Start.md": {
+        "bytes": 4753,
+        "sha256": "a38d7e099e19f6dc31d163a8b9a76b59e95579dc9b4b466be6e76f6bc35c7d48"
+      },
+      "README.md": {
+        "bytes": 6016,
+        "sha256": "fec5acb24ccfbbc6c802d7806d05edea8aded6f21d8ffba889974064342140ea"
+      },
+      "manifest.json": {
+        "bytes": 7632,
+        "sha256": "edce597cbeae51b5e48926ced1e7a634a70234aeea4e60fc5ac00039fb2e5d5a"
+      },
+      "tests/test_source_preflight.py": {
+        "bytes": 6134,
+        "sha256": "ce6af6dd40c15786c9e945cbee5e08796aede794cedff5f9cc5980df1848e153"
+      },
+      "tools/source_preflight.py": {
+        "bytes": 16697,
+        "sha256": "b82ed81cddf7784fe7144af887b1ba4411b0883505b09d751c69ac798969914e"
+      }
+    }
+  },
+  "checks": [
+    {
+      "command": "python3 -m unittest tests.test_source_preflight -v",
+      "exit_code": 0,
+      "result": "PASS",
+      "summary": "7 tests passed; SOURCE_STAGED asserts both reported roots equal the final path, path existence, and staged-file readability; missing, wrong-hash, unsafe-member, protected-path, and atomic-output cases pass"
+    },
+    {
+      "command": "python3 tools/check_package.py",
+      "exit_code": 0,
+      "result": "PASS",
+      "summary": "38 package files; manifest, syntax, local links/fences, traceability, and historical evidence checks passed"
+    },
+    {
+      "command": "python3 -m unittest discover -s tests -v",
+      "exit_code": 0,
+      "result": "PASS",
+      "summary": "19 tests passed"
+    },
+    {
+      "command": "python3 tools/source_preflight.py --output artifacts/source-preflight.json",
+      "exit_code": 2,
+      "result": "PASS_EXPECTED_BOUNDARY",
+      "summary": "real owner-supplied archive absent; JSON reports SOURCE_REQUIRED / ARCHIVE_MISSING, archive_present false, and required filename/SHA-256"
+    },
+    {
+      "command": "git diff --check",
+      "exit_code": 0,
+      "result": "PASS",
+      "summary": "no whitespace errors"
+    }
+  ],
+  "source_preflight_contract": {
+    "required_filename": "ephi_v0.19.1_production_hardened(1).zip",
+    "required_sha256": "5e9ad8f63b3158adc530af69fc650aec606cbfa64896ba73840cdcf994a2b6e3",
+    "required_source_root": "ephi_v0.19.1_production_hardened_release",
+    "promotion": "atomic os.replace(temporary, stage_dir)",
+    "synthetic_success": {
+      "status": "SOURCE_STAGED",
+      "staging_source_root": "stage_dir / expected_source_root",
+      "baseline_source_root": "stage_dir / expected_source_root",
+      "reported_path_exists": true,
+      "expected_staged_file_readable": true
+    },
+    "fail_closed": {
+      "missing_archive": "SOURCE_REQUIRED / ARCHIVE_MISSING",
+      "wrong_hash": "SOURCE_REJECTED / SOURCE_HASH_MISMATCH; no stage created",
+      "unsafe_path_members": "SOURCE_REJECTED / UNSAFE_MEMBER_PATH; no stage created",
+      "symlink_members": "SOURCE_REJECTED / UNSAFE_MEMBER_SYMLINK; no stage created"
+    }
+  },
+  "preservation": {
+    "evidence_tree_oid": "74d4d573af31d2d34eda79499768ef688ec41643",
+    "evidence_import_tree_oid": "c6850cc0d02abe41cdd73ee846c9b23e4b3954e0",
+    "candidate_diff": "CLEAN",
+    "working_tree_diff": "CLEAN",
+    "manifest_refresh_performed": false,
+    "manifest_consistent_without_refresh": true
+  },
+  "scope": {
+    "product_changes_on_verify_branch": [],
+    "F03_implementation": false,
+    "F04_implementation": false,
+    "F05_implementation": false,
+    "placeholder_application_code": false,
+    "application_source_restored": false,
+    "application_tests_executed": false,
+    "production_qualification": false
+  },
+  "remaining_boundary": {
+    "status": "SOURCE_REQUIRED",
+    "meaning": "the owner-supplied exact original application archive remains absent; no application baseline was restored or tested"
+  },
+  "evidence_locator": {
+    "branch": "codex-fabric/evidence/ephi/ephi-w0-source-preflight-verify1",
+    "path": ".codex-fabric/audit.json"
+  }
+}
