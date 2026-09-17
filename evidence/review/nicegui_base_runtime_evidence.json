@@ -1,0 +1,223 @@
+{
+  "schema_version": 1,
+  "change": "CHG-105",
+  "wave": "W0",
+  "scope": "Independent pinned NiceGUI Base runtime/dependency qualification",
+  "executed_on": "2026-09-17",
+  "status": "FRAMEWORK_RUNTIME_QUALIFIED_APPLICATION_NOT_QUALIFIED",
+  "starting_commit": "9bf7ad92019eccb7e033ec6c0695256f110b157a",
+  "source_baseline": {
+    "original_ephi_archive": "NOT_AVAILABLE_IN_EXECUTION_ENVIRONMENT",
+    "application_source_restored": false,
+    "application_tests_executed": false,
+    "claim_boundary": "No original-application source, source-baseline, F03/F04/F05, or application-test claim is made by this evidence."
+  },
+  "environment": {
+    "specification": "environment/nicegui_base_runtime.json",
+    "requirements": "environment/nicegui_base_requirements.txt",
+    "bootstrap_command": "python3.11 tools/w0_runtime.py bootstrap",
+    "check_command": "python3 tools/w0_runtime.py check",
+    "bootstrap_status": "PASS",
+    "python": {
+      "version": "3.11.7",
+      "requirement": ">=3.11,<3.14",
+      "isolated_venv": true,
+      "status": "PASS"
+    },
+    "nicegui_base": {
+      "distribution": "nicegui-base",
+      "version": "3.0.0a8",
+      "repository": "https://github.com/kimhw8084/nicegui-base.git",
+      "commit": "000298562d6bcbf6df304edbd41b98b30fe4bfcf",
+      "direct_url_vcs_identity": "PASS",
+      "status": "PASS"
+    },
+    "nicegui": {
+      "requirement": "nicegui==3.15.0",
+      "installed_version": "3.15.0",
+      "status": "PASS"
+    },
+    "public_authority_imports": {
+      "status": "PASS",
+      "count": 21,
+      "authority_names": [
+        "MonitoringPage",
+        "MasterDetailPage",
+        "AnalysisWorkspacePage",
+        "DataSourceTable",
+        "AnalyticalPanel",
+        "InvestigationContextBar",
+        "EngineeringStatusBadge",
+        "EngineeringTimeline",
+        "TimelineChart",
+        "StateView",
+        "AnalysisContext",
+        "SelectionBus",
+        "AnalysisBinding",
+        "StateKey",
+        "StateNamespace",
+        "WorkspaceController",
+        "NiceGUIWorkspace",
+        "ApplicationRuntime",
+        "RuntimeConfig",
+        "RuntimeEnvironment",
+        "CompatibilityManifest"
+      ],
+      "import_form": "from nicegui_base import <authority>",
+      "direct_nicegui_ui_or_private_integration_imports": "NOT_USED"
+    }
+  },
+  "discovery": {
+    "status": "PASS",
+    "commands": [
+      {
+        "name": "agent_context",
+        "command": "nicegui-base agent-context \"EPHI Attention -> Episode\" --format json",
+        "status": "PASS",
+        "exit_code": 0,
+        "stdout_bytes": 3645,
+        "stdout_sha256": "4c66c365733ed9a794653f80827aacbe5084e5aeeb593c15a32dab32351c2463",
+        "summary": {
+          "task": "EPHI Attention -> Episode",
+          "framework_version": "3.0.0a8",
+          "dominant_pattern": "data_explorer",
+          "starter_template": "data-explorer",
+          "golden_examples": ["examples/nicegui_base/golden_data_explorer.py"],
+          "validation_commands": ["nicegui-base agent-check .", "nicegui-base gate ."]
+        }
+      },
+      {
+        "name": "catalog_search",
+        "command": "nicegui-base catalog-search \"engineering attention episode workspace\" --format json",
+        "status": "PASS",
+        "exit_code": 0,
+        "stdout_bytes": 12793,
+        "stdout_sha256": "f08c83a246e03faf9cbc43e70843265ab9b6f945905beb92158a73e23ef37df0",
+        "summary": {
+          "count": 20,
+          "top_results": [
+            {"key": "pattern:analysis_workspace", "kind": "pattern", "title": "Analysis Workspace", "score": 139},
+            {"key": "framework:engineering:InvestigationContextBar", "kind": "reference", "title": "InvestigationContextBar", "score": 77},
+            {"key": "framework:engineering:OutOfSpecIndicator", "kind": "reference", "title": "OutOfSpecIndicator", "score": 77},
+            {"key": "framework:engineering:RcaWorkspaceSpec", "kind": "reference", "title": "RcaWorkspaceSpec", "score": 77},
+            {"key": "recipe:rca-cockpit", "kind": "recipe", "title": "RcaCockpit", "score": 76},
+            {"key": "framework:engineering:BaselineComparison", "kind": "reference", "title": "BaselineComparison", "score": 65},
+            {"key": "framework:engineering:CommonalityTable", "kind": "reference", "title": "CommonalityTable", "score": 65},
+            {"key": "framework:engineering:ConfidenceIndicator", "kind": "reference", "title": "ConfidenceIndicator", "score": 65}
+          ]
+        }
+      },
+      {
+        "name": "recommend_pattern",
+        "command": "nicegui-base recommend-pattern \"EPHI engineering attention and investigation\" --format json",
+        "status": "PASS",
+        "exit_code": 0,
+        "stdout_bytes": 550,
+        "stdout_sha256": "30142ef76ccf4411f26bf6667656691d3bfb63ab33609fe6bba560b3cb178108",
+        "summary": {
+          "requirement": "EPHI engineering attention and investigation",
+          "pattern": "analysis_workspace",
+          "page_pattern": "analysis_workspace",
+          "starter_template": "analysis-workspace",
+          "composition_apis": ["shell", "page_section", "filter_bar", "kpi_strip", "chart_table_detail", "inspector", "state_panel"],
+          "pattern_command": "nicegui-base create-pattern ./<app> --name \"<App Name>\" --pattern analysis_workspace"
+        }
+      },
+      {
+        "name": "recommend_visualization",
+        "command": "nicegui-base recommend-visualization \"episode timeline and process trend\" --schema timestamp --schema measurement --format json",
+        "status": "PASS",
+        "exit_code": 0,
+        "stdout_bytes": 3827,
+        "stdout_sha256": "347bdee342f802c134726b0bb12df3929b68dae9470b85c71d88a85b74d530ec",
+        "summary": {
+          "schema": ["timestamp", "measurement"],
+          "primary": {"key": "analytics:capability_histogram", "title": "Capability Histogram", "score": 84},
+          "results": [
+            {"key": "analytics:capability_histogram", "title": "Capability Histogram", "score": 84},
+            {"key": "analytics:spc_c", "title": "SPC C", "score": 84},
+            {"key": "analytics:spc_cusum", "title": "SPC CUSUM", "score": 84},
+            {"key": "analytics:spc_ewma", "title": "SPC EWMA", "score": 84},
+            {"key": "analytics:spc_i_mr", "title": "SPC I-MR", "score": 84}
+          ],
+          "interpretation": "The returned recommendation set did not select TimelineChart or ProcessTrendPanel. The CHG-104 TimelineChart authority remains a pinned-source/public-import binding, not a fabricated discovery result."
+        }
+      },
+      {
+        "name": "catalog_audit",
+        "command": "nicegui-base catalog-audit --format json",
+        "status": "PASS",
+        "exit_code": 0,
+        "stdout_bytes": 645,
+        "stdout_sha256": "8ebb4e83c9c377180b8d59f3296cd626368e06b67d02e497776287a8f98aaa4a",
+        "summary": {
+          "passed": true,
+          "catalog": {"conforming": 465, "issues": [], "total": 465},
+          "framework_catalog": {"canonical_total": 450, "declared": 450, "duplicates": [], "identified": 450, "missing": [], "visible": 450}
+        }
+      },
+      {
+        "name": "scaffold_plan",
+        "command": "nicegui-base scaffold-plan \"EPHI Attention -> Episode\" --format json",
+        "status": "PASS",
+        "exit_code": 0,
+        "stdout_bytes": 399,
+        "stdout_sha256": "67b4cfa05d6495ed01c31aa212f4a344eeaa84ed8e35221e150358a1d09aa61c",
+        "summary": {
+          "requirement": "EPHI Attention -> Episode",
+          "pattern": "data_explorer",
+          "authority": "installed nicegui_base public APIs and canonical registries",
+          "pattern_command": "nicegui-base create-pattern ./<app> --name \"<App Name>\" --pattern data_explorer",
+          "validation_commands": ["nicegui-base agent-check .", "nicegui-base gate ."]
+        }
+      }
+    ]
+  },
+  "qualification": {
+    "status": "PARTIAL_FRAMEWORK_SCOPE",
+    "commands": [
+      {
+        "name": "agent_check",
+        "command": "nicegui-base agent-check .",
+        "status": "FAIL",
+        "exit_code": 1,
+        "stdout_bytes": 231,
+        "stdout_sha256": "eeebc39724f37ac78c50908349ad410153c26c0d69c025287b41ecbc4f396c81",
+        "reason": "Expected fail: no EPHI application scaffold; the framework reports scaffold missing and version None."
+      },
+      {
+        "name": "gate",
+        "command": "nicegui-base gate .",
+        "status": "FAIL",
+        "exit_code": 1,
+        "stdout_bytes": 614,
+        "stdout_sha256": "6bd1ac1eb676051203e0a9122b935e71bca653b5d723173ddc6e6d744496df5e",
+        "reason": "Expected fail: no application manifest/entrypoint, dependency pin in the application shape expected by gate, or pytest installation. Python compile alone passed."
+      },
+      {
+        "name": "runtime_contract",
+        "command": "nicegui-base runtime-contract",
+        "status": "PASS",
+        "exit_code": 0,
+        "stdout_bytes": 127,
+        "stdout_sha256": "ac88861d4c382be805efc1e7e817e1de81efa7787272a4966e00d9b2efd97ad2",
+        "summary": {"nicegui": "3.15.0", "factories_checked": 48, "calls_checked": 1172}
+      },
+      {
+        "name": "runtime_smoke",
+        "command": "nicegui-base runtime-smoke --port 0",
+        "status": "PASS",
+        "exit_code": 0,
+        "stdout_bytes": 666,
+        "stdout_sha256": "fa9010cc2ae9fb0a73b97c51113f143646dc6d61be353b5f074ce4eaa835489d",
+        "summary": {"http_checks_passed": 23, "browser": "NOT_RUN", "scope": "NiceGUI Base framework laboratory only"}
+      }
+    ],
+    "interpretation": "Framework/runtime execution is not EPHI application production qualification and is not browser qualification."
+  },
+  "reproducibility": {
+    "ignored_virtualenv": "artifacts/w0-runtime/venv",
+    "ignored_raw_outputs": "artifacts/w0-runtime/{bootstrap,discovery,qualification}.json",
+    "network": "Used only by bootstrap to resolve the exact VCS commit and exact NiceGUI requirement; focused repository tests do not require live network."
+  }
+}

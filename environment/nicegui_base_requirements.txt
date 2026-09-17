@@ -1,0 +1,3 @@
+# CHG-105 / EPHI O1-W0. Do not replace either pin with a floating requirement.
+nicegui-base @ git+https://github.com/kimhw8084/nicegui-base.git@000298562d6bcbf6df304edbd41b98b30fe4bfcf
+nicegui==3.15.0
