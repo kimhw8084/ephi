@@ -1,0 +1,436 @@
+{
+  "accepted_at": "2026-09-17T18:38:34Z",
+  "changed_files": [
+    {
+      "additions": 10,
+      "deletions": 0,
+      "path": "README.md",
+      "status": "M"
+    },
+    {
+      "additions": 2,
+      "deletions": 0,
+      "path": "evidence/README.md",
+      "status": "M"
+    },
+    {
+      "additions": 375,
+      "deletions": 0,
+      "path": "evidence/review/w0_integrity_regression_contract.json",
+      "status": "A"
+    },
+    {
+      "additions": 19,
+      "deletions": 4,
+      "path": "manifest.json",
+      "status": "M"
+    },
+    {
+      "additions": 162,
+      "deletions": 0,
+      "path": "tests/test_w0_integrity_regressions.py",
+      "status": "A"
+    },
+    {
+      "additions": 795,
+      "deletions": 0,
+      "path": "tools/w0_integrity_regressions.py",
+      "status": "A"
+    }
+  ],
+  "checks": [
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n -C 12 'checkpoint|restore_advisory_state|WorkflowService|AdvisoryService' 02_Source_Audit.md 03_Application_Contracts.md 04_Data_and_Runtime.md 06_Investigation_and_Recovery_Logic.md evidence/source_excerpts.md\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n -C 14 '\\\"path\\\": \\\"src/ephi/advisory/checkpoint.py\\\"|\\\"path\\\": \\\"tests/advisory/test_checkpoint.py\\\"|\\\"path\\\": \\\"src/ephi/advisory/service.py\\\"' evidence/source_inventory.json\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,120p' evidence/README.md; rtk sed -n '1,120p' 02_Source_Audit.md; rtk sed -n '1,150p' 09_Delivery_and_Gates.md\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git show 9bf7ad9:tools/w0_baseline.py | sed -n '1,160p'; rtk git show 9bf7ad9:tests/test_w0_baseline.py | sed -n '1,160p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git status --short --untracked-files=all; rtk git ls-files | rg '\"'^(evidence/behavior_probes|evidence/source_|manifest|tools/w0|tests/test_w0)'\"'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1160,1200p' evidence/source_inventory.json; rtk sed -n '1400,1475p' evidence/source_inventory.json; rtk sed -n '9948,9970p' evidence/source_inventory.json\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk shasum -a 256 evidence/behavior_probes.py evidence/behavior_probes.json evidence/behavior_probes.log evidence/source_inventory.json evidence/source_excerpts.md; rtk rg -n -C 4 'behavior_probes\\\\.(py|json)|source_excerpts|source_inventory' evidence/import/original_manifest.json\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -m py_compile tools/w0_integrity_regressions.py; rtk python3 - <<'PY'\nimport json\nfrom tools.w0_integrity_regressions import CONTRACT_PATH, validate_contract, verify_historical_evidence\ncontract = json.loads(CONTRACT_PATH.read_text())\nvalidate_contract(contract)\nrows = verify_historical_evidence(contract)\nprint('contract PASS', len(rows))\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '64,92p' README.md; rtk sed -n '1,40p' evidence/README.md\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest tests.test_w0_integrity_regressions -v'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -m unittest tests.test_w0_integrity_regressions -v; rtk python3 tools/w0_integrity_regressions.py --output /tmp/ephi-chg109-result.json >/tmp/ephi-chg109-stdout.json; rtk python3 - <<'PY'\nimport json\nfrom pathlib import Path\nresult = json.loads(Path('/tmp/ephi-chg109-result.json').read_text())\nprint(result['status'], result['reason'], result['current_execution']['status'])\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '120,250p' tools/w0_integrity_regressions.py; rtk sed -n '430,620p' tools/w0_integrity_regressions.py; rtk python3 -m unittest tests.test_w0_integrity_regressions -v\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n 'return ' tools/w0_integrity_regressions.py | sed -n '1,180p'; rtk sed -n '600,790p' tools/w0_integrity_regressions.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest tests.test_w0_integrity_regressions -v; rtk python3 -m py_compile tools/w0_integrity_regressions.py tests/test_w0_integrity_regressions.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git diff --stat; rtk git diff -- README.md evidence/README.md | sed -n '1,220p'; rtk git diff -- tools/w0_integrity_regressions.py | sed -n '1,260p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git status --short --untracked-files=all; rtk git diff --no-index /dev/null tools/w0_integrity_regressions.py | sed -n '1,260p'; rtk git diff --no-index /dev/null evidence/review/w0_integrity_regression_contract.json | sed -n '1,200p'; rtk git diff --no-index /dev/null tests/test_w0_integrity_regressions.py | sed -n '1,220p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -m unittest tests.test_w0_integrity_regressions -v; rtk python3 - <<'PY'\nfrom tools.w0_integrity_regressions import CONTRACT_PATH, validate_contract\nimport json\ncontract = json.loads(CONTRACT_PATH.read_text())\nvalidate_contract(contract)\nprint('PASS contract validation')\nPY\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest tests.test_w0_integrity_regressions -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk find /Users/haewonkim/.codex-fabric -maxdepth 3 -type f -print 2>/dev/null | sed -n '1,240p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk /Users/haewonkim/.codex-fabric/bin/fabricctl --help 2>&1 | sed -n '1,240p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short --untracked-files=all; rtk git diff --check; rtk git diff --stat'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --check; rtk python3 -m py_compile tools/w0_integrity_regressions.py tests/test_w0_integrity_regressions.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk /Users/haewonkim/.codex-fabric/bin/fabricctl status 2>&1 | sed -n '1,220p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/source_preflight.py'",
+      "exit_code": 2,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/w0_integrity_regressions.py'",
+      "exit_code": 4,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m json.tool evidence/review/w0_integrity_regression_contract.json >/dev/null; rtk python3 -m py_compile tools/w0_integrity_regressions.py tests/test_w0_integrity_regressions.py; echo JSON_AND_COMPILE_PASS'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest discover -s tests -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk /Users/haewonkim/.codex-fabric/bin/fabricctl status CF-ed3c640b6213d6b5903083d0 2>&1 | sed -n '1,220p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk shasum -a 256 evidence/behavior_probes.py evidence/behavior_probes.json evidence/behavior_probes.log evidence/source_excerpts.md evidence/source_inventory.json; rtk git diff --numstat; rtk git ls-files | wc -l'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git diff --check; rtk git status --short --untracked-files=all; rtk git diff --name-only; rtk git diff -- manifest.json | sed -n '1,120p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk ls -l /Users/haewonkim/.codex-fabric/bin/fabricctl; rtk file /Users/haewonkim/.codex-fabric/bin/fabricctl; rtk sed -n '1,120p' /Users/haewonkim/.codex-fabric/bin/fabricctl\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n -C 8 'publish-evidence|refresh-evidence|publish_pending|def publish|evidence_published' /Users/haewonkim/.codex-fabric/current/fabric.py | sed -n '1,300p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '2442,2565p' /Users/haewonkim/.codex-fabric/current/fabric.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk find /Users/haewonkim/.codex-fabric/jobs -maxdepth 2 -type f -path '*CF-ed3c640b6213d6b5903083d0*' -print 2>/dev/null | sort; rtk find /Users/haewonkim/.codex-fabric/results/CF-ed3c640b6213d6b5903083d0 -maxdepth 2 -type f -print 2>/dev/null | sort | sed -n '1,120p'; rtk sed -n '1,240p' /Users/haewonkim/.codex-fabric/results/CF-ed3c640b6213d6b5903083d0/job-summary.json 2>/dev/null\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk ls -la /Users/haewonkim/.codex-fabric/jobs | rg 'CF-ed3c640b6213d6b5903083d0|ed3c' || true; rtk ls -la /Users/haewonkim/.codex-fabric/results | rg 'CF-ed3c640b6213d6b5903083d0|ed3c' || true; rtk sed -n '1,220p' /Users/haewonkim/.codex-fabric/results/CF-ed3c640b6213d6b5903083d0/job-summary.json 2>&1\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk find /Users/haewonkim/.codex-fabric/results/CF-19b476c3de016a912d6bf070 -maxdepth 1 -type f -print 2>/dev/null | sort; rtk sed -n '1,180p' /Users/haewonkim/.codex-fabric/results/CF-19b476c3de016a912d6bf070/result.json 2>/dev/null; rtk sed -n '1,180p' /Users/haewonkim/.codex-fabric/results/CF-19b476c3de016a912d6bf070/job-summary.json 2>/dev/null\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/w0_baseline.py'",
+      "exit_code": 4,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short --untracked-files=all; rtk wc -l tools/w0_integrity_regressions.py tests/test_w0_integrity_regressions.py evidence/review/w0_integrity_regression_contract.json; rtk git diff --stat'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m json.tool evidence/review/w0_integrity_regression_contract.json >/dev/null; rtk python3 -m py_compile tools/w0_integrity_regressions.py tests/test_w0_integrity_regressions.py; rtk git diff --check; rtk shasum -a 256 evidence/behavior_probes.py evidence/behavior_probes.json evidence/behavior_probes.log'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py; rtk python3 -m unittest discover -s tests -v'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m json.tool evidence/review/w0_integrity_regression_contract.json >/dev/null; rtk python3 -m py_compile tools/w0_integrity_regressions.py tests/test_w0_integrity_regressions.py; rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest discover -s tests -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest; rtk python3 -m unittest tests.test_w0_integrity_regressions -v; rtk python3 -m json.tool evidence/review/w0_integrity_regression_contract.json >/dev/null; rtk python3 -m py_compile tools/w0_integrity_regressions.py tests/test_w0_integrity_regressions.py; rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short --untracked-files=all; rtk git diff --check; rtk shasum -a 256 evidence/behavior_probes.py evidence/behavior_probes.json evidence/behavior_probes.log'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest discover -s tests -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    }
+  ],
+  "codex": {
+    "cli_version": "codex-cli 0.154.0",
+    "configured_model": "gpt-5.6-luna",
+    "event_count": 181,
+    "provider_reported_model": null,
+    "reasoning_effort": "xhigh",
+    "terminal_type": "turn.completed",
+    "usage": {
+      "cache_hit_percent": 96.97,
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 5985024,
+      "fresh_input_tokens": 187214,
+      "input_tokens": 6172238,
+      "non_reasoning_output_tokens": 31162,
+      "output_tokens": 62980,
+      "reasoning_output_tokens": 31818,
+      "total_processed_tokens": 6235218
+    },
+    "warnings": []
+  },
+  "commits": [
+    {
+      "sha": "ec2deef5c13da41bc7a7e8afac822d75bb0b7117",
+      "subject": "fabric: capture completed model changes [CF-ed3c640b6213d6b5903083d0]"
+    }
+  ],
+  "diff": {
+    "additions": 1363,
+    "changed_files": 6,
+    "commit_count": 1,
+    "deletions": 4
+  },
+  "error_code": null,
+  "evidence_manifest": {
+    "count": 4,
+    "items": [
+      {
+        "bytes": 9365,
+        "path": "README.md",
+        "sha256": "4fe32078679a7331503cbaabc615ef91a25bf8154e10e2fe5e932fda0bd00cc1"
+      },
+      {
+        "bytes": 2369,
+        "path": "evidence/README.md",
+        "sha256": "32e9bd42efcb267536e28e6f7b884c335952811cc6d05d64a870adbf1b16ff73"
+      },
+      {
+        "bytes": 14263,
+        "path": "evidence/review/w0_integrity_regression_contract.json",
+        "sha256": "e550e92670c21d72009c73bd7205cca68dda71ab0e9692b9942880f576102c0e"
+      },
+      {
+        "bytes": 9513,
+        "path": "manifest.json",
+        "sha256": "35f2f47daf170a1b79f2333f71a06fa069f7cf3ec8e6c6e33547596cb111aac3"
+      }
+    ],
+    "version": 1
+  },
+  "evidence_publisher_release": "1.2.3-resume-candidate",
+  "fabric_capture": {
+    "applied": true,
+    "commit_message": "fabric: capture completed model changes [CF-ed3c640b6213d6b5903083d0]",
+    "commit_sha": "ec2deef5c13da41bc7a7e8afac822d75bb0b7117",
+    "paths_before": 6,
+    "status_before": [
+      " M README.md",
+      " M evidence/README.md",
+      " M manifest.json",
+      "?? evidence/review/w0_integrity_regression_contract.json",
+      "?? tests/test_w0_integrity_regressions.py",
+      "?? tools/w0_integrity_regressions.py"
+    ],
+    "transient_untracked_removed": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "fabric_release": "1.2.3-resume-candidate",
+  "failure_class": null,
+  "finished_at": "2026-09-17T19:00:05Z",
+  "git": {
+    "base_is_ancestor": true,
+    "base_sha": "d9920739676add221c7990c3ea41abefb993fb0c",
+    "branch": "codex/ephi-w0-integrity-regressions-v1",
+    "head_sha": "ec2deef5c13da41bc7a7e8afac822d75bb0b7117",
+    "remote_exact_head": true,
+    "remote_head_sha": "ec2deef5c13da41bc7a7e8afac822d75bb0b7117",
+    "target_branch": "main",
+    "target_drifted_since_acceptance": false,
+    "target_head_observed_after_execution": "d9920739676add221c7990c3ea41abefb993fb0c",
+    "work_branch": "codex/ephi-w0-integrity-regressions-v1",
+    "worktree_clean": true
+  },
+  "instructions": {
+    "files": [
+      {
+        "bytes": 959,
+        "path": "AGENTS.md",
+        "sha256": "0803c825a0dbaf0266aa44b5ce9c6a30d8eac93737369aae3dc9715d3bb49767"
+      }
+    ],
+    "total_bytes": 959,
+    "warning": null
+  },
+  "job_id": "CF-ed3c640b6213d6b5903083d0",
+  "kind": "codex-fabric-audit-evidence",
+  "locator": {
+    "branch": "codex-fabric/evidence/ephi/ephi-w0-integrity-regressions-v1",
+    "path": ".codex-fabric/audit.json",
+    "ref": "refs/heads/codex-fabric/evidence/ephi/ephi-w0-integrity-regressions-v1"
+  },
+  "operation": "BUILD",
+  "policy": {
+    "environment_policy_sha256": "e077daca74297b3c30bee8989f00f8ca5338f7610b4d016a6c48db524205d064",
+    "fabric_release": "1.2.3-resume-candidate",
+    "policy_sha256": "44756118cd7fda0c45cd23ba1d31a48a3f4f2422d687df15264ba4406f40e1f2",
+    "registry_sha256": "cfc765f3211c37c7967a138f3b2d89a99341939b15b2623f92744d007f625d6f"
+  },
+  "project_id": "ephi",
+  "recovery": {
+    "model_rerun_safe": false,
+    "recovery_required": false,
+    "retry_safe": false,
+    "retry_scope": null,
+    "worktree_retained": true
+  },
+  "request": "ephi-w0-integrity-regressions-v1",
+  "schema_version": 1,
+  "started_at": "2026-09-17T18:38:34Z",
+  "status": "EXECUTED_CHANGE",
+  "timing": {
+    "execution_seconds": 1291,
+    "queue_seconds": 0,
+    "total_seconds": 1291
+  },
+  "transport": {
+    "bytes": 5055,
+    "envelope": "FABRIC/2",
+    "prompt_bytes": 4739,
+    "prompt_sha256": "a9aadf976781cb04d4ce15c9dc8055070bbcb7d7e8ab46dab04adce2c010a627",
+    "sha256": "ed3c640b6213d6b5903083d09059a6aba810e1bac823279e0d6f5d573a2680e3"
+  }
+}
