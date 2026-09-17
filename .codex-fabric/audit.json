@@ -1,0 +1,460 @@
+{
+  "accepted_at": "2026-09-17T13:55:45Z",
+  "changed_files": [
+    {
+      "additions": 7,
+      "deletions": 1,
+      "path": "07_NiceGUI_Base_Integration.md",
+      "status": "M"
+    },
+    {
+      "additions": 4,
+      "deletions": 0,
+      "path": "13_Package_Review.md",
+      "status": "M"
+    },
+    {
+      "additions": 15,
+      "deletions": 0,
+      "path": "README.md",
+      "status": "M"
+    },
+    {
+      "additions": 3,
+      "deletions": 0,
+      "path": "environment/nicegui_base_requirements.txt",
+      "status": "A"
+    },
+    {
+      "additions": 27,
+      "deletions": 0,
+      "path": "environment/nicegui_base_runtime.json",
+      "status": "A"
+    },
+    {
+      "additions": 1,
+      "deletions": 1,
+      "path": "evidence/README.md",
+      "status": "M"
+    },
+    {
+      "additions": 38,
+      "deletions": 1,
+      "path": "evidence/review/nicegui_base_binding_manifest.json",
+      "status": "M"
+    },
+    {
+      "additions": 223,
+      "deletions": 0,
+      "path": "evidence/review/nicegui_base_runtime_evidence.json",
+      "status": "A"
+    },
+    {
+      "additions": 35,
+      "deletions": 10,
+      "path": "manifest.json",
+      "status": "M"
+    },
+    {
+      "additions": 77,
+      "deletions": 0,
+      "path": "tests/test_w0_runtime.py",
+      "status": "A"
+    },
+    {
+      "additions": 480,
+      "deletions": 0,
+      "path": "tools/w0_runtime.py",
+      "status": "A"
+    }
+  ],
+  "checks": [
+    {
+      "command": "/bin/zsh -lc \"pwd && printf '%s\\\\n' '--- top-level ---' && rg --files -g 'README.md' -g '13_Package_Review.md' -g 'AGENTS.md' -g 'RTK.md' -g 'law.md' -g 'evidence/review/**' -g 'tools/**' -g 'tests/**' | sed -n '1,240p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"sed -n '1,240p' AGENTS.md && printf '%s\\\\n' '--- RTK ---' && sed -n '1,260p' /Users/haewonkim/.codex/RTK.md && printf '%s\\\\n' '--- law ---' && sed -n '1,300p' /Users/haewonkim/.codex/law.md && printf '%s\\\\n' '--- README ---' && sed -n '1,260p' README.md && printf '%s\\\\n' '--- 13_Package_Review ---' && sed -n '1,320p' 13_Package_Review.md\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git status --short --branch && rtk git rev-parse HEAD && printf '%s\\\\n' '--- tracked files ---' && rtk rg --files | sed -n '1,260p' && printf '%s\\\\n' '--- binding manifest ---' && rtk sed -n '1,320p' evidence/review/nicegui_base_binding_manifest.json && printf '%s\\\\n' '--- package checker ---' && rtk sed -n '1,360p' tools/check_package.py && printf '%s\\\\n' '--- baseline tests ---' && rtk sed -n '1,300p' tests/test_w0_baseline.py && printf '%s\\\\n' '--- package tests ---' && rtk sed -n '1,360p' tests/test_package.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk printf '%s\\\\n' '--- ignored/local artifacts ---' && rtk find artifacts -maxdepth 3 -type f -print 2>/dev/null || true && printf '%s\\\\n' '--- gitignore ---' && rtk sed -n '1,240p' .gitignore && printf '%s\\\\n' '--- 07 framework integration ---' && rtk sed -n '1,360p' 07_NiceGUI_Base_Integration.md && printf '%s\\\\n' '--- 11 developer start ---' && rtk sed -n '1,340p' 11_Developer_Start.md && printf '%s\\\\n' '--- evidence README ---' && rtk sed -n '1,280p' evidence/README.md && printf '%s\\\\n' '--- package review JSON keys/status ---' && rtk python3 -c 'import json; p=json.load(open(\\\"evidence/review/package_review.json\\\")); print(json.dumps(p, indent=2)[:24000])'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git ls-remote https://github.com/kimhw8084/nicegui-base.git 000298562d6bcbf6df304edbd41b98b30fe4bfcf && rtk mktemp -d /tmp/ephi-nicegui-base.XXXXXX'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git clone --filter=blob:none --no-checkout https://github.com/kimhw8084/nicegui-base.git /tmp/ephi-nicegui-base.8WFMSF && rtk git -C /tmp/ephi-nicegui-base.8WFMSF cat-file -t 000298562d6bcbf6df304edbd41b98b30fe4bfcf && rtk git -C /tmp/ephi-nicegui-base.8WFMSF checkout --detach 000298562d6bcbf6df304edbd41b98b30fe4bfcf && printf '%s\\\\n' '--- HEAD ---' && rtk git -C /tmp/ephi-nicegui-base.8WFMSF rev-parse HEAD && printf '%s\\\\n' '--- files ---' && rtk find /tmp/ephi-nicegui-base.8WFMSF -maxdepth 3 -type f | sed -n '1,180p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,260p' /tmp/ephi-nicegui-base.8WFMSF/pyproject.toml && printf '%s\\\\n' '--- root exports ---' && rtk sed -n '1,260p' /tmp/ephi-nicegui-base.8WFMSF/source/nicegui_base/__init__.py && printf '%s\\\\n' '--- CLI declarations ---' && rtk rg -n 'nicegui-base|agent-context|catalog-search|recommend-pattern|recommend-visualization|catalog-audit|scaffold-plan|runtime-contract|runtime-smoke|agent-check|def main' /tmp/ephi-nicegui-base.8WFMSF/pyproject.toml /tmp/ephi-nicegui-base.8WFMSF/source /tmp/ephi-nicegui-base.8WFMSF/README* /tmp/ephi-nicegui-base.8WFMSF/00_READ_ME_FIRST.md | sed -n '1,320p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 --version && for candidate in python3.11 python3.12 python3.13 python3.14 python3; do if command -v \"$candidate\" >/dev/null 2>&1; then \"$candidate\" --version; command -v \"$candidate\"; fi; done && printf '\"'%s\\\\n' '--- command definitions ---' && rtk sed -n '1,320p' /tmp/ephi-nicegui-base.8WFMSF/source/nicegui_base/cli.py && rtk sed -n '1,340p' /tmp/ephi-nicegui-base.8WFMSF/source/nicegui_base/ai_cli.py && rtk sed -n '1,340p' /tmp/ephi-nicegui-base.8WFMSF/source/nicegui_base/certification/nicegui_runtime_contract.py && rtk sed -n '1,340p' /tmp/ephi-nicegui-base.8WFMSF/source/nicegui_base/certification/runtime_smoke.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nimport json\np=json.load(open('evidence/review/nicegui_base_binding_manifest.json'))\nfor section in ('patterns','public_symbols','shared_state_authorities','runtime_authorities'):\n    rows=p['first_slice_binding'][section]\n    print(section, len(rows))\n    for row in rows:\n        print(' ', row.get('name') or row.get('public_symbol'), row.get('import'))\nprint('top keys', list(p))\nPY\nprintf '%s\\\\n' '--- installed/review authority names in source exports ---'\nrtk rg -n 'class (MonitoringPage|MasterDetailPage|AnalysisWorkspacePage|DataSourceTable|AnalyticalPanel|InvestigationContextBar|EngineeringStatusBadge|EngineeringTimeline|TimelineChart|StateView|AnalysisContext|SelectionBus|AnalysisBinding|StateKey|StateNamespace|WorkspaceController|NiceGUIWorkspace|ApplicationRuntime|RuntimeConfig|RuntimeEnvironment|CompatibilityManifest)' /tmp/ephi-nicegui-base.8WFMSF/source/nicegui_base | sed -n '1,220p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3.11 -m venv /tmp/ephi-nicegui-base.8WFMSF/venv && rtk /tmp/ephi-nicegui-base.8WFMSF/venv/bin/python -m pip install --disable-pip-version-check --no-cache-dir 'nicegui==3.15.0' 'nicegui-base @ git+https://github.com/kimhw8084/nicegui-base.git@000298562d6bcbf6df304edbd41b98b30fe4bfcf'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk /tmp/ephi-nicegui-base.8WFMSF/venv/bin/python - <<'PY'\nfrom importlib import metadata\nimport json, sys\nfor name in ('nicegui-base','nicegui'):\n    d=metadata.distribution(name)\n    print(name, d.version, d.locate_file(''))\n    print(d.read_text('direct_url.json'))\nimport nicegui_base\nprint('nicegui_base', nicegui_base.__file__)\nPY\nprintf '%s\\\\n' '--- runtime contract ---'\nrtk /tmp/ephi-nicegui-base.8WFMSF/venv/bin/nicegui-base runtime-contract --format json\nprintf '%s\\\\n' '--- agent context ---'\nrtk /tmp/ephi-nicegui-base.8WFMSF/venv/bin/nicegui-base agent-context 'EPHI Attention -> Episode' --format json | sed -n '1,260p'\nprintf '%s\\\\n' '--- catalog search ---'\nrtk /tmp/ephi-nicegui-base.8WFMSF/venv/bin/nicegui-base catalog-search 'engineering attention episode workspace' --format json | sed -n '1,260p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3.11 -m py_compile tools/w0_runtime.py tests/test_w0_runtime.py && rtk python3.11 -m unittest tests.test_w0_runtime -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 tools/w0_runtime.py check --venv /tmp/ephi-nicegui-base.8WFMSF/venv | sed -n '1,340p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 tools/w0_runtime.py discover --venv /tmp/ephi-nicegui-base.8WFMSF/venv --output /tmp/ephi-nicegui-base.8WFMSF/discovery.json > /tmp/ephi-nicegui-base.8WFMSF/discovery.stdout.json; rtk python3 - <<'PY'\nimport json\np=json.load(open('/tmp/ephi-nicegui-base.8WFMSF/discovery.json'))\nprint('status', p['status'], 'environment', p['environment_check']['status'])\nfor x in p['commands']:\n print(x['name'], x['status'], x['exit_code'], 'stdout bytes', len(x['stdout']), 'parsed', x['parsed_stdout'] is not None)\n if x['status'] \"'!= '\"'PASS': print(' stderr', x['stderr'][:500])\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nimport json\np=json.load(open('/tmp/ephi-nicegui-base.8WFMSF/discovery.json'))\nfor x in p['commands']:\n print('\\\\n---', x['name'], '---')\n q=x['parsed_stdout']\n if x['name']=='agent_context':\n  print(json.dumps({k:q.get(k) for k in ('task','framework_version','dominant_pattern','starter_template','golden_examples','validation_commands')}, indent=2))\n elif x['name']=='catalog_search':\n  print(json.dumps({'count':q.get('count'),'top_results':[{'key':r.get('key'),'kind':r.get('kind'),'title':r.get('title'),'score':r.get('score')} for r in q.get('results',[])[:8]]}, indent=2))\n elif x['name']=='recommend_pattern':\n  print(json.dumps(q, indent=2))\n elif x['name']=='recommend_visualization':\n  print(json.dumps(q, indent=2)[:10000])\n elif x['name']=='catalog_audit':\n  print(json.dumps(q, indent=2))\n else:\n  print(json.dumps(q, indent=2))\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 tools/w0_runtime.py qualify --venv /tmp/ephi-nicegui-base.8WFMSF/venv --output /tmp/ephi-nicegui-base.8WFMSF/qualification.json > /tmp/ephi-nicegui-base.8WFMSF/qualification.stdout.json; rtk python3 - <<'PY'\nimport json\np=json.load(open('/tmp/ephi-nicegui-base.8WFMSF/qualification.json'))\nprint('status', p['status'], 'environment', p['environment_check']['status'])\nfor x in p['commands']:\n print(x['name'], x['status'], x['exit_code'], 'stdout bytes', len(x['stdout']), 'stderr bytes', len(x['stderr']))\n print(' stdout first:', x['stdout'][:300].replace('\\\\n',' | '))\n print(' stderr first:', x['stderr'][:300].replace('\\\\n',' | '))\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n -C 3 'CHG-104|Required construction workflow|package_review.json' README.md 07_NiceGUI_Base_Integration.md evidence/README.md\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3.11 tools/w0_runtime.py bootstrap > /tmp/ephi-w0-bootstrap.stdout.json; code=$?; rtk python3.11 - <<'\"'PY'\nimport json\np=json.load(open('artifacts/w0-runtime/bootstrap.json'))\nprint('status', p['status'], 'venv', p['venv'])\nprint('commands', [(c['command'].split()[0:4], c['status'], c['exit_code']) for c in p['commands']])\nprint('identity', p.get('environment_check', {}).get('status'))\nif p.get('environment_check', {}).get('status') \"'!= '\"'PASS':\n print(json.dumps(p.get('environment_check'), indent=2)[:4000])\nPY\nexit \"'$code'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/w0_runtime.py discover > /tmp/ephi-w0-discovery.stdout.json; discover_code=$?; rtk python3 tools/w0_runtime.py qualify > /tmp/ephi-w0-qualification.stdout.json; qualify_code=$?; rtk python3 - <<'\"'PY'\nimport json\nfor name in ('discovery','qualification'):\n p=json.load(open('artifacts/w0-runtime/'+name+'.json'))\n print(name, p['status'], 'environment', p['environment_check']['status'])\n for c in p['commands']:\n  print(' ', c['name'], c['status'], c['exit_code'], len(c['stdout']), len(c['stderr']))\nPY\nif [ \"'$discover_code -ne 0 ] || [ $qualify_code -ne 0 ]; then exit 1; fi'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nimport json\nfor n in ('bootstrap','discovery','qualification'):\n p=json.load(open('artifacts/w0-runtime/'+n+'.json'))\n print('\\\\n---', n, '---')\n if n=='qualification':\n  for c in p['commands']:\n   print(c['name'], c['status'])\n   print(c['stdout'])\n elif n=='discovery':\n  for c in p['commands']:\n   print(c['name'], c['status'], 'sha', c['stdout_sha256'])\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,90p' evidence/review/nicegui_base_binding_manifest.json && rtk tail -n 80 evidence/review/nicegui_base_binding_manifest.json\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nimport json\nfor name in ('bootstrap','qualification'):\n p=json.load(open('artifacts/w0-runtime/'+name+'.json'))\n print(name)\n for c in p.get('commands',[]):\n  print(c.get('command'), c.get('status'), c.get('exit_code'), c.get('stdout_sha256'), len(c.get('stdout','')), c.get('stderr_sha256'), len(c.get('stderr','')))\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nimport json\np=json.load(open('artifacts/w0-runtime/qualification.json'))\nfor c in p['commands']:\n print(c['name'], c['parsed_stdout'])\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nimport json\np=json.load(open('artifacts/w0-runtime/qualification.json'))\nfor c in p['commands']:\n if c['name']=='runtime_smoke':\n  print(sum(1 for line in c['stdout'].splitlines() if line.startswith('[PASS]')))\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m json.tool environment/nicegui_base_runtime.json >/dev/null && rtk python3 -m json.tool evidence/review/nicegui_base_binding_manifest.json >/dev/null && rtk python3 -m json.tool evidence/review/nicegui_base_runtime_evidence.json >/dev/null && rtk python3 -m py_compile tools/w0_runtime.py tests/test_w0_runtime.py && rtk git diff --stat && rtk git status --short'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk tail -n 30 13_Package_Review.md'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3.11 tools/w0_runtime.py bootstrap > /tmp/ephi-w0-bootstrap.stdout.json; code=$?; rtk python3 - <<'\"'PY'\nimport json\np=json.load(open('artifacts/w0-runtime/bootstrap.json'))\nprint('status', p['status'])\nprint('python', p['environment_check']['python'])\nprint('authority', p['environment_check']['public_authority_imports']['status'], p['environment_check']['public_authority_imports']['authority_count'])\nfor i in p['environment_check']['issues']:\n print(i)\nPY\nexit \"'$code'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'set +e; rtk python3.14 tools/w0_runtime.py bootstrap --venv /tmp/ephi-w0-unsupported-venv --output /tmp/ephi-w0-unsupported.json > /tmp/ephi-w0-unsupported.stdout.json; code=$?; set -e; rtk python3 - <<'\"'PY'\nimport json\np=json.load(open('/tmp/ephi-w0-unsupported.json'))\nprint('exit_expected_2', p['status'], p['python']['version'], p['reason'])\nPY\nif [ \"'$code -ne 2 ]; then exit 1; fi'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nimport json\nruntime=json.load(open('evidence/review/nicegui_base_runtime_evidence.json'))\ndiscovery=json.load(open('artifacts/w0-runtime/discovery.json'))\nqualification=json.load(open('artifacts/w0-runtime/qualification.json'))\nfor section, artifact in [('discovery', discovery), ('qualification', qualification)]:\n    rows={x['name']:x for x in artifact['commands']}\n    for row in runtime[section]['commands']:\n        assert row['stdout_sha256']==rows[row['name']]['stdout_sha256'], (section,row['name'],row['stdout_sha256'],rows[row['name']]['stdout_sha256'])\n        assert row['stdout_bytes']==len(rows[row['name']]['stdout']), (section,row['name'])\nprint('PASS: evidence command output hashes and byte counts match ignored execution reports')\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest discover -s tests -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git diff --check && rtk git status --short --branch && rtk git diff --stat && rtk git diff -- manifest.json | sed -n '1,260p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/w0_runtime.py check > /tmp/ephi-w0-check.stdout.json; check_code=$?; rtk python3 tools/w0_runtime.py discover > /tmp/ephi-w0-discovery.stdout.json; discover_code=$?; set +e; rtk python3 tools/w0_runtime.py qualify > /tmp/ephi-w0-qualification.stdout.json; qualify_code=$?; set -e; rtk python3 - <<'\"'PY'\nimport json\nfor name in ('discovery','qualification'):\n p=json.load(open('artifacts/w0-runtime/'+name+'.json'))\n print(name, p['status'], p['environment_check']['status'], p['environment_check']['report']['python']['isolated_venv'])\nprint('check exit', json.load(open('/tmp/ephi-w0-check.stdout.json'))['status'])\nprint('qualification expected command exit', json.load(open('artifacts/w0-runtime/qualification.json'))['commands'][0]['exit_code'], json.load(open('artifacts/w0-runtime/qualification.json'))['commands'][2]['exit_code'], json.load(open('artifacts/w0-runtime/qualification.json'))['commands'][3]['exit_code'])\nPY\nif [ \"'$check_code -ne 0 ] || [ $discover_code -ne 0 ] || [ $qualify_code -ne 1 ]; then exit 1; fi'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nimport json\nruntime=json.load(open('evidence/review/nicegui_base_runtime_evidence.json'))\nfor name in ('discovery','qualification'):\n art=json.load(open('artifacts/w0-runtime/'+name+'.json'))\n rows={x['name']:x for x in art['commands']}\n for x in runtime[name]['commands']:\n  assert (x['stdout_sha256'],x['stdout_bytes'])==(rows[x['name']]['stdout_sha256'],len(rows[x['name']]['stdout']))\nprint('PASS: checked-in command hashes still match latest execution')\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,520p' tools/w0_runtime.py && printf '%s\\\\n' '--- runtime evidence key summaries ---' && rtk python3 - <<'PY'\nimport json\np=json.load(open('evidence/review/nicegui_base_runtime_evidence.json'))\nprint(p['status'], p['environment']['python'])\nprint('discovery', p['discovery']['status'], [(c['name'], c['status']) for c in p['discovery']['commands']])\nprint('qualification', p['qualification']['status'], [(c['name'], c['status']) for c in p['qualification']['commands']])\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n 'CHG-105|NOT_RUN|runtime|browser|NiceGUI Base' README.md 07_NiceGUI_Base_Integration.md 13_Package_Review.md evidence/README.md evidence/review/nicegui_base_binding_manifest.json evidence/review/nicegui_base_runtime_evidence.json | sed -n '1,260p' && printf '%s\\\\n' '--- manifest status ---' && rtk python3 - <<'PY'\nimport json\np=json.load(open('evidence/review/nicegui_base_binding_manifest.json'))\nprint(p['status'])\nprint(p['change_105_runtime_evidence'])\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk ls -la /Users/haewonkim/.codex-fabric && printf '%s\\\\n' '--- fabric metadata files ---' && rtk find /Users/haewonkim/.codex-fabric -maxdepth 3 -type f \\\\( -name 'audit.json' -o -name '*audit*' -o -name '*manifest*' \\\\) -print 2>/dev/null | sed -n '1,160p' && printf '%s\\\\n' '--- likely native audit commands/docs ---' && rtk rg -n 'audit.json|native Fabric|Fabric audit|codex-fabric' /Users/haewonkim/.codex-fabric /Users/haewonkim/.codex/skills 2>/dev/null | sed -n '1,240p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,260p' /Users/haewonkim/.codex-fabric/bin/fabricctl && printf '%s\\\\n' '--- current Fabric README relevant ---' && rtk rg -n -C 3 'evidence|audit|publish|integrat|job' /Users/haewonkim/.codex-fabric/current/README.md | sed -n '1,260p' && printf '%s\\\\n' '--- current job metadata ---' && rtk find /Users/haewonkim/.codex-fabric/jobs -maxdepth 2 -type f -name job.json -print | tail -n 5\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk find /Users/haewonkim/.codex-fabric/jobs -maxdepth 2 -type f -name job.json | rtk rg 'CF-19b476c3de016a912d6bf070' || true && printf '%s\\\\n' '--- fabricctl usage strings ---' && rtk rg -n 'argparse|subparsers|evidence|audit|publish|integrat|status' /Users/haewonkim/.codex-fabric/current/fabric.py | sed -n '1,260p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3.11 - <<'PY'\nimport json\np=json.load(open('/Users/haewonkim/.codex-fabric/jobs/CF-19b476c3de016a912d6bf070.running/job.json'))\nprint(json.dumps({k:p.get(k) for k in ('job_id','project','request','branch','repo','state','operation','base_commit')}, indent=2))\nPY\nprintf '%s\\\\n' '--- fabric status ---'\nrtk /Users/haewonkim/.codex-fabric/bin/fabricctl status CF-19b476c3de016a912d6bf070 | sed -n '1,240p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest && rtk python3 -m unittest tests.test_w0_runtime -v && rtk python3 -m unittest discover -s tests -v && rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git status --short --branch && printf '%s\\\\n' '--- changed paths ---' && rtk git diff --name-status && printf '%s\\\\n' '--- untracked tracked-by-package ---' && rtk python3 - <<'PY'\nimport json\np=json.load(open('manifest.json'))\nfor row in p['files']:\n if row['path'].startswith(('environment/','evidence/review/nicegui_base_runtime','tests/test_w0_runtime.py','tools/w0_runtime.py')):\n  print(row['path'], row['bytes'], row['sha256'])\nPY\nprintf '%s\\\\n' '--- native fabric status ---' && rtk /Users/haewonkim/.codex-fabric/bin/fabricctl status CF-19b476c3de016a912d6bf070 | sed -n '1,120p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1210,1360p' /Users/haewonkim/.codex-fabric/current/fabric.py && rtk sed -n '3100,3335p' /Users/haewonkim/.codex-fabric/current/fabric.py && rtk sed -n '2150,2245p' /Users/haewonkim/.codex-fabric/current/fabric.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk find artifacts -maxdepth 4 -type f | sed -n '1,120p' && printf '%s\\\\n' '--- source archive presence ---' && if test -f 'artifacts/source/ephi_v0.19.1_production_hardened(1).zip'; then echo PRESENT; else echo ABSENT; fi && printf '%s\\\\n' '--- final required checks quick summary ---' && rtk python3 tools/check_package.py && rtk git diff --check\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    }
+  ],
+  "codex": {
+    "cli_version": "codex-cli 0.154.0",
+    "configured_model": "gpt-5.6-luna",
+    "event_count": 119,
+    "provider_reported_model": null,
+    "reasoning_effort": "xhigh",
+    "terminal_type": "turn.completed",
+    "usage": {
+      "cache_hit_percent": 96.46,
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 5404416,
+      "fresh_input_tokens": 198446,
+      "input_tokens": 5602862,
+      "non_reasoning_output_tokens": 25203,
+      "output_tokens": 44399,
+      "reasoning_output_tokens": 19196,
+      "total_processed_tokens": 5647261
+    },
+    "warnings": []
+  },
+  "commits": [
+    {
+      "sha": "5a841ccb82fd015eb2b5058863a2ac4a88d4dcc1",
+      "subject": "fabric: capture completed model changes [CF-19b476c3de016a912d6bf070]"
+    }
+  ],
+  "diff": {
+    "additions": 910,
+    "changed_files": 11,
+    "commit_count": 1,
+    "deletions": 13
+  },
+  "error_code": null,
+  "evidence_manifest": {
+    "count": 8,
+    "items": [
+      {
+        "bytes": 10866,
+        "path": "07_NiceGUI_Base_Integration.md",
+        "sha256": "258715703154d25ed2fbdc2dd719d95b4fe4979600ffbab025492ffc179ce604"
+      },
+      {
+        "bytes": 7972,
+        "path": "13_Package_Review.md",
+        "sha256": "80eb25b482772cb2a03a9000672dd63eea948e8b99948e5cf2bc11df90257600"
+      },
+      {
+        "bytes": 8493,
+        "path": "README.md",
+        "sha256": "17b6ba18b7b3fbf7fd2821660c81a0eea8c79bac156aadec80f828d335177f1c"
+      },
+      {
+        "bytes": 1318,
+        "path": "environment/nicegui_base_runtime.json",
+        "sha256": "ea49feb766c2f755a019e5dce7cab89a4456ea3c9c87d98940bb22abd5bcb89a"
+      },
+      {
+        "bytes": 2043,
+        "path": "evidence/README.md",
+        "sha256": "dda15051bde19109be8f552f3dd2a6dc23b18e6ee61ea5fd96705ebd42cbb1eb"
+      },
+      {
+        "bytes": 15859,
+        "path": "evidence/review/nicegui_base_binding_manifest.json",
+        "sha256": "797ebcc38c8aa8846c3bd65305b1f20686ff2e17b43b6f770400ec10c826649c"
+      },
+      {
+        "bytes": 10028,
+        "path": "evidence/review/nicegui_base_runtime_evidence.json",
+        "sha256": "d280309406704f24baaa39acc7cdd8218f6aea2b2a6d56599690d47cd36b4cd3"
+      },
+      {
+        "bytes": 8982,
+        "path": "manifest.json",
+        "sha256": "7f724933b4390fb0c43decbd9c3dc71541176e7cfac8268e549a6e8015266598"
+      }
+    ],
+    "version": 1
+  },
+  "evidence_publisher_release": "1.2.3-resume-candidate",
+  "fabric_capture": {
+    "applied": true,
+    "commit_message": "fabric: capture completed model changes [CF-19b476c3de016a912d6bf070]",
+    "commit_sha": "5a841ccb82fd015eb2b5058863a2ac4a88d4dcc1",
+    "paths_before": 10,
+    "status_before": [
+      " M 07_NiceGUI_Base_Integration.md",
+      " M 13_Package_Review.md",
+      " M README.md",
+      " M evidence/README.md",
+      " M evidence/review/nicegui_base_binding_manifest.json",
+      " M manifest.json",
+      "?? environment/",
+      "?? evidence/review/nicegui_base_runtime_evidence.json",
+      "?? tests/test_w0_runtime.py",
+      "?? tools/w0_runtime.py"
+    ],
+    "transient_untracked_removed": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "fabric_release": "1.2.3-resume-candidate",
+  "failure_class": null,
+  "finished_at": "2026-09-17T14:12:35Z",
+  "git": {
+    "base_is_ancestor": true,
+    "base_sha": "9bf7ad92019eccb7e033ec6c0695256f110b157a",
+    "branch": "codex/ephi-w0-runtime-qualification-v1",
+    "head_sha": "5a841ccb82fd015eb2b5058863a2ac4a88d4dcc1",
+    "remote_exact_head": true,
+    "remote_head_sha": "5a841ccb82fd015eb2b5058863a2ac4a88d4dcc1",
+    "target_branch": "main",
+    "target_drifted_since_acceptance": false,
+    "target_head_observed_after_execution": "9bf7ad92019eccb7e033ec6c0695256f110b157a",
+    "work_branch": "codex/ephi-w0-runtime-qualification-v1",
+    "worktree_clean": true
+  },
+  "instructions": {
+    "files": [
+      {
+        "bytes": 959,
+        "path": "AGENTS.md",
+        "sha256": "0803c825a0dbaf0266aa44b5ce9c6a30d8eac93737369aae3dc9715d3bb49767"
+      }
+    ],
+    "total_bytes": 959,
+    "warning": null
+  },
+  "job_id": "CF-19b476c3de016a912d6bf070",
+  "kind": "codex-fabric-audit-evidence",
+  "locator": {
+    "branch": "codex-fabric/evidence/ephi/ephi-w0-runtime-qualification-v1",
+    "path": ".codex-fabric/audit.json",
+    "ref": "refs/heads/codex-fabric/evidence/ephi/ephi-w0-runtime-qualification-v1"
+  },
+  "operation": "BUILD",
+  "policy": {
+    "environment_policy_sha256": "e077daca74297b3c30bee8989f00f8ca5338f7610b4d016a6c48db524205d064",
+    "fabric_release": "1.2.3-resume-candidate",
+    "policy_sha256": "44756118cd7fda0c45cd23ba1d31a48a3f4f2422d687df15264ba4406f40e1f2",
+    "registry_sha256": "cfc765f3211c37c7967a138f3b2d89a99341939b15b2623f92744d007f625d6f"
+  },
+  "project_id": "ephi",
+  "recovery": {
+    "model_rerun_safe": false,
+    "recovery_required": false,
+    "retry_safe": false,
+    "retry_scope": null,
+    "worktree_retained": true
+  },
+  "request": "ephi-w0-runtime-qualification-v1",
+  "schema_version": 1,
+  "started_at": "2026-09-17T13:55:45Z",
+  "status": "EXECUTED_CHANGE",
+  "timing": {
+    "execution_seconds": 1010,
+    "queue_seconds": 0,
+    "total_seconds": 1010
+  },
+  "transport": {
+    "bytes": 3713,
+    "envelope": "FABRIC/2",
+    "prompt_bytes": 3397,
+    "prompt_sha256": "f0e76bb7e1e709e190df5be181614d0a06fc1cdc5709db0b265282417925ea2d",
+    "sha256": "19b476c3de016a912d6bf0704d6962e4d31ca56b4fc5377e9637fc9a42f95c46"
+  }
+}
