@@ -1,0 +1,346 @@
+{
+  "accepted_at": "2026-09-17T13:21:56Z",
+  "changed_files": [
+    {
+      "additions": 1,
+      "deletions": 1,
+      "path": "07_NiceGUI_Base_Integration.md",
+      "status": "M"
+    },
+    {
+      "additions": 12,
+      "deletions": 0,
+      "path": "README.md",
+      "status": "M"
+    },
+    {
+      "additions": 337,
+      "deletions": 0,
+      "path": "evidence/review/nicegui_base_binding_manifest.json",
+      "status": "A"
+    },
+    {
+      "additions": 19,
+      "deletions": 4,
+      "path": "manifest.json",
+      "status": "M"
+    },
+    {
+      "additions": 123,
+      "deletions": 0,
+      "path": "tests/test_w0_baseline.py",
+      "status": "A"
+    },
+    {
+      "additions": 411,
+      "deletions": 0,
+      "path": "tools/w0_baseline.py",
+      "status": "A"
+    }
+  ],
+  "checks": [
+    {
+      "command": "/bin/zsh -lc \"pwd && git status --short --branch && git rev-parse HEAD && git branch --show-current && echo '--- AGENTS ---' && sed -n '1,240p' AGENTS.md && echo '--- RTK ---' && sed -n '1,260p' /Users/haewonkim/.codex/RTK.md && echo '--- LAW ---' && sed -n '1,260p' /Users/haewonkim/.codex/law.md && echo '--- README ---' && sed -n '1,260p' README.md && echo '--- PACKAGE REVIEW ---' && sed -n '1,320p' 13_Package_Review.md\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk find .. -name AGENTS.md -print && rtk git log --oneline --decorate -8 && rtk rg -n \\\"CHG-104|CHG-85|R1|W0|Attention|Episode|NiceGUI Base|nicegui_base|construction_manifest|catalog|pattern\\\" --glob '*.md' --glob '*.json' --glob '*.py' . | head -n 260 && echo '--- top-level ---' && rtk rg --files -g '\"'!evidence/**'\"' -g '\"'!evidence/import/**'\"' | head -n 240 && echo '--- sibling dirs ---' && rtk find /Users/haewonkim -maxdepth 4 -type d \\\\( -name 'nicegui-base' -o -name 'ephi' \\\\) -print\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,240p' evidence/review/base_reference_check.json && rtk sed -n '1,360p' tools/source_preflight.py && rtk sed -n '1,360p' tests/test_source_preflight.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git clone --filter=blob:none --no-checkout https://github.com/kimhw8084/nicegui-base.git /tmp/ephi-nicegui-base-pinned-000298562d6bcbf6df304edbd41b98b30fe4bfcf'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git -C /tmp/ephi-nicegui-base-pinned-000298562d6bcbf6df304edbd41b98b30fe4bfcf checkout --detach 000298562d6bcbf6df304edbd41b98b30fe4bfcf && rtk git -C /tmp/ephi-nicegui-base-pinned-000298562d6bcbf6df304edbd41b98b30fe4bfcf status --short --branch && rtk sed -n '1,280p' /tmp/ephi-nicegui-base-pinned-000298562d6bcbf6df304edbd41b98b30fe4bfcf/AGENTS.md && rtk sed -n '1,360p' /tmp/ephi-nicegui-base-pinned-000298562d6bcbf6df304edbd41b98b30fe4bfcf/pyproject.toml && rtk sed -n '1,360p' /tmp/ephi-nicegui-base-pinned-000298562d6bcbf6df304edbd41b98b30fe4bfcf/source/nicegui_base/ai/construction_manifest.json\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk command -v nicegui-base || true; rtk nicegui-base --version || true; rtk nicegui-base agent-context 'EPHI O1 W0 first Attention to Episode slice' --format json > /tmp/ephi-base-agent-context.json 2>/tmp/ephi-base-agent-context.stderr; rtk sed -n '1,80p' /tmp/ephi-base-agent-context.stderr; rtk wc -c /tmp/ephi-base-agent-context.json; rtk sed -n '1,120p' /tmp/ephi-base-agent-context.json\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy find /Users/haewonkim -type d -name 'nicegui-base' -print 2>/dev/null | head -n 40; echo '--- base reference evidence ---'; rtk sed -n '1,220p' evidence/review/base_reference_check.json; echo '--- source preflight ---'; rtk sed -n '1,320p' tools/source_preflight.py; echo '--- source-preflight tests ---'; rtk sed -n '1,320p' tests/test_source_preflight.py; echo '--- checker ---'; rtk sed -n '1,360p' tools/check_package.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg --files /tmp/ephi-nicegui-base-pinned-000298562d6bcbf6df304edbd41b98b30fe4bfcf/source/nicegui_base | rg '(catalog|pattern|visual|state|runtime|workspace|exports|manifest|tokens|data)' | head -n 240; echo '--- public exports ---'; rtk sed -n '1,420p' /tmp/ephi-nicegui-base-pinned-000298562d6bcbf6df304edbd41b98b30fe4bfcf/source/nicegui_base/__init__.py; echo '--- workspace ---'; rtk sed -n '1,260p' /tmp/ephi-nicegui-base-pinned-000298562d6bcbf6df304edbd41b98b30fe4bfcf/source/nicegui_base/workspace/__init__.py; echo '--- runtime ---'; rtk sed -n '1,300p' /tmp/ephi-nicegui-base-pinned-000298562d6bcbf6df304edbd41b98b30fe4bfcf/source/nicegui_base/runtime/__init__.py; echo '--- jobs ---'; rtk sed -n '1,260p' /tmp/ephi-nicegui-base-pinned-000298562d6bcbf6df304edbd41b98b30fe4bfcf/source/nicegui_base/jobs/__init__.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nimport json\nfrom pathlib import Path\np=Path('/tmp/ephi-nicegui-base-pinned-000298562d6bcbf6df304edbd41b98b30fe4bfcf/source/nicegui_base/ai/framework_catalog.json')\ndata=json.loads(p.read_text())\nprint('top keys:', list(data))\nfor key, value in data.items():\n    if isinstance(value, dict): print(key, 'dict keys=', list(value)[:30])\n    elif isinstance(value, list): print(key, 'list length=', len(value), 'first=', value[0] if value else None)\n    else: print(key, type(value).__name__, value)\nPY\nrtk sed -n '1,280p' /tmp/ephi-nicegui-base-pinned-000298562d6bcbf6df304edbd41b98b30fe4bfcf/examples/nicegui_base/golden_analysis_workspace.py\nrtk sed -n '1,360p' /tmp/ephi-nicegui-base-pinned-000298562d6bcbf6df304edbd41b98b30fe4bfcf/examples/phase61_spc_wafer_investigation.py\nrtk sed -n '1,360p' /tmp/ephi-nicegui-base-pinned-000298562d6bcbf6df304edbd41b98b30fe4bfcf/examples/phase61_fdc_tool_health.py\nrtk sed -n '1,360p' /tmp/ephi-nicegui-base-pinned-000298562d6bcbf6df304edbd41b98b30fe4bfcf/examples/phase61_rca_commonality.py\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg --files /tmp/ephi-nicegui-base-pinned-000298562d6bcbf6df304edbd41b98b30fe4bfcf/examples | head -n 180; echo '--- catalog selected entries ---'; rtk python3 - <<'PY'\nimport json\nfrom pathlib import Path\np=Path('/tmp/ephi-nicegui-base-pinned-000298562d6bcbf6df304edbd41b98b30fe4bfcf/source/nicegui_base/ai/framework_catalog.json')\ndata=json.loads(p.read_text())\nterms=('analysis','workspace','attention','episode','monitor','master','timeline','table','state','runtime','selection','datasource','data_source','trend','spc','semiconductor','evidence')\nfor registry, entries in data['registries'].items():\n    if not isinstance(entries, list): continue\n    selected=[]\n    for item in entries:\n        blob=json.dumps(item, sort_keys=True).lower()\n        if any(t in blob for t in terms):\n            selected.append(item)\n    if selected:\n        print('\\\\n###', registry, len(selected), 'of', len(entries))\n        for item in selected:\n            if isinstance(item, dict):\n                print(json.dumps({k:item[k] for k in item if k in ('name','key','id','kind','module','symbol','description','category','pattern','authority','example','parameters','states','data_contract','selection_contract','state_contract','layout_slots')}, sort_keys=True))\n            else: print(item)\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nimport json\nfrom pathlib import Path\np=Path('/tmp/ephi-nicegui-base-pinned-000298562d6bcbf6df304edbd41b98b30fe4bfcf/source/nicegui_base/ai/framework_catalog.json')\ndata=json.loads(p.read_text())\nfor registry, wanted in {\n  'analysis': {'analysis_context','selection_bus','analysis_binding','analytical_panel','data_source_table','workspace_controller','nicegui_workspace'},\n  'page_patterns': {'monitoring','master_detail','analysis_workspace'},\n  'tables': {'server_data_table','master_detail_table','data_table'},\n  'engineering': {'EngineeringTimeline','EngineeringStatusBadge','InvestigationContextBar','EvidenceCard','ProcessTrendSpec'},\n  'visualizations': {'TimelineChart','ProcessTrendPanel'},\n  'convenience': {'state_store','stale_response_guard','auto_refresh'},\n  'runtime': {'runtime_config','health','compatibility_manifest'},\n  'jobs': {'durable_job_adapter'},\n}.items():\n  print(f'\\\\n### {registry}')\n  for item in data['registries'].get(registry, []):\n    key=item.get('key') or item.get('name') or item.get('pattern') if isinstance(item, dict) else item\n    if key in wanted:\n      print(json.dumps(item, indent=2, sort_keys=True))\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '220,520p' tools/source_preflight.py; rtk sed -n '1,420p' tools/check_package.py; echo '--- gitignore ---'; rtk sed -n '1,240p' .gitignore 2>/dev/null || true; echo '--- package tests ---'; rtk sed -n '1,260p' tests/test_package.py; echo '--- relevant docs ---'; rtk sed -n '1,240p' 07_NiceGUI_Base_Integration.md; rtk sed -n '1,180p' 11_Developer_Start.md; rtk sed -n '1,210p' 09_Delivery_and_Gates.md\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg --files /tmp/ephi-nicegui-base-pinned-000298562d6bcbf6df304edbd41b98b30fe4bfcf | rg '(phase61|semiconductor|golden|framework_catalog|construction_manifest|AGENT|APP_PATTERNS|COMPONENT_CATALOG|RECIPES)' | head -n 260; echo '--- template golden analysis ---'; rtk sed -n '1,320p' /tmp/ephi-nicegui-base-pinned-000298562d6bcbf6df304edbd41b98b30fe4bfcf/source/nicegui_base/ai/templates/golden/golden_analysis_workspace.py; echo '--- template golden data source ---'; rtk sed -n '1,300p' /tmp/ephi-nicegui-base-pinned-000298562d6bcbf6df304edbd41b98b30fe4bfcf/source/nicegui_base/ai/templates/golden/golden_data_source.py; echo '--- source names/signatures ---'; rtk rg -n \\\"\"'^(class|def) (AnalysisContext|SelectionBus|AnalysisBinding|AnalyticalPanel|DataSourceTable|WorkspaceController|NiceGUIWorkspace|ApplicationRuntime|RuntimeConfig|RuntimeEnvironment|CompatibilityManifest|StateKey|StateNamespace|StateStore|StateView|AsyncState|MonitoringPage|MasterDetailPage|AnalysisWorkspacePage|ServerDataTable|DataTable|EngineeringStatusBadge|EngineeringTimeline|InvestigationContextBar|TimelineChart|ProcessTrendPanel)'\"\\\\b\\\" /tmp/ephi-nicegui-base-pinned-000298562d6bcbf6df304edbd41b98b30fe4bfcf/source/nicegui_base /tmp/ephi-nicegui-base-pinned-000298562d6bcbf6df304edbd41b98b30fe4bfcf/source/nicegui_base/integrations/nicegui_visualization.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,320p' /tmp/ephi-nicegui-base-pinned-000298562d6bcbf6df304edbd41b98b30fe4bfcf/source/examples/phase61_spc_wafer_investigation.py; rtk sed -n '1,320p' /tmp/ephi-nicegui-base-pinned-000298562d6bcbf6df304edbd41b98b30fe4bfcf/source/examples/phase61_fdc_tool_health.py; rtk sed -n '1,360p' /tmp/ephi-nicegui-base-pinned-000298562d6bcbf6df304edbd41b98b30fe4bfcf/source/examples/phase61_rca_commonality.py; echo '--- example imports/symbol usage ---'; rtk rg -n '\"'^from nicegui_base import|''^from nicegui_base'\"\\\\.|ApplicationRuntime|AnalysisContext|SelectionBus|DataSource|WorkspaceController|NiceGUIWorkspace|Semiconductor' /tmp/ephi-nicegui-base-pinned-000298562d6bcbf6df304edbd41b98b30fe4bfcf/source/examples/phase61_*.py /tmp/ephi-nicegui-base-pinned-000298562d6bcbf6df304edbd41b98b30fe4bfcf/source/examples/nicegui_base/golden_analysis_workspace.py\"",
+      "exit_code": 2,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,220p' /tmp/ephi-nicegui-base-pinned-000298562d6bcbf6df304edbd41b98b30fe4bfcf/source/nicegui_base/analysis/__init__.py; rtk sed -n '1,180p' /tmp/ephi-nicegui-base-pinned-000298562d6bcbf6df304edbd41b98b30fe4bfcf/source/nicegui_base/analysis/context.py; rtk sed -n '1,140p' /tmp/ephi-nicegui-base-pinned-000298562d6bcbf6df304edbd41b98b30fe4bfcf/source/nicegui_base/analysis/selection.py; rtk sed -n '1,140p' /tmp/ephi-nicegui-base-pinned-000298562d6bcbf6df304edbd41b98b30fe4bfcf/source/nicegui_base/analysis/bindings.py; rtk sed -n '1,130p' /tmp/ephi-nicegui-base-pinned-000298562d6bcbf6df304edbd41b98b30fe4bfcf/source/nicegui_base/runtime/config.py; rtk sed -n '1,120p' /tmp/ephi-nicegui-base-pinned-000298562d6bcbf6df304edbd41b98b30fe4bfcf/source/nicegui_base/runtime/compatibility.py; rtk sed -n '1,180p' /tmp/ephi-nicegui-base-pinned-000298562d6bcbf6df304edbd41b98b30fe4bfcf/source/nicegui_base/runtime/kernel.py; rtk sed -n '1,120p' /tmp/ephi-nicegui-base-pinned-000298562d6bcbf6df304edbd41b98b30fe4bfcf/source/nicegui_base/patterns/pages.py; rtk sed -n '1,150p' /tmp/ephi-nicegui-base-pinned-000298562d6bcbf6df304edbd41b98b30fe4bfcf/source/nicegui_base/patterns/registry.py; rtk sed -n '1,110p' /tmp/ephi-nicegui-base-pinned-000298562d6bcbf6df304edbd41b98b30fe4bfcf/source/nicegui_base/integrations/nicegui_analysis.py; rtk sed -n '1,110p' /tmp/ephi-nicegui-base-pinned-000298562d6bcbf6df304edbd41b98b30fe4bfcf/source/nicegui_base/integrations/nicegui_workspace.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nfrom pathlib import Path\nimport hashlib\nroot=Path('/tmp/ephi-nicegui-base-pinned-000298562d6bcbf6df304edbd41b98b30fe4bfcf')\npaths=[\n'AGENTS.md','pyproject.toml','source/nicegui_base/ai/construction_manifest.json','source/nicegui_base/ai/framework_catalog.json','source/nicegui_base/__init__.py','source/nicegui_base/analysis/__init__.py','source/nicegui_base/patterns/registry.py','source/nicegui_base/patterns/pages.py','source/nicegui_base/runtime/__init__.py','source/nicegui_base/runtime/kernel.py','source/nicegui_base/runtime/config.py','source/nicegui_base/runtime/compatibility.py','source/nicegui_base/workspace/__init__.py','source/nicegui_base/workspace/controller.py','source/nicegui_base/integrations/nicegui_analysis.py','source/nicegui_base/integrations/nicegui_workspace.py','source/nicegui_base/integrations/nicegui_engineering.py','source/nicegui_base/integrations/nicegui_interactions.py','source/nicegui_base/integrations/nicegui_visualization.py','source/examples/phase61_spc_wafer_investigation.py','source/examples/phase61_fdc_tool_health.py','source/examples/phase61_rca_commonality.py','examples/nicegui_base/golden_analysis_workspace.py',\n]\nfor rel in paths:\n p=root/rel\n if not p.exists(): print(rel, 'MISSING'); continue\n b=p.read_bytes(); print(f'{rel}\\\\t{len(b)}\\\\t{hashlib.sha256(b).hexdigest()}')\nPY\nrtk rg -n \\\"AnalysisCoordinator|AnalysisContext|SelectionBus|AnalysisBinding|AnalyticalPanel|DataSourceTable|WorkspaceController|NiceGUIWorkspace|ApplicationRuntime|RuntimeConfig|RuntimeEnvironment|CompatibilityManifest|StateKey|StateNamespace|StateStore|StateView|AsyncState|MonitoringPage|MasterDetailPage|AnalysisWorkspacePage|ServerDataTable|EngineeringStatusBadge|EngineeringTimeline|InvestigationContextBar|TimelineChart|ProcessTrendPanel\\\" /tmp/ephi-nicegui-base-pinned-000298562d6bcbf6df304edbd41b98b30fe4bfcf/source/nicegui_base/__init__.py | head -n 160\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,180p' manifest.json; rtk sed -n '1,220p' tests/test_package.py; rtk git status --short --untracked-files=all; rtk git ls-files evidence evidence/import | wc -l\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nfrom pathlib import Path\nimport hashlib\nroot=Path('/tmp/ephi-nicegui-base-pinned-000298562d6bcbf6df304edbd41b98b30fe4bfcf')\nfor rel in ['source/nicegui_base/ai/templates/golden/golden_analysis_workspace.py','source/nicegui_base/ai/templates/golden/golden_data_source.py','source/nicegui_base/ai/guides/APP_PATTERNS.md','source/nicegui_base/ai/guides/AGENT_WORKFLOW.md','source/nicegui_base/ai/guides/COMPONENT_CATALOG.md']:\n p=root/rel; b=p.read_bytes(); print(rel, len(b), hashlib.sha256(b).hexdigest())\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -m py_compile tools/w0_baseline.py tests/test_w0_baseline.py; rtk python3 -m json.tool evidence/review/nicegui_base_binding_manifest.json >/dev/null; rtk sed -n '1,420p' tools/w0_baseline.py; echo '--- binding manifest head ---'; rtk sed -n '1,420p' evidence/review/nicegui_base_binding_manifest.json; echo '--- status ---'; rtk git status --short --untracked-files=all\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest tests.test_w0_baseline -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '45,88p' README.md; rtk sed -n '1,16p' 07_NiceGUI_Base_Integration.md\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --stat && rtk git diff --check && rtk python3 -m unittest tests.test_source_preflight tests.test_w0_baseline -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 tools/source_preflight.py > /tmp/ephi-source-preflight-run.json; rtk python3 - <<'PY'\nimport json\nfrom pathlib import Path\nfor path in (Path('/tmp/ephi-source-preflight-run.json'), Path('artifacts/source-preflight.json')):\n    record=json.loads(path.read_text())\n    print(path, 'status=', record['status'], 'reason=', record['reason'], 'archive_present=', record['source']['archive_present'], 'verified=', record['source']['verified'])\nPY\nrtk python3 tools/w0_baseline.py > /tmp/ephi-w0-baseline-run.json; rtk python3 - <<'PY'\nimport json\nfrom pathlib import Path\nrecord=json.loads(Path('/tmp/ephi-w0-baseline-run.json').read_text())\nprint('baseline status=', record['status'], 'reason=', record['reason'], 'preflight=', record['preflight']['status'], 'current_run=', record['current_run']['status'])\nPY\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 tools/w0_baseline.py > /tmp/ephi-w0-baseline-run.json; rtk python3 - <<'PY'\nimport json\nfrom pathlib import Path\nrecord=json.loads(Path('/tmp/ephi-w0-baseline-run.json').read_text())\nprint('baseline status=', record['status'], 'reason=', record['reason'], 'preflight=', record['preflight']['status'], 'current_run=', record['current_run']['status'])\nprint('output status=', json.loads(Path('artifacts/w0-baseline.json').read_text())['status'])\nPY\nrtk python3 -m unittest tests.test_w0_baseline -v\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py && rtk python3 -m unittest discover -s tests -v && rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nimport importlib.util\nfor name in ('nicegui_base', 'nicegui'):\n    spec=importlib.util.find_spec(name)\n    print(name, 'AVAILABLE' if spec else 'UNAVAILABLE')\nPY\nrtk git status --short --untracked-files=all\nrtk git diff -- README.md 07_NiceGUI_Base_Integration.md manifest.json\nrtk git diff --no-index /dev/null tools/w0_baseline.py >/tmp/ephi-w0-baseline.diff || true\nrtk wc -l tools/w0_baseline.py tests/test_w0_baseline.py evidence/review/nicegui_base_binding_manifest.json\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nfrom importlib import metadata\nfor name in ('nicegui', 'nicegui-base'):\n    try: print(name, metadata.version(name))\n    except metadata.PackageNotFoundError: print(name, 'NOT_INSTALLED')\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m py_compile tools/w0_baseline.py tests/test_w0_baseline.py && rtk python3 -m json.tool evidence/review/nicegui_base_binding_manifest.json >/dev/null && rtk python3 -m unittest tests.test_w0_baseline -v && rtk git diff --check && rtk python3 tools/check_package.py --refresh-manifest && rtk python3 tools/check_package.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest discover -s tests -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py && rtk python3 tools/w0_baseline.py && rtk git diff --check'",
+      "exit_code": 4,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git diff --check; rtk python3 - <<'PY'\nfrom pathlib import Path\nfor path in (Path('artifacts/source/ephi_v0.19.1_production_hardened(1).zip'), Path('artifacts/source-staging')):\n    print(path, 'PRESENT' if path.exists() else 'ABSENT')\nPY\nrtk git status --short --untracked-files=all && rtk git diff --stat && rtk git diff --numstat\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git add README.md 07_NiceGUI_Base_Integration.md manifest.json evidence/review/nicegui_base_binding_manifest.json tests/test_w0_baseline.py tools/w0_baseline.py && rtk git diff --cached --check && rtk git diff --cached --stat && rtk git commit -m \"ephi: add NiceGUI Base binding and W0 harness\"'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short --branch && rtk git show --stat --oneline --summary HEAD && rtk python3 tools/check_package.py && rtk python3 -m unittest discover -s tests -v && rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    }
+  ],
+  "codex": {
+    "cli_version": "codex-cli 0.154.0",
+    "configured_model": "gpt-5.6-luna",
+    "event_count": 90,
+    "provider_reported_model": null,
+    "reasoning_effort": "xhigh",
+    "terminal_type": "turn.completed",
+    "usage": {
+      "cache_hit_percent": 96.04,
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 4114432,
+      "fresh_input_tokens": 169436,
+      "input_tokens": 4283868,
+      "non_reasoning_output_tokens": 23159,
+      "output_tokens": 46325,
+      "reasoning_output_tokens": 23166,
+      "total_processed_tokens": 4330193
+    },
+    "warnings": []
+  },
+  "commits": [
+    {
+      "sha": "2dace3bab25cb090fd448db0523259d744aea026",
+      "subject": "ephi: add NiceGUI Base binding and W0 harness"
+    }
+  ],
+  "diff": {
+    "additions": 903,
+    "changed_files": 6,
+    "commit_count": 1,
+    "deletions": 5
+  },
+  "error_code": null,
+  "evidence_manifest": {
+    "count": 4,
+    "items": [
+      {
+        "bytes": 9544,
+        "path": "07_NiceGUI_Base_Integration.md",
+        "sha256": "7709279be8746d58b9f7baa9303da12e58f1ddd0d3e79eccab559e843140a9d5"
+      },
+      {
+        "bytes": 6881,
+        "path": "README.md",
+        "sha256": "e29f5cd9a3fa38bb7e0e2325910e6d2a8c58c14b9c7c768d8cac3352179eabc5"
+      },
+      {
+        "bytes": 13981,
+        "path": "evidence/review/nicegui_base_binding_manifest.json",
+        "sha256": "55182f33463248c47a33e5f0b31c172c3e5cd5c0ecf6c144252ea386d5d614cc"
+      },
+      {
+        "bytes": 8134,
+        "path": "manifest.json",
+        "sha256": "b97ed2ddd81178457918aa920c52fe3bf4ff1ce01d7cf5c47f1ca54b5ee3882e"
+      }
+    ],
+    "version": 1
+  },
+  "evidence_publisher_release": "1.2.3-resume-candidate",
+  "fabric_capture": {
+    "applied": false,
+    "paths_before": 0,
+    "transient_untracked_removed": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "fabric_release": "1.2.3-resume-candidate",
+  "failure_class": null,
+  "finished_at": "2026-09-17T13:37:37Z",
+  "git": {
+    "base_is_ancestor": true,
+    "base_sha": "49889d173f4304ffcdbe599bd3b9a87f167da93a",
+    "branch": "codex/ephi-w0-base-binding-baseline-harness-v1",
+    "head_sha": "2dace3bab25cb090fd448db0523259d744aea026",
+    "remote_exact_head": true,
+    "remote_head_sha": "2dace3bab25cb090fd448db0523259d744aea026",
+    "target_branch": "main",
+    "target_drifted_since_acceptance": false,
+    "target_head_observed_after_execution": "49889d173f4304ffcdbe599bd3b9a87f167da93a",
+    "work_branch": "codex/ephi-w0-base-binding-baseline-harness-v1",
+    "worktree_clean": true
+  },
+  "instructions": {
+    "files": [
+      {
+        "bytes": 959,
+        "path": "AGENTS.md",
+        "sha256": "0803c825a0dbaf0266aa44b5ce9c6a30d8eac93737369aae3dc9715d3bb49767"
+      }
+    ],
+    "total_bytes": 959,
+    "warning": null
+  },
+  "job_id": "CF-e4ec12112248334d11c7e3f4",
+  "kind": "codex-fabric-audit-evidence",
+  "locator": {
+    "branch": "codex-fabric/evidence/ephi/ephi-w0-base-binding-baseline-harness-v1",
+    "path": ".codex-fabric/audit.json",
+    "ref": "refs/heads/codex-fabric/evidence/ephi/ephi-w0-base-binding-baseline-harness-v1"
+  },
+  "operation": "BUILD",
+  "policy": {
+    "environment_policy_sha256": "e077daca74297b3c30bee8989f00f8ca5338f7610b4d016a6c48db524205d064",
+    "fabric_release": "1.2.3-resume-candidate",
+    "policy_sha256": "44756118cd7fda0c45cd23ba1d31a48a3f4f2422d687df15264ba4406f40e1f2",
+    "registry_sha256": "cfc765f3211c37c7967a138f3b2d89a99341939b15b2623f92744d007f625d6f"
+  },
+  "project_id": "ephi",
+  "recovery": {
+    "model_rerun_safe": false,
+    "recovery_required": false,
+    "retry_safe": false,
+    "retry_scope": null,
+    "worktree_retained": true
+  },
+  "request": "ephi-w0-base-binding-baseline-harness-v1",
+  "schema_version": 1,
+  "started_at": "2026-09-17T13:21:57Z",
+  "status": "EXECUTED_CHANGE",
+  "timing": {
+    "execution_seconds": 940,
+    "queue_seconds": 1,
+    "total_seconds": 941
+  },
+  "transport": {
+    "bytes": 4063,
+    "envelope": "FABRIC/2",
+    "prompt_bytes": 3731,
+    "prompt_sha256": "dd688b81d4243b0b8142da18f35b07037ffe5da18a156d2583f8e2331efe7f64",
+    "sha256": "e4ec12112248334d11c7e3f4bf738519ec545952c16ed7e8d03b6bc199fbd845"
+  }
+}
