@@ -1,0 +1,375 @@
+{
+  "schema_version": 1,
+  "change": "CHG-109",
+  "wave": "W0",
+  "scope": "Source-bound integrity regression gate for F02, F03, F04 and F05",
+  "source_identity": {
+    "required_filename": "ephi_v0.19.1_production_hardened(1).zip",
+    "required_sha256": "5e9ad8f63b3158adc530af69fc650aec606cbfa64896ba73840cdcf994a2b6e3",
+    "required_source_root": "ephi_v0.19.1_production_hardened_release",
+    "authority": "tools/source_preflight.py and tools/w0_baseline.py"
+  },
+  "historical_evidence": {
+    "status": "REFERENCE_ONLY",
+    "immutable": true,
+    "source": "original application audit",
+    "probe_script": "evidence/behavior_probes.py",
+    "probe_record": "evidence/behavior_probes.json",
+    "files": [
+      {
+        "path": "evidence/behavior_probes.py",
+        "bytes": 5635,
+        "sha256": "805a63ab3887b430c42b4b6208d1f1dffab9fc8536a7882d024b707e05a4d951"
+      },
+      {
+        "path": "evidence/behavior_probes.json",
+        "bytes": 1192,
+        "sha256": "5b17f4caff743c2f4839eccff8a9e7a168b0113d7ad2f1ce67057d5e71c09be1"
+      },
+      {
+        "path": "evidence/behavior_probes.log",
+        "bytes": 1192,
+        "sha256": "5b17f4caff743c2f4839eccff8a9e7a168b0113d7ad2f1ce67057d5e71c09be1"
+      },
+      {
+        "path": "evidence/source_excerpts.md",
+        "bytes": 8796,
+        "sha256": "5bd0bca1e8ddbd104e0d51daf734d93b6bca8f0c8170ddeb92e7d16c2a0b2bc6"
+      },
+      {
+        "path": "evidence/source_inventory.json",
+        "bytes": 264378,
+        "sha256": "d995b28e9196c0a2145655905e5c3ddac6c1821c42af0e5a9a79aee0737cef75"
+      }
+    ],
+    "observations": [
+      {
+        "id": "F03",
+        "status": "REFERENCE_ONLY",
+        "scenario_identity": "Technical episode resolves while engineering investigation remains open",
+        "observed": {
+          "id": "F03",
+          "scenario": "Technical episode resolves while engineering investigation remains open",
+          "workflow": "INVESTIGATING",
+          "visible_in_attention": false,
+          "required_product_behavior": "Remain discoverable as open engineering work."
+        },
+        "interpretation": "Historical observation only; it is not current execution or acceptance evidence."
+      },
+      {
+        "id": "F02",
+        "status": "REFERENCE_ONLY",
+        "scenario_identity": "Recompose advisory around populated source repository without restoring its separate checkpoint",
+        "observed": {
+          "id": "F02",
+          "scenario": "Recompose advisory around populated source repository without restoring its separate checkpoint",
+          "outcome": "KeyError",
+          "interpretation": "Persisting source rows alone is insufficient; version/workflow state must be restored or repository backed."
+        },
+        "interpretation": "Historical source-only recomposition boundary; not proof that the shipped checkpoint restore path fails."
+      },
+      {
+        "id": "F04",
+        "status": "REFERENCE_ONLY",
+        "scenario_identity": "Value summary as_of before a later superseding correction",
+        "observed": {
+          "id": "F04",
+          "scenario": "Value summary as_of before a later superseding correction",
+          "expected_operating_cost": 10,
+          "actual_operating_cost": 0.0,
+          "interpretation": "active_entries removes the old row before as_of filtering; historical summaries require as-of-aware supersession."
+        },
+        "interpretation": "Historical observation only; it is not current execution or acceptance evidence."
+      },
+      {
+        "id": "F05",
+        "status": "REFERENCE_ONLY",
+        "scenario_identity": "Low-confidence OBSERVE assessments attributed to data pipeline change after active episode",
+        "observed": {
+          "id": "F05",
+          "scenario": "Low-confidence OBSERVE assessments attributed to data pipeline change after active episode",
+          "assessment_count": 5,
+          "actual_episode_state": "RESOLVED",
+          "required_product_behavior": "Do not count data-unreliable assessments as affirmative recovery evidence."
+        },
+        "interpretation": "Historical observation only; it is not current execution or acceptance evidence."
+      }
+    ]
+  },
+  "current_execution": {
+    "status": "NOT_RUN",
+    "probe_script": "evidence/behavior_probes.py",
+    "pythonpath": "src:company_port/src",
+    "runtime_artifact_root": "artifacts/w0-integrity-regressions",
+    "result_output": "artifacts/w0-integrity-regressions.json",
+    "historical_output_must_not_be_overwritten": [
+      "evidence/behavior_probes.py",
+      "evidence/behavior_probes.json",
+      "evidence/behavior_probes.log"
+    ],
+    "boundary": "Fresh probe output is written and hashed only under ignored runtime artifacts; it is never written to preserved evidence."
+  },
+  "f02_checkpoint_restore_qualification": {
+    "source_inventory": "evidence/source_inventory.json",
+    "source_excerpts": "evidence/source_excerpts.md",
+    "checkpoint_source_path": "src/ephi/advisory/checkpoint.py",
+    "checkpoint_test_path": "tests/advisory/test_checkpoint.py",
+    "checkpoint_test_symbol": "test_advisory_checkpoint_preserves_workflow_missed_events_and_versions",
+    "api_rule": "Derive public save/restore functions and signatures from the staged source and preserved inventory; do not guess an API."
+  },
+  "findings": [
+    {
+      "id": "F03",
+      "scenario_identity": "Technical episode resolves while engineering investigation remains open",
+      "historical_observation": {
+        "status": "REFERENCE_ONLY",
+        "source": "evidence/behavior_probes.json",
+        "record_id": "F03",
+        "observed": {
+          "id": "F03",
+          "scenario": "Technical episode resolves while engineering investigation remains open",
+          "workflow": "INVESTIGATING",
+          "visible_in_attention": false,
+          "required_product_behavior": "Remain discoverable as open engineering work."
+        }
+      },
+      "target_product_behavior": {
+        "technical_episode_state": "RESOLVED",
+        "workflow_state": "INVESTIGATING",
+        "visible_in_attention": true,
+        "meaning": "Open engineering work remains discoverable until explicitly disposed."
+      },
+      "source_locators": [
+        {
+          "path": "src/ephi/advisory/service.py",
+          "lines": "181-190",
+          "basis": "evidence/source_excerpts.md"
+        }
+      ],
+      "audit_locators": [
+        {
+          "path": "02_Source_Audit.md",
+          "locator": "F03 finding row"
+        },
+        {
+          "path": "09_Delivery_and_Gates.md",
+          "locator": "G04 Work continuity"
+        }
+      ],
+      "evaluation_rule": {
+        "type": "exact_observation_fields",
+        "assertions": [
+          {
+            "path": "scenario",
+            "operator": "equals",
+            "value": "Technical episode resolves while engineering investigation remains open"
+          },
+          {
+            "path": "workflow",
+            "operator": "equals",
+            "value": "INVESTIGATING"
+          },
+          {
+            "path": "visible_in_attention",
+            "operator": "equals",
+            "value": true
+          }
+        ],
+        "failure_condition": "Fail when visible_in_attention is false for this scenario."
+      }
+    },
+    {
+      "id": "F02",
+      "scenario_identity": "Recompose advisory around populated source repository without restoring its separate checkpoint",
+      "historical_observation": {
+        "status": "REFERENCE_ONLY",
+        "source": "evidence/behavior_probes.json",
+        "record_id": "F02",
+        "observed": {
+          "id": "F02",
+          "scenario": "Recompose advisory around populated source repository without restoring its separate checkpoint",
+          "outcome": "KeyError",
+          "interpretation": "Persisting source rows alone is insufficient; version/workflow state must be restored or repository backed."
+        }
+      },
+      "target_product_behavior": {
+        "source_only_result": "SOURCE_ONLY_INSUFFICIENT",
+        "checkpoint_restore_result": "CHECKPOINT_RESTORE_PASS",
+        "meaning": "Source rows alone do not establish workflow/version/revision state; the intended checkpoint/restore path must restore it coherently."
+      },
+      "source_locators": [
+        {
+          "path": "src/ephi/advisory/service.py",
+          "lines": "68-78",
+          "basis": "evidence/source_excerpts.md"
+        },
+        {
+          "path": "src/ephi/advisory/service.py",
+          "lines": "108-118",
+          "basis": "evidence/source_excerpts.md"
+        },
+        {
+          "path": "src/ephi/advisory/checkpoint.py",
+          "locator": "public checkpoint API discovered from staged source/inventory"
+        }
+      ],
+      "audit_locators": [
+        {
+          "path": "02_Source_Audit.md",
+          "locator": "F02 finding row and qualification boundary paragraph"
+        },
+        {
+          "path": "12_Sources_and_Evidence.md",
+          "locator": "behavior probe boundary"
+        }
+      ],
+      "evaluation_rule": {
+        "type": "source_only_then_checkpoint_restore",
+        "source_only_assertions": [
+          {
+            "path": "scenario",
+            "operator": "equals",
+            "value": "Recompose advisory around populated source repository without restoring its separate checkpoint"
+          }
+        ],
+        "source_only_result": "SOURCE_ONLY_INSUFFICIENT",
+        "checkpoint_restore_results": [
+          "CHECKPOINT_RESTORE_PASS",
+          "CHECKPOINT_RESTORE_FAIL",
+          "NOT_RUN"
+        ],
+        "pass_condition": "Source-only result is SOURCE_ONLY_INSUFFICIENT and checkpoint restore result is CHECKPOINT_RESTORE_PASS.",
+        "not_run_condition": "Use NOT_RUN when the staged source or exact restore API/test authority cannot be identified or executed; never guess a signature."
+      }
+    },
+    {
+      "id": "F04",
+      "scenario_identity": "Value summary as_of before a later superseding correction",
+      "historical_observation": {
+        "status": "REFERENCE_ONLY",
+        "source": "evidence/behavior_probes.json",
+        "record_id": "F04",
+        "observed": {
+          "id": "F04",
+          "scenario": "Value summary as_of before a later superseding correction",
+          "expected_operating_cost": 10,
+          "actual_operating_cost": 0.0,
+          "interpretation": "active_entries removes the old row before as_of filtering; historical summaries require as-of-aware supersession."
+        }
+      },
+      "target_product_behavior": {
+        "as_of_operating_cost": 10,
+        "currency": "USD",
+        "meaning": "The summary between the original $10 entry and later $20 correction reports the then-active $10 cost."
+      },
+      "source_locators": [
+        {
+          "path": "src/ephi/value/ledger.py",
+          "lines": "100-104",
+          "basis": "evidence/source_excerpts.md"
+        },
+        {
+          "path": "src/ephi/value/service.py",
+          "lines": "438-440",
+          "basis": "evidence/source_excerpts.md"
+        }
+      ],
+      "audit_locators": [
+        {
+          "path": "02_Source_Audit.md",
+          "locator": "F04 finding row"
+        },
+        {
+          "path": "04_Data_and_Runtime.md",
+          "locator": "E5 Temporal value correction"
+        },
+        {
+          "path": "09_Delivery_and_Gates.md",
+          "locator": "G02 Temporal integrity"
+        }
+      ],
+      "evaluation_rule": {
+        "type": "exact_observation_fields",
+        "assertions": [
+          {
+            "path": "scenario",
+            "operator": "equals",
+            "value": "Value summary as_of before a later superseding correction"
+          },
+          {
+            "path": "actual_operating_cost",
+            "operator": "equals",
+            "value": 10
+          }
+        ],
+        "failure_condition": "Fail on 0, 20, or any value other than exactly 10."
+      }
+    },
+    {
+      "id": "F05",
+      "scenario_identity": "Low-confidence OBSERVE assessments attributed to data pipeline change after active episode",
+      "historical_observation": {
+        "status": "REFERENCE_ONLY",
+        "source": "evidence/behavior_probes.json",
+        "record_id": "F05",
+        "observed": {
+          "id": "F05",
+          "scenario": "Low-confidence OBSERVE assessments attributed to data pipeline change after active episode",
+          "assessment_count": 5,
+          "actual_episode_state": "RESOLVED",
+          "required_product_behavior": "Do not count data-unreliable assessments as affirmative recovery evidence."
+        }
+      },
+      "target_product_behavior": {
+        "assessment_count": 5,
+        "confidence": 0.0,
+        "severity": "OBSERVE",
+        "leading_hypothesis": "DATA_PIPELINE_OR_SCHEMA_CHANGE",
+        "affirmative_recovery_evidence": false,
+        "active_episode_state": "not RESOLVED solely from this sequence"
+      },
+      "source_locators": [
+        {
+          "path": "src/ephi/episodes/service.py",
+          "lines": "67-91",
+          "basis": "evidence/source_excerpts.md"
+        }
+      ],
+      "audit_locators": [
+        {
+          "path": "02_Source_Audit.md",
+          "locator": "F05 finding row"
+        },
+        {
+          "path": "06_Investigation_and_Recovery_Logic.md",
+          "locator": "qualified recovery evidence rule"
+        },
+        {
+          "path": "09_Delivery_and_Gates.md",
+          "locator": "G03 Recovery integrity"
+        }
+      ],
+      "evaluation_rule": {
+        "type": "exact_observation_fields",
+        "assertions": [
+          {
+            "path": "scenario",
+            "operator": "equals",
+            "value": "Low-confidence OBSERVE assessments attributed to data pipeline change after active episode"
+          },
+          {
+            "path": "assessment_count",
+            "operator": "equals",
+            "value": 5
+          },
+          {
+            "path": "actual_episode_state",
+            "operator": "not_equals",
+            "value": "RESOLVED"
+          }
+        ],
+        "failure_condition": "Fail if the active episode becomes RESOLVED solely from zero-confidence, data-unreliable OBSERVE assessments."
+      }
+    }
+  ]
+}

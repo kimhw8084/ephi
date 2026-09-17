@@ -14,4 +14,6 @@ They describe the **earlier source audit**, not an application run in this repos
 
 [review/package_review.json](review/package_review.json) records this repository review, and [review/base_reference_check.json](review/base_reference_check.json) records the pinned framework files inspected on GitHub. [review/nicegui_base_runtime_evidence.json](review/nicegui_base_runtime_evidence.json) is the newly executed CHG-105 installed-runtime summary; [review/nicegui_base_binding_manifest.json](review/nicegui_base_binding_manifest.json) links it while preserving the earlier CHG-104 source-inspection record. Framework/runtime execution remains distinct from application, browser and company qualification.
 
+[review/w0_integrity_regression_contract.json](review/w0_integrity_regression_contract.json) is the CHG-109 W0 contract for source-bound F02/F03/F04/F05 regression evaluation. Its historical observations remain reference-only; the runner's fresh probe and checkpoint results belong under ignored `artifacts/` runtime output.
+
 Use the commands in [the README](../README.md) for current package checks; consult GitHub Actions for checks on a particular published commit. Do not overwrite these historical results when running a new audit.

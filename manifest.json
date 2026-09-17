@@ -131,8 +131,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 8493,
-      "sha256": "17b6ba18b7b3fbf7fd2821660c81a0eea8c79bac156aadec80f828d335177f1c"
+      "bytes": 9365,
+      "sha256": "4fe32078679a7331503cbaabc615ef91a25bf8154e10e2fe5e932fda0bd00cc1"
     },
     {
       "path": "environment/nicegui_base_requirements.txt",
@@ -146,8 +146,8 @@
     },
     {
       "path": "evidence/README.md",
-      "bytes": 2043,
-      "sha256": "dda15051bde19109be8f552f3dd2a6dc23b18e6ee61ea5fd96705ebd42cbb1eb"
+      "bytes": 2369,
+      "sha256": "32e9bd42efcb267536e28e6f7b884c335952811cc6d05d64a870adbf1b16ff73"
     },
     {
       "path": "evidence/audit_environment.json",
@@ -210,6 +210,11 @@
       "sha256": "e40c88179a27da2ee672d644798ea9e2b3bc123743fbafe50f7dbf7a01a42678"
     },
     {
+      "path": "evidence/review/w0_integrity_regression_contract.json",
+      "bytes": 14263,
+      "sha256": "e550e92670c21d72009c73bd7205cca68dda71ab0e9692b9942880f576102c0e"
+    },
+    {
       "path": "evidence/source_excerpts.md",
       "bytes": 8796,
       "sha256": "5bd0bca1e8ddbd104e0d51daf734d93b6bca8f0c8170ddeb92e7d16c2a0b2bc6"
@@ -235,6 +240,11 @@
       "sha256": "8cccdf4cf0f6ed6f47205c92f80ac54ea479cea996cd8f1d8ec1af7720e11279"
     },
     {
+      "path": "tests/test_w0_integrity_regressions.py",
+      "bytes": 7310,
+      "sha256": "0a93b2726c89e3206ac29ad3115ceaebe63e75361f69772bf636d7011118068d"
+    },
+    {
       "path": "tests/test_w0_runtime.py",
       "bytes": 2886,
       "sha256": "dae5be689554ee00146846a30b7de7c309b27650d42c22b46eca5d17ac4964d8"
@@ -253,6 +263,11 @@
       "path": "tools/w0_baseline.py",
       "bytes": 18010,
       "sha256": "870043bdc3ccd2fce3e75ecf0ef2f370aa4abda6d76546a23c4453d93c30d076"
+    },
+    {
+      "path": "tools/w0_integrity_regressions.py",
+      "bytes": 39689,
+      "sha256": "8901cb7e509a0c5221dd05d717b72039708cb553a455d1a7a52f4bccfea4923a"
     },
     {
       "path": "tools/w0_runtime.py",

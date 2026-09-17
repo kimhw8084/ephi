@@ -76,6 +76,16 @@ The harness consumes `artifacts/source-preflight.json`, re-inventories the repor
 
 The CHG-104 NiceGUI Base binding record is [evidence/review/nicegui_base_binding_manifest.json](evidence/review/nicegui_base_binding_manifest.json). It records the pinned source inspection and explicitly records installed CLI discovery as unavailable when that executable is absent.
 
+## W0 integrity regressions (CHG-109)
+
+The source-bound F02/F03/F04/F05 contract is [the machine-readable regression contract](evidence/review/w0_integrity_regression_contract.json). After `source_preflight.py` reports `SOURCE_STAGED`, run:
+
+```bash
+python3 tools/w0_integrity_regressions.py
+```
+
+The gate validates the exact preflight identity, runs the preserved probe with `PYTHONPATH=src:company_port/src`, and stores fresh output only under ignored `artifacts/w0-integrity-regressions/`. It reports `BLOCKED` with current execution `NOT_RUN` until exact source is staged. F02 remains a qualification boundary: source-only recomposition is recorded as `SOURCE_ONLY_INSUFFICIENT`, while the actual staged checkpoint API/test must separately produce `CHECKPOINT_RESTORE_PASS` before F02 passes. Historical evidence is never overwritten or treated as current execution.
+
 ## W0 pinned framework qualification (CHG-105)
 
 The independent W0 framework slice uses the machine-readable [runtime specification](environment/nicegui_base_runtime.json) and its exact [requirements](environment/nicegui_base_requirements.txt). It installs NiceGUI Base only from the recorded VCS commit `000298562d6bcbf6df304edbd41b98b30fe4bfcf`, requires framework version `3.0.0a8`, requires exactly `nicegui==3.15.0`, and accepts only Python `>=3.11,<3.14`. The checker verifies `direct_url.json` VCS identity and the CHG-104 public root imports before running any framework command. A missing or mismatched identity fails closed.
