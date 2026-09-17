@@ -46,9 +46,27 @@ Checks cover file integrity, local Markdown links and code fences, JSON/Python s
 
 The historical **275 passed / 1 skipped** result belongs to the original application audit. It is not this repository's test result. The application tests and behavioral probes require the absent original source.
 
+## W0 source preflight
+
+The first bounded W0 step is a fail-closed source restoration preflight. Place the exact, owner-supplied archive at the ignored default location below, preserving its required filename, then run one command:
+
+```text
+artifacts/source/ephi_v0.19.1_production_hardened(1).zip
+```
+
+```bash
+python3 tools/source_preflight.py
+```
+
+The preflight writes `artifacts/source-preflight.json` and, only after the exact SHA-256 and archive-member safety checks pass, stages the source under `artifacts/source-staging/`. An alternate local/staging archive may be supplied with `--archive`, but its basename must still be `ephi_v0.19.1_production_hardened(1).zip`; `--stage-dir` must name a fresh directory. Paths under `evidence/` are rejected. The archive and staged source are ignored local artifacts and must never be committed.
+
+`SOURCE_REQUIRED` (exit 2) means the exact archive is absent. `SOURCE_REJECTED` (exit 3) means filename, hash, ZIP structure, member path, special-file/symlink safety, or staging validation failed. `SOURCE_STAGED` (exit 0) records source identity and discovers Python, dependency-file, test-file and runtime reality; it does not run the original application tests. The JSON keeps the historical 275 passed / 1 skipped audit result under `historical_test_result` with `REFERENCE_ONLY` status and records current test execution separately as `NOT_RUN` until an engineer runs the verified source baseline.
+
+This foundation does not reconstruct application modules and does not fix or claim to fix F03, F04 or F05. Those changes remain blocked on the verified original source and their W0 regression/qualification work.
+
 ## Before implementation
 
-1. Obtain the original `ephi_v0.19.1_production_hardened(1).zip` from its owner and verify SHA-256 `5e9ad8f63b3158adc530af69fc650aec606cbfa64896ba73840cdcf994a2b6e3`. The supplied design ZIP is a different artifact.
+1. Run the W0 source preflight above with the original `ephi_v0.19.1_production_hardened(1).zip`; verify SHA-256 `5e9ad8f63b3158adc530af69fc650aec606cbfa64896ba73840cdcf994a2b6e3`. The supplied design ZIP is a different artifact.
 2. Reproduce that source baseline in isolation and record dependencies. Preserve existing scientific modules and fix the documented integrity defects through regression tests.
 3. Resolve the installed APIs of [NiceGUI Base at the inspected commit](https://github.com/kimhw8084/nicegui-base/tree/000298562d6bcbf6df304edbd41b98b30fe4bfcf), then follow W0/W1. Company bindings and target qualification remain explicit gates.
 

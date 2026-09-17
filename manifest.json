@@ -106,8 +106,8 @@
     },
     {
       "path": "11_Developer_Start.md",
-      "bytes": 3512,
-      "sha256": "f43a14d6c98f992f546f219e671b620994f9ffa86988fd62e9db657f35545e0f"
+      "bytes": 4753,
+      "sha256": "a38d7e099e19f6dc31d163a8b9a76b59e95579dc9b4b466be6e76f6bc35c7d48"
     },
     {
       "path": "12_Sources_and_Evidence.md",
@@ -131,8 +131,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 4342,
-      "sha256": "0cf7fd8caf860e63f691d7c93d28b668638d9e591240c7f32b2a34de34c9645a"
+      "bytes": 6016,
+      "sha256": "fec5acb24ccfbbc6c802d7806d05edea8aded6f21d8ffba889974064342140ea"
     },
     {
       "path": "evidence/README.md",
@@ -205,9 +205,19 @@
       "sha256": "240751ed087c4ffe26cdbe82e54e6372bbbb1fbee94bf2d66ad2793e4f91eacf"
     },
     {
+      "path": "tests/test_source_preflight.py",
+      "bytes": 6134,
+      "sha256": "ce6af6dd40c15786c9e945cbee5e08796aede794cedff5f9cc5980df1848e153"
+    },
+    {
       "path": "tools/check_package.py",
       "bytes": 11246,
       "sha256": "642b4202dffad801be8e0c4cc796826e1a8833c335ce894b5d516ac810a09076"
+    },
+    {
+      "path": "tools/source_preflight.py",
+      "bytes": 16697,
+      "sha256": "b82ed81cddf7784fe7144af887b1ba4411b0883505b09d751c69ac798969914e"
     }
   ],
   "manifest_note": "Current repository files excluding this manifest and ignored local artifacts. Imported evidence remains bound to the preserved original manifest. Hashes establish byte identity, not source correctness or production acceptance."
