@@ -86,8 +86,8 @@
     },
     {
       "path": "07_NiceGUI_Base_Integration.md",
-      "bytes": 9308,
-      "sha256": "c385e09338245ba383085043e66e8ac6a7c3b338d354f191e61511fd86fe614e"
+      "bytes": 9544,
+      "sha256": "7709279be8746d58b9f7baa9303da12e58f1ddd0d3e79eccab559e843140a9d5"
     },
     {
       "path": "08_Security_Notifications_AI_Operations.md",
@@ -131,8 +131,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 6016,
-      "sha256": "fec5acb24ccfbbc6c802d7806d05edea8aded6f21d8ffba889974064342140ea"
+      "bytes": 6881,
+      "sha256": "e29f5cd9a3fa38bb7e0e2325910e6d2a8c58c14b9c7c768d8cac3352179eabc5"
     },
     {
       "path": "evidence/README.md",
@@ -185,6 +185,11 @@
       "sha256": "79351a0696b782c30a194bedd1ac536ae30ec66bbf963c0159ca10c03cb3e558"
     },
     {
+      "path": "evidence/review/nicegui_base_binding_manifest.json",
+      "bytes": 13981,
+      "sha256": "55182f33463248c47a33e5f0b31c172c3e5cd5c0ecf6c144252ea386d5d614cc"
+    },
+    {
       "path": "evidence/review/package_review.json",
       "bytes": 3075,
       "sha256": "e40c88179a27da2ee672d644798ea9e2b3bc123743fbafe50f7dbf7a01a42678"
@@ -210,6 +215,11 @@
       "sha256": "ce6af6dd40c15786c9e945cbee5e08796aede794cedff5f9cc5980df1848e153"
     },
     {
+      "path": "tests/test_w0_baseline.py",
+      "bytes": 5197,
+      "sha256": "8cccdf4cf0f6ed6f47205c92f80ac54ea479cea996cd8f1d8ec1af7720e11279"
+    },
+    {
       "path": "tools/check_package.py",
       "bytes": 11246,
       "sha256": "642b4202dffad801be8e0c4cc796826e1a8833c335ce894b5d516ac810a09076"
@@ -218,6 +228,11 @@
       "path": "tools/source_preflight.py",
       "bytes": 16697,
       "sha256": "b82ed81cddf7784fe7144af887b1ba4411b0883505b09d751c69ac798969914e"
+    },
+    {
+      "path": "tools/w0_baseline.py",
+      "bytes": 18010,
+      "sha256": "870043bdc3ccd2fce3e75ecf0ef2f370aa4abda6d76546a23c4453d93c30d076"
     }
   ],
   "manifest_note": "Current repository files excluding this manifest and ignored local artifacts. Imported evidence remains bound to the preserved original manifest. Hashes establish byte identity, not source correctness or production acceptance."

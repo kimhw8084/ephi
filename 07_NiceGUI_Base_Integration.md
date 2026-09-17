@@ -2,7 +2,7 @@
 
 ## 1. Verified integration baseline
 
-Repository: `kimhw8084/nicegui-base`, candidate SHA `000298562d6bcbf6df304edbd41b98b30fe4bfcf`. Read authorities: `AGENTS.md`; `source/nicegui_base/ai/construction_manifest.json`; `source/nicegui_base/__init__.py`; `source/nicegui_base/design/{__init__,tokens}.py`; `examples/nicegui_base/golden_analysis_workspace.py`. The framework identifies version 3.0.0a8 and exactly NiceGUI 3.15.0.
+Repository: `kimhw8084/nicegui-base`, candidate SHA `000298562d6bcbf6df304edbd41b98b30fe4bfcf`. Read authorities: `AGENTS.md`; `source/nicegui_base/ai/construction_manifest.json`; `source/nicegui_base/__init__.py`; `source/nicegui_base/design/{__init__,tokens}.py`; `examples/nicegui_base/golden_analysis_workspace.py`. The framework identifies version 3.0.0a8 and exactly NiceGUI 3.15.0. CHG-104's machine-readable binding record is [evidence/review/nicegui_base_binding_manifest.json](evidence/review/nicegui_base_binding_manifest.json); it separates pinned-source findings from unavailable installed-CLI/runtime evidence.
 
 Use the installed package at a pinned artifact/commit. Do not clone source into EPHI and gradually fork it. Framework improvement requests are separate changes with separate tests. Do not launch the Base reference explorer as the EPHI application. Its existing `run_nicegui_base.py` remains the canonical explorer launcher; EPHI extends its own existing CLI through an application bootstrap generated from the supported Base pattern. No extra launcher is added inside the golden framework checkout.
 

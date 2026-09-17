@@ -1,0 +1,337 @@
+{
+  "schema_version": 1,
+  "change": "CHG-104",
+  "requirement": "R1",
+  "scope": "EPHI O1/W0 first Attention -> Episode slice",
+  "status": "SOURCE_INSPECTION_COMPLETE_CLI_UNAVAILABLE_RUNTIME_NOT_QUALIFIED",
+  "framework": {
+    "repository": "kimhw8084/nicegui-base",
+    "commit": "000298562d6bcbf6df304edbd41b98b30fe4bfcf",
+    "framework_version": "3.0.0a8",
+    "nicegui_requirement": "nicegui==3.15.0",
+    "python_requires": ">=3.11,<3.14",
+    "authority_rule": "Normal application code imports public symbols from nicegui_base; it does not import nicegui.ui directly or nicegui_base.integrations.nicegui_* APIs."
+  },
+  "discovery_evidence": {
+    "cli": {
+      "executable": "nicegui-base",
+      "availability": "UNAVAILABLE",
+      "availability_check": {
+        "command": "command -v nicegui-base",
+        "status": "NOT_FOUND"
+      },
+      "commands": [
+        {
+          "command": "nicegui-base agent-context \"EPHI O1/W0 first Attention -> Episode slice\" --format json",
+          "status": "NOT_RUN",
+          "reason": "UNAVAILABLE"
+        },
+        {
+          "command": "nicegui-base catalog-search \"engineering attention episode workspace\" --format json",
+          "status": "NOT_RUN",
+          "reason": "UNAVAILABLE"
+        },
+        {
+          "command": "nicegui-base recommend-pattern \"EPHI engineering attention and investigation\" --format json",
+          "status": "NOT_RUN",
+          "reason": "UNAVAILABLE"
+        },
+        {
+          "command": "nicegui-base recommend-visualization \"episode timeline and process trend\" --schema timestamp --schema measurement --format json",
+          "status": "NOT_RUN",
+          "reason": "UNAVAILABLE"
+        },
+        {
+          "command": "nicegui-base catalog-audit --format json",
+          "status": "NOT_RUN",
+          "reason": "UNAVAILABLE"
+        },
+        {
+          "command": "nicegui-base scaffold-plan \"EPHI Attention -> Episode\" --format json",
+          "status": "NOT_RUN",
+          "reason": "UNAVAILABLE"
+        }
+      ]
+    },
+    "pinned_source_inspection": {
+      "status": "PASS",
+      "method": "Read-only checkout at the pinned commit; parse pyproject metadata, construction manifest and framework catalog; inspect public root exports, patterns, shared analysis/workspace state and golden examples. No framework installation or imports.",
+      "files": [
+        {
+          "path": "AGENTS.md",
+          "bytes": 5951,
+          "sha256": "b3b5462373fa217fa887895914ffb6581de62313d5eea72e6800d2b675b04da7"
+        },
+        {
+          "path": "pyproject.toml",
+          "bytes": 3284,
+          "sha256": "8b66fe0d77d631143a83f234cbfdc4401fc0259ec21f8da67ba2ba1d93229840"
+        },
+        {
+          "path": "source/nicegui_base/ai/construction_manifest.json",
+          "bytes": 35164,
+          "sha256": "3ae85f2e554f7080fbf81f68b1df7cf69ed5e917ca82427ddaf06ab31625a724"
+        },
+        {
+          "path": "source/nicegui_base/ai/framework_catalog.json",
+          "bytes": 203443,
+          "sha256": "555e46ff14ac9311ebb678285d6f3163bbcbf49840ec04ac11e1898366c9c149f"
+        },
+        {
+          "path": "source/nicegui_base/__init__.py",
+          "bytes": 19431,
+          "sha256": "7366f8a70c0a6ee43f9891a38a3e7965a932cba554978818fc25b32fdc195214"
+        }
+      ],
+      "catalog": {
+        "schema_version": 7,
+        "framework_version": "3.0.0a8",
+        "nicegui_version": "3.15.0",
+        "registry_counts": {
+          "analysis": 7,
+          "page_patterns": 10,
+          "tables": 6,
+          "visualizations": 24,
+          "runtime": 6
+        }
+      }
+    },
+    "runtime": {
+      "nicegui": {
+        "status": "AVAILABLE",
+        "installed_version": "3.15.0"
+      },
+      "nicegui_base": {
+        "status": "UNAVAILABLE",
+        "reason": "distribution and import are absent; no unpinned installation attempted"
+      },
+      "commands": [
+        {
+          "command": "nicegui-base agent-check .",
+          "status": "NOT_RUN",
+          "reason": "UNAVAILABLE"
+        },
+        {
+          "command": "nicegui-base gate .",
+          "status": "NOT_RUN",
+          "reason": "UNAVAILABLE"
+        },
+        {
+          "command": "nicegui-base runtime-contract",
+          "status": "NOT_RUN",
+          "reason": "UNAVAILABLE"
+        },
+        {
+          "command": "nicegui-base runtime-smoke --port 0",
+          "status": "NOT_RUN",
+          "reason": "UNAVAILABLE"
+        }
+      ]
+    }
+  },
+  "first_slice_binding": {
+    "patterns": [
+      {
+        "catalog_key": "monitoring",
+        "public_symbol": "MonitoringPage",
+        "purpose": "Operational health, alerts and periodically refreshed data.",
+        "required_slots": ["header", "metrics", "primary"],
+        "optional_slots": ["filters", "secondary", "data", "details", "actions"],
+        "primary_grid": "metrics"
+      },
+      {
+        "catalog_key": "master_detail",
+        "public_symbol": "MasterDetailPage",
+        "purpose": "Browse entities while preserving selected-entity context.",
+        "required_slots": ["header", "data", "details"],
+        "optional_slots": ["filters", "actions"],
+        "primary_grid": "content_inspector"
+      },
+      {
+        "catalog_key": "analysis_workspace",
+        "public_symbol": "AnalysisWorkspacePage",
+        "purpose": "Maximum-density resizable chart/table analysis environment.",
+        "required_slots": ["header", "primary"],
+        "optional_slots": ["filters", "secondary", "data", "details", "actions"],
+        "primary_grid": "content_inspector"
+      }
+    ],
+    "public_symbols": [
+      {
+        "name": "DataSourceTable",
+        "import": "from nicegui_base import DataSourceTable",
+        "catalog_key": "data_source_table",
+        "purpose": "Server-paged table directly backed by DataSource and AnalysisContext.",
+        "source_definition": "source/nicegui_base/integrations/nicegui_analysis.py:70"
+      },
+      {
+        "name": "AnalyticalPanel",
+        "import": "from nicegui_base import AnalyticalPanel",
+        "catalog_key": "analytical_panel",
+        "purpose": "Canonical analytical loading/error/empty/stale/partial/action shell.",
+        "source_definition": "source/nicegui_base/integrations/nicegui_analysis.py:29"
+      },
+      {
+        "name": "InvestigationContextBar",
+        "import": "from nicegui_base import InvestigationContextBar",
+        "catalog_key": "InvestigationContextBar",
+        "purpose": "Persistent investigation orientation strip.",
+        "source_definition": "source/nicegui_base/integrations/nicegui_engineering.py:92"
+      },
+      {
+        "name": "EngineeringStatusBadge",
+        "import": "from nicegui_base import EngineeringStatusBadge",
+        "catalog_key": "EngineeringStatusBadge",
+        "purpose": "Canonical engineering operational status.",
+        "source_definition": "source/nicegui_base/integrations/nicegui_engineering.py:58"
+      },
+      {
+        "name": "EngineeringTimeline",
+        "import": "from nicegui_base import EngineeringTimeline",
+        "catalog_key": "EngineeringTimeline",
+        "purpose": "Chronological engineering events.",
+        "source_definition": "source/nicegui_base/integrations/nicegui_engineering.py:273"
+      },
+      {
+        "name": "TimelineChart",
+        "import": "from nicegui_base import TimelineChart",
+        "catalog_key": "TimelineChart",
+        "purpose": "Registered timeline visualization renderer.",
+        "source_definition": "source/nicegui_base/integrations/nicegui_visualization.py:728"
+      },
+      {
+        "name": "StateView",
+        "import": "from nicegui_base import StateView",
+        "catalog_key": "state_view",
+        "purpose": "Canonical state surface for loading, empty, error, unavailable and permission-denied states.",
+        "source_definition": "source/nicegui_base/integrations/nicegui_interactions.py:821"
+      }
+    ],
+    "shared_state_authorities": [
+      {
+        "name": "AnalysisContext",
+        "import": "from nicegui_base import AnalysisContext",
+        "catalog_key": "analysis_context",
+        "purpose": "Single authority for filters, time, populations, entity, source and freshness.",
+        "source_definition": "source/nicegui_base/analysis/context.py:16"
+      },
+      {
+        "name": "SelectionBus",
+        "import": "from nicegui_base import SelectionBus",
+        "catalog_key": "selection_bus",
+        "purpose": "Typed row/entity/time selection and drill history.",
+        "source_definition": "source/nicegui_base/analysis/selection.py:12"
+      },
+      {
+        "name": "AnalysisBinding",
+        "import": "from nicegui_base import AnalysisBinding",
+        "catalog_key": "analysis_binding",
+        "purpose": "Latest-request-wins context-to-data refresh binding.",
+        "source_definition": "source/nicegui_base/analysis/bindings.py:14"
+      },
+      {
+        "name": "StateKey",
+        "import": "from nicegui_base import StateKey",
+        "catalog_key": "golden_analysis_workspace",
+        "purpose": "Typed workspace state key used by the golden analysis workspace.",
+        "source_definition": "source/nicegui_base/runtime/kernel.py:37"
+      },
+      {
+        "name": "StateNamespace",
+        "import": "from nicegui_base import StateNamespace",
+        "catalog_key": "golden_analysis_workspace",
+        "purpose": "State ownership namespace used by the golden analysis workspace.",
+        "source_definition": "source/nicegui_base/runtime/kernel.py:25"
+      },
+      {
+        "name": "WorkspaceController",
+        "import": "from nicegui_base import WorkspaceController",
+        "catalog_key": "workspace_controller",
+        "purpose": "Persistent workspace panel layout and interaction state authority.",
+        "source_definition": "source/nicegui_base/workspace/controller.py:14"
+      },
+      {
+        "name": "NiceGUIWorkspace",
+        "import": "from nicegui_base import NiceGUIWorkspace",
+        "catalog_key": "nicegui_workspace",
+        "purpose": "Public NiceGUI renderer for WorkspaceController.",
+        "source_definition": "source/nicegui_base/integrations/nicegui_workspace.py:20"
+      }
+    ],
+    "runtime_authorities": [
+      {
+        "name": "ApplicationRuntime",
+        "import": "from nicegui_base import ApplicationRuntime",
+        "purpose": "Application/workspace runtime authority used by the golden analysis workspace.",
+        "source_definition": "source/nicegui_base/runtime/kernel.py:456"
+      },
+      {
+        "name": "RuntimeConfig",
+        "import": "from nicegui_base import RuntimeConfig",
+        "catalog_key": "runtime_config",
+        "purpose": "Typed host, port, environment, session and proxy configuration.",
+        "source_definition": "source/nicegui_base/runtime/config.py:41"
+      },
+      {
+        "name": "RuntimeEnvironment",
+        "import": "from nicegui_base import RuntimeEnvironment",
+        "catalog_key": "runtime_config",
+        "purpose": "Runtime environment type for RuntimeConfig.",
+        "source_definition": "source/nicegui_base/runtime/config.py:14"
+      },
+      {
+        "name": "CompatibilityManifest",
+        "import": "from nicegui_base import CompatibilityManifest",
+        "catalog_key": "compatibility_manifest",
+        "purpose": "Recorded certified framework/runtime compatibility authority.",
+        "source_definition": "source/nicegui_base/runtime/compatibility.py:16"
+      }
+    ]
+  },
+  "example_evidence": [
+    {
+      "declared_path": "examples/nicegui_base/golden_analysis_workspace.py",
+      "resolved_path": "examples/nicegui_base/golden_analysis_workspace.py",
+      "status": "PASS",
+      "bytes": 1440,
+      "sha256": "8fc851d348ec06f43715156f152b7d1a55e54d45e6e70ca3344af30fefa2899e",
+      "observed_authorities": ["ApplicationRuntime", "PanelSpec", "StateKey", "StateNamespace", "WorkspaceBreakpoint"]
+    },
+    {
+      "declared_path": "source/nicegui_base/ai/templates/golden/golden_analysis_workspace.py",
+      "resolved_path": "source/nicegui_base/ai/templates/golden/golden_analysis_workspace.py",
+      "status": "PASS",
+      "bytes": 1440,
+      "sha256": "8fc851d348ec06f43715156f152b7d1a55e54d45e6e70ca3344af30fefa2899e",
+      "observed_authorities": ["ApplicationRuntime", "PanelSpec", "StateKey", "StateNamespace", "WorkspaceBreakpoint"]
+    },
+    {
+      "declared_path": "examples/phase61_spc_wafer_investigation.py",
+      "resolved_path": "source/examples/phase61_spc_wafer_investigation.py",
+      "status": "PASS_RESOLVED_UNDER_SOURCE",
+      "bytes": 3657,
+      "sha256": "7b7f7b06fb4381ca1f072e4aa28b674c2c14b628568fd75d34758ce713a0e10e",
+      "observed_authorities": ["AnalysisContext", "SelectionBus", "SemiconductorAnalysisContext", "SemiconductorAnalyticalSurface"]
+    },
+    {
+      "declared_path": "examples/phase61_fdc_tool_health.py",
+      "resolved_path": "source/examples/phase61_fdc_tool_health.py",
+      "status": "PASS_RESOLVED_UNDER_SOURCE",
+      "bytes": 1948,
+      "sha256": "a9d6726c2767e1332d5fe7598df937e3143a5a18e6cd2de3af27d13965585868",
+      "observed_authorities": ["AnalysisContext", "SelectionBus", "SemiconductorAnalysisContext", "SemiconductorAnalyticalSurface"]
+    },
+    {
+      "declared_path": "examples/phase61_rca_commonality.py",
+      "resolved_path": "source/examples/phase61_rca_commonality.py",
+      "status": "PASS_RESOLVED_UNDER_SOURCE",
+      "bytes": 2247,
+      "sha256": "1e289d93e1710b5fa3c8dba9439cb038a2d0ea50c52b3835332faa6e956a033d",
+      "observed_authorities": ["AnalysisContext", "SelectionBus", "SemiconductorAnalysisContext", "SemiconductorAnalyticalSurface"]
+    }
+  ],
+  "not_selected": {
+    "application_features": ["EPHI domain modules", "company bindings", "F03", "F04", "F05", "browser/runtime qualification"],
+    "reason": "This is a bounded binding record for the first Attention -> Episode slice, not a product implementation or framework fork."
+  }
+}

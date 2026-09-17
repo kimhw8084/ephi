@@ -64,6 +64,18 @@ The preflight writes `artifacts/source-preflight.json` and, only after the exact
 
 This foundation does not reconstruct application modules and does not fix or claim to fix F03, F04 or F05. Those changes remain blocked on the verified original source and their W0 regression/qualification work.
 
+## W0 baseline execution
+
+After preflight reports `SOURCE_STAGED`, run the bounded baseline harness:
+
+```bash
+python3 tools/w0_baseline.py
+```
+
+The harness consumes `artifacts/source-preflight.json`, re-inventories the reported staged root, and runs only the test runner and test roots discovered there. It exits non-zero without executing tests for a missing/non-staged preflight, any source identity mismatch, or a missing staged root. Its ignored output is `artifacts/w0-baseline.json`; its `historical_test_result` remains `REFERENCE_ONLY` and is separate from `current_run`.
+
+The CHG-104 NiceGUI Base binding record is [evidence/review/nicegui_base_binding_manifest.json](evidence/review/nicegui_base_binding_manifest.json). It records the pinned source inspection and explicitly records installed CLI discovery as unavailable when that executable is absent.
+
 ## Before implementation
 
 1. Run the W0 source preflight above with the original `ephi_v0.19.1_production_hardened(1).zip`; verify SHA-256 `5e9ad8f63b3158adc530af69fc650aec606cbfa64896ba73840cdcf994a2b6e3`. The supplied design ZIP is a different artifact.
