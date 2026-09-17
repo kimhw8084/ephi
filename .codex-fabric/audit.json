@@ -1,0 +1,118 @@
+{
+  "schema_version": 1,
+  "kind": "codex-fabric-audit-evidence",
+  "project_id": "ephi",
+  "request": "CHG-85-W0.1",
+  "operation": "FIX",
+  "status": "EXECUTED_CHANGE",
+  "resulting_candidate": {
+    "sha": "bdf75beb0a03b5fa19a693ba9f13b13dee074d2e",
+    "subject": "fix: report promoted source root in preflight",
+    "parent": "4b483a6b5c272faa1a04f9dba482e254510b6dad",
+    "build_candidate": {
+      "sha": "4b483a6b5c272faa1a04f9dba482e254510b6dad",
+      "subject": "fabric: capture completed model changes [CF-48a882d753701fef0e7e3c87]"
+    },
+    "base": "fb9710e42b64f3a0ff58599011dd9fa8d06100d8"
+  },
+  "changed_files": [
+    {
+      "path": "manifest.json",
+      "status": "M",
+      "bytes": 7632,
+      "sha256": "edce597cbeae51b5e48926ced1e7a634a70234aeea4e60fc5ac00039fb2e5d5a"
+    },
+    {
+      "path": "tests/test_source_preflight.py",
+      "status": "M",
+      "bytes": 6134,
+      "sha256": "ce6af6dd40c15786c9e945cbee5e08796aede794cedff5f9cc5980df1848e153"
+    },
+    {
+      "path": "tools/source_preflight.py",
+      "status": "M",
+      "bytes": 16697,
+      "sha256": "b82ed81cddf7784fe7144af887b1ba4411b0883505b09d751c69ac798969914e"
+    }
+  ],
+  "checks": [
+    {
+      "command": "python3 -m unittest tests.test_source_preflight -v",
+      "exit_code": 0,
+      "result": "PASS",
+      "summary": "7 tests passed; successful SOURCE_STAGED regression checks both reported roots, final-path existence and staged-file readability"
+    },
+    {
+      "command": "python3 tools/check_package.py --refresh-manifest",
+      "exit_code": 0,
+      "result": "PASS",
+      "summary": "38 package files; manifest, syntax, local links/fences, traceability and historical evidence"
+    },
+    {
+      "command": "python3 tools/source_preflight.py --output artifacts/source-preflight.json",
+      "exit_code": 2,
+      "result": "PASS_EXPECTED_BOUNDARY",
+      "summary": "missing exact archive returned SOURCE_REQUIRED with ARCHIVE_MISSING"
+    },
+    {
+      "command": "python3 tools/check_package.py",
+      "exit_code": 0,
+      "result": "PASS",
+      "summary": "38 package files; design-package checks passed"
+    },
+    {
+      "command": "python3 -m unittest discover -s tests -v",
+      "exit_code": 0,
+      "result": "PASS",
+      "summary": "19 tests passed"
+    },
+    {
+      "command": "git diff --check",
+      "exit_code": 0,
+      "result": "PASS",
+      "summary": "no whitespace errors"
+    }
+  ],
+  "source_preflight_result": {
+    "synthetic_success": {
+      "status": "SOURCE_STAGED",
+      "staging_source_root": "stage_dir / expected_source_root",
+      "baseline_source_root": "stage_dir / expected_source_root",
+      "reported_path_exists": true,
+      "expected_staged_file_readable": true
+    },
+    "missing_archive": {
+      "status": "SOURCE_REQUIRED",
+      "reason": "ARCHIVE_MISSING",
+      "required_filename": "ephi_v0.19.1_production_hardened(1).zip",
+      "required_sha256": "5e9ad8f63b3158adc530af69fc650aec606cbfa64896ba73840cdcf994a2b6e3"
+    }
+  },
+  "preservation": {
+    "evidence_tree_oid": "74d4d573af31d2d34eda79499768ef688ec41643",
+    "evidence_import_tree_oid": "c6850cc0d02abe41cdd73ee846c9b23e4b3954e0",
+    "evidence_diff": "CLEAN",
+    "evidence_import_diff": "CLEAN"
+  },
+  "scope": {
+    "root_cause_fixed": "post-promotion metadata now reports the final atomic stage_dir / expected_source_root path",
+    "preserved_semantics": [
+      "fail-closed archive identity and SHA-256 verification",
+      "ZIP member path, duplicate, collision, symlink, special-file and extraction safety",
+      "protected evidence paths",
+      "SOURCE_REQUIRED and SOURCE_REJECTED outcomes",
+      "atomic temporary extraction and os.replace promotion"
+    ],
+    "out_of_scope": ["F03", "F04", "F05", "application implementation", "application test rerun"]
+  },
+  "remaining_boundary": {
+    "status": "SOURCE_REQUIRED",
+    "meaning": "the owner-supplied exact original application archive is still absent; no application baseline was restored or tested",
+    "application_tests_executed": false,
+    "production_qualification": false
+  },
+  "evidence_locator": {
+    "branch": "codex-fabric/evidence/ephi/ephi-w0-source-preflight-fix1",
+    "path": ".codex-fabric/audit.json"
+  }
+}
