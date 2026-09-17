@@ -76,6 +76,21 @@ The harness consumes `artifacts/source-preflight.json`, re-inventories the repor
 
 The CHG-104 NiceGUI Base binding record is [evidence/review/nicegui_base_binding_manifest.json](evidence/review/nicegui_base_binding_manifest.json). It records the pinned source inspection and explicitly records installed CLI discovery as unavailable when that executable is absent.
 
+## W0 pinned framework qualification (CHG-105)
+
+The independent W0 framework slice uses the machine-readable [runtime specification](environment/nicegui_base_runtime.json) and its exact [requirements](environment/nicegui_base_requirements.txt). It installs NiceGUI Base only from the recorded VCS commit `000298562d6bcbf6df304edbd41b98b30fe4bfcf`, requires framework version `3.0.0a8`, requires exactly `nicegui==3.15.0`, and accepts only Python `>=3.11,<3.14`. The checker verifies `direct_url.json` VCS identity and the CHG-104 public root imports before running any framework command. A missing or mismatched identity fails closed.
+
+Use an explicitly supported interpreter to create the ignored environment and run the bounded checks:
+
+```bash
+python3.11 tools/w0_runtime.py bootstrap
+python3 tools/w0_runtime.py check
+python3 tools/w0_runtime.py discover
+python3 tools/w0_runtime.py qualify
+```
+
+`discover` executes the six requested NiceGUI Base discovery authorities and preserves their machine-readable responses in ignored `artifacts/w0-runtime/` output. `qualify` runs `nicegui-base agent-check .`, `nicegui-base gate .`, `nicegui-base runtime-contract`, and `nicegui-base runtime-smoke --port 0`. The framework smoke is a browserless NiceGUI Base laboratory check, not EPHI application production qualification or browser qualification. The checked-in summary and its separation from CHG-104 source inspection are recorded in [the CHG-105 runtime evidence](evidence/review/nicegui_base_runtime_evidence.json) and linked from [the binding manifest](evidence/review/nicegui_base_binding_manifest.json).
+
 ## Before implementation
 
 1. Run the W0 source preflight above with the original `ephi_v0.19.1_production_hardened(1).zip`; verify SHA-256 `5e9ad8f63b3158adc530af69fc650aec606cbfa64896ba73840cdcf994a2b6e3`. The supplied design ZIP is a different artifact.

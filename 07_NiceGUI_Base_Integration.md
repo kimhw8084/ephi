@@ -57,6 +57,12 @@ These are domain compositions of existing Base panels/tables/timelines/forms, no
 
 ## 5. Required construction workflow
 
+### 5.1 CHG-105 pinned-runtime qualification
+
+Before application construction, use the repository-native [CHG-105 runtime specification](environment/nicegui_base_runtime.json) and [bootstrap/check tool](tools/w0_runtime.py). It creates an ignored virtual environment from the exact NiceGUI Base VCS commit and `nicegui==3.15.0`, verifies Python `>=3.11,<3.14`, checks installed VCS provenance through `direct_url.json`, and proves the CHG-104 page-pattern, public, state and runtime authorities import from `nicegui_base`. The executed evidence is kept separate from this chapter's pinned-source inspection in [the binding manifest](evidence/review/nicegui_base_binding_manifest.json) and [the runtime evidence](evidence/review/nicegui_base_runtime_evidence.json).
+
+The qualification command results must be interpreted narrowly: `runtime-contract` checks the installed framework against NiceGUI 3.15.0; `runtime-smoke --port 0` exercises the framework laboratory without a browser; `agent-check .` and `gate .` validate an application scaffold and may remain FAIL while the EPHI application is absent. None of these commands qualifies EPHI application behavior, a browser, company bindings or production deployment.
+
 In the pinned environment:
 
 ```bash
@@ -79,7 +85,7 @@ nicegui-base runtime-contract
 nicegui-base runtime-smoke --port 0
 ```
 
-The CLI commands are verified as documented by the pinned contract; their execution is **NOT_RUN in this audit**. Framework/browser/company-provider/human visual evidence stays PENDING until performed. A changed Base commit is a dependency change requiring interface/screenshot/target requalification, not a floating-main upgrade.
+The CLI commands were verified as documented by the pinned contract; their execution was **NOT_RUN in the earlier CHG-104 source-inspection audit**. The CHG-105 installed-runtime results are recorded separately above. Framework/browser/company-provider/human visual evidence stays PENDING until performed. A changed Base commit is a dependency change requiring interface/screenshot/target requalification, not a floating-main upgrade.
 
 ## 6. Integration acceptance
 

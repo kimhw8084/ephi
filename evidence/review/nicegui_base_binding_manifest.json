@@ -3,7 +3,19 @@
   "change": "CHG-104",
   "requirement": "R1",
   "scope": "EPHI O1/W0 first Attention -> Episode slice",
-  "status": "SOURCE_INSPECTION_COMPLETE_CLI_UNAVAILABLE_RUNTIME_NOT_QUALIFIED",
+  "status": "PINNED_RUNTIME_QUALIFICATION_COMPLETE_APPLICATION_NOT_QUALIFIED",
+  "status_history": [
+    {
+      "change": "CHG-104",
+      "status": "SOURCE_INSPECTION_COMPLETE_CLI_UNAVAILABLE_RUNTIME_NOT_QUALIFIED",
+      "scope": "Pinned-source inspection and proposed first-slice binding"
+    },
+    {
+      "change": "CHG-105",
+      "status": "PINNED_RUNTIME_QUALIFICATION_COMPLETE_APPLICATION_NOT_QUALIFIED",
+      "scope": "Independent installed framework/dependency qualification"
+    }
+  ],
   "framework": {
     "repository": "kimhw8084/nicegui-base",
     "commit": "000298562d6bcbf6df304edbd41b98b30fe4bfcf",
@@ -330,6 +342,31 @@
       "observed_authorities": ["AnalysisContext", "SelectionBus", "SemiconductorAnalysisContext", "SemiconductorAnalyticalSurface"]
     }
   ],
+  "change_105_runtime_evidence": {
+    "status": "FRAMEWORK_RUNTIME_QUALIFIED_APPLICATION_NOT_QUALIFIED",
+    "specification": "environment/nicegui_base_runtime.json",
+    "requirements": "environment/nicegui_base_requirements.txt",
+    "bootstrap_and_check": "tools/w0_runtime.py",
+    "evidence_file": "evidence/review/nicegui_base_runtime_evidence.json",
+    "source_inspection_boundary": "The existing pinned_source_inspection and CHG-104 unavailable-CLI observations above are preserved. This section records only newly executed installed-runtime evidence.",
+    "installed_runtime": {
+      "status": "PASS",
+      "python": "3.11.7",
+      "nicegui_base_version": "3.0.0a8",
+      "nicegui_base_commit": "000298562d6bcbf6df304edbd41b98b30fe4bfcf",
+      "nicegui_version": "3.15.0",
+      "public_authority_imports": "PASS 21/21",
+      "direct_private_or_nicegui_ui_imports_established": false
+    },
+    "discovery": "PASS: six requested discovery commands returned machine-readable output",
+    "qualification": {
+      "agent_check": "FAIL: repository contains no EPHI application scaffold",
+      "gate": "FAIL: repository contains no EPHI application manifest/entrypoint and no pytest dependency",
+      "runtime_contract": "PASS",
+      "runtime_smoke": "PASS: framework laboratory, browserless"
+    },
+    "interpretation": "Framework/runtime execution is not EPHI application production qualification and is not browser qualification."
+  },
   "not_selected": {
     "application_features": ["EPHI domain modules", "company bindings", "F03", "F04", "F05", "browser/runtime qualification"],
     "reason": "This is a bounded binding record for the first Attention -> Episode slice, not a product implementation or framework fork."

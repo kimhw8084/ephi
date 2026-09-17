@@ -53,3 +53,7 @@ Exact import/review identities are recorded in [the review evidence](evidence/re
 4. **Bind company-specific evidence before a pilot.** Identity, backend/artifact store, source mappings, family thresholds, action authority and operational policies remain the gates already defined in the design.
 
 No application deployment, scientific qualification or production-readiness claim follows from publishing this repository. The next authorized implementation can proceed from [11_Developer_Start.md](11_Developer_Start.md) once the source prerequisite is supplied.
+
+## CHG-105 W0 runtime delta
+
+The independent framework/dependency qualification slice is recorded separately in [the runtime evidence](evidence/review/nicegui_base_runtime_evidence.json) and linked from [the NiceGUI Base binding manifest](evidence/review/nicegui_base_binding_manifest.json). It verified an isolated Python 3.11.7 environment, the exact NiceGUI Base VCS commit/version, exact `nicegui==3.15.0`, and 21/21 CHG-104 public-root authority imports. All six requested installed discovery commands returned machine-readable output. `runtime-contract` and browserless framework `runtime-smoke --port 0` PASS; `agent-check .` and `gate .` FAIL because this repository still has no EPHI application scaffold or entrypoint. The original application archive remains unavailable in this execution environment, so application baseline/tests, browser qualification, and production qualification remain NOT_RUN.

@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "change": "CHG-105",
+  "wave": "W0",
+  "scope": "Independent pinned NiceGUI Base runtime and dependency qualification",
+  "python_requires": ">=3.11,<3.14",
+  "framework": {
+    "distribution": "nicegui-base",
+    "version": "3.0.0a8",
+    "repository": "https://github.com/kimhw8084/nicegui-base.git",
+    "commit": "000298562d6bcbf6df304edbd41b98b30fe4bfcf",
+    "source_requirement": "nicegui-base @ git+https://github.com/kimhw8084/nicegui-base.git@000298562d6bcbf6df304edbd41b98b30fe4bfcf"
+  },
+  "dependencies": [
+    "nicegui==3.15.0"
+  ],
+  "requirements_file": "environment/nicegui_base_requirements.txt",
+  "venv_default": "artifacts/w0-runtime/venv",
+  "identity_rules": [
+    "The active interpreter must satisfy >=3.11,<3.14.",
+    "nicegui-base metadata must report version 3.0.0a8.",
+    "nicegui-base direct_url.json must identify the exact Git repository and commit 000298562d6bcbf6df304edbd41b98b30fe4bfcf.",
+    "NiceGUI metadata must report exactly 3.15.0.",
+    "The CHG-104 first-slice authorities must import from nicegui_base public exports."
+  ],
+  "application_authority_rule": "EPHI application code may import public symbols from nicegui_base; it must not establish direct nicegui.ui or private nicegui_base.integrations.nicegui_* imports as application APIs."
+}

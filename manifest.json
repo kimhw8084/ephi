@@ -86,8 +86,8 @@
     },
     {
       "path": "07_NiceGUI_Base_Integration.md",
-      "bytes": 9544,
-      "sha256": "7709279be8746d58b9f7baa9303da12e58f1ddd0d3e79eccab559e843140a9d5"
+      "bytes": 10866,
+      "sha256": "258715703154d25ed2fbdc2dd719d95b4fe4979600ffbab025492ffc179ce604"
     },
     {
       "path": "08_Security_Notifications_AI_Operations.md",
@@ -116,8 +116,8 @@
     },
     {
       "path": "13_Package_Review.md",
-      "bytes": 7059,
-      "sha256": "e9b2730f7772c0ed1a49674d69ea75a3101ff035bb77146261ec11212adb92a5"
+      "bytes": 7972,
+      "sha256": "80eb25b482772cb2a03a9000672dd63eea948e8b99948e5cf2bc11df90257600"
     },
     {
       "path": "AGENTS.md",
@@ -131,13 +131,23 @@
     },
     {
       "path": "README.md",
-      "bytes": 6881,
-      "sha256": "e29f5cd9a3fa38bb7e0e2325910e6d2a8c58c14b9c7c768d8cac3352179eabc5"
+      "bytes": 8493,
+      "sha256": "17b6ba18b7b3fbf7fd2821660c81a0eea8c79bac156aadec80f828d335177f1c"
+    },
+    {
+      "path": "environment/nicegui_base_requirements.txt",
+      "bytes": 201,
+      "sha256": "d1eb9ce4f1863254f4e9d3bc60a5ae7fc87eb3a4c9a7ef1472ab10c9e37e4072"
+    },
+    {
+      "path": "environment/nicegui_base_runtime.json",
+      "bytes": 1318,
+      "sha256": "ea49feb766c2f755a019e5dce7cab89a4456ea3c9c87d98940bb22abd5bcb89a"
     },
     {
       "path": "evidence/README.md",
-      "bytes": 1765,
-      "sha256": "66ec81400420571f684fe23d3ddba7332883a0e9ee0a39dc6855bd6619f9a730"
+      "bytes": 2043,
+      "sha256": "dda15051bde19109be8f552f3dd2a6dc23b18e6ee61ea5fd96705ebd42cbb1eb"
     },
     {
       "path": "evidence/audit_environment.json",
@@ -186,8 +196,13 @@
     },
     {
       "path": "evidence/review/nicegui_base_binding_manifest.json",
-      "bytes": 13981,
-      "sha256": "55182f33463248c47a33e5f0b31c172c3e5cd5c0ecf6c144252ea386d5d614cc"
+      "bytes": 15859,
+      "sha256": "797ebcc38c8aa8846c3bd65305b1f20686ff2e17b43b6f770400ec10c826649c"
+    },
+    {
+      "path": "evidence/review/nicegui_base_runtime_evidence.json",
+      "bytes": 10028,
+      "sha256": "d280309406704f24baaa39acc7cdd8218f6aea2b2a6d56599690d47cd36b4cd3"
     },
     {
       "path": "evidence/review/package_review.json",
@@ -220,6 +235,11 @@
       "sha256": "8cccdf4cf0f6ed6f47205c92f80ac54ea479cea996cd8f1d8ec1af7720e11279"
     },
     {
+      "path": "tests/test_w0_runtime.py",
+      "bytes": 2886,
+      "sha256": "dae5be689554ee00146846a30b7de7c309b27650d42c22b46eca5d17ac4964d8"
+    },
+    {
       "path": "tools/check_package.py",
       "bytes": 11246,
       "sha256": "642b4202dffad801be8e0c4cc796826e1a8833c335ce894b5d516ac810a09076"
@@ -233,6 +253,11 @@
       "path": "tools/w0_baseline.py",
       "bytes": 18010,
       "sha256": "870043bdc3ccd2fce3e75ecf0ef2f370aa4abda6d76546a23c4453d93c30d076"
+    },
+    {
+      "path": "tools/w0_runtime.py",
+      "bytes": 19311,
+      "sha256": "00bfa230848d59ac735b0d1b7304f99781ba7361c33e7f099a718416416794c2"
     }
   ],
   "manifest_note": "Current repository files excluding this manifest and ignored local artifacts. Imported evidence remains bound to the preserved original manifest. Hashes establish byte identity, not source correctness or production acceptance."
