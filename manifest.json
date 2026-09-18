@@ -306,8 +306,8 @@
     },
     {
       "path": "tests/test_w0_repo_baseline.py",
-      "bytes": 2703,
-      "sha256": "1337112946db548f2f86b6f6328b38671e08113cfc2db3ee5c734d38046667a7"
+      "bytes": 3516,
+      "sha256": "3a469d9b0a7130605a3b591d73f4d86a16a57c7e7a8963ee3512c1964959b8cf"
     },
     {
       "path": "tests/test_w0_runtime.py",
