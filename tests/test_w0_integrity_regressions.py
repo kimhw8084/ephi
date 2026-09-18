@@ -112,7 +112,7 @@ class W0IntegrityRegressionTests(unittest.TestCase):
         findings = {item["id"]: item for item in first["findings"]}
         self.assertEqual(findings["F02"]["status"], "PASS")
         self.assertEqual(findings["F03"]["status"], "PASS")
-        self.assertEqual(findings["F04"]["status"], "NOT_IMPLEMENTED")
+        self.assertEqual(findings["F04"]["status"], "PASS")
         self.assertEqual(findings["F05"]["status"], "NOT_IMPLEMENTED")
         self.assertEqual(first["historical_evidence"]["status"], "REFERENCE_ONLY")
 
@@ -133,6 +133,8 @@ class W0IntegrityRegressionTests(unittest.TestCase):
         finding = self.findings["F04"]
         base = {"id": "F04", "scenario": finding["scenario_identity"]}
         self.assertEqual(evaluate_finding(finding, dict(base, actual_operating_cost=10))["status"], "PASS")
+        self.assertEqual(evaluate_finding(finding, dict(base, actual_operating_cost="10"))["status"], "PASS")
+        self.assertEqual(evaluate_finding(finding, dict(base, actual_operating_cost=10.0))["status"], "FAIL")
         for value in (0, 20, 10.01):
             with self.subTest(value=value):
                 self.assertEqual(evaluate_finding(finding, dict(base, actual_operating_cost=value))["status"], "FAIL")

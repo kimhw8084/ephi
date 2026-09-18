@@ -102,24 +102,19 @@
     "import": "ephi",
     "entrypoint": "ephi.app:main",
     "behavioral_statuses": ["PASS", "NOT_IMPLEMENTED", "NOT_RUN"],
-    "boundary": "Canonical behavioral checks target the repository package; fresh scoped scenarios are evaluated by this contract and out-of-scope capabilities remain explicit."
+    "boundary": "Canonical behavioral checks target the repository package; fresh scoped scenarios are evaluated by this contract and F05 remains explicitly out of scope."
   },
   "canonical_execution": {
     "status": "ENABLED",
     "runner": "tools/w0_integrity_regressions.py",
-    "fresh_findings": ["F02", "F03"],
+    "fresh_findings": ["F02", "F03", "F04"],
     "target": "src/ephi",
-    "scenario_authority": "ephi.advisory",
+    "scenario_authority": "ephi.advisory and ephi.value",
     "out_of_scope": {
-      "F04": {
-        "status": "NOT_IMPLEMENTED",
-        "execution": "NOT_RUN",
-        "reason": "out of scope for CHG-115"
-      },
       "F05": {
         "status": "NOT_IMPLEMENTED",
         "execution": "NOT_RUN",
-        "reason": "out of scope for CHG-115"
+        "reason": "out of scope for CHG-116"
       }
     }
   },

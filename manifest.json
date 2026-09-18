@@ -116,8 +116,8 @@
     },
     {
       "path": "11_Developer_Start.md",
-      "bytes": 2902,
-      "sha256": "52115dedc9fcd75c88870c0a2d5155f7377152436583110ed7f68d8f70b26ee3"
+      "bytes": 2906,
+      "sha256": "c9942c9a9eb67c0c063e3315a9230455dfa01376b02f3a86b0d89c74a9e7f72e"
     },
     {
       "path": "12_Sources_and_Evidence.md",
@@ -126,13 +126,13 @@
     },
     {
       "path": "13_Package_Review.md",
-      "bytes": 7945,
-      "sha256": "82d78975cdd7be9d1272a093a37988dab7326e2175dde837a0a826f04b5efca9"
+      "bytes": 8004,
+      "sha256": "0688b7d6e6a888397beeb9f2dd79f4166837a36f1e823804f912ba77563d17c7"
     },
     {
       "path": "AGENTS.md",
-      "bytes": 1415,
-      "sha256": "e7d6dc713c2c18db9f0491e70b6ca32ccb079eb676d72d37b1b8e7b06a545f28"
+      "bytes": 1458,
+      "sha256": "4349f387a79d886ed1264604ff48c582698e539e08ed8fb2f9d8ab8fbf6f804a"
     },
     {
       "path": "CONTRIBUTING.md",
@@ -141,8 +141,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 6347,
-      "sha256": "9fcdc24add35bfa54145d9db70d966a428460d67345253347a02df0c16d8ebf2"
+      "bytes": 6351,
+      "sha256": "08b728662a68f97e7577bddde2f69fe7664e7d3086ec57cf22f4f3aabe50ef40"
     },
     {
       "path": "environment/nicegui_base_requirements.txt",
@@ -161,8 +161,8 @@
     },
     {
       "path": "evidence/README.md",
-      "bytes": 2369,
-      "sha256": "32e9bd42efcb267536e28e6f7b884c335952811cc6d05d64a870adbf1b16ff73"
+      "bytes": 2372,
+      "sha256": "cb9848dcdac24ce860004689917df9d48945363ad0b78a2b00f37b4e10209bb4"
     },
     {
       "path": "evidence/audit_environment.json",
@@ -226,8 +226,8 @@
     },
     {
       "path": "evidence/review/w0_integrity_regression_contract.json",
-      "bytes": 15485,
-      "sha256": "215b796ad24bb91ec92b1183a53735a0a70a6fdf272a393b4faedab0d7535255"
+      "bytes": 15363,
+      "sha256": "ab2ec2de635c9f6a26e95f66ced4c01f3e58b76e96e3a5fe634b0ad8b439ab05"
     },
     {
       "path": "evidence/source_excerpts.md",
@@ -246,8 +246,8 @@
     },
     {
       "path": "src/ephi/__init__.py",
-      "bytes": 679,
-      "sha256": "1b7db46637e8ebe7d7a7eab544bc4dedadb1b249a1c2102c01691a281dd0ef15"
+      "bytes": 1146,
+      "sha256": "60538b98090826d34be6aec629e3c3076484a64cfb61833ea6b4fa8825ef6398"
     },
     {
       "path": "src/ephi/__main__.py",
@@ -276,8 +276,8 @@
     },
     {
       "path": "src/ephi/app.py",
-      "bytes": 2601,
-      "sha256": "94ca799dcf0eda688b54868f0071785e724b51273fa1a3cd4ff611764de019df"
+      "bytes": 2636,
+      "sha256": "f71d8511518718c936f9425fd15d0f325af594f36de0fd48e097297cb7054504"
     },
     {
       "path": "src/ephi/config.py",
@@ -300,14 +300,34 @@
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
+      "path": "src/ephi/value/__init__.py",
+      "bytes": 687,
+      "sha256": "3c1ae7fc494e66a7afa70689041102ecb70c25fad9d8e03b86d404a9a89e6e32"
+    },
+    {
+      "path": "src/ephi/value/model.py",
+      "bytes": 5799,
+      "sha256": "8d06e53eaf7af1dbb9c397072e797cba9c9f65ed40b27c1814ccfe48bd528d5b"
+    },
+    {
+      "path": "src/ephi/value/repository.py",
+      "bytes": 4226,
+      "sha256": "d3ec39335796d1d42b249ef057190ff345b597170107370c6c17a49ff9ffeef0"
+    },
+    {
+      "path": "src/ephi/value/service.py",
+      "bytes": 3007,
+      "sha256": "95642604c52ff0a18b63e05b4af95e81d7c3b59c4460e2c354493994f691f45b"
+    },
+    {
       "path": "tests/test_advisory_integrity.py",
-      "bytes": 7605,
-      "sha256": "bc4c286bec316b77c2b4381e34b5d6c14898b7baabd98b2318abe7ef2e7d7331"
+      "bytes": 7614,
+      "sha256": "5e70f95b36f989ac32bb87e5a15b8b47bcb139579c9b49cf65ab663329d67395"
     },
     {
       "path": "tests/test_ephi_application.py",
-      "bytes": 1904,
-      "sha256": "f70c189760802de53c0aaa77f1631a6e65f290cf9e1861c4c2cad3be905b68c9"
+      "bytes": 2024,
+      "sha256": "370607ad35d1fd31f178e99946491e0da665f93be470308fefd9c08386c4bff9"
     },
     {
       "path": "tests/test_package.py",
@@ -320,14 +340,19 @@
       "sha256": "ce6af6dd40c15786c9e945cbee5e08796aede794cedff5f9cc5980df1848e153"
     },
     {
+      "path": "tests/test_value_integrity.py",
+      "bytes": 8981,
+      "sha256": "793777867e53fe616e83c06a12de94c8883ccdf756cb6f7ce38bb49d94f14373"
+    },
+    {
       "path": "tests/test_w0_baseline.py",
       "bytes": 5197,
       "sha256": "8cccdf4cf0f6ed6f47205c92f80ac54ea479cea996cd8f1d8ec1af7720e11279"
     },
     {
       "path": "tests/test_w0_integrity_regressions.py",
-      "bytes": 8389,
-      "sha256": "9ab6cf339cdf46684cd02b82ed2f1234176e190845340eb27a489b0d2bcb8dd8"
+      "bytes": 8598,
+      "sha256": "14c3fcb19113c23ea98631b892efa1b0364cdb875985ddb1001adcafac5f76fc"
     },
     {
       "path": "tests/test_w0_repo_baseline.py",
@@ -356,8 +381,8 @@
     },
     {
       "path": "tools/w0_integrity_regressions.py",
-      "bytes": 52586,
-      "sha256": "f89632ae25321d98d5f18b547df90758e01eed79caa1c94f9f92f7776a27f309"
+      "bytes": 55248,
+      "sha256": "0646738995f39f6563e52c41b06f7e7b57f6a54ddedc97026a7bcec3d70af4d9"
     },
     {
       "path": "tools/w0_repo_baseline.py",

@@ -29,14 +29,14 @@ CANONICAL_BEHAVIORAL_CHECKS = {
         "reason": "canonical workflow API is exercised by the CHG-109 runner",
     },
     "F04": {
-        "status": "NOT_IMPLEMENTED",
+        "status": "IMPLEMENTED",
         "execution": "NOT_RUN",
-        "reason": "out of scope for CHG-115",
+        "reason": "canonical temporal value API is exercised by the CHG-116 runner",
     },
     "F05": {
         "status": "NOT_IMPLEMENTED",
         "execution": "NOT_RUN",
-        "reason": "out of scope for CHG-115",
+        "reason": "out of scope for CHG-116",
     },
 }
 

@@ -34,9 +34,10 @@ class EphiApplicationTests(unittest.TestCase):
         for finding in ("F02", "F03"):
             self.assertEqual(result["behavioral_checks"][finding]["status"], "IMPLEMENTED")
             self.assertEqual(result["behavioral_checks"][finding]["execution"], "NOT_RUN")
-        for finding in ("F04", "F05"):
-            self.assertEqual(result["behavioral_checks"][finding]["status"], "NOT_IMPLEMENTED")
-            self.assertEqual(result["behavioral_checks"][finding]["execution"], "NOT_RUN")
+        self.assertEqual(result["behavioral_checks"]["F04"]["status"], "IMPLEMENTED")
+        self.assertEqual(result["behavioral_checks"]["F04"]["execution"], "NOT_RUN")
+        self.assertEqual(result["behavioral_checks"]["F05"]["status"], "NOT_IMPLEMENTED")
+        self.assertEqual(result["behavioral_checks"]["F05"]["execution"], "NOT_RUN")
 
     def test_entry_boundary_is_offline(self):
         self.assertEqual(main(["--self-check", "--json"]), 0)

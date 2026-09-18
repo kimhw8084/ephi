@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import argparse
 import ast
+from decimal import Decimal, InvalidOperation
 import hashlib
 import importlib.util
 import json
@@ -23,6 +24,9 @@ from typing import Any, Mapping
 # Keep direct execution and ``python -m tools.w0_integrity_regressions`` usable.
 if __package__ in {None, ""}:
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
+
+from ephi.value import EventPeriod, InMemoryValueRepository, ValueEntry, ValueService, decimal_json_default
 
 REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
 EVIDENCE_ROOT = REPOSITORY_ROOT / "evidence"
@@ -182,16 +186,16 @@ def validate_contract(contract: Mapping[str, Any], *, source_bound: bool = True)
     canonical = _mapping(contract.get("canonical_execution"), "canonical_execution")
     if canonical.get("status") != "ENABLED" or canonical.get("runner") != "tools/w0_integrity_regressions.py":
         raise IntegrityError("CONTRACT_INVALID", "canonical execution section is not enabled")
-    if canonical.get("fresh_findings") != ["F02", "F03"]:
-        raise IntegrityError("CONTRACT_INVALID", "canonical execution must run fresh F02/F03 scenarios")
+    if canonical.get("fresh_findings") != ["F02", "F03", "F04"]:
+        raise IntegrityError("CONTRACT_INVALID", "canonical execution must run fresh F02/F03/F04 scenarios")
     out_of_scope = _mapping(canonical.get("out_of_scope"), "canonical_execution.out_of_scope")
-    if set(out_of_scope) != {"F04", "F05"} or any(
+    if set(out_of_scope) != {"F05"} or any(
         not isinstance(value, Mapping)
         or value.get("status") != "NOT_IMPLEMENTED"
         or value.get("execution") != "NOT_RUN"
         for value in out_of_scope.values()
     ):
-        raise IntegrityError("CONTRACT_INVALID", "F04/F05 must remain separately NOT_IMPLEMENTED/NOT_RUN")
+        raise IntegrityError("CONTRACT_INVALID", "F05 must remain separately NOT_IMPLEMENTED/NOT_RUN")
     if source_bound:
         legacy_current = _mapping(contract.get("legacy_source_execution"), "legacy_source_execution")
         if legacy_current.get("probe_script") != "evidence/behavior_probes.py" or legacy_current.get("pythonpath") != "src:company_port/src":
@@ -433,9 +437,23 @@ def _assertion_result(row: Mapping[str, Any], assertion: Mapping[str, Any]) -> d
     operator = assertion.get("operator")
     expected = assertion.get("value")
     present, actual = _path_value(row, path) if isinstance(path, str) else (False, None)
-    passed = present and (
-        actual == expected if operator == "equals" else actual != expected if operator == "not_equals" else False
-    )
+    if path == "actual_operating_cost" and operator == "equals":
+        try:
+            actual_decimal = Decimal(actual) if not isinstance(actual, (bool, float)) else None
+            expected_decimal = Decimal(expected) if not isinstance(expected, (bool, float)) else None
+        except (InvalidOperation, TypeError, ValueError):
+            actual_decimal = expected_decimal = None
+        exact_money = (
+            actual_decimal is not None
+            and expected_decimal is not None
+            and actual_decimal.is_finite()
+            and expected_decimal.is_finite()
+        )
+        passed = present and exact_money and actual_decimal == expected_decimal
+    else:
+        passed = present and (
+            actual == expected if operator == "equals" else actual != expected if operator == "not_equals" else False
+        )
     return {
         "path": path,
         "operator": operator,
@@ -717,7 +735,7 @@ def _new_canonical_result(contract_path: Path) -> dict[str, Any]:
                 "id": finding_id,
                 "status": "NOT_IMPLEMENTED",
                 "execution": "NOT_RUN",
-                "reason": "canonical F02/F03/F04/F05 API is outside CHG-111 R3 scope",
+                "reason": "canonical scenario has not run",
                 **({"source_only_result": "NOT_RUN", "checkpoint_restore_result": "NOT_RUN"} if finding_id == "F02" else {}),
             }
             for finding_id in EXPECTED_FINDING_IDS
@@ -772,6 +790,56 @@ def _canonical_f03_scenario(scenario: str) -> dict[str, Any]:
         "technical_episode_state": episode.technical_state.value,
         "workflow": episode.engineering_work_state.value,
         "visible_in_attention": len(visible) == 1 and visible[0].visible_in_attention,
+    }
+
+
+def _canonical_f04_scenario(scenario: str) -> dict[str, Any]:
+    """Execute the fresh F04 cutoff scenario against the canonical value API."""
+
+    from datetime import datetime, timezone
+
+    repository = InMemoryValueRepository()
+    original = ValueEntry(
+        entry_id="canonical-f04-original",
+        scope="canonical-scope",
+        group_id="canonical-claim-group",
+        category="operating_cost",
+        amount=Decimal("10"),
+        currency="USD",
+        event_at=datetime(2026, 1, 1, tzinfo=timezone.utc),
+        known_at=datetime(2026, 1, 1, tzinfo=timezone.utc),
+    )
+    repository.append(original)
+    repository.append(
+        ValueEntry(
+            entry_id="canonical-f04-correction",
+            scope=original.scope,
+            group_id=original.group_id,
+            category=original.category,
+            amount=Decimal("20"),
+            currency=original.currency,
+            event_at=original.event_at,
+            known_at=datetime(2026, 1, 3, tzinfo=timezone.utc),
+            supersedes=original.entry_id,
+        )
+    )
+    actual = ValueService(repository).aggregate(
+        scope=original.scope,
+        group_id=original.group_id,
+        category=original.category,
+        currency=original.currency,
+        knowledge_cutoff=datetime(2026, 1, 2, tzinfo=timezone.utc),
+        event_period=EventPeriod(
+            start=datetime(2026, 1, 1, tzinfo=timezone.utc),
+            end=datetime(2026, 2, 1, tzinfo=timezone.utc),
+        ),
+    )
+    return {
+        "id": "F04",
+        "scenario": scenario,
+        "knowledge_cutoff": datetime(2026, 1, 2, tzinfo=timezone.utc),
+        "expected_operating_cost": Decimal("10"),
+        "actual_operating_cost": actual,
     }
 
 
@@ -839,7 +907,7 @@ def run_canonical_integrity_regressions(
     contract_path: Path = CONTRACT_PATH,
     output_path: Path | None = None,
 ) -> dict[str, Any]:
-    """Verify historical evidence and execute the fresh canonical F02/F03 slice."""
+    """Verify historical evidence and execute the fresh canonical F02/F03/F04 slice."""
 
     contract_path = Path(contract_path).expanduser()
     result = _new_canonical_result(contract_path)
@@ -873,25 +941,21 @@ def run_canonical_integrity_regressions(
             f02_observation, f02_checkpoint_status, f02_details = _canonical_f02_scenario(
                 findings["F02"]["scenario_identity"]
             )
+            f04_observation = _canonical_f04_scenario(findings["F04"]["scenario_identity"])
             evaluated = [
                 evaluate_finding(findings["F03"], f03_observation),
                 evaluate_f02(findings["F02"], f02_observation, f02_checkpoint_status),
-                {
-                    "id": "F04",
-                    "status": "NOT_IMPLEMENTED",
-                    "execution": "NOT_RUN",
-                    "reason": "out of scope for CHG-115",
-                },
+                evaluate_finding(findings["F04"], f04_observation),
                 {
                     "id": "F05",
                     "status": "NOT_IMPLEMENTED",
                     "execution": "NOT_RUN",
-                    "reason": "out of scope for CHG-115",
+                    "reason": "out of scope for CHG-116",
                 },
             ]
             result["findings"] = evaluated
             result["current_execution"]["status"] = "PASS" if all(
-                item["status"] == "PASS" for item in evaluated[:2]
+                item["status"] == "PASS" for item in evaluated[:3]
             ) else "FAIL"
             result["current_execution"]["tests_executed"] = True
             result["current_execution"]["canonical_scenarios"] = {
@@ -899,6 +963,7 @@ def run_canonical_integrity_regressions(
                 "target": "src/ephi",
                 "f02": f02_details,
                 "f03": f03_observation,
+                "f04": f04_observation,
             }
             result["status"] = result["current_execution"]["status"]
             result["reason"] = (
@@ -907,7 +972,7 @@ def run_canonical_integrity_regressions(
                 else "REGRESSION_ASSERTION_FAILED"
             )
             result["message"] = (
-                "fresh canonical F02/F03 scenarios passed; F04/F05 remain NOT_IMPLEMENTED/NOT_RUN"
+                "fresh canonical F02/F03/F04 scenarios passed; F05 remains NOT_IMPLEMENTED/NOT_RUN"
                 if result["status"] == "PASS"
                 else "one or more fresh canonical F02/F03 assertions failed"
             )
@@ -1055,7 +1120,7 @@ def write_result(path: Path, result: Mapping[str, Any]) -> None:
     try:
         with tempfile.NamedTemporaryFile("w", encoding="utf-8", dir=path.parent, prefix=f".{path.name}.", suffix=".tmp", delete=False) as stream:
             temporary = Path(stream.name)
-            stream.write(json.dumps(result, indent=2, sort_keys=True) + "\n")
+            stream.write(json.dumps(result, default=decimal_json_default, indent=2, sort_keys=True) + "\n")
         temporary.replace(path)
     finally:
         if temporary is not None and temporary.exists():
@@ -1076,7 +1141,7 @@ def main(argv: list[str] | None = None) -> int:
         write_result(args.output, result)
     except IntegrityError as exc:
         result = _blocked(result, exc)
-    print(json.dumps(result, indent=2, sort_keys=True))
+    print(json.dumps(result, default=decimal_json_default, indent=2, sort_keys=True))
     return {"PASS": 0, "FAIL": 5, "NOT_RUN": 4, "NOT_IMPLEMENTED": 4, "BLOCKED": 4}.get(result["status"], 4)
 
 

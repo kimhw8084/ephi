@@ -27,7 +27,7 @@ P-identifiers below concern the package and contract review. Historical F-identi
 | P09 | Generic downstream “action” delivery could be interpreted as a manufacturing control path. Restricted V1 delivery to approved work requests/tickets/notifications and retained human external execution. | R1/R5, ADR 10; G07/G12 |
 | P10 | Permission lifetime on receipts/artifact links/notifications needed explicit treatment. Required authorization at disclosure/dispatch, added concrete regression obligations, and kept framework inspection distinct from installed API qualification. | T2/T4; G07/G08/G09 |
 
-The affected application behavior is still proposed. None of these document corrections demonstrates an implemented F03/F04/F05 fix.
+The affected application behavior is still proposed. None of these document corrections demonstrates an implemented F03/F05 fix; CHG-116 separately adds the bounded canonical F04 value slice.
 
 ## Evidence and verification
 
@@ -39,7 +39,7 @@ The affected application behavior is still proposed. None of these document corr
 | NiceGUI Base pin | PASS for source inspection: pinned public commit and metadata confirm version 3.0.0a8, NiceGUI 3.15.0 and Python >=3.11,<3.14; file hashes saved in the review evidence |
 | Current package checks | PASS when run on a supported interpreter: `python3 tools/check_package.py`; integrity, syntax, local links/fences, traceability presence and historical consistency |
 | Checker regression suite | PASS: 12 tests via `python3 -m unittest discover -s tests -v`; changed/missing/extra files, damaged evidence, invalid syntax, broken links and other rejection paths |
-| Canonical application self-check and repository tests | PASS/IMPLEMENTED capability for F02/F03 and `NOT_IMPLEMENTED`/`NOT_RUN` for F04/F05; fresh F02/F03 execution is separately reported by `tools/w0_integrity_regressions.py` |
+| Canonical application self-check and repository tests | PASS/IMPLEMENTED capability for F02/F03/F04 and `NOT_IMPLEMENTED`/`NOT_RUN` for F05; fresh F02/F03/F04 execution is separately reported by `tools/w0_integrity_regressions.py` |
 | Installed Base, browser, company sources, persistence and scientific qualification | NOT_RUN: no implementation/target environment in this package |
 | Original mission completeness | NOT_VERIFIABLE: original attachment absent; internal A–S and requirement traceability retained |
 
@@ -49,7 +49,7 @@ Exact import/review identities are recorded in [the review evidence](evidence/re
 
 1. **Keep the canonical baseline reproducible.** Run the Git-native baseline, package checks and offline tests from a fresh checkout; do not add an artifact prerequisite.
 2. **Resolve framework and dependency bindings.** Use the pinned catalog, exact dependency declarations and the existing CHG-105 runtime tool; installation/bootstrap is separately reported from offline repository checks.
-3. **Complete W0 and the smallest W1 slice.** Extend F04/F05 against `src/ephi`, then add one scoped durable claim/acknowledge path through the actual Base UI with conflict/restart evidence. Do not multiply screens before that works.
+3. **Complete W0 and the smallest W1 slice.** Extend F05 against `src/ephi`, then add one scoped durable claim/acknowledge path through the actual Base UI with conflict/restart evidence. Do not multiply screens before that works.
 4. **Bind company-specific evidence before a pilot.** Identity, backend/artifact store, source mappings, family thresholds, action authority and operational policies remain the gates already defined in the design.
 
 No browser, scientific or production-readiness claim follows from publishing this repository. The next authorized implementation can proceed from [11_Developer_Start.md](11_Developer_Start.md) against the canonical package.
