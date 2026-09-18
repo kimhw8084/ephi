@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the design repository without importing EPHI or installing dependencies."""
+"""Validate the canonical repository package and preserve historical evidence."""
 
 from __future__ import annotations
 
@@ -10,6 +10,7 @@ import json
 from pathlib import Path, PurePosixPath
 import re
 import sys
+import tomllib
 from urllib.parse import unquote, urlsplit
 import xml.etree.ElementTree as ET
 
@@ -17,13 +18,14 @@ import xml.etree.ElementTree as ET
 ROOT = Path(__file__).resolve().parents[1]
 IGNORED_DIRS = {".git", ".venv", "__pycache__", ".pytest_cache", "artifacts"}
 IGNORED_FILES = {".DS_Store", "EPHI_1.0_Design_Pack.zip"}
-STATUS = "DESIGN_HANDOFF_NOT_IMPLEMENTED_NOT_PRODUCTION_QUALIFIED"
+STATUS = "CANONICAL_REPO_BASELINE_NOT_PRODUCTION_QUALIFIED"
 REQUIRED = {
     "README.md", "AGENTS.md", "CONTRIBUTING.md", "manifest.json",
     ".gitignore", ".gitattributes", ".github/workflows/package.yml",
     "evidence/README.md", "evidence/import/original_manifest.json",
     "evidence/review/package_review.json", "evidence/review/base_reference_check.json",
-    "tools/check_package.py", "tests/test_package.py",
+    "environment/w0_repo_baseline.json", "pyproject.toml", "src/ephi/__init__.py",
+    "tools/check_package.py", "tools/w0_repo_baseline.py", "tests/test_package.py",
 }
 SECRET_PATTERNS = (
     r"-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----",
@@ -197,6 +199,8 @@ def validate(root: Path) -> list[str]:
         try:
             if path.suffix == ".json":
                 read_json(path)
+            elif path.name == "pyproject.toml":
+                tomllib.loads(path.read_text(encoding="utf-8"))
             elif path.suffix == ".py":
                 ast.parse(path.read_text(encoding="utf-8"), filename=name)
             elif path.suffix == ".md":
@@ -240,7 +244,7 @@ def main() -> int:
             print(f"FAIL: {error}", file=sys.stderr)
         return 1
     print(f"PASS: {len(package_files(ROOT))} package files; manifest, syntax, local links/fences, traceability and historical evidence.")
-    print("Scope: design package only. Application/runtime/browser/production qualification NOT_RUN.")
+    print("Scope: canonical repository baseline present; Application/runtime/browser/production qualification NOT_RUN.")
     return 0
 
 

@@ -2,15 +2,15 @@
 
 ## Evidence hierarchy
 
-**Delivery boundary:** this repository was created from `EPHI_1.0_Design_Pack.zip` (SHA-256 `88e3fdbd02d1796203b8b39a700cd72a7e39087704faa811b7920622574b4e7d`). The EPHI source ZIP, original mission attachment and companion master referenced by the earlier audit are absent. All historical executions below belong to that earlier audit. See [13_Package_Review.md](13_Package_Review.md) for the current review and [evidence/README.md](evidence/README.md) for preserved provenance.
+**Delivery boundary:** this repository is the canonical Git executable source for the CHG-111 R3 baseline. The design-pack and earlier application-source records below are historical provenance only; they are not installation, package-validation or W0 prerequisites. All historical executions below belong to the earlier audit. See [13_Package_Review.md](13_Package_Review.md) for the current review and [evidence/README.md](evidence/README.md) for preserved provenance.
 
-The EPHI source archive identified by the historical audit is the code authority for those findings. The user's original mission was the requested product/design brief, not evidence that a feature or test already exists. Pinned NiceGUI Base source describes template capabilities and construction rules, not target certification. External official documentation supports limited technical platform choices. Proposed architecture, policies, load envelopes, interface names and UI behavior are design decisions, not claims about the current implementation.
+The historical EPHI source archive is the provenance authority for the historical findings only. The canonical implementation authority is this Git repository. The user's original mission was the requested product/design brief, not evidence that a feature or test already exists. Pinned NiceGUI Base source describes template capabilities and construction rules, not target certification. External official documentation supports limited technical platform choices. Proposed architecture, policies, load envelopes, interface names and UI behavior are design decisions, not claims about the current implementation.
 
 ## Local source and evidence
 
 | Source | Identity / scope |
 |---|---|
-| EPHI source archive | `ephi_v0.19.1_production_hardened(1).zip`; SHA-256 `5e9ad8f63b3158adc530af69fc650aec606cbfa64896ba73840cdcf994a2b6e3` |
+| Historical EPHI source archive | Filename/SHA-256 are preserved here as `REFERENCE_ONLY` provenance; the artifact is not a canonical checkout prerequisite |
 | Source root | `ephi_v0.19.1_production_hardened_release/` |
 | User mission | `붙여넣은 마크다운(1)(1).md`; available in the original audit conversation, not in this delivery |
 | Python source inventory | `evidence/source_inventory.json`: relative paths, file hashes, line counts and parsed symbols; includes additional Python scripts beyond the three summarized directories |
@@ -20,14 +20,7 @@ The EPHI source archive identified by the historical audit is the code authority
 | Selected source excerpts | `evidence/source_excerpts.md`; line-numbered extracts supporting key findings |
 | Pack checks | `evidence/design_pack_checks.json`: structural/source-identity checks, not implementation or browser tests |
 
-Run the probes from the extracted EPHI root in an environment satisfying the relevant EPHI dependencies:
-
-```bash
-PYTHONPATH=src:company_port/src python /path/to/ephi/evidence/behavior_probes.py \
-  --output /path/to/observations.json
-```
-
-This observational harness only constructs synthetic in-memory fixtures. Successful process execution means observations were collected. In the original source, F03's absent work row, F04's zero historical cost and F05's resolved state are reproduced defects/product mismatches, not successful product acceptance. F02 deliberately omits the separate checkpoint restore and establishes that restoring source rows alone is insufficient; it does not establish failure of the full checkpoint restoration path.
+The preserved behavior-probe harness and outputs are historical observations only. They are not part of the canonical W0 command path. The canonical CHG-109 runner targets `src/ephi` and reports the four behavioral checks as `NOT_IMPLEMENTED`/`NOT_RUN` until future changes implement them. In the historical source, F03's absent work row, F04's zero historical cost and F05's resolved state are reproduced defects/product mismatches, not successful product acceptance. F02 deliberately omits the separate checkpoint restore and establishes that restoring source rows alone is insufficient; it does not establish failure of the full checkpoint restoration path.
 
 In the historical audit, the application archive/source was not patched, committed or pushed. This repository publishes the separate design and evidence; it does not change that application's source or historical results.
 

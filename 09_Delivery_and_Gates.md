@@ -36,7 +36,7 @@ Keep analytical CPU out of the UI event loop; the Base adapter may isolate short
 
 | Gate | What must be proven | Evidence and blocking rule |
 |---|---|---|
-| G00 Source identity / installation | exact ZIP/commit/dependency lock, import/launch on supported Python | hashes + reproducible install; absent required library blocks target stage |
+| G00 Source identity / installation | canonical Git commit/tree/worktree, package/dependency identity, import/launch on supported Python | repository facts + reproducible install; absent required library blocks target stage |
 | G01 Existing regression | 275-pass baseline maintained except explicitly justified behavior corrections | full test log/JUnit, invariant suite; unexplained regression blocks |
 | G02 Temporal integrity | no future-available input; revisions immutable; historical supersession correct | F04 regression plus replay/property tests; mandatory |
 | G03 Recovery integrity | low confidence, missing/stale/pipeline-suspect inputs cannot establish recovery | F05 regression, repeated-sample/context tests; mandatory |
@@ -79,7 +79,7 @@ Time-to-detect, time-to-acknowledge, active investigation effort, decision lead 
 
 ## P1. Migration plan
 
-**Baseline.** Freeze source ZIP hash and the selected Base commit. Inventory installed runtime/dependency constraints and existing company configuration. Keep unrelated user work untouched. Save old API outputs and deterministic scientific fixtures. Mark demos/local stores as explicit development profiles.
+**Baseline.** Record the canonical Git commit/tree/worktree and selected Base commit/dependency identities. Inventory supported runtime constraints and existing company configuration. Keep unrelated user work untouched. Save old API outputs and deterministic scientific fixtures. Mark demos/local stores as explicit development profiles. Historical source-audit provenance remains reference-only and is not a prerequisite for the canonical checkout.
 
 **Corrective core changes.** Add regression tests for F03/F04/F05 before fixes. Replace recovery eligibility with a versioned qualified rule; implement as-of supersession; separate work visibility from technical state. Preserve legacy behavior only for comparison/replay where required, not as production fallback. Record scientific behavior differences and rerun affected qualification.
 
@@ -103,7 +103,7 @@ Each wave ends with a healthy repository, a runnable vertical result, exact comm
 
 | Wave | Objective / user-visible result | Backend and frontend work | Migration / tests / exit |
 |---|---|---|---|
-| W0 — Trust baseline | Credible baseline; reproduced integrity gaps closed | F03/F04/F05 regressions/fixes; F02 restore/persistence contract; pin Base; resolve actual catalog APIs; dependency lock; scientific policy version | Existing suite and new regressions PASS; exact source identity; Base compatibility smoke; no production claim |
+| W0 — Trust baseline | Credible canonical repository baseline; integrity gaps remain explicit until their APIs exist | Git-native package/import/test baseline; pin Base; resolve actual catalog APIs; dependency lock; scientific policy version; F03/F04/F05 and F02 checks reported honestly | Canonical repository checks PASS; unimplemented behavioral checks remain NOT_IMPLEMENTED/NOT_RUN; Base compatibility smoke when bootstrapped; no production claim |
 | W1 — One durable case | Open, claim and revisit one episode in actual Base UI after restart | UoW/repos/receipts; minimal attention/read brief; Base shell/provider/context; real DB integration; scoped principal and health startup | Demo namespace only; crash/restart, concurrency, auth tests; no silent memory fallback; source unavailable states render |
 | W2 — Real metrology shadow | One real family's qualified signals appear with provenance | Company read adapters, canonical snapshots, metrology pipeline workers, checkpoints/read heads, freshness; evidence/reference timeline | Data Reality/replay/golden policy; observer-only UI; record real baseline and discrepancies; target auth/durability prerequisites already satisfied |
 | W3 — Complete decision loop | Engineer reviews exposure, performs checks, records action, verifies recovery, closes/reopens | WIP/route/alternative adapters if available; workflow/check/action/recovery/decision snapshots; exposure and forms; basic value observations | Family-scoped human pilot; all source-dependent capabilities explicit; F03/F05 browser tests; no autonomous controls; observed actions and recovery durable |
