@@ -32,7 +32,12 @@ from .advisory import (
 )
 from .config import RuntimeSettings
 from .identity import ApplicationIdentity
-from .infrastructure import SQLiteReferenceStore, SQLiteReferenceTransactionAdapter
+from .infrastructure import (
+    PostgreSQLReferenceTransactionAdapter,
+    PostgresReferenceTransactionAdapter,
+    SQLiteReferenceStore,
+    SQLiteReferenceTransactionAdapter,
+)
 from .recovery import (
     CriterionResult,
     IntegrityAttribution,
@@ -101,6 +106,8 @@ __all__ = [
     "Severity",
     "SQLiteReferenceStore",
     "SQLiteReferenceTransactionAdapter",
+    "PostgreSQLReferenceTransactionAdapter",
+    "PostgresReferenceTransactionAdapter",
     "StorageFailureError",
     "TechnicalEpisodeState",
     "SupersessionConflictError",
