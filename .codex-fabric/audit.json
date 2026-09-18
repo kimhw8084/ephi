@@ -1,0 +1,382 @@
+{
+  "accepted_at": "2026-09-18T15:12:23Z",
+  "changed_files": [
+    {
+      "additions": 18,
+      "deletions": 0,
+      "path": "11_Developer_Start.md",
+      "status": "M"
+    },
+    {
+      "additions": 18,
+      "deletions": 0,
+      "path": "README.md",
+      "status": "M"
+    },
+    {
+      "additions": 46,
+      "deletions": 6,
+      "path": "manifest.json",
+      "status": "M"
+    },
+    {
+      "additions": 43,
+      "deletions": 0,
+      "path": "src/ephi/__init__.py",
+      "status": "M"
+    },
+    {
+      "additions": 45,
+      "deletions": 0,
+      "path": "src/ephi/application/__init__.py",
+      "status": "A"
+    },
+    {
+      "additions": 186,
+      "deletions": 0,
+      "path": "src/ephi/application/context.py",
+      "status": "A"
+    },
+    {
+      "additions": 70,
+      "deletions": 0,
+      "path": "src/ephi/application/errors.py",
+      "status": "A"
+    },
+    {
+      "additions": 146,
+      "deletions": 0,
+      "path": "src/ephi/application/hashing.py",
+      "status": "A"
+    },
+    {
+      "additions": 324,
+      "deletions": 0,
+      "path": "src/ephi/application/transactions.py",
+      "status": "A"
+    },
+    {
+      "additions": 15,
+      "deletions": 0,
+      "path": "src/ephi/infrastructure/__init__.py",
+      "status": "A"
+    },
+    {
+      "additions": 301,
+      "deletions": 0,
+      "path": "src/ephi/infrastructure/sqlite.py",
+      "status": "A"
+    },
+    {
+      "additions": 242,
+      "deletions": 0,
+      "path": "tests/test_o2_transactions.py",
+      "status": "A"
+    }
+  ],
+  "checks": [
+    {
+      "command": "/bin/zsh -lc \"pwd && sed -n '1,240p' /Users/haewonkim/.codex/RTK.md && sed -n '1,260p' /Users/haewonkim/.codex/law.md && sed -n '1,260p' README.md && sed -n '1,320p' 13_Package_Review.md && git status --short --branch && git rev-parse HEAD && git show -s --format='%H%n%s' 6806aa2f6b42d3199009c0b783262b053d9d26af\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n \\\"Principal|AccessScope|RevisionVector|CommandContext|receipt|outbox|transaction|O2|CHG-121|expected version|VERSION_CONFLICT|IDEMPOTENCY\\\" 03_Application_Contracts.md 04_Data_and_Runtime.md 09_Delivery_and_Gates.md 10_Traceability_and_Decisions.md 11_Developer_Start.md src tests pyproject.toml README.md tools || true\nrtk rg --files | sed -n '1,240p'\nrtk find src tests -maxdepth 4 -type f -print | sort\nrtk sed -n '1,260p' pyproject.toml\nrtk sed -n '1,260p' 03_Application_Contracts.md\nrtk sed -n '1,300p' 04_Data_and_Runtime.md\nrtk sed -n '1,260p' 11_Developer_Start.md\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,230p' 03_Application_Contracts.md\nrtk sed -n '1,240p' src/ephi/identity.py\nrtk sed -n '1,240p' src/ephi/__init__.py\nrtk sed -n '1,280p' src/ephi/advisory/model.py\nrtk sed -n '1,300p' src/ephi/advisory/service.py\nrtk sed -n '1,260p' src/ephi/advisory/checkpoint.py\nrtk sed -n '1,240p' src/ephi/value/model.py\nrtk sed -n '1,320p' src/ephi/value/repository.py\nrtk sed -n '1,260p' tests/test_advisory_integrity.py\nrtk sed -n '1,260p' tests/test_ephi_application.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,320p' tools/check_package.py\nrtk sed -n '1,360p' tools/w0_repo_baseline.py\nrtk sed -n '1,260p' tools/w0_integrity_regressions.py\nrtk sed -n '1,220p' .gitignore 2>/dev/null || true\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,220p' src/ephi/__init__.py\nrtk sed -n '1,260p' src/ephi/advisory/model.py\nrtk sed -n '1,280p' src/ephi/advisory/service.py\nrtk sed -n '1,220p' tests/test_package.py\nrtk sed -n '1,240p' tests/test_w0_repo_baseline.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 --version\nrtk git status --short --branch\nrtk git log --oneline -5'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -m compileall -q src/ephi && rtk python3 - <<'PY'\nimport sys\nsys.path.insert(0, 'src')\nimport ephi\nprint('imported', ephi.AccessScope('s').canonical_key)\nPY\nrtk git diff --stat && rtk git diff -- src/ephi/application/transactions.py | sed -n '1,260p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git status --short\nrtk find src/ephi/application src/ephi/infrastructure -type f | sort\nrtk sed -n '1,360p' src/ephi/application/transactions.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest tests.test_o2_transactions -v'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest tests.test_o2_transactions -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n \\\"staged-source|Pinned framework|CHG-109 boundary|It is not required|Scope boundary\\\" README.md 11_Developer_Start.md src/ephi/application/__init__.py src/ephi/__init__.py src/ephi/application/errors.py\nrtk sed -n '35,105p' README.md\nrtk sed -n '38,120p' 11_Developer_Start.md\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,100p' src/ephi/application/__init__.py\nrtk sed -n '1,130p' src/ephi/__init__.py\nrtk python3 -m compileall -q src/ephi tests/test_o2_transactions.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest discover -s tests -v'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest tests.test_o2_transactions -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/w0_integrity_regressions.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest discover -s tests -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/w0_repo_baseline.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git status --short\nrtk git diff --stat\nrtk wc -l src/ephi/application/*.py src/ephi/infrastructure/*.py tests/test_o2_transactions.py\nrtk git diff -- README.md 11_Developer_Start.md src/ephi/__init__.py | sed -n '1,320p'\nrtk git diff -- manifest.json | sed -n '1,220p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest\nrtk python3 -m unittest tests.test_o2_transactions -v\nrtk python3 tools/check_package.py\nrtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/w0_integrity_regressions.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest discover -s tests -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/w0_repo_baseline.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short\nrtk git diff --check\nrtk git diff --name-only\nrtk git diff --numstat\nrtk git log -1 --oneline'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git add README.md 11_Developer_Start.md manifest.json src/ephi/__init__.py src/ephi/application src/ephi/infrastructure tests/test_o2_transactions.py && rtk git diff --cached --check && rtk git diff --cached --stat && rtk git diff --cached --name-only'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git commit -m \"Implement CHG-121 O2 durable command transactions\"'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest tests.test_o2_transactions -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/w0_integrity_regressions.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest discover -s tests -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/w0_repo_baseline.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short --branch\nrtk git show --stat --oneline --summary HEAD\nrtk git diff HEAD''^ HEAD --check\nrtk git log -1 --format='\"'%H%n%s'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    }
+  ],
+  "codex": {
+    "cli_version": "codex-cli 0.154.0",
+    "configured_model": "gpt-5.6-luna",
+    "event_count": 94,
+    "provider_reported_model": null,
+    "reasoning_effort": "xhigh",
+    "terminal_type": "turn.completed",
+    "usage": {
+      "cache_hit_percent": 94.48,
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 2561280,
+      "fresh_input_tokens": 149684,
+      "input_tokens": 2710964,
+      "non_reasoning_output_tokens": 23430,
+      "output_tokens": 42186,
+      "reasoning_output_tokens": 18756,
+      "total_processed_tokens": 2753150
+    },
+    "warnings": []
+  },
+  "commits": [
+    {
+      "sha": "5c6af941eb7c361e0bb4779ea27bbaf256ca08a4",
+      "subject": "Implement CHG-121 O2 durable command transactions"
+    }
+  ],
+  "diff": {
+    "additions": 1454,
+    "changed_files": 12,
+    "commit_count": 1,
+    "deletions": 6
+  },
+  "error_code": null,
+  "evidence_manifest": {
+    "count": 3,
+    "items": [
+      {
+        "bytes": 3697,
+        "path": "11_Developer_Start.md",
+        "sha256": "b0706355ec404f8d9ab7b60e810571e8c175add87fe1757831a497b9ade51bb3"
+      },
+      {
+        "bytes": 7140,
+        "path": "README.md",
+        "sha256": "66d2aff6697b58a7bcba1ddaa316a4713e2255c0d7ed6489c0c5fa58c98fbb4f"
+      },
+      {
+        "bytes": 15029,
+        "path": "manifest.json",
+        "sha256": "0472e73b2699d5917d87891a2ff4a026db9eb1e47ce10ced17f1699cf0f7394d"
+      }
+    ],
+    "version": 1
+  },
+  "evidence_publisher_release": "1.2.3-resume-candidate",
+  "fabric_capture": {
+    "applied": false,
+    "paths_before": 0,
+    "transient_untracked_removed": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "fabric_release": "1.2.3-resume-candidate",
+  "failure_class": null,
+  "finished_at": "2026-09-18T15:27:49Z",
+  "git": {
+    "base_is_ancestor": true,
+    "base_sha": "6806aa2f6b42d3199009c0b783262b053d9d26af",
+    "branch": "codex/ephi-o2-command-transaction-core-v1",
+    "head_sha": "5c6af941eb7c361e0bb4779ea27bbaf256ca08a4",
+    "remote_exact_head": true,
+    "remote_head_sha": "5c6af941eb7c361e0bb4779ea27bbaf256ca08a4",
+    "target_branch": "main",
+    "target_drifted_since_acceptance": false,
+    "target_head_observed_after_execution": "6806aa2f6b42d3199009c0b783262b053d9d26af",
+    "work_branch": "codex/ephi-o2-command-transaction-core-v1",
+    "worktree_clean": true
+  },
+  "instructions": {
+    "files": [
+      {
+        "bytes": 1458,
+        "path": "AGENTS.md",
+        "sha256": "4349f387a79d886ed1264604ff48c582698e539e08ed8fb2f9d8ab8fbf6f804a"
+      }
+    ],
+    "total_bytes": 1458,
+    "warning": null
+  },
+  "job_id": "CF-e2b27c65f6f65932a3cf5d85",
+  "kind": "codex-fabric-audit-evidence",
+  "locator": {
+    "branch": "codex-fabric/evidence/ephi/ephi-o2-command-transaction-core-v1",
+    "path": ".codex-fabric/audit.json",
+    "ref": "refs/heads/codex-fabric/evidence/ephi/ephi-o2-command-transaction-core-v1"
+  },
+  "operation": "BUILD",
+  "policy": {
+    "environment_policy_sha256": "e077daca74297b3c30bee8989f00f8ca5338f7610b4d016a6c48db524205d064",
+    "fabric_release": "1.2.3-resume-candidate",
+    "policy_sha256": "44756118cd7fda0c45cd23ba1d31a48a3f4f2422d687df15264ba4406f40e1f2",
+    "registry_sha256": "cfc765f3211c37c7967a138f3b2d89a99341939b15b2623f92744d007f625d6f"
+  },
+  "project_id": "ephi",
+  "recovery": {
+    "model_rerun_safe": false,
+    "recovery_required": false,
+    "retry_safe": false,
+    "retry_scope": null,
+    "worktree_retained": true
+  },
+  "request": "ephi-o2-command-transaction-core-v1",
+  "schema_version": 1,
+  "started_at": "2026-09-18T15:12:23Z",
+  "status": "EXECUTED_CHANGE",
+  "timing": {
+    "execution_seconds": 926,
+    "queue_seconds": 0,
+    "total_seconds": 926
+  },
+  "transport": {
+    "bytes": 7223,
+    "envelope": "FABRIC/2",
+    "prompt_bytes": 6901,
+    "prompt_sha256": "cf6360704a4306f801fef947937bb911d83239765eb7e59da5702b77bc994567",
+    "sha256": "e2b27c65f6f65932a3cf5d85f352ead5a4510d56a7423726dab5508aad21954f"
+  }
+}
