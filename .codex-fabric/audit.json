@@ -1,0 +1,396 @@
+{
+  "accepted_at": "2026-09-18T22:05:22Z",
+  "changed_files": [
+    {
+      "additions": 5,
+      "deletions": 1,
+      "path": ".github/workflows/package.yml",
+      "status": "M"
+    },
+    {
+      "additions": 23,
+      "deletions": 2,
+      "path": "11_Developer_Start.md",
+      "status": "M"
+    },
+    {
+      "additions": 24,
+      "deletions": 2,
+      "path": "13_Package_Review.md",
+      "status": "M"
+    },
+    {
+      "additions": 28,
+      "deletions": 2,
+      "path": "README.md",
+      "status": "M"
+    },
+    {
+      "additions": 43,
+      "deletions": 18,
+      "path": "manifest.json",
+      "status": "M"
+    },
+    {
+      "additions": 111,
+      "deletions": 0,
+      "path": "migrations/003_o2_read_snapshot_core.sql",
+      "status": "A"
+    },
+    {
+      "additions": 38,
+      "deletions": 0,
+      "path": "src/ephi/__init__.py",
+      "status": "M"
+    },
+    {
+      "additions": 60,
+      "deletions": 0,
+      "path": "src/ephi/application/__init__.py",
+      "status": "M"
+    },
+    {
+      "additions": 56,
+      "deletions": 0,
+      "path": "src/ephi/application/errors.py",
+      "status": "M"
+    },
+    {
+      "additions": 446,
+      "deletions": 0,
+      "path": "src/ephi/application/read.py",
+      "status": "A"
+    },
+    {
+      "additions": 2,
+      "deletions": 0,
+      "path": "src/ephi/infrastructure/__init__.py",
+      "status": "M"
+    },
+    {
+      "additions": 116,
+      "deletions": 3,
+      "path": "src/ephi/infrastructure/postgresql.py",
+      "status": "M"
+    },
+    {
+      "additions": 744,
+      "deletions": 0,
+      "path": "src/ephi/infrastructure/postgresql_reads.py",
+      "status": "A"
+    },
+    {
+      "additions": 327,
+      "deletions": 0,
+      "path": "tests/test_o2_postgresql_reads.py",
+      "status": "A"
+    },
+    {
+      "additions": 72,
+      "deletions": 0,
+      "path": "tests/test_o2_read_contracts.py",
+      "status": "A"
+    }
+  ],
+  "checks": [
+    {
+      "command": "/bin/zsh -lc \"pwd && git status --short --branch && git rev-parse HEAD && git show -s --format='%H%n%s' HEAD && sed -n '1,240p' /Users/haewonkim/.codex/RTK.md && sed -n '1,240p' /Users/haewonkim/.codex/law.md && sed -n '1,240p' README.md && sed -n '1,260p' 13_Package_Review.md\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk find . -maxdepth 3 -type f | sort && rtk rg -n \"Principal|AccessScope|RevisionVector|PostgreSQLReference|migration|worker|grant|authorization|query|snapshot|read\" src tests migrations .github 03_Application_Contracts.md 04_Data_and_Runtime.md 09_Delivery_and_Gates.md 11_Developer_Start.md pyproject.toml'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,240p' src/ephi/application/context.py && rtk sed -n '1,220p' src/ephi/application/errors.py && rtk sed -n '1,260p' src/ephi/application/storage.py && rtk sed -n '1,520p' src/ephi/infrastructure/postgresql.py && rtk sed -n '1,260p' migrations/001_o2_command_core.sql && rtk sed -n '1,360p' migrations/002_o2_worker_core.sql\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,260p' tests/test_o2_postgresql.py && rtk sed -n '260,620p' tests/test_o2_postgresql.py && rtk sed -n '1,180p' tests/test_o2_transactions.py && rtk sed -n '1,220p' src/ephi/application/__init__.py && rtk sed -n '1,180p' src/ephi/infrastructure/__init__.py && rtk sed -n '1,180p' src/ephi/__init__.py && rtk sed -n '1,260p' pyproject.toml && rtk find .github -type f -maxdepth 3 -print -exec sed -n '1,260p' {} \\\\;\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,220p' src/ephi/application/hashing.py && rtk sed -n '1,220p' src/ephi/application/transactions.py && rtk sed -n '1,220p' src/ephi/application/worker.py && rtk sed -n '1,420p' src/ephi/infrastructure/postgresql_worker.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,220p' 11_Developer_Start.md && rtk sed -n '1,240p' 09_Delivery_and_Gates.md && rtk sed -n '1,220p' 10_Traceability_and_Decisions.md && rtk rg -n \\\"CHG-121|CHG-123|CHG-126|O2|retained|G05|G07|R2|T3\\\" README.md 09_Delivery_and_Gates.md 10_Traceability_and_Decisions.md 11_Developer_Start.md 13_Package_Review.md evidence/review/*.json\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk ls -la .github/workflows 2>/dev/null || true; rtk sed -n '1,320p' .github/workflows/* 2>/dev/null || true; rtk sed -n '1,240p' tools/check_package.py; rtk sed -n '1,300p' tools/w0_repo_baseline.py; rtk sed -n '1,260p' tools/w0_integrity_regressions.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk tail -n 120 src/ephi/application/errors.py && rtk python3 -m py_compile src/ephi/application/read.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,180p' src/ephi/application/__init__.py && rtk sed -n '1,160p' src/ephi/application/read.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -m compileall -q src tests && rtk python3 - <<'PY'\nimport sys\nsys.path.insert(0, 'src')\nimport ephi\nfrom ephi.application import CursorPageToken, QuerySnapshotExpiredError, ReadRevisionDraft\nfrom ephi.infrastructure import PostgreSQLReadSnapshotStore\nprint('imports ok', ephi.__version__, CursorPageToken.__name__, PostgreSQLReadSnapshotStore.__name__)\nPY\nrtk git diff --stat && rtk git diff --check\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git status --short && rtk git diff -- src/ephi/application/__init__.py src/ephi/__init__.py src/ephi/infrastructure/__init__.py src/ephi/infrastructure/postgresql.py | sed -n '1,320p' && rtk rg -n \\\"class |def |hashlib.compare|base64\\\" src/ephi/application/read.py src/ephi/infrastructure/postgresql_reads.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest discover -s tests -v'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk which psql || true; rtk which docker || true; rtk which podman || true; rtk printenv EPHI_TEST_POSTGRES_DSN || true; rtk python3 - <<'PY'\nfrom pathlib import Path\nfrom src.ephi.infrastructure.postgresql import _sql_statements\ns=Path('migrations/003_o2_read_snapshot_core.sql').read_text()\nitems=list(_sql_statements(s))\nprint(len(items))\nfor i,item in enumerate(items,1): print(i, item.splitlines()[0][:90], '...', item[-40:].replace('\\\\n',' '))\nPY\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"PYTHONPATH=src rtk python3 - <<'PY'\nfrom pathlib import Path\nfrom ephi.infrastructure.postgresql import _sql_statements\ns=Path('migrations/003_o2_read_snapshot_core.sql').read_text()\nitems=list(_sql_statements(s))\nprint(len(items))\nfor i,item in enumerate(items,1): print(i, item.splitlines()[0][:90], '...', item[-40:].replace('\\\\n',' '))\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest tests.test_o2_read_contracts tests.test_o2_postgresql_reads -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk docker ps --format '{{.Names}}\\\\t{{.Image}}\\\\t{{.Status}}' && rtk docker images --format '{{.Repository}}:{{.Tag}}' | rg '\"'^postgres:'\"' || true\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk docker run --rm -d --name ephi-chg129-pg -e POSTGRES_USER=ephi_test -e POSTGRES_PASSWORD=ephi_test_password -e POSTGRES_DB=ephi_test -p 55432:5432 postgres:18.6'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk docker exec ephi-chg129-pg pg_isready -U ephi_test -d ephi_test'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"EPHI_TEST_POSTGRES_DSN='postgresql://ephi_test:ephi_test_password@127.0.0.1:55432/ephi_test' PYTHONPATH=src rtk python3 -m unittest tests.test_o2_postgresql_reads -v\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"EPHI_TEST_POSTGRES_DSN='postgresql://ephi_test:ephi_test_password@127.0.0.1:55432/ephi_test' PYTHONPATH=src rtk python3 -m unittest tests.test_o2_postgresql_reads -v\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"EPHI_TEST_POSTGRES_DSN='postgresql://ephi_test:ephi_test_password@127.0.0.1:55432/ephi_test' PYTHONPATH=src rtk python3 -m unittest tests.test_o2_postgresql tests.test_o2_worker_postgresql tests.test_o2_postgresql_reads -v\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '96,145p' README.md && rtk sed -n '52,90p' 13_Package_Review.md && rtk sed -n '52,80p' 11_Developer_Start.md && rtk sed -n '30,100p' .github/workflows/package.yml\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,150p' src/ephi/__init__.py && rtk python3 -m compileall -q src tests && PYTHONPATH=src rtk python3 -c 'import ephi; print(ephi.ReadRevision.__name__, ephi.PostgreSQLReadSnapshotStore.__name__)'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"EPHI_TEST_POSTGRES_DSN='postgresql://ephi_test:ephi_test_password@127.0.0.1:55432/ephi_test' PYTHONPATH=src rtk python3 -m unittest tests.test_o2_postgresql_reads -v\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '64,92p' 13_Package_Review.md && rtk git diff --check && rtk git status --short\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest discover -s tests -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py && rtk python3 tools/w0_repo_baseline.py && rtk python3 tools/w0_integrity_regressions.py && rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git diff --stat && rtk git diff -- .github/workflows/package.yml README.md 11_Developer_Start.md 13_Package_Review.md src/ephi/application/errors.py src/ephi/application/__init__.py src/ephi/infrastructure/postgresql.py src/ephi/infrastructure/__init__.py src/ephi/__init__.py | sed -n '1,520p' && rtk wc -l src/ephi/application/read.py src/ephi/infrastructure/postgresql_reads.py migrations/003_o2_read_snapshot_core.sql tests/test_o2_read_contracts.py tests/test_o2_postgresql_reads.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"EPHI_TEST_POSTGRES_DSN='postgresql://ephi_test:ephi_test_password@127.0.0.1:55432/ephi_test' PYTHONPATH=src rtk python3 -m unittest tests.test_o2_postgresql tests.test_o2_worker_postgresql tests.test_o2_postgresql_reads -v\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk docker rm -f ephi-chg129-pg && rtk git diff --check && rtk git status --short'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git add .github/workflows/package.yml 11_Developer_Start.md 13_Package_Review.md README.md manifest.json migrations/003_o2_read_snapshot_core.sql src/ephi/__init__.py src/ephi/application/__init__.py src/ephi/application/errors.py src/ephi/application/read.py src/ephi/infrastructure/__init__.py src/ephi/infrastructure/postgresql.py src/ephi/infrastructure/postgresql_reads.py tests/test_o2_postgresql_reads.py tests/test_o2_read_contracts.py && rtk git commit -m 'Implement CHG-129 generic durable read snapshots'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short --branch && rtk git rev-parse HEAD && rtk git show --stat --oneline --summary HEAD && rtk python3 tools/check_package.py && rtk python3 tools/w0_repo_baseline.py && rtk git diff --check && rtk git status --porcelain=v1 --untracked-files=all'",
+      "exit_code": 0,
+      "type": "command_execution"
+    }
+  ],
+  "codex": {
+    "cli_version": "codex-cli 0.154.0",
+    "configured_model": "gpt-5.6-luna",
+    "event_count": 115,
+    "provider_reported_model": null,
+    "reasoning_effort": "xhigh",
+    "terminal_type": "turn.completed",
+    "usage": {
+      "cache_hit_percent": 97.48,
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 8016640,
+      "fresh_input_tokens": 207177,
+      "input_tokens": 8223817,
+      "non_reasoning_output_tokens": 34516,
+      "output_tokens": 62655,
+      "reasoning_output_tokens": 28139,
+      "total_processed_tokens": 8286472
+    },
+    "warnings": []
+  },
+  "commits": [
+    {
+      "sha": "f2262662871e738a8b8ec7e8e0497f827a39dbd0",
+      "subject": "Implement CHG-129 generic durable read snapshots"
+    }
+  ],
+  "diff": {
+    "additions": 2095,
+    "changed_files": 15,
+    "commit_count": 1,
+    "deletions": 28
+  },
+  "error_code": null,
+  "evidence_manifest": {
+    "count": 4,
+    "items": [
+      {
+        "bytes": 5228,
+        "path": "11_Developer_Start.md",
+        "sha256": "ffe6cb69ab3047795d47c7426b475ac8b022baec29a89bdb1df65ec13a1525e4"
+      },
+      {
+        "bytes": 10837,
+        "path": "13_Package_Review.md",
+        "sha256": "006efd799297db2300d9899b9b10566313fb3a4e95794985da2146c27327eb15"
+      },
+      {
+        "bytes": 10321,
+        "path": "README.md",
+        "sha256": "0e40a1c9c5e1eeb3f3c5cd32aacf49edab479e255819775bb2de9db292e63ec9"
+      },
+      {
+        "bytes": 17238,
+        "path": "manifest.json",
+        "sha256": "871784c54fdcbd37a74b287d6460558375d8fcb0182919962fe38a7cbfebb051"
+      }
+    ],
+    "version": 1
+  },
+  "evidence_publisher_release": "1.2.3-resume-candidate",
+  "fabric_capture": {
+    "applied": false,
+    "paths_before": 0,
+    "transient_untracked_removed": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "fabric_release": "1.2.3-resume-candidate",
+  "failure_class": null,
+  "finished_at": "2026-09-18T22:27:53Z",
+  "git": {
+    "base_is_ancestor": true,
+    "base_sha": "a774399f62f891821fe1c287d02bc116c49c6415",
+    "branch": "codex/ephi-o2-retained-query-snapshots-v1",
+    "detached_verify": false,
+    "head_sha": "f2262662871e738a8b8ec7e8e0497f827a39dbd0",
+    "remote_exact_head": true,
+    "remote_head_sha": "f2262662871e738a8b8ec7e8e0497f827a39dbd0",
+    "target_branch": "main",
+    "target_drifted_since_acceptance": false,
+    "target_head_observed_after_execution": "a774399f62f891821fe1c287d02bc116c49c6415",
+    "work_branch": "codex/ephi-o2-retained-query-snapshots-v1",
+    "worktree_clean": true
+  },
+  "instructions": {
+    "files": [
+      {
+        "bytes": 1458,
+        "path": "AGENTS.md",
+        "sha256": "4349f387a79d886ed1264604ff48c582698e539e08ed8fb2f9d8ab8fbf6f804a"
+      }
+    ],
+    "total_bytes": 1458,
+    "warning": null
+  },
+  "job_id": "CF-220f55bbdfc0eb174a5eace0",
+  "kind": "codex-fabric-audit-evidence",
+  "locator": {
+    "branch": "codex-fabric/evidence/ephi/ephi-o2-retained-query-snapshots-v1",
+    "path": ".codex-fabric/audit.json",
+    "ref": "refs/heads/codex-fabric/evidence/ephi/ephi-o2-retained-query-snapshots-v1"
+  },
+  "operation": "BUILD",
+  "policy": {
+    "environment_policy_sha256": "e077daca74297b3c30bee8989f00f8ca5338f7610b4d016a6c48db524205d064",
+    "fabric_release": "1.2.3-resume-candidate",
+    "policy_sha256": "44756118cd7fda0c45cd23ba1d31a48a3f4f2422d687df15264ba4406f40e1f2",
+    "registry_sha256": "cfc765f3211c37c7967a138f3b2d89a99341939b15b2623f92744d007f625d6f"
+  },
+  "project_id": "ephi",
+  "recovery": {
+    "model_rerun_safe": false,
+    "recovery_required": false,
+    "retry_safe": false,
+    "retry_scope": null,
+    "worktree_retained": true
+  },
+  "request": "ephi-o2-retained-query-snapshots-v1",
+  "schema_version": 1,
+  "started_at": "2026-09-18T22:05:22Z",
+  "status": "EXECUTED_CHANGE",
+  "timing": {
+    "execution_seconds": 1351,
+    "queue_seconds": 0,
+    "total_seconds": 1351
+  },
+  "transport": {
+    "bytes": 10515,
+    "envelope": "FABRIC/2",
+    "prompt_bytes": 10192,
+    "prompt_sha256": "19c8c758ab0a41878982214ef5dc7078ed0edd113a9d3c40e6677fbb6313124f",
+    "sha256": "220f55bbdfc0eb174a5eace0c623ee207fde94a6f48b96e3bf19217f69f9c9de"
+  }
+}
