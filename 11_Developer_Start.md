@@ -39,6 +39,24 @@ python3 tools/w0_integrity_regressions.py --legacy-source --preflight <legacy-re
 
 It is not required by the package checker, canonical baseline, application tests or future implementation gates. The retained `tools/source_preflight.py` and `tools/w0_baseline.py` modules are optional historical-source compatibility utilities only.
 
+## CHG-121 reference transaction adapter
+
+The reusable O2 transaction substrate is `ephi.application` plus
+`ephi.infrastructure.sqlite.SQLiteReferenceTransactionAdapter`. It is a
+file-backed stdlib SQLite reference adapter for offline/integration evidence;
+it rejects in-memory paths and is not PostgreSQL/G05 qualification. Use the
+focused tests to exercise command receipts, authorization-aware replay,
+compare-and-set conflicts, concurrent first attempts and atomic audit/outbox
+rollback:
+
+```bash
+python3 -m unittest tests.test_o2_transactions -v
+```
+
+Do not extend this slice into NiceGUI pages or ClaimEpisode/Acknowledge
+product behavior. PostgreSQL integration, worker fencing, retained query
+snapshots and later O3 use cases remain separately authorized work.
+
 ## Scope boundary
 
 The first canonical package contains identity, a runtime/config boundary, a deterministic entry self-check and public framework-authority lookup. It does not contain broad UI, company adapters, production storage, speculative science modules or fake product behavior. Continue from [09_Delivery_and_Gates.md](09_Delivery_and_Gates.md) and stop at the authorized wave exit criteria.

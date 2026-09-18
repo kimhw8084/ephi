@@ -1,6 +1,27 @@
 """Canonical repository-native EPHI application package."""
 
 from .app import application_identity, self_check
+from .application import (
+    AccessScope,
+    AggregateNotFoundError,
+    AuthorizationError,
+    AuthorizationDeniedError,
+    CommandContext,
+    CommandError,
+    CommandResult,
+    DurableStorageError,
+    IdempotencyConflictError,
+    Principal,
+    RevisionVector,
+    ScopeDeniedError,
+    StorageFailureError,
+    ValidationError,
+    ValidationFailureError,
+    VersionConflictError,
+    VersionedAggregateCommandExecutor,
+    canonical_command_payload_hash,
+    normalize_domain_payload,
+)
 from .advisory import (
     AdvisoryEpisode,
     AdvisoryService,
@@ -11,6 +32,7 @@ from .advisory import (
 )
 from .config import RuntimeSettings
 from .identity import ApplicationIdentity
+from .infrastructure import SQLiteReferenceStore, SQLiteReferenceTransactionAdapter
 from .recovery import (
     CriterionResult,
     IntegrityAttribution,
@@ -43,16 +65,26 @@ __version__ = ApplicationIdentity.version
 
 __all__ = [
     "ApplicationIdentity",
+    "AccessScope",
+    "AggregateNotFoundError",
+    "AuthorizationError",
     "AdvisoryEpisode",
     "AdvisoryService",
     "AttentionProjection",
+    "AuthorizationDeniedError",
+    "CommandContext",
+    "CommandError",
+    "CommandResult",
+    "DurableStorageError",
     "CriterionResult",
     "EngineeringWorkState",
     "EventPeriod",
     "IntegrityAttribution",
+    "IdempotencyConflictError",
     "InMemoryValueRepository",
     "MixedCurrencyError",
     "ObservationOutcome",
+    "Principal",
     "RecoveryAssessment",
     "RecoveryEpisode",
     "RecoveryEvaluator",
@@ -63,8 +95,13 @@ __all__ = [
     "RecoveryService",
     "RecoveryState",
     "RecoveryValidationError",
+    "RevisionVector",
     "RuntimeSettings",
+    "ScopeDeniedError",
     "Severity",
+    "SQLiteReferenceStore",
+    "SQLiteReferenceTransactionAdapter",
+    "StorageFailureError",
     "TechnicalEpisodeState",
     "SupersessionConflictError",
     "SupersessionError",
@@ -72,7 +109,13 @@ __all__ = [
     "ValueEntry",
     "ValueService",
     "ValueValidationError",
+    "ValidationError",
+    "ValidationFailureError",
+    "VersionConflictError",
+    "VersionedAggregateCommandExecutor",
     "WorkflowVersionConflict",
     "application_identity",
+    "canonical_command_payload_hash",
+    "normalize_domain_payload",
     "self_check",
 ]
