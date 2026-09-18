@@ -159,7 +159,7 @@ class AdvisoryIntegrityTests(unittest.TestCase):
             )
         self.assertEqual(context.exception.code, "IDENTITY_MISMATCH")
 
-    def test_canonical_runner_executes_f02_f03_f04_and_keeps_f05_out_of_scope(self):
+    def test_canonical_runner_executes_f02_f03_f04_f05(self):
         result = run_canonical_integrity_regressions()
 
         self.assertEqual(result["status"], "PASS")
@@ -170,8 +170,9 @@ class AdvisoryIntegrityTests(unittest.TestCase):
         self.assertEqual(findings["F02"]["checkpoint_restore_result"], "CHECKPOINT_RESTORE_PASS")
         self.assertEqual(findings["F03"]["status"], "PASS")
         self.assertEqual(findings["F04"]["status"], "PASS")
-        self.assertEqual(findings["F05"]["status"], "NOT_IMPLEMENTED")
-        self.assertEqual(findings["F05"]["execution"], "NOT_RUN")
+        self.assertEqual(findings["F05"]["status"], "PASS")
+        self.assertEqual(findings["F05"]["observed"]["assessment_count"], 5)
+        self.assertNotEqual(findings["F05"]["observed"]["actual_episode_state"], "RESOLVED")
 
 
 if __name__ == "__main__":

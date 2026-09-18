@@ -44,7 +44,7 @@ python3.11 -m venv .venv
 .venv/bin/python -m ephi --self-check --json
 ```
 
-The self-check reports package identity, runtime/config identity, the pinned framework identity, F02/F03/F04 capability availability and the explicit `NOT_IMPLEMENTED`/`NOT_RUN` state of out-of-scope F05. It does not claim historical source identity, byte identity, algorithm equivalence or historical-test equivalence; executed F02/F03/F04 evidence comes only from the integrity runner below.
+The self-check reports package identity, runtime/config identity, the pinned framework identity and F02–F05 capability availability. It does not claim historical source identity, byte identity, algorithm equivalence or historical-test equivalence; executed F02–F05 evidence comes only from the integrity runner below.
 
 ## Validate the repository offline
 
@@ -67,7 +67,7 @@ The active [CHG-109 contract](evidence/review/w0_integrity_regression_contract.j
 python3 tools/w0_integrity_regressions.py
 ```
 
-The runner verifies preserved historical probe identities, runs the canonical self-check, and executes fresh F02/F03/F04 scenarios against `src/ephi`. It reports F05 separately as `NOT_IMPLEMENTED`/`NOT_RUN`; it does not fabricate PASS. The old staged-source behavior remains only behind the explicit `--legacy-source` compatibility option for historical fixture coverage.
+The runner verifies preserved historical probe identities, runs the canonical self-check, and executes fresh F02/F03/F04/F05 scenarios against `src/ephi`. F05 uses only the bounded in-memory qualified-recovery API and a deterministic W0 regression policy; it is not family production qualification. The old staged-source behavior remains only behind the explicit `--legacy-source` compatibility option for historical fixture coverage.
 
 ## Pinned framework authority
 

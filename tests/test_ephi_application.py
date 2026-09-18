@@ -36,7 +36,7 @@ class EphiApplicationTests(unittest.TestCase):
             self.assertEqual(result["behavioral_checks"][finding]["execution"], "NOT_RUN")
         self.assertEqual(result["behavioral_checks"]["F04"]["status"], "IMPLEMENTED")
         self.assertEqual(result["behavioral_checks"]["F04"]["execution"], "NOT_RUN")
-        self.assertEqual(result["behavioral_checks"]["F05"]["status"], "NOT_IMPLEMENTED")
+        self.assertEqual(result["behavioral_checks"]["F05"]["status"], "IMPLEMENTED")
         self.assertEqual(result["behavioral_checks"]["F05"]["execution"], "NOT_RUN")
 
     def test_entry_boundary_is_offline(self):

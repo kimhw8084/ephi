@@ -186,16 +186,10 @@ def validate_contract(contract: Mapping[str, Any], *, source_bound: bool = True)
     canonical = _mapping(contract.get("canonical_execution"), "canonical_execution")
     if canonical.get("status") != "ENABLED" or canonical.get("runner") != "tools/w0_integrity_regressions.py":
         raise IntegrityError("CONTRACT_INVALID", "canonical execution section is not enabled")
-    if canonical.get("fresh_findings") != ["F02", "F03", "F04"]:
-        raise IntegrityError("CONTRACT_INVALID", "canonical execution must run fresh F02/F03/F04 scenarios")
-    out_of_scope = _mapping(canonical.get("out_of_scope"), "canonical_execution.out_of_scope")
-    if set(out_of_scope) != {"F05"} or any(
-        not isinstance(value, Mapping)
-        or value.get("status") != "NOT_IMPLEMENTED"
-        or value.get("execution") != "NOT_RUN"
-        for value in out_of_scope.values()
-    ):
-        raise IntegrityError("CONTRACT_INVALID", "F05 must remain separately NOT_IMPLEMENTED/NOT_RUN")
+    if canonical.get("fresh_findings") != ["F02", "F03", "F04", "F05"]:
+        raise IntegrityError("CONTRACT_INVALID", "canonical execution must run fresh F02/F03/F04/F05 scenarios")
+    if canonical.get("scenario_authority") != "ephi.advisory, ephi.recovery and ephi.value":
+        raise IntegrityError("CONTRACT_INVALID", "canonical execution must identify the recovery authority")
     if source_bound:
         legacy_current = _mapping(contract.get("legacy_source_execution"), "legacy_source_execution")
         if legacy_current.get("probe_script") != "evidence/behavior_probes.py" or legacy_current.get("pythonpath") != "src:company_port/src":
@@ -843,6 +837,64 @@ def _canonical_f04_scenario(scenario: str) -> dict[str, Any]:
     }
 
 
+def _canonical_f05_scenario(scenario: str) -> dict[str, Any]:
+    """Execute the exact historical F05 shape against the fresh recovery API."""
+
+    from datetime import datetime, timedelta, timezone
+
+    from ephi.recovery import (
+        IntegrityAttribution,
+        ObservationOutcome,
+        RecoveryObservation,
+        RecoveryPolicy,
+        RecoveryService,
+        Severity,
+    )
+
+    evaluated_at = datetime(2026, 1, 10, 12, 0, tzinfo=timezone.utc)
+    service = RecoveryService(RecoveryPolicy.deterministic_w0_regression())
+    episode = service.create_episode("canonical-f05-episode")
+    assessments = []
+    for index in range(5):
+        observed_at = evaluated_at - timedelta(minutes=20 + index)
+        assessments.append(
+            service.submit_observation(
+                RecoveryObservation(
+                    observation_id=f"canonical-f05-observation-{index + 1}",
+                    episode_id=episode.episode_id,
+                    sampling_identity=f"canonical-f05-sample-{index + 1}",
+                    event_at=observed_at - timedelta(minutes=1),
+                    observed_at=observed_at,
+                    available_at=observed_at + timedelta(minutes=1),
+                    context="W0_CONTEXT",
+                    characteristic="W0_CHARACTERISTIC",
+                    unit="W0_UNIT",
+                    severity=Severity.OBSERVE,
+                    outcome=ObservationOutcome.UNKNOWN,
+                    confidence=0.0,
+                    leading_hypothesis="DATA_PIPELINE_OR_SCHEMA_CHANGE",
+                    integrity_attribution=IntegrityAttribution.DATA_PIPELINE_OR_SCHEMA_CHANGE,
+                    reference_valid=True,
+                    capability_valid=True,
+                ),
+                evaluated_at=evaluated_at,
+            )
+        )
+    actual_episode = service.get_episode(episode.episode_id)
+    return {
+        "id": "F05",
+        "scenario": scenario,
+        "assessment_count": actual_episode.assessment_count,
+        "actual_episode_state": actual_episode.state.value,
+        "eligible_independent_count": actual_episode.eligible_independent_count,
+        "affirmative_recovery_evidence": actual_episode.state.value == "RESOLVED",
+        "eligibility_reason_codes": [
+            [code.value for code in assessment.eligibility.reason_codes]
+            for assessment in assessments
+        ],
+    }
+
+
 def _canonical_f02_scenario(scenario: str) -> tuple[dict[str, Any], str, dict[str, Any]]:
     """Execute source-only rejection and complete checkpoint round-trip independently."""
 
@@ -907,7 +959,7 @@ def run_canonical_integrity_regressions(
     contract_path: Path = CONTRACT_PATH,
     output_path: Path | None = None,
 ) -> dict[str, Any]:
-    """Verify historical evidence and execute the fresh canonical F02/F03/F04 slice."""
+    """Verify historical evidence and execute fresh canonical F02/F03/F04/F05 scenarios."""
 
     contract_path = Path(contract_path).expanduser()
     result = _new_canonical_result(contract_path)
@@ -942,20 +994,16 @@ def run_canonical_integrity_regressions(
                 findings["F02"]["scenario_identity"]
             )
             f04_observation = _canonical_f04_scenario(findings["F04"]["scenario_identity"])
+            f05_observation = _canonical_f05_scenario(findings["F05"]["scenario_identity"])
             evaluated = [
                 evaluate_finding(findings["F03"], f03_observation),
                 evaluate_f02(findings["F02"], f02_observation, f02_checkpoint_status),
                 evaluate_finding(findings["F04"], f04_observation),
-                {
-                    "id": "F05",
-                    "status": "NOT_IMPLEMENTED",
-                    "execution": "NOT_RUN",
-                    "reason": "out of scope for CHG-116",
-                },
+                evaluate_finding(findings["F05"], f05_observation),
             ]
             result["findings"] = evaluated
             result["current_execution"]["status"] = "PASS" if all(
-                item["status"] == "PASS" for item in evaluated[:3]
+                item["status"] == "PASS" for item in evaluated
             ) else "FAIL"
             result["current_execution"]["tests_executed"] = True
             result["current_execution"]["canonical_scenarios"] = {
@@ -964,6 +1012,7 @@ def run_canonical_integrity_regressions(
                 "f02": f02_details,
                 "f03": f03_observation,
                 "f04": f04_observation,
+                "f05": f05_observation,
             }
             result["status"] = result["current_execution"]["status"]
             result["reason"] = (
@@ -972,9 +1021,9 @@ def run_canonical_integrity_regressions(
                 else "REGRESSION_ASSERTION_FAILED"
             )
             result["message"] = (
-                "fresh canonical F02/F03/F04 scenarios passed; F05 remains NOT_IMPLEMENTED/NOT_RUN"
+                "fresh canonical F02/F03/F04/F05 scenarios passed"
                 if result["status"] == "PASS"
-                else "one or more fresh canonical F02/F03 assertions failed"
+                    else "one or more fresh canonical F02/F03/F04/F05 assertions failed"
             )
         return _finish(result, output_path)
     except (OSError, subprocess.SubprocessError, ValueError, TypeError) as exc:

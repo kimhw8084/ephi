@@ -34,9 +34,9 @@ CANONICAL_BEHAVIORAL_CHECKS = {
         "reason": "canonical temporal value API is exercised by the CHG-116 runner",
     },
     "F05": {
-        "status": "NOT_IMPLEMENTED",
+        "status": "IMPLEMENTED",
         "execution": "NOT_RUN",
-        "reason": "out of scope for CHG-116",
+        "reason": "canonical qualified recovery API is exercised by the CHG-118 runner",
     },
 }
 

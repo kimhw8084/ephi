@@ -5,6 +5,7 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+from unittest.mock import patch
 
 from tools.source_preflight import (
     EXPECTED_ARCHIVE_FILENAME,
@@ -113,8 +114,24 @@ class W0IntegrityRegressionTests(unittest.TestCase):
         self.assertEqual(findings["F02"]["status"], "PASS")
         self.assertEqual(findings["F03"]["status"], "PASS")
         self.assertEqual(findings["F04"]["status"], "PASS")
-        self.assertEqual(findings["F05"]["status"], "NOT_IMPLEMENTED")
+        self.assertEqual(findings["F05"]["status"], "PASS")
         self.assertEqual(first["historical_evidence"]["status"], "REFERENCE_ONLY")
+
+    def test_f05_failure_propagates_to_canonical_execution_and_top_level_status(self):
+        failing_f05 = {
+            "id": "F05",
+            "scenario": self.findings["F05"]["scenario_identity"],
+            "assessment_count": 5,
+            "actual_episode_state": "RESOLVED",
+            "affirmative_recovery_evidence": True,
+        }
+        with patch("tools.w0_integrity_regressions._canonical_f05_scenario", return_value=failing_f05):
+            result = run_canonical_integrity_regressions()
+
+        findings = {item["id"]: item for item in result["findings"]}
+        self.assertEqual(findings["F05"]["status"], "FAIL")
+        self.assertEqual(result["current_execution"]["status"], "FAIL")
+        self.assertEqual(result["status"], "FAIL")
 
     def test_f03_evaluator_requires_attention_visibility(self):
         finding = self.findings["F03"]
