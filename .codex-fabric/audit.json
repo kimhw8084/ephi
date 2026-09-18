@@ -1,0 +1,68 @@
+{
+  "accepted_at": "2026-09-18T12:51:53Z",
+  "changed_files": [],
+  "checks": [],
+  "codex": {
+    "cli_version": null,
+    "configured_model": "gpt-5.6-luna",
+    "event_count": null,
+    "provider_reported_model": null,
+    "reasoning_effort": "xhigh",
+    "terminal_type": null,
+    "usage": {},
+    "warnings": []
+  },
+  "commits": [],
+  "diff": null,
+  "error_code": "CODEX_VERSION_UNAVAILABLE",
+  "evidence_manifest": {
+    "count": 0,
+    "items": [],
+    "version": 1
+  },
+  "evidence_publisher_release": "1.2.3-resume-candidate",
+  "fabric_capture": null,
+  "fabric_release": "1.2.3-resume-candidate",
+  "failure_class": "CONTROL_PLANE",
+  "finished_at": "2026-09-18T12:51:53Z",
+  "git": {},
+  "instructions": null,
+  "job_id": "CF-3875cb7dae30beb32065a1e9",
+  "kind": "codex-fabric-audit-evidence",
+  "locator": {
+    "branch": "codex-fabric/evidence/ephi/ephi-w0-qualified-recovery-f05-v1",
+    "path": ".codex-fabric/audit.json",
+    "ref": "refs/heads/codex-fabric/evidence/ephi/ephi-w0-qualified-recovery-f05-v1"
+  },
+  "operation": "BUILD",
+  "policy": {
+    "environment_policy_sha256": "e077daca74297b3c30bee8989f00f8ca5338f7610b4d016a6c48db524205d064",
+    "fabric_release": "1.2.3-resume-candidate",
+    "policy_sha256": "44756118cd7fda0c45cd23ba1d31a48a3f4f2422d687df15264ba4406f40e1f2",
+    "registry_sha256": "cfc765f3211c37c7967a138f3b2d89a99341939b15b2623f92744d007f625d6f"
+  },
+  "project_id": "ephi",
+  "recovery": {
+    "model_rerun_safe": false,
+    "recovery_required": false,
+    "retry_safe": false,
+    "retry_scope": null,
+    "worktree_retained": false
+  },
+  "request": "ephi-w0-qualified-recovery-f05-v1",
+  "schema_version": 1,
+  "started_at": "2026-09-18T12:51:53Z",
+  "status": "FAILED_INFRA",
+  "timing": {
+    "execution_seconds": 0,
+    "queue_seconds": 0,
+    "total_seconds": 0
+  },
+  "transport": {
+    "bytes": 7093,
+    "envelope": "FABRIC/2",
+    "prompt_bytes": 6775,
+    "prompt_sha256": "8c69e0a5aa46814c1aeacb4988287c659dec6e7ddf0365a221b6a9a14c1faa29",
+    "sha256": "3875cb7dae30beb32065a1e957c814a809304c75b579ac8f1bc02df15931c53a"
+  }
+}
