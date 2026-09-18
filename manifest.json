@@ -116,8 +116,8 @@
     },
     {
       "path": "11_Developer_Start.md",
-      "bytes": 2927,
-      "sha256": "fe837ed950de8ee55e296a1a1878de8c183870b0adb4146f825b3c5cd3071924"
+      "bytes": 3697,
+      "sha256": "b0706355ec404f8d9ab7b60e810571e8c175add87fe1757831a497b9ade51bb3"
     },
     {
       "path": "12_Sources_and_Evidence.md",
@@ -141,8 +141,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 6341,
-      "sha256": "8218d1a3a8b8ab808f647ade26f8bf876a300b1c792ab428e391b7be31f8cb38"
+      "bytes": 7140,
+      "sha256": "66d2aff6697b58a7bcba1ddaa316a4713e2255c0d7ed6489c0c5fa58c98fbb4f"
     },
     {
       "path": "environment/nicegui_base_requirements.txt",
@@ -246,8 +246,8 @@
     },
     {
       "path": "src/ephi/__init__.py",
-      "bytes": 1832,
-      "sha256": "5abecf06a362111501f9c1e0651bc29606f01364c8681016bb0852423357619a"
+      "bytes": 2998,
+      "sha256": "c7e538b35a267efb8ed75b3d2426633523609c68a5c50808ab2b84c990910ef5"
     },
     {
       "path": "src/ephi/__main__.py",
@@ -280,6 +280,31 @@
       "sha256": "a6ac048e584f947b94be818baadb394186565cb9cf5bc584f9b1881726291e0e"
     },
     {
+      "path": "src/ephi/application/__init__.py",
+      "bytes": 1189,
+      "sha256": "b27728af017e4334a73da13a73f922799e7d8cf9cb13800143cf98a87e24d48c"
+    },
+    {
+      "path": "src/ephi/application/context.py",
+      "bytes": 7922,
+      "sha256": "a9daa0e494a752025f9cc1442a02add86717e89348bcc965858a915e9a0b34ed"
+    },
+    {
+      "path": "src/ephi/application/errors.py",
+      "bytes": 1996,
+      "sha256": "95005aaa90686626a5fdd4430ada68f532e7974420e40ef231d28f73f185e43b"
+    },
+    {
+      "path": "src/ephi/application/hashing.py",
+      "bytes": 6357,
+      "sha256": "f607423b3b89eb8a3af5245ce9c4b3129d0890ebc4d8e3624d22689757bd671d"
+    },
+    {
+      "path": "src/ephi/application/transactions.py",
+      "bytes": 16804,
+      "sha256": "9e6c657e0c8608f195c1b00dfe2079311f5b5de892fdcd41f3e3138a06069a36"
+    },
+    {
       "path": "src/ephi/config.py",
       "bytes": 1290,
       "sha256": "758f0cee7244bd875be2f0e97e627f31ee5152d48ec832e78f0dcdf347a60ecd"
@@ -293,6 +318,16 @@
       "path": "src/ephi/identity.py",
       "bytes": 576,
       "sha256": "a4f78a9a8ff8ce15529479958e68e3f4d0867802dbee07dd453d5d7d1df6a120"
+    },
+    {
+      "path": "src/ephi/infrastructure/__init__.py",
+      "bytes": 331,
+      "sha256": "f388aaf9f00a921005abbe356d6be475cc78c0842b966dc800f9d9239bf8fdb6"
+    },
+    {
+      "path": "src/ephi/infrastructure/sqlite.py",
+      "bytes": 12803,
+      "sha256": "d47c1c65ae556985f320eac97e57222a2ffb34183e41989b5684004ee7adf1e4"
     },
     {
       "path": "src/ephi/py.typed",
@@ -333,6 +368,11 @@
       "path": "tests/test_ephi_application.py",
       "bytes": 2020,
       "sha256": "0f87a410f75a7d3fee4f5d277f953a0ef0791776f30e5f0d69f058e6f17372db"
+    },
+    {
+      "path": "tests/test_o2_transactions.py",
+      "bytes": 11542,
+      "sha256": "b0ed1c907618b3e759c59249e01f95b7d6641f9a5501e366d750d6815ad515ca"
     },
     {
       "path": "tests/test_package.py",
