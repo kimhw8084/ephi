@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""Restore and inspect the exact EPHI source archive without importing it."""
+"""LEGACY OPTIONAL: inspect historical source-artifact compatibility inputs.
+
+This module is retained only for historical CHG-85/CHG-104/CHG-109 fixture
+coverage. It is not part of the canonical Git-native W0 baseline and must not
+be used as an application installation, package, or implementation gate.
+"""
 
 from __future__ import annotations
 
@@ -371,7 +376,7 @@ def write_result(path: Path, result: dict, *, protected_roots: tuple[Path, ...] 
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--archive", type=Path, default=DEFAULT_ARCHIVE, help="exact source ZIP; filename and SHA-256 are fixed")
+    parser.add_argument("--archive", type=Path, default=DEFAULT_ARCHIVE, help="optional legacy historical source artifact; not used by canonical W0")
     parser.add_argument("--stage-dir", type=Path, default=DEFAULT_STAGE, help="fresh ignored directory for verified extraction")
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT, help="machine-readable result JSON")
     args = parser.parse_args(argv)

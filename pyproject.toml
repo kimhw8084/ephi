@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=68,<80"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ephi"
+version = "0.1.0"
+description = "Canonical EPHI engineering decision support application baseline"
+readme = "README.md"
+requires-python = ">=3.11,<3.14"
+dependencies = [
+  "nicegui-base @ git+https://github.com/kimhw8084/nicegui-base.git@000298562d6bcbf6df304edbd41b98b30fe4bfcf",
+  "nicegui==3.15.0",
+]
+
+[project.scripts]
+ephi = "ephi.app:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["ephi*"]
+
+[tool.setuptools.package-data]
+ephi = ["py.typed"]
