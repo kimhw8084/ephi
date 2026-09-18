@@ -69,6 +69,24 @@ python3 tools/w0_integrity_regressions.py
 
 The runner verifies preserved historical probe identities, runs the canonical self-check, and executes fresh F02/F03/F04/F05 scenarios against `src/ephi`. F05 uses only the bounded in-memory qualified-recovery API and a deterministic W0 regression policy; it is not family production qualification. The old staged-source behavior remains only behind the explicit `--legacy-source` compatibility option for historical fixture coverage.
 
+## CHG-121 O2 reference transaction substrate
+
+The first reusable O2 slice is available under `ephi.application` and
+`ephi.infrastructure`: typed server-derived command context, deterministic
+semantic payload hashing, and a file-backed `sqlite3` reference adapter with
+versioned aggregate state, command receipts, append-only audit events and a
+durable outbox. Focused evidence can be run with:
+
+```bash
+python3 -m unittest tests.test_o2_transactions -v
+```
+
+This adapter is development/integration evidence for local durability and
+compare-and-set semantics only. It rejects `:memory:` and has no fallback
+store, but it does **not** claim PostgreSQL/G05 qualification, worker
+leasing/fencing, retained query snapshots, notification delivery, or product
+commands/UI. Those remain later O2/O3 work.
+
 ## Pinned framework authority
 
 CHG-105 pins `nicegui-base` to Git commit `000298562d6bcbf6df304edbd41b98b30fe4bfcf`, framework version `3.0.0a8`, exactly `nicegui==3.15.0`, and Python `>=3.11,<3.14`. Application code uses public `from nicegui_base import ...` authorities only; it does not use direct `nicegui.ui` or private `nicegui_base.integrations.nicegui_*` APIs. The machine-readable runtime specification is [environment/nicegui_base_runtime.json](environment/nicegui_base_runtime.json).
