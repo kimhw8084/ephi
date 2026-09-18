@@ -42,6 +42,8 @@ if TYPE_CHECKING:
 
 _TERMINAL_STATUSES = ("SUCCEEDED", "FAILED", "DEAD_LETTER", "CANCELED")
 _DEFAULT_RETRY_CAP_SECONDS = 3600
+_ATTEMPT_EXHAUSTED_CODE = "ATTEMPT_BUDGET_EXHAUSTED"
+_ATTEMPT_EXHAUSTED_MESSAGE = "attempt budget exhausted after lease expiry or due retry"
 
 
 def _validated_identity(value: object, field: str) -> str:
@@ -258,14 +260,42 @@ class PostgreSQLWorkerStore:
         with self._transaction() as connection:
             row = connection.execute(
                 """
-                WITH candidate AS (
-                    SELECT job_id
-                    FROM job
-                    WHERE scope_key = %s
-                      AND status IN ('QUEUED', 'DEFERRED', 'RUNNING')
-                      AND available_at <= clock_timestamp()
-                      AND (lease_expires_at IS NULL OR lease_expires_at <= clock_timestamp())
-                    ORDER BY priority DESC, available_at ASC, created_at ASC, job_id ASC
+                WITH db_now AS MATERIALIZED (
+                    SELECT clock_timestamp() AS now
+                ), exhausted AS MATERIALIZED (
+                    SELECT j.job_id
+                    FROM job AS j
+                    CROSS JOIN db_now
+                    WHERE j.scope_key = %s
+                      AND j.attempts >= j.max_attempts
+                      AND (
+                          (j.status = 'RUNNING' AND j.lease_expires_at <= db_now.now)
+                          OR (j.status IN ('QUEUED', 'DEFERRED') AND j.available_at <= db_now.now)
+                      )
+                    ORDER BY j.priority DESC, j.available_at ASC, j.created_at ASC, j.job_id ASC
+                    FOR UPDATE SKIP LOCKED
+                ), dead_lettered AS (
+                    UPDATE job AS j
+                    SET status = 'DEAD_LETTER',
+                        lease_owner = NULL,
+                        lease_expires_at = NULL,
+                        last_failure_code = %s,
+                        last_failure_message = %s,
+                        last_failure_at = db_now.now,
+                        updated_at = db_now.now
+                    FROM exhausted, db_now
+                    WHERE j.job_id = exhausted.job_id
+                    RETURNING j.job_id
+                ), candidate AS MATERIALIZED (
+                    SELECT j.job_id
+                    FROM job AS j
+                    CROSS JOIN db_now
+                    WHERE j.scope_key = %s
+                      AND j.status IN ('QUEUED', 'DEFERRED', 'RUNNING')
+                      AND j.attempts < j.max_attempts
+                      AND j.available_at <= db_now.now
+                      AND (j.lease_expires_at IS NULL OR j.lease_expires_at <= db_now.now)
+                    ORDER BY j.priority DESC, j.available_at ASC, j.created_at ASC, j.job_id ASC
                     FOR UPDATE SKIP LOCKED
                     LIMIT 1
                 )
@@ -274,13 +304,20 @@ class PostgreSQLWorkerStore:
                     attempts = j.attempts + 1,
                     lease_owner = %s,
                     lease_epoch = j.lease_epoch + 1,
-                    lease_expires_at = clock_timestamp() + (%s * INTERVAL '1 second'),
-                    updated_at = clock_timestamp()
-                FROM candidate
+                    lease_expires_at = db_now.now + (%s * INTERVAL '1 second'),
+                    updated_at = db_now.now
+                FROM candidate, db_now
                 WHERE j.job_id = candidate.job_id
                 RETURNING j.*
                 """,
-                (scope.canonical_key, owner, seconds),
+                (
+                    scope.canonical_key,
+                    _ATTEMPT_EXHAUSTED_CODE,
+                    _ATTEMPT_EXHAUSTED_MESSAGE,
+                    scope.canonical_key,
+                    owner,
+                    seconds,
+                ),
             ).fetchone()
             if row is None:
                 if raise_if_none:

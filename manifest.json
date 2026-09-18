@@ -351,8 +351,8 @@
     },
     {
       "path": "src/ephi/infrastructure/postgresql_worker.py",
-      "bytes": 30417,
-      "sha256": "dda0a6c9d010e13498da6d9398d932675987a88b752dada30ca2fd64f2baa4ed"
+      "bytes": 32159,
+      "sha256": "05d5b7952f2c47f5cd118539103aa87de21ee84dd4d0fe512bbd704ac704adc5"
     },
     {
       "path": "src/ephi/infrastructure/sqlite.py",
@@ -411,8 +411,8 @@
     },
     {
       "path": "tests/test_o2_worker_postgresql.py",
-      "bytes": 15078,
-      "sha256": "4e852299a17d25bac18783f4a58b792df0469f6228ac482bfb49939e8e7dadb7"
+      "bytes": 18911,
+      "sha256": "afdbdc07cf5e2cc84fc1c99f374f7a1d9fdc7674addcfd886233a5aa81582688"
     },
     {
       "path": "tests/test_package.py",

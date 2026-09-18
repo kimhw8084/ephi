@@ -162,6 +162,85 @@ class PostgreSQLWorkerTests(unittest.TestCase):
         )
         self.assertEqual(failed.status, "FAILED")
 
+    def test_expired_final_attempt_is_dead_lettered_without_a_takeover(self):
+        queued = self._enqueue("crash-exhausted", max_attempts=1)
+        first = self.worker.claim(self.scope, "worker-a")
+        self.assertEqual(first.attempts, 1)
+        self._expire()
+
+        self.assertIsNone(self.worker.claim(self.scope, "worker-b"))
+        dead = self.worker.inspect(self.scope, job_id=queued.job_id)[0]
+        self.assertEqual(dead.status, "DEAD_LETTER")
+        self.assertEqual(dead.attempts, 1)
+        self.assertIsNone(dead.lease_owner)
+        self.assertIsNone(dead.lease_expires_at)
+        self.assertEqual(dead.last_failure_code, "ATTEMPT_BUDGET_EXHAUSTED")
+        self.assertEqual(
+            self.adapter.connection.execute(
+                "SELECT COUNT(*) AS count FROM applied_effect WHERE job_id = %s", (queued.job_id,)
+            ).fetchone()["count"],
+            0,
+        )
+        for action in (
+            lambda: self.worker.heartbeat(first.lease),
+            lambda: self.worker.complete(first.lease),
+            lambda: self.worker.commit_local_effect(
+                first.lease, "effect-1", {"input": 1}, aggregate_type="fixture", aggregate_id="aggregate-1"
+            ),
+        ):
+            with self.assertRaises((InvalidTransitionError, StaleLeaseError)):
+                action()
+
+    def test_second_crashed_attempt_is_dead_lettered_without_a_third_claim(self):
+        queued = self._enqueue("crash-second", max_attempts=2)
+        first = self.worker.claim(self.scope, "worker-a")
+        self._expire()
+        second = self.worker.claim(self.scope, "worker-b")
+        self.assertEqual(second.job_id, queued.job_id)
+        self.assertEqual(second.attempts, 2)
+        self._expire()
+
+        self.assertIsNone(self.worker.claim(self.scope, "worker-c"))
+        dead = self.worker.inspect(self.scope, job_id=queued.job_id)[0]
+        self.assertEqual(dead.status, "DEAD_LETTER")
+        self.assertEqual(dead.attempts, 2)
+        self.assertIsNone(dead.lease_owner)
+        self.assertIsNone(dead.lease_expires_at)
+
+    def test_final_allowed_live_attempt_can_heartbeat_and_complete(self):
+        queued = self._enqueue("live-final", max_attempts=1)
+        claimed = self.worker.claim(self.scope, "worker-a")
+        self.assertEqual(claimed.job_id, queued.job_id)
+        self.assertEqual(claimed.attempts, 1)
+        renewed = self.worker.heartbeat(claimed.lease)
+        self.assertEqual(renewed.attempts, 1)
+        completed = self.worker.complete(renewed.lease)
+        self.assertEqual(completed.status, "SUCCEEDED")
+        self.assertEqual(completed.attempts, 1)
+
+    def test_due_queued_and_deferred_exhausted_jobs_are_dead_lettered(self):
+        queued = self._enqueue("due-queued", max_attempts=1)
+        self.adapter.connection.execute(
+            "UPDATE job SET attempts = max_attempts, available_at = clock_timestamp() - interval '1 second' "
+            "WHERE job_id = %s",
+            (queued.job_id,),
+        )
+        self.assertIsNone(self.worker.claim(self.scope, "worker-a"))
+        queued_dead = self.worker.inspect(self.scope, job_id=queued.job_id)[0]
+        self.assertEqual(queued_dead.status, "DEAD_LETTER")
+        self.assertEqual(queued_dead.attempts, 1)
+
+        deferred = self._enqueue("due-deferred", max_attempts=1)
+        self.adapter.connection.execute(
+            "UPDATE job SET status = 'DEFERRED', attempts = max_attempts, "
+            "available_at = clock_timestamp() - interval '1 second' WHERE job_id = %s",
+            (deferred.job_id,),
+        )
+        self.assertIsNone(self.worker.claim(self.scope, "worker-a"))
+        deferred_dead = self.worker.inspect(self.scope, job_id=deferred.job_id)[0]
+        self.assertEqual(deferred_dead.status, "DEAD_LETTER")
+        self.assertEqual(deferred_dead.attempts, 1)
+
     def test_defer_and_cancel_are_durable_and_unclaimed_cancel_cannot_be_claimed(self):
         deferred = self._enqueue("defer")
         claimed = self.worker.claim(self.scope, "worker-a")
