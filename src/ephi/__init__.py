@@ -11,6 +11,17 @@ from .advisory import (
 )
 from .config import RuntimeSettings
 from .identity import ApplicationIdentity
+from .value import (
+    EventPeriod,
+    InMemoryValueRepository,
+    MixedCurrencyError,
+    SupersessionConflictError,
+    SupersessionError,
+    UnknownPredecessorError,
+    ValueEntry,
+    ValueService,
+    ValueValidationError,
+)
 
 __version__ = ApplicationIdentity.version
 
@@ -20,8 +31,17 @@ __all__ = [
     "AdvisoryService",
     "AttentionProjection",
     "EngineeringWorkState",
+    "EventPeriod",
+    "InMemoryValueRepository",
+    "MixedCurrencyError",
     "RuntimeSettings",
     "TechnicalEpisodeState",
+    "SupersessionConflictError",
+    "SupersessionError",
+    "UnknownPredecessorError",
+    "ValueEntry",
+    "ValueService",
+    "ValueValidationError",
     "WorkflowVersionConflict",
     "application_identity",
     "self_check",

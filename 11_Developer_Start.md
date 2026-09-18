@@ -29,7 +29,7 @@ The [machine-readable baseline specification](environment/w0_repo_baseline.json)
 
 ## CHG-109 boundary
 
-Run `python3 tools/w0_integrity_regressions.py` to verify preserved CHG-109 evidence, exercise the canonical entry self-check and run fresh F02/F03 scenarios against `src/ephi`. F04/F05 remain explicitly `NOT_IMPLEMENTED`/`NOT_RUN` and are outside this change. The runner's PASS is based on executed F02/F03 observations, not the static self-check labels.
+Run `python3 tools/w0_integrity_regressions.py` to verify preserved CHG-109 evidence, exercise the canonical entry self-check and run fresh F02/F03/F04 scenarios against `src/ephi`. F05 remains explicitly `NOT_IMPLEMENTED`/`NOT_RUN` and is outside this change. The runner's PASS is based on executed F02/F03/F04 observations, not the static self-check labels.
 
 The staged-source behavior is retained only as an explicit legacy fixture path:
 
