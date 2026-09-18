@@ -1,0 +1,458 @@
+{
+  "accepted_at": "2026-09-18T20:53:30Z",
+  "changed_files": [
+    {
+      "additions": 4,
+      "deletions": 0,
+      "path": ".github/workflows/package.yml",
+      "status": "M"
+    },
+    {
+      "additions": 5,
+      "deletions": 0,
+      "path": "04_Data_and_Runtime.md",
+      "status": "M"
+    },
+    {
+      "additions": 5,
+      "deletions": 1,
+      "path": "11_Developer_Start.md",
+      "status": "M"
+    },
+    {
+      "additions": 15,
+      "deletions": 0,
+      "path": "13_Package_Review.md",
+      "status": "M"
+    },
+    {
+      "additions": 20,
+      "deletions": 0,
+      "path": "README.md",
+      "status": "M"
+    },
+    {
+      "additions": 38,
+      "deletions": 18,
+      "path": "manifest.json",
+      "status": "M"
+    },
+    {
+      "additions": 46,
+      "deletions": 0,
+      "path": "migrations/002_o2_worker_core.sql",
+      "status": "A"
+    },
+    {
+      "additions": 28,
+      "deletions": 0,
+      "path": "src/ephi/application/__init__.py",
+      "status": "M"
+    },
+    {
+      "additions": 51,
+      "deletions": 0,
+      "path": "src/ephi/application/errors.py",
+      "status": "M"
+    },
+    {
+      "additions": 143,
+      "deletions": 0,
+      "path": "src/ephi/application/worker.py",
+      "status": "A"
+    },
+    {
+      "additions": 2,
+      "deletions": 0,
+      "path": "src/ephi/infrastructure/__init__.py",
+      "status": "M"
+    },
+    {
+      "additions": 18,
+      "deletions": 5,
+      "path": "src/ephi/infrastructure/postgresql.py",
+      "status": "M"
+    },
+    {
+      "additions": 717,
+      "deletions": 0,
+      "path": "src/ephi/infrastructure/postgresql_worker.py",
+      "status": "A"
+    },
+    {
+      "additions": 413,
+      "deletions": 0,
+      "path": "tests/test_o2_worker_postgresql.py",
+      "status": "A"
+    }
+  ],
+  "checks": [
+    {
+      "command": "/bin/zsh -lc \"pwd && git status --short --branch && git rev-parse HEAD && sed -n '1,240p' /Users/haewonkim/.codex/RTK.md && sed -n '1,260p' /Users/haewonkim/.codex/law.md && sed -n '1,220p' README.md && sed -n '1,260p' 13_Package_Review.md\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git cherry-pick 5885b43d59ab96fb234287aa5a91c898cb852b83'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short && rtk git log --oneline --decorate -3 && rtk git show --stat --oneline HEAD && rtk rg -n \"def claim|attempts|max_attempts|DEAD_LETTER|clock_timestamp|lease\" src/ephi/infrastructure/postgresql_worker.py src/ephi/application/worker.py tests/test_o2_worker_postgresql.py migrations/002_o2_worker_core.sql'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,240p' src/ephi/infrastructure/postgresql_worker.py && rtk sed -n '240,470p' src/ephi/infrastructure/postgresql_worker.py && rtk sed -n '470,710p' src/ephi/infrastructure/postgresql_worker.py && rtk sed -n '1,120p' migrations/002_o2_worker_core.sql && rtk sed -n '1,360p' tests/test_o2_worker_postgresql.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk nl -ba src/ephi/infrastructure/postgresql_worker.py | rtk sed -n '235,330p'; rtk nl -ba src/ephi/infrastructure/postgresql_worker.py | rtk sed -n '585,660p'; rtk nl -ba src/ephi/application/worker.py | rtk sed -n '1,190p'; rtk nl -ba src/ephi/infrastructure/postgresql.py | rtk sed -n '1,260p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,240p' src/ephi/application/errors.py && rtk nl -ba src/ephi/infrastructure/postgresql_worker.py | rtk sed -n '400,590p' && rtk rg -n \\\"StaleLeaseError|terminal jobs|DEAD_LETTER|attempt budget|bounded\\\" tests src README.md 04_Data_and_Runtime.md 13_Package_Review.md evidence/review || true\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '100,145p' README.md && rtk sed -n '108,132p' 04_Data_and_Runtime.md && rtk rg -n \\\"CHG-126|O2 worker|worker\\\" 10_Traceability_and_Decisions.md 09_Delivery_and_Gates.md 11_Developer_Start.md .github/workflows/package.yml\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff -- src/ephi/infrastructure/postgresql_worker.py tests/test_o2_worker_postgresql.py && rtk git diff --check && rtk python3 -m py_compile src/ephi/infrastructure/postgresql_worker.py tests/test_o2_worker_postgresql.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk env | rtk rg '\"'^EPHI_TEST_POSTGRES_DSN='\"' || true; rtk git status --short\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n --hidden --glob '\"'!evidence/**'\"' --glob '\"'!*.pyc'\"' 'EPHI_TEST_POSTGRES_DSN|postgresql://|postgres://|POSTGRES_' . /Users/haewonkim/.codex-fabric 2>/dev/null | rtk sed -n '1,160p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk docker ps --format '{{.Names}}\\\\t{{.Image}}\\\\t{{.Ports}}\\\\t{{.Status}}' || true; rtk command -v psql || true; rtk command -v docker || true\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk docker ps -a --format '{{.Names}}\\\\t{{.Image}}\\\\t{{.Ports}}\\\\t{{.Status}}' | rtk rg 'ephi|postgres' || true\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk docker run --name ephi-chg126-pg -e POSTGRES_USER=ephi_ci -e POSTGRES_PASSWORD=ephi_ci_password -e POSTGRES_DB=ephi_ci -p 55432:5432 -d postgres:18.6'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk docker exec ephi-chg126-pg pg_isready -U ephi_ci -d ephi_ci'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk env PYTHONPATH=src EPHI_TEST_POSTGRES_DSN=postgresql://ephi_ci:ephi_ci_password@127.0.0.1:55432/ephi_ci python3 -m unittest tests.test_o2_worker_postgresql -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk env PYTHONPATH=src python3 -m unittest tests.test_o2_transactions -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk env PYTHONPATH=src EPHI_TEST_POSTGRES_DSN=postgresql://ephi_ci:ephi_ci_password@127.0.0.1:55432/ephi_ci python3 -m unittest tests.test_o2_postgresql -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git status --short && rtk git diff --stat && rtk git diff -- manifest.json | rtk sed -n '1,180p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git log --oneline --all -- src/ephi/infrastructure/sqlite.py manifest.json | rtk sed -n '1,120p'; rtk git diff fb33d6bd0c7d8c97a82a4a508a3f70574717f9a8 HEAD -- src/ephi/infrastructure/sqlite.py manifest.json | rtk sed -n '1,260p'; rtk wc -c src/ephi/infrastructure/sqlite.py; rtk git show HEAD:src/ephi/infrastructure/sqlite.py | rtk wc -c; rtk git show HEAD:manifest.json | rtk rg -n -A4 -B2 'src/ephi/infrastructure/sqlite.py'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n -A3 -B1 'src/ephi/infrastructure/postgresql_worker.py|src/ephi/infrastructure/sqlite.py|tests/test_o2_worker_postgresql.py' manifest.json; rtk git diff --numstat -- manifest.json; rtk git diff -- manifest.json | rtk sed -n '1,160p'; rtk sha256sum src/ephi/infrastructure/postgresql_worker.py src/ephi/infrastructure/sqlite.py tests/test_o2_worker_postgresql.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/w0_repo_baseline.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk env PYTHONPATH=src EPHI_TEST_POSTGRES_DSN=postgresql://ephi_ci:ephi_ci_password@127.0.0.1:55432/ephi_ci python3 -m unittest discover -s tests -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/w0_integrity_regressions.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git remote -v; rtk git branch -vv; rtk gh --version; rtk sed -n '1,130p' .github/workflows/package.yml; rtk rg -n \\\"audit|evidence commit|Fabric|candidate|sole parent|audit.json\\\" .codex-fabric .github tools README.md CONTRIBUTING.md 2>/dev/null | rtk sed -n '1,220p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git log --graph --oneline --decorate --all --max-count=30 | rtk sed -n '1,220p'; rtk git log --oneline --decorate codex-fabric/evidence/ephi/ephi-o2-worker-fencing-core-v1 -5; rtk git show --stat --oneline codex-fabric/evidence/ephi/ephi-o2-worker-fencing-core-v1 | rtk sed -n '1,100p'; rtk git show --format=fuller --no-patch codex-fabric/evidence/ephi/ephi-o2-worker-fencing-core-v1\"",
+      "exit_code": 128,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git log --oneline --decorate origin/codex-fabric/evidence/ephi/ephi-o2-worker-fencing-core-v1 -5; rtk git show --stat --oneline origin/codex-fabric/evidence/ephi/ephi-o2-worker-fencing-core-v1 | rtk sed -n '1,120p'; rtk git show --format=fuller --no-patch origin/codex-fabric/evidence/ephi/ephi-o2-worker-fencing-core-v1; rtk git show --format= --name-only origin/codex-fabric/evidence/ephi/ephi-o2-worker-fencing-core-v1\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git show origin/codex-fabric/evidence/ephi/ephi-o2-worker-fencing-core-v1:.codex-fabric/audit.json | rtk sed -n '1,260p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk ls -la /Users/haewonkim/.codex-fabric | rtk sed -n '1,200p'; rtk find /Users/haewonkim/.codex-fabric -maxdepth 2 -type f \\\\( -name 'fabricctl' -o -name '*fabric*' -o -name 'audit.json' \\\\) -print | rtk sed -n '1,200p'; rtk rg -n \\\"audit.json|publish audit|capture completed|fabricctl\\\" /Users/haewonkim/.codex-fabric /Users/haewonkim/.codex 2>/dev/null | rtk sed -n '1,240p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk ls -la /Users/haewonkim/.codex-fabric/bin; rtk ls -la /Users/haewonkim/.codex-fabric/libexec | rtk sed -n '1,160p'; rtk file /Users/haewonkim/.codex-fabric/bin/fabricctl /Users/haewonkim/.codex-fabric/libexec/* 2>/dev/null | rtk sed -n '1,160p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,220p' /Users/haewonkim/.codex-fabric/bin/fabricctl; rtk sed -n '1260,1400p' /Users/haewonkim/.codex-fabric/releases/1.2.3-resume-candidate/fabric.py; rtk rg -n \\\"def .*publish|def .*capture|evidence_publication|publish audit|candidate|sole parent|audit\\\" /Users/haewonkim/.codex-fabric/releases/1.2.3-resume-candidate/fabric.py | rtk sed -n '1,240p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk /Users/haewonkim/.codex-fabric/bin/fabricctl --help'",
+      "exit_code": 2,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk ls -la /Users/haewonkim/.codex-fabric/jobs/CF-cf10a3cb696fa499a74da038.running; rtk sed -n '1,180p' /Users/haewonkim/.codex-fabric/jobs/CF-cf10a3cb696fa499a74da038.running/prompt.md; rtk rg -n \\\"capture_completed_model_changes|publish_evidence_for_job|worker-resume|publish-evidence\\\" /Users/haewonkim/.codex-fabric/releases/1.2.3-resume-candidate/fabric.py | rtk sed -n '1,180p'; rtk sed -n '1420,1515p' /Users/haewonkim/.codex-fabric/releases/1.2.3-resume-candidate/fabric.py; rtk sed -n '2700,2765p' /Users/haewonkim/.codex-fabric/releases/1.2.3-resume-candidate/fabric.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '3240,3490p' /Users/haewonkim/.codex-fabric/releases/1.2.3-resume-candidate/fabric.py; rtk sed -n '2395,2695p' /Users/haewonkim/.codex-fabric/releases/1.2.3-resume-candidate/fabric.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git add manifest.json src/ephi/infrastructure/postgresql_worker.py tests/test_o2_worker_postgresql.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git diff --cached --check; rtk git diff --cached --stat; rtk git diff --cached -- src/ephi/infrastructure/postgresql_worker.py tests/test_o2_worker_postgresql.py | rtk sed -n '1,360p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git commit -m \"Fix CHG-126 bounded worker attempts\"'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git show -s --format='%H%n%P%n%s' HEAD; rtk git status --short --branch\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git push --set-upstream origin codex/ephi-o2-worker-fencing-core-fix1'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk gh run list --workflow package.yml --branch codex/ephi-o2-worker-fencing-core-fix1 --limit 5 --json databaseId,status,conclusion,event,headSha,workflowName,createdAt,url'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk gh run watch 35394506421 --exit-status'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk /Users/haewonkim/.codex-fabric/bin/fabricctl status CF-cf10a3cb696fa499a74da038'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk docker rm -f ephi-chg126-pg'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git diff --check; rtk git status --short --branch; rtk git show -s --format='candidate=%H%nparent=%P%nsubject=%s' HEAD; rtk git diff --stat 5885b43d59ab96fb234287aa5a91c898cb852b83 687c6914eb818211afab574136400b3be6359415; rtk git diff --stat 687c6914eb818211afab574136400b3be6359415 HEAD; rtk git ls-remote origin refs/heads/codex/ephi-o2-worker-fencing-core-fix1; rtk gh run view 35394506421 --json databaseId,status,conclusion,headSha,url,jobs | rtk sed -n '1,220p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    }
+  ],
+  "codex": {
+    "cli_version": "codex-cli 0.154.0",
+    "configured_model": "gpt-5.6-luna",
+    "event_count": 105,
+    "provider_reported_model": null,
+    "reasoning_effort": "xhigh",
+    "terminal_type": "turn.completed",
+    "usage": {
+      "cache_hit_percent": 96.16,
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 4379648,
+      "fresh_input_tokens": 174926,
+      "input_tokens": 4554574,
+      "non_reasoning_output_tokens": 9962,
+      "output_tokens": 24130,
+      "reasoning_output_tokens": 14168,
+      "total_processed_tokens": 4578704
+    },
+    "warnings": []
+  },
+  "commits": [
+    {
+      "sha": "22f439c3689b80f1bdb722900e12073ccabf5d70",
+      "subject": "Fix CHG-126 bounded worker attempts"
+    },
+    {
+      "sha": "687c6914eb818211afab574136400b3be6359415",
+      "subject": "fabric: capture completed model changes [CF-f32cdb0df844d95d0d09d7c3]"
+    }
+  ],
+  "diff": {
+    "additions": 1505,
+    "changed_files": 14,
+    "commit_count": 2,
+    "deletions": 24
+  },
+  "error_code": null,
+  "evidence_manifest": {
+    "count": 5,
+    "items": [
+      {
+        "bytes": 22844,
+        "path": "04_Data_and_Runtime.md",
+        "sha256": "c8dd2588f8e72f4691b8914d6b1e7c4cdc6826a75239639b6f7d139fd0e69d04"
+      },
+      {
+        "bytes": 4202,
+        "path": "11_Developer_Start.md",
+        "sha256": "f92f0b8d2cfc778645526ab66a5e14a7d48d5765b5a099f565827e551a276681"
+      },
+      {
+        "bytes": 9466,
+        "path": "13_Package_Review.md",
+        "sha256": "7256aea5073186ab26b9681832544f92ab36430a43932792a6689397eee29af0"
+      },
+      {
+        "bytes": 9053,
+        "path": "README.md",
+        "sha256": "b78494a386285eae9a67fd44710819e071aea4f24d9e42edbec1c4033e5e0494"
+      },
+      {
+        "bytes": 16383,
+        "path": "manifest.json",
+        "sha256": "7143d6153b766cd90016e83829a7db33237d93fed620219b8a8f68e02e2301c0"
+      }
+    ],
+    "version": 1
+  },
+  "evidence_publisher_release": "1.2.3-resume-candidate",
+  "fabric_capture": {
+    "applied": false,
+    "paths_before": 0,
+    "transient_untracked_removed": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "fabric_release": "1.2.3-resume-candidate",
+  "failure_class": null,
+  "finished_at": "2026-09-18T21:02:43Z",
+  "git": {
+    "base_is_ancestor": true,
+    "base_sha": "fb33d6bd0c7d8c97a82a4a508a3f70574717f9a8",
+    "branch": "codex/ephi-o2-worker-fencing-core-fix1",
+    "head_sha": "22f439c3689b80f1bdb722900e12073ccabf5d70",
+    "remote_exact_head": true,
+    "remote_head_sha": "22f439c3689b80f1bdb722900e12073ccabf5d70",
+    "target_branch": "main",
+    "target_drifted_since_acceptance": false,
+    "target_head_observed_after_execution": "fb33d6bd0c7d8c97a82a4a508a3f70574717f9a8",
+    "work_branch": "codex/ephi-o2-worker-fencing-core-fix1",
+    "worktree_clean": true
+  },
+  "instructions": {
+    "files": [
+      {
+        "bytes": 1458,
+        "path": "AGENTS.md",
+        "sha256": "4349f387a79d886ed1264604ff48c582698e539e08ed8fb2f9d8ab8fbf6f804a"
+      }
+    ],
+    "total_bytes": 1458,
+    "warning": null
+  },
+  "job_id": "CF-cf10a3cb696fa499a74da038",
+  "kind": "codex-fabric-audit-evidence",
+  "locator": {
+    "branch": "codex-fabric/evidence/ephi/ephi-o2-worker-fencing-core-fix1",
+    "path": ".codex-fabric/audit.json",
+    "ref": "refs/heads/codex-fabric/evidence/ephi/ephi-o2-worker-fencing-core-fix1"
+  },
+  "operation": "FIX",
+  "policy": {
+    "environment_policy_sha256": "e077daca74297b3c30bee8989f00f8ca5338f7610b4d016a6c48db524205d064",
+    "fabric_release": "1.2.3-resume-candidate",
+    "policy_sha256": "44756118cd7fda0c45cd23ba1d31a48a3f4f2422d687df15264ba4406f40e1f2",
+    "registry_sha256": "cfc765f3211c37c7967a138f3b2d89a99341939b15b2623f92744d007f625d6f"
+  },
+  "project_id": "ephi",
+  "recovery": {
+    "model_rerun_safe": false,
+    "recovery_required": false,
+    "retry_safe": false,
+    "retry_scope": null,
+    "worktree_retained": true
+  },
+  "request": "ephi-o2-worker-fencing-core-fix1",
+  "schema_version": 1,
+  "started_at": "2026-09-18T20:53:30Z",
+  "status": "EXECUTED_CHANGE",
+  "timing": {
+    "execution_seconds": 553,
+    "queue_seconds": 0,
+    "total_seconds": 553
+  },
+  "transport": {
+    "bytes": 5004,
+    "envelope": "FABRIC/2",
+    "prompt_bytes": 4690,
+    "prompt_sha256": "4ab85278709a20b6f4e2c028508bdcfe3be0a2d00855f8f40ed575a18ecab29b",
+    "sha256": "cf10a3cb696fa499a74da038654b65c3ea667fb2398fe2ca9b92c08dd6d4ce5b"
+  }
+}
