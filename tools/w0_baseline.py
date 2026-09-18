@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""Execute a verified EPHI source baseline without weakening source preflight."""
+"""LEGACY OPTIONAL: execute a verified historical-source baseline.
+
+The canonical W0 path is :mod:`tools.w0_repo_baseline`. This compatibility
+harness remains only for historical source-preflight fixtures and is not an
+application, package, or implementation gate.
+"""
 
 from __future__ import annotations
 

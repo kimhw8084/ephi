@@ -1,9 +1,9 @@
 {
-  "title": "EPHI Engineering Decision System — Reviewed Design Repository",
+  "title": "EPHI Engineering Decision System — Canonical Repository Baseline",
   "design_revision": "0.2",
   "design_date": "2026-09-15",
   "timezone": "America/Chicago",
-  "status": "DESIGN_HANDOFF_NOT_IMPLEMENTED_NOT_PRODUCTION_QUALIFIED",
+  "status": "CANONICAL_REPO_BASELINE_NOT_PRODUCTION_QUALIFIED",
   "repository": "https://github.com/kimhw8084/ephi",
   "imported_design_pack": {
     "filename": "EPHI_1.0_Design_Pack.zip",
@@ -16,7 +16,16 @@
     "filename": "ephi_v0.19.1_production_hardened(1).zip",
     "sha256": "5e9ad8f63b3158adc530af69fc650aec606cbfa64896ba73840cdcf994a2b6e3",
     "included": false,
-    "modified": false
+    "modified": false,
+    "status": "REFERENCE_ONLY"
+  },
+  "canonical_application": {
+    "distribution": "ephi",
+    "version": "0.1.0",
+    "source_root": "src/ephi",
+    "python_requires": ">=3.11,<3.14",
+    "status": "BASELINE_PRESENT_BEHAVIORAL_SCOPE_NOT_IMPLEMENTED",
+    "baseline_specification": "environment/w0_repo_baseline.json"
   },
   "nicegui_base_inspected_candidate": {
     "repository": "kimhw8084/nicegui-base",
@@ -27,6 +36,7 @@
     "browser_tests_run": false
   },
   "historical_source_test_result": {
+    "status": "REFERENCE_ONLY",
     "passed": 275,
     "skipped": 1,
     "skip_reason": "optional PyArrow integration unavailable",
@@ -41,8 +51,8 @@
     },
     {
       "path": ".github/workflows/package.yml",
-      "bytes": 946,
-      "sha256": "633ff8df785bce5b9c63a90a646e975734330ed6899586aa2e13243849f20929"
+      "bytes": 1417,
+      "sha256": "657e1f5769cea4f2e743ea21b99b01d866313abd4fbb06352f47cddda5dad208"
     },
     {
       "path": ".gitignore",
@@ -51,8 +61,8 @@
     },
     {
       "path": "00_START_HERE.md",
-      "bytes": 4462,
-      "sha256": "6298ef998b93917f80bdd1457e1e556ecf17b15289b9f59841ad6d4c848a67ac"
+      "bytes": 4498,
+      "sha256": "efb192102e27c711e0173ea6db4cbdc163c1b77139178c88f955effbadb296e9"
     },
     {
       "path": "01_Product_and_Architecture.md",
@@ -96,43 +106,43 @@
     },
     {
       "path": "09_Delivery_and_Gates.md",
-      "bytes": 18324,
-      "sha256": "40e2fad240dcaf7b6d4cc1c65b3d3c6d57d58b04984b8e9cb28c4dccb79a62ab"
+      "bytes": 18623,
+      "sha256": "c566c138635b89d978e1c4a397a59cc9e243100f34bf7faf748d19a7a483cf0f"
     },
     {
       "path": "10_Traceability_and_Decisions.md",
-      "bytes": 8109,
-      "sha256": "c1aedda41b6f085ccca34b78a999c7f11e752bac6c5d51865af3fe79ea6dcae2"
+      "bytes": 8154,
+      "sha256": "8f72e3deef189d42b162e7701f6183ea2702df744f554b60f2501aa73bca355f"
     },
     {
       "path": "11_Developer_Start.md",
-      "bytes": 4753,
-      "sha256": "a38d7e099e19f6dc31d163a8b9a76b59e95579dc9b4b466be6e76f6bc35c7d48"
+      "bytes": 2858,
+      "sha256": "b8207b9bca1edb9b73f5eb4b5813c9d78cf4ecc17647609f8041c855c4861498"
     },
     {
       "path": "12_Sources_and_Evidence.md",
-      "bytes": 6815,
-      "sha256": "d34b83c265fdf0d7f2b8814e852ffa0d031462ed26457d90b05af603a19da504"
+      "bytes": 6795,
+      "sha256": "0f72dd28e2fd994f8cce0d3c01056bffd2ef9e3768625b762620770a8c608c28"
     },
     {
       "path": "13_Package_Review.md",
-      "bytes": 7972,
-      "sha256": "80eb25b482772cb2a03a9000672dd63eea948e8b99948e5cf2bc11df90257600"
+      "bytes": 7844,
+      "sha256": "b7af702e2493ab4e91b9b6ef3da8fa994ccbe93cfc7313f4d98aef358e2e6690"
     },
     {
       "path": "AGENTS.md",
-      "bytes": 959,
-      "sha256": "0803c825a0dbaf0266aa44b5ce9c6a30d8eac93737369aae3dc9715d3bb49767"
+      "bytes": 1415,
+      "sha256": "e7d6dc713c2c18db9f0491e70b6ca32ccb079eb676d72d37b1b8e7b06a545f28"
     },
     {
       "path": "CONTRIBUTING.md",
-      "bytes": 1668,
-      "sha256": "d6001031c8e4360536e911e6bc58f65d1a9b3c1fa172622f663ec25ff667621c"
+      "bytes": 1654,
+      "sha256": "ce607f433d8b590bfdaafb472081a9d396c825f4dfc4fb99bfb724f97361cec5"
     },
     {
       "path": "README.md",
-      "bytes": 9365,
-      "sha256": "4fe32078679a7331503cbaabc615ef91a25bf8154e10e2fe5e932fda0bd00cc1"
+      "bytes": 6266,
+      "sha256": "458c8886f90cfb22221ec159288abc023fabaeee8f5c5e1ae8353a03066ccc64"
     },
     {
       "path": "environment/nicegui_base_requirements.txt",
@@ -143,6 +153,11 @@
       "path": "environment/nicegui_base_runtime.json",
       "bytes": 1318,
       "sha256": "ea49feb766c2f755a019e5dce7cab89a4456ea3c9c87d98940bb22abd5bcb89a"
+    },
+    {
+      "path": "environment/w0_repo_baseline.json",
+      "bytes": 1055,
+      "sha256": "50385883ce2eadda92ace6684cbc086fa117d16ad655b1a6a1f1e824c3d418b1"
     },
     {
       "path": "evidence/README.md",
@@ -211,8 +226,8 @@
     },
     {
       "path": "evidence/review/w0_integrity_regression_contract.json",
-      "bytes": 14263,
-      "sha256": "e550e92670c21d72009c73bd7205cca68dda71ab0e9692b9942880f576102c0e"
+      "bytes": 14648,
+      "sha256": "e5b0487c22a101f1b3f8756f1650f0dd764d53b3e1c64ec37a4fc8c246d84580"
     },
     {
       "path": "evidence/source_excerpts.md",
@@ -223,6 +238,51 @@
       "path": "evidence/source_inventory.json",
       "bytes": 264378,
       "sha256": "d995b28e9196c0a2145655905e5c3ddac6c1821c42af0e5a9a79aee0737cef75"
+    },
+    {
+      "path": "pyproject.toml",
+      "bytes": 581,
+      "sha256": "fcbfc78fcd8a52ff65fd19364dde6197bc39583428069696771938c895503a27"
+    },
+    {
+      "path": "src/ephi/__init__.py",
+      "bytes": 343,
+      "sha256": "5d002b1cdfd485deebc1b898fc79d83746a71ed310feddbd2a7f5101c0cc8e7f"
+    },
+    {
+      "path": "src/ephi/__main__.py",
+      "bytes": 132,
+      "sha256": "ae7b0798ba5fce5a6b9322ad2d591ab088cac68da94e05ba59199267e20f4683"
+    },
+    {
+      "path": "src/ephi/app.py",
+      "bytes": 2202,
+      "sha256": "96f880a312c5e89f2c3d3c8069711d084b99013a54c6923e5e9400197bb130cc"
+    },
+    {
+      "path": "src/ephi/config.py",
+      "bytes": 1290,
+      "sha256": "758f0cee7244bd875be2f0e97e627f31ee5152d48ec832e78f0dcdf347a60ecd"
+    },
+    {
+      "path": "src/ephi/framework.py",
+      "bytes": 769,
+      "sha256": "2a4fad562a6de56683b892bcf9c178ff4a6d627fc0db9ca389aed2dca8dd3797"
+    },
+    {
+      "path": "src/ephi/identity.py",
+      "bytes": 576,
+      "sha256": "a4f78a9a8ff8ce15529479958e68e3f4d0867802dbee07dd453d5d7d1df6a120"
+    },
+    {
+      "path": "src/ephi/py.typed",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tests/test_ephi_application.py",
+      "bytes": 1686,
+      "sha256": "32011b2caada32a48c6c5eeea7222ca73bfb15db66fbb8e09a5a18af186f9d1a"
     },
     {
       "path": "tests/test_package.py",
@@ -241,8 +301,13 @@
     },
     {
       "path": "tests/test_w0_integrity_regressions.py",
-      "bytes": 7310,
-      "sha256": "0a93b2726c89e3206ac29ad3115ceaebe63e75361f69772bf636d7011118068d"
+      "bytes": 8046,
+      "sha256": "0c916e13df9fc6da8e8ddbf47a9d646fc46c6c4f32848ca15f07e6bd4b286206"
+    },
+    {
+      "path": "tests/test_w0_repo_baseline.py",
+      "bytes": 2703,
+      "sha256": "1337112946db548f2f86b6f6328b38671e08113cfc2db3ee5c734d38046667a7"
     },
     {
       "path": "tests/test_w0_runtime.py",
@@ -251,23 +316,28 @@
     },
     {
       "path": "tools/check_package.py",
-      "bytes": 11246,
-      "sha256": "642b4202dffad801be8e0c4cc796826e1a8833c335ce894b5d516ac810a09076"
+      "bytes": 11490,
+      "sha256": "a353043571493380c81a93a56d1426cb4b9e2f3a78eb620bc75a24ace8d55da0"
     },
     {
       "path": "tools/source_preflight.py",
-      "bytes": 16697,
-      "sha256": "b82ed81cddf7784fe7144af887b1ba4411b0883505b09d751c69ac798969914e"
+      "bytes": 16947,
+      "sha256": "bc4e3bf2daaca42bdc4c294fa07a4087adfc8446d78ba69c8d2f1603a3e07087"
     },
     {
       "path": "tools/w0_baseline.py",
-      "bytes": 18010,
-      "sha256": "870043bdc3ccd2fce3e75ecf0ef2f370aa4abda6d76546a23c4453d93c30d076"
+      "bytes": 18197,
+      "sha256": "7948861632c18658e9e9da18bada087db3b817726522a4958c37e0c88273b8b9"
     },
     {
       "path": "tools/w0_integrity_regressions.py",
-      "bytes": 39689,
-      "sha256": "8901cb7e509a0c5221dd05d717b72039708cb553a455d1a7a52f4bccfea4923a"
+      "bytes": 45946,
+      "sha256": "284bbbca783ae53726db3a81f451561a310fd4f4e18535906429d148a0aff5e6"
+    },
+    {
+      "path": "tools/w0_repo_baseline.py",
+      "bytes": 17326,
+      "sha256": "370e39add9e7157317998877333582fc2fe79cc0057c2cb13ca06540ff624df5"
     },
     {
       "path": "tools/w0_runtime.py",

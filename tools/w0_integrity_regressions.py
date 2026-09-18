@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""Run the source-bound CHG-109 W0 integrity regression gate."""
+"""Run CHG-109 integrity checks against the canonical repository boundary.
+
+The default target is ``src/ephi``. The historical staged-source runner is
+available only through the explicit ``--legacy-source`` compatibility mode.
+"""
 
 from __future__ import annotations
 
@@ -115,21 +119,22 @@ def _list(value: Any, field: str) -> list[Any]:
     return value
 
 
-def validate_contract(contract: Mapping[str, Any]) -> None:
-    """Validate CHG-109 structure and bind its source identity to existing authorities."""
+def validate_contract(contract: Mapping[str, Any], *, source_bound: bool = True) -> None:
+    """Validate CHG-109 structure and, optionally, its legacy source binding."""
 
     if contract.get("schema_version") != 1 or contract.get("change") != "CHG-109" or contract.get("wave") != "W0":
         raise IntegrityError("CONTRACT_INVALID", "contract must be schema 1 for CHG-109/W0")
 
-    source = _mapping(contract.get("source_identity"), "source_identity")
-    expected_identity = {
-        "required_filename": EXPECTED_ARCHIVE_FILENAME,
-        "required_sha256": EXPECTED_ARCHIVE_SHA256,
-        "required_source_root": EXPECTED_SOURCE_ROOT,
-    }
-    for field, expected in expected_identity.items():
-        if source.get(field) != expected:
-            raise IntegrityError("SOURCE_IDENTITY_MISMATCH", f"contract source identity does not match {field}")
+    if source_bound:
+        source = _mapping(contract.get("source_identity"), "source_identity")
+        expected_identity = {
+            "required_filename": EXPECTED_ARCHIVE_FILENAME,
+            "required_sha256": EXPECTED_ARCHIVE_SHA256,
+            "required_source_root": EXPECTED_SOURCE_ROOT,
+        }
+        for field, expected in expected_identity.items():
+            if source.get(field) != expected:
+                raise IntegrityError("SOURCE_IDENTITY_MISMATCH", f"contract source identity does not match {field}")
 
     historical = _mapping(contract.get("historical_evidence"), "historical_evidence")
     if historical.get("status") != "REFERENCE_ONLY" or historical.get("immutable") is not True:
@@ -167,13 +172,15 @@ def validate_contract(contract: Mapping[str, Any]) -> None:
     current = _mapping(contract.get("current_execution"), "current_execution")
     if current.get("status") != "NOT_RUN":
         raise IntegrityError("CONTRACT_INVALID", "contract current_execution status must remain NOT_RUN")
-    if current.get("probe_script") != "evidence/behavior_probes.py" or current.get("pythonpath") != "src:company_port/src":
-        raise IntegrityError("CONTRACT_INVALID", "current probe boundary does not match the documented source boundary")
-    for field in ("runtime_artifact_root", "result_output"):
-        _repo_relative(current.get(field), f"current_execution.{field}")
-    protected = current.get("historical_output_must_not_be_overwritten")
-    if protected != ["evidence/behavior_probes.py", "evidence/behavior_probes.json", "evidence/behavior_probes.log"]:
-        raise IntegrityError("CONTRACT_INVALID", "current execution does not protect historical probe files")
+    if source_bound:
+        legacy_current = _mapping(contract.get("legacy_source_execution"), "legacy_source_execution")
+        if legacy_current.get("probe_script") != "evidence/behavior_probes.py" or legacy_current.get("pythonpath") != "src:company_port/src":
+            raise IntegrityError("CONTRACT_INVALID", "current probe boundary does not match the documented source boundary")
+        for field in ("runtime_artifact_root", "result_output"):
+            _repo_relative(legacy_current.get(field), f"legacy_source_execution.{field}")
+        protected = legacy_current.get("historical_output_must_not_be_overwritten")
+        if protected != ["evidence/behavior_probes.py", "evidence/behavior_probes.json", "evidence/behavior_probes.log"]:
+            raise IntegrityError("CONTRACT_INVALID", "current execution does not protect historical probe files")
 
     qualification = _mapping(contract.get("f02_checkpoint_restore_qualification"), "f02_checkpoint_restore_qualification")
     for field in ("source_inventory", "source_excerpts", "checkpoint_source_path", "checkpoint_test_path", "checkpoint_test_symbol"):
@@ -219,10 +226,10 @@ def validate_contract(contract: Mapping[str, Any]) -> None:
                     raise IntegrityError("CONTRACT_INVALID", f"finding {finding.get('id')} has an invalid evaluation assertion")
 
 
-def verify_historical_evidence(contract: Mapping[str, Any]) -> list[dict[str, Any]]:
+def verify_historical_evidence(contract: Mapping[str, Any], *, source_bound: bool = True) -> list[dict[str, Any]]:
     """Verify preserved evidence identities and return observations as reference-only data."""
 
-    validate_contract(contract)
+    validate_contract(contract, source_bound=source_bound)
     historical = _mapping(contract["historical_evidence"], "historical_evidence")
     for item in historical["files"]:
         item = _mapping(item, "historical_evidence.files[]")
@@ -614,7 +621,7 @@ def _execute_current(
     probe_output = runtime_dir / "behavior_probes.json"
     probe_command = [
         sys.executable,
-        str(_repo_relative(contract["current_execution"]["probe_script"], "current_execution.probe_script")),
+        str(_repo_relative(contract["legacy_source_execution"]["probe_script"], "legacy_source_execution.probe_script")),
         "--output",
         str(probe_output),
     ]
@@ -653,7 +660,115 @@ def _execute_current(
     return probe, checkpoint, {"before": before, "after": _tree_snapshot(source_root)}
 
 
-def run_integrity_regressions(
+def _new_canonical_result(contract_path: Path) -> dict[str, Any]:
+    return {
+        "schema_version": 1,
+        "change": "CHG-109",
+        "wave": "W0",
+        "status": "NOT_RUN",
+        "reason": None,
+        "message": None,
+        "target": {
+            "source_root": "src/ephi",
+            "import": "ephi",
+            "entrypoint": "ephi.app:main",
+            "mode": "canonical-repository",
+        },
+        "contract": {
+            "path": str(contract_path),
+            "status": "NOT_READ",
+            "record_sha256": None,
+        },
+        "historical_evidence": {
+            "status": "REFERENCE_ONLY",
+            "current_execution": False,
+            "observations": [],
+        },
+        "current_execution": {
+            "status": "NOT_RUN",
+            "tests_executed": False,
+            "target": "src/ephi",
+            "application_self_check": {"status": "NOT_RUN"},
+        },
+        "findings": [
+            {
+                "id": finding_id,
+                "status": "NOT_IMPLEMENTED",
+                "execution": "NOT_RUN",
+                "reason": "canonical F02/F03/F04/F05 API is outside CHG-111 R3 scope",
+                **({"source_only_result": "NOT_RUN", "checkpoint_restore_result": "NOT_RUN"} if finding_id == "F02" else {}),
+            }
+            for finding_id in EXPECTED_FINDING_IDS
+        ],
+    }
+
+
+def _canonical_self_check() -> dict[str, Any]:
+    source = REPOSITORY_ROOT / "src"
+    environment = dict(os.environ)
+    environment["PYTHONPATH"] = str(source) + (os.pathsep + environment["PYTHONPATH"] if environment.get("PYTHONPATH") else "")
+    completed = subprocess.run(
+        [sys.executable, "-m", "ephi", "--self-check", "--json"],
+        cwd=REPOSITORY_ROOT,
+        env=environment,
+        capture_output=True,
+        text=True,
+        check=False,
+        timeout=PROBE_TIMEOUT_SECONDS,
+    )
+    if completed.returncode != 0:
+        return {"status": "FAIL", "returncode": completed.returncode, "stderr": completed.stderr[-4000:]}
+    try:
+        payload = json.loads(completed.stdout)
+    except json.JSONDecodeError:
+        return {"status": "FAIL", "reason": "SELF_CHECK_INVALID_JSON"}
+    return {"status": "PASS", "returncode": completed.returncode, "identity": payload}
+
+
+def run_canonical_integrity_regressions(
+    *,
+    contract_path: Path = CONTRACT_PATH,
+    output_path: Path | None = None,
+) -> dict[str, Any]:
+    """Verify historical evidence and report canonical behavioral checks honestly."""
+
+    contract_path = Path(contract_path).expanduser()
+    result = _new_canonical_result(contract_path)
+    try:
+        contract_raw = contract_path.read_bytes()
+        result["contract"]["record_sha256"] = hashlib.sha256(contract_raw).hexdigest()
+        contract_value = _strict_json_bytes(contract_raw, "CHG-109 contract")
+        if not isinstance(contract_value, Mapping):
+            raise IntegrityError("CONTRACT_INVALID", "CHG-109 contract must be an object")
+        validate_contract(contract_value, source_bound=False)
+        result["contract"]["status"] = "VALID"
+        result["historical_evidence"]["observations"] = verify_historical_evidence(contract_value, source_bound=False)
+    except FileNotFoundError as exc:
+        return _finish(_blocked(result, IntegrityError("CONTRACT_MISSING", f"CHG-109 contract is missing: {contract_path}")), output_path)
+    except IntegrityError as exc:
+        return _finish(_blocked(result, exc), output_path)
+    except OSError as exc:
+        return _finish(_blocked(result, IntegrityError("CONTRACT_READ_ERROR", str(exc))), output_path)
+
+    try:
+        result["current_execution"]["application_self_check"] = _canonical_self_check()
+        if result["current_execution"]["application_self_check"]["status"] != "PASS":
+            result["current_execution"]["status"] = "FAIL"
+            result["status"] = "FAIL"
+            result["reason"] = "CANONICAL_SELF_CHECK_FAILED"
+            result["message"] = "canonical application self-check failed"
+        else:
+            result["current_execution"]["status"] = "NOT_RUN"
+            result["current_execution"]["tests_executed"] = True
+            result["status"] = "NOT_IMPLEMENTED"
+            result["reason"] = "CANONICAL_BEHAVIORAL_APIS_NOT_IMPLEMENTED"
+            result["message"] = "canonical entry boundary passed; F02/F03/F04/F05 remain NOT_IMPLEMENTED/NOT_RUN"
+        return _finish(result, output_path)
+    except (OSError, subprocess.SubprocessError, ValueError, TypeError) as exc:
+        return _finish(_blocked(result, IntegrityError("CANONICAL_EXECUTION_ERROR", str(exc))), output_path)
+
+
+def _run_legacy_integrity_regressions(
     preflight_path: Path,
     output_path: Path | None = None,
     *,
@@ -757,6 +872,28 @@ def run_integrity_regressions(
         return _finish(_blocked(result, IntegrityError("CURRENT_EXECUTION_ERROR", str(exc))), output_path)
 
 
+def run_integrity_regressions(
+    preflight_path: Path | None = None,
+    output_path: Path | None = None,
+    *,
+    contract_path: Path = CONTRACT_PATH,
+    runtime_root: Path = DEFAULT_RUNTIME_ROOT,
+    legacy_source: bool = False,
+) -> dict[str, Any]:
+    """Run canonical checks by default; require an explicit legacy source mode."""
+
+    if not legacy_source:
+        return run_canonical_integrity_regressions(contract_path=contract_path, output_path=output_path)
+    if preflight_path is None:
+        raise IntegrityError("PREFLIGHT_REQUIRED", "legacy source mode requires an explicit preflight result")
+    return _run_legacy_integrity_regressions(
+        preflight_path,
+        output_path,
+        contract_path=contract_path,
+        runtime_root=runtime_root,
+    )
+
+
 def write_result(path: Path, result: Mapping[str, Any]) -> None:
     path = Path(path).expanduser()
     if path.resolve(strict=False).is_relative_to(EVIDENCE_ROOT.resolve()):
@@ -777,18 +914,20 @@ def write_result(path: Path, result: Mapping[str, Any]) -> None:
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--preflight", type=Path, default=DEFAULT_PREFLIGHT, help="integrated source-preflight JSON result")
+    parser.add_argument("--preflight", type=Path, default=None, help="legacy source-preflight JSON result; only with --legacy-source")
     parser.add_argument("--contract", type=Path, default=CONTRACT_PATH, help="tracked CHG-109 machine-readable contract")
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT, help="ignored machine-readable current result")
     parser.add_argument("--runtime-root", type=Path, default=DEFAULT_RUNTIME_ROOT, help="ignored root for fresh probe output")
+    parser.add_argument("--legacy-source", action="store_true", help="explicitly run the retained historical staged-source compatibility path")
     args = parser.parse_args(argv)
-    result = run_integrity_regressions(args.preflight, contract_path=args.contract, runtime_root=args.runtime_root)
+    preflight = args.preflight if args.preflight is not None else (DEFAULT_PREFLIGHT if args.legacy_source else None)
+    result = run_integrity_regressions(preflight, contract_path=args.contract, runtime_root=args.runtime_root, legacy_source=args.legacy_source)
     try:
         write_result(args.output, result)
     except IntegrityError as exc:
         result = _blocked(result, exc)
     print(json.dumps(result, indent=2, sort_keys=True))
-    return {"PASS": 0, "FAIL": 5, "NOT_RUN": 4, "BLOCKED": 4}.get(result["status"], 4)
+    return {"PASS": 0, "FAIL": 5, "NOT_RUN": 4, "NOT_IMPLEMENTED": 4, "BLOCKED": 4}.get(result["status"], 4)
 
 
 if __name__ == "__main__":

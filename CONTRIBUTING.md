@@ -15,6 +15,6 @@ git diff --stat
 
 Review the manifest diff before committing. Refreshing hashes records changed bytes; it does not certify their correctness or provenance. The checker preserves the original evidence hashes recorded in [the imported manifest](evidence/import/original_manifest.json). New local reports belong in the ignored `artifacts/` directory unless deliberately prepared as versioned evidence.
 
-Use relative links for repository documents and pinned references for framework claims. Proposed interface snippets are contracts, not installable source. When the original application is restored, preserve its import paths and add only the modules needed for the current vertical slice. Run its own checks in addition to this repository's package checks.
+Use relative links for repository documents and pinned references for framework claims. Proposed interface snippets are contracts, while `src/ephi` is the new canonical implementation boundary. Keep historical observations separate from newly executed canonical checks. Run application checks in addition to this repository's package checks.
 
 Never commit credentials, company production data, local environments or unreviewed archives. Changes to manufacturing authority, scientific policy, retention or company scope require their stated design gates.
