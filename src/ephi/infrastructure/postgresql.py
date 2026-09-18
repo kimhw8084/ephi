@@ -7,6 +7,7 @@ psycopg, and constructing this adapter always requires an explicit DSN.
 from __future__ import annotations
 
 from collections.abc import Mapping
+from collections.abc import Iterator
 import hashlib
 import json
 from pathlib import Path
@@ -31,6 +32,76 @@ MIGRATION_PATHS = tuple(sorted(MIGRATION_DIR.glob("*.sql")))
 # migration specifically.  ``apply_migrations`` applies every numbered file.
 MIGRATION_PATH = MIGRATION_DIR / "001_o2_command_core.sql"
 _TABLES = ("aggregate_state", "command_receipt", "audit_event", "outbox_event")
+
+
+def _sql_statements(script: str) -> Iterator[str]:
+    """Split numbered migrations without splitting dollar-quoted functions."""
+
+    start = 0
+    index = 0
+    quote: str | None = None
+    dollar_tag: str | None = None
+    line_comment = False
+    block_comment = False
+    while index < len(script):
+        character = script[index]
+        following = script[index + 1] if index + 1 < len(script) else ""
+        if line_comment:
+            if character == "\n":
+                line_comment = False
+            index += 1
+            continue
+        if block_comment:
+            if character == "*" and following == "/":
+                block_comment = False
+                index += 2
+            else:
+                index += 1
+            continue
+        if dollar_tag is not None:
+            if script.startswith(dollar_tag, index):
+                index += len(dollar_tag)
+                dollar_tag = None
+            else:
+                index += 1
+            continue
+        if quote is not None:
+            if character == quote:
+                if following == quote:
+                    index += 2
+                    continue
+                quote = None
+            index += 1
+            continue
+        if character == "-" and following == "-":
+            line_comment = True
+            index += 2
+            continue
+        if character == "/" and following == "*":
+            block_comment = True
+            index += 2
+            continue
+        if character in {"'", '"'}:
+            quote = character
+            index += 1
+            continue
+        if character == "$":
+            end = script.find("$", index + 1)
+            if end != -1:
+                candidate = script[index:end + 1]
+                if candidate[1:-1] == "" or all(part.isalnum() or part == "_" for part in candidate[1:-1]):
+                    dollar_tag = candidate
+                    index = end + 1
+                    continue
+        if character == ";":
+            statement = script[start:index].strip()
+            if statement:
+                yield statement
+            start = index + 1
+        index += 1
+    statement = script[start:].strip()
+    if statement:
+        yield statement
 
 
 def _validated_identity(value: object, field: str) -> str:
@@ -311,9 +382,8 @@ class PostgreSQLReferenceTransactionAdapter:
         try:
             for migration_path in MIGRATION_PATHS:
                 migration = migration_path.read_text(encoding="utf-8")
-                for statement in migration.split(";"):
-                    if statement.strip():
-                        self.connection.execute(statement)
+                for statement in _sql_statements(migration):
+                    self.connection.execute(statement)
         except (OSError, StorageFailureError):
             raise
         except Exception as exc:
@@ -325,6 +395,49 @@ class PostgreSQLReferenceTransactionAdapter:
         from .postgresql_worker import PostgreSQLWorkerStore
 
         return PostgreSQLWorkerStore(self, config=config)
+
+    def read_store(self):
+        """Return the generic CHG-129 read adapter on this same connection."""
+
+        from .postgresql_reads import PostgreSQLReadSnapshotStore
+
+        return PostgreSQLReadSnapshotStore(self)
+
+    def publish_read_revision(self, *args, **kwargs):
+        return self.read_store().publish_read_revision(*args, **kwargs)
+
+    def publish_current_revision(self, *args, **kwargs):
+        return self.read_store().publish_current_revision(*args, **kwargs)
+
+    def publish_current_revision_in_transaction(self, *args, **kwargs):
+        return self.read_store().publish_current_revision_in_transaction(*args, **kwargs)
+
+    def get_current_head(self, *args, **kwargs):
+        return self.read_store().get_current_head(*args, **kwargs)
+
+    def get_read_revision(self, *args, **kwargs):
+        return self.read_store().get_read_revision(*args, **kwargs)
+
+    def read_current_bundle(self, *args, **kwargs):
+        return self.read_store().read_current_bundle(*args, **kwargs)
+
+    def read_historical_bundle(self, *args, **kwargs):
+        return self.read_store().read_historical_bundle(*args, **kwargs)
+
+    def read_historical_revision(self, *args, **kwargs):
+        return self.read_store().read_historical_revision(*args, **kwargs)
+
+    def create_query_snapshot(self, *args, **kwargs):
+        return self.read_store().create_query_snapshot(*args, **kwargs)
+
+    def create_retained_query_snapshot(self, *args, **kwargs):
+        return self.read_store().create_retained_query_snapshot(*args, **kwargs)
+
+    def read_query_snapshot_page(self, *args, **kwargs):
+        return self.read_store().read_query_snapshot_page(*args, **kwargs)
+
+    def read_retained_query_snapshot_page(self, *args, **kwargs):
+        return self.read_store().read_retained_query_snapshot_page(*args, **kwargs)
 
     def command_transaction(self) -> CommandUnitOfWork:
         return _PostgreSQLCommandTransaction(self)

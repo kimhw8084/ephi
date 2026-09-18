@@ -61,8 +61,29 @@ complete G05/O2. Worker fencing, retained query snapshots and later O3 use
 use cases remain separately authorized work. CHG-126 now provides only the
 generic PostgreSQL worker/job lease, fencing and bounded LOCAL-effect
 substrate. Its PostgreSQL 18.x evidence is reference/integration evidence,
-not a company deployment or full O2/G05 completion; retained/coherent query
-snapshots remain the final major O2 durability slice.
+not a company deployment or full O2/G05 completion.
+
+## CHG-129 generic read/snapshot substrate
+
+The generic read foundation is exposed through `ephi.application.read` and
+`PostgreSQLReferenceTransactionAdapter.read_store()` (also forwarded on the
+adapter). It provides immutable read revisions and current heads, coherent
+current bundles in a short PostgreSQL `REPEATABLE READ` transaction, exact
+historical workflow snapshots, bounded retained row-version query snapshots,
+database-time expiry and fail-closed cursor/authorization checks. Run its
+additive reference evidence with:
+
+```bash
+EPHI_TEST_POSTGRES_DSN='postgresql://user:password@host:5432/database' \
+  python3 -m unittest tests.test_o2_postgresql_reads -v
+```
+
+This remains generic PostgreSQL foundation evidence, not production/company
+binding and not `ListAttention`, `GetEpisodeBrief`, Claim/Acknowledge,
+NiceGUI/browser, company identity, scientific-source or notification
+implementation. O3 will bind these primitives to the first durable Attention
+→ Episode UI slice. Every page is a separate bounded transaction; no browser
+request carries a PostgreSQL transaction across requests.
 
 ## Scope boundary
 

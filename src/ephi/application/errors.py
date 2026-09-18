@@ -114,6 +114,62 @@ class InvalidTransitionError(CommandError):
     code = "INVALID_TRANSITION"
 
 
+class ReadError(CommandError):
+    """Base class for typed, fail-closed read/snapshot errors."""
+
+
+class ReadRevisionConflictError(ReadError):
+    """A revision identity or current-head CAS precondition was already won."""
+
+    code = "READ_REVISION_CONFLICT"
+
+
+class CoherentReadConflictError(ReadError):
+    """The selected read revision and workflow aggregate are not one pair."""
+
+    code = "COHERENT_READ_CONFLICT"
+
+
+class ReadRevisionNotFoundError(ReadError):
+    code = "READ_REVISION_NOT_FOUND"
+
+
+class QuerySnapshotExpiredError(ReadError):
+    """Retained state is unavailable or no longer valid; restart the query."""
+
+    code = "QUERY_SNAPSHOT_EXPIRED"
+
+    def __init__(self, message: str = "query snapshot expired or is unavailable; restart the query", *, reason: str | None = None):
+        details = {"restart_query": True}
+        if reason is not None:
+            details["reason"] = reason
+        super().__init__(message, details=details)
+
+
+class QueryTooBroadError(ReadError):
+    """A retained result would exceed the bounded reference implementation."""
+
+    code = "QUERY_TOO_BROAD"
+
+    def __init__(self, message: str = "query result exceeds the bounded retained snapshot limit", *, limit: int | None = None):
+        details = {}
+        if limit is not None:
+            details["max_retained_rows"] = limit
+        super().__init__(message, details=details)
+
+
+class QueryIdentityMismatchError(ReadError):
+    """A cursor, snapshot, or requested query identity does not match."""
+
+    code = "QUERY_IDENTITY_MISMATCH"
+
+
+class QueryCursorValidationError(QueryIdentityMismatchError):
+    """A cursor is malformed, tampered with, or has an invalid position."""
+
+    code = "QUERY_CURSOR_INVALID"
+
+
 # A concise compatibility name for callers that describe the persistence
 # boundary as durable storage rather than a retryable infrastructure failure.
 DurableStorageError = StorageFailureError
