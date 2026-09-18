@@ -282,11 +282,6 @@ class VersionedAggregateCommandExecutor:
         if receipt.payload_hash != payload_hash:
             raise IdempotencyConflictError(context.command_id)
         self._authorize(context, required_capability)
-        if (
-            receipt.auth_session_revision_json != canonical_json(context.principal.auth_session_revision)
-            or receipt.security_revision_json != canonical_json(context.principal.security_revision)
-        ):
-            raise AuthorizationDeniedError("authorization revision no longer permits receipt replay")
         result = CommandResult.from_json(receipt.result_json)
         if result.result_identity != receipt.result_identity or result.payload_hash != receipt.payload_hash:
             raise StorageFailureError("stored receipt and result identity do not agree")

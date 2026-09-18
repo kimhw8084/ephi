@@ -149,17 +149,24 @@ class O2TransactionTests(unittest.TestCase):
         self.assertEqual(after_state, before_state)
         self.assertEqual(self.store.count_rows(), before_counts)
 
-    def test_receipt_replay_rechecks_current_capability_scope_and_security_revision(self):
-        self.execute()
+    def test_receipt_replay_uses_current_authorization_not_historical_revisions(self):
+        committed = self.execute()
         before = self.store.count_rows()
-        revoked = Principal("subject-1", (), (self.scope,), 7, 11)
+        reconnected = Principal("subject-1", (self.capability,), (self.scope,), 8, 12)
+        replay = self.execute(context=self.context(principal=reconnected))
+        self.assertEqual(replay, committed)
+        self.assertEqual(self.store.count_rows(), before)
+        self.assertEqual(self.store.get_aggregate(self.scope, "fixture", "aggregate-1").state["effect_count"], 1)
+        receipt = self.store.get_command_receipt(self.scope.canonical_key, "subject-1", "command-1")
+        self.assertIsNotNone(receipt)
+        self.assertEqual(receipt.auth_session_revision_json, "7")
+        self.assertEqual(receipt.security_revision_json, "11")
+
+        revoked = Principal("subject-1", (), (self.scope,), 8, 12)
         with self.assertRaises(AuthorizationDeniedError) as raised:
             self.execute(context=self.context(principal=revoked))
         self.assertEqual(raised.exception.code, "FORBIDDEN_ACTION")
-        rotated = Principal("subject-1", (self.capability,), (self.scope,), 8, 11)
-        with self.assertRaises(AuthorizationDeniedError):
-            self.execute(context=self.context(principal=rotated))
-        out_of_scope = Principal("subject-1", (self.capability,), (AccessScope("different"),), 7, 11)
+        out_of_scope = Principal("subject-1", (self.capability,), (AccessScope("different"),), 8, 12)
         with self.assertRaises(ScopeDeniedError):
             self.execute(context=self.context(principal=out_of_scope))
         self.assertEqual(self.store.count_rows(), before)

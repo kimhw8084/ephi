@@ -301,8 +301,8 @@
     },
     {
       "path": "src/ephi/application/transactions.py",
-      "bytes": 16804,
-      "sha256": "9e6c657e0c8608f195c1b00dfe2079311f5b5de892fdcd41f3e3138a06069a36"
+      "bytes": 16471,
+      "sha256": "613a8048e9ed4d2761d11ecefdd371d2c3a165173d3d9c0694d98e0cd2b47f9f"
     },
     {
       "path": "src/ephi/config.py",
@@ -371,8 +371,8 @@
     },
     {
       "path": "tests/test_o2_transactions.py",
-      "bytes": 11542,
-      "sha256": "b0ed1c907618b3e759c59249e01f95b7d6641f9a5501e366d750d6815ad515ca"
+      "bytes": 11990,
+      "sha256": "88a1b463ca5a5edc243a381dad7459bbc582ef5dc27891b1cc6288585ec4270d"
     },
     {
       "path": "tests/test_package.py",
