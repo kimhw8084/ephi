@@ -8,7 +8,6 @@ G05 production qualification.
 from __future__ import annotations
 
 from collections.abc import Mapping
-from dataclasses import dataclass
 import json
 from pathlib import Path
 import sqlite3
@@ -18,6 +17,12 @@ from typing import Any
 from ephi.application.context import AccessScope
 from ephi.application.errors import StorageFailureError, ValidationFailureError
 from ephi.application.hashing import canonical_json, normalize_domain_payload
+from ephi.application.storage import (
+    AggregateSnapshot,
+    CommandUnitOfWork,
+    ReceiptAlreadyExistsError,
+    StoredCommandReceipt,
+)
 
 
 SCHEMA = """
@@ -57,6 +62,8 @@ CREATE TABLE IF NOT EXISTS audit_event (
     aggregate_version INTEGER NOT NULL CHECK (aggregate_version >= 0),
     event_type TEXT NOT NULL,
     event_json TEXT NOT NULL,
+    auth_session_revision_json TEXT NOT NULL,
+    security_revision_json TEXT NOT NULL,
     recorded_at TEXT NOT NULL,
     UNIQUE (scope_key, subject, command_id)
 );
@@ -82,36 +89,184 @@ CREATE INDEX IF NOT EXISTS idx_outbox_status ON outbox_event(status, created_at)
 """
 
 
-@dataclass(frozen=True, slots=True)
-class AggregateSnapshot:
-    scope_key: str
-    aggregate_type: str
-    aggregate_id: str
-    version: int
-    state: dict[str, Any]
-
-
-@dataclass(frozen=True, slots=True)
-class StoredCommandReceipt:
-    scope_key: str
-    subject: str
-    command_id: str
-    payload_hash: str
-    status: str
-    result_identity: str
-    result_json: str
-    aggregate_type: str
-    aggregate_id: str
-    aggregate_version: int
-    auth_session_revision_json: str
-    security_revision_json: str
-    committed_at: str
-
-
 def _validated_identity(value: object, field: str) -> str:
     if not isinstance(value, str) or not value or value != value.strip() or "\x00" in value:
         raise ValidationFailureError(f"{field} must be a non-empty canonical string")
     return value
+
+
+class _SQLiteCommandTransaction:
+    """One SQLite transaction implementing the application UoW contract."""
+
+    def __init__(self, adapter: "SQLiteReferenceTransactionAdapter") -> None:
+        self.adapter = adapter
+        self.connection = adapter.connection
+
+    def __enter__(self) -> "_SQLiteCommandTransaction":
+        self.adapter.transaction_lock.acquire()
+        try:
+            self.connection.execute("BEGIN IMMEDIATE")
+        except sqlite3.Error as exc:
+            self.adapter.transaction_lock.release()
+            raise StorageFailureError("durable SQLite command transaction could not begin") from exc
+        return self
+
+    def __exit__(self, exc_type: object, _exc: object, _tb: object) -> bool:
+        try:
+            if exc_type is None:
+                self.connection.commit()
+            else:
+                self.connection.rollback()
+        except sqlite3.Error as exc:
+            try:
+                self.connection.rollback()
+            except sqlite3.Error:
+                pass
+            raise StorageFailureError("durable SQLite command transaction failed") from exc
+        finally:
+            self.adapter.transaction_lock.release()
+        return False
+
+    def get_command_receipt(self, scope_key: str, subject: str, command_id: str) -> StoredCommandReceipt | None:
+        try:
+            row = self.connection.execute(
+                "SELECT scope_key, subject, command_id, payload_hash, status, result_identity, result_json, aggregate_type, aggregate_id, aggregate_version, auth_session_revision_json, security_revision_json, committed_at FROM command_receipt WHERE scope_key = ? AND subject = ? AND command_id = ?",
+                (scope_key, subject, command_id),
+            ).fetchone()
+        except sqlite3.Error as exc:
+            raise StorageFailureError("durable SQLite storage failed while reading a command receipt") from exc
+        return self.adapter._receipt_from_row(row) if row is not None else None
+
+    def get_aggregate(
+        self,
+        scope_key: str,
+        aggregate_type: str,
+        aggregate_id: str,
+        *,
+        for_update: bool = False,
+    ) -> AggregateSnapshot | None:
+        del for_update
+        try:
+            row = self.connection.execute(
+                "SELECT scope_key, aggregate_type, aggregate_id, version, state_json FROM aggregate_state WHERE scope_key = ? AND aggregate_type = ? AND aggregate_id = ?",
+                (scope_key, aggregate_type, aggregate_id),
+            ).fetchone()
+        except sqlite3.Error as exc:
+            raise StorageFailureError("durable SQLite storage failed while reading an aggregate") from exc
+        if row is None:
+            return None
+        try:
+            state = json.loads(row["state_json"])
+        except (TypeError, json.JSONDecodeError) as exc:
+            raise StorageFailureError("durable aggregate state is not valid JSON") from exc
+        if not isinstance(state, dict):
+            raise StorageFailureError("durable aggregate state is not a mapping")
+        return AggregateSnapshot(row["scope_key"], row["aggregate_type"], row["aggregate_id"], row["version"], state)
+
+    def update_aggregate(
+        self,
+        scope_key: str,
+        aggregate_type: str,
+        aggregate_id: str,
+        *,
+        expected_version: int,
+        next_version: int,
+        state_json: str,
+    ) -> int:
+        try:
+            return int(self.connection.execute(
+                "UPDATE aggregate_state SET version = ?, state_json = ? WHERE scope_key = ? AND aggregate_type = ? AND aggregate_id = ? AND version = ?",
+                (next_version, state_json, scope_key, aggregate_type, aggregate_id, expected_version),
+            ).rowcount)
+        except sqlite3.Error as exc:
+            raise StorageFailureError("durable SQLite storage failed while updating an aggregate") from exc
+
+    def append_audit(
+        self,
+        *,
+        event_id: str,
+        scope_key: str,
+        subject: str,
+        command_id: str,
+        aggregate_type: str,
+        aggregate_id: str,
+        aggregate_version: int,
+        event_type: str,
+        event_json: str,
+        auth_session_revision_json: str,
+        security_revision_json: str,
+        recorded_at: str,
+    ) -> None:
+        try:
+            self.connection.execute(
+                "INSERT INTO audit_event(event_id, scope_key, subject, command_id, aggregate_type, aggregate_id, aggregate_version, event_type, event_json, auth_session_revision_json, security_revision_json, recorded_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                (
+                    event_id, scope_key, subject, command_id, aggregate_type, aggregate_id,
+                    aggregate_version, event_type, event_json, auth_session_revision_json,
+                    security_revision_json, recorded_at,
+                ),
+            )
+        except sqlite3.Error as exc:
+            raise StorageFailureError("durable SQLite storage failed while appending audit") from exc
+
+    def append_outbox(
+        self,
+        *,
+        event_id: str,
+        scope_key: str,
+        subject: str,
+        command_id: str,
+        aggregate_type: str,
+        aggregate_id: str,
+        aggregate_version: int,
+        event_type: str,
+        payload_json: str,
+        status: str,
+        created_at: str,
+    ) -> None:
+        try:
+            self.connection.execute(
+                "INSERT INTO outbox_event(event_id, scope_key, subject, command_id, aggregate_type, aggregate_id, aggregate_version, event_type, payload_json, status, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                (
+                    event_id, scope_key, subject, command_id, aggregate_type, aggregate_id,
+                    aggregate_version, event_type, payload_json, status, created_at,
+                ),
+            )
+        except sqlite3.Error as exc:
+            raise StorageFailureError("durable SQLite storage failed while appending outbox") from exc
+
+    def insert_receipt(
+        self,
+        *,
+        scope_key: str,
+        subject: str,
+        command_id: str,
+        payload_hash: str,
+        status: str,
+        result_identity: str,
+        result_json: str,
+        aggregate_type: str,
+        aggregate_id: str,
+        aggregate_version: int,
+        auth_session_revision_json: str,
+        security_revision_json: str,
+        committed_at: str,
+    ) -> None:
+        try:
+            self.connection.execute(
+                "INSERT INTO command_receipt(scope_key, subject, command_id, payload_hash, status, result_identity, result_json, aggregate_type, aggregate_id, aggregate_version, auth_session_revision_json, security_revision_json, committed_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                (
+                    scope_key, subject, command_id, payload_hash, status, result_identity,
+                    result_json, aggregate_type, aggregate_id, aggregate_version,
+                    auth_session_revision_json, security_revision_json, committed_at,
+                ),
+            )
+        except sqlite3.IntegrityError as exc:
+            if "command_receipt" in str(exc) and ("UNIQUE" in str(exc).upper() or "PRIMARY KEY" in str(exc).upper()):
+                raise ReceiptAlreadyExistsError from exc
+            raise StorageFailureError("durable SQLite storage failed while inserting receipt") from exc
+        except sqlite3.Error as exc:
+            raise StorageFailureError("durable SQLite storage failed while inserting receipt") from exc
 
 
 class SQLiteReferenceTransactionAdapter:
@@ -144,6 +299,12 @@ class SQLiteReferenceTransactionAdapter:
                 raise sqlite3.DatabaseError("SQLite WAL mode was not enabled")
             self._connection.execute("PRAGMA synchronous = FULL")
             self._connection.executescript(SCHEMA)
+            audit_columns = {row[1] for row in self._connection.execute("PRAGMA table_info(audit_event)").fetchall()}
+            for column in ("auth_session_revision_json", "security_revision_json"):
+                if column not in audit_columns:
+                    self._connection.execute(
+                        f"ALTER TABLE audit_event ADD COLUMN {column} TEXT NOT NULL DEFAULT 'null'"
+                    )
         except (OSError, sqlite3.Error) as exc:
             try:
                 self._connection.close()
@@ -160,6 +321,11 @@ class SQLiteReferenceTransactionAdapter:
     @property
     def transaction_lock(self) -> threading.RLock:
         return self._lock
+
+    def command_transaction(self) -> CommandUnitOfWork:
+        """Open the storage-neutral bounded command transaction."""
+
+        return _SQLiteCommandTransaction(self)
 
     def close(self) -> None:
         connection = getattr(self, "_connection", None)
@@ -263,8 +429,9 @@ class SQLiteReferenceTransactionAdapter:
     def _list_event_rows(self, table: str, json_column: str, timestamp_column: str) -> tuple[dict[str, Any], ...]:
         try:
             status_column = ", status" if table == "outbox_event" else ""
+            audit_metadata = ", auth_session_revision_json, security_revision_json" if table == "audit_event" else ""
             rows = self.connection.execute(
-                f"SELECT event_id, scope_key, subject, command_id, aggregate_type, aggregate_id, aggregate_version, event_type, {json_column}{status_column}, {timestamp_column} FROM {table} ORDER BY event_id"
+                f"SELECT event_id, scope_key, subject, command_id, aggregate_type, aggregate_id, aggregate_version, event_type, {json_column}{audit_metadata}{status_column}, {timestamp_column} FROM {table} ORDER BY event_id"
             ).fetchall()
         except sqlite3.Error as exc:
             raise StorageFailureError("durable SQLite storage failed while reading events") from exc

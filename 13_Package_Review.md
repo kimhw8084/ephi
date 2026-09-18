@@ -54,6 +54,17 @@ Exact import/review identities are recorded in [the review evidence](evidence/re
 
 No browser, scientific or production-readiness claim follows from publishing this repository. The next authorized implementation can proceed from [11_Developer_Start.md](11_Developer_Start.md) against the canonical package.
 
+## CHG-123 PostgreSQL reference evidence
+
+CHG-123 adds a storage-neutral command transaction boundary, an optional
+`psycopg[binary]==3.3.6` PostgreSQL adapter, the narrow numbered command-core
+migration and DSN-gated real-connection tests. The integration path is
+reference/integration evidence only: it is not a bound company database, does
+not complete G05/O2, and does not add worker leasing/fencing, retained query
+snapshots, notification delivery, company identity integration or O3 product
+behavior. The ordinary package matrix and canonical W0 baseline remain
+database-independent.
+
 ## CHG-105 W0 runtime delta
 
 The independent framework/dependency qualification slice is recorded separately in [the runtime evidence](evidence/review/nicegui_base_runtime_evidence.json) and linked from [the NiceGUI Base binding manifest](evidence/review/nicegui_base_binding_manifest.json). It verified an isolated Python 3.11.7 environment, the exact NiceGUI Base VCS commit/version, exact `nicegui==3.15.0`, and 21/21 CHG-104 public-root authority imports. All six requested installed discovery commands returned machine-readable output. `runtime-contract` and browserless framework `runtime-smoke --port 0` PASS; application/browser/production qualification remain NOT_RUN. The canonical package self-check and Git-native baseline are the current W0 execution targets.

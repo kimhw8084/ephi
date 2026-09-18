@@ -83,9 +83,24 @@ python3 -m unittest tests.test_o2_transactions -v
 
 This adapter is development/integration evidence for local durability and
 compare-and-set semantics only. It rejects `:memory:` and has no fallback
-store, but it does **not** claim PostgreSQL/G05 qualification, worker
-leasing/fencing, retained query snapshots, notification delivery, or product
-commands/UI. Those remain later O2/O3 work.
+store. CHG-123 adds a storage-neutral command UoW and an explicit-DSN
+`PostgreSQLReferenceTransactionAdapter` under the `postgres` optional extra,
+with numbered migration `migrations/001_o2_command_core.sql` and
+DSN-gated tests in `tests/test_o2_postgresql.py`:
+
+```bash
+python3 -m pip install 'psycopg[binary]==3.3.6'
+EPHI_TEST_POSTGRES_DSN='postgresql://user:password@host:5432/database' \
+  python3 -m unittest tests.test_o2_postgresql -v
+```
+
+Without an explicit `EPHI_TEST_POSTGRES_DSN`, PostgreSQL tests report
+`NOT_RUN`; the ordinary package matrix, canonical baseline and SQLite tests
+remain database-independent. This is PostgreSQL reference/integration
+evidence, not a bound company production database, and does **not** complete
+G05 or claim O2 complete. Worker leasing/fencing/effect semantics, retained
+query snapshots, notification delivery, company identity integration and O3
+product behavior remain separate work.
 
 ## Pinned framework authority
 

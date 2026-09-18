@@ -13,6 +13,11 @@ dependencies = [
   "nicegui==3.15.0",
 ]
 
+[project.optional-dependencies]
+postgres = [
+  "psycopg[binary]==3.3.6",
+]
+
 [project.scripts]
 ephi = "ephi.app:main"
 

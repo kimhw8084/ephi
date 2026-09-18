@@ -54,8 +54,11 @@ python3 -m unittest tests.test_o2_transactions -v
 ```
 
 Do not extend this slice into NiceGUI pages or ClaimEpisode/Acknowledge
-product behavior. PostgreSQL integration, worker fencing, retained query
-snapshots and later O3 use cases remain separately authorized work.
+product behavior. CHG-123 adds PostgreSQL reference/integration evidence only:
+select it with an explicit `EPHI_TEST_POSTGRES_DSN` and the `postgres`
+optional dependency. It does not bind a company production database or
+complete G05/O2. Worker fencing, retained query snapshots and later O3 use
+cases remain separately authorized work.
 
 ## Scope boundary
 

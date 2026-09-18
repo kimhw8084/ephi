@@ -6,10 +6,13 @@ from .sqlite import (
     SQLiteReferenceStore,
     StoredCommandReceipt,
 )
+from .postgresql import PostgreSQLReferenceTransactionAdapter, PostgresReferenceTransactionAdapter
 
 __all__ = [
     "AggregateSnapshot",
     "SQLiteReferenceStore",
     "SQLiteReferenceTransactionAdapter",
     "StoredCommandReceipt",
+    "PostgreSQLReferenceTransactionAdapter",
+    "PostgresReferenceTransactionAdapter",
 ]
