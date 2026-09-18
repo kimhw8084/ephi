@@ -1,6 +1,7 @@
 """Offline contract checks for the generic CHG-129 read substrate."""
 
 from datetime import datetime, timezone
+import secrets
 import sys
 import unittest
 
@@ -17,7 +18,6 @@ from ephi.application import (  # noqa: E402
     RetainedQuerySnapshot,
     VersionedReadRow,
     canonical_query_identity,
-    snapshot_token_binding,
 )
 from ephi.infrastructure import AggregateSnapshot  # noqa: E402
 
@@ -51,13 +51,12 @@ class ReadContractTests(unittest.TestCase):
             datetime(2026, 1, 1, tzinfo=timezone.utc),
             datetime(2026, 1, 1, 0, 5, tzinfo=timezone.utc),
             2,
-            snapshot_token_binding("snapshot-1", query_hash, self.scope, "subject-1", 9, "read.fixture"),
         )
-        token = CursorPageToken.create(snapshot, 2)
+        token = CursorPageToken.create(snapshot, 2, server_binding=secrets.token_hex(32))
         self.assertEqual(CursorPageToken.decode(token.encode()), token)
         tampered = CursorPageToken(token.snapshot_id, token.query_identity_hash, token.next_ordinal + 1, token.integrity)
         with self.assertRaises(QueryCursorValidationError):
-            tampered.verify(snapshot)
+            tampered.verify(snapshot, server_binding=secrets.token_hex(32))
 
     def test_versioned_rows_reject_missing_or_unsafe_identity(self):
         with self.assertRaises(Exception):

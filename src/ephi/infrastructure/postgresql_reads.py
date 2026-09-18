@@ -10,7 +10,9 @@ from __future__ import annotations
 from collections.abc import Callable, Mapping, Sequence
 from contextlib import contextmanager
 from datetime import datetime
+from dataclasses import dataclass
 import json
+import secrets
 from typing import Any, TYPE_CHECKING
 from uuid import uuid4
 
@@ -48,7 +50,6 @@ from ephi.application.read import (
     RetainedSnapshotRow,
     VersionedReadRow,
     canonical_query_identity,
-    snapshot_token_binding,
 )
 from ephi.application.storage import AggregateSnapshot
 
@@ -160,6 +161,14 @@ def _current_aggregate(row: Mapping[str, Any]) -> AggregateSnapshot:
         int(row["version"]),
         _json_object(row["state_json"], "workflow aggregate state"),
     )
+
+
+@dataclass(frozen=True, slots=True)
+class _StoredQuerySnapshot:
+    """Public snapshot metadata plus server-only cursor verification material."""
+
+    public: RetainedQuerySnapshot
+    server_binding: str
 
 
 class PostgreSQLReadSnapshotStore:
@@ -487,11 +496,24 @@ class PostgreSQLReadSnapshotStore:
                 if aggregate_row is None:
                     raise AggregateNotFoundError("current workflow aggregate is not available")
                 aggregate = _current_aggregate(aggregate_row)
-                if aggregate != revision.workflow_aggregate:
+                if (
+                    aggregate.scope_key != revision.scope.canonical_key
+                    or aggregate.aggregate_type != revision.workflow_aggregate.aggregate_type
+                    or aggregate.aggregate_id != revision.workflow_aggregate.aggregate_id
+                ):
                     raise CoherentReadConflictError(
-                        "current read head and workflow aggregate do not describe one coherent revision"
+                        "current read head and workflow aggregate identities are inconsistent"
                     )
-                return CurrentReadBundle(revision, aggregate, revision.revision_vector)
+                stored_vector = revision.revision_vector
+                effective_vector = RevisionVector(
+                    stored_vector.analysis_revision,
+                    stored_vector.exposure_revision,
+                    stored_vector.priority_revision,
+                    aggregate.version,
+                    stored_vector.plan_version,
+                    stored_vector.qualification_manifest_id,
+                )
+                return CurrentReadBundle(revision, aggregate, effective_vector)
         except CommandError:
             raise
         except Exception as exc:
@@ -542,13 +564,13 @@ class PostgreSQLReadSnapshotStore:
             raise ValidationFailureError("ttl_seconds exceeds the bounded snapshot lifetime")
         return ttl_seconds
 
-    def _snapshot_from_row(self, row: Mapping[str, Any], scope: AccessScope) -> RetainedQuerySnapshot:
+    def _snapshot_from_row(self, row: Mapping[str, Any], scope: AccessScope) -> _StoredQuerySnapshot:
         if row["scope_key"] != scope.canonical_key:
             raise ScopeDeniedError("retained query snapshot is outside the requested scope")
         security_revision_value = _json_value(row["security_revision_json"], "snapshot security revision")
         security_revision = _revision_identity(security_revision_value, "security_revision")
         try:
-            return RetainedQuerySnapshot(
+            public = RetainedQuerySnapshot(
                 row["snapshot_id"],
                 row["query_identity_hash"],
                 scope,
@@ -558,8 +580,13 @@ class PostgreSQLReadSnapshotStore:
                 row["created_at"],
                 row["expires_at"],
                 int(row["total_row_count"]),
-                row["token_binding"],
             )
+            server_binding = row["token_binding"]
+            if not isinstance(server_binding, str) or len(server_binding) != 64 or any(
+                character not in "0123456789abcdef" for character in server_binding
+            ):
+                raise StorageFailureError("stored query snapshot cursor binding failed validation")
+            return _StoredQuerySnapshot(public, server_binding)
         except ValidationFailureError as exc:
             raise StorageFailureError("stored query snapshot failed validation") from exc
 
@@ -588,14 +615,7 @@ class PostgreSQLReadSnapshotStore:
             raise ValidationFailureError("retained snapshot row identities must be unique")
 
         snapshot_id = uuid4().hex
-        token_binding = snapshot_token_binding(
-            snapshot_id,
-            query_hash,
-            scope,
-            principal.subject,
-            principal.security_revision,
-            required_read_capability,
-        )
+        token_binding = secrets.token_hex(32)
         security_json = canonical_json(principal.security_revision)
         try:
             with self._transaction() as connection:
@@ -636,7 +656,7 @@ class PostgreSQLReadSnapshotStore:
                             canonical_json(retained.payload),
                         ),
                     )
-                return self._snapshot_from_row(row, scope)
+                return self._snapshot_from_row(row, scope).public
         except CommandError:
             raise
         except Exception as exc:
@@ -689,7 +709,8 @@ class PostgreSQLReadSnapshotStore:
                 ).fetchone()
                 if row is None:
                     raise QuerySnapshotExpiredError(reason="retained_snapshot_missing")
-                snapshot = self._snapshot_from_row(row, scope)
+                stored_snapshot = self._snapshot_from_row(row, scope)
+                snapshot = stored_snapshot.public
                 database_now = row["database_now"]
                 if not isinstance(database_now, datetime) or snapshot.expires_at <= database_now:
                     raise QuerySnapshotExpiredError(reason="retained_snapshot_expired")
@@ -697,7 +718,7 @@ class PostgreSQLReadSnapshotStore:
                 if query_hash != snapshot.query_identity_hash:
                     raise QueryIdentityMismatchError("query/filter/sort identity does not match the retained snapshot")
                 if decoded_cursor is not None:
-                    decoded_cursor.verify(snapshot)
+                    decoded_cursor.verify(snapshot, server_binding=stored_snapshot.server_binding)
                     start_ordinal = decoded_cursor.next_ordinal
                 else:
                     if snapshot.total_row_count == 0:
@@ -731,7 +752,11 @@ class PostgreSQLReadSnapshotStore:
                 next_cursor = None
                 next_ordinal = start_ordinal + len(retained_rows)
                 if next_ordinal <= snapshot.total_row_count:
-                    next_cursor = CursorPageToken.create(snapshot, next_ordinal).encode()
+                    next_cursor = CursorPageToken.create(
+                        snapshot,
+                        next_ordinal,
+                        server_binding=stored_snapshot.server_binding,
+                    ).encode()
                 return PageResult(snapshot, tuple(retained_rows), next_cursor)
         except CommandError:
             raise

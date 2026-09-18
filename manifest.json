@@ -116,8 +116,8 @@
     },
     {
       "path": "11_Developer_Start.md",
-      "bytes": 5228,
-      "sha256": "ffe6cb69ab3047795d47c7426b475ac8b022baec29a89bdb1df65ec13a1525e4"
+      "bytes": 5413,
+      "sha256": "ceb48498be249e792655b82a179239bf2a095e57c7f1da5c220cd37bd6646720"
     },
     {
       "path": "12_Sources_and_Evidence.md",
@@ -126,8 +126,8 @@
     },
     {
       "path": "13_Package_Review.md",
-      "bytes": 10837,
-      "sha256": "006efd799297db2300d9899b9b10566313fb3a4e95794985da2146c27327eb15"
+      "bytes": 11027,
+      "sha256": "0cddb3422b119b73a8dec555ea18e233d3d5a353744ece59a547b03fa894947b"
     },
     {
       "path": "AGENTS.md",
@@ -141,8 +141,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 10321,
-      "sha256": "0e40a1c9c5e1eeb3f3c5cd32aacf49edab479e255819775bb2de9db292e63ec9"
+      "bytes": 10596,
+      "sha256": "379b2c5ebde8a7855031204f28c004e70cf94d677eb66a46f794154a038daee0"
     },
     {
       "path": "environment/nicegui_base_requirements.txt",
@@ -296,8 +296,8 @@
     },
     {
       "path": "src/ephi/application/__init__.py",
-      "bytes": 3543,
-      "sha256": "9d30a84c12b09c45716ad68a3f3cbb6425d3cbb94f364441c0a1b40f222e286a"
+      "bytes": 3485,
+      "sha256": "1ef9f52f635488138973ed7039c295d8b222ee8ac3341e60df5b243d8126a9b4"
     },
     {
       "path": "src/ephi/application/context.py",
@@ -316,8 +316,8 @@
     },
     {
       "path": "src/ephi/application/read.py",
-      "bytes": 18468,
-      "sha256": "fde546cca35f0c87f8ad8c90253ad1261a88acbef90190c6f4e94b905b1d7d67"
+      "bytes": 19200,
+      "sha256": "833622c6198921ffe8847d17528b196fde5e1f6d6072868813788789b600a3c1"
     },
     {
       "path": "src/ephi/application/storage.py",
@@ -361,8 +361,8 @@
     },
     {
       "path": "src/ephi/infrastructure/postgresql_reads.py",
-      "bytes": 34672,
-      "sha256": "d05e4dba47a0707adc76eb186d59c081d1658c1d64927031d50f5e8c071dc4cc"
+      "bytes": 35977,
+      "sha256": "1971d219a28ea56939e3c1bd34b50cffe99c318756f44f927ff2092290a01344"
     },
     {
       "path": "src/ephi/infrastructure/postgresql_worker.py",
@@ -421,13 +421,13 @@
     },
     {
       "path": "tests/test_o2_postgresql_reads.py",
-      "bytes": 17135,
-      "sha256": "66cba8fde632a6b69acfb13a34903c7b69828dcd7af81fb26a7dd7b7d1a2b7d4"
+      "bytes": 20195,
+      "sha256": "6555e2e5c9ad323b35221171ccdb42bf6f8626b62aae3ddf781d0b6ddd445d19"
     },
     {
       "path": "tests/test_o2_read_contracts.py",
-      "bytes": 3108,
-      "sha256": "6b5aac3dbc64b13c03a8658bd5dfd843c1b6eefde348044a2c54f6923ee63820"
+      "bytes": 3065,
+      "sha256": "35ddfd001f449b3c4d9a27ea7a9ed4729ebc76a17a29472d2b199cf5fac91633"
     },
     {
       "path": "tests/test_o2_transactions.py",

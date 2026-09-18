@@ -129,8 +129,12 @@ under `ephi.application.read` and PostgreSQL migration
 immutable read revisions with historical workflow snapshots, CAS-safe current
 heads, short PostgreSQL `REPEATABLE READ` current bundles, exact historical
 reads, bounded retained row-version snapshots, database-time expiry, and
-integrity-checked page cursors. Current authorization, effective scope and
-security-revision identity are revalidated for every retained page.
+integrity-checked page cursors. A current bundle combines the immutable
+analytical head with the live workflow aggregate from that same snapshot and
+returns an effective revision vector with the live workflow version; a
+historical bundle remains pinned to the workflow snapshot stored on its read
+revision. Current authorization, effective scope and security-revision
+identity are revalidated for every retained page.
 
 Its focused real-PostgreSQL evidence is additive:
 

@@ -2,6 +2,7 @@
 
 from contextlib import contextmanager
 from datetime import datetime, timezone
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -165,8 +166,8 @@ class PostgreSQLReadSnapshotTests(unittest.TestCase):
         self.assertEqual(self.store.get_current_head(self.scope, "fixture", "entity-1").revision_id, "r2")
         self.assertIsNone(self.store.get_read_revision("r3"))
 
-    def test_current_bundle_is_repeatable_read_coherent_across_separate_connections(self):
-        first = self.publish("r1", 1, "r1", workflow=self.workflow_v1)
+    def test_current_bundle_is_repeatable_read_coherent_when_workflow_advances_without_analysis_publish(self):
+        self.publish("r1", 1, "r1", workflow=self.workflow_v1)
         reader = PostgreSQLReferenceTransactionAdapter(DSN)
         writer = PostgreSQLReferenceTransactionAdapter(DSN)
         self.addCleanup(reader.close)
@@ -205,11 +206,6 @@ class PostgreSQLReadSnapshotTests(unittest.TestCase):
             "UPDATE aggregate_state SET version = 2, state_json = %s::jsonb WHERE scope_key = %s AND aggregate_type = 'workflow' AND aggregate_id = 'entity-1'",
             (canonical_json(workflow_v2.state), self.scope.canonical_key),
         )
-        writer.publish_current_revision_in_transaction(
-            writer.connection,
-            self.draft("r2", 2, "r2", workflow_v2),
-            expected_head_version=first.head_version,
-        )
         writer.connection.commit()
         continue_read.set()
         thread.join(timeout=15)
@@ -219,7 +215,35 @@ class PostgreSQLReadSnapshotTests(unittest.TestCase):
         self.assertEqual(result[0].workflow_aggregate.version, 1)
         self.assertEqual(result[0].revision_vector.workflow_version, 1)
         newest = reader.read_current_bundle(self.principal, self.scope, "fixture", "entity-1", self.capability)
-        self.assertEqual((newest.read_revision.revision_id, newest.workflow_aggregate.version), ("r2", 2))
+        self.assertEqual((newest.read_revision.revision_id, newest.workflow_aggregate.version), ("r1", 2))
+        self.assertEqual(newest.revision_vector, RevisionVector("analysis-r1", "exposure-r1", "priority-r1", 2, None, "manifest-r1"))
+
+    def test_current_bundle_combines_current_analysis_with_live_workflow_and_history_stays_pinned(self):
+        self.publish("r1", 1, "r1", workflow=self.workflow_v1)
+        self.update_workflow(2, {"state": "ACKNOWLEDGED", "owner": "team-b"})
+
+        current = self.store.read_current_bundle(self.principal, self.scope, "fixture", "entity-1", self.capability)
+        self.assertEqual(current.read_revision.revision_id, "r1")
+        self.assertEqual(current.workflow_aggregate.version, 2)
+        self.assertEqual(current.workflow_aggregate.state["state"], "ACKNOWLEDGED")
+        self.assertEqual(
+            current.revision_vector,
+            RevisionVector("analysis-r1", "exposure-r1", "priority-r1", 2, None, "manifest-r1"),
+        )
+
+        historical = self.store.read_historical_bundle(self.principal, self.scope, "r1", self.capability)
+        self.assertEqual(historical.workflow_aggregate.version, 1)
+        self.assertEqual(historical.workflow_aggregate.state["state"], "OPEN")
+        self.assertEqual(historical.revision_vector.workflow_version, 1)
+        self.publish(
+            "r2",
+            2,
+            "r2",
+            expected_head_version=1,
+            workflow=self.store.get_aggregate(self.scope, "workflow", "entity-1"),
+        )
+        republished = self.store.read_current_bundle(self.principal, self.scope, "fixture", "entity-1", self.capability)
+        self.assertEqual((republished.read_revision.revision_id, republished.workflow_aggregate.version), ("r2", 2))
 
     def test_historical_read_uses_stored_workflow_snapshot_after_current_advances(self):
         first = self.publish("r1", 1, "r1", workflow=self.workflow_v1)
@@ -288,6 +312,7 @@ class PostgreSQLReadSnapshotTests(unittest.TestCase):
     def test_cursor_identity_authorization_and_bounds_fail_closed(self):
         self.seed_source([(f"row-{index}", 1, index, {"value": index}) for index in range(1, 4)])
         snapshot = self.store.create_query_snapshot(self.principal, self.scope, self.query(), self.capability, self.source_rows())
+        self.assertFalse(hasattr(snapshot, "token_binding"))
         page = self.store.read_query_snapshot_page(self.principal, self.scope, snapshot.snapshot_id, self.query(), self.capability, page_size=1)
         self.assertIsNotNone(page.next_cursor)
         with self.assertRaises(QueryIdentityMismatchError):
@@ -299,6 +324,45 @@ class PostgreSQLReadSnapshotTests(unittest.TestCase):
         malformed = CursorPageToken(decoded.snapshot_id, decoded.query_identity_hash, 999, decoded.integrity).encode()
         with self.assertRaises(QueryCursorValidationError):
             self.store.read_query_snapshot_page(self.principal, self.scope, snapshot.snapshot_id, self.query(), self.capability, page_size=1, cursor=malformed)
+        public_binding = hashlib.sha256(
+            canonical_json(
+                {
+                    "snapshot_id": snapshot.snapshot_id,
+                    "query_identity_hash": snapshot.query_identity_hash,
+                    "scope_key": snapshot.scope.canonical_key,
+                    "subject": snapshot.subject,
+                    "security_revision": snapshot.security_revision,
+                    "required_read_capability": snapshot.required_read_capability,
+                }
+            ).encode("utf-8")
+        ).hexdigest()
+        forged_ordinal = decoded.next_ordinal + 1
+        forged_integrity = hashlib.sha256(
+            canonical_json(
+                {
+                    "snapshot_id": decoded.snapshot_id,
+                    "query_identity_hash": decoded.query_identity_hash,
+                    "next_ordinal": forged_ordinal,
+                    "snapshot_binding": public_binding,
+                }
+            ).encode("utf-8")
+        ).hexdigest()
+        forged = CursorPageToken(
+            decoded.snapshot_id,
+            decoded.query_identity_hash,
+            forged_ordinal,
+            forged_integrity,
+        ).encode()
+        with self.assertRaises(QueryCursorValidationError):
+            self.store.read_query_snapshot_page(
+                self.principal,
+                self.scope,
+                snapshot.snapshot_id,
+                self.query(),
+                self.capability,
+                page_size=1,
+                cursor=forged,
+            )
         with self.assertRaises(QueryTooBroadError):
             self.store.read_query_snapshot_page(self.principal, self.scope, snapshot.snapshot_id, self.query(), self.capability, page_size=101)
         rotated_session = Principal(self.principal.subject, (self.capability,), (self.scope,), 11, 20)

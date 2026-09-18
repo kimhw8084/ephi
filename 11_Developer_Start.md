@@ -70,8 +70,10 @@ The generic read foundation is exposed through `ephi.application.read` and
 adapter). It provides immutable read revisions and current heads, coherent
 current bundles in a short PostgreSQL `REPEATABLE READ` transaction, exact
 historical workflow snapshots, bounded retained row-version query snapshots,
-database-time expiry and fail-closed cursor/authorization checks. Run its
-additive reference evidence with:
+database-time expiry and fail-closed cursor/authorization checks. Current
+reads intentionally combine the immutable analytical head with the live
+workflow aggregate and effective workflow version; historical reads retain
+the stored workflow snapshot. Run its additive reference evidence with:
 
 ```bash
 EPHI_TEST_POSTGRES_DSN='postgresql://user:password@host:5432/database' \

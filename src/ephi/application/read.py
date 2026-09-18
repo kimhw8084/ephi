@@ -173,10 +173,24 @@ class CurrentReadBundle:
             raise ValidationFailureError("workflow_aggregate must be an AggregateSnapshot")
         if not isinstance(self.revision_vector, RevisionVector):
             raise ValidationFailureError("revision_vector must be a RevisionVector")
-        if self.revision_vector != self.read_revision.revision_vector:
-            raise ValidationFailureError("bundle revision_vector must match read_revision")
-        if self.workflow_aggregate != self.read_revision.workflow_aggregate:
-            raise ValidationFailureError("bundle workflow aggregate must match the coherent read revision")
+        if self.workflow_aggregate.scope_key != self.read_revision.scope.canonical_key:
+            raise ValidationFailureError("bundle workflow aggregate scope must match read_revision scope")
+        if (
+            self.workflow_aggregate.aggregate_type != self.read_revision.workflow_aggregate.aggregate_type
+            or self.workflow_aggregate.aggregate_id != self.read_revision.workflow_aggregate.aggregate_id
+        ):
+            raise ValidationFailureError("bundle workflow aggregate identity must match read_revision")
+        stored_vector = self.read_revision.revision_vector
+        effective_vector = RevisionVector(
+            stored_vector.analysis_revision,
+            stored_vector.exposure_revision,
+            stored_vector.priority_revision,
+            self.workflow_aggregate.version,
+            stored_vector.plan_version,
+            stored_vector.qualification_manifest_id,
+        )
+        if self.revision_vector != effective_vector:
+            raise ValidationFailureError("bundle revision_vector is inconsistent with the current workflow aggregate")
 
 
 @dataclass(frozen=True, slots=True)
@@ -187,6 +201,10 @@ class HistoricalReadBundle:
 
     def __post_init__(self) -> None:
         CurrentReadBundle(self.read_revision, self.workflow_aggregate, self.revision_vector)
+        if self.workflow_aggregate != self.read_revision.workflow_aggregate:
+            raise ValidationFailureError("historical bundle workflow aggregate must match read_revision")
+        if self.revision_vector != self.read_revision.revision_vector:
+            raise ValidationFailureError("historical bundle revision_vector must match read_revision")
 
 
 @dataclass(frozen=True, slots=True)
@@ -231,7 +249,6 @@ class RetainedQuerySnapshot:
     created_at: datetime
     expires_at: datetime
     total_row_count: int
-    token_binding: str
 
     def __post_init__(self) -> None:
         object.__setattr__(self, "snapshot_id", _identity(self.snapshot_id, "snapshot_id"))
@@ -250,10 +267,6 @@ class RetainedQuerySnapshot:
             raise ValidationFailureError("total_row_count must be a non-negative integer")
         if self.total_row_count > MAX_RETAINED_ROW_COUNT:
             raise ValidationFailureError("total_row_count exceeds MAX_RETAINED_ROW_COUNT")
-        if not isinstance(self.token_binding, str) or len(self.token_binding) != 64 or any(
-            character not in "0123456789abcdef" for character in self.token_binding
-        ):
-            raise ValidationFailureError("token_binding must be a lowercase SHA-256 digest")
 
 
 def canonical_query_identity(query_identity: Mapping[str, object]) -> tuple[dict[str, Any], str]:
@@ -261,27 +274,6 @@ def canonical_query_identity(query_identity: Mapping[str, object]) -> tuple[dict
 
     normalized = _mapping_payload(query_identity, "query_identity")
     return normalized, hashlib.sha256(canonical_json(normalized).encode("utf-8")).hexdigest()
-
-
-def snapshot_token_binding(
-    snapshot_id: str,
-    query_identity_hash: str,
-    scope: AccessScope,
-    subject: str,
-    security_revision: RevisionIdentity,
-    required_read_capability: str,
-) -> str:
-    """Return the deterministic server-retained binding used by cursors."""
-
-    envelope = {
-        "snapshot_id": snapshot_id,
-        "query_identity_hash": query_identity_hash,
-        "scope_key": scope.canonical_key,
-        "subject": subject,
-        "security_revision": security_revision,
-        "required_read_capability": required_read_capability,
-    }
-    return hashlib.sha256(canonical_json(envelope).encode("utf-8")).hexdigest()
 
 
 def _cursor_digest(snapshot_id: str, query_identity_hash: str, next_ordinal: int, binding: str) -> str:
@@ -315,20 +307,34 @@ class CursorPageToken:
             raise QueryCursorValidationError("cursor integrity is malformed")
 
     @classmethod
-    def create(cls, snapshot: RetainedQuerySnapshot, next_ordinal: int) -> "CursorPageToken":
+    def create(
+        cls,
+        snapshot: RetainedQuerySnapshot,
+        next_ordinal: int,
+        *,
+        server_binding: str,
+    ) -> "CursorPageToken":
         if isinstance(next_ordinal, bool) or not isinstance(next_ordinal, int) or next_ordinal <= 0:
             raise QueryCursorValidationError("cursor ordinal is invalid")
+        if not isinstance(server_binding, str) or len(server_binding) != 64 or any(
+            character not in "0123456789abcdef" for character in server_binding
+        ):
+            raise QueryCursorValidationError("cursor server binding is invalid")
         return cls(
             snapshot.snapshot_id,
             snapshot.query_identity_hash,
             next_ordinal,
-            _cursor_digest(snapshot.snapshot_id, snapshot.query_identity_hash, next_ordinal, snapshot.token_binding),
+            _cursor_digest(snapshot.snapshot_id, snapshot.query_identity_hash, next_ordinal, server_binding),
         )
 
-    def verify(self, snapshot: RetainedQuerySnapshot) -> None:
+    def verify(self, snapshot: RetainedQuerySnapshot, *, server_binding: str) -> None:
         if self.snapshot_id != snapshot.snapshot_id or self.query_identity_hash != snapshot.query_identity_hash:
             raise QueryCursorValidationError("cursor does not belong to the requested query snapshot")
-        expected = _cursor_digest(self.snapshot_id, self.query_identity_hash, self.next_ordinal, snapshot.token_binding)
+        if not isinstance(server_binding, str) or len(server_binding) != 64 or any(
+            character not in "0123456789abcdef" for character in server_binding
+        ):
+            raise QueryCursorValidationError("cursor server binding is invalid")
+        expected = _cursor_digest(self.snapshot_id, self.query_identity_hash, self.next_ordinal, server_binding)
         if not compare_digest(self.integrity, expected):
             raise QueryCursorValidationError("cursor integrity validation failed")
 

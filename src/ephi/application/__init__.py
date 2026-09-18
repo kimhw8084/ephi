@@ -55,7 +55,6 @@ from .read import (
     RetainedSnapshotRow,
     VersionedReadRow,
     canonical_query_identity,
-    snapshot_token_binding,
 )
 from .transactions import CommandResult, VersionedAggregateCommandExecutor
 from .worker import (
@@ -116,7 +115,6 @@ __all__ = [
     "DEFAULT_SNAPSHOT_TTL_SECONDS",
     "MAX_SNAPSHOT_TTL_SECONDS",
     "canonical_query_identity",
-    "snapshot_token_binding",
     "ScopeDeniedError",
     "StorageFailureError",
     "StaleLeaseError",

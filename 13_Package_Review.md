@@ -88,11 +88,14 @@ immutable revision/current-head/bundle contracts, PostgreSQL `read_revision`,
 `read_head`, `query_snapshot` and `query_snapshot_row` tables, immutable-row
 constraints, CAS publication, repeatable-read coherent current reads, exact
 historical workflow snapshots, bounded retained row-version pages, database
-clock expiry and integrity-checked cursors. Focused PostgreSQL 18.x evidence
-covers separate-connection read races, revision/history immutability, stale
-head rejection, snapshot isolation under mutable fixture changes, current
-authorization/security-revision revalidation, tamper/identity failures,
-missing retained members and restart-query expiry.
+clock expiry and integrity-checked cursors. Current reads combine the
+immutable analytical head with the live workflow aggregate and effective
+workflow version, while historical reads remain pinned to their stored
+workflow snapshot. Focused PostgreSQL 18.x evidence covers separate-connection
+read races, revision/history immutability, stale head rejection, snapshot
+isolation under mutable fixture changes, current authorization/security-
+revision revalidation, tamper/identity failures, missing retained members and
+restart-query expiry.
 
 This evidence is generic PostgreSQL read/snapshot foundation evidence only. It
 does not implement `ListAttention`, `GetEpisodeBrief`, Claim/Acknowledge
