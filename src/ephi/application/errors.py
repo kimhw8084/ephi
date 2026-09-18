@@ -63,6 +63,57 @@ class StorageFailureError(CommandError):
     code = "RETRYABLE_STORAGE_FAILURE"
 
 
+class JobSemanticConflictError(CommandError):
+    """A semantic enqueue key is already bound to another payload/type."""
+
+    code = "JOB_SEMANTIC_CONFLICT"
+
+    def __init__(self, scope_key: str, semantic_key: str):
+        super().__init__(
+            "semantic job key was already committed with a different payload",
+            details={"scope_key": scope_key, "semantic_key": semantic_key},
+        )
+        self.scope_key = scope_key
+        self.semantic_key = semantic_key
+
+
+class NoEligibleJobError(CommandError):
+    code = "NO_ELIGIBLE_JOB"
+
+
+class JobNotFoundError(CommandError):
+    code = "JOB_NOT_FOUND"
+
+
+class StaleLeaseError(CommandError):
+    """The supplied owner/epoch no longer has a current database lease."""
+
+    code = "STALE_LEASE"
+
+    def __init__(self, job_id: str):
+        super().__init__(
+            "job lease is stale, expired, or fenced by a newer worker",
+            details={"job_id": job_id},
+        )
+        self.job_id = job_id
+
+
+class EffectIdempotencyConflictError(CommandError):
+    code = "EFFECT_IDEMPOTENCY_CONFLICT"
+
+    def __init__(self, job_id: str, effect_key: str):
+        super().__init__(
+            "local effect key was already committed with a different input",
+            details={"job_id": job_id, "effect_key": effect_key},
+        )
+        self.job_id = job_id
+        self.effect_key = effect_key
+
+
+class InvalidTransitionError(CommandError):
+    code = "INVALID_TRANSITION"
+
+
 # A concise compatibility name for callers that describe the persistence
 # boundary as durable storage rather than a retryable infrastructure failure.
 DurableStorageError = StorageFailureError
