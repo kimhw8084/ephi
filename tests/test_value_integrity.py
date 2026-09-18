@@ -213,7 +213,7 @@ class ValueIntegrityTests(unittest.TestCase):
         self.assertIsInstance(payload["amount"], str)
         self.assertEqual(json.loads(json.dumps({"amount": Decimal("10")}, default=decimal_json_default))["amount"], "10")
 
-    def test_canonical_runner_passes_f02_f03_f04_and_leaves_f05_out_of_scope(self):
+    def test_canonical_runner_passes_f02_f03_f04_f05(self):
         result = run_canonical_integrity_regressions()
         findings = {item["id"]: item for item in result["findings"]}
 
@@ -222,8 +222,9 @@ class ValueIntegrityTests(unittest.TestCase):
         self.assertEqual(findings["F03"]["status"], "PASS")
         self.assertEqual(findings["F04"]["status"], "PASS")
         self.assertEqual(findings["F04"]["observed"]["actual_operating_cost"], Decimal("10"))
-        self.assertEqual(findings["F05"]["status"], "NOT_IMPLEMENTED")
-        self.assertEqual(findings["F05"]["execution"], "NOT_RUN")
+        self.assertEqual(findings["F05"]["status"], "PASS")
+        self.assertEqual(findings["F05"]["observed"]["assessment_count"], 5)
+        self.assertNotEqual(findings["F05"]["observed"]["actual_episode_state"], "RESOLVED")
 
 
 if __name__ == "__main__":

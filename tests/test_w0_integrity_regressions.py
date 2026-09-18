@@ -113,7 +113,7 @@ class W0IntegrityRegressionTests(unittest.TestCase):
         self.assertEqual(findings["F02"]["status"], "PASS")
         self.assertEqual(findings["F03"]["status"], "PASS")
         self.assertEqual(findings["F04"]["status"], "PASS")
-        self.assertEqual(findings["F05"]["status"], "NOT_IMPLEMENTED")
+        self.assertEqual(findings["F05"]["status"], "PASS")
         self.assertEqual(first["historical_evidence"]["status"], "REFERENCE_ONLY")
 
     def test_f03_evaluator_requires_attention_visibility(self):
