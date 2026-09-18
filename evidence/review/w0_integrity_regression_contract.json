@@ -2,7 +2,7 @@
   "schema_version": 1,
   "change": "CHG-109",
   "wave": "W0",
-  "scope": "Source-bound integrity regression gate for F02, F03, F04 and F05",
+  "scope": "Canonical repository integrity regression contract for F02, F03, F04 and F05",
   "source_identity": {
     "required_filename": "ephi_v0.19.1_production_hardened(1).zip",
     "required_sha256": "5e9ad8f63b3158adc530af69fc650aec606cbfa64896ba73840cdcf994a2b6e3",
@@ -98,6 +98,14 @@
   },
   "current_execution": {
     "status": "NOT_RUN",
+    "target": "src/ephi",
+    "import": "ephi",
+    "entrypoint": "ephi.app:main",
+    "behavioral_statuses": ["NOT_IMPLEMENTED", "NOT_RUN"],
+    "boundary": "Canonical behavioral checks target the repository package; missing APIs are reported honestly and do not block the repository baseline."
+  },
+  "legacy_source_execution": {
+    "status": "NOT_RUN",
     "probe_script": "evidence/behavior_probes.py",
     "pythonpath": "src:company_port/src",
     "runtime_artifact_root": "artifacts/w0-integrity-regressions",
@@ -107,7 +115,7 @@
       "evidence/behavior_probes.json",
       "evidence/behavior_probes.log"
     ],
-    "boundary": "Fresh probe output is written and hashed only under ignored runtime artifacts; it is never written to preserved evidence."
+    "boundary": "Optional legacy fresh probe output is written and hashed only under ignored runtime artifacts; it is never written to preserved evidence."
   },
   "f02_checkpoint_restore_qualification": {
     "source_inventory": "evidence/source_inventory.json",

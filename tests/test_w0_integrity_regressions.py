@@ -1,4 +1,4 @@
-"""Offline regressions for the CHG-109 source-bound W0 integrity gate."""
+"""Offline regressions for canonical CHG-109 semantics and legacy compatibility."""
 
 from copy import deepcopy
 import json
@@ -17,6 +17,7 @@ from tools.w0_integrity_regressions import (
     evaluate_f02,
     evaluate_finding,
     run_integrity_regressions,
+    run_canonical_integrity_regressions,
     validate_contract,
     verify_historical_evidence,
 )
@@ -83,7 +84,7 @@ class W0IntegrityRegressionTests(unittest.TestCase):
         record = json.loads(preflight.read_text(encoding="utf-8"))
         record["status"] = "SOURCE_STAGED"
         preflight.write_text(json.dumps(record), encoding="utf-8")
-        result = run_integrity_regressions(preflight)
+        result = run_integrity_regressions(preflight, legacy_source=True)
         self.assertEqual(result["status"], "BLOCKED")
         self.assertEqual(result["reason"], "SOURCE_IDENTITY_MISMATCH")
         self.assertEqual(result["current_execution"]["status"], "NOT_RUN")
@@ -92,14 +93,24 @@ class W0IntegrityRegressionTests(unittest.TestCase):
 
     def test_missing_preflight_is_deterministically_blocked_and_separate(self):
         missing = self.root / "missing-source-preflight.json"
-        first = run_integrity_regressions(missing)
-        second = run_integrity_regressions(missing)
+        first = run_integrity_regressions(missing, legacy_source=True)
+        second = run_integrity_regressions(missing, legacy_source=True)
         self.assertEqual(first, second)
         self.assertEqual(first["status"], "BLOCKED")
         self.assertEqual(first["reason"], "PREFLIGHT_MISSING")
         self.assertEqual(first["historical_evidence"]["status"], "REFERENCE_ONLY")
         self.assertFalse(first["historical_evidence"]["current_execution"])
         self.assertEqual(first["current_execution"]["status"], "NOT_RUN")
+
+    def test_default_target_is_canonical_and_does_not_require_preflight(self):
+        first = run_canonical_integrity_regressions()
+        second = run_integrity_regressions()
+        self.assertEqual(first, second)
+        self.assertEqual(first["target"]["source_root"], "src/ephi")
+        self.assertEqual(first["status"], "NOT_IMPLEMENTED")
+        self.assertEqual(first["current_execution"]["application_self_check"]["status"], "PASS")
+        self.assertTrue(all(item["status"] == "NOT_IMPLEMENTED" for item in first["findings"]))
+        self.assertEqual(first["historical_evidence"]["status"], "REFERENCE_ONLY")
 
     def test_f03_evaluator_requires_attention_visibility(self):
         finding = self.findings["F03"]

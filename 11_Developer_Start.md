@@ -1,36 +1,44 @@
-# Developer execution brief
+# Developer start
 
-Implement this design in vertical slices. The authoritative product choices are in this pack; source-derived behavior and proposed changes are distinguished in `02_Source_Audit.md`. Do not blindly reuse earlier chat claims or a floating GitHub main.
+CHG-111 R3 establishes the canonical application directly in this Git repository. A fresh checkout is the normal W0 starting point. This is a new implementation boundary, not a reconstruction of the historical audited application; do not claim source identity, byte identity, algorithm equivalence or historical-test equivalence.
 
-## Repository prerequisite
+## Install and identify
 
-This repository currently contains the design and audit evidence only. The original application archive named in [README.md](README.md) must be obtained and hash-verified before application work. The companion master is unnecessary for reading this maintained split design; the original mission attachment is unavailable for an independent completeness check. Run the package checker first, then keep newly executed source/framework results separate from the imported evidence. Do not reconstruct 409 inventoried Python files from excerpts or substitute a new demo for the audited application.
-
-## Bounded W0 restoration preflight
-
-Use the repository-native preflight before opening application work:
+Use Python `>=3.11,<3.14` and the exact dependency declarations in [pyproject.toml](pyproject.toml): NiceGUI Base commit `000298562d6bcbf6df304edbd41b98b30fe4bfcf`, framework version `3.0.0a8`, and `nicegui==3.15.0`.
 
 ```bash
-python3 tools/source_preflight.py
+python3.11 -m venv .venv
+.venv/bin/python -m pip install -e .
+.venv/bin/python -m ephi --self-check --json
 ```
 
-The command expects the owner-supplied `ephi_v0.19.1_production_hardened(1).zip` at ignored `artifacts/source/`, verifies SHA-256 `5e9ad8f63b3158adc530af69fc650aec606cbfa64896ba73840cdcf994a2b6e3`, rejects unsafe ZIP members and protected evidence paths, and stages only verified members in a fresh ignored directory. It writes a machine-readable result to `artifacts/source-preflight.json`. `SOURCE_REQUIRED` is the expected current result while the archive is absent; it is not a successful baseline. A verified result discovers the source's Python/dependency/test inventory and runtime, but leaves source test execution explicitly `NOT_RUN` until an engineer runs and records that baseline.
+The package exposes `ephi.app:main`, `python -m ephi`, deterministic runtime/config identity and a self-check that does not require a database, company binding or framework import. Framework construction, when authorized by a later slice, must use public `from nicegui_base import ...` authorities only.
 
-The JSON's historical 275 passed / 1 skipped value is an immutable `REFERENCE_ONLY` audit fact. Never report it as a test result from this repository or as a newly executed source baseline. This preflight is source restoration and inspection only; it does not reconstruct application code and does not fix or claim F03/F04/F05.
+## Canonical W0 checks
 
-## First branch: W0 and the smallest W1 slice
+Run the standard-library checks from the checkout without a chat file, archive, staged source or network:
 
-1. Run the bounded W0 source preflight and inspect its recorded source/dependency/test reality. With `SOURCE_STAGED`, restore the same source in isolation, run the full suite and optional integrations required by the chosen target, and read the four audit probes. Add regression tests for F03 open-work continuity, F04 as-of supersession and F05 recovery validity; define the revised qualified recovery policy.
-2. Pin NiceGUI Base `000298562d6bcbf6df304edbd41b98b30fe4bfcf` as the inspected candidate, or record an explicitly approved replacement and its new evidence. Read its AGENTS/construction contract, use its catalog/golden patterns, and save actual selected APIs in a binding manifest. No invented constructor signatures and no copied demo renderers.
-3. Implement application context/DTO/errors, the unit-of-work/receipt contract and bounded episode/attention read ports. Adapt existing services instead of cloning them. Implement one durable repository path and migration with real transactional integration tests.
-4. Render a single honest fixture episode through installed Base Attention → Episode. Allow scoped claim/acknowledge, persist it, restart the application and verify the state. Demonstrate stale/unavailable/conflict/reconnect behavior. No production profile may fall back to fixtures or memory.
+```bash
+python3 tools/check_package.py
+python3 tools/w0_repo_baseline.py
+python3 -m unittest discover -s tests -v
+git diff --check
+```
 
-**First demonstrable result:** two permitted sessions see the same canonical episode; one claims it; the other receives a version conflict rather than silently overwriting; after process restart the claim, audit and evidence revision remain; technical recovery does not hide the open work; low-quality data does not prove recovery; historical ledger values remain correct after correction.
+The [machine-readable baseline specification](environment/w0_repo_baseline.json) binds package name/version, Python range, source/package root, entrypoint and dependency identities. The baseline tool records Git commit/tree/worktree state, manifest identities, import identity and current test results. The historical 275/1 audit result remains `REFERENCE_ONLY` and is not included in current test totals.
 
-Do not start with a new detector, chatbot, custom CSS system, seven empty pages, microservices, or a giant untyped configuration DSL. Implement only modules required by the current vertical slice while preserving the target boundaries.
+## CHG-109 boundary
 
-## Evidence required with every delivery
+Run `python3 tools/w0_integrity_regressions.py` to verify preserved CHG-109 evidence and exercise the canonical entry self-check. F02/F03/F04/F05 are intentionally reported `NOT_IMPLEMENTED`/`NOT_RUN` because those APIs are outside this minimal slice. Future changes implement and close them against `src/ephi`.
 
-Report exact starting/ending source identity, files changed, requirement IDs, commands run and PASS/FAIL/NOT_RUN, saved logs/screenshots, pre-existing versus new warnings, source/target/qualification scope, migration/rollback and remaining blockers. Never claim target/browser/runtime PASS from code inspection. Never label pending company evidence as complete.
+The staged-source behavior is retained only as an explicit legacy fixture path:
 
-Stop the wave when its exit criteria pass; present the runnable artifact and next wave's concrete scope. Do not silently expand into another redesign. Do not alter the NiceGUI Base framework or push/overwrite unrelated repository work without the user's requested scope.
+```bash
+python3 tools/w0_integrity_regressions.py --legacy-source --preflight <legacy-result>
+```
+
+It is not required by the package checker, canonical baseline, application tests or future implementation gates. The retained `tools/source_preflight.py` and `tools/w0_baseline.py` modules are optional historical-source compatibility utilities only.
+
+## Scope boundary
+
+The first canonical package contains identity, a runtime/config boundary, a deterministic entry self-check and public framework-authority lookup. It does not contain broad UI, company adapters, production storage, speculative science modules or fake product behavior. Continue from [09_Delivery_and_Gates.md](09_Delivery_and_Gates.md) and stop at the authorized wave exit criteria.
