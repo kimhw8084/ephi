@@ -63,7 +63,7 @@ class W0IntegrityRegressionTests(unittest.TestCase):
         observations = verify_historical_evidence(self.contract)
         self.assertEqual({row["id"] for row in observations}, set(EXPECTED_FINDING_IDS))
         self.assertEqual(self.contract["historical_evidence"]["status"], "REFERENCE_ONLY")
-        self.assertEqual(self.contract["current_execution"]["status"], "NOT_RUN")
+        self.assertEqual(self.contract["current_execution"]["status"], "ENABLED")
 
     def test_contract_validation_rejects_identity_or_mixed_current_claim(self):
         wrong_identity = deepcopy(self.contract)
@@ -107,9 +107,13 @@ class W0IntegrityRegressionTests(unittest.TestCase):
         second = run_integrity_regressions()
         self.assertEqual(first, second)
         self.assertEqual(first["target"]["source_root"], "src/ephi")
-        self.assertEqual(first["status"], "NOT_IMPLEMENTED")
+        self.assertEqual(first["status"], "PASS")
         self.assertEqual(first["current_execution"]["application_self_check"]["status"], "PASS")
-        self.assertTrue(all(item["status"] == "NOT_IMPLEMENTED" for item in first["findings"]))
+        findings = {item["id"]: item for item in first["findings"]}
+        self.assertEqual(findings["F02"]["status"], "PASS")
+        self.assertEqual(findings["F03"]["status"], "PASS")
+        self.assertEqual(findings["F04"]["status"], "NOT_IMPLEMENTED")
+        self.assertEqual(findings["F05"]["status"], "NOT_IMPLEMENTED")
         self.assertEqual(first["historical_evidence"]["status"], "REFERENCE_ONLY")
 
     def test_f03_evaluator_requires_attention_visibility(self):
@@ -117,6 +121,7 @@ class W0IntegrityRegressionTests(unittest.TestCase):
         visible = {
             "id": "F03",
             "scenario": finding["scenario_identity"],
+            "technical_episode_state": "RESOLVED",
             "workflow": "INVESTIGATING",
             "visible_in_attention": True,
         }
@@ -147,6 +152,7 @@ class W0IntegrityRegressionTests(unittest.TestCase):
         source_only = {
             "id": "F02",
             "scenario": finding["scenario_identity"],
+            "source_only_result": "SOURCE_ONLY_INSUFFICIENT",
             "outcome": "KeyError",
         }
         passed = evaluate_f02(finding, source_only, "CHECKPOINT_RESTORE_PASS")
@@ -163,10 +169,10 @@ class W0IntegrityRegressionTests(unittest.TestCase):
         self.assertEqual(failed["status"], "FAIL")
         self.assertEqual(failed["checkpoint_restore_result"], "CHECKPOINT_RESTORE_FAIL")
 
-        wrong_source_only = dict(source_only, outcome="success")
+        wrong_source_only = dict(source_only, source_only_result="FAIL", outcome="success")
         wrong = evaluate_f02(finding, wrong_source_only, "CHECKPOINT_RESTORE_PASS")
-        self.assertEqual(wrong["status"], "PASS")
-        self.assertEqual(wrong["source_only_result"], "SOURCE_ONLY_INSUFFICIENT")
+        self.assertEqual(wrong["status"], "FAIL")
+        self.assertEqual(wrong["source_only_result"], "FAIL")
 
 
 if __name__ == "__main__":

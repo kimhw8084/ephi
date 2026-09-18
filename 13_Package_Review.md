@@ -6,7 +6,7 @@ Review date: 2026-09-15 America/Chicago. Design revision: 0.2.
 
 The package is a substantial implementation design with useful separation of science, operational urgency, human workflow and economic evidence. Its strongest choices are immutable decisions, qualified affirmative recovery, durable commands and a single canonical episode workspace. Its historical audit includes concrete synthetic observations and appropriately limits the meaning of portable tests.
 
-It is ready to serve as a versioned design repository and now contains the smallest installable canonical application boundary. It is **not a qualified release**. The canonical package contains no broad UI, company adapters, production storage or scientific implementation. It is a new repository implementation; it is not a reconstruction of the historical audited application.
+It is ready to serve as a versioned design repository and now contains the smallest installable canonical application boundary plus the scoped W0 F02/F03 advisory/workflow integrity slice. It is **not a qualified release**. The canonical package contains no broad UI, company adapters, production storage or scientific implementation. It is a new repository implementation; it is not a reconstruction of the historical audited application.
 
 The repository root is `ephi`. The split chapters are the maintained design, and an absent companion master is not a build input. Historical archive/source facts remain preserved as `REFERENCE_ONLY` provenance; they are not required for checkout, installation or the canonical W0 path.
 
@@ -39,7 +39,7 @@ The affected application behavior is still proposed. None of these document corr
 | NiceGUI Base pin | PASS for source inspection: pinned public commit and metadata confirm version 3.0.0a8, NiceGUI 3.15.0 and Python >=3.11,<3.14; file hashes saved in the review evidence |
 | Current package checks | PASS when run on a supported interpreter: `python3 tools/check_package.py`; integrity, syntax, local links/fences, traceability presence and historical consistency |
 | Checker regression suite | PASS: 12 tests via `python3 -m unittest discover -s tests -v`; changed/missing/extra files, damaged evidence, invalid syntax, broken links and other rejection paths |
-| Canonical application self-check and repository tests | PASS/NOT_IMPLEMENTED as separately reported by `tools/w0_repo_baseline.py`; F02/F03/F04/F05 are not claimed implemented |
+| Canonical application self-check and repository tests | PASS/IMPLEMENTED capability for F02/F03 and `NOT_IMPLEMENTED`/`NOT_RUN` for F04/F05; fresh F02/F03 execution is separately reported by `tools/w0_integrity_regressions.py` |
 | Installed Base, browser, company sources, persistence and scientific qualification | NOT_RUN: no implementation/target environment in this package |
 | Original mission completeness | NOT_VERIFIABLE: original attachment absent; internal A–S and requirement traceability retained |
 
@@ -49,7 +49,7 @@ Exact import/review identities are recorded in [the review evidence](evidence/re
 
 1. **Keep the canonical baseline reproducible.** Run the Git-native baseline, package checks and offline tests from a fresh checkout; do not add an artifact prerequisite.
 2. **Resolve framework and dependency bindings.** Use the pinned catalog, exact dependency declarations and the existing CHG-105 runtime tool; installation/bootstrap is separately reported from offline repository checks.
-3. **Complete W0 and the smallest W1 slice.** Implement F03/F04/F05 and F02 against `src/ephi`, then one scoped durable claim/acknowledge path through the actual Base UI with conflict/restart evidence. Do not multiply screens before that works.
+3. **Complete W0 and the smallest W1 slice.** Extend F04/F05 against `src/ephi`, then add one scoped durable claim/acknowledge path through the actual Base UI with conflict/restart evidence. Do not multiply screens before that works.
 4. **Bind company-specific evidence before a pilot.** Identity, backend/artifact store, source mappings, family thresholds, action authority and operational policies remain the gates already defined in the design.
 
 No browser, scientific or production-readiness claim follows from publishing this repository. The next authorized implementation can proceed from [11_Developer_Start.md](11_Developer_Start.md) against the canonical package.

@@ -18,12 +18,26 @@ FRAMEWORK_IDENTITY = {
 }
 
 CANONICAL_BEHAVIORAL_CHECKS = {
-    finding: {
+    "F02": {
+        "status": "IMPLEMENTED",
+        "execution": "NOT_RUN",
+        "reason": "canonical checkpoint API is exercised by the CHG-109 runner",
+    },
+    "F03": {
+        "status": "IMPLEMENTED",
+        "execution": "NOT_RUN",
+        "reason": "canonical workflow API is exercised by the CHG-109 runner",
+    },
+    "F04": {
         "status": "NOT_IMPLEMENTED",
         "execution": "NOT_RUN",
-        "reason": "canonical API is outside CHG-111 R3 scope",
-    }
-    for finding in ("F02", "F03", "F04", "F05")
+        "reason": "out of scope for CHG-115",
+    },
+    "F05": {
+        "status": "NOT_IMPLEMENTED",
+        "execution": "NOT_RUN",
+        "reason": "out of scope for CHG-115",
+    },
 }
 
 

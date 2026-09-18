@@ -28,10 +28,13 @@ class EphiApplicationTests(unittest.TestCase):
             "application_name": "ephi",
         })
 
-    def test_self_check_does_not_fabricate_integrity_passes(self):
+    def test_self_check_reports_capability_without_claiming_execution(self):
         result = self_check()
         self.assertEqual(result["status"], "PASS")
-        for finding in ("F02", "F03", "F04", "F05"):
+        for finding in ("F02", "F03"):
+            self.assertEqual(result["behavioral_checks"][finding]["status"], "IMPLEMENTED")
+            self.assertEqual(result["behavioral_checks"][finding]["execution"], "NOT_RUN")
+        for finding in ("F04", "F05"):
             self.assertEqual(result["behavioral_checks"][finding]["status"], "NOT_IMPLEMENTED")
             self.assertEqual(result["behavioral_checks"][finding]["execution"], "NOT_RUN")
 
