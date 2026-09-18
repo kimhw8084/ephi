@@ -24,14 +24,6 @@ from typing import Any, Mapping
 if __package__ in {None, ""}:
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from tools.source_preflight import (
-    EXPECTED_ARCHIVE_FILENAME,
-    EXPECTED_ARCHIVE_SHA256,
-    EXPECTED_SOURCE_ROOT,
-)
-from tools.w0_baseline import BaselineError, validate_preflight_record
-
-
 REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
 EVIDENCE_ROOT = REPOSITORY_ROOT / "evidence"
 CONTRACT_PATH = EVIDENCE_ROOT / "review" / "w0_integrity_regression_contract.json"
@@ -54,6 +46,18 @@ class IntegrityError(ValueError):
     def __init__(self, code: str, message: str):
         super().__init__(message)
         self.code = code
+
+
+def _legacy_source_constants() -> tuple[str, str, str]:
+    """Load historical fixture constants only when explicit legacy mode is used."""
+
+    from tools.source_preflight import (
+        EXPECTED_ARCHIVE_FILENAME,
+        EXPECTED_ARCHIVE_SHA256,
+        EXPECTED_SOURCE_ROOT,
+    )
+
+    return EXPECTED_ARCHIVE_FILENAME, EXPECTED_ARCHIVE_SHA256, EXPECTED_SOURCE_ROOT
 
 
 def sha256(path: Path) -> tuple[int, str]:
@@ -126,11 +130,12 @@ def validate_contract(contract: Mapping[str, Any], *, source_bound: bool = True)
         raise IntegrityError("CONTRACT_INVALID", "contract must be schema 1 for CHG-109/W0")
 
     if source_bound:
+        expected_filename, expected_sha256, expected_source_root = _legacy_source_constants()
         source = _mapping(contract.get("source_identity"), "source_identity")
         expected_identity = {
-            "required_filename": EXPECTED_ARCHIVE_FILENAME,
-            "required_sha256": EXPECTED_ARCHIVE_SHA256,
-            "required_source_root": EXPECTED_SOURCE_ROOT,
+            "required_filename": expected_filename,
+            "required_sha256": expected_sha256,
+            "required_source_root": expected_source_root,
         }
         for field, expected in expected_identity.items():
             if source.get(field) != expected:
@@ -170,8 +175,23 @@ def validate_contract(contract: Mapping[str, Any], *, source_bound: bool = True)
             raise IntegrityError("CONTRACT_INVALID", "historical scenario identity must match preserved observation")
 
     current = _mapping(contract.get("current_execution"), "current_execution")
-    if current.get("status") != "NOT_RUN":
-        raise IntegrityError("CONTRACT_INVALID", "contract current_execution status must remain NOT_RUN")
+    if current.get("status") != "ENABLED":
+        raise IntegrityError("CONTRACT_INVALID", "contract current_execution must enable canonical scenarios")
+    if current.get("target") != "src/ephi" or current.get("import") != "ephi":
+        raise IntegrityError("CONTRACT_INVALID", "canonical current_execution target must be src/ephi/ephi")
+    canonical = _mapping(contract.get("canonical_execution"), "canonical_execution")
+    if canonical.get("status") != "ENABLED" or canonical.get("runner") != "tools/w0_integrity_regressions.py":
+        raise IntegrityError("CONTRACT_INVALID", "canonical execution section is not enabled")
+    if canonical.get("fresh_findings") != ["F02", "F03"]:
+        raise IntegrityError("CONTRACT_INVALID", "canonical execution must run fresh F02/F03 scenarios")
+    out_of_scope = _mapping(canonical.get("out_of_scope"), "canonical_execution.out_of_scope")
+    if set(out_of_scope) != {"F04", "F05"} or any(
+        not isinstance(value, Mapping)
+        or value.get("status") != "NOT_IMPLEMENTED"
+        or value.get("execution") != "NOT_RUN"
+        for value in out_of_scope.values()
+    ):
+        raise IntegrityError("CONTRACT_INVALID", "F04/F05 must remain separately NOT_IMPLEMENTED/NOT_RUN")
     if source_bound:
         legacy_current = _mapping(contract.get("legacy_source_execution"), "legacy_source_execution")
         if legacy_current.get("probe_script") != "evidence/behavior_probes.py" or legacy_current.get("pythonpath") != "src:company_port/src":
@@ -257,6 +277,7 @@ def verify_historical_evidence(contract: Mapping[str, Any], *, source_bound: boo
 
 
 def _new_result(contract_path: Path, preflight_path: Path) -> dict[str, Any]:
+    expected_filename, expected_sha256, expected_source_root = _legacy_source_constants()
     return {
         "schema_version": 1,
         "change": "CHG-109",
@@ -275,9 +296,9 @@ def _new_result(contract_path: Path, preflight_path: Path) -> dict[str, Any]:
             "record_sha256": None,
         },
         "source_identity": {
-            "required_filename": EXPECTED_ARCHIVE_FILENAME,
-            "required_sha256": EXPECTED_ARCHIVE_SHA256,
-            "required_source_root": EXPECTED_SOURCE_ROOT,
+            "required_filename": expected_filename,
+            "required_sha256": expected_sha256,
+            "required_source_root": expected_source_root,
             "verified_by": "tools/source_preflight.py and tools/w0_baseline.py",
         },
         "historical_evidence": {
@@ -689,6 +710,7 @@ def _new_canonical_result(contract_path: Path) -> dict[str, Any]:
             "tests_executed": False,
             "target": "src/ephi",
             "application_self_check": {"status": "NOT_RUN"},
+            "canonical_scenarios": {"status": "NOT_RUN"},
         },
         "findings": [
             {
@@ -725,12 +747,99 @@ def _canonical_self_check() -> dict[str, Any]:
     return {"status": "PASS", "returncode": completed.returncode, "identity": payload}
 
 
+def _canonical_f03_scenario(scenario: str) -> dict[str, Any]:
+    """Execute the fresh F03 scenario against the canonical domain service."""
+
+    from ephi.advisory import AdvisoryService, EngineeringWorkState, TechnicalEpisodeState
+
+    service = AdvisoryService()
+    episode = service.create_episode("canonical-f03-episode")
+    episode = service.transition_engineering_work_state(
+        episode.episode_id,
+        EngineeringWorkState.INVESTIGATING,
+        expected_workflow_version=episode.workflow_version,
+    )
+    episode = service.transition_technical_state(
+        episode.episode_id,
+        TechnicalEpisodeState.RESOLVED,
+        expected_workflow_version=episode.workflow_version,
+    )
+    attention = service.query_attention()
+    visible = [row for row in attention if row.episode_id == episode.episode_id]
+    return {
+        "id": "F03",
+        "scenario": scenario,
+        "technical_episode_state": episode.technical_state.value,
+        "workflow": episode.engineering_work_state.value,
+        "visible_in_attention": len(visible) == 1 and visible[0].visible_in_attention,
+    }
+
+
+def _canonical_f02_scenario(scenario: str) -> tuple[dict[str, Any], str, dict[str, Any]]:
+    """Execute source-only rejection and complete checkpoint round-trip independently."""
+
+    from ephi.advisory import (
+        AdvisoryService,
+        CheckpointError,
+        EngineeringWorkState,
+        TechnicalEpisodeState,
+    )
+
+    service = AdvisoryService()
+    episode = service.create_episode("canonical-f02-episode")
+    episode = service.transition_engineering_work_state(
+        episode.episode_id,
+        EngineeringWorkState.INVESTIGATING,
+        expected_workflow_version=episode.workflow_version,
+    )
+    episode = service.transition_technical_state(
+        episode.episode_id,
+        TechnicalEpisodeState.RESOLVED,
+        expected_workflow_version=episode.workflow_version,
+    )
+    partial = {
+        "checkpoint_schema": "ephi.advisory.checkpoint",
+        "checkpoint_version": 1,
+        "episode_id": episode.episode_id,
+        "technical_state": episode.technical_state.value,
+    }
+    try:
+        service.restore_checkpoint(partial, expected_episode_id=episode.episode_id)
+    except CheckpointError as exc:
+        source_only_result = "SOURCE_ONLY_INSUFFICIENT" if exc.code == "INCOMPLETE_AUTHORITY" else "FAIL"
+        source_only_error_code = exc.code
+    else:
+        source_only_result = "FAIL"
+        source_only_error_code = None
+
+    checkpoint = service.save_checkpoint(episode.episode_id)
+    restored_service = AdvisoryService()
+    restored = restored_service.restore_checkpoint(checkpoint, expected_episode_id=episode.episode_id)
+    round_trip_fields = restored.as_dict() == episode.as_dict()
+    checkpoint_result = "CHECKPOINT_RESTORE_PASS" if round_trip_fields else "CHECKPOINT_RESTORE_FAIL"
+    observation = {
+        "id": "F02",
+        "scenario": scenario,
+        "source_only_result": source_only_result,
+        "source_only_error_code": source_only_error_code,
+        "round_trip_preserved": round_trip_fields,
+    }
+    details = {
+        "status": checkpoint_result,
+        "source_only_error_code": source_only_error_code,
+        "serialized_checkpoint": checkpoint,
+        "original": episode.as_dict(),
+        "restored": restored.as_dict(),
+    }
+    return observation, checkpoint_result, details
+
+
 def run_canonical_integrity_regressions(
     *,
     contract_path: Path = CONTRACT_PATH,
     output_path: Path | None = None,
 ) -> dict[str, Any]:
-    """Verify historical evidence and report canonical behavioral checks honestly."""
+    """Verify historical evidence and execute the fresh canonical F02/F03 slice."""
 
     contract_path = Path(contract_path).expanduser()
     result = _new_canonical_result(contract_path)
@@ -758,11 +867,50 @@ def run_canonical_integrity_regressions(
             result["reason"] = "CANONICAL_SELF_CHECK_FAILED"
             result["message"] = "canonical application self-check failed"
         else:
-            result["current_execution"]["status"] = "NOT_RUN"
+            sys.path.insert(0, str(REPOSITORY_ROOT / "src"))
+            findings = _finding_map(contract_value)
+            f03_observation = _canonical_f03_scenario(findings["F03"]["scenario_identity"])
+            f02_observation, f02_checkpoint_status, f02_details = _canonical_f02_scenario(
+                findings["F02"]["scenario_identity"]
+            )
+            evaluated = [
+                evaluate_finding(findings["F03"], f03_observation),
+                evaluate_f02(findings["F02"], f02_observation, f02_checkpoint_status),
+                {
+                    "id": "F04",
+                    "status": "NOT_IMPLEMENTED",
+                    "execution": "NOT_RUN",
+                    "reason": "out of scope for CHG-115",
+                },
+                {
+                    "id": "F05",
+                    "status": "NOT_IMPLEMENTED",
+                    "execution": "NOT_RUN",
+                    "reason": "out of scope for CHG-115",
+                },
+            ]
+            result["findings"] = evaluated
+            result["current_execution"]["status"] = "PASS" if all(
+                item["status"] == "PASS" for item in evaluated[:2]
+            ) else "FAIL"
             result["current_execution"]["tests_executed"] = True
-            result["status"] = "NOT_IMPLEMENTED"
-            result["reason"] = "CANONICAL_BEHAVIORAL_APIS_NOT_IMPLEMENTED"
-            result["message"] = "canonical entry boundary passed; F02/F03/F04/F05 remain NOT_IMPLEMENTED/NOT_RUN"
+            result["current_execution"]["canonical_scenarios"] = {
+                "status": result["current_execution"]["status"],
+                "target": "src/ephi",
+                "f02": f02_details,
+                "f03": f03_observation,
+            }
+            result["status"] = result["current_execution"]["status"]
+            result["reason"] = (
+                "ALL_SCOPED_INTEGRITY_REGRESSIONS_PASS"
+                if result["status"] == "PASS"
+                else "REGRESSION_ASSERTION_FAILED"
+            )
+            result["message"] = (
+                "fresh canonical F02/F03 scenarios passed; F04/F05 remain NOT_IMPLEMENTED/NOT_RUN"
+                if result["status"] == "PASS"
+                else "one or more fresh canonical F02/F03 assertions failed"
+            )
         return _finish(result, output_path)
     except (OSError, subprocess.SubprocessError, ValueError, TypeError) as exc:
         return _finish(_blocked(result, IntegrityError("CANONICAL_EXECUTION_ERROR", str(exc))), output_path)
@@ -776,6 +924,8 @@ def _run_legacy_integrity_regressions(
     runtime_root: Path = DEFAULT_RUNTIME_ROOT,
 ) -> dict[str, Any]:
     """Run CHG-109 only after exact source preflight and historical evidence checks pass."""
+
+    from tools.w0_baseline import BaselineError, validate_preflight_record
 
     preflight_path = Path(preflight_path).expanduser()
     contract_path = Path(contract_path).expanduser()

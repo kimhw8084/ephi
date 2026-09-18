@@ -116,8 +116,8 @@
     },
     {
       "path": "11_Developer_Start.md",
-      "bytes": 2858,
-      "sha256": "b8207b9bca1edb9b73f5eb4b5813c9d78cf4ecc17647609f8041c855c4861498"
+      "bytes": 2902,
+      "sha256": "52115dedc9fcd75c88870c0a2d5155f7377152436583110ed7f68d8f70b26ee3"
     },
     {
       "path": "12_Sources_and_Evidence.md",
@@ -126,8 +126,8 @@
     },
     {
       "path": "13_Package_Review.md",
-      "bytes": 7844,
-      "sha256": "b7af702e2493ab4e91b9b6ef3da8fa994ccbe93cfc7313f4d98aef358e2e6690"
+      "bytes": 7945,
+      "sha256": "82d78975cdd7be9d1272a093a37988dab7326e2175dde837a0a826f04b5efca9"
     },
     {
       "path": "AGENTS.md",
@@ -141,8 +141,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 6266,
-      "sha256": "458c8886f90cfb22221ec159288abc023fabaeee8f5c5e1ae8353a03066ccc64"
+      "bytes": 6347,
+      "sha256": "9fcdc24add35bfa54145d9db70d966a428460d67345253347a02df0c16d8ebf2"
     },
     {
       "path": "environment/nicegui_base_requirements.txt",
@@ -226,8 +226,8 @@
     },
     {
       "path": "evidence/review/w0_integrity_regression_contract.json",
-      "bytes": 14648,
-      "sha256": "e5b0487c22a101f1b3f8756f1650f0dd764d53b3e1c64ec37a4fc8c246d84580"
+      "bytes": 15485,
+      "sha256": "215b796ad24bb91ec92b1183a53735a0a70a6fdf272a393b4faedab0d7535255"
     },
     {
       "path": "evidence/source_excerpts.md",
@@ -246,8 +246,8 @@
     },
     {
       "path": "src/ephi/__init__.py",
-      "bytes": 343,
-      "sha256": "5d002b1cdfd485deebc1b898fc79d83746a71ed310feddbd2a7f5101c0cc8e7f"
+      "bytes": 679,
+      "sha256": "1b7db46637e8ebe7d7a7eab544bc4dedadb1b249a1c2102c01691a281dd0ef15"
     },
     {
       "path": "src/ephi/__main__.py",
@@ -255,9 +255,29 @@
       "sha256": "ae7b0798ba5fce5a6b9322ad2d591ab088cac68da94e05ba59199267e20f4683"
     },
     {
+      "path": "src/ephi/advisory/__init__.py",
+      "bytes": 1275,
+      "sha256": "846fe9b73998b0158e1f96c9f6b03832c3e8f54930654fdd8f5ae39e19010389"
+    },
+    {
+      "path": "src/ephi/advisory/checkpoint.py",
+      "bytes": 6450,
+      "sha256": "6771d6e2495ea0c476bc1de59e74a79d1f4e92054c9817334c3627f4673ed3d8"
+    },
+    {
+      "path": "src/ephi/advisory/model.py",
+      "bytes": 4014,
+      "sha256": "d305dc77a4cff52976e23678717a406a181502e4a47313fb3d290b2c847b7904"
+    },
+    {
+      "path": "src/ephi/advisory/service.py",
+      "bytes": 8899,
+      "sha256": "eec5fe562fc032db7af1bf2fded10cd3e044478bc9783834874f2206e8b8b1d5"
+    },
+    {
       "path": "src/ephi/app.py",
-      "bytes": 2202,
-      "sha256": "96f880a312c5e89f2c3d3c8069711d084b99013a54c6923e5e9400197bb130cc"
+      "bytes": 2601,
+      "sha256": "94ca799dcf0eda688b54868f0071785e724b51273fa1a3cd4ff611764de019df"
     },
     {
       "path": "src/ephi/config.py",
@@ -280,9 +300,14 @@
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
+      "path": "tests/test_advisory_integrity.py",
+      "bytes": 7605,
+      "sha256": "bc4c286bec316b77c2b4381e34b5d6c14898b7baabd98b2318abe7ef2e7d7331"
+    },
+    {
       "path": "tests/test_ephi_application.py",
-      "bytes": 1686,
-      "sha256": "32011b2caada32a48c6c5eeea7222ca73bfb15db66fbb8e09a5a18af186f9d1a"
+      "bytes": 1904,
+      "sha256": "f70c189760802de53c0aaa77f1631a6e65f290cf9e1861c4c2cad3be905b68c9"
     },
     {
       "path": "tests/test_package.py",
@@ -301,8 +326,8 @@
     },
     {
       "path": "tests/test_w0_integrity_regressions.py",
-      "bytes": 8046,
-      "sha256": "0c916e13df9fc6da8e8ddbf47a9d646fc46c6c4f32848ca15f07e6bd4b286206"
+      "bytes": 8389,
+      "sha256": "9ab6cf339cdf46684cd02b82ed2f1234176e190845340eb27a489b0d2bcb8dd8"
     },
     {
       "path": "tests/test_w0_repo_baseline.py",
@@ -331,8 +356,8 @@
     },
     {
       "path": "tools/w0_integrity_regressions.py",
-      "bytes": 45946,
-      "sha256": "284bbbca783ae53726db3a81f451561a310fd4f4e18535906429d148a0aff5e6"
+      "bytes": 52586,
+      "sha256": "f89632ae25321d98d5f18b547df90758e01eed79caa1c94f9f92f7776a27f309"
     },
     {
       "path": "tools/w0_repo_baseline.py",
