@@ -15,6 +15,7 @@ from typing import Any
 from ephi.application.context import AccessScope
 from ephi.application.errors import StorageFailureError, ValidationFailureError
 from ephi.application.hashing import canonical_json, normalize_domain_payload
+from ephi.application.worker import WorkerLeaseConfig
 from ephi.application.storage import (
     AggregateSnapshot,
     CommandEventAlreadyExistsError,
@@ -24,7 +25,11 @@ from ephi.application.storage import (
 )
 
 
-MIGRATION_PATH = Path(__file__).resolve().parents[3] / "migrations" / "001_o2_command_core.sql"
+MIGRATION_DIR = Path(__file__).resolve().parents[3] / "migrations"
+MIGRATION_PATHS = tuple(sorted(MIGRATION_DIR.glob("*.sql")))
+# Kept as a compatibility name for callers that identify the command-core
+# migration specifically.  ``apply_migrations`` applies every numbered file.
+MIGRATION_PATH = MIGRATION_DIR / "001_o2_command_core.sql"
 _TABLES = ("aggregate_state", "command_receipt", "audit_event", "outbox_event")
 
 
@@ -304,14 +309,22 @@ class PostgreSQLReferenceTransactionAdapter:
 
     def apply_migrations(self) -> None:
         try:
-            migration = MIGRATION_PATH.read_text(encoding="utf-8")
-            for statement in migration.split(";"):
-                if statement.strip():
-                    self.connection.execute(statement)
+            for migration_path in MIGRATION_PATHS:
+                migration = migration_path.read_text(encoding="utf-8")
+                for statement in migration.split(";"):
+                    if statement.strip():
+                        self.connection.execute(statement)
         except (OSError, StorageFailureError):
             raise
         except Exception as exc:
             raise StorageFailureError("durable PostgreSQL migration could not be applied") from exc
+
+    def worker_store(self, *, config: WorkerLeaseConfig | None = None):
+        """Return the generic durable worker adapter on this PostgreSQL connection."""
+
+        from .postgresql_worker import PostgreSQLWorkerStore
+
+        return PostgreSQLWorkerStore(self, config=config)
 
     def command_transaction(self) -> CommandUnitOfWork:
         return _PostgreSQLCommandTransaction(self)

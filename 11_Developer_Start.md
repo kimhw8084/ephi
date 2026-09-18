@@ -58,7 +58,11 @@ product behavior. CHG-123 adds PostgreSQL reference/integration evidence only:
 select it with an explicit `EPHI_TEST_POSTGRES_DSN` and the `postgres`
 optional dependency. It does not bind a company production database or
 complete G05/O2. Worker fencing, retained query snapshots and later O3 use
-cases remain separately authorized work.
+use cases remain separately authorized work. CHG-126 now provides only the
+generic PostgreSQL worker/job lease, fencing and bounded LOCAL-effect
+substrate. Its PostgreSQL 18.x evidence is reference/integration evidence,
+not a company deployment or full O2/G05 completion; retained/coherent query
+snapshots remain the final major O2 durability slice.
 
 ## Scope boundary
 

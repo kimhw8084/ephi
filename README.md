@@ -102,6 +102,26 @@ G05 or claim O2 complete. Worker leasing/fencing/effect semantics, retained
 query snapshots, notification delivery, company identity integration and O3
 product behavior remain separate work.
 
+## CHG-126 durable worker substrate
+
+CHG-126 adds the reusable PostgreSQL worker/job lease, fencing and bounded
+LOCAL-effect substrate under `ephi.application.worker` and
+`ephi.infrastructure.PostgreSQLWorkerStore`. Enqueue is idempotent by
+`(scope, semantic_key, payload_hash, job_type)`; claims are short
+`FOR UPDATE SKIP LOCKED` transactions with monotonically increasing fencing
+epochs; lease validity is checked against PostgreSQL server time. The
+documented defaults are a 120-second lease and 30-second heartbeat interval,
+with tiny explicit test overrides supported.
+
+Delivery remains at-least-once. Exactly-once behavior is limited to a bounded
+local PostgreSQL mutation plus its unique `applied_effect` receipt. No
+scientific handlers, worker loop, O3 Attention/claim/acknowledge behavior,
+NiceGUI pages, retained query snapshots, company bindings, notifications or
+external effects are implemented. The PostgreSQL worker tests are
+reference/integration evidence against a real PostgreSQL 18.x service, not a
+bound company deployment and not full O2/G05 completion. Retained/coherent
+query snapshots remain the final major O2 durability slice after this change.
+
 ## Pinned framework authority
 
 CHG-105 pins `nicegui-base` to Git commit `000298562d6bcbf6df304edbd41b98b30fe4bfcf`, framework version `3.0.0a8`, exactly `nicegui==3.15.0`, and Python `>=3.11,<3.14`. Application code uses public `from nicegui_base import ...` authorities only; it does not use direct `nicegui.ui` or private `nicegui_base.integrations.nicegui_*` APIs. The machine-readable runtime specification is [environment/nicegui_base_runtime.json](environment/nicegui_base_runtime.json).
