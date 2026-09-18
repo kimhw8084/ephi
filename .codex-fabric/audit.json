@@ -1,0 +1,421 @@
+{
+  "accepted_at": "2026-09-18T18:18:45Z",
+  "changed_files": [
+    {
+      "additions": 18,
+      "deletions": 0,
+      "path": "11_Developer_Start.md",
+      "status": "M"
+    },
+    {
+      "additions": 18,
+      "deletions": 0,
+      "path": "README.md",
+      "status": "M"
+    },
+    {
+      "additions": 46,
+      "deletions": 6,
+      "path": "manifest.json",
+      "status": "M"
+    },
+    {
+      "additions": 43,
+      "deletions": 0,
+      "path": "src/ephi/__init__.py",
+      "status": "M"
+    },
+    {
+      "additions": 45,
+      "deletions": 0,
+      "path": "src/ephi/application/__init__.py",
+      "status": "A"
+    },
+    {
+      "additions": 186,
+      "deletions": 0,
+      "path": "src/ephi/application/context.py",
+      "status": "A"
+    },
+    {
+      "additions": 70,
+      "deletions": 0,
+      "path": "src/ephi/application/errors.py",
+      "status": "A"
+    },
+    {
+      "additions": 146,
+      "deletions": 0,
+      "path": "src/ephi/application/hashing.py",
+      "status": "A"
+    },
+    {
+      "additions": 319,
+      "deletions": 0,
+      "path": "src/ephi/application/transactions.py",
+      "status": "A"
+    },
+    {
+      "additions": 15,
+      "deletions": 0,
+      "path": "src/ephi/infrastructure/__init__.py",
+      "status": "A"
+    },
+    {
+      "additions": 301,
+      "deletions": 0,
+      "path": "src/ephi/infrastructure/sqlite.py",
+      "status": "A"
+    },
+    {
+      "additions": 249,
+      "deletions": 0,
+      "path": "tests/test_o2_transactions.py",
+      "status": "A"
+    }
+  ],
+  "checks": [
+    {
+      "command": "/bin/zsh -lc \"pwd && git status --short --branch && git rev-parse HEAD && git show -s --format='%H%n%P%n%s' HEAD && sed -n '1,240p' /Users/haewonkim/.codex/RTK.md && sed -n '1,260p' /Users/haewonkim/.codex/law.md && sed -n '1,240p' README.md && sed -n '1,280p' 13_Package_Review.md\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git show --stat --oneline --decorate 5c6af941eb7c361e0bb4779ea27bbaf256ca08a4 && rtk git show --format=fuller --name-status 5c6af941eb7c361e0bb4779ea27bbaf256ca08a4 && rtk git log --oneline --decorate --all --graph -20'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git cherry-pick 5c6af941eb7c361e0bb4779ea27bbaf256ca08a4'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n \\\"_replay_or_conflict|auth_session_revision|security_revision|replay|O2|receipt\\\" src/ephi tests/test_o2_transactions.py 11_Developer_Start.md README.md && rtk sed -n '1,420p' src/ephi/application/transactions.py && rtk sed -n '1,360p' tests/test_o2_transactions.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,260p' src/ephi/application/context.py && rtk sed -n '1,220p' src/ephi/application/errors.py && rtk sed -n '1,360p' src/ephi/infrastructure/sqlite.py && rtk sed -n '1,180p' 11_Developer_Start.md\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff -- src/ephi/application/transactions.py tests/test_o2_transactions.py && rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest tests.test_o2_transactions -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short && rtk git diff --stat && rtk git diff -- manifest.json'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/w0_repo_baseline.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest discover -s tests -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/w0_integrity_regressions.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short && rtk git diff --check && rtk git diff --stat'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git add manifest.json src/ephi/application/transactions.py tests/test_o2_transactions.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git commit -m \"Fix CHG-121 receipt replay authorization\"'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git rev-parse HEAD && rtk git rev-parse HEAD''^ && rtk git status --short --branch && rtk git show --stat --oneline HEAD && rtk git show --stat --oneline 3672611bcc6d1bb7fe30b5b0bda76b5b0743dd08 && rtk git ls-tree -r --name-only 3672611bcc6d1bb7fe30b5b0bda76b5b0743dd08 | rtk rg \"audit|fabric\"'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk ls -la .codex-fabric && rtk sed -n '1,220p' <(rtk git show 3672611bcc6d1bb7fe30b5b0bda76b5b0743dd08:.codex-fabric/audit.json) && rtk git show 3672611bcc6d1bb7fe30b5b0bda76b5b0743dd08:evidence/audit_environment.json && rtk git remote -v && rtk git config --get-regexp 'remote\\\\..*|branch\\\\..*'\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git show 3672611bcc6d1bb7fe30b5b0bda76b5b0743dd08:.codex-fabric/audit.json'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk ls -la /Users/haewonkim/.codex-fabric'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk command -v fabric'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk command -v codex-fabric'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg --files /Users/haewonkim/.codex-fabric | rtk rg 'audit|fabric|evidence'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk /Users/haewonkim/.codex-fabric/bin/fabricctl --help'",
+      "exit_code": 2,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,260p' /Users/haewonkim/.codex-fabric/logs/CF-007db8702ca91474dfa5320f.launcher.log\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk ls -la /Users/haewonkim/.codex-fabric/jobs && rtk ls -la /Users/haewonkim/.codex-fabric/results | tail -80'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,240p' /Users/haewonkim/.codex-fabric/projects.yaml && rtk git status --short --branch && rtk git branch --show-current\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk /Users/haewonkim/.codex-fabric/bin/fabricctl status'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk tail -120 /Users/haewonkim/.codex-fabric/logs/CF-007db8702ca91474dfa5320f.launcher.log'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk ls -la /Users/haewonkim/.codex-fabric/results/CF-007db8702ca91474dfa5320f && rtk find /Users/haewonkim/.codex-fabric/results/CF-007db8702ca91474dfa5320f -maxdepth 2 -type f -print'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk ls -la /Users/haewonkim/.codex-fabric/jobs/CF-007db8702ca91474dfa5320f.running && rtk find /Users/haewonkim/.codex-fabric/jobs/CF-007db8702ca91474dfa5320f.running -maxdepth 2 -type f -print'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,260p' /Users/haewonkim/.codex-fabric/jobs/CF-007db8702ca91474dfa5320f.running/job.json && rtk sed -n '1,180p' /Users/haewonkim/.codex-fabric/jobs/CF-007db8702ca91474dfa5320f.running/lease.json && rtk sed -n '1,220p' /Users/haewonkim/.codex-fabric/jobs/CF-007db8702ca91474dfa5320f.running/prompt.md\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk wc -l /Users/haewonkim/.codex-fabric/results/CF-007db8702ca91474dfa5320f/codex.events.jsonl && rtk tail -40 /Users/haewonkim/.codex-fabric/results/CF-007db8702ca91474dfa5320f/codex.events.jsonl && rtk sed -n '1,160p' /Users/haewonkim/.codex-fabric/results/CF-007db8702ca91474dfa5320f/codex.stderr.log\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,220p' /Users/haewonkim/.codex-fabric/bin/fabricctl && rtk rg -n \\\"publish-evidence|publish_pending|evidence_commit|EXECUTED|running\\\" /Users/haewonkim/.codex-fabric/releases/1.2.3-resume-candidate /Users/haewonkim/.codex-fabric/libexec/projectos_integrate.py | head -160\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '2440,2765p' /Users/haewonkim/.codex-fabric/releases/1.2.3-resume-candidate/fabric.py && rtk sed -n '3310,3535p' /Users/haewonkim/.codex-fabric/releases/1.2.3-resume-candidate/fabric.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest tests.test_o2_transactions -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/w0_integrity_regressions.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest discover -s tests -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/w0_repo_baseline.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short --branch && rtk git rev-parse HEAD && rtk git rev-parse HEAD''^ && rtk git show -s --format='\"'%H%n%P%n%s' HEAD && rtk git diff HEAD\"'^ HEAD --check && rtk git diff --name-only HEAD''^ HEAD'",
+      "exit_code": 0,
+      "type": "command_execution"
+    }
+  ],
+  "codex": {
+    "cli_version": "codex-cli 0.154.0",
+    "configured_model": "gpt-5.6-luna",
+    "event_count": 99,
+    "provider_reported_model": null,
+    "reasoning_effort": "xhigh",
+    "terminal_type": "turn.completed",
+    "usage": {
+      "cache_hit_percent": 90.85,
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 1662976,
+      "fresh_input_tokens": 167447,
+      "input_tokens": 1830423,
+      "non_reasoning_output_tokens": 6762,
+      "output_tokens": 12640,
+      "reasoning_output_tokens": 5878,
+      "total_processed_tokens": 1843063
+    },
+    "warnings": []
+  },
+  "commits": [
+    {
+      "sha": "6800e2d2e0e6da926fb529dc23ee37b48feaa390",
+      "subject": "Fix CHG-121 receipt replay authorization"
+    },
+    {
+      "sha": "48b93619de95c1df28dab56a8a0683560bec553b",
+      "subject": "Implement CHG-121 O2 durable command transactions"
+    }
+  ],
+  "diff": {
+    "additions": 1456,
+    "changed_files": 12,
+    "commit_count": 2,
+    "deletions": 6
+  },
+  "error_code": null,
+  "evidence_manifest": {
+    "count": 3,
+    "items": [
+      {
+        "bytes": 3697,
+        "path": "11_Developer_Start.md",
+        "sha256": "b0706355ec404f8d9ab7b60e810571e8c175add87fe1757831a497b9ade51bb3"
+      },
+      {
+        "bytes": 7140,
+        "path": "README.md",
+        "sha256": "66d2aff6697b58a7bcba1ddaa316a4713e2255c0d7ed6489c0c5fa58c98fbb4f"
+      },
+      {
+        "bytes": 15029,
+        "path": "manifest.json",
+        "sha256": "e418a3f7ea2db51edf87dc14e1193a35720557d794061775ed4250d1430e3d14"
+      }
+    ],
+    "version": 1
+  },
+  "evidence_publisher_release": "1.2.3-resume-candidate",
+  "fabric_capture": {
+    "applied": false,
+    "paths_before": 0,
+    "transient_untracked_removed": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "fabric_release": "1.2.3-resume-candidate",
+  "failure_class": null,
+  "finished_at": "2026-09-18T18:23:31Z",
+  "git": {
+    "base_is_ancestor": true,
+    "base_sha": "6806aa2f6b42d3199009c0b783262b053d9d26af",
+    "branch": "codex/ephi-o2-command-transaction-core-fix1",
+    "head_sha": "6800e2d2e0e6da926fb529dc23ee37b48feaa390",
+    "remote_exact_head": true,
+    "remote_head_sha": "6800e2d2e0e6da926fb529dc23ee37b48feaa390",
+    "target_branch": "main",
+    "target_drifted_since_acceptance": false,
+    "target_head_observed_after_execution": "6806aa2f6b42d3199009c0b783262b053d9d26af",
+    "work_branch": "codex/ephi-o2-command-transaction-core-fix1",
+    "worktree_clean": true
+  },
+  "instructions": {
+    "files": [
+      {
+        "bytes": 1458,
+        "path": "AGENTS.md",
+        "sha256": "4349f387a79d886ed1264604ff48c582698e539e08ed8fb2f9d8ab8fbf6f804a"
+      }
+    ],
+    "total_bytes": 1458,
+    "warning": null
+  },
+  "job_id": "CF-007db8702ca91474dfa5320f",
+  "kind": "codex-fabric-audit-evidence",
+  "locator": {
+    "branch": "codex-fabric/evidence/ephi/ephi-o2-command-transaction-core-fix1",
+    "path": ".codex-fabric/audit.json",
+    "ref": "refs/heads/codex-fabric/evidence/ephi/ephi-o2-command-transaction-core-fix1"
+  },
+  "operation": "FIX",
+  "policy": {
+    "environment_policy_sha256": "e077daca74297b3c30bee8989f00f8ca5338f7610b4d016a6c48db524205d064",
+    "fabric_release": "1.2.3-resume-candidate",
+    "policy_sha256": "44756118cd7fda0c45cd23ba1d31a48a3f4f2422d687df15264ba4406f40e1f2",
+    "registry_sha256": "cfc765f3211c37c7967a138f3b2d89a99341939b15b2623f92744d007f625d6f"
+  },
+  "project_id": "ephi",
+  "recovery": {
+    "model_rerun_safe": false,
+    "recovery_required": false,
+    "retry_safe": false,
+    "retry_scope": null,
+    "worktree_retained": true
+  },
+  "request": "ephi-o2-command-transaction-core-fix1",
+  "schema_version": 1,
+  "started_at": "2026-09-18T18:18:45Z",
+  "status": "EXECUTED_CHANGE",
+  "timing": {
+    "execution_seconds": 286,
+    "queue_seconds": 0,
+    "total_seconds": 286
+  },
+  "transport": {
+    "bytes": 4154,
+    "envelope": "FABRIC/2",
+    "prompt_bytes": 3830,
+    "prompt_sha256": "dc019ffbccda34a5974e331a25cc2fdd70e2dfbcada7e3801823645651f5f4d1",
+    "sha256": "007db8702ca91474dfa5320f97fffd4bc60e5d9ba23d247521288792b4f70c3c"
+  }
+}
