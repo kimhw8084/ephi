@@ -1,4 +1,4 @@
-"""Synthetic fail-closed and deterministic fixture regressions for W0 baseline execution."""
+"""Legacy compatibility regressions for the historical-source baseline."""
 
 from pathlib import Path
 import json

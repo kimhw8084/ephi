@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""Execute a verified EPHI source baseline without weakening source preflight."""
+"""Optional legacy baseline for a separately verified historical source tree.
+
+The canonical W0 path is ``tools/w0_repo_baseline.py``. This archive-oriented
+compatibility utility is not invoked by package validation, canonical tests,
+or the current repository baseline.
+"""
 
 from __future__ import annotations
 

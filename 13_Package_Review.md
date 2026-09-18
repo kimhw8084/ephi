@@ -6,9 +6,9 @@ Review date: 2026-09-15 America/Chicago. Design revision: 0.2.
 
 The package is a substantial implementation design with useful separation of science, operational urgency, human workflow and economic evidence. Its strongest choices are immutable decisions, qualified affirmative recovery, durable commands and a single canonical episode workspace. Its historical audit includes concrete synthetic observations and appropriately limits the meaning of portable tests.
 
-It is ready to serve as a versioned design repository. It is **not a runnable application**, a completed W0 baseline, or a qualified release. The supplied archive contains 13 design chapters, nine audit artifacts and a manifest; it contains no original application source, dependency lockfile, migrations or browser implementation. Creating replacements from the excerpts would discard the scientific investment the design explicitly intends to retain.
+It is ready to serve as a versioned design repository and now includes a smallest runnable canonical package baseline. It is **not a completed behavioral W0 qualification or qualified release**. The preserved audit package contains 13 design chapters, nine audit artifacts and a manifest; it remains separate from the new application under `src/ephi`. Creating historical replacements from excerpts would discard the scientific investment the design explicitly intends to retain.
 
-The repository root is `ephi`; the archive's enclosing `EPHI_1.0_Design_Pack/` directory was removed during extraction. The original ZIP is retained locally and ignored by Git. The split chapters are the maintained design; an absent companion master is not a required build input.
+The repository root is `ephi`; the design pack's enclosing directory was removed during extraction. The split chapters are the maintained design; an absent companion master is not a required build input. Historical source-archive identity is preserved as reference-only provenance and is not an active implementation prerequisite.
 
 ## Corrections in this review
 
@@ -16,7 +16,7 @@ P-identifiers below concern the package and contract review. Historical F-identi
 
 | ID | Finding and correction | Requirements / gates |
 |---|---|---|
-| P01 | No repository entry point or repeatable package validation. Added README, contributor/agent instructions, a standard-library checker, regression tests and CI. | T4; package checks only |
+| P01 | No repository entry point or repeatable package validation. Added README, contributor/agent instructions, a standard-library checker, regression tests and CI. CHG-111 adds the canonical package, entrypoint and Git-native baseline. | T4; package checks only |
 | P02 | Original manifest mixed historical audit state with delivery claims and referenced an absent companion. Preserved it under `evidence/import/`, added current hashes, named all missing inputs, and separated historical from current evidence. | T1/T4; G00 remains pending |
 | P03 | “One transaction” did not specify a coherent multi-statement read or prevent competing projection writers. Specified a single statement/repeatable-read snapshot, shared episode locking and owned-field updates. | R2/R3, I10/I12; G04/G05/G07 |
 | P04 | Receipt lookup alone left concurrent first attempts and lost responses ambiguous. Added unique-receipt rollback/re-read behavior, payload identity, same-ID retry semantics, current authorization and archived deduplication identities. | T2, I10; G05/G07/G10 |
@@ -39,7 +39,7 @@ The affected application behavior is still proposed. None of these document corr
 | NiceGUI Base pin | PASS for source inspection: pinned public commit and metadata confirm version 3.0.0a8, NiceGUI 3.15.0 and Python >=3.11,<3.14; file hashes saved in the review evidence |
 | Current package checks | PASS locally on Python 3.14.5: `python3 tools/check_package.py`; integrity, syntax, local links/fences, traceability presence and historical consistency |
 | Checker regression suite | PASS: 12 tests via `python3 -m unittest discover -s tests -v`; changed/missing/extra files, damaged evidence, invalid syntax, broken links and other rejection paths |
-| Application tests and defect corrections | NOT_RUN: original application source absent |
+| Application feature tests and defect corrections | NOT_RUN: F02/F03/F04/F05 APIs are not implemented in the new minimal package |
 | Installed Base, browser, company sources, persistence and scientific qualification | NOT_RUN: no implementation/target environment in this package |
 | Original mission completeness | NOT_VERIFIABLE: original attachment absent; internal A–S and requirement traceability retained |
 
@@ -47,13 +47,12 @@ Exact import/review identities are recorded in [the review evidence](evidence/re
 
 ## Implementation blockers and next slice
 
-1. **Restore the exact original application source.** Verify its recorded archive hash and reproduce the baseline before modifying algorithms. The repository is not a substitute for that input.
-2. **Resolve framework and dependency bindings.** Inspect the installed pinned catalog, produce the binding manifest and lock a compatible environment; the original audit lacked NiceGUI, Polars and PyArrow.
-3. **Complete W0 and the smallest W1 slice.** Add F03/F04/F05 regressions and fixes, then one scoped durable claim/acknowledge path through the actual Base UI with conflict/restart evidence. Do not multiply screens before that works.
-4. **Bind company-specific evidence before a pilot.** Identity, backend/artifact store, source mappings, family thresholds, action authority and operational policies remain the gates already defined in the design.
+1. **Resolve framework and dependency bindings.** Install the exact declared pins on a supported interpreter, produce the binding manifest, and keep the public-import rule. The original audit lacked NiceGUI, Polars and PyArrow.
+2. **Complete the next W0/W1 slice.** Add F03/F04/F05 APIs and regressions against `src/ephi`, then one scoped durable claim/acknowledge path through the actual Base UI with conflict/restart evidence. Do not multiply screens before that works.
+3. **Bind company-specific evidence before a pilot.** Identity, backend/artifact store, source mappings, family thresholds, action authority and operational policies remain the gates already defined in the design.
 
 No application deployment, scientific qualification or production-readiness claim follows from publishing this repository. The next authorized implementation can proceed from [11_Developer_Start.md](11_Developer_Start.md) once the source prerequisite is supplied.
 
 ## CHG-105 W0 runtime delta
 
-The independent framework/dependency qualification slice is recorded separately in [the runtime evidence](evidence/review/nicegui_base_runtime_evidence.json) and linked from [the NiceGUI Base binding manifest](evidence/review/nicegui_base_binding_manifest.json). It verified an isolated Python 3.11.7 environment, the exact NiceGUI Base VCS commit/version, exact `nicegui==3.15.0`, and 21/21 CHG-104 public-root authority imports. All six requested installed discovery commands returned machine-readable output. `runtime-contract` and browserless framework `runtime-smoke --port 0` PASS; `agent-check .` and `gate .` FAIL because this repository still has no EPHI application scaffold or entrypoint. The original application archive remains unavailable in this execution environment, so application baseline/tests, browser qualification, and production qualification remain NOT_RUN.
+The independent framework/dependency qualification slice is recorded separately in [the runtime evidence](evidence/review/nicegui_base_runtime_evidence.json) and linked from [the NiceGUI Base binding manifest](evidence/review/nicegui_base_binding_manifest.json). It verified an isolated Python 3.11.7 environment, the exact NiceGUI Base VCS commit/version, exact `nicegui==3.15.0`, and 21/21 CHG-104 public-root authority imports. The new package identity and deterministic entrypoint are covered by the canonical repository tests; installed framework/browser/company/scientific qualification remains NOT_RUN.

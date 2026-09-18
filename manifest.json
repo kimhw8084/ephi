@@ -3,7 +3,7 @@
   "design_revision": "0.2",
   "design_date": "2026-09-15",
   "timezone": "America/Chicago",
-  "status": "DESIGN_HANDOFF_NOT_IMPLEMENTED_NOT_PRODUCTION_QUALIFIED",
+  "status": "CANONICAL_REPO_BASELINE_NOT_PRODUCTION_QUALIFIED",
   "repository": "https://github.com/kimhw8084/ephi",
   "imported_design_pack": {
     "filename": "EPHI_1.0_Design_Pack.zip",
@@ -46,13 +46,13 @@
     },
     {
       "path": ".gitignore",
-      "bytes": 304,
-      "sha256": "648492eb1969ce04671d676ccfd1e2a1259d41a19269238120c59c9d6b66e3ad"
+      "bytes": 323,
+      "sha256": "9d0d3159beab79a6965bf073c0f5df421d45ac21463d8d3546be5b7918e5e12f"
     },
     {
       "path": "00_START_HERE.md",
-      "bytes": 4462,
-      "sha256": "6298ef998b93917f80bdd1457e1e556ecf17b15289b9f59841ad6d4c848a67ac"
+      "bytes": 4484,
+      "sha256": "6ef00ef194f6426069bcc6525a5a6e4bb4c5646caf6796c2ba4dd6476c2655d4"
     },
     {
       "path": "01_Product_and_Architecture.md",
@@ -96,28 +96,28 @@
     },
     {
       "path": "09_Delivery_and_Gates.md",
-      "bytes": 18324,
-      "sha256": "40e2fad240dcaf7b6d4cc1c65b3d3c6d57d58b04984b8e9cb28c4dccb79a62ab"
+      "bytes": 18454,
+      "sha256": "3f208f5b0ce8481e5a0804c9bac8211ff86e04bf2bad1d67fe73dd5f7b8fff3a"
     },
     {
       "path": "10_Traceability_and_Decisions.md",
-      "bytes": 8109,
-      "sha256": "c1aedda41b6f085ccca34b78a999c7f11e752bac6c5d51865af3fe79ea6dcae2"
+      "bytes": 8208,
+      "sha256": "9fba9fa7d9f898d03ebdf726d1cd20e7b2c1d6a553d2a49717d2ff9268f10e11"
     },
     {
       "path": "11_Developer_Start.md",
-      "bytes": 4753,
-      "sha256": "a38d7e099e19f6dc31d163a8b9a76b59e95579dc9b4b466be6e76f6bc35c7d48"
+      "bytes": 3613,
+      "sha256": "7b2c784d210843052d9253259b907aa18127d52678c956cc77a211395e79c527"
     },
     {
       "path": "12_Sources_and_Evidence.md",
-      "bytes": 6815,
-      "sha256": "d34b83c265fdf0d7f2b8814e852ffa0d031462ed26457d90b05af603a19da504"
+      "bytes": 7245,
+      "sha256": "6fcc4e03499af3fd7bd7186e4a92db0498829d1d0b2a22ef792aa6c58359dd3f"
     },
     {
       "path": "13_Package_Review.md",
-      "bytes": 7972,
-      "sha256": "80eb25b482772cb2a03a9000672dd63eea948e8b99948e5cf2bc11df90257600"
+      "bytes": 7726,
+      "sha256": "42f41d7764fd81f122b63e9a4b32a7f044ce0b5fdeb37263391c3930e4ea3815"
     },
     {
       "path": "AGENTS.md",
@@ -131,8 +131,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 9365,
-      "sha256": "4fe32078679a7331503cbaabc615ef91a25bf8154e10e2fe5e932fda0bd00cc1"
+      "bytes": 8873,
+      "sha256": "5a79af983b29d12ede04e4a482cf6b3ab1aba94e65a3872dfb883cd84ca6aa93"
     },
     {
       "path": "environment/nicegui_base_requirements.txt",
@@ -145,9 +145,14 @@
       "sha256": "ea49feb766c2f755a019e5dce7cab89a4456ea3c9c87d98940bb22abd5bcb89a"
     },
     {
+      "path": "environment/w0_repo_baseline.json",
+      "bytes": 1374,
+      "sha256": "a95dfd32935b805800d2bdafea061d32536bb8f64e6486400caf52c722d66e54"
+    },
+    {
       "path": "evidence/README.md",
-      "bytes": 2369,
-      "sha256": "32e9bd42efcb267536e28e6f7b884c335952811cc6d05d64a870adbf1b16ff73"
+      "bytes": 2516,
+      "sha256": "5b1a29ab4056d7e1c975b01292bf34a4b6a45264870ef85b1549ec28263f8225"
     },
     {
       "path": "evidence/audit_environment.json",
@@ -211,8 +216,8 @@
     },
     {
       "path": "evidence/review/w0_integrity_regression_contract.json",
-      "bytes": 14263,
-      "sha256": "e550e92670c21d72009c73bd7205cca68dda71ab0e9692b9942880f576102c0e"
+      "bytes": 14410,
+      "sha256": "5fd3028b791542fc1c1ced6d74628e667dc324070c7f913a25a07bc9a4d50678"
     },
     {
       "path": "evidence/source_excerpts.md",
@@ -225,24 +230,59 @@
       "sha256": "d995b28e9196c0a2145655905e5c3ddac6c1821c42af0e5a9a79aee0737cef75"
     },
     {
+      "path": "pyproject.toml",
+      "bytes": 480,
+      "sha256": "a0a9fd2ee1c09c466e638cf38d3fcad2f9077541043c69a71cf49bbc1787e00d"
+    },
+    {
+      "path": "src/ephi/__init__.py",
+      "bytes": 623,
+      "sha256": "f272622466f28c9823b6d436226ffd358c7dfbd0af634211181230fb32038ea3"
+    },
+    {
+      "path": "src/ephi/__main__.py",
+      "bytes": 879,
+      "sha256": "a776575ac6e462cd9b7dc97f2a1d3c49595e0c83313c17edc884969b7198b3e5"
+    },
+    {
+      "path": "src/ephi/application.py",
+      "bytes": 1689,
+      "sha256": "8f9a7b5f0f1de4b2eabc042727773393f1e749306ba43af96710b6bc19508e7c"
+    },
+    {
+      "path": "src/ephi/config.py",
+      "bytes": 1757,
+      "sha256": "ab64b16230c5849b3b58fb28ddfd8d45c777914536a81bda09874ceb06877e1c"
+    },
+    {
+      "path": "tests/test_canonical_application.py",
+      "bytes": 2482,
+      "sha256": "246c2195ac49f9a20e99c58534c6936193f0d41efeb3c4f015691a11fdd0212d"
+    },
+    {
       "path": "tests/test_package.py",
-      "bytes": 4524,
-      "sha256": "240751ed087c4ffe26cdbe82e54e6372bbbb1fbee94bf2d66ad2793e4f91eacf"
+      "bytes": 4531,
+      "sha256": "debe7775a4382ce624cb48ad970b317c04d134ea4a74b30932db75953ccd3396"
     },
     {
       "path": "tests/test_source_preflight.py",
-      "bytes": 6134,
-      "sha256": "ce6af6dd40c15786c9e945cbee5e08796aede794cedff5f9cc5980df1848e153"
+      "bytes": 6133,
+      "sha256": "81319b2aee26dfdb55a91844b5a37d9cb735ed04fc9ffdea2a352e9eab8ceb34"
     },
     {
       "path": "tests/test_w0_baseline.py",
-      "bytes": 5197,
-      "sha256": "8cccdf4cf0f6ed6f47205c92f80ac54ea479cea996cd8f1d8ec1af7720e11279"
+      "bytes": 5179,
+      "sha256": "1977dfd7549c34feb73a8f7e33dbf70bf4f6ff3b8ebc5ef7d15f792e74aa77de"
     },
     {
       "path": "tests/test_w0_integrity_regressions.py",
-      "bytes": 7310,
-      "sha256": "0a93b2726c89e3206ac29ad3115ceaebe63e75361f69772bf636d7011118068d"
+      "bytes": 7943,
+      "sha256": "b1b0d65a5a9aa33d21ceb45cf8e0810d32d3ab0b25b760c5bd0b86820b58cf56"
+    },
+    {
+      "path": "tests/test_w0_repo_baseline.py",
+      "bytes": 4205,
+      "sha256": "375b26df6b9add3504417bf22494d7199d0d45a5eee2623740abc8e71abdd32b"
     },
     {
       "path": "tests/test_w0_runtime.py",
@@ -251,23 +291,28 @@
     },
     {
       "path": "tools/check_package.py",
-      "bytes": 11246,
-      "sha256": "642b4202dffad801be8e0c4cc796826e1a8833c335ce894b5d516ac810a09076"
+      "bytes": 11733,
+      "sha256": "821dddcf5be7c8a1dd2a944c0b411f46bedefe74fd5bdaf41e94f283767c66f2"
     },
     {
       "path": "tools/source_preflight.py",
-      "bytes": 16697,
-      "sha256": "b82ed81cddf7784fe7144af887b1ba4411b0883505b09d751c69ac798969914e"
+      "bytes": 16859,
+      "sha256": "126c26023ca3371d06057874ad1af2251c417ffe2619976d773c46e5ab589cdb"
     },
     {
       "path": "tools/w0_baseline.py",
-      "bytes": 18010,
-      "sha256": "870043bdc3ccd2fce3e75ecf0ef2f370aa4abda6d76546a23c4453d93c30d076"
+      "bytes": 18202,
+      "sha256": "37d7942574ae86f69eb0b4484018ac837e7a4a1d6cdb854cfd24ae6f078a7421"
     },
     {
       "path": "tools/w0_integrity_regressions.py",
-      "bytes": 39689,
-      "sha256": "8901cb7e509a0c5221dd05d717b72039708cb553a455d1a7a52f4bccfea4923a"
+      "bytes": 43678,
+      "sha256": "de728f19a735de425eacc1bebe69bf4e69d76d66df762f6d2ab6270a774c4844"
+    },
+    {
+      "path": "tools/w0_repo_baseline.py",
+      "bytes": 18633,
+      "sha256": "d5101d43b47f8bbad0d5f3d4caf92066e44e8403c1e65d5e9d4cf2d9f8cc5b27"
     },
     {
       "path": "tools/w0_runtime.py",

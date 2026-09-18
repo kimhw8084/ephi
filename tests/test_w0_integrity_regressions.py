@@ -1,4 +1,4 @@
-"""Offline regressions for the CHG-109 source-bound W0 integrity gate."""
+"""Offline regressions for CHG-109 historical evidence and canonical targeting."""
 
 from copy import deepcopy
 import json
@@ -16,6 +16,7 @@ from tools.w0_integrity_regressions import (
     EXPECTED_FINDING_IDS,
     evaluate_f02,
     evaluate_finding,
+    run_canonical_integrity_regressions,
     run_integrity_regressions,
     validate_contract,
     verify_historical_evidence,
@@ -89,6 +90,15 @@ class W0IntegrityRegressionTests(unittest.TestCase):
         self.assertEqual(result["current_execution"]["status"], "NOT_RUN")
         self.assertFalse(result["current_execution"]["tests_executed"])
         self.assertTrue(all(item["status"] == "NOT_RUN" for item in result["findings"]))
+
+    def test_canonical_default_target_does_not_require_legacy_preflight(self):
+        result = run_canonical_integrity_regressions()
+        self.assertEqual(result["mode"], "CANONICAL_REPOSITORY")
+        self.assertEqual(result["status"], "NOT_RUN")
+        self.assertEqual(result["current_execution"]["target"], "src/ephi")
+        self.assertFalse(result["current_execution"]["tests_executed"])
+        self.assertTrue(all(item["status"] == "NOT_IMPLEMENTED" for item in result["findings"]))
+        self.assertEqual(result["historical_evidence"]["status"], "REFERENCE_ONLY")
 
     def test_missing_preflight_is_deterministically_blocked_and_separate(self):
         missing = self.root / "missing-source-preflight.json"

@@ -2,11 +2,11 @@
 
 ## Evidence hierarchy
 
-**Delivery boundary:** this repository was created from `EPHI_1.0_Design_Pack.zip` (SHA-256 `88e3fdbd02d1796203b8b39a700cd72a7e39087704faa811b7920622574b4e7d`). The EPHI source ZIP, original mission attachment and companion master referenced by the earlier audit are absent. All historical executions below belong to that earlier audit. See [13_Package_Review.md](13_Package_Review.md) for the current review and [evidence/README.md](evidence/README.md) for preserved provenance.
+**Delivery boundary:** the Git checkout is the sole executable source of truth for the canonical application. This repository was created from `EPHI_1.0_Design_Pack.zip` (SHA-256 `88e3fdbd02d1796203b8b39a700cd72a7e39087704faa811b7920622574b4e7d`). The historical source archive, original mission attachment and companion master referenced by the earlier audit are reference-only inputs and are not normal build/test prerequisites. All historical executions below belong to that earlier audit. See [13_Package_Review.md](13_Package_Review.md) for the current review and [evidence/README.md](evidence/README.md) for preserved provenance.
 
-The EPHI source archive identified by the historical audit is the code authority for those findings. The user's original mission was the requested product/design brief, not evidence that a feature or test already exists. Pinned NiceGUI Base source describes template capabilities and construction rules, not target certification. External official documentation supports limited technical platform choices. Proposed architecture, policies, load envelopes, interface names and UI behavior are design decisions, not claims about the current implementation.
+The historical EPHI source archive identified below is evidence authority for those historical findings only; Git is the executable authority for the new canonical implementation. The user's original mission was the requested product/design brief, not evidence that a feature or test already exists. Pinned NiceGUI Base source describes template capabilities and construction rules, not target certification. External official documentation supports limited technical platform choices. Proposed architecture, policies, load envelopes, interface names and UI behavior are design decisions, not claims about the current implementation.
 
-## Local source and evidence
+## Historical local source and evidence (REFERENCE_ONLY)
 
 | Source | Identity / scope |
 |---|---|
@@ -20,7 +20,9 @@ The EPHI source archive identified by the historical audit is the code authority
 | Selected source excerpts | `evidence/source_excerpts.md`; line-numbered extracts supporting key findings |
 | Pack checks | `evidence/design_pack_checks.json`: structural/source-identity checks, not implementation or browser tests |
 
-Run the probes from the extracted EPHI root in an environment satisfying the relevant EPHI dependencies:
+The following is an optional historical compatibility procedure only; it is not part of the canonical Git-native build, test, or W0 baseline:
+
+Run the probes from the separately preserved historical source root in an environment satisfying the relevant EPHI dependencies:
 
 ```bash
 PYTHONPATH=src:company_port/src python /path/to/ephi/evidence/behavior_probes.py \

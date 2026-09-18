@@ -1,17 +1,17 @@
 # EPHI 1.0 — Engineering Decision System
 ## Master design and implementation handoff
 
-**Design date:** 2026-09-15 America/Chicago. **Status:** proposed target design, grounded in a source audit; not an implementation or production certification.
+**Design date:** 2026-09-15 America/Chicago. **Status:** maintained target design; the repository now has a canonical package baseline but no production certification.
 
-**Repository revision 0.2:** the supplied design pack is now maintained directly in the `ephi` repository root. Begin with [README.md](README.md) for current package checks and [13_Package_Review.md](13_Package_Review.md) for the review. The original application archive, original mission attachment and companion master were not included in this delivery. Historical application results below have not been rerun here.
+**Repository revision 0.2:** the supplied design pack is maintained directly in the `ephi` repository root. Begin with [README.md](README.md) for current package checks and [13_Package_Review.md](13_Package_Review.md) for the review. The canonical application is a new implementation under `src/ephi`; historical application results below remain reference-only.
 
 **Decision:** retain EPHI's analytical investment, repair the verified integrity/product gaps, and build one complete engineer decision loop on the installed NiceGUI Base platform. The primary product is a work queue plus a canonical episode workspace, not a collection of dashboards.
 
 Read `01_Product_and_Architecture.md` for the one-page architecture and requirements. Implement using `03_Application_Contracts.md` through `09_Delivery_and_Gates.md`. `02_Source_Audit.md` contains actual findings and evidence limitations. `10_Traceability_and_Decisions.md` maps the mission's A–S outputs and all requirements. `11_Developer_Start.md` is the execution handoff. `12_Sources_and_Evidence.md` provides pinned references, reproducibility instructions and unexecuted gates.
 
-## Source identities
+## Historical provenance (REFERENCE_ONLY; not a repository prerequisite)
 
-- EPHI input: `ephi_v0.19.1_production_hardened(1).zip`.
+- Historical EPHI input filename: `ephi_v0.19.1_production_hardened(1).zip`.
 - SHA-256: `5e9ad8f63b3158adc530af69fc650aec606cbfa64896ba73840cdcf994a2b6e3`.
 - Archive source root: `ephi_v0.19.1_production_hardened_release/`.
 - NiceGUI Base inspected candidate: `kimhw8084/nicegui-base` at `000298562d6bcbf6df304edbd41b98b30fe4bfcf`.

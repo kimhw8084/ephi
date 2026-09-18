@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the design repository without importing EPHI or installing dependencies."""
+"""Validate the canonical EPHI repository without installing dependencies."""
 
 from __future__ import annotations
 
@@ -10,20 +10,26 @@ import json
 from pathlib import Path, PurePosixPath
 import re
 import sys
+import tomllib
 from urllib.parse import unquote, urlsplit
 import xml.etree.ElementTree as ET
 
 
 ROOT = Path(__file__).resolve().parents[1]
-IGNORED_DIRS = {".git", ".venv", "__pycache__", ".pytest_cache", "artifacts"}
+IGNORED_DIRS = {".git", ".venv", "__pycache__", ".pytest_cache", "artifacts", "build"}
 IGNORED_FILES = {".DS_Store", "EPHI_1.0_Design_Pack.zip"}
-STATUS = "DESIGN_HANDOFF_NOT_IMPLEMENTED_NOT_PRODUCTION_QUALIFIED"
+STATUS = "CANONICAL_REPO_BASELINE_NOT_PRODUCTION_QUALIFIED"
 REQUIRED = {
     "README.md", "AGENTS.md", "CONTRIBUTING.md", "manifest.json",
     ".gitignore", ".gitattributes", ".github/workflows/package.yml",
     "evidence/README.md", "evidence/import/original_manifest.json",
     "evidence/review/package_review.json", "evidence/review/base_reference_check.json",
     "tools/check_package.py", "tests/test_package.py",
+    "pyproject.toml", "environment/w0_repo_baseline.json",
+    "src/ephi/__init__.py", "src/ephi/__main__.py",
+    "src/ephi/application.py", "src/ephi/config.py",
+    "tools/w0_repo_baseline.py", "tests/test_canonical_application.py",
+    "tests/test_w0_repo_baseline.py",
 }
 SECRET_PATTERNS = (
     r"-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----",
@@ -41,7 +47,7 @@ def digest(path: Path) -> dict:
 def package_files(root: Path) -> list[Path]:
     def walk(directory: Path):
         for path in sorted(directory.iterdir()):
-            if path.name in IGNORED_DIRS or path.name in IGNORED_FILES:
+            if path.name in IGNORED_DIRS or path.name in IGNORED_FILES or path.name.endswith(".egg-info"):
                 continue
             if path.name == ".env" or (path.name.startswith(".env.") and path.name != ".env.example"):
                 continue
@@ -179,7 +185,7 @@ def validate(root: Path) -> list[str]:
         errors.append(f"required file missing: {missing}")
     manifest = read_json(root / "manifest.json")
     if manifest["status"] != STATUS:
-        errors.append("design package must not claim implemented/qualified status")
+        errors.append("package status must identify the canonical repository baseline without production qualification")
     declared = [entry["path"] for entry in manifest["files"]]
     if declared != sorted(set(declared)):
         errors.append("manifest paths must be unique and sorted")
@@ -197,6 +203,8 @@ def validate(root: Path) -> list[str]:
         try:
             if path.suffix == ".json":
                 read_json(path)
+            elif path.name == "pyproject.toml":
+                tomllib.loads(path.read_text(encoding="utf-8"))
             elif path.suffix == ".py":
                 ast.parse(path.read_text(encoding="utf-8"), filename=name)
             elif path.suffix == ".md":
@@ -240,7 +248,7 @@ def main() -> int:
             print(f"FAIL: {error}", file=sys.stderr)
         return 1
     print(f"PASS: {len(package_files(ROOT))} package files; manifest, syntax, local links/fences, traceability and historical evidence.")
-    print("Scope: design package only. Application/runtime/browser/production qualification NOT_RUN.")
+    print("Scope: canonical repository baseline only. Feature/runtime/browser/scientific/production qualification NOT_RUN.")
     return 0
 
 

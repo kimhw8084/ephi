@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""Restore and inspect the exact EPHI source archive without importing it."""
+"""Optional legacy compatibility preflight for historical EPHI source input.
+
+This utility is retained only for historical-source compatibility work. It is
+not part of the canonical Git-native W0 baseline or ordinary application
+tests.
+"""
 
 from __future__ import annotations
 

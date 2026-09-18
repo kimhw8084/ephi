@@ -2,7 +2,7 @@
 
 Engineering decision support for equipment, process and measurement-system health.
 
-**Status: reviewed design handoff. Application implementation and production qualification are pending.** This repository contains the EPHI 1.0 design, historical source-audit evidence, and executable package checks. It does not yet contain an installable EPHI application.
+**Status: canonical repository baseline implemented; application features and production qualification are pending.** This repository contains the EPHI 1.0 design, preserved historical source-audit evidence, and the smallest installable repo-native EPHI application foundation. It does not claim identity, byte identity, algorithm equivalence, or historical-test equivalence with an earlier application artifact.
 
 EPHI's intended workflow is **Detect → Explain → Prioritize → Contain → Investigate → Act → Verify recovery → Learn → Prove value**. Manufacturing actions remain human controlled in approved external systems.
 
@@ -35,56 +35,44 @@ The numbered chapters are the maintained design. [manifest.json](manifest.json) 
 
 ## Validate this repository
 
-Python 3.11 or newer; no third-party packages or application credentials are needed:
+Python 3.11–3.13 is supported. Offline repository checks need no third-party packages, network, credentials, chat attachment, or source archive:
 
 ```bash
 python3 tools/check_package.py
 python3 -m unittest discover -s tests -v
+python3 tools/w0_repo_baseline.py
 ```
 
-Checks cover file integrity, local Markdown links and code fences, JSON/Python syntax, requirement coverage, and consistency of the imported audit evidence. CI runs these package checks on Python 3.11–3.14. This is distinct from the proposed application's pinned Python 3.11–3.13 runtime.
+Checks cover file integrity, local Markdown links and code fences, JSON/TOML/Python syntax, requirement coverage, imported audit consistency, canonical package identity, exact dependency declarations, Git identity, and deterministic import/entry behavior. CI runs package checks on Python 3.11–3.14; the application itself supports Python 3.11–3.13.
 
-The historical **275 passed / 1 skipped** result belongs to the original application audit. It is not this repository's test result. The application tests and behavioral probes require the absent original source.
+The historical **275 passed / 1 skipped** result remains `REFERENCE_ONLY` in imported audit evidence. It is not this repository's test result. Current canonical tests are the results from `python3 -m unittest discover -s tests -v`.
 
-## W0 source preflight
+## Install and identify the canonical application
 
-The first bounded W0 step is a fail-closed source restoration preflight. Place the exact, owner-supplied archive at the ignored default location below, preserving its required filename, then run one command:
-
-```text
-artifacts/source/ephi_v0.19.1_production_hardened(1).zip
-```
+The canonical application is defined by [pyproject.toml](pyproject.toml) and lives under `src/ephi`. A fresh Git checkout can install the package with the exact CHG-105 framework pins:
 
 ```bash
-python3 tools/source_preflight.py
+python3 -m pip install .
+python3 -m ephi --self-check
 ```
 
-The preflight writes `artifacts/source-preflight.json` and, only after the exact SHA-256 and archive-member safety checks pass, stages the source under `artifacts/source-staging/`. An alternate local/staging archive may be supplied with `--archive`, but its basename must still be `ephi_v0.19.1_production_hardened(1).zip`; `--stage-dir` must name a fresh directory. Paths under `evidence/` are rejected. The archive and staged source are ignored local artifacts and must never be committed.
+The baseline entrypoint is intentionally a deterministic identity/configuration self-check. It does not start a production server, create company bindings, persist data, or implement broad UI behavior. The application is a new canonical implementation, not a reconstruction of an historical source tree.
 
-`SOURCE_REQUIRED` (exit 2) means the exact archive is absent. `SOURCE_REJECTED` (exit 3) means filename, hash, ZIP structure, member path, special-file/symlink safety, or staging validation failed. `SOURCE_STAGED` (exit 0) records source identity and discovers Python, dependency-file, test-file and runtime reality; it does not run the original application tests. The JSON keeps the historical 275 passed / 1 skipped audit result under `historical_test_result` with `REFERENCE_ONLY` status and records current test execution separately as `NOT_RUN` until an engineer runs the verified source baseline.
+## W0 repository baseline
 
-This foundation does not reconstruct application modules and does not fix or claim to fix F03, F04 or F05. Those changes remain blocked on the verified original source and their W0 regression/qualification work.
+The machine-readable contract is [environment/w0_repo_baseline.json](environment/w0_repo_baseline.json), and the runner is [tools/w0_repo_baseline.py](tools/w0_repo_baseline.py). It records only Git HEAD/tree/worktree facts, the supported Python range, exact declared dependencies, package/import identity, manifest membership/hashes, deterministic entrypoint output, and current canonical test results. Its ignored output is `artifacts/w0-repo-baseline.json`.
 
-## W0 baseline execution
+Identity or manifest corruption fails closed before canonical tests execute. Historical audit results remain a separate `REFERENCE_ONLY` field and cannot make the canonical baseline pass.
 
-After preflight reports `SOURCE_STAGED`, run the bounded baseline harness:
+## Historical-source compatibility utilities
 
-```bash
-python3 tools/w0_baseline.py
-```
-
-The harness consumes `artifacts/source-preflight.json`, re-inventories the reported staged root, and runs only the test runner and test roots discovered there. It exits non-zero without executing tests for a missing/non-staged preflight, any source identity mismatch, or a missing staged root. Its ignored output is `artifacts/w0-baseline.json`; its `historical_test_result` remains `REFERENCE_ONLY` and is separate from `current_run`.
-
-The CHG-104 NiceGUI Base binding record is [evidence/review/nicegui_base_binding_manifest.json](evidence/review/nicegui_base_binding_manifest.json). It records the pinned source inspection and explicitly records installed CLI discovery as unavailable when that executable is absent.
+`tools/source_preflight.py` and `tools/w0_baseline.py` are retained as explicitly optional legacy compatibility utilities for historical-source work. They are not prerequisites for installation, package validation, the canonical W0 baseline, ordinary tests, or future implementation gates. Do not request, locate, stage, reconstruct, download, or depend on the historical source archive for the normal repository workflow. Its filename and SHA-256 are preserved only as `REFERENCE_ONLY` provenance in imported evidence and related historical records.
 
 ## W0 integrity regressions (CHG-109)
 
-The source-bound F02/F03/F04/F05 contract is [the machine-readable regression contract](evidence/review/w0_integrity_regression_contract.json). After `source_preflight.py` reports `SOURCE_STAGED`, run:
+Run `python3 tools/w0_integrity_regressions.py` for the default canonical target. The preserved F02/F03/F04/F05 probe files and observations remain immutable `REFERENCE_ONLY` evidence. Because those behavioral APIs do not yet exist in the minimal `src/ephi` application, the canonical runner reports `NOT_IMPLEMENTED`/`NOT_RUN`; it does not block the repository baseline or fabricate `PASS`. The old source-bound execution is available only with the explicit `--legacy-source` option and is not part of the normal W0 path.
 
-```bash
-python3 tools/w0_integrity_regressions.py
-```
-
-The gate validates the exact preflight identity, runs the preserved probe with `PYTHONPATH=src:company_port/src`, and stores fresh output only under ignored `artifacts/w0-integrity-regressions/`. It reports `BLOCKED` with current execution `NOT_RUN` until exact source is staged. F02 remains a qualification boundary: source-only recomposition is recorded as `SOURCE_ONLY_INSUFFICIENT`, while the actual staged checkpoint API/test must separately produce `CHECKPOINT_RESTORE_PASS` before F02 passes. Historical evidence is never overwritten or treated as current execution.
+The CHG-104 NiceGUI Base binding record is [evidence/review/nicegui_base_binding_manifest.json](evidence/review/nicegui_base_binding_manifest.json). It records the pinned source inspection and explicitly records installed CLI discovery as unavailable when that executable is absent.
 
 ## W0 pinned framework qualification (CHG-105)
 
@@ -101,13 +89,13 @@ python3 tools/w0_runtime.py qualify
 
 `discover` executes the six requested NiceGUI Base discovery authorities and preserves their machine-readable responses in ignored `artifacts/w0-runtime/` output. `qualify` runs `nicegui-base agent-check .`, `nicegui-base gate .`, `nicegui-base runtime-contract`, and `nicegui-base runtime-smoke --port 0`. The framework smoke is a browserless NiceGUI Base laboratory check, not EPHI application production qualification or browser qualification. The checked-in summary and its separation from CHG-104 source inspection are recorded in [the CHG-105 runtime evidence](evidence/review/nicegui_base_runtime_evidence.json) and linked from [the binding manifest](evidence/review/nicegui_base_binding_manifest.json).
 
-## Before implementation
+## Before expanding implementation
 
-1. Run the W0 source preflight above with the original `ephi_v0.19.1_production_hardened(1).zip`; verify SHA-256 `5e9ad8f63b3158adc530af69fc650aec606cbfa64896ba73840cdcf994a2b6e3`. The supplied design ZIP is a different artifact.
-2. Reproduce that source baseline in isolation and record dependencies. Preserve existing scientific modules and fix the documented integrity defects through regression tests.
-3. Resolve the installed APIs of [NiceGUI Base at the inspected commit](https://github.com/kimhw8084/nicegui-base/tree/000298562d6bcbf6df304edbd41b98b30fe4bfcf), then follow W0/W1. Company bindings and target qualification remain explicit gates.
+1. Keep the canonical package/import/test baseline passing on a supported Python interpreter.
+2. Resolve any additional installed APIs of [NiceGUI Base at the inspected commit](https://github.com/kimhw8084/nicegui-base/tree/000298562d6bcbf6df304edbd41b98b30fe4bfcf) through its public exports and the existing CHG-104/105 binding evidence.
+3. Implement only the next authorized vertical slice against `src/ephi`, then add its contracts, tests, and qualification evidence. Company bindings and target qualification remain explicit gates.
 
-There is no application installation or launch command yet. Publication of this design does not complete W0 or qualify a deployment.
+This repository baseline does not complete W0 behavioral qualification or qualify a deployment.
 
 ## Contributing
 

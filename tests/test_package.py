@@ -34,7 +34,7 @@ class PackageTests(unittest.TestCase):
     def test_current_package_passes_without_git_or_dependencies(self):
         result = self.run_check()
         self.assertEqual(result.returncode, 0, result.stderr)
-        self.assertIn("Application/runtime/browser/production qualification NOT_RUN", result.stdout)
+        self.assertIn("Feature/runtime/browser/scientific/production qualification NOT_RUN", result.stdout)
 
     def test_changed_document_requires_explicit_manifest_refresh(self):
         path = self.root / "README.md"

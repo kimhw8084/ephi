@@ -2,7 +2,7 @@
   "schema_version": 1,
   "change": "CHG-109",
   "wave": "W0",
-  "scope": "Source-bound integrity regression gate for F02, F03, F04 and F05",
+  "scope": "Historical F02/F03/F04/F05 evidence with canonical repository execution target",
   "source_identity": {
     "required_filename": "ephi_v0.19.1_production_hardened(1).zip",
     "required_sha256": "5e9ad8f63b3158adc530af69fc650aec606cbfa64896ba73840cdcf994a2b6e3",
@@ -98,6 +98,9 @@
   },
   "current_execution": {
     "status": "NOT_RUN",
+    "target_mode": "CANONICAL_REPOSITORY",
+    "target_source_root": "src/ephi",
+    "canonical_behavior_status": "NOT_IMPLEMENTED",
     "probe_script": "evidence/behavior_probes.py",
     "pythonpath": "src:company_port/src",
     "runtime_artifact_root": "artifacts/w0-integrity-regressions",

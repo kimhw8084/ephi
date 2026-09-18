@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "change": "CHG-111",
+  "wave": "W0",
+  "scope": "Canonical Git-native repository baseline",
+  "mode": "CANONICAL_REPOSITORY",
+  "python_requires": ">=3.11,<3.14",
+  "package": {
+    "definition": "pyproject.toml",
+    "name": "ephi",
+    "version": "0.1.0",
+    "source_root": "src/ephi",
+    "entrypoint": "ephi.__main__:main",
+    "script": "ephi"
+  },
+  "dependencies": {
+    "nicegui_base": "nicegui-base @ git+https://github.com/kimhw8084/nicegui-base.git@000298562d6bcbf6df304edbd41b98b30fe4bfcf",
+    "nicegui": "nicegui==3.15.0",
+    "nicegui_base_version": "3.0.0a8",
+    "nicegui_base_commit": "000298562d6bcbf6df304edbd41b98b30fe4bfcf"
+  },
+  "commands": {
+    "canonical_tests": ["python3", "-m", "unittest", "discover", "-s", "tests", "-v"],
+    "package_check": ["python3", "tools/check_package.py"],
+    "entry_check": ["python3", "-m", "ephi", "--self-check"]
+  },
+  "historical_test_result": {
+    "status": "REFERENCE_ONLY",
+    "passed": 275,
+    "skipped": 1,
+    "source": "evidence/pytest.log",
+    "current_execution": false
+  },
+  "integrity": {
+    "git": ["HEAD", "HEAD^{tree}", "status --porcelain=v1 --untracked-files=all"],
+    "manifest": "manifest.json",
+    "preserve_historical_evidence": true,
+    "forbidden_runtime_inputs": ["historical-source artifacts", "staged-source directories", "chat attachments"]
+  }
+}

@@ -1,4 +1,4 @@
-"""Synthetic archive regressions for the W0 source-restoration preflight."""
+"""Legacy compatibility regressions for the historical-source preflight."""
 
 from pathlib import Path
 import hashlib
