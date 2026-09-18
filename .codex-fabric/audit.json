@@ -1,0 +1,510 @@
+{
+  "accepted_at": "2026-09-18T02:05:55Z",
+  "changed_files": [
+    {
+      "additions": 14,
+      "deletions": 0,
+      "path": ".github/workflows/package.yml",
+      "status": "M"
+    },
+    {
+      "additions": 4,
+      "deletions": 6,
+      "path": "00_START_HERE.md",
+      "status": "M"
+    },
+    {
+      "additions": 3,
+      "deletions": 3,
+      "path": "09_Delivery_and_Gates.md",
+      "status": "M"
+    },
+    {
+      "additions": 1,
+      "deletions": 1,
+      "path": "10_Traceability_and_Decisions.md",
+      "status": "M"
+    },
+    {
+      "additions": 28,
+      "deletions": 20,
+      "path": "11_Developer_Start.md",
+      "status": "M"
+    },
+    {
+      "additions": 4,
+      "deletions": 11,
+      "path": "12_Sources_and_Evidence.md",
+      "status": "M"
+    },
+    {
+      "additions": 10,
+      "deletions": 10,
+      "path": "13_Package_Review.md",
+      "status": "M"
+    },
+    {
+      "additions": 3,
+      "deletions": 2,
+      "path": "AGENTS.md",
+      "status": "M"
+    },
+    {
+      "additions": 1,
+      "deletions": 1,
+      "path": "CONTRIBUTING.md",
+      "status": "M"
+    },
+    {
+      "additions": 33,
+      "deletions": 54,
+      "path": "README.md",
+      "status": "M"
+    },
+    {
+      "additions": 37,
+      "deletions": 0,
+      "path": "environment/w0_repo_baseline.json",
+      "status": "A"
+    },
+    {
+      "additions": 10,
+      "deletions": 2,
+      "path": "evidence/review/w0_integrity_regression_contract.json",
+      "status": "M"
+    },
+    {
+      "additions": 105,
+      "deletions": 35,
+      "path": "manifest.json",
+      "status": "M"
+    },
+    {
+      "additions": 24,
+      "deletions": 0,
+      "path": "pyproject.toml",
+      "status": "A"
+    },
+    {
+      "additions": 14,
+      "deletions": 0,
+      "path": "src/ephi/__init__.py",
+      "status": "A"
+    },
+    {
+      "additions": 7,
+      "deletions": 0,
+      "path": "src/ephi/__main__.py",
+      "status": "A"
+    },
+    {
+      "additions": 69,
+      "deletions": 0,
+      "path": "src/ephi/app.py",
+      "status": "A"
+    },
+    {
+      "additions": 37,
+      "deletions": 0,
+      "path": "src/ephi/config.py",
+      "status": "A"
+    },
+    {
+      "additions": 24,
+      "deletions": 0,
+      "path": "src/ephi/framework.py",
+      "status": "A"
+    },
+    {
+      "additions": 19,
+      "deletions": 0,
+      "path": "src/ephi/identity.py",
+      "status": "A"
+    },
+    {
+      "additions": 0,
+      "deletions": 0,
+      "path": "src/ephi/py.typed",
+      "status": "A"
+    },
+    {
+      "additions": 43,
+      "deletions": 0,
+      "path": "tests/test_ephi_application.py",
+      "status": "A"
+    },
+    {
+      "additions": 15,
+      "deletions": 4,
+      "path": "tests/test_w0_integrity_regressions.py",
+      "status": "M"
+    },
+    {
+      "additions": 66,
+      "deletions": 0,
+      "path": "tests/test_w0_repo_baseline.py",
+      "status": "A"
+    },
+    {
+      "additions": 8,
+      "deletions": 4,
+      "path": "tools/check_package.py",
+      "status": "M"
+    },
+    {
+      "additions": 7,
+      "deletions": 2,
+      "path": "tools/source_preflight.py",
+      "status": "M"
+    },
+    {
+      "additions": 6,
+      "deletions": 1,
+      "path": "tools/w0_baseline.py",
+      "status": "M"
+    },
+    {
+      "additions": 165,
+      "deletions": 26,
+      "path": "tools/w0_integrity_regressions.py",
+      "status": "M"
+    },
+    {
+      "additions": 345,
+      "deletions": 0,
+      "path": "tools/w0_repo_baseline.py",
+      "status": "A"
+    }
+  ],
+  "checks": [
+    {
+      "command": "/bin/zsh -lc \"pwd && git status --short --branch && git rev-parse HEAD && git show -s --format='%H%n%s' HEAD && printf '\\\\n--- instruction files ---\\\\n' && sed -n '1,240p' /Users/haewonkim/.codex/RTK.md && printf '\\\\n--- law ---\\\\n' && sed -n '1,260p' /Users/haewonkim/.codex/law.md && printf '\\\\n--- README ---\\\\n' && sed -n '1,260p' README.md && printf '\\\\n--- 13_Package_Review ---\\\\n' && sed -n '1,320p' 13_Package_Review.md\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git status --short --branch && rtk rg --files -g '\"'!artifacts/**'\"' -g '\"'!*.zip'\"' | sed -n '1,260p' && printf '\\\\n--- pyproject/setup/config files ---\\\\n' && rtk rg --files -g 'pyproject.toml' -g 'setup.cfg' -g 'setup.py' -g 'requirements*.txt' -g 'environment/**' -g 'tools/**' -g 'tests/**' | sort && printf '\\\\n--- current tools ---\\\\n' && rtk sed -n '1,280p' tools/check_package.py && printf '\\\\n--- current tests list ---\\\\n' && rtk rg -n \\\"source_preflight|w0_baseline|SOURCE_STAGED|SOURCE_REQUIRED|w0_integrity|manifest|nicegui|application|entry|runtime\\\" tests tools README.md 11_Developer_Start.md 09_Delivery_and_Gates.md 12_Sources_and_Evidence.md CONTRIBUTING.md AGENTS.md 2>/dev/null | sed -n '1,360p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,260p' manifest.json && printf '\\\\n--- binding ---\\\\n' && rtk sed -n '1,320p' evidence/review/nicegui_base_binding_manifest.json && printf '\\\\n--- runtime spec ---\\\\n' && rtk sed -n '1,260p' environment/nicegui_base_runtime.json && printf '\\\\n--- requirements ---\\\\n' && rtk sed -n '1,160p' environment/nicegui_base_requirements.txt && printf '\\\\n--- gitignore/ci ---\\\\n' && rtk sed -n '1,220p' .gitignore && rtk sed -n '1,220p' .github/workflows/package.yml && printf '\\\\n--- baseline tool ---\\\\n' && rtk sed -n '1,280p' tools/w0_baseline.py && printf '\\\\n--- baseline tests ---\\\\n' && rtk sed -n '1,260p' tests/test_w0_baseline.py && printf '\\\\n--- package tests ---\\\\n' && rtk sed -n '1,220p' tests/test_package.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"pwd && rtk sed -n '1,230p' tools/w0_baseline.py && rtk sed -n '230,520p' tools/w0_baseline.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk cat environment/nicegui_base_requirements.txt && rtk python3 - <<'PY'\nimport json\nfrom pathlib import Path\np=json.loads(Path('environment/nicegui_base_runtime.json').read_text())\nprint(json.dumps(p, indent=2))\nPY\nprintf '\\\\n--- public exports names and runtime details ---\\\\n'\nrtk python3 - <<'PY'\nimport json\nfrom pathlib import Path\np=json.loads(Path('evidence/review/nicegui_base_binding_manifest.json').read_text())\nfor key in ('public_symbols','shared_state_authorities','runtime_authorities','forbidden_imports','application_boundary'):\n    if key in p.get('first_slice_binding',{}): print(key, json.dumps(p['first_slice_binding'][key],indent=2))\nPY\nprintf '\\\\n--- dependency/runtime docs ---\\\\n'\nrtk rg -n \\\"pyproject|nicegui-base|nicegui==|Python|entrypoint|main\\\\(|RuntimeConfig|ApplicationRuntime|R1|W0|source_preflight|w0_baseline|SOURCE_STAGED|275 passed|archive|zip\\\" 00_START_HERE.md 01_Product_and_Architecture.md 03_Application_Contracts.md 04_Data_and_Runtime.md 07_NiceGUI_Base_Integration.md 09_Delivery_and_Gates.md 10_Traceability_and_Decisions.md 11_Developer_Start.md 12_Sources_and_Evidence.md CONTRIBUTING.md evidence/README.md tools tests | sed -n '1,460p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,240p' tests/test_w0_integrity_regressions.py && printf '\\\\n--- integrity definitions ---\\\\n' && rtk sed -n '1,180p' tools/w0_integrity_regressions.py && rtk sed -n '220,340p' tools/w0_integrity_regressions.py && rtk sed -n '680,810p' tools/w0_integrity_regressions.py && printf '\\\\n--- source preflight tests tail ---\\\\n' && rtk sed -n '1,180p' tests/test_source_preflight.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '500,735p' tools/w0_integrity_regressions.py && printf '\\\\n--- package requirements and baseline references in current docs ---\\\\n' && rtk rg -n \\\"source_preflight|w0_baseline|w0_integrity|SOURCE_STAGED|source archive|original application archive|ephi_v0\\\\.19\\\\.1|exact ZIP|ZIP|275 passed|not a runnable|design and audit evidence only|implementation blockers|G00|W0\\\" --glob '\"'!evidence/import/**'\"' --glob '\"'!evidence/behavior_probes.*'\"' --glob '\"'!evidence/source_inventory.json'\"' --glob '\"'!manifest.json'\"' . | sed -n '1,520p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk cat .gitignore && rtk python3 --version && (rtk command -v python3.11 || true) && rtk git log --oneline --decorate -5 && rtk git ls-tree -r --name-only HEAD | sed -n '1,220p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest tests.test_ephi_application tests.test_w0_repo_baseline tests.test_w0_integrity_regressions -v'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nfrom tools.w0_repo_baseline import run_baseline\nimport json\nprint(json.dumps(run_baseline(execute_tests=False), indent=2, sort_keys=True))\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,150p' 09_Delivery_and_Gates.md && rtk sed -n '1,90p' 00_START_HERE.md && rtk sed -n '1,90p' 13_Package_Review.md && rtk sed -n '1,100p' 12_Sources_and_Evidence.md && rtk sed -n '1,80p' AGENTS.md && rtk sed -n '1,80p' CONTRIBUTING.md\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk cat .github/workflows/package.yml && rtk rg -n \\\"original application archive|source prerequisite|must be obtained|source ZIP|exact ZIP|SOURCE_STAGED|source-preflight|source-staging|ephi_v0\\\\.19\\\\.1|275 passed|not a runnable application|no application scaffold|design and audit evidence only\\\" --glob '\"'!evidence/import/**'\"' --glob '\"'!evidence/behavior_probes.*'\"' --glob '\"'!evidence/source_inventory.json'\"' --glob '\"'!manifest.json'\"' --glob '\"'!tools/source_preflight.py'\"' --glob '\"'!tools/w0_baseline.py'\"' --glob '\"'!tests/test_source_preflight.py'\"' --glob '\"'!tests/test_w0_baseline.py'\"' --glob '\"'!tools/w0_integrity_regressions.py'\"' --glob '\"'!tests/test_w0_integrity_regressions.py'\"' . | sed -n '1,360p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,140p' evidence/review/w0_integrity_regression_contract.json && rtk rg -n 'contract\\\\[\\\"current_execution\\\"\\\\]|current_execution\\\\.get\\\\(\\\"probe|pythonpath|historical_output' tools/w0_integrity_regressions.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk cat evidence/review/package_review.json && printf '\\\\n--- exact active references ---\\\\n' && rtk rg -n \\\"ephi_v0\\\\.19\\\\.1|source archive|source ZIP|exact ZIP|source prerequisite|must be obtained|SOURCE_STAGED|source-preflight|source-staging|not a runnable application|no EPHI application scaffold|original application source\\\" --glob '\"'!evidence/import/**'\"' --glob '\"'!evidence/behavior_probes.*'\"' --glob '\"'!evidence/source_inventory.json'\"' --glob '\"'!evidence/pytest*'\"' --glob '\"'!evidence/design_pack_checks.json'\"' --glob '\"'!tools/source_preflight.py'\"' --glob '\"'!tools/w0_baseline.py'\"' --glob '\"'!tests/test_source_preflight.py'\"' --glob '\"'!tests/test_w0_baseline.py'\"' --glob '\"'!tools/w0_integrity_regressions.py'\"' --glob '\"'!tests/test_w0_integrity_regressions.py'\"' --glob '\"'!evidence/review/w0_integrity_regression_contract.json'\"' . | sed -n '1,240p'\"",
+      "exit_code": 0,
+      "test_result": {
+        "exit_code": 0,
+        "framework": "pytest",
+        "outcome": "passed",
+        "output_bytes": 6992,
+        "output_sha256": "292f10aa280415f08a956f6665b57041d3c9d8c33577aa66c9f147ddee0923cf",
+        "summary_detected": false
+      },
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest tests.test_ephi_application tests.test_w0_repo_baseline tests.test_w0_integrity_regressions -v && rtk python3 tools/w0_repo_baseline.py --no-tests && rtk python3 tools/w0_integrity_regressions.py'",
+      "exit_code": 4,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py && rtk python3 -m unittest discover -s tests -v && rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3.11 -m pip install --no-deps --no-build-isolation --target /tmp/ephi-chg111-install-check .'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk env PYTHONPATH=/tmp/ephi-chg111-install-check python3.11 -m ephi --self-check --json && rtk env PYTHONPATH=/tmp/ephi-chg111-install-check python3.11 -c 'import ephi; print(ephi.__version__)'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git diff --stat && printf '\\\\n--- name status ---\\\\n' && rtk git status --short && printf '\\\\n--- changed historical files ---\\\\n' && rtk git diff --name-only -- evidence evidence/import && printf '\\\\n--- forbidden application imports ---\\\\n' && rtk rg -n \\\"nicegui\\\\.ui|nicegui_base\\\\.integrations\\\\.nicegui_\\\" src/ephi tools tests || true && printf '\\\\n--- active legacy prerequisite references ---\\\\n' && rtk rg -n \\\"source_preflight|w0_baseline|SOURCE_STAGED|source-staging|source-preflight|ephi_v0\\\\.19\\\\.1|exact ZIP|source prerequisite|must be obtained\\\" README.md 00_START_HERE.md 09_Delivery_and_Gates.md 10_Traceability_and_Decisions.md 11_Developer_Start.md 12_Sources_and_Evidence.md 13_Package_Review.md AGENTS.md CONTRIBUTING.md | sed -n '1,260p' && printf '\\\\n--- current historical evidence digests ---\\\\n' && rtk python3 - <<'PY'\nimport json, hashlib\nfrom pathlib import Path\nroot=Path('.')\nmanifest=json.loads((root/'evidence/import/original_manifest.json').read_text())\nfor item in manifest['files']:\n    if item['path'].startswith('evidence/'):\n        p=root/item['path']\n        digest=hashlib.sha256(p.read_bytes()).hexdigest() if p.exists() else None\n        print(item['path'], 'PASS' if digest == item['sha256'] else 'FAIL')\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk rm -rf build && rtk git status --short'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git diff -- tools/check_package.py tools/w0_integrity_regressions.py tests/test_w0_integrity_regressions.py .github/workflows/package.yml 09_Delivery_and_Gates.md 13_Package_Review.md | sed -n '1,720p' && printf '\\\\n--- new files ---\\\\n' && rtk sed -n '1,380p' tools/w0_repo_baseline.py && rtk sed -n '1,220p' src/ephi/app.py && rtk sed -n '1,160p' pyproject.toml\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest && rtk python3 -m unittest discover -s tests -v && rtk git diff --check'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nimport json\nfrom pathlib import Path\nm=json.loads(Path('manifest.json').read_text())['files']\npaths=[x['path'] for x in m]\nprint(len(paths), len(set(paths)), paths==sorted(paths))\nfor i,(a,b) in enumerate(zip(paths, paths[1:])):\n    if a>=b: print(i,repr(a),repr(b))\nPY\nrtk sed -n '1,100p' manifest.json | tail -40\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk rm -rf src/ephi.egg-info && rtk python3 tools/check_package.py --refresh-manifest && rtk python3 -m unittest discover -s tests -v && rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git status --short --branch && printf '\\\\n--- manifest inventory check ---\\\\n' && rtk python3 - <<'PY'\nfrom tools.w0_repo_baseline import validate_manifest, ROOT\nprint(validate_manifest(ROOT))\nPY\nprintf '\\\\n--- historical file changes ---\\\\n' && rtk git diff --name-only -- evidence/import evidence/behavior_probes.py evidence/behavior_probes.json evidence/behavior_probes.log evidence/source_excerpts.md evidence/source_inventory.json evidence/audit_environment.json evidence/design_pack_checks.json evidence/pytest.log evidence/pytest_results.xml && printf '\\\\n--- new file list ---\\\\n' && rtk git status --short | rtk sed -n '/\"'^??/p'\"'\"",
+      "exit_code": 0,
+      "test_result": {
+        "exit_code": 0,
+        "framework": "pytest",
+        "outcome": "passed",
+        "output_bytes": 1047,
+        "output_sha256": "39bbd1d36dc474dd95a7bd431c0bcb27c19e437aca147281681062660dc01d52",
+        "summary_detected": false
+      },
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git add -A && rtk git commit -m \"CHG-111 R3 add canonical EPHI W0 baseline\"'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short --branch && rtk git rev-parse HEAD && rtk python3 tools/check_package.py && rtk python3 tools/w0_repo_baseline.py && rtk python3 -m unittest discover -s tests -v && rtk git diff --check && rtk git status --porcelain'",
+      "exit_code": 0,
+      "type": "command_execution"
+    }
+  ],
+  "codex": {
+    "cli_version": "codex-cli 0.154.0",
+    "configured_model": "gpt-5.6-luna",
+    "event_count": 118,
+    "provider_reported_model": null,
+    "reasoning_effort": "xhigh",
+    "terminal_type": "turn.completed",
+    "usage": {
+      "cache_hit_percent": 96.86,
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 6181376,
+      "fresh_input_tokens": 200279,
+      "input_tokens": 6381655,
+      "non_reasoning_output_tokens": 31394,
+      "output_tokens": 50291,
+      "reasoning_output_tokens": 18897,
+      "total_processed_tokens": 6431946
+    },
+    "warnings": []
+  },
+  "commits": [
+    {
+      "sha": "de6044e1a6e090c416d495e7014359347e685086",
+      "subject": "CHG-111 R3 add canonical EPHI W0 baseline"
+    }
+  ],
+  "diff": {
+    "additions": 1102,
+    "changed_files": 29,
+    "commit_count": 1,
+    "deletions": 182
+  },
+  "error_code": null,
+  "evidence_manifest": {
+    "count": 12,
+    "items": [
+      {
+        "bytes": 4498,
+        "path": "00_START_HERE.md",
+        "sha256": "efb192102e27c711e0173ea6db4cbdc163c1b77139178c88f955effbadb296e9"
+      },
+      {
+        "bytes": 18623,
+        "path": "09_Delivery_and_Gates.md",
+        "sha256": "c566c138635b89d978e1c4a397a59cc9e243100f34bf7faf748d19a7a483cf0f"
+      },
+      {
+        "bytes": 8154,
+        "path": "10_Traceability_and_Decisions.md",
+        "sha256": "8f72e3deef189d42b162e7701f6183ea2702df744f554b60f2501aa73bca355f"
+      },
+      {
+        "bytes": 2858,
+        "path": "11_Developer_Start.md",
+        "sha256": "b8207b9bca1edb9b73f5eb4b5813c9d78cf4ecc17647609f8041c855c4861498"
+      },
+      {
+        "bytes": 6795,
+        "path": "12_Sources_and_Evidence.md",
+        "sha256": "0f72dd28e2fd994f8cce0d3c01056bffd2ef9e3768625b762620770a8c608c28"
+      },
+      {
+        "bytes": 7844,
+        "path": "13_Package_Review.md",
+        "sha256": "b7af702e2493ab4e91b9b6ef3da8fa994ccbe93cfc7313f4d98aef358e2e6690"
+      },
+      {
+        "bytes": 1415,
+        "path": "AGENTS.md",
+        "sha256": "e7d6dc713c2c18db9f0491e70b6ca32ccb079eb676d72d37b1b8e7b06a545f28"
+      },
+      {
+        "bytes": 1654,
+        "path": "CONTRIBUTING.md",
+        "sha256": "ce607f433d8b590bfdaafb472081a9d396c825f4dfc4fb99bfb724f97361cec5"
+      },
+      {
+        "bytes": 6266,
+        "path": "README.md",
+        "sha256": "458c8886f90cfb22221ec159288abc023fabaeee8f5c5e1ae8353a03066ccc64"
+      },
+      {
+        "bytes": 1055,
+        "path": "environment/w0_repo_baseline.json",
+        "sha256": "50385883ce2eadda92ace6684cbc086fa117d16ad655b1a6a1f1e824c3d418b1"
+      },
+      {
+        "bytes": 14648,
+        "path": "evidence/review/w0_integrity_regression_contract.json",
+        "sha256": "e5b0487c22a101f1b3f8756f1650f0dd764d53b3e1c64ec37a4fc8c246d84580"
+      },
+      {
+        "bytes": 11740,
+        "path": "manifest.json",
+        "sha256": "b23e8d1b50b0c2240601285dfd7feb925ca47f4df30f4b19a2629094ebcedd76"
+      }
+    ],
+    "version": 1
+  },
+  "evidence_publisher_release": "1.2.3-resume-candidate",
+  "fabric_capture": {
+    "applied": false,
+    "paths_before": 0,
+    "transient_untracked_removed": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "fabric_release": "1.2.3-resume-candidate",
+  "failure_class": null,
+  "finished_at": "2026-09-18T02:24:36Z",
+  "git": {
+    "base_is_ancestor": true,
+    "base_sha": "61cccd2639720d3a8fa2b6bfadd5873f29867476",
+    "branch": "codex/ephi-w0-repo-native-baseline-v3",
+    "head_sha": "de6044e1a6e090c416d495e7014359347e685086",
+    "remote_exact_head": true,
+    "remote_head_sha": "de6044e1a6e090c416d495e7014359347e685086",
+    "target_branch": "main",
+    "target_drifted_since_acceptance": false,
+    "target_head_observed_after_execution": "61cccd2639720d3a8fa2b6bfadd5873f29867476",
+    "work_branch": "codex/ephi-w0-repo-native-baseline-v3",
+    "worktree_clean": true
+  },
+  "instructions": {
+    "files": [
+      {
+        "bytes": 959,
+        "path": "AGENTS.md",
+        "sha256": "0803c825a0dbaf0266aa44b5ce9c6a30d8eac93737369aae3dc9715d3bb49767"
+      }
+    ],
+    "total_bytes": 959,
+    "warning": null
+  },
+  "job_id": "CF-09eb9dd7a2708f9702ce63af",
+  "kind": "codex-fabric-audit-evidence",
+  "locator": {
+    "branch": "codex-fabric/evidence/ephi/ephi-w0-repo-native-baseline-v3",
+    "path": ".codex-fabric/audit.json",
+    "ref": "refs/heads/codex-fabric/evidence/ephi/ephi-w0-repo-native-baseline-v3"
+  },
+  "operation": "BUILD",
+  "policy": {
+    "environment_policy_sha256": "e077daca74297b3c30bee8989f00f8ca5338f7610b4d016a6c48db524205d064",
+    "fabric_release": "1.2.3-resume-candidate",
+    "policy_sha256": "44756118cd7fda0c45cd23ba1d31a48a3f4f2422d687df15264ba4406f40e1f2",
+    "registry_sha256": "cfc765f3211c37c7967a138f3b2d89a99341939b15b2623f92744d007f625d6f"
+  },
+  "project_id": "ephi",
+  "recovery": {
+    "model_rerun_safe": false,
+    "recovery_required": false,
+    "retry_safe": false,
+    "retry_scope": null,
+    "worktree_retained": true
+  },
+  "request": "ephi-w0-repo-native-baseline-v3",
+  "schema_version": 1,
+  "started_at": "2026-09-18T02:05:55Z",
+  "status": "EXECUTED_CHANGE",
+  "timing": {
+    "execution_seconds": 1121,
+    "queue_seconds": 0,
+    "total_seconds": 1121
+  },
+  "transport": {
+    "bytes": 5591,
+    "envelope": "FABRIC/2",
+    "prompt_bytes": 5277,
+    "prompt_sha256": "2ca0bdecf3067fd3ca6f959f083bca2e792b4b2c0de58ebd9f78c8b801255c84",
+    "sha256": "09eb9dd7a2708f9702ce63af849584f8a08c7fee52659df45df02f4a253891ed"
+  }
+}
