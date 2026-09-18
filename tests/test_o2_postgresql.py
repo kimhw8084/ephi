@@ -90,12 +90,21 @@ class PostgreSQLTransactionTests(unittest.TestCase):
         ) if viewed else None
         return CommandContext(command_id, principal or self.principal, self.scope, expected, revisions, reason)
 
-    def execute(self, store=None, context=None, *, payload=None, command_type="FixtureCommand", effect=None):
+    def execute(
+        self,
+        store=None,
+        context=None,
+        *,
+        aggregate_id="aggregate-1",
+        payload=None,
+        command_type="FixtureCommand",
+        effect=None,
+    ):
         return VersionedAggregateCommandExecutor(store or self.store).execute(
             context or self.context(),
             command_type=command_type,
             aggregate_type="fixture",
-            aggregate_id="aggregate-1",
+            aggregate_id=aggregate_id,
             payload=payload or {"value": 1},
             required_capability=self.capability,
             effect=effect,
@@ -219,6 +228,87 @@ class PostgreSQLTransactionTests(unittest.TestCase):
         self.assertEqual(len(results), 2)
         self.assertEqual(results[0], results[1])
         self.assertEqual(self.store.count_rows(), {"aggregate_state": 1, "command_receipt": 1, "audit_event": 1, "outbox_event": 1})
+        self.assertEqual(self.store.get_aggregate(self.scope, "fixture", "aggregate-1").version, 1)
+
+    def test_concurrent_first_attempts_on_different_targets_reconcile_to_idempotency_conflict(self):
+        self.store.seed_aggregate(self.scope, "fixture", "aggregate-2", {"effect_count": 0, "seed": "canonical"})
+        command_context = self.context("cross-target-command")
+        payload_hashes = {
+            canonical_command_payload_hash(
+                "FixtureCommand",
+                self.scope,
+                0,
+                command_context.viewed_revisions,
+                {"value": 1},
+                target={"aggregate_type": "fixture", "aggregate_id": aggregate_id},
+            )
+            for aggregate_id in ("aggregate-1", "aggregate-2")
+        }
+        self.assertEqual(len(payload_hashes), 2)
+        first = PostgreSQLReferenceTransactionAdapter(DSN)
+        second = PostgreSQLReferenceTransactionAdapter(DSN)
+        self.addCleanup(first.close)
+        self.addCleanup(second.close)
+        barrier = threading.Barrier(2)
+        results = []
+        conflicts = []
+        failures = []
+
+        def attempt(store, aggregate_id):
+            try:
+                barrier.wait(timeout=10)
+                results.append(
+                    self.execute(
+                        store=_ReceiptRaceBarrierStore(store, barrier),
+                        context=self.context("cross-target-command"),
+                        aggregate_id=aggregate_id,
+                    )
+                )
+            except IdempotencyConflictError as exc:
+                conflicts.append(exc)
+            except Exception as exc:  # pragma: no cover - assertion reports any race failure
+                failures.append(exc)
+
+        threads = [
+            threading.Thread(target=attempt, args=(first, "aggregate-1")),
+            threading.Thread(target=attempt, args=(second, "aggregate-2")),
+        ]
+        for thread in threads:
+            thread.start()
+        for thread in threads:
+            thread.join(timeout=20)
+        self.assertFalse(failures, failures)
+        self.assertEqual(len(results), 1)
+        self.assertEqual(len(conflicts), 1)
+        self.assertEqual(conflicts[0].code, "IDEMPOTENCY_CONFLICT")
+        result = results[0]
+        self.assertIn(result.aggregate_id, {"aggregate-1", "aggregate-2"})
+        self.assertEqual(result.aggregate_version, 1)
+        self.assertEqual(
+            self.store.count_rows(),
+            {"aggregate_state": 2, "command_receipt": 1, "audit_event": 1, "outbox_event": 1},
+        )
+        states = [
+            self.store.get_aggregate(self.scope, "fixture", aggregate_id).state["effect_count"]
+            for aggregate_id in ("aggregate-1", "aggregate-2")
+        ]
+        self.assertEqual(sum(states), 1)
+        receipt = self.store.get_command_receipt(self.scope.canonical_key, "subject-1", "cross-target-command")
+        self.assertIsNotNone(receipt)
+        self.assertEqual(receipt.aggregate_id, result.aggregate_id)
+        self.assertEqual(self.store.list_audit_events()[0]["aggregate_id"], result.aggregate_id)
+        self.assertEqual(self.store.list_outbox_events()[0]["aggregate_id"], result.aggregate_id)
+
+    def test_unrelated_postgresql_unique_conflict_remains_storage_failure(self):
+        self.execute()
+        self.store.connection.execute("CREATE UNIQUE INDEX ephi_test_audit_event_type_unique ON audit_event(event_type)")
+        self.addCleanup(lambda: self.store.connection.execute("DROP INDEX IF EXISTS ephi_test_audit_event_type_unique"))
+        with self.assertRaises(StorageFailureError):
+            self.execute(context=self.context("unrelated-unique-conflict", expected=1))
+        self.assertEqual(
+            self.store.count_rows(),
+            {"aggregate_state": 1, "command_receipt": 1, "audit_event": 1, "outbox_event": 1},
+        )
         self.assertEqual(self.store.get_aggregate(self.scope, "fixture", "aggregate-1").version, 1)
 
     def test_audit_trigger_rolls_back_aggregate_sibling_event_and_receipt(self):

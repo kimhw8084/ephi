@@ -37,6 +37,10 @@ class ReceiptAlreadyExistsError(Exception):
     """A durable unique receipt key was won by another transaction."""
 
 
+class CommandEventAlreadyExistsError(Exception):
+    """A durable audit/outbox command event key was won by another transaction."""
+
+
 class CommandUnitOfWork(Protocol):
     """The bounded local transaction used by the command executor."""
 

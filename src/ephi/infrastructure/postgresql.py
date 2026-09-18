@@ -7,6 +7,7 @@ psycopg, and constructing this adapter always requires an explicit DSN.
 from __future__ import annotations
 
 from collections.abc import Mapping
+import hashlib
 import json
 from pathlib import Path
 from typing import Any
@@ -16,6 +17,7 @@ from ephi.application.errors import StorageFailureError, ValidationFailureError
 from ephi.application.hashing import canonical_json, normalize_domain_payload
 from ephi.application.storage import (
     AggregateSnapshot,
+    CommandEventAlreadyExistsError,
     CommandUnitOfWork,
     ReceiptAlreadyExistsError,
     StoredCommandReceipt,
@@ -51,6 +53,30 @@ def _json_text(value: object, field: str) -> str:
         raise StorageFailureError(f"durable PostgreSQL {field} is not valid JSON") from exc
     except Exception as exc:
         raise StorageFailureError(f"durable PostgreSQL {field} is not valid JSON") from exc
+
+
+def _deterministic_event_id(kind: str, scope_key: str, subject: str, command_id: str) -> str:
+    return hashlib.sha256(f"ephi-o2:{kind}:{scope_key}:{subject}:{command_id}".encode("utf-8")).hexdigest()
+
+
+def _is_command_event_conflict(
+    exc: Exception,
+    *,
+    table: str,
+    event_id: str,
+    scope_key: str,
+    subject: str,
+    command_id: str,
+) -> bool:
+    if getattr(exc, "sqlstate", None) != "23505":
+        return False
+    constraint_name = getattr(getattr(exc, "diag", None), "constraint_name", None)
+    if constraint_name == f"{table}_command_unique":
+        return True
+    if constraint_name != f"{table}_pkey":
+        return False
+    kind = table.removesuffix("_event")
+    return event_id == _deterministic_event_id(kind, scope_key, subject, command_id)
 
 
 class _PostgreSQLCommandTransaction:
@@ -161,6 +187,15 @@ class _PostgreSQLCommandTransaction:
                 ),
             )
         except Exception as exc:
+            if _is_command_event_conflict(
+                exc,
+                table="audit_event",
+                event_id=event_id,
+                scope_key=scope_key,
+                subject=subject,
+                command_id=command_id,
+            ):
+                raise CommandEventAlreadyExistsError from exc
             raise StorageFailureError("durable PostgreSQL storage failed while appending audit") from exc
 
     def append_outbox(
@@ -187,6 +222,15 @@ class _PostgreSQLCommandTransaction:
                 ),
             )
         except Exception as exc:
+            if _is_command_event_conflict(
+                exc,
+                table="outbox_event",
+                event_id=event_id,
+                scope_key=scope_key,
+                subject=subject,
+                command_id=command_id,
+            ):
+                raise CommandEventAlreadyExistsError from exc
             raise StorageFailureError("durable PostgreSQL storage failed while appending outbox") from exc
 
     def insert_receipt(

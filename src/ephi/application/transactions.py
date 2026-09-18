@@ -21,7 +21,12 @@ from .errors import (
     VersionConflictError,
 )
 from .hashing import canonical_command_payload_hash, canonical_json, normalize_domain_payload
-from .storage import CommandStorage, ReceiptAlreadyExistsError, StoredCommandReceipt
+from .storage import (
+    CommandEventAlreadyExistsError,
+    CommandStorage,
+    ReceiptAlreadyExistsError,
+    StoredCommandReceipt,
+)
 
 
 Effect = Callable[[Mapping[str, Any], Mapping[str, Any]], Mapping[str, Any]]
@@ -276,8 +281,8 @@ class VersionedAggregateCommandExecutor:
                     committed_at=recorded_at,
                 )
                 return result
-        except ReceiptAlreadyExistsError:
-            # The unique receipt winner committed independently. The losing
+        except (ReceiptAlreadyExistsError, CommandEventAlreadyExistsError):
+            # The command winner committed independently. The losing
             # transaction has already rolled back all of its local writes.
             return self._reconcile_committed_receipt(context, required_capability, payload_hash)
 

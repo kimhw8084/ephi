@@ -306,13 +306,13 @@
     },
     {
       "path": "src/ephi/application/storage.py",
-      "bytes": 2963,
-      "sha256": "1106f805b65752f7328b9d6dffb2438580bd158079a6832f4c910530eafef0c8"
+      "bytes": 3097,
+      "sha256": "80e48945f6a2d177257d75a7c9872e97b3379f5164ca3b3049837dc5a89b0297"
     },
     {
       "path": "src/ephi/application/transactions.py",
-      "bytes": 15189,
-      "sha256": "13f5f920b8679244b1798dc9087e90729df91f83a9ac584165358ebcf492582a"
+      "bytes": 15269,
+      "sha256": "9597741331cba159bcf4621fc0e0bc9e537f34f15fa09604c07c28fa169862e0"
     },
     {
       "path": "src/ephi/config.py",
@@ -336,8 +336,8 @@
     },
     {
       "path": "src/ephi/infrastructure/postgresql.py",
-      "bytes": 18628,
-      "sha256": "af70d78c4ce05348b43d348f919cb2fadf3f3071261329c5eb17c1d1a7eb9d59"
+      "bytes": 20110,
+      "sha256": "658d347615c44a33e96cec238a7349fbaf8014147976ae2255af7be49803ef4a"
     },
     {
       "path": "src/ephi/infrastructure/sqlite.py",
@@ -386,8 +386,8 @@
     },
     {
       "path": "tests/test_o2_postgresql.py",
-      "bytes": 12364,
-      "sha256": "77470f38e53006ae634cbb41427149d4ddfa0bd5bc8fd350db8ba936312f4cbf"
+      "bytes": 16343,
+      "sha256": "7b1f0dffa7554f426f8cf28fda54d2666ebdb1335b7337ec3609e5f447992bcf"
     },
     {
       "path": "tests/test_o2_transactions.py",
