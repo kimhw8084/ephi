@@ -51,8 +51,8 @@
     },
     {
       "path": ".github/workflows/package.yml",
-      "bytes": 3077,
-      "sha256": "a8f3014945975d2a3c85a7213a063cc4e525dcedcc93561c1cc1124bc2f9b79b"
+      "bytes": 3312,
+      "sha256": "da8664aadb4a4166903bd9b3a901ef5a2d7e48611faf8b3622e78ca5b946774b"
     },
     {
       "path": ".gitignore",
@@ -81,8 +81,8 @@
     },
     {
       "path": "04_Data_and_Runtime.md",
-      "bytes": 22545,
-      "sha256": "207369afebb3435c8765c7e57d6f895e6af361c5c57450b83ec916c8c9cc8ced"
+      "bytes": 22844,
+      "sha256": "c8dd2588f8e72f4691b8914d6b1e7c4cdc6826a75239639b6f7d139fd0e69d04"
     },
     {
       "path": "05_UX_and_Interaction_Design.md",
@@ -116,8 +116,8 @@
     },
     {
       "path": "11_Developer_Start.md",
-      "bytes": 3893,
-      "sha256": "dd254b4e9f5c31de744aafe284134254ee66420cfd21fa388a362e374c1ed991"
+      "bytes": 4202,
+      "sha256": "f92f0b8d2cfc778645526ab66a5e14a7d48d5765b5a099f565827e551a276681"
     },
     {
       "path": "12_Sources_and_Evidence.md",
@@ -126,8 +126,8 @@
     },
     {
       "path": "13_Package_Review.md",
-      "bytes": 8594,
-      "sha256": "24e7f664f43d3bac5f7537b46bdd3a4fdf6118a93220c4103b80cf813759a226"
+      "bytes": 9466,
+      "sha256": "7256aea5073186ab26b9681832544f92ab36430a43932792a6689397eee29af0"
     },
     {
       "path": "AGENTS.md",
@@ -141,8 +141,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 7880,
-      "sha256": "32b17cc9951c7e6686897acfed07f10482124fea894cc8d2260fc5e175579e04"
+      "bytes": 9053,
+      "sha256": "b78494a386285eae9a67fd44710819e071aea4f24d9e42edbec1c4033e5e0494"
     },
     {
       "path": "environment/nicegui_base_requirements.txt",
@@ -245,6 +245,11 @@
       "sha256": "a1f6446278e05112e80f02d694ded584491b77502537919a92cdafd5faf56a33"
     },
     {
+      "path": "migrations/002_o2_worker_core.sql",
+      "bytes": 2317,
+      "sha256": "9c8e4dea1c0625ccb18bffa5717b750caf02204f204b77d1747bc3495274e963"
+    },
+    {
       "path": "pyproject.toml",
       "bytes": 657,
       "sha256": "0ef88ce76633bbebfada55628717ff5189b05eb05bf276f1f27d4ceeac27f0a1"
@@ -286,8 +291,8 @@
     },
     {
       "path": "src/ephi/application/__init__.py",
-      "bytes": 1291,
-      "sha256": "0df2a05dccfc654833a7b54193d16edce648200556e6133fb525b36d725bd639"
+      "bytes": 1983,
+      "sha256": "14c2aa07e07d44b7d7b8d89b16f0334220e1fd44f606ba521072b1ea540340f6"
     },
     {
       "path": "src/ephi/application/context.py",
@@ -296,8 +301,8 @@
     },
     {
       "path": "src/ephi/application/errors.py",
-      "bytes": 1996,
-      "sha256": "95005aaa90686626a5fdd4430ada68f532e7974420e40ef231d28f73f185e43b"
+      "bytes": 3448,
+      "sha256": "39bb1bf18f0ceeee1a05463e47f4d088f34d9bed4f933131a4a3990de05ed48b"
     },
     {
       "path": "src/ephi/application/hashing.py",
@@ -313,6 +318,11 @@
       "path": "src/ephi/application/transactions.py",
       "bytes": 15269,
       "sha256": "9597741331cba159bcf4621fc0e0bc9e537f34f15fa09604c07c28fa169862e0"
+    },
+    {
+      "path": "src/ephi/application/worker.py",
+      "bytes": 3801,
+      "sha256": "4ce4c5b0fef2c6ebae33594867b977454bc0a8eaf15d12ba96295c4cdc5feb55"
     },
     {
       "path": "src/ephi/config.py",
@@ -331,13 +341,18 @@
     },
     {
       "path": "src/ephi/infrastructure/__init__.py",
-      "bytes": 518,
-      "sha256": "bfc2cad9f2f86952b2a87b6818aa1c9600d3ae3a380433d2e0ce5d4b2cb74a5f"
+      "bytes": 600,
+      "sha256": "7b7581818885618ad8379f3ae808851bdba5139ffffbbee597591e10735ead4a"
     },
     {
       "path": "src/ephi/infrastructure/postgresql.py",
-      "bytes": 20110,
-      "sha256": "658d347615c44a33e96cec238a7349fbaf8014147976ae2255af7be49803ef4a"
+      "bytes": 20754,
+      "sha256": "a4ace0197aa8926ce580c80ac66d0baf9e176027846dfa9dbab48652cb654758"
+    },
+    {
+      "path": "src/ephi/infrastructure/postgresql_worker.py",
+      "bytes": 30417,
+      "sha256": "dda0a6c9d010e13498da6d9398d932675987a88b752dada30ca2fd64f2baa4ed"
     },
     {
       "path": "src/ephi/infrastructure/sqlite.py",
@@ -393,6 +408,11 @@
       "path": "tests/test_o2_transactions.py",
       "bytes": 11990,
       "sha256": "88a1b463ca5a5edc243a381dad7459bbc582ef5dc27891b1cc6288585ec4270d"
+    },
+    {
+      "path": "tests/test_o2_worker_postgresql.py",
+      "bytes": 15078,
+      "sha256": "4e852299a17d25bac18783f4a58b792df0469f6228ac482bfb49939e8e7dadb7"
     },
     {
       "path": "tests/test_package.py",

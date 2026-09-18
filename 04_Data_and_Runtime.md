@@ -117,6 +117,11 @@ Use row-level claims in a short transaction. PostgreSQL `FOR UPDATE SKIP LOCKED`
 
 Delivery semantics are **at least once**. Exactly-once local logical effects come from unique semantic keys plus effect/receipt transactions, not from the queue promise. A stale worker may have computed an artifact but cannot publish it. External effects use idempotency/reconciliation, not an exactly-once claim.
 
+CHG-126 implements only the generic substrate described here: its bounded
+retry path uses an explicit next availability supplied at the application
+boundary or a deterministic capped generic backoff. Provider-specific retry
+behavior, scientific handlers and worker loops remain outside this slice.
+
 Retry transient connectivity, serialization conflicts and rate limits with capped exponential backoff and jitter; honor provider retry guidance. Proposed 5 attempts, 5s initial, 5min cap. Schema ambiguity, qualification failure, invalid units and forbidden actions are not automatically retried. Dead-letter entries retain reason and failed stage. Retrying a failed stage creates a new audited attempt with the same logical effect key; it cannot bypass a gate.
 
 Fairness: reserve capacity for ingestion/health and operational deadlines; replay/backfill cannot starve live work. Bound concurrency per source and family. Avoid a single failed family stopping all others. Job dependency cycles are rejected at enqueue; missing/failed prerequisites become visible blocked states.

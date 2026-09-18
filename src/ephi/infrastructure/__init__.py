@@ -7,6 +7,7 @@ from .sqlite import (
     StoredCommandReceipt,
 )
 from .postgresql import PostgreSQLReferenceTransactionAdapter, PostgresReferenceTransactionAdapter
+from .postgresql_worker import PostgreSQLWorkerStore
 
 __all__ = [
     "AggregateSnapshot",
@@ -15,4 +16,5 @@ __all__ = [
     "StoredCommandReceipt",
     "PostgreSQLReferenceTransactionAdapter",
     "PostgresReferenceTransactionAdapter",
+    "PostgreSQLWorkerStore",
 ]
