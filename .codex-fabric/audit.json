@@ -1,0 +1,485 @@
+{
+  "accepted_at": "2026-09-18T23:17:04Z",
+  "changed_files": [
+    {
+      "additions": 5,
+      "deletions": 1,
+      "path": ".github/workflows/package.yml",
+      "status": "M"
+    },
+    {
+      "additions": 25,
+      "deletions": 2,
+      "path": "11_Developer_Start.md",
+      "status": "M"
+    },
+    {
+      "additions": 27,
+      "deletions": 2,
+      "path": "13_Package_Review.md",
+      "status": "M"
+    },
+    {
+      "additions": 32,
+      "deletions": 2,
+      "path": "README.md",
+      "status": "M"
+    },
+    {
+      "additions": 43,
+      "deletions": 18,
+      "path": "manifest.json",
+      "status": "M"
+    },
+    {
+      "additions": 111,
+      "deletions": 0,
+      "path": "migrations/003_o2_read_snapshot_core.sql",
+      "status": "A"
+    },
+    {
+      "additions": 38,
+      "deletions": 0,
+      "path": "src/ephi/__init__.py",
+      "status": "M"
+    },
+    {
+      "additions": 58,
+      "deletions": 0,
+      "path": "src/ephi/application/__init__.py",
+      "status": "M"
+    },
+    {
+      "additions": 56,
+      "deletions": 0,
+      "path": "src/ephi/application/errors.py",
+      "status": "M"
+    },
+    {
+      "additions": 452,
+      "deletions": 0,
+      "path": "src/ephi/application/read.py",
+      "status": "A"
+    },
+    {
+      "additions": 2,
+      "deletions": 0,
+      "path": "src/ephi/infrastructure/__init__.py",
+      "status": "M"
+    },
+    {
+      "additions": 116,
+      "deletions": 3,
+      "path": "src/ephi/infrastructure/postgresql.py",
+      "status": "M"
+    },
+    {
+      "additions": 769,
+      "deletions": 0,
+      "path": "src/ephi/infrastructure/postgresql_reads.py",
+      "status": "A"
+    },
+    {
+      "additions": 391,
+      "deletions": 0,
+      "path": "tests/test_o2_postgresql_reads.py",
+      "status": "A"
+    },
+    {
+      "additions": 71,
+      "deletions": 0,
+      "path": "tests/test_o2_read_contracts.py",
+      "status": "A"
+    }
+  ],
+  "checks": [
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '110,175p' README.md && rtk sed -n '50,115p' 11_Developer_Start.md && rtk sed -n '75,115p' 13_Package_Review.md && rtk sed -n '70,110p' .github/workflows/package.yml && rtk sed -n '350,410p' src/ephi/infrastructure/postgresql.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n \\\"class AggregateSnapshot\\\" src/ephi/application/storage.py src/ephi/infrastructure/sqlite.py && rtk sed -n '1,110p' src/ephi/application/storage.py && rtk sed -n '400,460p' src/ephi/infrastructure/postgresql.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n \\\"CREATE TABLE IF NOT EXISTS aggregate_state|version .*CHECK|aggregate_state\\\" migrations/001_o2_command_core.sql | head -50 && rtk sed -n '1,100p' migrations/001_o2_command_core.sql\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n \\\"token_binding|snapshot_token_binding|CursorPageToken\\\\.create|\\\\.verify\\\\(\\\" src/ephi tests migrations README.md 11_Developer_Start.md 13_Package_Review.md && rtk python3 -m compileall -q src tests && rtk git diff -- src/ephi/application/read.py src/ephi/infrastructure/postgresql_reads.py src/ephi/application/__init__.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest tests.test_o2_read_contracts -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'if [ -n \"$EPHI_TEST_POSTGRES_DSN\" ]; then rtk python3 -m unittest tests.test_o2_postgresql_reads -v; else rtk python3 -m unittest tests.test_o2_postgresql_reads -v; fi'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sh -c 'command -v psql || true; command -v postgres || true; command -v pg_ctl || true; command -v initdb || true; command -v docker || true; command -v podman || true; python3 - <<\\\"PY\\\"\ntry:\n    import psycopg\n    print(\\\"psycopg\\\", psycopg.__version__)\nexcept Exception as exc:\n    print(\\\"psycopg unavailable\\\", type(exc).__name__)\nPY'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sh -c 'task_pg_data=\"'$(mktemp -d /tmp/ephi-chg129-pgdata.XXXXXX) && task_pg_port=55432 && initdb -D \"$task_pg_data\" --no-locale --encoding=UTF8 >/tmp/ephi-chg129-initdb.log && pg_ctl -D \"$task_pg_data\" -o \"-p $task_pg_port\" -l /tmp/ephi-chg129-postgres.log start >/tmp/ephi-chg129-pgctl.log && printf \"%s'\"\\\\n\\\" \\\"\"'$task_pg_data\" > /tmp/ephi-chg129-pgdata.path && printf \"%s'\"\\\\n\\\" \\\"postgresql://\"'$(id -un)@127.0.0.1:$task_pg_port/postgres\"'\"'\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sh -c 'ls -ld /opt/homebrew/share/postgresql* 2>/dev/null || true; find /opt/homebrew -name postgres.bki -print 2>/dev/null | head -20; docker info >/tmp/ephi-chg129-docker-info.log 2>&1; task_docker_status=\"'$?; printf \"docker_info_exit=%s'\"\\\\n\\\" \\\"\"'$task_docker_status\"; sed -n \"1,20p\" /tmp/ephi-chg129-docker-info.log'\"'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk docker images --format '{{.Repository}}:{{.Tag}}' | sort | rg -i 'postgres|pg' || true; rtk brew list --versions postgresql postgresql@17 postgresql@18 2>/dev/null || true; rtk ls -l /opt/homebrew/bin/initdb /opt/homebrew/bin/postgres /opt/homebrew/bin/pg_ctl\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk docker ps -a --filter name=ephi-chg129-pg --format '{{.Names}} {{.Status}}'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk docker run --rm -d --name ephi-chg129-pg -e POSTGRES_PASSWORD=ephi_ci_password -e POSTGRES_USER=ephi_ci -e POSTGRES_DB=ephi_ci -p 55432:5432 postgres:18.6'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sh -c 'for task_attempt in \"'$(seq 1 30); do if docker exec ephi-chg129-pg pg_isready -U ephi_ci -d ephi_ci >/dev/null 2>&1; then echo ready; exit 0; fi; sleep 1; done; docker logs ephi-chg129-pg; exit 1'\"'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"EPHI_TEST_POSTGRES_DSN='postgresql://ephi_ci:ephi_ci_password@127.0.0.1:55432/ephi_ci' rtk python3 -m unittest tests.test_o2_postgresql_reads -v\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"EPHI_TEST_POSTGRES_DSN='postgresql://ephi_ci:ephi_ci_password@127.0.0.1:55432/ephi_ci' rtk python3 -m unittest tests.test_o2_postgresql tests.test_o2_worker_postgresql -v\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/w0_repo_baseline.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest discover -s tests -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/w0_integrity_regressions.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --check && rtk git status --short && rtk git diff --stat && rtk git diff -- src/ephi/application/read.py src/ephi/infrastructure/postgresql_reads.py tests/test_o2_postgresql_reads.py tests/test_o2_read_contracts.py README.md 11_Developer_Start.md 13_Package_Review.md src/ephi/application/__init__.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git diff -- manifest.json && rtk rg -n \\\"snapshot_token_binding|token_binding|server_binding\\\" --glob '\"'!evidence/**'\"' --glob '\"'!manifest.json'\"' . && rtk git diff --name-only --diff-filter=AM\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk find /Users/haewonkim/.codex-fabric -maxdepth 3 -type f \\\\( -name 'audit.json' -o -name '*audit*' -o -name '*fabric*' \\\\) -print 2>/dev/null | head -80 && rtk git log --graph --decorate --oneline --all --max-count=12 && rtk git diff --name-only --diff-filter=AM\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git rev-list --parents -n 1 35ca8d104af0f955a1b9f7371a974f6443d53abb && rtk git show --stat --oneline 35ca8d104af0f955a1b9f7371a974f6443d53abb && rtk git show --format=fuller --no-patch 35ca8d104af0f955a1b9f7371a974f6443d53abb && rtk git show 35ca8d104af0f955a1b9f7371a974f6443d53abb:.codex-fabric/audit.json | head -80'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk rg -n \"publish audit evidence|codex-fabric/audit.json|accepted_at\" /Users/haewonkim/.codex-fabric /Users/haewonkim/.codex 2>/dev/null | head -120'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,220p' /Users/haewonkim/.codex-fabric/jobs/CF-1bbc748bc32f7888ea5674fb.running/job.json && rtk sed -n '1,160p' /Users/haewonkim/.codex-fabric/jobs/CF-1bbc748bc32f7888ea5674fb.running/lease.json 2>/dev/null || true && rtk sed -n '1,200p' /Users/haewonkim/.codex-fabric/libexec/projectos_integrate.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n \\\"def publish|evidence_commit|publish_evidence|audit.json|parent\\\" /Users/haewonkim/.codex-fabric/releases/1.2.3-resume-candidate/fabric.py | head -100 && rtk sed -n '1980,2100p' /Users/haewonkim/.codex-fabric/releases/1.2.3-resume-candidate/fabric.py && rtk sed -n '2100,2200p' /Users/haewonkim/.codex-fabric/releases/1.2.3-resume-candidate/fabric.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '2520,2765p' /Users/haewonkim/.codex-fabric/releases/1.2.3-resume-candidate/fabric.py && rtk sed -n '3670,3735p' /Users/haewonkim/.codex-fabric/releases/1.2.3-resume-candidate/fabric.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n \\\"CoherentReadConflictError|contextmanager|datetime|timezone|Path|json\\\" tests/test_o2_postgresql_reads.py | head -40 && rtk sed -n '1,35p' tests/test_o2_postgresql_reads.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest && rtk python3 -m unittest tests.test_o2_read_contracts -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"EPHI_TEST_POSTGRES_DSN='postgresql://ephi_ci:ephi_ci_password@127.0.0.1:55432/ephi_ci' rtk python3 -m unittest tests.test_o2_postgresql_reads -v && EPHI_TEST_POSTGRES_DSN='postgresql://ephi_ci:ephi_ci_password@127.0.0.1:55432/ephi_ci' rtk python3 -m unittest tests.test_o2_postgresql tests.test_o2_worker_postgresql -v\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/w0_repo_baseline.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest discover -s tests -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/w0_integrity_regressions.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --check && rtk git status --short && rtk git diff --stat && rtk git rev-parse HEAD && rtk git rev-parse f2262662871e738a8b8ec7e8e0497f827a39dbd0''^{tree} && rtk git diff --quiet f2262662871e738a8b8ec7e8e0497f827a39dbd0 -- .codex-fabric/audit.json; task_audit_status=$?; printf '\"'audit_path_diff_exit=%s\\\\n' \\\"\"'$task_audit_status\"'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git add 11_Developer_Start.md 13_Package_Review.md README.md manifest.json src/ephi/application/__init__.py src/ephi/application/read.py src/ephi/infrastructure/postgresql_reads.py tests/test_o2_postgresql_reads.py tests/test_o2_read_contracts.py && rtk git diff --cached --check && task_tree=$(rtk git write-tree) && task_candidate=$(rtk git commit-tree \"$task_tree\" -p f2262662871e738a8b8ec7e8e0497f827a39dbd0 -m '\"'Fix CHG-129 current read authority and opaque cursors') && rtk git update-ref refs/heads/codex/ephi-o2-retained-query-snapshots-fix1 \\\"\"'$task_candidate\" && printf '\"'%s\\\\n' \\\"\"'$task_candidate\"'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git status --short --branch && rtk git rev-parse HEAD && rtk git rev-list --parents -n 1 HEAD && rtk git diff --stat f2262662871e738a8b8ec7e8e0497f827a39dbd0 && rtk git ls-tree -r --name-only HEAD | rg '\"'^'\"\\\\.codex-fabric/audit\\\\.json\"'$'\"' || true && rtk git show --no-ext-diff --stat --oneline HEAD\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk find /Users/haewonkim/.codex-fabric/jobs -maxdepth 2 -type f -path '*CF-1bbc748bc32f7888ea5674fb*' -print | sort && rtk find /Users/haewonkim/.codex-fabric/jobs -maxdepth 2 -type f -path '*CF-1bbc748bc32f7888ea5674fb*' -print | sort | while read task_file; do case \\\"\"'$task_file\" in *result.json|*job-summary.json|*lease.json) echo \"--- $task_file\"; sed -n '\"'1,240p' \\\"\"'$task_file\";; esac; done'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk ls -la /Users/haewonkim/.codex-fabric/jobs/CF-1bbc748bc32f7888ea5674fb.running && rtk ls -la /Users/haewonkim/.codex-fabric/jobs/CF-1bbc748bc32f7888ea5674fb.executed 2>/dev/null || true && rtk ls -la /Users/haewonkim/.codex-fabric/jobs/CF-1bbc748bc32f7888ea5674fb.failed 2>/dev/null || true'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sh -c 'ps -p 99819,99873 -o pid,ppid,stat,etime,command=' && sed -n \\\"1,120p\\\" /Users/haewonkim/.codex-fabric/jobs/CF-1bbc748bc32f7888ea5674fb.running/lease.json'\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk ps -p 99819,99873 -o pid,ppid,stat,etime,command= && rtk sed -n '1,120p' /Users/haewonkim/.codex-fabric/jobs/CF-1bbc748bc32f7888ea5674fb.running/lease.json\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk docker stop ephi-chg129-pg && rtk python3 tools/check_package.py && rtk python3 tools/w0_repo_baseline.py && rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short --branch && rtk git rev-list --parents -n 1 HEAD && rtk git ls-remote origin refs/heads/codex/ephi-o2-retained-query-snapshots-fix1 refs/heads/codex-fabric/evidence/ephi/ephi-o2-retained-query-snapshots-fix1 && rtk ls -la /Users/haewonkim/.codex-fabric/bin 2>/dev/null || true && rtk ls -la /Users/haewonkim/.codex-fabric/releases/1.2.3-resume-candidate | head -20'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,120p' /Users/haewonkim/.codex-fabric/bin/fabricctl && rtk sed -n '1,120p' /Users/haewonkim/.codex-fabric/bin/projectos-integrate-stdin && rtk sed -n '4320,4385p' /Users/haewonkim/.codex-fabric/releases/1.2.3-resume-candidate/fabric.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk /Users/haewonkim/.codex-fabric/bin/fabricctl status CF-1bbc748bc32f7888ea5674fb'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk ps -p 99819,99873 -ww -o pid,stat,command='",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,115p' .github/workflows/package.yml && rtk command -v gh || true && rtk gh auth status 2>&1 | head -40 || true && rtk /Users/haewonkim/.codex-fabric/bin/fabricctl status CF-1bbc748bc32f7888ea5674fb\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git push origin HEAD:codex/ephi-o2-retained-query-snapshots-fix1'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk gh run list --workflow package.yml --branch codex/ephi-o2-retained-query-snapshots-fix1 --limit 5 --json databaseId,status,conclusion,headSha,event,url,displayTitle'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk gh run watch 35405822285 --exit-status'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk gh run view 35405822285 --json status,conclusion,headSha,url,jobs && rtk /Users/haewonkim/.codex-fabric/bin/fabricctl status CF-1bbc748bc32f7888ea5674fb && rtk git status --short --branch && rtk git rev-list --parents -n 1 HEAD'",
+      "exit_code": 0,
+      "type": "command_execution"
+    }
+  ],
+  "codex": {
+    "cli_version": "codex-cli 0.154.0",
+    "configured_model": "gpt-5.6-luna",
+    "event_count": 144,
+    "provider_reported_model": null,
+    "reasoning_effort": "xhigh",
+    "terminal_type": "turn.completed",
+    "usage": {
+      "cache_hit_percent": 97.24,
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 7844096,
+      "fresh_input_tokens": 222517,
+      "input_tokens": 8066613,
+      "non_reasoning_output_tokens": 15864,
+      "output_tokens": 33961,
+      "reasoning_output_tokens": 18097,
+      "total_processed_tokens": 8100574
+    },
+    "warnings": []
+  },
+  "commits": [
+    {
+      "sha": "28f290a23bd1c63d73e083c27650f932263a4b59",
+      "subject": "Fix CHG-129 current read authority and opaque cursors"
+    },
+    {
+      "sha": "f2262662871e738a8b8ec7e8e0497f827a39dbd0",
+      "subject": "Implement CHG-129 generic durable read snapshots"
+    }
+  ],
+  "diff": {
+    "additions": 2196,
+    "changed_files": 15,
+    "commit_count": 2,
+    "deletions": 28
+  },
+  "error_code": null,
+  "evidence_manifest": {
+    "count": 4,
+    "items": [
+      {
+        "bytes": 5413,
+        "path": "11_Developer_Start.md",
+        "sha256": "ceb48498be249e792655b82a179239bf2a095e57c7f1da5c220cd37bd6646720"
+      },
+      {
+        "bytes": 11027,
+        "path": "13_Package_Review.md",
+        "sha256": "0cddb3422b119b73a8dec555ea18e233d3d5a353744ece59a547b03fa894947b"
+      },
+      {
+        "bytes": 10596,
+        "path": "README.md",
+        "sha256": "379b2c5ebde8a7855031204f28c004e70cf94d677eb66a46f794154a038daee0"
+      },
+      {
+        "bytes": 17238,
+        "path": "manifest.json",
+        "sha256": "fbb45e2728ce35c3d52d5e2068ee40031b3aad6aa5ade32eb01252866a1a7f4a"
+      }
+    ],
+    "version": 1
+  },
+  "evidence_publisher_release": "1.2.3-resume-candidate",
+  "fabric_capture": {
+    "applied": false,
+    "paths_before": 0,
+    "transient_untracked_removed": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "fabric_release": "1.2.3-resume-candidate",
+  "failure_class": null,
+  "finished_at": "2026-09-18T23:29:41Z",
+  "git": {
+    "base_is_ancestor": true,
+    "base_sha": "a774399f62f891821fe1c287d02bc116c49c6415",
+    "branch": "codex/ephi-o2-retained-query-snapshots-fix1",
+    "detached_verify": false,
+    "head_sha": "28f290a23bd1c63d73e083c27650f932263a4b59",
+    "remote_exact_head": true,
+    "remote_head_sha": "28f290a23bd1c63d73e083c27650f932263a4b59",
+    "target_branch": "main",
+    "target_drifted_since_acceptance": false,
+    "target_head_observed_after_execution": "a774399f62f891821fe1c287d02bc116c49c6415",
+    "work_branch": "codex/ephi-o2-retained-query-snapshots-fix1",
+    "worktree_clean": true
+  },
+  "instructions": {
+    "files": [
+      {
+        "bytes": 1458,
+        "path": "AGENTS.md",
+        "sha256": "4349f387a79d886ed1264604ff48c582698e539e08ed8fb2f9d8ab8fbf6f804a"
+      }
+    ],
+    "total_bytes": 1458,
+    "warning": null
+  },
+  "job_id": "CF-1bbc748bc32f7888ea5674fb",
+  "kind": "codex-fabric-audit-evidence",
+  "locator": {
+    "branch": "codex-fabric/evidence/ephi/ephi-o2-retained-query-snapshots-fix1",
+    "path": ".codex-fabric/audit.json",
+    "ref": "refs/heads/codex-fabric/evidence/ephi/ephi-o2-retained-query-snapshots-fix1"
+  },
+  "operation": "FIX",
+  "policy": {
+    "environment_policy_sha256": "e077daca74297b3c30bee8989f00f8ca5338f7610b4d016a6c48db524205d064",
+    "fabric_release": "1.2.3-resume-candidate",
+    "policy_sha256": "44756118cd7fda0c45cd23ba1d31a48a3f4f2422d687df15264ba4406f40e1f2",
+    "registry_sha256": "cfc765f3211c37c7967a138f3b2d89a99341939b15b2623f92744d007f625d6f"
+  },
+  "project_id": "ephi",
+  "recovery": {
+    "model_rerun_safe": false,
+    "recovery_required": false,
+    "retry_safe": false,
+    "retry_scope": null,
+    "worktree_retained": true
+  },
+  "request": "ephi-o2-retained-query-snapshots-fix1",
+  "schema_version": 1,
+  "started_at": "2026-09-18T23:17:04Z",
+  "status": "EXECUTED_CHANGE",
+  "timing": {
+    "execution_seconds": 757,
+    "queue_seconds": 0,
+    "total_seconds": 757
+  },
+  "transport": {
+    "bytes": 7960,
+    "envelope": "FABRIC/2",
+    "prompt_bytes": 7636,
+    "prompt_sha256": "d2baea39de52217c4119785db9cb85d59d0592fbf1d6cd7cb8627bb83082e788",
+    "sha256": "1bbc748bc32f7888ea5674fb1c2889ff5af0bcb07b4076583fff098fead2b87e"
+  }
+}
