@@ -19,6 +19,7 @@ from .hashing import (
     canonical_json,
     normalize_domain_payload,
 )
+from .storage import CommandStorage, CommandUnitOfWork
 from .transactions import CommandResult, VersionedAggregateCommandExecutor
 
 __all__ = [
@@ -29,6 +30,8 @@ __all__ = [
     "CommandContext",
     "CommandError",
     "CommandResult",
+    "CommandStorage",
+    "CommandUnitOfWork",
     "DurableStorageError",
     "IdempotencyConflictError",
     "Principal",

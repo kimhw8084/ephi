@@ -7,10 +7,7 @@ from dataclasses import dataclass
 from datetime import datetime, timezone
 import hashlib
 import json
-import sqlite3
 from typing import Any
-
-from ephi.infrastructure.sqlite import SQLiteReferenceTransactionAdapter
 
 from .context import CommandContext
 from .errors import (
@@ -24,6 +21,7 @@ from .errors import (
     VersionConflictError,
 )
 from .hashing import canonical_command_payload_hash, canonical_json, normalize_domain_payload
+from .storage import CommandStorage, ReceiptAlreadyExistsError, StoredCommandReceipt
 
 
 Effect = Callable[[Mapping[str, Any], Mapping[str, Any]], Mapping[str, Any]]
@@ -110,9 +108,9 @@ def _default_effect(current: Mapping[str, Any], payload: Mapping[str, Any], comm
 class VersionedAggregateCommandExecutor:
     """Execute one local versioned effect with receipt/audit/outbox atomicity."""
 
-    def __init__(self, store: SQLiteReferenceTransactionAdapter):
-        if not isinstance(store, SQLiteReferenceTransactionAdapter):
-            raise TypeError("store must be a SQLiteReferenceTransactionAdapter")
+    def __init__(self, store: CommandStorage):
+        if not isinstance(store, CommandStorage):
+            raise TypeError("store must implement the durable command transaction boundary")
         self.store = store
 
     def execute(
@@ -155,36 +153,37 @@ class VersionedAggregateCommandExecutor:
             target=target,
             reason=context.reason,
         )
+        scope_key = context.scope.canonical_key
+        subject = context.principal.subject
+        auth_session_revision_json = canonical_json(context.principal.auth_session_revision)
+        security_revision_json = canonical_json(context.principal.security_revision)
 
-        with self.store.transaction_lock:
-            connection = self.store.connection
-            try:
-                connection.execute("BEGIN IMMEDIATE")
-                receipt_row = connection.execute(
-                    "SELECT scope_key, subject, command_id, payload_hash, status, result_identity, result_json, aggregate_type, aggregate_id, aggregate_version, auth_session_revision_json, security_revision_json, committed_at FROM command_receipt WHERE scope_key = ? AND subject = ? AND command_id = ?",
-                    (context.scope.canonical_key, context.principal.subject, context.command_id),
-                ).fetchone()
-                receipt = self.store._receipt_from_row(receipt_row) if receipt_row is not None else None
+        try:
+            with self.store.command_transaction() as transaction:
+                # The maintained order is authorization, receipt, aggregate,
+                # expected version, local effect, audit, outbox, receipt, commit.
+                receipt = transaction.get_command_receipt(scope_key, subject, context.command_id)
                 if receipt is not None:
-                    result = self._replay_or_conflict(context, required_capability, receipt, payload_hash)
-                    connection.commit()
-                    return result
+                    return self._replay_or_conflict(context, required_capability, receipt, payload_hash)
 
-                aggregate_row = connection.execute(
-                    "SELECT scope_key, aggregate_type, aggregate_id, version, state_json FROM aggregate_state WHERE scope_key = ? AND aggregate_type = ? AND aggregate_id = ?",
-                    (context.scope.canonical_key, aggregate_type, aggregate_id),
-                ).fetchone()
-                if aggregate_row is None:
+                aggregate = transaction.get_aggregate(
+                    scope_key,
+                    aggregate_type,
+                    aggregate_id,
+                    for_update=True,
+                )
+                if aggregate is None:
                     raise AggregateNotFoundError("aggregate is not available in the requested scope")
-                current_version = aggregate_row["version"]
+                current_version = aggregate.version
                 if current_version != context.expected_workflow_version:
+                    # A competing first attempt may have won the aggregate lock
+                    # after the initial receipt read. Reconcile its committed
+                    # receipt before exposing VERSION_CONFLICT.
+                    receipt = transaction.get_command_receipt(scope_key, subject, context.command_id)
+                    if receipt is not None:
+                        return self._replay_or_conflict(context, required_capability, receipt, payload_hash)
                     raise VersionConflictError(aggregate_id, context.expected_workflow_version, current_version)
-                try:
-                    current_state = json.loads(aggregate_row["state_json"])
-                except (TypeError, json.JSONDecodeError) as exc:
-                    raise StorageFailureError("durable aggregate state is not valid JSON") from exc
-                if not isinstance(current_state, dict):
-                    raise StorageFailureError("durable aggregate state is not an object")
+                current_state = aggregate.state
                 try:
                     next_state_raw = (
                         effect(current_state, normalized_payload)
@@ -200,25 +199,31 @@ class VersionedAggregateCommandExecutor:
                     raise ValidationFailureError("local aggregate effect must return a mapping")
                 next_version = current_version + 1
                 state_json = canonical_json(next_state)
-                changed = connection.execute(
-                    "UPDATE aggregate_state SET version = ?, state_json = ? WHERE scope_key = ? AND aggregate_type = ? AND aggregate_id = ? AND version = ?",
-                    (next_version, state_json, context.scope.canonical_key, aggregate_type, aggregate_id, current_version),
-                ).rowcount
+                changed = transaction.update_aggregate(
+                    scope_key,
+                    aggregate_type,
+                    aggregate_id,
+                    expected_version=current_version,
+                    next_version=next_version,
+                    state_json=state_json,
+                )
                 if changed != 1:
                     raise VersionConflictError(aggregate_id, context.expected_workflow_version, current_version)
 
-                result_identity = _event_identity("result", context.scope.canonical_key, context.principal.subject, context.command_id)
+                result_identity = _event_identity("result", scope_key, subject, context.command_id)
                 result = CommandResult("COMMITTED", result_identity, aggregate_type, aggregate_id, next_version, next_state, payload_hash)
                 result_json = canonical_json(result.as_dict())
                 recorded_at = _utc_timestamp()
-                audit_id = _event_identity("audit", context.scope.canonical_key, context.principal.subject, context.command_id)
-                outbox_id = _event_identity("outbox", context.scope.canonical_key, context.principal.subject, context.command_id)
+                audit_id = _event_identity("audit", scope_key, subject, context.command_id)
+                outbox_id = _event_identity("outbox", scope_key, subject, context.command_id)
                 audit_json = canonical_json({
                     "command_type": command_type,
                     "payload_hash": payload_hash,
                     "expected_workflow_version": context.expected_workflow_version,
                     "new_workflow_version": next_version,
                     "result_identity": result_identity,
+                    "auth_session_revision": context.principal.auth_session_revision,
+                    "security_revision": context.principal.security_revision,
                 })
                 outbox_json = canonical_json({
                     "event_id": outbox_id,
@@ -228,47 +233,53 @@ class VersionedAggregateCommandExecutor:
                     "aggregate_id": aggregate_id,
                     "aggregate_version": next_version,
                 })
-                connection.execute(
-                    "INSERT INTO audit_event(event_id, scope_key, subject, command_id, aggregate_type, aggregate_id, aggregate_version, event_type, event_json, recorded_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                    (audit_id, context.scope.canonical_key, context.principal.subject, context.command_id, aggregate_type, aggregate_id, next_version, command_type, audit_json, recorded_at),
+                transaction.append_audit(
+                    event_id=audit_id,
+                    scope_key=scope_key,
+                    subject=subject,
+                    command_id=context.command_id,
+                    aggregate_type=aggregate_type,
+                    aggregate_id=aggregate_id,
+                    aggregate_version=next_version,
+                    event_type=command_type,
+                    event_json=audit_json,
+                    auth_session_revision_json=auth_session_revision_json,
+                    security_revision_json=security_revision_json,
+                    recorded_at=recorded_at,
                 )
-                connection.execute(
-                    "INSERT INTO outbox_event(event_id, scope_key, subject, command_id, aggregate_type, aggregate_id, aggregate_version, event_type, payload_json, status, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                    (outbox_id, context.scope.canonical_key, context.principal.subject, context.command_id, aggregate_type, aggregate_id, next_version, command_type, outbox_json, "PENDING", recorded_at),
+                transaction.append_outbox(
+                    event_id=outbox_id,
+                    scope_key=scope_key,
+                    subject=subject,
+                    command_id=context.command_id,
+                    aggregate_type=aggregate_type,
+                    aggregate_id=aggregate_id,
+                    aggregate_version=next_version,
+                    event_type=command_type,
+                    payload_json=outbox_json,
+                    status="PENDING",
+                    created_at=recorded_at,
                 )
-                try:
-                    connection.execute(
-                        "INSERT INTO command_receipt(scope_key, subject, command_id, payload_hash, status, result_identity, result_json, aggregate_type, aggregate_id, aggregate_version, auth_session_revision_json, security_revision_json, committed_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                        (
-                            context.scope.canonical_key,
-                            context.principal.subject,
-                            context.command_id,
-                            payload_hash,
-                            result.status,
-                            result_identity,
-                            result_json,
-                            aggregate_type,
-                            aggregate_id,
-                            next_version,
-                            canonical_json(context.principal.auth_session_revision),
-                            canonical_json(context.principal.security_revision),
-                            recorded_at,
-                        ),
-                    )
-                except sqlite3.IntegrityError as exc:
-                    # A backend that permits two first attempts to race may
-                    # report the unique receipt winner here.  Roll back the
-                    # entire losing effect, then reconcile in a fresh read.
-                    connection.rollback()
-                    return self._reconcile_committed_receipt(context, required_capability, payload_hash, exc)
-                connection.commit()
+                transaction.insert_receipt(
+                    scope_key=scope_key,
+                    subject=subject,
+                    command_id=context.command_id,
+                    payload_hash=payload_hash,
+                    status=result.status,
+                    result_identity=result_identity,
+                    result_json=result_json,
+                    aggregate_type=aggregate_type,
+                    aggregate_id=aggregate_id,
+                    aggregate_version=next_version,
+                    auth_session_revision_json=auth_session_revision_json,
+                    security_revision_json=security_revision_json,
+                    committed_at=recorded_at,
+                )
                 return result
-            except CommandError:
-                connection.rollback()
-                raise
-            except sqlite3.Error as exc:
-                connection.rollback()
-                raise StorageFailureError("durable command transaction failed") from exc
+        except ReceiptAlreadyExistsError:
+            # The unique receipt winner committed independently. The losing
+            # transaction has already rolled back all of its local writes.
+            return self._reconcile_committed_receipt(context, required_capability, payload_hash)
 
     @staticmethod
     def _authorize(context: CommandContext, required_capability: str) -> None:
@@ -278,7 +289,7 @@ class VersionedAggregateCommandExecutor:
         if not principal.has_capability(required_capability):
             raise AuthorizationDeniedError("principal is not currently granted the required capability")
 
-    def _replay_or_conflict(self, context: CommandContext, required_capability: str, receipt: Any, payload_hash: str) -> CommandResult:
+    def _replay_or_conflict(self, context: CommandContext, required_capability: str, receipt: StoredCommandReceipt, payload_hash: str) -> CommandResult:
         if receipt.payload_hash != payload_hash:
             raise IdempotencyConflictError(context.command_id)
         self._authorize(context, required_capability)
@@ -292,27 +303,16 @@ class VersionedAggregateCommandExecutor:
         context: CommandContext,
         required_capability: str,
         payload_hash: str,
-        cause: sqlite3.IntegrityError,
     ) -> CommandResult:
-        del cause
-        connection = self.store.connection
+        scope_key = context.scope.canonical_key
+        subject = context.principal.subject
         try:
-            connection.execute("BEGIN")
-            row = connection.execute(
-                "SELECT scope_key, subject, command_id, payload_hash, status, result_identity, result_json, aggregate_type, aggregate_id, aggregate_version, auth_session_revision_json, security_revision_json, committed_at FROM command_receipt WHERE scope_key = ? AND subject = ? AND command_id = ?",
-                (context.scope.canonical_key, context.principal.subject, context.command_id),
-            ).fetchone()
-            if row is None:
-                raise StorageFailureError("receipt race could not be reconciled; retry the same command")
-            receipt = self.store._receipt_from_row(row)
-            result = self._replay_or_conflict(context, required_capability, receipt, payload_hash)
-            connection.commit()
-            return result
-        except CommandError:
-            connection.rollback()
-            raise
-        except sqlite3.Error as exc:
-            connection.rollback()
+            with self.store.command_transaction() as transaction:
+                receipt = transaction.get_command_receipt(scope_key, subject, context.command_id)
+                if receipt is None:
+                    raise StorageFailureError("receipt race could not be reconciled; retry the same command")
+                return self._replay_or_conflict(context, required_capability, receipt, payload_hash)
+        except ReceiptAlreadyExistsError as exc:  # pragma: no cover - reconciliation has no insert path
             raise StorageFailureError("durable receipt reconciliation failed") from exc
 
 
