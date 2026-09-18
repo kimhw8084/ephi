@@ -361,8 +361,8 @@
     },
     {
       "path": "tests/test_w0_integrity_regressions.py",
-      "bytes": 8587,
-      "sha256": "176dfce8ff2629c1e98de24d8046b82abe3780aef13fc694cab28e75649e7941"
+      "bytes": 9383,
+      "sha256": "767a0e4d52baf32056b34360028500b4589f67a24f49fc6b306bbdf94161ef82"
     },
     {
       "path": "tests/test_w0_repo_baseline.py",
@@ -391,8 +391,8 @@
     },
     {
       "path": "tools/w0_integrity_regressions.py",
-      "bytes": 57389,
-      "sha256": "69b53cedfaf05219b63aded97a92a0ff3dc2d54e9bbc51b814137ce8dae33d70"
+      "bytes": 57385,
+      "sha256": "6f62a02824a4a37125fe9cd4846ef5d8eef7d70f6b17e8a6a156d3b516c7817f"
     },
     {
       "path": "tools/w0_repo_baseline.py",

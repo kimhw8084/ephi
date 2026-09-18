@@ -1003,7 +1003,7 @@ def run_canonical_integrity_regressions(
             ]
             result["findings"] = evaluated
             result["current_execution"]["status"] = "PASS" if all(
-                item["status"] == "PASS" for item in evaluated[:3]
+                item["status"] == "PASS" for item in evaluated
             ) else "FAIL"
             result["current_execution"]["tests_executed"] = True
             result["current_execution"]["canonical_scenarios"] = {
