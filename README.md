@@ -119,8 +119,38 @@ scientific handlers, worker loop, O3 Attention/claim/acknowledge behavior,
 NiceGUI pages, retained query snapshots, company bindings, notifications or
 external effects are implemented. The PostgreSQL worker tests are
 reference/integration evidence against a real PostgreSQL 18.x service, not a
-bound company deployment and not full O2/G05 completion. Retained/coherent
-query snapshots remain the final major O2 durability slice after this change.
+bound company deployment and not full O2/G05 completion.
+
+## CHG-129 generic read/snapshot substrate
+
+CHG-129 adds the storage-neutral coherent-read and retained-query contracts
+under `ephi.application.read` and PostgreSQL migration
+`migrations/003_o2_read_snapshot_core.sql`. The reference adapter provides
+immutable read revisions with historical workflow snapshots, CAS-safe current
+heads, short PostgreSQL `REPEATABLE READ` current bundles, exact historical
+reads, bounded retained row-version snapshots, database-time expiry, and
+integrity-checked page cursors. A current bundle combines the immutable
+analytical head with the live workflow aggregate from that same snapshot and
+returns an effective revision vector with the live workflow version; a
+historical bundle remains pinned to the workflow snapshot stored on its read
+revision. Current authorization, effective scope and security-revision
+identity are revalidated for every retained page.
+
+Its focused real-PostgreSQL evidence is additive:
+
+```bash
+EPHI_TEST_POSTGRES_DSN='postgresql://user:password@host:5432/database' \
+  python3 -m unittest tests.test_o2_postgresql_reads -v
+```
+
+This is generic PostgreSQL read/snapshot foundation evidence only. It does not
+implement `ListAttention`, `GetEpisodeBrief`, Claim/Acknowledge commands,
+NiceGUI pages, browser state, company identity adapters, scientific source
+queries, notifications or production readiness. O3 will bind these primitives
+to the first durable Attention → Episode UI slice. The CI PostgreSQL 18.x job
+runs this suite together with the existing command and worker suites; the
+normal package matrix, full suite and W0 canonical baseline remain
+database-independent.
 
 ## Pinned framework authority
 

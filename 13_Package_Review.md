@@ -77,8 +77,33 @@ reference/integration evidence only: it is not a bound company production
 deployment, does not complete full O2/G05, and does not implement job
 handlers, O3 Attention/claim/acknowledge behavior, NiceGUI pages, retained
 query snapshots, company bindings, notifications or production readiness.
-Retained/coherent query snapshots remain the final major O2 durability slice
-after this change.
+CHG-129 adds the separate generic read/snapshot foundation described below;
+this worker evidence remains independently green and reference/integration
+scoped.
+
+## CHG-129 PostgreSQL read/snapshot reference evidence
+
+CHG-129 adds only the generic read foundation needed before O3: storage-neutral
+immutable revision/current-head/bundle contracts, PostgreSQL `read_revision`,
+`read_head`, `query_snapshot` and `query_snapshot_row` tables, immutable-row
+constraints, CAS publication, repeatable-read coherent current reads, exact
+historical workflow snapshots, bounded retained row-version pages, database
+clock expiry and integrity-checked cursors. Current reads combine the
+immutable analytical head with the live workflow aggregate and effective
+workflow version, while historical reads remain pinned to their stored
+workflow snapshot. Focused PostgreSQL 18.x evidence covers separate-connection
+read races, revision/history immutability, stale head rejection, snapshot
+isolation under mutable fixture changes, current authorization/security-
+revision revalidation, tamper/identity failures, missing retained members and
+restart-query expiry.
+
+This evidence is generic PostgreSQL read/snapshot foundation evidence only. It
+does not implement `ListAttention`, `GetEpisodeBrief`, Claim/Acknowledge
+commands, NiceGUI pages, browser state, company identity adapters, scientific
+source queries, notifications or production readiness. O3 will bind these
+primitives to the first durable Attention → Episode UI slice. Historical
+evidence remains `REFERENCE_ONLY`, and PostgreSQL evidence remains additive to
+the database-independent package/full-suite/W0 checks.
 
 ## CHG-105 W0 runtime delta
 

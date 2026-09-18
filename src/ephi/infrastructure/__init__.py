@@ -8,6 +8,7 @@ from .sqlite import (
 )
 from .postgresql import PostgreSQLReferenceTransactionAdapter, PostgresReferenceTransactionAdapter
 from .postgresql_worker import PostgreSQLWorkerStore
+from .postgresql_reads import PostgreSQLReadSnapshotStore
 
 __all__ = [
     "AggregateSnapshot",
@@ -17,4 +18,5 @@ __all__ = [
     "PostgreSQLReferenceTransactionAdapter",
     "PostgresReferenceTransactionAdapter",
     "PostgreSQLWorkerStore",
+    "PostgreSQLReadSnapshotStore",
 ]
