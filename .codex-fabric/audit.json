@@ -1,0 +1,386 @@
+{
+  "accepted_at": "2026-09-18T14:29:12Z",
+  "changed_files": [
+    {
+      "additions": 2,
+      "deletions": 0,
+      "path": "06_Investigation_and_Recovery_Logic.md",
+      "status": "M"
+    },
+    {
+      "additions": 1,
+      "deletions": 1,
+      "path": "09_Delivery_and_Gates.md",
+      "status": "M"
+    },
+    {
+      "additions": 1,
+      "deletions": 1,
+      "path": "11_Developer_Start.md",
+      "status": "M"
+    },
+    {
+      "additions": 1,
+      "deletions": 1,
+      "path": "12_Sources_and_Evidence.md",
+      "status": "M"
+    },
+    {
+      "additions": 3,
+      "deletions": 3,
+      "path": "13_Package_Review.md",
+      "status": "M"
+    },
+    {
+      "additions": 2,
+      "deletions": 2,
+      "path": "README.md",
+      "status": "M"
+    },
+    {
+      "additions": 3,
+      "deletions": 10,
+      "path": "evidence/review/w0_integrity_regression_contract.json",
+      "status": "M"
+    },
+    {
+      "additions": 37,
+      "deletions": 27,
+      "path": "manifest.json",
+      "status": "M"
+    },
+    {
+      "additions": 30,
+      "deletions": 0,
+      "path": "src/ephi/__init__.py",
+      "status": "M"
+    },
+    {
+      "additions": 2,
+      "deletions": 2,
+      "path": "src/ephi/app.py",
+      "status": "M"
+    },
+    {
+      "additions": 559,
+      "deletions": 0,
+      "path": "src/ephi/recovery.py",
+      "status": "A"
+    },
+    {
+      "additions": 4,
+      "deletions": 3,
+      "path": "tests/test_advisory_integrity.py",
+      "status": "M"
+    },
+    {
+      "additions": 1,
+      "deletions": 1,
+      "path": "tests/test_ephi_application.py",
+      "status": "M"
+    },
+    {
+      "additions": 177,
+      "deletions": 0,
+      "path": "tests/test_recovery_integrity.py",
+      "status": "A"
+    },
+    {
+      "additions": 4,
+      "deletions": 3,
+      "path": "tests/test_value_integrity.py",
+      "status": "M"
+    },
+    {
+      "additions": 18,
+      "deletions": 1,
+      "path": "tests/test_w0_integrity_regressions.py",
+      "status": "M"
+    },
+    {
+      "additions": 69,
+      "deletions": 20,
+      "path": "tools/w0_integrity_regressions.py",
+      "status": "M"
+    }
+  ],
+  "checks": [
+    {
+      "command": "/bin/zsh -lc \"pwd && git status --short --branch && git log -1 --oneline && git rev-parse HEAD && git show --no-patch --format='%H%n%P%n%s' 7e5d356f1e211e2e13f81e76382a92b0539f4145 && git show --no-patch --format='%H%n%P%n%s' e3f6eb859bfb693a8e26748b8ce2e11f68694190\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"sed -n '1,240p' README.md\nprintf '\\\\n--- 13_Package_Review.md ---\\\\n'\nsed -n '1,280p' 13_Package_Review.md\nprintf '\\\\n--- RTK.md ---\\\\n'\nsed -n '1,240p' /Users/haewonkim/.codex/RTK.md\nprintf '\\\\n--- law.md ---\\\\n'\nsed -n '1,240p' /Users/haewonkim/.codex/law.md\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git show --stat --oneline --decorate 7e5d356f1e211e2e13f81e76382a92b0539f4145 && rtk git diff --stat e3f6eb859bfb693a8e26748b8ce2e11f68694190 7e5d356f1e211e2e13f81e76382a92b0539f4145 && rtk git cherry-pick 7e5d356f1e211e2e13f81e76382a92b0539f4145'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n -C 8 \\\"evaluated\\\\[:3\\\\]|current_execution|F05|status\\\" tools/w0_integrity_regressions.py tests/test_w0_integrity_regressions.py tests/test_recovery_integrity.py src/ephi/recovery.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,130p' tools/w0_integrity_regressions.py\nrtk sed -n '940,1035p' tools/w0_integrity_regressions.py\nrtk sed -n '1,220p' tests/test_w0_integrity_regressions.py\nrtk sed -n '1,120p' tests/test_recovery_integrity.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk rg -n -C 12 \"def evaluate_finding|def _canonical_f05_scenario|F05\" tools/w0_integrity_regressions.py evidence/review/w0_integrity_regression_contract.json tests/test_recovery_integrity.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff -- tools/w0_integrity_regressions.py tests/test_w0_integrity_regressions.py && rtk python3 -m unittest tests.test_recovery_integrity tests.test_w0_integrity_regressions.W0IntegrityRegressionTests.test_default_target_is_canonical_and_does_not_require_preflight tests.test_w0_integrity_regressions.W0IntegrityRegressionTests.test_f05_failure_propagates_to_canonical_execution_and_top_level_status tests.test_w0_integrity_regressions.W0IntegrityRegressionTests.test_f05_evaluator_rejects_resolved_data_unreliable_sequence -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk ls -la .codex-fabric 2>/dev/null || true\nrtk git log --oneline --decorate --max-count=8 --all\nrtk git status --short --branch\nrtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git show --no-patch --format='%H%n%P%n%s' 7122668\nrtk git ls-tree -r --name-only 7122668 | rtk rg 'codex-fabric|audit|evidence' | head -80\nrtk git show --stat --oneline 7122668\nrtk git show --format=fuller --stat 7122668 -- .codex-fabric/audit.json audit.json 2>/dev/null || true\nrtk git branch -a --contains 7e5d356f1e211e2e13f81e76382a92b0539f4145\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git show --no-patch --format='%H%n%P%n%s' 04ce36d\trtk git show --no-patch --format='%H%n%P%n%s' ddcc311\nrtk git show 7122668:.codex-fabric/audit.json\nrtk git show 04ce36d:.codex-fabric/audit.json | rtk sed -n '1,160p'\nrtk git config --get-regexp '\"'^(remote|branch|user|codex|fabric)'\"' || true\nrtk find . -maxdepth 3 -type f -path '*/.codex-fabric/*' -print 2>/dev/null | head -50\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git show --no-patch --format='%H%n%P%n%s' 04ce36d\nrtk git show --no-patch --format='%H%n%P%n%s' ddcc311\nrtk git log --graph --all --decorate --oneline --max-count=30\nrtk git show 04ce36d:.codex-fabric/audit.json | rtk rg -n 'status|failure_class|error_code|commits|changed_files|locator|request|job_id'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"for c in 27fbcc1 166e48e 89c3850 89a9c4d 7d5d26f 8c65f76; do rtk git show --no-patch --format='%H%n%P%n%s' \\\"\"'$c\"; done\nrtk git show 27fbcc1:.codex-fabric/audit.json | rtk rg -n '\"'status|error_code|failure_class|changed_files|commits|job_id|request'\nrtk git show 166e48e:.codex-fabric/audit.json | rtk rg -n 'status|error_code|failure_class|changed_files|commits|job_id|request'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk /Users/haewonkim/.codex-fabric/bin/fabricctl status 2>&1 | rtk sed -n '1,240p'\nrtk /Users/haewonkim/.codex-fabric/bin/fabricctl health 2>&1 | rtk sed -n '1,200p'\nrtk /Users/haewonkim/.codex-fabric/bin/fabricctl --help 2>&1 | rtk sed -n '1,240p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk /Users/haewonkim/.codex-fabric/bin/fabricctl status CF-444adfbb8fc952a0fcfde046 2>&1 | rtk sed -n '1,260p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/w0_repo_baseline.py && rtk python3 -m unittest discover -s tests -v && rtk python3 tools/w0_integrity_regressions.py && rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk find /Users/haewonkim/.codex-fabric -maxdepth 4 -type f \\\\( -name '*444adfbb8fc952a0fcfde046*' -o -name '*fix1*' -o -name 'job.json' -o -name 'state.json' \\\\) -print 2>/dev/null | head -100\nrtk find /Users/haewonkim/.codex-fabric -maxdepth 3 -type d -print 2>/dev/null | head -100\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk ls -l /Users/haewonkim/.codex-fabric/jobs/CF-444adfbb8fc952a0fcfde046.running\nrtk sed -n '1,260p' /Users/haewonkim/.codex-fabric/jobs/CF-444adfbb8fc952a0fcfde046.running 2>/dev/null\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,260p' /Users/haewonkim/.codex-fabric/jobs/CF-444adfbb8fc952a0fcfde046.running/job.json\nrtk sed -n '1,220p' /Users/haewonkim/.codex-fabric/jobs/CF-444adfbb8fc952a0fcfde046.running/lease.json\nrtk sed -n '1,220p' /Users/haewonkim/.codex-fabric/jobs/CF-444adfbb8fc952a0fcfde046.running/prompt.md\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git diff --stat 7e5d356f1e211e2e13f81e76382a92b0539f4145\nrtk git diff -- manifest.json | rtk sed -n '1,220p'\nrtk git diff --name-status 7e5d356f1e211e2e13f81e76382a92b0539f4145\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --quiet HEAD 7e5d356f1e211e2e13f81e76382a92b0539f4145 && rtk git reset --keep 7e5d356f1e211e2e13f81e76382a92b0539f4145 && rtk git rev-parse HEAD && rtk git status --short --branch'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk /Users/haewonkim/.codex-fabric/bin/fabricctl publish-evidence CF-444adfbb8fc952a0fcfde046 2>&1 | rtk sed -n '1,260p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git add manifest.json tests/test_w0_integrity_regressions.py tools/w0_integrity_regressions.py && rtk git commit -m \\\"Fix canonical F05 status propagation\\\" && rtk git show --no-patch --format='%H%n%P%n%s' HEAD && rtk git status --short --branch\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 tools/check_package.py && rtk python3 tools/w0_repo_baseline.py && rtk python3 -m unittest discover -s tests -v && rtk python3 tools/w0_integrity_regressions.py && rtk git diff --check && rtk git status --porcelain=v1 --untracked-files=all && rtk git show --no-patch --format='%H%n%P%n%s' HEAD\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk /Users/haewonkim/.codex-fabric/bin/fabricctl publish-evidence --help 2>&1 | rtk sed -n '1,180p'\nrtk /Users/haewonkim/.codex-fabric/bin/fabricctl worker --help 2>&1 | rtk sed -n '1,180p'\nrtk /Users/haewonkim/.codex-fabric/bin/fabricctl durability --help 2>&1 | rtk sed -n '1,180p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    }
+  ],
+  "codex": {
+    "cli_version": "codex-cli 0.154.0",
+    "configured_model": "gpt-5.6-luna",
+    "event_count": 61,
+    "provider_reported_model": null,
+    "reasoning_effort": "xhigh",
+    "terminal_type": "turn.completed",
+    "usage": {
+      "cache_hit_percent": 93.3,
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 1395200,
+      "fresh_input_tokens": 100180,
+      "input_tokens": 1495380,
+      "non_reasoning_output_tokens": 5625,
+      "output_tokens": 15316,
+      "reasoning_output_tokens": 9691,
+      "total_processed_tokens": 1510696
+    },
+    "warnings": []
+  },
+  "commits": [
+    {
+      "sha": "13e9b185fdae1d8c6b009f33a3510a3b8ce8b098",
+      "subject": "Fix canonical F05 status propagation"
+    },
+    {
+      "sha": "7e5d356f1e211e2e13f81e76382a92b0539f4145",
+      "subject": "Implement CHG-118 qualified recovery integrity"
+    }
+  ],
+  "diff": {
+    "additions": 914,
+    "changed_files": 17,
+    "commit_count": 2,
+    "deletions": 75
+  },
+  "error_code": null,
+  "evidence_manifest": {
+    "count": 8,
+    "items": [
+      {
+        "bytes": 12683,
+        "path": "06_Investigation_and_Recovery_Logic.md",
+        "sha256": "4d8bfecb579b13e2491713cf148561afc15a5eba3a31de01dd73da18400b518e"
+      },
+      {
+        "bytes": 18625,
+        "path": "09_Delivery_and_Gates.md",
+        "sha256": "b90e8372910a2cf3f104dd6b7c776575ad04567c00d4f239357d6ca8b44e2bd9"
+      },
+      {
+        "bytes": 2927,
+        "path": "11_Developer_Start.md",
+        "sha256": "fe837ed950de8ee55e296a1a1878de8c183870b0adb4146f825b3c5cd3071924"
+      },
+      {
+        "bytes": 6830,
+        "path": "12_Sources_and_Evidence.md",
+        "sha256": "38c2516146237b54c2ae3da294affe84a2c4ec3cfb618af137a0a42735f7f111"
+      },
+      {
+        "bytes": 8004,
+        "path": "13_Package_Review.md",
+        "sha256": "b6dfcf53cc927bd1a5b443a6137e0b4b448da89afaf61d04058e1a91ba8422ef"
+      },
+      {
+        "bytes": 6341,
+        "path": "README.md",
+        "sha256": "8218d1a3a8b8ab808f647ade26f8bf876a300b1c792ab428e391b7be31f8cb38"
+      },
+      {
+        "bytes": 15179,
+        "path": "evidence/review/w0_integrity_regression_contract.json",
+        "sha256": "14ca39e0effcd0a09f048b6f81f4c188cfc5ab11ac2186df870446964468017e"
+      },
+      {
+        "bytes": 13690,
+        "path": "manifest.json",
+        "sha256": "06ed21cd556a3e52eed7519dc840ec1b6d91eec50b7bcce25257775b70b59d4d"
+      }
+    ],
+    "version": 1
+  },
+  "evidence_publisher_release": "1.2.3-resume-candidate",
+  "fabric_capture": {
+    "applied": false,
+    "paths_before": 0,
+    "transient_untracked_removed": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "fabric_release": "1.2.3-resume-candidate",
+  "failure_class": null,
+  "finished_at": "2026-09-18T14:34:40Z",
+  "git": {
+    "base_is_ancestor": true,
+    "base_sha": "e3f6eb859bfb693a8e26748b8ce2e11f68694190",
+    "branch": "codex/ephi-w0-qualified-recovery-f05-fix1",
+    "head_sha": "13e9b185fdae1d8c6b009f33a3510a3b8ce8b098",
+    "remote_exact_head": true,
+    "remote_head_sha": "13e9b185fdae1d8c6b009f33a3510a3b8ce8b098",
+    "target_branch": "main",
+    "target_drifted_since_acceptance": false,
+    "target_head_observed_after_execution": "e3f6eb859bfb693a8e26748b8ce2e11f68694190",
+    "work_branch": "codex/ephi-w0-qualified-recovery-f05-fix1",
+    "worktree_clean": true
+  },
+  "instructions": {
+    "files": [
+      {
+        "bytes": 1458,
+        "path": "AGENTS.md",
+        "sha256": "4349f387a79d886ed1264604ff48c582698e539e08ed8fb2f9d8ab8fbf6f804a"
+      }
+    ],
+    "total_bytes": 1458,
+    "warning": null
+  },
+  "job_id": "CF-444adfbb8fc952a0fcfde046",
+  "kind": "codex-fabric-audit-evidence",
+  "locator": {
+    "branch": "codex-fabric/evidence/ephi/ephi-w0-qualified-recovery-f05-fix1",
+    "path": ".codex-fabric/audit.json",
+    "ref": "refs/heads/codex-fabric/evidence/ephi/ephi-w0-qualified-recovery-f05-fix1"
+  },
+  "operation": "FIX",
+  "policy": {
+    "environment_policy_sha256": "e077daca74297b3c30bee8989f00f8ca5338f7610b4d016a6c48db524205d064",
+    "fabric_release": "1.2.3-resume-candidate",
+    "policy_sha256": "44756118cd7fda0c45cd23ba1d31a48a3f4f2422d687df15264ba4406f40e1f2",
+    "registry_sha256": "cfc765f3211c37c7967a138f3b2d89a99341939b15b2623f92744d007f625d6f"
+  },
+  "project_id": "ephi",
+  "recovery": {
+    "model_rerun_safe": false,
+    "recovery_required": false,
+    "retry_safe": false,
+    "retry_scope": null,
+    "worktree_retained": true
+  },
+  "request": "ephi-w0-qualified-recovery-f05-fix1",
+  "schema_version": 1,
+  "started_at": "2026-09-18T14:29:12Z",
+  "status": "EXECUTED_CHANGE",
+  "timing": {
+    "execution_seconds": 328,
+    "queue_seconds": 0,
+    "total_seconds": 328
+  },
+  "transport": {
+    "bytes": 3115,
+    "envelope": "FABRIC/2",
+    "prompt_bytes": 2795,
+    "prompt_sha256": "155dc11a62268f45ef86acfdd4a6b1bcb68827e7ea034ac098ba47d1ca13cd88",
+    "sha256": "444adfbb8fc952a0fcfde04683ac3d454ed11afb66138fd711a9ab55e4714e44"
+  }
+}
