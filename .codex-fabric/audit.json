@@ -1,0 +1,553 @@
+{
+  "accepted_at": "2026-09-18T01:28:17Z",
+  "changed_files": [
+    {
+      "additions": 2,
+      "deletions": 0,
+      "path": ".gitignore",
+      "status": "M"
+    },
+    {
+      "additions": 4,
+      "deletions": 4,
+      "path": "00_START_HERE.md",
+      "status": "M"
+    },
+    {
+      "additions": 1,
+      "deletions": 1,
+      "path": "09_Delivery_and_Gates.md",
+      "status": "M"
+    },
+    {
+      "additions": 1,
+      "deletions": 1,
+      "path": "10_Traceability_and_Decisions.md",
+      "status": "M"
+    },
+    {
+      "additions": 11,
+      "deletions": 10,
+      "path": "11_Developer_Start.md",
+      "status": "M"
+    },
+    {
+      "additions": 6,
+      "deletions": 4,
+      "path": "12_Sources_and_Evidence.md",
+      "status": "M"
+    },
+    {
+      "additions": 8,
+      "deletions": 9,
+      "path": "13_Package_Review.md",
+      "status": "M"
+    },
+    {
+      "additions": 22,
+      "deletions": 34,
+      "path": "README.md",
+      "status": "M"
+    },
+    {
+      "additions": 40,
+      "deletions": 0,
+      "path": "environment/w0_repo_baseline.json",
+      "status": "A"
+    },
+    {
+      "additions": 2,
+      "deletions": 2,
+      "path": "evidence/README.md",
+      "status": "M"
+    },
+    {
+      "additions": 4,
+      "deletions": 1,
+      "path": "evidence/review/w0_integrity_regression_contract.json",
+      "status": "M"
+    },
+    {
+      "additions": 82,
+      "deletions": 37,
+      "path": "manifest.json",
+      "status": "M"
+    },
+    {
+      "additions": 20,
+      "deletions": 0,
+      "path": "pyproject.toml",
+      "status": "A"
+    },
+    {
+      "additions": 24,
+      "deletions": 0,
+      "path": "src/ephi/__init__.py",
+      "status": "A"
+    },
+    {
+      "additions": 26,
+      "deletions": 0,
+      "path": "src/ephi/__main__.py",
+      "status": "A"
+    },
+    {
+      "additions": 55,
+      "deletions": 0,
+      "path": "src/ephi/application.py",
+      "status": "A"
+    },
+    {
+      "additions": 47,
+      "deletions": 0,
+      "path": "src/ephi/config.py",
+      "status": "A"
+    },
+    {
+      "additions": 67,
+      "deletions": 0,
+      "path": "tests/test_canonical_application.py",
+      "status": "A"
+    },
+    {
+      "additions": 1,
+      "deletions": 1,
+      "path": "tests/test_package.py",
+      "status": "M"
+    },
+    {
+      "additions": 1,
+      "deletions": 1,
+      "path": "tests/test_source_preflight.py",
+      "status": "M"
+    },
+    {
+      "additions": 1,
+      "deletions": 1,
+      "path": "tests/test_w0_baseline.py",
+      "status": "M"
+    },
+    {
+      "additions": 11,
+      "deletions": 1,
+      "path": "tests/test_w0_integrity_regressions.py",
+      "status": "M"
+    },
+    {
+      "additions": 88,
+      "deletions": 0,
+      "path": "tests/test_w0_repo_baseline.py",
+      "status": "A"
+    },
+    {
+      "additions": 14,
+      "deletions": 6,
+      "path": "tools/check_package.py",
+      "status": "M"
+    },
+    {
+      "additions": 6,
+      "deletions": 1,
+      "path": "tools/source_preflight.py",
+      "status": "M"
+    },
+    {
+      "additions": 6,
+      "deletions": 1,
+      "path": "tools/w0_baseline.py",
+      "status": "M"
+    },
+    {
+      "additions": 96,
+      "deletions": 3,
+      "path": "tools/w0_integrity_regressions.py",
+      "status": "M"
+    },
+    {
+      "additions": 434,
+      "deletions": 0,
+      "path": "tools/w0_repo_baseline.py",
+      "status": "A"
+    }
+  ],
+  "checks": [
+    {
+      "command": "/bin/zsh -lc \"pwd && sed -n '1,240p' /Users/haewonkim/.codex/RTK.md && sed -n '1,260p' /Users/haewonkim/.codex/law.md && printf '\\\\n--- README.md ---\\\\n' && sed -n '1,280p' README.md && printf '\\\\n--- 13_Package_Review.md ---\\\\n' && sed -n '1,320p' 13_Package_Review.md\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk --version && rtk git status --short --branch && rtk git rev-parse HEAD && rtk git diff --stat && printf '\\\\n--- top-level files ---\\\\n' && rtk rg --files -g '\"'!artifacts/**'\"' -g '\"'!evidence/import/**'\"' | sed -n '1,260p' && printf '\\\\n--- manifests/package config candidates ---\\\\n' && rtk rg -n --hidden -g '\"'!artifacts/**'\"' -g '\"'!evidence/import/**'\"' '(pyproject|setup\\\\.py|requirements|nicegui_base|SOURCE_STAGED|source_preflight|w0_baseline|W0)' . | sed -n '1,360p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"printf '%s\\\\n' '--- check_package.py ---' && sed -n '1,360p' tools/check_package.py && printf '%s\\\\n' '--- tests/test_package.py ---' && sed -n '1,360p' tests/test_package.py && printf '%s\\\\n' '--- tests/test_w0_baseline.py ---' && sed -n '1,300p' tests/test_w0_baseline.py && printf '%s\\\\n' '--- tools/w0_baseline.py ---' && sed -n '1,320p' tools/w0_baseline.py && printf '%s\\\\n' '--- tools/w0_integrity_regressions.py ---' && sed -n '1,360p' tools/w0_integrity_regressions.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"sed -n '1,360p' tools/w0_baseline.py && sed -n '1,280p' tests/test_w0_integrity_regressions.py && sed -n '1,220p' environment/nicegui_base_requirements.txt && sed -n '1,180p' environment/nicegui_base_runtime.json && sed -n '1,280p' manifest.json\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"sed -n '1,240p' 11_Developer_Start.md && sed -n '1,180p' 09_Delivery_and_Gates.md && sed -n '1,170p' 07_NiceGUI_Base_Integration.md && sed -n '1,190p' 03_Application_Contracts.md && sed -n '1,180p' CONTRIBUTING.md && sed -n '1,220p' .gitignore && sed -n '1,180p' .github/workflows/package.yml\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rg -n 'def run_integrity_regressions|def main|run_integrity_regressions\\\\(' tools/w0_integrity_regressions.py tests/test_w0_integrity_regressions.py && sed -n '360,760p' tools/w0_integrity_regressions.py && sed -n '1,240p' evidence/review/w0_integrity_regression_contract.json\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"sed -n '760,860p' tools/w0_integrity_regressions.py && sed -n '280,520p' evidence/review/w0_integrity_regression_contract.json\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n --glob '\"'!evidence/import/**'\"' --glob '\"'!evidence/source_inventory.json'\"' --glob '\"'!evidence/source_excerpts.md'\"' --glob '\"'!evidence/behavior_probes.*'\"' '(ephi_v0\\\\.19\\\\.1|5e9ad8f|SOURCE_STAGED|SOURCE_REQUIRED|source-preflight|source-staging|owner-supplied archive|original application archive|source restoration|absent original application)' .\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git status --short && rtk rg --files src environment | sort && sed -n '1,80p' pyproject.toml\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'ls -la src src/environment environment && rtk git status --short --untracked-files=all'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"sed -n '1,24p' tools/source_preflight.py && sed -n '1,20p' tools/w0_baseline.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"sed -n '1,140p' README.md\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"sed -n '1,70p' 00_START_HERE.md && sed -n '1,100p' 11_Developer_Start.md && sed -n '1,90p' 13_Package_Review.md && sed -n '1,34p' evidence/README.md && sed -n '68,84p' 10_Traceability_and_Decisions.md\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'PYTHONDONTWRITEBYTECODE=1 rtk python3 -m unittest tests.test_canonical_application tests.test_w0_repo_baseline tests.test_w0_integrity_regressions -v'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'PYTHONDONTWRITEBYTECODE=1 rtk python3 -m unittest tests.test_canonical_application tests.test_w0_repo_baseline tests.test_w0_integrity_regressions -v'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'PYTHONDONTWRITEBYTECODE=1 rtk python3 -m unittest tests.test_canonical_application tests.test_w0_repo_baseline tests.test_w0_integrity_regressions -v'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest && PYTHONDONTWRITEBYTECODE=1 rtk python3 -m unittest tests.test_w0_repo_baseline -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'PYTHONDONTWRITEBYTECODE=1 rtk python3 tools/w0_repo_baseline.py'",
+      "exit_code": 5,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'PYTHONDONTWRITEBYTECODE=1 rtk python3 -m unittest discover -s tests -v'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest && PYTHONDONTWRITEBYTECODE=1 rtk python3 -m unittest discover -s tests -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'PYTHONDONTWRITEBYTECODE=1 rtk python3 tools/w0_repo_baseline.py >/tmp/ephi-w0-baseline.out && tail -n 24 /tmp/ephi-w0-baseline.out'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 tools/check_package.py --refresh-manifest && rtk git diff --check && rtk rg -n --glob '\"'!evidence/import/**'\"' --glob '\"'!evidence/source_inventory.json'\"' --glob '\"'!evidence/source_excerpts.md'\"' --glob '\"'!evidence/behavior_probes.*'\"' '(ephi_v0\\\\.19\\\\.1|5e9ad8f|SOURCE_STAGED|SOURCE_REQUIRED|source-preflight|source-staging|owner-supplied archive|original application archive|absent original application)' README.md 00_START_HERE.md 09_Delivery_and_Gates.md 10_Traceability_and_Decisions.md 11_Developer_Start.md 13_Package_Review.md evidence/README.md || true\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'PYTHONDONTWRITEBYTECODE=1 rtk python3 -m unittest discover -s tests -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/w0_integrity_regressions.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git status --short --branch && rtk git diff --stat && rtk git diff -- README.md 11_Developer_Start.md tools/w0_integrity_regressions.py | sed -n '1,360p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk mktemp -d /tmp/ephi-chg111-install.XXXXXX'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m pip install --no-deps --target /tmp/ephi-chg111-install.IXJEXT .'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'PYTHONPATH=/tmp/ephi-chg111-install.IXJEXT PYTHONDONTWRITEBYTECODE=1 rtk python3 -m ephi --self-check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n --glob '\"'!evidence/import/**'\"' --glob '\"'!evidence/source_inventory.json'\"' --glob '\"'!evidence/source_excerpts.md'\"' --glob '\"'!evidence/behavior_probes.*'\"' '(original application archive|owner-supplied|SOURCE_STAGED|source-preflight|source-staging|ephi_v0\\\\.19\\\\.1|5e9ad8f)' . | sed -n '1,240p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"sed -n '1,32p' 12_Sources_and_Evidence.md && sed -n '1,30p' 02_Source_Audit.md\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest && rtk python3 tools/check_package.py && rtk git diff --check'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nimport json\np=json.load(open('manifest.json'))['files']\nprint(len(p), len({x['path'] for x in p}), p[:5], p[-5:])\nprint(p == sorted(set(x['path'] for x in p)))\nprint([x['path'] for x in p if x['path'] \"'!= sorted(x['\"'path'] for x in p)[p.index(x)]][:5])\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rm -rf /Users/haewonkim/.codex-fabric/worktrees/CF-aea2f715eca08edf33d71159/src/ephi.egg-info && rtk git status --short --untracked-files=all | sed -n '1,120p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rm -rf /Users/haewonkim/.codex-fabric/worktrees/CF-aea2f715eca08edf33d71159/build && rtk git status --short --untracked-files=all | sed -n '1,120p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest && rtk python3 tools/check_package.py && rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest && rtk python3 tools/check_package.py && PYTHONDONTWRITEBYTECODE=1 rtk python3 -m unittest discover -s tests -v && PYTHONDONTWRITEBYTECODE=1 rtk python3 tools/w0_repo_baseline.py >/tmp/ephi-w0-final-baseline.out && rtk python3 tools/w0_integrity_regressions.py >/tmp/ephi-chg109-final.out && rtk git diff --check && tail -n 8 /tmp/ephi-w0-final-baseline.out && tail -n 8 /tmp/ephi-chg109-final.out'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git diff --stat && rtk git diff --name-only && rtk git status --short --ignored | sed -n '1,180p' && sed -n '1,260p' tools/w0_repo_baseline.py | tail -n 80 && sed -n '1,160p' src/ephi/application.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest && rtk python3 tools/check_package.py && PYTHONDONTWRITEBYTECODE=1 rtk python3 -m unittest discover -s tests -v && rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git add -A && rtk git commit -m \"Implement CHG-111 canonical EPHI W0 baseline\"'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short --branch && rtk git rev-parse HEAD && rtk python3 tools/check_package.py && PYTHONDONTWRITEBYTECODE=1 rtk python3 -m unittest discover -s tests -v >/tmp/ephi-final-tests.out && tail -n 5 /tmp/ephi-final-tests.out && PYTHONDONTWRITEBYTECODE=1 rtk python3 tools/w0_repo_baseline.py >/tmp/ephi-final-baseline-after-commit.out && tail -n 8 /tmp/ephi-final-baseline-after-commit.out && rtk python3 tools/w0_integrity_regressions.py >/tmp/ephi-final-integrity-after-commit.out && tail -n 8 /tmp/ephi-final-integrity-after-commit.out && rtk git diff --check && rtk git status --short --branch'",
+      "exit_code": 0,
+      "type": "command_execution"
+    }
+  ],
+  "codex": {
+    "cli_version": "codex-cli 0.154.0",
+    "configured_model": "gpt-5.6-luna",
+    "event_count": 162,
+    "provider_reported_model": null,
+    "reasoning_effort": "xhigh",
+    "terminal_type": "turn.completed",
+    "usage": {
+      "cache_hit_percent": 97.09,
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 9174528,
+      "fresh_input_tokens": 275059,
+      "input_tokens": 9449587,
+      "non_reasoning_output_tokens": 33090,
+      "output_tokens": 51872,
+      "reasoning_output_tokens": 18782,
+      "total_processed_tokens": 9501459
+    },
+    "warnings": []
+  },
+  "commits": [
+    {
+      "sha": "a4b9aa727c679b52eb1c20cf879a5ac13056a88d",
+      "subject": "Implement CHG-111 canonical EPHI W0 baseline"
+    }
+  ],
+  "diff": {
+    "additions": 1080,
+    "changed_files": 28,
+    "commit_count": 1,
+    "deletions": 118
+  },
+  "error_code": null,
+  "evidence_manifest": {
+    "count": 11,
+    "items": [
+      {
+        "bytes": 4484,
+        "path": "00_START_HERE.md",
+        "sha256": "6ef00ef194f6426069bcc6525a5a6e4bb4c5646caf6796c2ba4dd6476c2655d4"
+      },
+      {
+        "bytes": 18454,
+        "path": "09_Delivery_and_Gates.md",
+        "sha256": "3f208f5b0ce8481e5a0804c9bac8211ff86e04bf2bad1d67fe73dd5f7b8fff3a"
+      },
+      {
+        "bytes": 8208,
+        "path": "10_Traceability_and_Decisions.md",
+        "sha256": "9fba9fa7d9f898d03ebdf726d1cd20e7b2c1d6a553d2a49717d2ff9268f10e11"
+      },
+      {
+        "bytes": 3613,
+        "path": "11_Developer_Start.md",
+        "sha256": "7b2c784d210843052d9253259b907aa18127d52678c956cc77a211395e79c527"
+      },
+      {
+        "bytes": 7245,
+        "path": "12_Sources_and_Evidence.md",
+        "sha256": "6fcc4e03499af3fd7bd7186e4a92db0498829d1d0b2a22ef792aa6c58359dd3f"
+      },
+      {
+        "bytes": 7726,
+        "path": "13_Package_Review.md",
+        "sha256": "42f41d7764fd81f122b63e9a4b32a7f044ce0b5fdeb37263391c3930e4ea3815"
+      },
+      {
+        "bytes": 8873,
+        "path": "README.md",
+        "sha256": "5a79af983b29d12ede04e4a482cf6b3ab1aba94e65a3872dfb883cd84ca6aa93"
+      },
+      {
+        "bytes": 1374,
+        "path": "environment/w0_repo_baseline.json",
+        "sha256": "a95dfd32935b805800d2bdafea061d32536bb8f64e6486400caf52c722d66e54"
+      },
+      {
+        "bytes": 2516,
+        "path": "evidence/README.md",
+        "sha256": "5b1a29ab4056d7e1c975b01292bf34a4b6a45264870ef85b1549ec28263f8225"
+      },
+      {
+        "bytes": 14410,
+        "path": "evidence/review/w0_integrity_regression_contract.json",
+        "sha256": "5fd3028b791542fc1c1ced6d74628e667dc324070c7f913a25a07bc9a4d50678"
+      },
+      {
+        "bytes": 10937,
+        "path": "manifest.json",
+        "sha256": "31f721e83616c64007245d186ba524afe1088fdaf4bbe6998de0d51bcd797ef8"
+      }
+    ],
+    "version": 1
+  },
+  "evidence_publisher_release": "1.2.3-resume-candidate",
+  "fabric_capture": {
+    "applied": false,
+    "paths_before": 0,
+    "transient_untracked_removed": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "fabric_release": "1.2.3-resume-candidate",
+  "failure_class": null,
+  "finished_at": "2026-09-18T01:46:23Z",
+  "git": {
+    "base_is_ancestor": true,
+    "base_sha": "61cccd2639720d3a8fa2b6bfadd5873f29867476",
+    "branch": "codex/ephi-w0-repo-native-baseline-v2",
+    "head_sha": "a4b9aa727c679b52eb1c20cf879a5ac13056a88d",
+    "remote_exact_head": true,
+    "remote_head_sha": "a4b9aa727c679b52eb1c20cf879a5ac13056a88d",
+    "target_branch": "main",
+    "target_drifted_since_acceptance": false,
+    "target_head_observed_after_execution": "61cccd2639720d3a8fa2b6bfadd5873f29867476",
+    "work_branch": "codex/ephi-w0-repo-native-baseline-v2",
+    "worktree_clean": true
+  },
+  "instructions": {
+    "files": [
+      {
+        "bytes": 959,
+        "path": "AGENTS.md",
+        "sha256": "0803c825a0dbaf0266aa44b5ce9c6a30d8eac93737369aae3dc9715d3bb49767"
+      }
+    ],
+    "total_bytes": 959,
+    "warning": null
+  },
+  "job_id": "CF-aea2f715eca08edf33d71159",
+  "kind": "codex-fabric-audit-evidence",
+  "locator": {
+    "branch": "codex-fabric/evidence/ephi/ephi-w0-repo-native-baseline-v2",
+    "path": ".codex-fabric/audit.json",
+    "ref": "refs/heads/codex-fabric/evidence/ephi/ephi-w0-repo-native-baseline-v2"
+  },
+  "operation": "BUILD",
+  "policy": {
+    "environment_policy_sha256": "e077daca74297b3c30bee8989f00f8ca5338f7610b4d016a6c48db524205d064",
+    "fabric_release": "1.2.3-resume-candidate",
+    "policy_sha256": "44756118cd7fda0c45cd23ba1d31a48a3f4f2422d687df15264ba4406f40e1f2",
+    "registry_sha256": "cfc765f3211c37c7967a138f3b2d89a99341939b15b2623f92744d007f625d6f"
+  },
+  "project_id": "ephi",
+  "recovery": {
+    "model_rerun_safe": false,
+    "recovery_required": false,
+    "retry_safe": false,
+    "retry_scope": null,
+    "worktree_retained": true
+  },
+  "request": "ephi-w0-repo-native-baseline-v2",
+  "schema_version": 1,
+  "started_at": "2026-09-18T01:28:17Z",
+  "status": "EXECUTED_CHANGE",
+  "timing": {
+    "execution_seconds": 1086,
+    "queue_seconds": 0,
+    "total_seconds": 1086
+  },
+  "transport": {
+    "bytes": 5605,
+    "envelope": "FABRIC/2",
+    "prompt_bytes": 5291,
+    "prompt_sha256": "defea2182e667c39ea7103374bbed6622894de511d31c702b593c2a99eba35a4",
+    "sha256": "aea2f715eca08edf33d7115914c96f7d1bd9004d9a5617ec38f4323d4a1294a2"
+  }
+}
