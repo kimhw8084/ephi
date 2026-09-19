@@ -61,16 +61,22 @@
     "The native CUA surface did not provide a durable file/hash channel for the two screenshots and an extension repeatedly stole focus before S09 could be completed in-browser."
   ],
   "artifact_bridge": {
-    "status": "BLOCKED",
-    "canonical_ref_requested": "project-os-artifacts/ephi/ephi-o3-attention-episode-w1-fix2",
-    "reason": "No callable Project OS Artifact Bridge was exposed in this execution. The prohibited synthetic AR-2 sidecar and Notion credentials were not used.",
+    "status": "PUBLISHED_BLOCKED_EVIDENCE_GAPS",
+    "canonical_ref": "refs/heads/project-os-artifacts/ephi/ephi-o3-attention-episode-w1-fix2",
+    "reason": "The dedicated Git artifact carrier was available and was used. The browser evidence remains explicitly blocked where the native CUA surface could not provide durable screenshot hashes or complete S09.",
     "notion_credentials_used": false,
     "synthetic_ar2_sidecar_used": false,
-    "remote_commit": null,
-    "remote_tree": null,
-    "manifest_sha256": null,
-    "bundle_sha256": null,
-    "remote_readback": null
+    "remote_commit": "8d7b05b20f265a58cef932f30776c8d81e9e886f",
+    "remote_tree": "05401978f455af379db3a55a2a80353004431895",
+    "manifest_sha256": "8868a4efd06d2bea5a7ecb2f922585841b1f5a7634debe557a65b8c4b6521cc8",
+    "bundle_sha256": "03a71beaa0f3addb1f45f606cc6f885a68974630bc1d15c10f17516d32302abc",
+    "remote_readback": {
+      "remote_file_count": 6,
+      "required_files_readable": true,
+      "all_remote_hashes_recorded": true,
+      "candidate_binding_verified": true,
+      "status_boundary_verified": true
+    }
   },
   "self_declared_go": false,
   "audit_boundary": "Independent Project OS audit remains required; this record does not declare GO."
