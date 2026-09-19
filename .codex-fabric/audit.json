@@ -1,0 +1,1023 @@
+{
+  "accepted_at": "2026-09-19T16:05:06Z",
+  "changed_files": [
+    {
+      "additions": 398,
+      "deletions": 0,
+      "path": ".nicegui_base/construction_manifest.json",
+      "status": "A"
+    },
+    {
+      "additions": 6243,
+      "deletions": 0,
+      "path": ".nicegui_base/framework_catalog.json",
+      "status": "A"
+    },
+    {
+      "additions": 84,
+      "deletions": 0,
+      "path": ".nicegui_base/install_manifest.json",
+      "status": "A"
+    },
+    {
+      "additions": 23,
+      "deletions": 4,
+      "path": "11_Developer_Start.md",
+      "status": "M"
+    },
+    {
+      "additions": 25,
+      "deletions": 2,
+      "path": "13_Package_Review.md",
+      "status": "M"
+    },
+    {
+      "additions": 34,
+      "deletions": 2,
+      "path": "README.md",
+      "status": "M"
+    },
+    {
+      "additions": 23,
+      "deletions": 0,
+      "path": "app.py",
+      "status": "A"
+    },
+    {
+      "additions": 148,
+      "deletions": 0,
+      "path": "certification_output/runtime_smoke/RUNTIME_SMOKE_REPORT.json",
+      "status": "A"
+    },
+    {
+      "additions": 32,
+      "deletions": 0,
+      "path": "certification_output/runtime_smoke/RUNTIME_SMOKE_SERVER.log",
+      "status": "A"
+    },
+    {
+      "additions": 101,
+      "deletions": 0,
+      "path": "docs/nicegui_base/AGENT_WORKFLOW.md",
+      "status": "A"
+    },
+    {
+      "additions": 76,
+      "deletions": 0,
+      "path": "docs/nicegui_base/AI_QUICKSTART.md",
+      "status": "A"
+    },
+    {
+      "additions": 97,
+      "deletions": 0,
+      "path": "docs/nicegui_base/AI_RULES.md",
+      "status": "A"
+    },
+    {
+      "additions": 22,
+      "deletions": 0,
+      "path": "docs/nicegui_base/ANTI_PATTERNS.md",
+      "status": "A"
+    },
+    {
+      "additions": 16,
+      "deletions": 0,
+      "path": "docs/nicegui_base/APP_PATTERNS.md",
+      "status": "A"
+    },
+    {
+      "additions": 228,
+      "deletions": 0,
+      "path": "docs/nicegui_base/COMPONENT_CATALOG.md",
+      "status": "A"
+    },
+    {
+      "additions": 25,
+      "deletions": 0,
+      "path": "docs/nicegui_base/FINAL_RELEASE_CANDIDATE_STABLE_QUALIFICATION_HANDOFF.md",
+      "status": "A"
+    },
+    {
+      "additions": 101,
+      "deletions": 0,
+      "path": "docs/nicegui_base/ICON_CATALOG.md",
+      "status": "A"
+    },
+    {
+      "additions": 20,
+      "deletions": 0,
+      "path": "docs/nicegui_base/LAYOUT_RULES.md",
+      "status": "A"
+    },
+    {
+      "additions": 33,
+      "deletions": 0,
+      "path": "docs/nicegui_base/OPENCODE_GEMMA_BOOTSTRAP.md",
+      "status": "A"
+    },
+    {
+      "additions": 12,
+      "deletions": 0,
+      "path": "docs/nicegui_base/PERFORMANCE_GUIDE.md",
+      "status": "A"
+    },
+    {
+      "additions": 114,
+      "deletions": 0,
+      "path": "docs/nicegui_base/RECIPES.md",
+      "status": "A"
+    },
+    {
+      "additions": 104,
+      "deletions": 0,
+      "path": "docs/nicegui_base/SEMICONDUCTOR_APPLICATION_RECIPES.md",
+      "status": "A"
+    },
+    {
+      "additions": 14,
+      "deletions": 0,
+      "path": "docs/nicegui_base/SEMICONDUCTOR_LONGITUDINAL_ASSURANCE_REVIEW_EXCEPTION_GOVERNANCE.md",
+      "status": "A"
+    },
+    {
+      "additions": 15,
+      "deletions": 0,
+      "path": "docs/nicegui_base/SEMICONDUCTOR_OPERATIONAL_ASSURANCE_RENEWAL_LEDGER.md",
+      "status": "A"
+    },
+    {
+      "additions": 51,
+      "deletions": 0,
+      "path": "docs/nicegui_base/SEMICONDUCTOR_POST_RELEASE_STABILITY_ROLLBACK_READINESS.md",
+      "status": "A"
+    },
+    {
+      "additions": 68,
+      "deletions": 0,
+      "path": "docs/nicegui_base/SEMICONDUCTOR_PRODUCTION_RUNTIME.md",
+      "status": "A"
+    },
+    {
+      "additions": 68,
+      "deletions": 0,
+      "path": "docs/nicegui_base/SEMICONDUCTOR_PROMOTION_EXECUTION_ADAPTER_RELEASE_AUDIT.md",
+      "status": "A"
+    },
+    {
+      "additions": 83,
+      "deletions": 0,
+      "path": "docs/nicegui_base/SEMICONDUCTOR_PROVIDER_SDK_RC.md",
+      "status": "A"
+    },
+    {
+      "additions": 76,
+      "deletions": 0,
+      "path": "docs/nicegui_base/SEMICONDUCTOR_RELEASE_PUBLICATION_POST_PROMOTION_VERIFICATION.md",
+      "status": "A"
+    },
+    {
+      "additions": 113,
+      "deletions": 0,
+      "path": "docs/nicegui_base/SEMICONDUCTOR_RUNTIME_ONBOARDING.md",
+      "status": "A"
+    },
+    {
+      "additions": 14,
+      "deletions": 0,
+      "path": "docs/nicegui_base/SEMICONDUCTOR_STABLE_PROMOTION_CANDIDATE.md",
+      "status": "A"
+    },
+    {
+      "additions": 65,
+      "deletions": 0,
+      "path": "docs/nicegui_base/SEMICONDUCTOR_STABLE_RELEASE_EVIDENCE_ACCEPTANCE_PROMOTION_CLOSURE.md",
+      "status": "A"
+    },
+    {
+      "additions": 13,
+      "deletions": 0,
+      "path": "docs/nicegui_base/SEMICONDUCTOR_SUSTAINED_OPERATIONS_INCIDENT_ROLLBACK_AUDIT.md",
+      "status": "A"
+    },
+    {
+      "additions": 21,
+      "deletions": 0,
+      "path": "docs/nicegui_base/SEMICONDUCTOR_SUSTAINED_OPERATIONS_RENEWAL_CONTINUITY.md",
+      "status": "A"
+    },
+    {
+      "additions": 16,
+      "deletions": 0,
+      "path": "docs/nicegui_base/SEMICONDUCTOR_TARGET_CERTIFICATION.md",
+      "status": "A"
+    },
+    {
+      "additions": 61,
+      "deletions": 0,
+      "path": "docs/nicegui_base/SEMICONDUCTOR_TARGET_EXECUTION_OPERATIONAL_HANDOFF.md",
+      "status": "A"
+    },
+    {
+      "additions": 44,
+      "deletions": 0,
+      "path": "docs/nicegui_base/TROUBLESHOOTING.md",
+      "status": "A"
+    },
+    {
+      "additions": 28,
+      "deletions": 0,
+      "path": "docs/nicegui_base/VALIDATOR_RULES.md",
+      "status": "A"
+    },
+    {
+      "additions": 20,
+      "deletions": 0,
+      "path": "docs/nicegui_base/VISUAL_RESOURCE_GUIDE.md",
+      "status": "A"
+    },
+    {
+      "additions": 42,
+      "deletions": 0,
+      "path": "docs/nicegui_base/ZERO_STOCK_NICEGUI_VISUAL_LAWS.md",
+      "status": "A"
+    },
+    {
+      "additions": 59,
+      "deletions": 0,
+      "path": "evidence/review/chg_134_fix1_qualification.json",
+      "status": "A"
+    },
+    {
+      "additions": 83,
+      "deletions": 0,
+      "path": "evidence/review/chg_134_fix2_qualification.json",
+      "status": "A"
+    },
+    {
+      "additions": 99,
+      "deletions": 0,
+      "path": "evidence/review/chg_134_fix3_qualification.json",
+      "status": "A"
+    },
+    {
+      "additions": 16,
+      "deletions": 0,
+      "path": "examples/nicegui_base/README.md",
+      "status": "A"
+    },
+    {
+      "additions": 40,
+      "deletions": 0,
+      "path": "examples/nicegui_base/golden_analysis_workspace.py",
+      "status": "A"
+    },
+    {
+      "additions": 51,
+      "deletions": 0,
+      "path": "examples/nicegui_base/golden_crud.py",
+      "status": "A"
+    },
+    {
+      "additions": 49,
+      "deletions": 0,
+      "path": "examples/nicegui_base/golden_dashboard.py",
+      "status": "A"
+    },
+    {
+      "additions": 70,
+      "deletions": 0,
+      "path": "examples/nicegui_base/golden_data_explorer.py",
+      "status": "A"
+    },
+    {
+      "additions": 314,
+      "deletions": 14,
+      "path": "manifest.json",
+      "status": "M"
+    },
+    {
+      "additions": 19,
+      "deletions": 0,
+      "path": "migrations/005_o3_attention_episode_w1.sql",
+      "status": "A"
+    },
+    {
+      "additions": 14,
+      "deletions": 0,
+      "path": "nicegui_base.toml",
+      "status": "A"
+    },
+    {
+      "additions": 2,
+      "deletions": 0,
+      "path": "requirements-dev.txt",
+      "status": "A"
+    },
+    {
+      "additions": 4,
+      "deletions": 0,
+      "path": "requirements.txt",
+      "status": "A"
+    },
+    {
+      "additions": 7,
+      "deletions": 0,
+      "path": "src/ephi/app.py",
+      "status": "M"
+    },
+    {
+      "additions": 38,
+      "deletions": 0,
+      "path": "src/ephi/application/__init__.py",
+      "status": "M"
+    },
+    {
+      "additions": 262,
+      "deletions": 0,
+      "path": "src/ephi/application/attention.py",
+      "status": "A"
+    },
+    {
+      "additions": 137,
+      "deletions": 0,
+      "path": "src/ephi/application/episodes.py",
+      "status": "A"
+    },
+    {
+      "additions": 115,
+      "deletions": 0,
+      "path": "src/ephi/application/workflow.py",
+      "status": "A"
+    },
+    {
+      "additions": 2,
+      "deletions": 0,
+      "path": "src/ephi/infrastructure/__init__.py",
+      "status": "M"
+    },
+    {
+      "additions": 100,
+      "deletions": 21,
+      "path": "src/ephi/infrastructure/postgresql.py",
+      "status": "M"
+    },
+    {
+      "additions": 211,
+      "deletions": 0,
+      "path": "src/ephi/infrastructure/postgresql_o3.py",
+      "status": "A"
+    },
+    {
+      "additions": 5,
+      "deletions": 0,
+      "path": "src/ephi/ui/__init__.py",
+      "status": "A"
+    },
+    {
+      "additions": 497,
+      "deletions": 0,
+      "path": "src/ephi/ui/app.py",
+      "status": "A"
+    },
+    {
+      "additions": 255,
+      "deletions": 0,
+      "path": "src/ephi/ui/provider.py",
+      "status": "A"
+    },
+    {
+      "additions": 251,
+      "deletions": 0,
+      "path": "tests/test_o3_application.py",
+      "status": "A"
+    },
+    {
+      "additions": 195,
+      "deletions": 0,
+      "path": "tests/test_o3_postgresql.py",
+      "status": "A"
+    },
+    {
+      "additions": 262,
+      "deletions": 0,
+      "path": "tests/test_o3_provider.py",
+      "status": "A"
+    },
+    {
+      "additions": 247,
+      "deletions": 0,
+      "path": "tests/test_postgresql_adapter_lifecycle.py",
+      "status": "A"
+    }
+  ],
+  "checks": [
+    {
+      "command": "/bin/zsh -lc \"rtk git ls-remote --heads origin 'project-os-artifacts/ephi/*' 'codex-fabric/evidence/*' | tail -20\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk shasum -a 256 artifacts/chg134-fix3/retained-before-desktop.png artifacts/chg134-fix3/expired-desktop.png artifacts/chg134-fix3/refreshed-desktop.png artifacts/chg134-fix3/mobile-attention.png artifacts/chg134-fix3/mobile-episode-claimed.png artifacts/chg134-fix3/mobile-episode-acknowledged.png artifacts/chg134-fix3/permission-denied-desktop.png artifacts/chg134-fix3/source-unavailable-desktop.png artifacts/chg134-fix3/source-recovered-desktop.png artifacts/chg134-fix3/s09-desktop.json artifacts/chg134-fix3/mobile-core.json artifacts/chg134-fix3/permission-revocation.json artifacts/chg134-fix3/source-outage-recovery.json'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk /opt/anaconda3/bin/python3.11 artifacts/chg134-fix3/browser_probe.py'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'PYTHONPATH=src EPHI_ENV=development EPHI_HOST=127.0.0.1 EPHI_PORT=18080 NICEGUI_BASE_STORAGE_SECRET=fix3-local-secret EPHI_POSTGRES_DSN=postgresql://ephi_app@127.0.0.1:55439/postgres EPHI_DEV_SCOPE_ID=browser-scope EPHI_DEV_SITE_ID=site-1 EPHI_DEV_AREA_ID=area-1 EPHI_DEV_IDENTITY_SUBJECT=browser-user EPHI_DEV_IDENTITY_CAPABILITIES=ephi.attention.read,ephi.episode.read,ephi.episode.claim,ephi.episode.acknowledge EPHI_DEV_AUTH_SESSION_REVISION=1 EPHI_DEV_SECURITY_REVISION=1 EPHI_W1_EPISODE_ID=episode-1 rtk artifacts/w0-runtime/venv/bin/python artifacts/chg134-fix3/serve_rotate.py'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk psql postgresql://ephi@127.0.0.1:55439/postgres -X -v ON_ERROR_STOP=1 -c \"DROP POLICY ephi_test_snapshot_select ON query_snapshot_row; CREATE POLICY ephi_test_snapshot_select ON query_snapshot_row FOR SELECT TO ephi_app USING (true);\"'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk shasum -a 256 artifacts/chg134-fix3/s09-desktop.json artifacts/chg134-fix3/retained-before-desktop.png artifacts/chg134-fix3/expired-desktop.png artifacts/chg134-fix3/refreshed-desktop.png'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git ls-tree -r --name-only 8d7b05b20f265a58cef932f30776c8d81e9e886f'",
+      "exit_code": 128,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk /opt/homebrew/Cellar/postgresql@18/18.6/bin/psql postgresql://ephi@127.0.0.1:55439/postgres -X -Atc \"SELECT version();\"'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk /opt/anaconda3/bin/python3.11 -c 'from playwright.sync_api import sync_playwright; p=sync_playwright().start(); b=p.chromium.launch(headless=True,args=[\\\"--disable-extensions\\\"]); print(b.version); b.close(); p.stop()'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk artifacts/w0-runtime/venv/bin/python -c 'import nicegui_base, nicegui, sys; print(sys.version.split()[0]); print(nicegui_base.__file__); print(nicegui.__version__)'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk /opt/anaconda3/bin/python3.11 -c 'import playwright; print(playwright.__version__ if hasattr(playwright,\\\"__version__\\\") else \\\"unknown\\\")'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk /opt/anaconda3/bin/python3.11 -m pip show playwright | rtk rg '\"'^(Name|Version):'\"'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk artifacts/w0-runtime/venv/bin/nicegui-base validate --help'",
+      "exit_code": 2,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk artifacts/w0-runtime/venv/bin/nicegui-base agent-context --help'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk artifacts/w0-runtime/venv/bin/nicegui-base doctor --help'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk artifacts/w0-runtime/venv/bin/nicegui-base doctor --runtime-only --format json'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk mkdir -p /tmp/ephi-fix3-bundle && rtk cp artifacts/chg134-fix3/native-summary.json artifacts/chg134-fix3/s09-desktop.json artifacts/chg134-fix3/mobile-core.json artifacts/chg134-fix3/permission-revocation.json artifacts/chg134-fix3/source-outage-recovery.json artifacts/chg134-fix3/retained-before-desktop.png artifacts/chg134-fix3/expired-desktop.png artifacts/chg134-fix3/refreshed-desktop.png artifacts/chg134-fix3/mobile-attention.png artifacts/chg134-fix3/mobile-episode-claimed.png artifacts/chg134-fix3/mobile-episode-acknowledged.png artifacts/chg134-fix3/permission-denied-desktop.png artifacts/chg134-fix3/source-unavailable-desktop.png artifacts/chg134-fix3/source-recovered-desktop.png /tmp/ephi-fix3-bundle/'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk tar --sort=name --mtime='2026-09-19 00:00:00Z' --owner=0 --group=0 --numeric-owner -czf artifacts/chg134-fix3/ephi-o3-attention-episode-w1-fix3-bundle.tar.gz -C /tmp/ephi-fix3-bundle .\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk touch -t 202609190000 /tmp/ephi-fix3-bundle/*.json /tmp/ephi-fix3-bundle/*.png'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk tar -czf artifacts/chg134-fix3/ephi-o3-attention-episode-w1-fix3-bundle.tar.gz -C /tmp/ephi-fix3-bundle expired-desktop.png mobile-attention.png mobile-core.json mobile-episode-acknowledged.png mobile-episode-claimed.png native-summary.json permission-denied-desktop.png permission-revocation.json refreshed-desktop.png retained-before-desktop.png s09-desktop.json source-outage-recovery.json source-recovered-desktop.png source-unavailable-desktop.png'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk shasum -a 256 artifacts/chg134-fix3/ephi-o3-attention-episode-w1-fix3-bundle.tar.gz && rtk tar -tzf artifacts/chg134-fix3/ephi-o3-attention-episode-w1-fix3-bundle.tar.gz'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk shasum -a 256 artifacts/chg134-fix3/native-summary.json artifacts/chg134-fix3/s09-desktop.json artifacts/chg134-fix3/mobile-core.json artifacts/chg134-fix3/permission-revocation.json artifacts/chg134-fix3/source-outage-recovery.json artifacts/chg134-fix3/retained-before-desktop.png artifacts/chg134-fix3/expired-desktop.png artifacts/chg134-fix3/refreshed-desktop.png artifacts/chg134-fix3/mobile-attention.png artifacts/chg134-fix3/mobile-episode-claimed.png artifacts/chg134-fix3/mobile-episode-acknowledged.png artifacts/chg134-fix3/permission-denied-desktop.png artifacts/chg134-fix3/source-unavailable-desktop.png artifacts/chg134-fix3/source-recovered-desktop.png artifacts/chg134-fix3/ephi-o3-attention-episode-w1-fix3-bundle.tar.gz'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk shasum -a 256 artifacts/chg134-fix3/carrier-manifest.json artifacts/chg134-fix3/ephi-o3-attention-episode-w1-fix3-bundle.tar.gz'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk rm -rf -- /tmp/ephi-fix3-carrier && rtk mkdir -p /tmp/ephi-fix3-carrier && rtk cp artifacts/chg134-fix3/carrier-manifest.json artifacts/chg134-fix3/ephi-o3-attention-episode-w1-fix3-bundle.tar.gz /tmp/ephi-fix3-carrier/ && rtk git -C /tmp/ephi-fix3-carrier init -q'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git -C /tmp/ephi-fix3-carrier add carrier-manifest.json ephi-o3-attention-episode-w1-fix3-bundle.tar.gz && rtk git -C /tmp/ephi-fix3-carrier -c user.name='Codex Fabric' -c user.email='codex-fabric@users.noreply.github.com' commit -q -m 'Publish CHG-134 fix3 evidence package' && rtk git -C /tmp/ephi-fix3-carrier rev-parse HEAD && rtk git -C /tmp/ephi-fix3-carrier rev-parse HEAD\"'^{tree}'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git -C /tmp/ephi-fix3-carrier remote add origin https://github.com/kimhw8084/ephi.git && rtk git -C /tmp/ephi-fix3-carrier push origin HEAD:refs/heads/project-os-artifacts/ephi/ephi-o3-attention-episode-w1-fix3'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git fetch origin refs/heads/project-os-artifacts/ephi/ephi-o3-attention-episode-w1-fix3 && rtk git rev-parse FETCH_HEAD && rtk git rev-parse FETCH_HEAD''^{tree} && rtk git ls-tree -r --name-only FETCH_HEAD && rtk git cat-file blob FETCH_HEAD:ephi-o3-attention-episode-w1-fix3-bundle.tar.gz | rtk shasum -a 256 && rtk git cat-file blob FETCH_HEAD:ephi-o3-attention-episode-w1-fix3-bundle.tar.gz | rtk tar -tzf - && rtk git show FETCH_HEAD:carrier-manifest.json | rtk jq -e '\"'.project==\\\"ephi\\\" and .request==\\\"ephi-o3-attention-episode-w1-fix3\\\" and .operation==\\\"FIX\\\" and .repair_candidate_sha==\\\"6a3091eee40d18eb33819d72491dcaf205bcf591\\\" and .repair_candidate_tree==\\\"474db4e5aca2022e4446965d1f62fe366dc62f72\\\" and .bundle.sha256==\\\"2a5ebb69c89ffdf2f5d91bf0cb01be827de2ff20f86f3be5a7ef478651af7c00\\\"'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short --branch && rtk git diff --stat && rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nimport hashlib\nimport io\nimport json\nimport subprocess\nimport tarfile\n\nrepo = '/Users/haewonkim/.codex-fabric/worktrees/CF-a861f914802e7e8a4f617f68'\ncommit = '12660d02a5d7a85509cdedff39c717a3c5783967'\nmanifest = json.loads(subprocess.check_output(['git', 'show', f'{commit}:carrier-manifest.json'], cwd=repo))\nbundle = subprocess.check_output(['git', 'show', f'{commit}:ephi-o3-attention-episode-w1-fix3-bundle.tar.gz'], cwd=repo)\nassert hashlib.sha256(bundle).hexdigest() == manifest['bundle']['sha256']\nwith tarfile.open(fileobj=io.BytesIO(bundle), mode='r:gz') as archive:\n    names = sorted(member.name for member in archive.getmembers() if member.isfile())\n    expected_names = sorted([*manifest['screenshots'], *manifest['structured_evidence']])\n    assert names == expected_names, (names, expected_names)\n    expected_hashes = {**manifest['screenshots'], **manifest['structured_evidence']}\n    for name, expected in expected_hashes.items():\n        actual = hashlib.sha256(archive.extractfile(name).read()).hexdigest()\n        assert actual == expected, (name, actual, expected)\nprint(json.dumps({'remote_commit': commit, 'inventory_count': len(names), 'bundle_sha256': hashlib.sha256(bundle).hexdigest(), 'all_required_hashes_verified': True}, sort_keys=True))\nPY\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk shasum -a 256 artifacts/chg134-fix3/carrier-manifest.json && rtk cp artifacts/chg134-fix3/carrier-manifest.json /tmp/ephi-fix3-carrier/carrier-manifest.json && rtk git -C /tmp/ephi-fix3-carrier add carrier-manifest.json && rtk git -C /tmp/ephi-fix3-carrier -c user.name='Codex Fabric' -c user.email='codex-fabric@users.noreply.github.com' commit -q -m 'Correct evidence inventory names' && rtk git -C /tmp/ephi-fix3-carrier rev-parse HEAD && rtk git -C /tmp/ephi-fix3-carrier rev-parse HEAD\"'^{tree}'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git -C /tmp/ephi-fix3-carrier push origin HEAD:refs/heads/project-os-artifacts/ephi/ephi-o3-attention-episode-w1-fix3'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git fetch origin refs/heads/project-os-artifacts/ephi/ephi-o3-attention-episode-w1-fix3 && rtk python3 - <<'PY'\nimport hashlib\nimport io\nimport json\nimport subprocess\nimport tarfile\n\nrepo = '/Users/haewonkim/.codex-fabric/worktrees/CF-a861f914802e7e8a4f617f68'\ncommit = subprocess.check_output(['git', 'rev-parse', 'FETCH_HEAD'], cwd=repo, text=True).strip()\ntree = subprocess.check_output(['git', 'rev-parse', 'FETCH_HEAD\"'^{tree}'\"'], cwd=repo, text=True).strip()\nmanifest_bytes = subprocess.check_output(['git', 'cat-file', 'blob', 'FETCH_HEAD:carrier-manifest.json'], cwd=repo)\nmanifest = json.loads(manifest_bytes)\nbundle = subprocess.check_output(['git', 'cat-file', 'blob', 'FETCH_HEAD:ephi-o3-attention-episode-w1-fix3-bundle.tar.gz'], cwd=repo)\nassert hashlib.sha256(manifest_bytes).hexdigest() == '11d82adce0a981472ce140b174d5bd8bbfd4c99a96f034f1c0a0142d258939c6'\nassert hashlib.sha256(bundle).hexdigest() == manifest['bundle']['sha256']\nwith tarfile.open(fileobj=io.BytesIO(bundle), mode='r:gz') as archive:\n    names = sorted(member.name for member in archive.getmembers() if member.isfile())\n    expected_names = sorted([*manifest['screenshots'], *manifest['structured_evidence']])\n    assert names == expected_names, (names, expected_names)\n    expected_hashes = {**manifest['screenshots'], **manifest['structured_evidence']}\n    for name, expected in expected_hashes.items():\n        actual = hashlib.sha256(archive.extractfile(name).read()).hexdigest()\n        assert actual == expected, (name, actual, expected)\nprint(json.dumps({'remote_commit': commit, 'remote_tree': tree, 'manifest_sha256': hashlib.sha256(manifest_bytes).hexdigest(), 'inventory_count': len(names), 'bundle_sha256': hashlib.sha256(bundle).hexdigest(), 'all_required_hashes_verified': True}, sort_keys=True))\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk ls -d .nicegui 2>/dev/null || true'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk rm -rf -- .nicegui && rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m compileall -q src tests tools'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/w0_integrity_regressions.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk artifacts/w0-runtime/venv/bin/python -m unittest discover -s tests -q'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest discover -s tests -q'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/w0_repo_baseline.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk artifacts/w0-runtime/venv/bin/nicegui-base gate .'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short --branch'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git add manifest.json evidence/review/chg_134_fix3_qualification.json && rtk git commit -m \"Record CHG-134 fix3 qualification evidence\"'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git show HEAD:evidence/review/chg_134_fix3_qualification.json | rtk jq '{status,repair_candidate_sha,repair_candidate_tree,artifact_bridge}'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git merge-base --is-ancestor d5af282415d6352ae5d52a520ecb2b9ea47b09c1 HEAD && rtk git show -s --format='%H %P' 6a3091eee40d18eb33819d72491dcaf205bcf591\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short --branch && rtk git log --oneline --decorate -4 && rtk git rev-parse HEAD''^{tree} && rtk git rev-parse HEAD~1 && rtk git rev-parse HEAD~1''^{tree}'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git ls-remote origin refs/heads/main refs/heads/project-os-artifacts/ephi/ephi-o3-attention-episode-w1-fix3'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk /opt/homebrew/Cellar/postgresql@18/18.6/bin/pg_ctl -D /tmp/ephi-fix3-pgdata.cYeVlt stop -m fast'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short --branch && rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    }
+  ],
+  "codex": {
+    "cli_version": "codex-cli 0.154.0",
+    "configured_model": "gpt-5.6-luna",
+    "event_count": 673,
+    "provider_reported_model": null,
+    "reasoning_effort": "xhigh",
+    "terminal_type": "turn.completed",
+    "usage": {
+      "cache_hit_percent": 98.34,
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 41105152,
+      "fresh_input_tokens": 694553,
+      "input_tokens": 41799705,
+      "non_reasoning_output_tokens": 63135,
+      "output_tokens": 109464,
+      "reasoning_output_tokens": 46329,
+      "total_processed_tokens": 41909169
+    },
+    "warnings": []
+  },
+  "commits": [
+    {
+      "sha": "82741cc0b736d07cff13ed294091db3c8e529047",
+      "subject": "Record CHG-134 fix3 qualification evidence"
+    },
+    {
+      "sha": "6a3091eee40d18eb33819d72491dcaf205bcf591",
+      "subject": "Fix CHG-134 async Attention snapshot guidance"
+    },
+    {
+      "sha": "d5af282415d6352ae5d52a520ecb2b9ea47b09c1",
+      "subject": "Bind CHG-134 evidence carrier readback"
+    },
+    {
+      "sha": "cacb99a2b1cac68f147d06393539f42f2dc55b31",
+      "subject": "Record CHG-134 fix qualification boundary"
+    },
+    {
+      "sha": "e6ad7c36953496ed4fdafbeb2975cfab99f3033e",
+      "subject": "Fix PostgreSQL adapter reconnection after source outage"
+    },
+    {
+      "sha": "ef959f577bc1aa223b260ac32cb42a18eadfaf9f",
+      "subject": "Fix CHG-134 source health and current authorization"
+    },
+    {
+      "sha": "dc8f04b02d9ef9bdb3da59951a0061ffefd2113f",
+      "subject": "Implement O3.1 durable Attention Episode W1 slice"
+    }
+  ],
+  "diff": {
+    "additions": 12175,
+    "changed_files": 68,
+    "commit_count": 7,
+    "deletions": 43
+  },
+  "error_code": null,
+  "evidence_manifest": {
+    "count": 44,
+    "items": [
+      {
+        "bytes": 35164,
+        "path": ".nicegui_base/construction_manifest.json",
+        "sha256": "3ae85f2e554f7080fbf81f68b1df7cf69ed5e917ca82427ddaf06ab31625a724"
+      },
+      {
+        "bytes": 203443,
+        "path": ".nicegui_base/framework_catalog.json",
+        "sha256": "555e46ff14ac9311ebb678285d6f3163bbcbf49840ec04ac11e1898366c9c149"
+      },
+      {
+        "bytes": 6438,
+        "path": ".nicegui_base/install_manifest.json",
+        "sha256": "8c0b0d423af8c279d5cd90e63509f918b3fbf7e52807341910a695a199dceb5a"
+      },
+      {
+        "bytes": 6354,
+        "path": "11_Developer_Start.md",
+        "sha256": "8e62f46dc9e37ee17a308e7d27163435c16f059433351800722bc722f405bda5"
+      },
+      {
+        "bytes": 13666,
+        "path": "13_Package_Review.md",
+        "sha256": "3c7b1c7ab6c131807a812774bf8c15af57c3aa3d18c7e3e5dada0fa54d4fccc5"
+      },
+      {
+        "bytes": 13469,
+        "path": "README.md",
+        "sha256": "2fdf36ba9c533cb47118e1566a00d8de618479290da68d4979e6ccee8dce521b"
+      },
+      {
+        "bytes": 2534,
+        "path": "certification_output/runtime_smoke/RUNTIME_SMOKE_REPORT.json",
+        "sha256": "e444a9132023ccaaf1f74572641cf0da6d589ed9c668a775ec61579eb58fdb41"
+      },
+      {
+        "bytes": 1863,
+        "path": "certification_output/runtime_smoke/RUNTIME_SMOKE_SERVER.log",
+        "sha256": "0520a045b2641cbd63a6f7d97a8e01dc94e8e171fe58108d391b7fe789867a49"
+      },
+      {
+        "bytes": 4829,
+        "path": "docs/nicegui_base/AGENT_WORKFLOW.md",
+        "sha256": "0669f564069e7dafae45dea80190c1d8ff511d8fd9b825dd899ef98c0074c091"
+      },
+      {
+        "bytes": 3025,
+        "path": "docs/nicegui_base/AI_QUICKSTART.md",
+        "sha256": "8ea275da5fbb7b2c8c8381eddf6c750c794789d2e404fd7822654681d1232fa8"
+      },
+      {
+        "bytes": 7496,
+        "path": "docs/nicegui_base/AI_RULES.md",
+        "sha256": "0232c21a4e63b4f7ae9f2c76153ff2df1ebe0fff34d9c8d81adf64fb2138fa3a"
+      },
+      {
+        "bytes": 2135,
+        "path": "docs/nicegui_base/ANTI_PATTERNS.md",
+        "sha256": "fec2712934043272760464139073e040c82281e7dc63eb28326f15897f902480"
+      },
+      {
+        "bytes": 1465,
+        "path": "docs/nicegui_base/APP_PATTERNS.md",
+        "sha256": "94dee03e72c0126c4c1ba4466b566a2cdac05cd3433fbc4054950fa0a8763957"
+      },
+      {
+        "bytes": 20510,
+        "path": "docs/nicegui_base/COMPONENT_CATALOG.md",
+        "sha256": "09850c3058c53c2c5725168d7c69bc2e17e363058a41e539e8e55cc08feed39d"
+      },
+      {
+        "bytes": 1767,
+        "path": "docs/nicegui_base/FINAL_RELEASE_CANDIDATE_STABLE_QUALIFICATION_HANDOFF.md",
+        "sha256": "0e97a2c5bb9bbc8621716d7ca70bd530492dacafc9573e291ba27b3f88bd9282"
+      },
+      {
+        "bytes": 3058,
+        "path": "docs/nicegui_base/ICON_CATALOG.md",
+        "sha256": "da6ad24115318574346f3f4de81b785a70610b306b0ef4c1dfd6df22bd4364f5"
+      },
+      {
+        "bytes": 1236,
+        "path": "docs/nicegui_base/LAYOUT_RULES.md",
+        "sha256": "dc0a4ce52a258148e92eaa66ee0d53121d111ef4a9ad0571f6ca08a18b59a9fb"
+      },
+      {
+        "bytes": 2093,
+        "path": "docs/nicegui_base/OPENCODE_GEMMA_BOOTSTRAP.md",
+        "sha256": "fe3b205aa4d4f6432d6a6367b802126525032a3acbbb94cc82dbed32c243feae"
+      },
+      {
+        "bytes": 999,
+        "path": "docs/nicegui_base/PERFORMANCE_GUIDE.md",
+        "sha256": "049add7dbba6de5e04688181e2a2101a3bbd710c44e0990498581dbd223ff058"
+      },
+      {
+        "bytes": 7043,
+        "path": "docs/nicegui_base/RECIPES.md",
+        "sha256": "e77d2b9978a33f9114680b124844fbd1597313f99eeecf3859762af5db63e603"
+      },
+      {
+        "bytes": 7804,
+        "path": "docs/nicegui_base/SEMICONDUCTOR_APPLICATION_RECIPES.md",
+        "sha256": "7d3f1037047ff946946c6f557a297a8c95d92ee760e45bd2704a707e656dae66"
+      },
+      {
+        "bytes": 1350,
+        "path": "docs/nicegui_base/SEMICONDUCTOR_LONGITUDINAL_ASSURANCE_REVIEW_EXCEPTION_GOVERNANCE.md",
+        "sha256": "4c6920c6890e1bb54f7fa0c2a4068ce330573015b049154ff6b976608c0290c7"
+      },
+      {
+        "bytes": 1037,
+        "path": "docs/nicegui_base/SEMICONDUCTOR_OPERATIONAL_ASSURANCE_RENEWAL_LEDGER.md",
+        "sha256": "9b6cf415c9962d4631d5b396fd40f52424f37768c6e973898d181ab49bb84214"
+      },
+      {
+        "bytes": 2936,
+        "path": "docs/nicegui_base/SEMICONDUCTOR_POST_RELEASE_STABILITY_ROLLBACK_READINESS.md",
+        "sha256": "c6c5cbbf84b75b0df45ab37852d8e1f8b7c0d3791d0471bbec85c4cb1bc1afd1"
+      },
+      {
+        "bytes": 3877,
+        "path": "docs/nicegui_base/SEMICONDUCTOR_PRODUCTION_RUNTIME.md",
+        "sha256": "2b5f608a3adee16ce210993f2991bbdafc40a4a5c4d9c7c0aa2c1ffdca02b1df"
+      },
+      {
+        "bytes": 2961,
+        "path": "docs/nicegui_base/SEMICONDUCTOR_PROMOTION_EXECUTION_ADAPTER_RELEASE_AUDIT.md",
+        "sha256": "24905a1a21b95ea01d0ebf5f093caee8c014a21a3013a71f81cb4ea5b87bd74e"
+      },
+      {
+        "bytes": 4508,
+        "path": "docs/nicegui_base/SEMICONDUCTOR_PROVIDER_SDK_RC.md",
+        "sha256": "9b7607f41bf559fae46b25e167e910f6ba22deade21784543b4f0e558107c3d3"
+      },
+      {
+        "bytes": 3610,
+        "path": "docs/nicegui_base/SEMICONDUCTOR_RELEASE_PUBLICATION_POST_PROMOTION_VERIFICATION.md",
+        "sha256": "665a3c335303d454a8e3363a494d8e240d354c8e51f4d33b04b4b6a89c111cc9"
+      },
+      {
+        "bytes": 5848,
+        "path": "docs/nicegui_base/SEMICONDUCTOR_RUNTIME_ONBOARDING.md",
+        "sha256": "7043de584a09dea74ae49ff57d2448ad749a4cdeb3137730ba0832337c5174a1"
+      },
+      {
+        "bytes": 1438,
+        "path": "docs/nicegui_base/SEMICONDUCTOR_STABLE_PROMOTION_CANDIDATE.md",
+        "sha256": "f7c1c24d19cfb7eca2826a09c1dad7d00f625898decb6eba7809c9e83a504432"
+      },
+      {
+        "bytes": 3182,
+        "path": "docs/nicegui_base/SEMICONDUCTOR_STABLE_RELEASE_EVIDENCE_ACCEPTANCE_PROMOTION_CLOSURE.md",
+        "sha256": "74b3644f12768a59c297fa29ce360d9d8d01a6be399f22bbefc32760a0b8184f"
+      },
+      {
+        "bytes": 1155,
+        "path": "docs/nicegui_base/SEMICONDUCTOR_SUSTAINED_OPERATIONS_INCIDENT_ROLLBACK_AUDIT.md",
+        "sha256": "e41b2e24e9eab7ceee57d131396dd5fa6e31e4c3c8bb90cfd00be24829c2e3ca"
+      },
+      {
+        "bytes": 2262,
+        "path": "docs/nicegui_base/SEMICONDUCTOR_SUSTAINED_OPERATIONS_RENEWAL_CONTINUITY.md",
+        "sha256": "33262a5667b300b8f224ea229eb452bde2ad1768610eb00f8d81d515c501b0b0"
+      },
+      {
+        "bytes": 1510,
+        "path": "docs/nicegui_base/SEMICONDUCTOR_TARGET_CERTIFICATION.md",
+        "sha256": "e34ccfa128d4d60c38be3c6ab26a17981542c6ee3e07762a45b347514b27bf26"
+      },
+      {
+        "bytes": 2992,
+        "path": "docs/nicegui_base/SEMICONDUCTOR_TARGET_EXECUTION_OPERATIONAL_HANDOFF.md",
+        "sha256": "a0b87dc9422b120566048e10f76b7d3a3a6be8b13c73cefb5a277919b5bfe94e"
+      },
+      {
+        "bytes": 2087,
+        "path": "docs/nicegui_base/TROUBLESHOOTING.md",
+        "sha256": "2b334f6d210d2f16af1731d35f4f49db14f7955bdfd590033a64196635721a67"
+      },
+      {
+        "bytes": 2092,
+        "path": "docs/nicegui_base/VALIDATOR_RULES.md",
+        "sha256": "8aa5d0ad6c4d910307f6abbe949e96f515103bac961b87ae421393bf6db06aae"
+      },
+      {
+        "bytes": 1154,
+        "path": "docs/nicegui_base/VISUAL_RESOURCE_GUIDE.md",
+        "sha256": "ee71abc444717057b409d2b7be0bb55feb7c7e67e2fe1a5b74966d3b90057133"
+      },
+      {
+        "bytes": 3110,
+        "path": "docs/nicegui_base/ZERO_STOCK_NICEGUI_VISUAL_LAWS.md",
+        "sha256": "d156a395107a330771daea7fe2b33bcb4cece64d19ba45f8d025db475d7b5ee0"
+      },
+      {
+        "bytes": 3380,
+        "path": "evidence/review/chg_134_fix1_qualification.json",
+        "sha256": "fb884a22637a6342c8cafee7ff69c8f8c09b48d75ee3ae802c2f1166b89712e8"
+      },
+      {
+        "bytes": 4931,
+        "path": "evidence/review/chg_134_fix2_qualification.json",
+        "sha256": "d22e581b4e440cf351d336f92836228e5fdec29882902dee016d13dab2896697"
+      },
+      {
+        "bytes": 4934,
+        "path": "evidence/review/chg_134_fix3_qualification.json",
+        "sha256": "74325a651776d5c638b7ed1df81f3ebfe001d0452f7e16647bfcdd9e57a75dad"
+      },
+      {
+        "bytes": 960,
+        "path": "examples/nicegui_base/README.md",
+        "sha256": "854b348484efbd945b053c61ba3471240336eaad192141133aa272ab82ace937"
+      },
+      {
+        "bytes": 28660,
+        "path": "manifest.json",
+        "sha256": "799c9d1e11904109887bd7170947e97352e94261483e11a5a0639edf45bdfe4d"
+      }
+    ],
+    "version": 1
+  },
+  "evidence_publisher_release": "1.2.3-resume-candidate",
+  "fabric_capture": {
+    "applied": false,
+    "paths_before": 0,
+    "transient_untracked_removed": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "fabric_release": "1.2.3-resume-candidate",
+  "failure_class": null,
+  "finished_at": "2026-09-19T17:19:10Z",
+  "git": {
+    "base_is_ancestor": true,
+    "base_sha": "cdf8bb54eeb42926029a9394814d79d17a282bd9",
+    "branch": "codex/ephi-o3-attention-episode-w1-fix3",
+    "detached_verify": false,
+    "head_sha": "82741cc0b736d07cff13ed294091db3c8e529047",
+    "remote_exact_head": true,
+    "remote_head_sha": "82741cc0b736d07cff13ed294091db3c8e529047",
+    "target_branch": "main",
+    "target_drifted_since_acceptance": false,
+    "target_head_observed_after_execution": "cdf8bb54eeb42926029a9394814d79d17a282bd9",
+    "work_branch": "codex/ephi-o3-attention-episode-w1-fix3",
+    "worktree_clean": true
+  },
+  "instructions": {
+    "files": [
+      {
+        "bytes": 1458,
+        "path": "AGENTS.md",
+        "sha256": "4349f387a79d886ed1264604ff48c582698e539e08ed8fb2f9d8ab8fbf6f804a"
+      }
+    ],
+    "total_bytes": 1458,
+    "warning": null
+  },
+  "job_id": "CF-a861f914802e7e8a4f617f68",
+  "kind": "codex-fabric-audit-evidence",
+  "locator": {
+    "branch": "codex-fabric/evidence/ephi/ephi-o3-attention-episode-w1-fix3",
+    "path": ".codex-fabric/audit.json",
+    "ref": "refs/heads/codex-fabric/evidence/ephi/ephi-o3-attention-episode-w1-fix3"
+  },
+  "operation": "FIX",
+  "policy": {
+    "environment_policy_sha256": "e077daca74297b3c30bee8989f00f8ca5338f7610b4d016a6c48db524205d064",
+    "fabric_release": "1.2.3-resume-candidate",
+    "policy_sha256": "44756118cd7fda0c45cd23ba1d31a48a3f4f2422d687df15264ba4406f40e1f2",
+    "registry_sha256": "cfc765f3211c37c7967a138f3b2d89a99341939b15b2623f92744d007f625d6f"
+  },
+  "project_id": "ephi",
+  "recovery": {
+    "model_rerun_safe": false,
+    "recovery_required": false,
+    "retry_safe": false,
+    "retry_scope": null,
+    "worktree_retained": true
+  },
+  "request": "ephi-o3-attention-episode-w1-fix3",
+  "schema_version": 1,
+  "started_at": "2026-09-19T16:05:07Z",
+  "status": "EXECUTED_CHANGE",
+  "timing": {
+    "execution_seconds": 4443,
+    "queue_seconds": 1,
+    "total_seconds": 4444
+  },
+  "transport": {
+    "bytes": 8930,
+    "envelope": "FABRIC/2",
+    "prompt_bytes": 8614,
+    "prompt_sha256": "df0c118d3d7e237ce32a546c7f2f6f7ad8f1bb65a57f17177f16bfcbf9385643",
+    "sha256": "a861f914802e7e8a4f617f684f096656a649ea05372a81c5fd1ae8f8a76fad0f"
+  }
+}
