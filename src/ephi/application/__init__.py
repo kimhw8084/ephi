@@ -144,6 +144,12 @@ from .source_reality import (
     redacted_connection_facts,
     require_runtime_source_binding,
 )
+from .operations import (
+    OperationalState,
+    OperationsAxis,
+    OperationsHealthSnapshot,
+    operations_health_snapshot,
+)
 
 __all__ = [
     "AccessScope",
@@ -271,6 +277,10 @@ __all__ = [
     "preflight_source_reality",
     "redacted_connection_facts",
     "require_runtime_source_binding",
+    "OperationalState",
+    "OperationsAxis",
+    "OperationsHealthSnapshot",
+    "operations_health_snapshot",
     "canonical_command_payload_hash",
     "canonical_json",
     "normalize_domain_payload",
