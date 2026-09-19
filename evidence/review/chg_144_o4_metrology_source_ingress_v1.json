@@ -78,10 +78,28 @@
     ]
   },
   "artifact_bridge": {
-    "status": "PENDING_PUBLICATION",
+    "status": "PUBLISHED_AND_REMOTE_READBACK_VERIFIED",
     "canonical_ref": "refs/heads/project-os-artifacts/ephi/ephi-o4-metrology-source-ingress-v1",
-    "notion_credentials_used": false,
-    "synthetic_ar2_sidecar_used": false
+    "remote_commit": "5bf6b44bf98b43697433678c6b7cfec990337461",
+    "remote_tree": "d1449d2401d030228c96069ce0307bd1bce93b33",
+    "remote_manifest_sha256": "308603f83aff78c4b7016ddd92328fc238e5960445d0fb418f008920da5bd9bb",
+    "bundle_sha256": "83e9d3d98dedddf6487bee9e427d39d4bdb0fabd539b3a4a62af5a74d7a7ae9b",
+    "remote_inventory": [
+      "carrier-manifest.json",
+      "chg_144_o4_metrology_source_ingress_v1.json",
+      "ephi-o4-metrology-source-ingress-v1-bundle.tar.gz"
+    ],
+    "remote_readback": {
+      "ref_fetched": true,
+      "manifest_fields_verified": true,
+      "candidate_binding_verified": true,
+      "request_binding_verified": true,
+      "fabric_job_binding_verified": true,
+      "bundle_sha256_verified": true,
+      "notion_credentials_used": false,
+      "synthetic_ar2_sidecar_used": false
+    },
+    "candidate_evidence_file_sha256": "f6cf64f0a23a5ea20ca08f01de09a2c1d1ef3586dcd89b2ef3e725a2078450eb"
   },
   "scope_boundary": "No main mutation, merge, integration PR, Notion mutation, real-family snapshot claim, G02/G06 qualification claim or later O4/O5 product work."
 }
