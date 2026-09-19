@@ -27,6 +27,47 @@ class ValidationFailureError(CommandError):
     code = "VALIDATION_FAILED"
 
 
+class SourceIngressError(CommandError):
+    """Base error for the fail-closed metrology source-ingress boundary."""
+
+
+class SourceQuarantineError(SourceIngressError):
+    """A source row or mapping cannot prove canonical identity or time truth."""
+
+    code = "SOURCE_QUARANTINED"
+
+
+class SourceBindingUnavailableError(SourceIngressError):
+    """The required approved real-source binding is absent or unusable."""
+
+    code = "SOURCE_BINDING_UNAVAILABLE"
+
+
+class SourceSnapshotConflictError(SourceIngressError):
+    """A logical source partition/revision was republished with other content."""
+
+    code = "SOURCE_SNAPSHOT_CONFLICT"
+
+    def __init__(self, snapshot_id: str):
+        super().__init__(
+            "source partition/revision is already bound to incompatible immutable content",
+            details={"snapshot_id": snapshot_id},
+        )
+        self.snapshot_id = snapshot_id
+
+
+class SourceSnapshotNotFoundError(SourceIngressError):
+    """The requested authorized source snapshot is unavailable."""
+
+    code = "SOURCE_SNAPSHOT_NOT_FOUND"
+
+
+class SourceTemporalError(SourceIngressError):
+    """A source snapshot cannot satisfy the requested temporal mode."""
+
+    code = "SOURCE_NOT_READY"
+
+
 class VersionConflictError(CommandError):
     code = "VERSION_CONFLICT"
 

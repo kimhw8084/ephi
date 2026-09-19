@@ -62,6 +62,7 @@ from ephi.application.errors import (
     VersionConflictError,
 )
 from ephi.application.workflow import EpisodeWorkflowCommandService
+from ephi.application.source_reality import require_runtime_source_binding
 from ephi.config import RuntimeSettings
 from ephi.infrastructure.postgresql import PostgreSQLReferenceTransactionAdapter
 from .provider import EphiReadDataSource
@@ -137,6 +138,8 @@ class EphiUiComposition:
     briefs: EpisodeBriefQueryService
     workflow: EpisodeWorkflowCommandService
     source: EphiReadDataSource
+    metrology_source_adapter: object
+    metrology_source_binding: object
     runtime: ApplicationRuntime
     workspace: object
 
@@ -166,6 +169,7 @@ def build_composition_from_environment() -> EphiUiComposition:
     """Compose only from explicit PostgreSQL and identity bindings."""
 
     dsn = _required_environment("EPHI_POSTGRES_DSN")
+    metrology_source_adapter, metrology_source_binding = require_runtime_source_binding()
     identity = _DevelopmentIdentityProvider()
     principal_provider = identity.principal
     scope_provider = identity.scope
@@ -191,6 +195,8 @@ def build_composition_from_environment() -> EphiUiComposition:
         briefs,
         workflow,
         source,
+        metrology_source_adapter,
+        metrology_source_binding,
         runtime,
         workspace,
     )

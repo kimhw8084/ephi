@@ -46,6 +46,8 @@ _REQUIRED_SCHEMA_TABLES = (
     "query_snapshot_row",
     "artifact_catalog",
     "o3_attention_projection",
+    "source_snapshot",
+    "source_capability",
 )
 
 
@@ -487,6 +489,13 @@ class PostgreSQLReferenceTransactionAdapter:
         from .artifacts import PostgreSQLArtifactCatalog
 
         return PostgreSQLArtifactCatalog(self)
+
+    def source_store(self):
+        """Return the O4 bounded source-manifest/capability adapter."""
+
+        from .postgresql_source import PostgreSQLSourceSnapshotStore
+
+        return PostgreSQLSourceSnapshotStore(self)
 
     def publish_read_revision(self, *args, **kwargs):
         return self.read_store().publish_read_revision(*args, **kwargs)
