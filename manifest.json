@@ -405,6 +405,11 @@
       "sha256": "d22e581b4e440cf351d336f92836228e5fdec29882902dee016d13dab2896697"
     },
     {
+      "path": "evidence/review/chg_134_fix3_qualification.json",
+      "bytes": 4934,
+      "sha256": "74325a651776d5c638b7ed1df81f3ebfe001d0452f7e16647bfcdd9e57a75dad"
+    },
+    {
       "path": "evidence/review/nicegui_base_binding_manifest.json",
       "bytes": 15859,
       "sha256": "797ebcc38c8aa8846c3bd65305b1f20686ff2e17b43b6f770400ec10c826649c"
@@ -661,8 +666,8 @@
     },
     {
       "path": "src/ephi/ui/app.py",
-      "bytes": 19374,
-      "sha256": "d903cdbe7253a18788fd9469d41a98ac4a79e2684e49d1b75942642c32663da4"
+      "bytes": 20065,
+      "sha256": "7027be241737aaf9af1dbc7222d38d416ac1647810a9746141814ca5ef85c093"
     },
     {
       "path": "src/ephi/ui/provider.py",
@@ -736,8 +741,8 @@
     },
     {
       "path": "tests/test_o3_application.py",
-      "bytes": 11213,
-      "sha256": "364c1424d50039a5685875940bfb4e0a726dedfb382a382fae5889632d980662"
+      "bytes": 11590,
+      "sha256": "29bdaed1613bcdfa26ff58a08819754e0ffad9fd53fd42b17e76e777a798428a"
     },
     {
       "path": "tests/test_o3_postgresql.py",
@@ -746,8 +751,8 @@
     },
     {
       "path": "tests/test_o3_provider.py",
-      "bytes": 7723,
-      "sha256": "60787d3a48bce6ed14dcb480185602783097fdccdad94d3cc1c02bbbd2b85384"
+      "bytes": 10895,
+      "sha256": "3d10b7c364908e7bbd66a53a7f64db378d8632e94f1283f886ccf0a032f74380"
     },
     {
       "path": "tests/test_package.py",
