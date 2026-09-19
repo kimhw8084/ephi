@@ -1,0 +1,1035 @@
+{
+  "accepted_at": "2026-09-19T14:26:52Z",
+  "changed_files": [
+    {
+      "additions": 398,
+      "deletions": 0,
+      "path": ".nicegui_base/construction_manifest.json",
+      "status": "A"
+    },
+    {
+      "additions": 6243,
+      "deletions": 0,
+      "path": ".nicegui_base/framework_catalog.json",
+      "status": "A"
+    },
+    {
+      "additions": 84,
+      "deletions": 0,
+      "path": ".nicegui_base/install_manifest.json",
+      "status": "A"
+    },
+    {
+      "additions": 23,
+      "deletions": 4,
+      "path": "11_Developer_Start.md",
+      "status": "M"
+    },
+    {
+      "additions": 25,
+      "deletions": 2,
+      "path": "13_Package_Review.md",
+      "status": "M"
+    },
+    {
+      "additions": 34,
+      "deletions": 2,
+      "path": "README.md",
+      "status": "M"
+    },
+    {
+      "additions": 23,
+      "deletions": 0,
+      "path": "app.py",
+      "status": "A"
+    },
+    {
+      "additions": 148,
+      "deletions": 0,
+      "path": "certification_output/runtime_smoke/RUNTIME_SMOKE_REPORT.json",
+      "status": "A"
+    },
+    {
+      "additions": 32,
+      "deletions": 0,
+      "path": "certification_output/runtime_smoke/RUNTIME_SMOKE_SERVER.log",
+      "status": "A"
+    },
+    {
+      "additions": 101,
+      "deletions": 0,
+      "path": "docs/nicegui_base/AGENT_WORKFLOW.md",
+      "status": "A"
+    },
+    {
+      "additions": 76,
+      "deletions": 0,
+      "path": "docs/nicegui_base/AI_QUICKSTART.md",
+      "status": "A"
+    },
+    {
+      "additions": 97,
+      "deletions": 0,
+      "path": "docs/nicegui_base/AI_RULES.md",
+      "status": "A"
+    },
+    {
+      "additions": 22,
+      "deletions": 0,
+      "path": "docs/nicegui_base/ANTI_PATTERNS.md",
+      "status": "A"
+    },
+    {
+      "additions": 16,
+      "deletions": 0,
+      "path": "docs/nicegui_base/APP_PATTERNS.md",
+      "status": "A"
+    },
+    {
+      "additions": 228,
+      "deletions": 0,
+      "path": "docs/nicegui_base/COMPONENT_CATALOG.md",
+      "status": "A"
+    },
+    {
+      "additions": 25,
+      "deletions": 0,
+      "path": "docs/nicegui_base/FINAL_RELEASE_CANDIDATE_STABLE_QUALIFICATION_HANDOFF.md",
+      "status": "A"
+    },
+    {
+      "additions": 101,
+      "deletions": 0,
+      "path": "docs/nicegui_base/ICON_CATALOG.md",
+      "status": "A"
+    },
+    {
+      "additions": 20,
+      "deletions": 0,
+      "path": "docs/nicegui_base/LAYOUT_RULES.md",
+      "status": "A"
+    },
+    {
+      "additions": 33,
+      "deletions": 0,
+      "path": "docs/nicegui_base/OPENCODE_GEMMA_BOOTSTRAP.md",
+      "status": "A"
+    },
+    {
+      "additions": 12,
+      "deletions": 0,
+      "path": "docs/nicegui_base/PERFORMANCE_GUIDE.md",
+      "status": "A"
+    },
+    {
+      "additions": 114,
+      "deletions": 0,
+      "path": "docs/nicegui_base/RECIPES.md",
+      "status": "A"
+    },
+    {
+      "additions": 104,
+      "deletions": 0,
+      "path": "docs/nicegui_base/SEMICONDUCTOR_APPLICATION_RECIPES.md",
+      "status": "A"
+    },
+    {
+      "additions": 14,
+      "deletions": 0,
+      "path": "docs/nicegui_base/SEMICONDUCTOR_LONGITUDINAL_ASSURANCE_REVIEW_EXCEPTION_GOVERNANCE.md",
+      "status": "A"
+    },
+    {
+      "additions": 15,
+      "deletions": 0,
+      "path": "docs/nicegui_base/SEMICONDUCTOR_OPERATIONAL_ASSURANCE_RENEWAL_LEDGER.md",
+      "status": "A"
+    },
+    {
+      "additions": 51,
+      "deletions": 0,
+      "path": "docs/nicegui_base/SEMICONDUCTOR_POST_RELEASE_STABILITY_ROLLBACK_READINESS.md",
+      "status": "A"
+    },
+    {
+      "additions": 68,
+      "deletions": 0,
+      "path": "docs/nicegui_base/SEMICONDUCTOR_PRODUCTION_RUNTIME.md",
+      "status": "A"
+    },
+    {
+      "additions": 68,
+      "deletions": 0,
+      "path": "docs/nicegui_base/SEMICONDUCTOR_PROMOTION_EXECUTION_ADAPTER_RELEASE_AUDIT.md",
+      "status": "A"
+    },
+    {
+      "additions": 83,
+      "deletions": 0,
+      "path": "docs/nicegui_base/SEMICONDUCTOR_PROVIDER_SDK_RC.md",
+      "status": "A"
+    },
+    {
+      "additions": 76,
+      "deletions": 0,
+      "path": "docs/nicegui_base/SEMICONDUCTOR_RELEASE_PUBLICATION_POST_PROMOTION_VERIFICATION.md",
+      "status": "A"
+    },
+    {
+      "additions": 113,
+      "deletions": 0,
+      "path": "docs/nicegui_base/SEMICONDUCTOR_RUNTIME_ONBOARDING.md",
+      "status": "A"
+    },
+    {
+      "additions": 14,
+      "deletions": 0,
+      "path": "docs/nicegui_base/SEMICONDUCTOR_STABLE_PROMOTION_CANDIDATE.md",
+      "status": "A"
+    },
+    {
+      "additions": 65,
+      "deletions": 0,
+      "path": "docs/nicegui_base/SEMICONDUCTOR_STABLE_RELEASE_EVIDENCE_ACCEPTANCE_PROMOTION_CLOSURE.md",
+      "status": "A"
+    },
+    {
+      "additions": 13,
+      "deletions": 0,
+      "path": "docs/nicegui_base/SEMICONDUCTOR_SUSTAINED_OPERATIONS_INCIDENT_ROLLBACK_AUDIT.md",
+      "status": "A"
+    },
+    {
+      "additions": 21,
+      "deletions": 0,
+      "path": "docs/nicegui_base/SEMICONDUCTOR_SUSTAINED_OPERATIONS_RENEWAL_CONTINUITY.md",
+      "status": "A"
+    },
+    {
+      "additions": 16,
+      "deletions": 0,
+      "path": "docs/nicegui_base/SEMICONDUCTOR_TARGET_CERTIFICATION.md",
+      "status": "A"
+    },
+    {
+      "additions": 61,
+      "deletions": 0,
+      "path": "docs/nicegui_base/SEMICONDUCTOR_TARGET_EXECUTION_OPERATIONAL_HANDOFF.md",
+      "status": "A"
+    },
+    {
+      "additions": 44,
+      "deletions": 0,
+      "path": "docs/nicegui_base/TROUBLESHOOTING.md",
+      "status": "A"
+    },
+    {
+      "additions": 28,
+      "deletions": 0,
+      "path": "docs/nicegui_base/VALIDATOR_RULES.md",
+      "status": "A"
+    },
+    {
+      "additions": 20,
+      "deletions": 0,
+      "path": "docs/nicegui_base/VISUAL_RESOURCE_GUIDE.md",
+      "status": "A"
+    },
+    {
+      "additions": 42,
+      "deletions": 0,
+      "path": "docs/nicegui_base/ZERO_STOCK_NICEGUI_VISUAL_LAWS.md",
+      "status": "A"
+    },
+    {
+      "additions": 59,
+      "deletions": 0,
+      "path": "evidence/review/chg_134_fix1_qualification.json",
+      "status": "A"
+    },
+    {
+      "additions": 83,
+      "deletions": 0,
+      "path": "evidence/review/chg_134_fix2_qualification.json",
+      "status": "A"
+    },
+    {
+      "additions": 16,
+      "deletions": 0,
+      "path": "examples/nicegui_base/README.md",
+      "status": "A"
+    },
+    {
+      "additions": 40,
+      "deletions": 0,
+      "path": "examples/nicegui_base/golden_analysis_workspace.py",
+      "status": "A"
+    },
+    {
+      "additions": 51,
+      "deletions": 0,
+      "path": "examples/nicegui_base/golden_crud.py",
+      "status": "A"
+    },
+    {
+      "additions": 49,
+      "deletions": 0,
+      "path": "examples/nicegui_base/golden_dashboard.py",
+      "status": "A"
+    },
+    {
+      "additions": 70,
+      "deletions": 0,
+      "path": "examples/nicegui_base/golden_data_explorer.py",
+      "status": "A"
+    },
+    {
+      "additions": 309,
+      "deletions": 14,
+      "path": "manifest.json",
+      "status": "M"
+    },
+    {
+      "additions": 19,
+      "deletions": 0,
+      "path": "migrations/005_o3_attention_episode_w1.sql",
+      "status": "A"
+    },
+    {
+      "additions": 14,
+      "deletions": 0,
+      "path": "nicegui_base.toml",
+      "status": "A"
+    },
+    {
+      "additions": 2,
+      "deletions": 0,
+      "path": "requirements-dev.txt",
+      "status": "A"
+    },
+    {
+      "additions": 4,
+      "deletions": 0,
+      "path": "requirements.txt",
+      "status": "A"
+    },
+    {
+      "additions": 7,
+      "deletions": 0,
+      "path": "src/ephi/app.py",
+      "status": "M"
+    },
+    {
+      "additions": 38,
+      "deletions": 0,
+      "path": "src/ephi/application/__init__.py",
+      "status": "M"
+    },
+    {
+      "additions": 262,
+      "deletions": 0,
+      "path": "src/ephi/application/attention.py",
+      "status": "A"
+    },
+    {
+      "additions": 137,
+      "deletions": 0,
+      "path": "src/ephi/application/episodes.py",
+      "status": "A"
+    },
+    {
+      "additions": 115,
+      "deletions": 0,
+      "path": "src/ephi/application/workflow.py",
+      "status": "A"
+    },
+    {
+      "additions": 2,
+      "deletions": 0,
+      "path": "src/ephi/infrastructure/__init__.py",
+      "status": "M"
+    },
+    {
+      "additions": 100,
+      "deletions": 21,
+      "path": "src/ephi/infrastructure/postgresql.py",
+      "status": "M"
+    },
+    {
+      "additions": 211,
+      "deletions": 0,
+      "path": "src/ephi/infrastructure/postgresql_o3.py",
+      "status": "A"
+    },
+    {
+      "additions": 5,
+      "deletions": 0,
+      "path": "src/ephi/ui/__init__.py",
+      "status": "A"
+    },
+    {
+      "additions": 480,
+      "deletions": 0,
+      "path": "src/ephi/ui/app.py",
+      "status": "A"
+    },
+    {
+      "additions": 255,
+      "deletions": 0,
+      "path": "src/ephi/ui/provider.py",
+      "status": "A"
+    },
+    {
+      "additions": 245,
+      "deletions": 0,
+      "path": "tests/test_o3_application.py",
+      "status": "A"
+    },
+    {
+      "additions": 195,
+      "deletions": 0,
+      "path": "tests/test_o3_postgresql.py",
+      "status": "A"
+    },
+    {
+      "additions": 189,
+      "deletions": 0,
+      "path": "tests/test_o3_provider.py",
+      "status": "A"
+    },
+    {
+      "additions": 247,
+      "deletions": 0,
+      "path": "tests/test_postgresql_adapter_lifecycle.py",
+      "status": "A"
+    }
+  ],
+  "checks": [
+    {
+      "command": "/bin/zsh -lc 'rtk /tmp/ephi-r3-venv/bin/nicegui-base-validate . --format json'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk /tmp/ephi-r3-venv/bin/nicegui-base-agent-check . --format json'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk /tmp/ephi-r3-venv/bin/nicegui-base-gate . --format json'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk /tmp/ephi-r3-venv/bin/nicegui-base-runtime-contract --format json'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk /tmp/ephi-r3-venv/bin/nicegui-base-runtime-smoke --port 0 --output /tmp/ephi-fix2-base-runtime-smoke --format json'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import sys; print(sys.executable); import pytest; print(pytest.__version__)'; rtk /tmp/ephi-r3-venv/bin/python -c 'import sys; print(sys.executable); import pytest; print(pytest.__version__)' 2>&1 || true; rtk sed -n '1,180p' requirements.txt; rtk git ls-files .nicegui\"",
+      "exit_code": 0,
+      "test_result": {
+        "exit_code": 0,
+        "framework": "pytest",
+        "outcome": "passed",
+        "output_bytes": 214,
+        "output_sha256": "5d893863311eceeda4e895c59a756b62263dbe107801ed8334f5b8a05e3677fe",
+        "summary_detected": false
+      },
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk which nicegui-base; rtk which nicegui-base-gate; rtk nicegui-base gate . --format json 2>&1 || true; rtk python3 -c 'import nicegui_base; print(nicegui_base.__file__, getattr(nicegui_base,\\\"__version__\\\", \\\"?\\\"))' 2>&1 || true\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'PYTHONPATH=/opt/anaconda3/lib/python3.11/site-packages rtk /tmp/ephi-r3-venv/bin/nicegui-base-gate . --format json'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk /tmp/ephi-r3-venv/bin/python -m pip install pytest'",
+      "exit_code": 0,
+      "test_result": {
+        "exit_code": 0,
+        "framework": "pytest",
+        "outcome": "passed",
+        "output_bytes": 1975,
+        "output_sha256": "d4e57559fdc070bcfadda3531bdb1d54ed0593a94cf5356c5e10fe692ebaf206",
+        "summary_detected": false
+      },
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk /tmp/ephi-r3-venv/bin/nicegui-base-gate . --format json'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'PYTHONPATH=src rtk /tmp/ephi-r3-venv/bin/python -m pytest -q tests/test_package.py::PackageTests::test_current_package_passes_without_git_or_dependencies tests/test_w0_repo_baseline.py::W0RepoBaselineTests::test_current_identity_matches_interpreter_contract_without_network -vv'",
+      "exit_code": 1,
+      "test_result": {
+        "counts": {
+          "failed": 2
+        },
+        "exit_code": 1,
+        "failing_test_ids": [
+          "tests/test_package.py::PackageTests::test_current_package_passes_without_git_or_dependencies",
+          "tests/test_w0_repo_baseline.py::W0RepoBaselineTests::test_current_identity_matches_interpreter_contract_without_network"
+        ],
+        "framework": "pytest",
+        "outcome": "test_failures",
+        "output_bytes": 2519,
+        "output_sha256": "7dc24dcd2a07c24eb657969ba0a5cd60f56de608fb836a8a1d882b7e946890b4",
+        "summary_detected": true
+      },
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk /tmp/ephi-r3-venv/bin/nicegui-base-gate . --format json'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short; rtk git diff --stat; rtk git diff --check; rtk python3 tools/w0_repo_baseline.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git diff -- manifest.json; rtk rg -n 'test_postgresql_adapter_lifecycle' manifest.json; rtk python3 -m unittest discover -s tests -v >/tmp/ephi-fix2-unittest.log 2>&1; status=\"'$?; rtk tail -25 /tmp/ephi-fix2-unittest.log; exit $status'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest discover -s tests -v >/tmp/ephi-fix2-unittest.log 2>&1; rc=$?; rtk tail -25 /tmp/ephi-fix2-unittest.log; exit $rc'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff -- src/ephi/infrastructure/postgresql.py src/ephi/infrastructure/postgresql_o3.py tests/test_postgresql_adapter_lifecycle.py | head -900'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n 'self\\\\.connection' src/ephi/infrastructure/postgresql*.py src/ephi/infrastructure/artifacts.py | head -240; rtk rg -n 'self\\\\.adapter\\\\.connection|adapter\\\\.connection' src/ephi/infrastructure | head -240\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,260p' src/ephi/infrastructure/postgresql_reads.py; rtk sed -n '260,620p' src/ephi/infrastructure/postgresql_reads.py; rtk sed -n '1,240p' src/ephi/infrastructure/postgresql_o3.py; rtk sed -n '100,230p' src/ephi/infrastructure/postgresql_worker.py; rtk sed -n '480,560p' src/ephi/infrastructure/postgresql_worker.py; rtk sed -n '1,150p' src/ephi/infrastructure/artifacts/catalog.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk nl -ba src/ephi/infrastructure/postgresql.py | sed -n '530,680p'; rtk nl -ba src/ephi/infrastructure/postgresql_o3.py | sed -n '35,175p'; rtk nl -ba src/ephi/infrastructure/postgresql_reads.py | sed -n '380,550p'; rtk nl -ba src/ephi/infrastructure/postgresql_worker.py | sed -n '500,545p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk find /tmp -maxdepth 1 -type f -iname '*fix2*' -o -iname '*outage*' | head -100; rtk find /tmp -maxdepth 2 -type f -path '*ephi*' | head -120\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"find /tmp -maxdepth 1 -type f | rg 'fix2|outage|qualification' | head -100; find /tmp -maxdepth 2 -type f | rg 'ephi-fix2|ephi.*outage' | head -100\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk cat evidence/review/chg_134_fix1_qualification.json; rtk ls evidence/review | rg 'chg_134|verify|qualification|browser' | head -80; rtk cat evidence/review/nicegui_base_runtime_evidence.json | head -80\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n --hidden --glob '\"'!evidence/import/**'\"' --glob '\"'!*.png'\"' --glob '\"'!*.zip'\"' 'ephi-o3-attention-episode-w1-fix2|CF-.*fix2|Artifact Bridge|artifact bridge|project-os-artifacts' . /Users/haewonkim/.codex 2>/dev/null | head -240\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n --hidden --glob '\"'!history.jsonl'\"' --glob '\"'!*.png'\"' --glob '\"'!*.zip'\"' 'artifact_stage|artifact-manifest|manifest_sha256|project-os-artifacts|Artifact Runs' /Users/haewonkim/.codex-fabric /Users/haewonkim/.projectos 2>/dev/null | head -300\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n --hidden --glob '*.json' --glob '*.md' 'CF-7cf9a06942d8b293fcaa7f4d|ephi-o3-attention-episode-w1-verify1|project-os-artifacts/ephi' /Users/haewonkim/.codex-fabric/quarantine /Users/haewonkim/.codex-fabric/results 2>/dev/null | head -160\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"EPHI_TEST_POSTGRES_DSN='postgresql://ephi_ci@127.0.0.1:55438/ephi_ci' rtk /tmp/ephi-r3-venv/bin/python -c 'import os, psycopg; c=psycopg.connect(os.environ[\\\"EPHI_TEST_POSTGRES_DSN\\\"],autocommit=True,row_factory=psycopg.rows.dict_row); print(c.execute(\\\"SELECT count(*) AS n FROM o3_attention_projection\\\").fetchone()); c.close()' ; rtk ps -ax | rg 'app.py|postgres.*55438' | head -40; rtk cat /tmp/ephi-fix2-pgdata.path; rtk cat /tmp/ephi-fix2-pgsock.path\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk curl -sS http://127.0.0.1:8123/healthz; rtk curl -sS http://127.0.0.1:8123/readyz'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"EPHI_TEST_POSTGRES_DSN='postgresql://ephi_ci@127.0.0.1:55438/ephi_ci' PYTHONPATH=src rtk python3 -m unittest -v tests.test_postgresql_adapter_lifecycle\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git add manifest.json src/ephi/infrastructure/postgresql.py src/ephi/infrastructure/postgresql_o3.py tests/test_postgresql_adapter_lifecycle.py && rtk git commit -m 'Fix PostgreSQL adapter reconnection after source outage'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git show -s --format='%H%n%T%n%P%n%s' HEAD; rtk git status --short; rtk git merge-base --is-ancestor ef959f577bc1aa223b260ac32cb42a18eadfaf9f HEAD; echo ancestor_rc=\"'$?; rtk git show -s --format='\"'%H %T' ef959f577bc1aa223b260ac32cb42a18eadfaf9f\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk env | rg -i 'fabric|project.?os|job|request|worktree' | sed -E 's/(TOKEN|KEY|SECRET|PASSWORD|AUTH)[\"'^=]*=.*/'\"\\\\1=<redacted>/' | head -120\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git add manifest.json evidence/review/chg_134_fix2_qualification.json && rtk git commit -m 'Record CHG-134 fix qualification boundary'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git remote get-url origin; rtk git ls-remote origin refs/heads/project-os-artifacts/ephi/ephi-o3-attention-episode-w1-fix2; rtk git show -s --format='%H %T %P' HEAD; rtk git show -s --format='%H %T %P' e6ad7c36953496ed4fdafbeb2975cfab99f3033e; rtk git status --short\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nfrom pathlib import Path\nimport hashlib, json, subprocess, zipfile\n\nroot = Path('/tmp/ephi-fix2-carrier')\nif root.exists():\n    for p in sorted(root.rglob('*'), reverse=True):\n        if p.is_file() or p.is_symlink():\n            p.unlink()\n        elif p.is_dir():\n            p.rmdir()\nroot.mkdir(parents=True)\n\ndef sha_bytes(data: bytes) -> str:\n    return hashlib.sha256(data).hexdigest()\n\ndef sha_file(path: Path) -> str:\n    return sha_bytes(path.read_bytes())\n\ndef candidate_files():\n    names = subprocess.check_output(\n        ['git', 'ls-tree', '-r', '--name-only', 'e6ad7c36953496ed4fdafbeb2975cfab99f3033e'],\n        text=True,\n    ).splitlines()\n    result = []\n    for name in names:\n        data = subprocess.check_output(\n            ['git', 'show', f'e6ad7c36953496ed4fdafbeb2975cfab99f3033e:{name}']\n        )\n        result.append({'path': name, 'bytes': len(data), 'sha256': sha_bytes(data)})\n    return result\n\ncandidate = candidate_files()\n(root / 'candidate-file-sha256.json').write_text(json.dumps({\n    'schema_version': 1,\n    'project': 'ephi',\n    'request': 'ephi-o3-attention-episode-w1-fix2',\n    'operation': 'FIX',\n    'fabric_job': 'CF-08ce8de05ac749b681162a55',\n    'candidate_source_sha': 'e6ad7c36953496ed4fdafbeb2975cfab99f3033e',\n    'candidate_tree_sha': '24b06b7f575ab994681a7e0365b0b5bfe70186d4',\n    'predecessor_candidate_sha': 'ef959f577bc1aa223b260ac32cb42a18eadfaf9f',\n    'predecessor_candidate_tree': '3755ca31a2d9ba5b8e473fa67ab1338b00623055',\n    'tracked_file_count': len(candidate),\n    'tracked_files': candidate,\n}, indent=2) + '\\\\n')\n\n(root / 'browser-evidence.json').write_text(json.dumps({\n    'schema_version': 1,\n    'project': 'ephi',\n    'request': 'ephi-o3-attention-episode-w1-fix2',\n    'operation': 'FIX',\n    'fabric_job': 'CF-08ce8de05ac749b681162a55',\n    'candidate_source_sha': 'e6ad7c36953496ed4fdafbeb2975cfab99f3033e',\n    'candidate_tree_sha': '24b06b7f575ab994681a7e0365b0b5bfe70186d4',\n    'status': 'FIX_BLOCKED_EVIDENCE_GAPS',\n    'application': 'real EPHI NiceGUI Base application with explicit PostgreSQL and development identity bindings',\n    's08': {\n        'status': 'PASS_OBSERVED_NOT_DURABLY_HASHED',\n        'viewport_dpr': 'not verifiable in native CUA surface',\n        'source_down': 'Refresh retained the known row and rendered Stale data; backend source health reported StorageFailure/source unavailable',\n        'source_restored': 'PostgreSQL restart followed by supported Refresh returned healthy current row in the same app process/page',\n        'process_restart': False,\n        'memory_fallback': False,\n        'screenshot_files': [],\n        'screenshot_hashes': None,\n    },\n    's09': {\n        'status': 'BLOCKED_NATIVE_CUA_FOCUS',\n        'functional_real_postgresql_regression': 'PASS',\n        'expected_ui': 'Attention snapshot expired; Refresh Attention to start a new retained query snapshot.',\n        'security_recheck': 'PASS in real PostgreSQL lifecycle regression',\n        'new_snapshot_after_authorized_refresh': 'PASS in real PostgreSQL lifecycle regression',\n        'browser_blocker': 'pre-existing browser extension repeatedly stole focus before the retained-snapshot UI sequence could be completed',\n    },\n    'other_browser_reconfirmation': {\n        'desktop_1440x900_dpr1': 'NOT_VERIFIABLE',\n        'mobile_390x844_dpr1': 'NOT_RUN',\n        'core_workflows': 'NOT_RUN_ON_REPAIRED_CANDIDATE',\n        'unexpected_errors': 'NOT_RUN',\n    },\n}, indent=2) + '\\\\n')\n\n(root / 'qualification-report.json').write_text(json.dumps({\n    'schema_version': 1,\n    'evidence_kind': 'newly_executed_qualification',\n    'project': 'ephi',\n    'request': 'ephi-o3-attention-episode-w1-fix2',\n    'operation': 'FIX',\n    'fabric_job': 'CF-08ce8de05ac749b681162a55',\n    'target_base_sha': 'cdf8bb54eeb42926029a9394814d79d17a282bd9',\n    'candidate_source_sha': 'e6ad7c36953496ed4fdafbeb2975cfab99f3033e',\n    'candidate_tree_sha': '24b06b7f575ab994681a7e0365b0b5bfe70186d4',\n    'predecessor_candidate_sha': 'ef959f577bc1aa223b260ac32cb42a18eadfaf9f',\n    'predecessor_evidence_commit': '1e0b6135841d7b3a964456153c259df73214912c',\n    'status': 'FIX_BLOCKED_EVIDENCE_GAPS',\n    'postgresql': {\n        'server': '18.6',\n        'suite': '55 tests PASS across O2 command/read/artifact/worker, O3, and adapter lifecycle',\n        'outage_restore': 'PASS; AdminShutdown/OperationalError observed, failed in-flight operation not replayed, next operation reconnected after restart',\n        'durability': 'aggregate/receipt/audit/outbox/retained snapshot contents preserved across outage',\n    },\n    'adapter_lifecycle': {\n        'explicit_close_terminal': 'PASS',\n        'server_termination_replacement': 'PASS',\n        'no_inflight_retry': 'PASS',\n        'authorized_read_and_fresh_command_after_reconnect': 'PASS',\n        'concurrent_replacement_ownership': 'PASS',\n        'receipt_auth_version_semantics': 'PASS',\n        's09_expiry_security_revision_refresh': 'PASS',\n    },\n    'base_checks': {\n        'runtime_contract': 'PASS',\n        'runtime_smoke': 'PASS',\n        'validate': 'PASS',\n        'agent_check': 'PASS',\n        'gate': 'PASS',\n        'framework_commit': '000298562d6bcbf6df304edbd41b98b30fe4bfcf',\n        'nicegui': '3.15.0',\n        'nicegui_base': '3.0.0a8',\n    },\n    'package_checks': {\n        'check_package_refresh_manifest': 'PASS',\n        'full_unittest': 'PASS (165 tests, 58 skipped)',\n        'w0_repo_baseline': 'PASS',\n        'git_diff_check': 'PASS',\n    },\n    'blocking_boundary': [\n        'No durable screenshot files/hashes were available from the native CUA surface.',\n        'S09 browser sequence and exact viewport/DPR reconfirmations were not completed because a pre-existing extension repeatedly stole Chrome focus.',\n        'No callable Project OS Artifact Bridge was exposed; Notion and the synthetic AR-2 sidecar were not used.',\n    ],\n    'self_declared_go': False,\n}, indent=2) + '\\\\n')\n\nmanifest = {\n    'schema_version': 1,\n    'project': 'ephi',\n    'request': 'ephi-o3-attention-episode-w1-fix2',\n    'operation': 'FIX',\n    'fabric_job': 'CF-08ce8de05ac749b681162a55',\n    'target_base_sha': 'cdf8bb54eeb42926029a9394814d79d17a282bd9',\n    'candidate_source_sha': 'e6ad7c36953496ed4fdafbeb2975cfab99f3033e',\n    'candidate_tree_sha': '24b06b7f575ab994681a7e0365b0b5bfe70186d4',\n    'predecessor_candidate_sha': 'ef959f577bc1aa223b260ac32cb42a18eadfaf9f',\n    'predecessor_candidate_tree': '3755ca31a2d9ba5b8e473fa67ab1338b00623055',\n    'status': 'FIX_BLOCKED_EVIDENCE_GAPS',\n    'self_declared_go': False,\n    'viewport_dpr': 'not verifiable; browser evidence records this explicitly',\n    'files': [],\n}\nfor path in sorted(p for p in root.iterdir() if p.is_file()):\n    manifest['files'].append({'path': path.name, 'bytes': path.stat().st_size, 'sha256': sha_file(path)})\n(root / 'artifact-manifest.json').write_text(json.dumps(manifest, indent=2) + '\\\\n')\n\nmembers = sorted(p.name for p in root.iterdir() if p.is_file() and p.name \"'!= '\"'artifact-bundle.zip')\nwith zipfile.ZipFile(root / 'artifact-bundle.zip', 'w', compression=zipfile.ZIP_DEFLATED, compresslevel=9) as z:\n    for name in members:\n        info = zipfile.ZipInfo(name, date_time=(2026, 9, 19, 0, 0, 0))\n        info.compress_type = zipfile.ZIP_DEFLATED\n        info.external_attr = 0o100644 << 16\n        z.writestr(info, (root / name).read_bytes())\nprint(json.dumps({\n    'carrier': str(root),\n    'candidate_file_count': len(candidate),\n    'carrier_files': members + ['artifact-bundle.zip'],\n    'manifest_sha256': sha_file(root / 'artifact-manifest.json'),\n    'bundle_sha256': sha_file(root / 'artifact-bundle.zip'),\n}, indent=2))\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nfrom pathlib import Path\nimport hashlib, json, shutil, subprocess, tempfile\n\ncarrier = Path('/tmp/ephi-fix2-carrier')\nref = 'refs/heads/project-os-artifacts/ephi/ephi-o3-attention-episode-w1-fix2'\nrepo = Path('/Users/haewonkim/.codex-fabric/worktrees/CF-08ce8de05ac749b681162a55')\nremote_url = subprocess.check_output(['git', '-C', str(repo), 'remote', 'get-url', 'origin'], text=True).strip()\nexisting = subprocess.check_output(['git', '-C', str(repo), 'ls-remote', 'origin', ref], text=True).strip()\nif existing:\n    raise SystemExit(f'GIT_ARTIFACT_CONFLICT existing={existing}')\n\ndef sha(path):\n    return hashlib.sha256(path.read_bytes()).hexdigest()\nrequired = sorted(p.name for p in carrier.iterdir() if p.is_file())\nmanifest_hash = sha(carrier / 'artifact-manifest.json')\nbundle_hash = sha(carrier / 'artifact-bundle.zip')\nreceipt = {\n    'schema_version': 1,\n    'project': 'ephi',\n    'request': 'ephi-o3-attention-episode-w1-fix2',\n    'operation': 'FIX',\n    'fabric_job': 'CF-08ce8de05ac749b681162a55',\n    'target_base_sha': 'cdf8bb54eeb42926029a9394814d79d17a282bd9',\n    'candidate_source_sha': 'e6ad7c36953496ed4fdafbeb2975cfab99f3033e',\n    'candidate_tree_sha': '24b06b7f575ab994681a7e0365b0b5bfe70186d4',\n    'predecessor_candidate_sha': 'ef959f577bc1aa223b260ac32cb42a18eadfaf9f',\n    'status': 'FIX_BLOCKED_EVIDENCE_GAPS',\n    'self_declared_go': False,\n    'artifact_ref': ref,\n    'remote_url': remote_url,\n    'carrier_mode': 'dedicated_git_artifact_carrier',\n    'notion_used': False,\n    'synthetic_ar2_sidecar_used': False,\n    'manifest_sha256': manifest_hash,\n    'bundle_sha256': bundle_hash,\n    'required_files': [\n        {'path': name, 'bytes': (carrier / name).stat().st_size, 'sha256': sha(carrier / name)}\n        for name in required\n    ],\n}\n(carrier / 'git-publish-receipt.json').write_text(json.dumps(receipt, indent=2) + '\\\\n')\n\npublish_repo = Path(tempfile.mkdtemp(prefix='ephi-fix2-carrier-publish-', dir='/tmp'))\nfor source in carrier.iterdir():\n    if source.is_file():\n        shutil.copy2(source, publish_repo / source.name)\nsubprocess.run(['git', '-C', str(publish_repo), 'init', '-q', '--initial-branch=carrier'], check=True)\nsubprocess.run(['git', '-C', str(publish_repo), 'remote', 'add', 'origin', remote_url], check=True)\nsubprocess.run(['git', '-C', str(publish_repo), 'add', '.'], check=True)\nmessage = 'Project OS EPHI CHG-134 FIX evidence: request=ephi-o3-attention-episode-w1-fix2 fabric_job=CF-08ce8de05ac749b681162a55 candidate=e6ad7c36953496ed4fdafbeb2975cfab99f3033e status=FIX_BLOCKED_EVIDENCE_GAPS'\nsubprocess.run(['git', '-C', str(publish_repo), '-c', 'user.name=Project OS Artifact Publisher', '-c', 'user.email=project-os-artifacts@users.noreply.github.com', 'commit', '-q', '-m', message], check=True)\nlocal_commit = subprocess.check_output(['git', '-C', str(publish_repo), 'rev-parse', 'HEAD'], text=True).strip()\nsubprocess.run(['git', '-C', str(publish_repo), 'push', 'origin', f'HEAD:{ref}'], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)\nprint(json.dumps({'artifact_ref': ref, 'local_commit': local_commit, 'manifest_sha256': manifest_hash, 'bundle_sha256': bundle_hash, 'file_count': len(required)}, indent=2))\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nfrom pathlib import Path\nimport hashlib, json, subprocess, tempfile\n\nrepo = Path('/Users/haewonkim/.codex-fabric/worktrees/CF-08ce8de05ac749b681162a55')\nref = 'refs/heads/project-os-artifacts/ephi/ephi-o3-attention-episode-w1-fix2'\nremote_url = subprocess.check_output(['git', '-C', str(repo), 'remote', 'get-url', 'origin'], text=True).strip()\nreadback = Path(tempfile.mkdtemp(prefix='ephi-fix2-readback-', dir='/tmp'))\nsubprocess.run(['git', 'init', '-q', '--initial-branch=readback', str(readback)], check=True)\nsubprocess.run(['git', '-C', str(readback), 'remote', 'add', 'origin', remote_url], check=True)\nsubprocess.run(['git', '-C', str(readback), 'fetch', '-q', '--no-tags', 'origin', ref], check=True)\nremote_commit = subprocess.check_output(['git', '-C', str(readback), 'rev-parse', 'FETCH_HEAD'], text=True).strip()\nremote_tree = subprocess.check_output(['git', '-C', str(readback), 'rev-parse', 'FETCH_HEAD\"'^{tree}'\"'], text=True).strip()\npaths = subprocess.check_output(['git', '-C', str(readback), 'ls-tree', '-r', '--name-only', 'FETCH_HEAD'], text=True).splitlines()\nexpected = sorted(['artifact-manifest.json', 'browser-evidence.json', 'candidate-file-sha256.json', 'qualification-report.json', 'artifact-bundle.zip', 'git-publish-receipt.json'])\nif sorted(paths) \"'!= expected:\n    raise SystemExit(f'\"'REMOTE_INVENTORY_MISMATCH actual={paths} expected={expected}')\ndef remote_bytes(path):\n    return subprocess.check_output(['git', '-C', str(readback), 'show', f'FETCH_HEAD:{path}'])\ndef sha_bytes(data):\n    return hashlib.sha256(data).hexdigest()\nhashes = {path: sha_bytes(remote_bytes(path)) for path in paths}\nmanifest = json.loads(remote_bytes('artifact-manifest.json'))\nqualification = json.loads(remote_bytes('qualification-report.json'))\nbrowser = json.loads(remote_bytes('browser-evidence.json'))\nreceipt = json.loads(remote_bytes('git-publish-receipt.json'))\nidentity = ('ephi', 'ephi-o3-attention-episode-w1-fix2', 'FIX')\nfor label, data in [('manifest', manifest), ('qualification', qualification), ('browser', browser), ('receipt', receipt)]:\n    if (data.get('project'), data.get('request'), data.get('operation')) \"'!= identity:\n        raise SystemExit(f'\"'IDENTITY_MISMATCH {label}')\nif manifest['candidate_source_sha'] \"'!= '\"'e6ad7c36953496ed4fdafbeb2975cfab99f3033e' or manifest['candidate_tree_sha'] \"'!= '\"'24b06b7f575ab994681a7e0365b0b5bfe70186d4':\n    raise SystemExit('CANDIDATE_BINDING_MISMATCH')\nif manifest['status'] \"'!= '\"'FIX_BLOCKED_EVIDENCE_GAPS' or not manifest['self_declared_go'] is False:\n    raise SystemExit('STATUS_BOUNDARY_MISMATCH')\nif receipt['manifest_sha256'] \"'!= hashes['\"'artifact-manifest.json'] or receipt['bundle_sha256'] \"'!= hashes['\"'artifact-bundle.zip']:\n    raise SystemExit('RECEIPT_HASH_MISMATCH')\nlocal_manifest = Path('/tmp/ephi-fix2-carrier/artifact-manifest.json').read_bytes()\nlocal_bundle = Path('/tmp/ephi-fix2-carrier/artifact-bundle.zip').read_bytes()\nif sha_bytes(local_manifest) \"'!= hashes['\"'artifact-manifest.json'] or sha_bytes(local_bundle) \"'!= hashes['\"'artifact-bundle.zip']:\n    raise SystemExit('LOCAL_REMOTE_HASH_MISMATCH')\nprint(json.dumps({\n    'artifact_ref': ref,\n    'remote_commit': remote_commit,\n    'remote_tree': remote_tree,\n    'remote_file_count': len(paths),\n    'required_files_readable': True,\n    'all_remote_hashes_recorded': True,\n    'manifest_sha256': hashes['artifact-manifest.json'],\n    'bundle_sha256': hashes['artifact-bundle.zip'],\n    'candidate_binding_verified': True,\n    'status_boundary_verified': True,\n}, indent=2))\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 tools/check_package.py --refresh-manifest; rtk git add manifest.json evidence/review/chg_134_fix2_qualification.json; rtk git commit -m 'Bind CHG-134 evidence carrier readback'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest discover -s tests -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/w0_repo_baseline.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk ps aux | rg 'ephi.*app.py|python.*app.py|pg_ctl.*55438|postgres.*55438' | head -60\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk ps -ax | rg 'postgres|app.py|ephi-r3-venv' | head -80\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'FIX2_PGDATA=\"$(rtk cat /tmp/ephi-fix2-pgdata.path)\" /opt/homebrew/opt/postgresql@18/bin/pg_ctl -D \"$FIX2_PGDATA\" status'",
+      "exit_code": 4,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk /opt/homebrew/opt/postgresql@18/bin/pg_ctl -D /tmp/ephi-fix2-pgdata.aWV85j status; rtk curl -sS http://127.0.0.1:8123/healthz'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git branch --show-current; rtk git rev-parse origin/main; rtk git merge-base --is-ancestor cdf8bb54eeb42926029a9394814d79d17a282bd9 HEAD; echo base_ancestor_rc=$?; rtk git merge-base --is-ancestor ef959f577bc1aa223b260ac32cb42a18eadfaf9f HEAD; echo predecessor_ancestor_rc=$?; rtk git log --oneline --decorate --graph -5; rtk git status --short'",
+      "exit_code": 0,
+      "type": "command_execution"
+    }
+  ],
+  "codex": {
+    "cli_version": "codex-cli 0.154.0",
+    "configured_model": "gpt-5.6-luna",
+    "event_count": 365,
+    "provider_reported_model": null,
+    "reasoning_effort": "xhigh",
+    "terminal_type": "turn.completed",
+    "usage": {
+      "cache_hit_percent": 97.68,
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 20526336,
+      "fresh_input_tokens": 488522,
+      "input_tokens": 21014858,
+      "non_reasoning_output_tokens": 37307,
+      "output_tokens": 66557,
+      "reasoning_output_tokens": 29250,
+      "total_processed_tokens": 21081415
+    },
+    "warnings": []
+  },
+  "commits": [
+    {
+      "sha": "d5af282415d6352ae5d52a520ecb2b9ea47b09c1",
+      "subject": "Bind CHG-134 evidence carrier readback"
+    },
+    {
+      "sha": "cacb99a2b1cac68f147d06393539f42f2dc55b31",
+      "subject": "Record CHG-134 fix qualification boundary"
+    },
+    {
+      "sha": "e6ad7c36953496ed4fdafbeb2975cfab99f3033e",
+      "subject": "Fix PostgreSQL adapter reconnection after source outage"
+    },
+    {
+      "sha": "ef959f577bc1aa223b260ac32cb42a18eadfaf9f",
+      "subject": "Fix CHG-134 source health and current authorization"
+    },
+    {
+      "sha": "dc8f04b02d9ef9bdb3da59951a0061ffefd2113f",
+      "subject": "Implement O3.1 durable Attention Episode W1 slice"
+    }
+  ],
+  "diff": {
+    "additions": 11975,
+    "changed_files": 67,
+    "commit_count": 5,
+    "deletions": 43
+  },
+  "error_code": null,
+  "evidence_manifest": {
+    "count": 43,
+    "items": [
+      {
+        "bytes": 35164,
+        "path": ".nicegui_base/construction_manifest.json",
+        "sha256": "3ae85f2e554f7080fbf81f68b1df7cf69ed5e917ca82427ddaf06ab31625a724"
+      },
+      {
+        "bytes": 203443,
+        "path": ".nicegui_base/framework_catalog.json",
+        "sha256": "555e46ff14ac9311ebb678285d6f3163bbcbf49840ec04ac11e1898366c9c149"
+      },
+      {
+        "bytes": 6438,
+        "path": ".nicegui_base/install_manifest.json",
+        "sha256": "8c0b0d423af8c279d5cd90e63509f918b3fbf7e52807341910a695a199dceb5a"
+      },
+      {
+        "bytes": 6354,
+        "path": "11_Developer_Start.md",
+        "sha256": "8e62f46dc9e37ee17a308e7d27163435c16f059433351800722bc722f405bda5"
+      },
+      {
+        "bytes": 13666,
+        "path": "13_Package_Review.md",
+        "sha256": "3c7b1c7ab6c131807a812774bf8c15af57c3aa3d18c7e3e5dada0fa54d4fccc5"
+      },
+      {
+        "bytes": 13469,
+        "path": "README.md",
+        "sha256": "2fdf36ba9c533cb47118e1566a00d8de618479290da68d4979e6ccee8dce521b"
+      },
+      {
+        "bytes": 2534,
+        "path": "certification_output/runtime_smoke/RUNTIME_SMOKE_REPORT.json",
+        "sha256": "e444a9132023ccaaf1f74572641cf0da6d589ed9c668a775ec61579eb58fdb41"
+      },
+      {
+        "bytes": 1863,
+        "path": "certification_output/runtime_smoke/RUNTIME_SMOKE_SERVER.log",
+        "sha256": "0520a045b2641cbd63a6f7d97a8e01dc94e8e171fe58108d391b7fe789867a49"
+      },
+      {
+        "bytes": 4829,
+        "path": "docs/nicegui_base/AGENT_WORKFLOW.md",
+        "sha256": "0669f564069e7dafae45dea80190c1d8ff511d8fd9b825dd899ef98c0074c091"
+      },
+      {
+        "bytes": 3025,
+        "path": "docs/nicegui_base/AI_QUICKSTART.md",
+        "sha256": "8ea275da5fbb7b2c8c8381eddf6c750c794789d2e404fd7822654681d1232fa8"
+      },
+      {
+        "bytes": 7496,
+        "path": "docs/nicegui_base/AI_RULES.md",
+        "sha256": "0232c21a4e63b4f7ae9f2c76153ff2df1ebe0fff34d9c8d81adf64fb2138fa3a"
+      },
+      {
+        "bytes": 2135,
+        "path": "docs/nicegui_base/ANTI_PATTERNS.md",
+        "sha256": "fec2712934043272760464139073e040c82281e7dc63eb28326f15897f902480"
+      },
+      {
+        "bytes": 1465,
+        "path": "docs/nicegui_base/APP_PATTERNS.md",
+        "sha256": "94dee03e72c0126c4c1ba4466b566a2cdac05cd3433fbc4054950fa0a8763957"
+      },
+      {
+        "bytes": 20510,
+        "path": "docs/nicegui_base/COMPONENT_CATALOG.md",
+        "sha256": "09850c3058c53c2c5725168d7c69bc2e17e363058a41e539e8e55cc08feed39d"
+      },
+      {
+        "bytes": 1767,
+        "path": "docs/nicegui_base/FINAL_RELEASE_CANDIDATE_STABLE_QUALIFICATION_HANDOFF.md",
+        "sha256": "0e97a2c5bb9bbc8621716d7ca70bd530492dacafc9573e291ba27b3f88bd9282"
+      },
+      {
+        "bytes": 3058,
+        "path": "docs/nicegui_base/ICON_CATALOG.md",
+        "sha256": "da6ad24115318574346f3f4de81b785a70610b306b0ef4c1dfd6df22bd4364f5"
+      },
+      {
+        "bytes": 1236,
+        "path": "docs/nicegui_base/LAYOUT_RULES.md",
+        "sha256": "dc0a4ce52a258148e92eaa66ee0d53121d111ef4a9ad0571f6ca08a18b59a9fb"
+      },
+      {
+        "bytes": 2093,
+        "path": "docs/nicegui_base/OPENCODE_GEMMA_BOOTSTRAP.md",
+        "sha256": "fe3b205aa4d4f6432d6a6367b802126525032a3acbbb94cc82dbed32c243feae"
+      },
+      {
+        "bytes": 999,
+        "path": "docs/nicegui_base/PERFORMANCE_GUIDE.md",
+        "sha256": "049add7dbba6de5e04688181e2a2101a3bbd710c44e0990498581dbd223ff058"
+      },
+      {
+        "bytes": 7043,
+        "path": "docs/nicegui_base/RECIPES.md",
+        "sha256": "e77d2b9978a33f9114680b124844fbd1597313f99eeecf3859762af5db63e603"
+      },
+      {
+        "bytes": 7804,
+        "path": "docs/nicegui_base/SEMICONDUCTOR_APPLICATION_RECIPES.md",
+        "sha256": "7d3f1037047ff946946c6f557a297a8c95d92ee760e45bd2704a707e656dae66"
+      },
+      {
+        "bytes": 1350,
+        "path": "docs/nicegui_base/SEMICONDUCTOR_LONGITUDINAL_ASSURANCE_REVIEW_EXCEPTION_GOVERNANCE.md",
+        "sha256": "4c6920c6890e1bb54f7fa0c2a4068ce330573015b049154ff6b976608c0290c7"
+      },
+      {
+        "bytes": 1037,
+        "path": "docs/nicegui_base/SEMICONDUCTOR_OPERATIONAL_ASSURANCE_RENEWAL_LEDGER.md",
+        "sha256": "9b6cf415c9962d4631d5b396fd40f52424f37768c6e973898d181ab49bb84214"
+      },
+      {
+        "bytes": 2936,
+        "path": "docs/nicegui_base/SEMICONDUCTOR_POST_RELEASE_STABILITY_ROLLBACK_READINESS.md",
+        "sha256": "c6c5cbbf84b75b0df45ab37852d8e1f8b7c0d3791d0471bbec85c4cb1bc1afd1"
+      },
+      {
+        "bytes": 3877,
+        "path": "docs/nicegui_base/SEMICONDUCTOR_PRODUCTION_RUNTIME.md",
+        "sha256": "2b5f608a3adee16ce210993f2991bbdafc40a4a5c4d9c7c0aa2c1ffdca02b1df"
+      },
+      {
+        "bytes": 2961,
+        "path": "docs/nicegui_base/SEMICONDUCTOR_PROMOTION_EXECUTION_ADAPTER_RELEASE_AUDIT.md",
+        "sha256": "24905a1a21b95ea01d0ebf5f093caee8c014a21a3013a71f81cb4ea5b87bd74e"
+      },
+      {
+        "bytes": 4508,
+        "path": "docs/nicegui_base/SEMICONDUCTOR_PROVIDER_SDK_RC.md",
+        "sha256": "9b7607f41bf559fae46b25e167e910f6ba22deade21784543b4f0e558107c3d3"
+      },
+      {
+        "bytes": 3610,
+        "path": "docs/nicegui_base/SEMICONDUCTOR_RELEASE_PUBLICATION_POST_PROMOTION_VERIFICATION.md",
+        "sha256": "665a3c335303d454a8e3363a494d8e240d354c8e51f4d33b04b4b6a89c111cc9"
+      },
+      {
+        "bytes": 5848,
+        "path": "docs/nicegui_base/SEMICONDUCTOR_RUNTIME_ONBOARDING.md",
+        "sha256": "7043de584a09dea74ae49ff57d2448ad749a4cdeb3137730ba0832337c5174a1"
+      },
+      {
+        "bytes": 1438,
+        "path": "docs/nicegui_base/SEMICONDUCTOR_STABLE_PROMOTION_CANDIDATE.md",
+        "sha256": "f7c1c24d19cfb7eca2826a09c1dad7d00f625898decb6eba7809c9e83a504432"
+      },
+      {
+        "bytes": 3182,
+        "path": "docs/nicegui_base/SEMICONDUCTOR_STABLE_RELEASE_EVIDENCE_ACCEPTANCE_PROMOTION_CLOSURE.md",
+        "sha256": "74b3644f12768a59c297fa29ce360d9d8d01a6be399f22bbefc32760a0b8184f"
+      },
+      {
+        "bytes": 1155,
+        "path": "docs/nicegui_base/SEMICONDUCTOR_SUSTAINED_OPERATIONS_INCIDENT_ROLLBACK_AUDIT.md",
+        "sha256": "e41b2e24e9eab7ceee57d131396dd5fa6e31e4c3c8bb90cfd00be24829c2e3ca"
+      },
+      {
+        "bytes": 2262,
+        "path": "docs/nicegui_base/SEMICONDUCTOR_SUSTAINED_OPERATIONS_RENEWAL_CONTINUITY.md",
+        "sha256": "33262a5667b300b8f224ea229eb452bde2ad1768610eb00f8d81d515c501b0b0"
+      },
+      {
+        "bytes": 1510,
+        "path": "docs/nicegui_base/SEMICONDUCTOR_TARGET_CERTIFICATION.md",
+        "sha256": "e34ccfa128d4d60c38be3c6ab26a17981542c6ee3e07762a45b347514b27bf26"
+      },
+      {
+        "bytes": 2992,
+        "path": "docs/nicegui_base/SEMICONDUCTOR_TARGET_EXECUTION_OPERATIONAL_HANDOFF.md",
+        "sha256": "a0b87dc9422b120566048e10f76b7d3a3a6be8b13c73cefb5a277919b5bfe94e"
+      },
+      {
+        "bytes": 2087,
+        "path": "docs/nicegui_base/TROUBLESHOOTING.md",
+        "sha256": "2b334f6d210d2f16af1731d35f4f49db14f7955bdfd590033a64196635721a67"
+      },
+      {
+        "bytes": 2092,
+        "path": "docs/nicegui_base/VALIDATOR_RULES.md",
+        "sha256": "8aa5d0ad6c4d910307f6abbe949e96f515103bac961b87ae421393bf6db06aae"
+      },
+      {
+        "bytes": 1154,
+        "path": "docs/nicegui_base/VISUAL_RESOURCE_GUIDE.md",
+        "sha256": "ee71abc444717057b409d2b7be0bb55feb7c7e67e2fe1a5b74966d3b90057133"
+      },
+      {
+        "bytes": 3110,
+        "path": "docs/nicegui_base/ZERO_STOCK_NICEGUI_VISUAL_LAWS.md",
+        "sha256": "d156a395107a330771daea7fe2b33bcb4cece64d19ba45f8d025db475d7b5ee0"
+      },
+      {
+        "bytes": 3380,
+        "path": "evidence/review/chg_134_fix1_qualification.json",
+        "sha256": "fb884a22637a6342c8cafee7ff69c8f8c09b48d75ee3ae802c2f1166b89712e8"
+      },
+      {
+        "bytes": 4931,
+        "path": "evidence/review/chg_134_fix2_qualification.json",
+        "sha256": "d22e581b4e440cf351d336f92836228e5fdec29882902dee016d13dab2896697"
+      },
+      {
+        "bytes": 960,
+        "path": "examples/nicegui_base/README.md",
+        "sha256": "854b348484efbd945b053c61ba3471240336eaad192141133aa272ab82ace937"
+      },
+      {
+        "bytes": 28477,
+        "path": "manifest.json",
+        "sha256": "0ebc4534cc9d267ad733c0506a696fa57c152013734ea0bc3e998b87fe5ccb54"
+      }
+    ],
+    "version": 1
+  },
+  "evidence_publisher_release": "1.2.3-resume-candidate",
+  "fabric_capture": {
+    "applied": false,
+    "paths_before": 0,
+    "transient_untracked_removed": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "fabric_release": "1.2.3-resume-candidate",
+  "failure_class": null,
+  "finished_at": "2026-09-19T15:17:18Z",
+  "git": {
+    "base_is_ancestor": true,
+    "base_sha": "cdf8bb54eeb42926029a9394814d79d17a282bd9",
+    "branch": "codex/ephi-o3-attention-episode-w1-fix2",
+    "detached_verify": false,
+    "head_sha": "d5af282415d6352ae5d52a520ecb2b9ea47b09c1",
+    "remote_exact_head": true,
+    "remote_head_sha": "d5af282415d6352ae5d52a520ecb2b9ea47b09c1",
+    "target_branch": "main",
+    "target_drifted_since_acceptance": false,
+    "target_head_observed_after_execution": "cdf8bb54eeb42926029a9394814d79d17a282bd9",
+    "work_branch": "codex/ephi-o3-attention-episode-w1-fix2",
+    "worktree_clean": true
+  },
+  "instructions": {
+    "files": [
+      {
+        "bytes": 1458,
+        "path": "AGENTS.md",
+        "sha256": "4349f387a79d886ed1264604ff48c582698e539e08ed8fb2f9d8ab8fbf6f804a"
+      }
+    ],
+    "total_bytes": 1458,
+    "warning": null
+  },
+  "job_id": "CF-08ce8de05ac749b681162a55",
+  "kind": "codex-fabric-audit-evidence",
+  "locator": {
+    "branch": "codex-fabric/evidence/ephi/ephi-o3-attention-episode-w1-fix2",
+    "path": ".codex-fabric/audit.json",
+    "ref": "refs/heads/codex-fabric/evidence/ephi/ephi-o3-attention-episode-w1-fix2"
+  },
+  "operation": "FIX",
+  "policy": {
+    "environment_policy_sha256": "e077daca74297b3c30bee8989f00f8ca5338f7610b4d016a6c48db524205d064",
+    "fabric_release": "1.2.3-resume-candidate",
+    "policy_sha256": "44756118cd7fda0c45cd23ba1d31a48a3f4f2422d687df15264ba4406f40e1f2",
+    "registry_sha256": "cfc765f3211c37c7967a138f3b2d89a99341939b15b2623f92744d007f625d6f"
+  },
+  "project_id": "ephi",
+  "recovery": {
+    "model_rerun_safe": false,
+    "recovery_required": false,
+    "retry_safe": false,
+    "retry_scope": null,
+    "worktree_retained": true
+  },
+  "request": "ephi-o3-attention-episode-w1-fix2",
+  "schema_version": 1,
+  "started_at": "2026-09-19T14:26:52Z",
+  "status": "EXECUTED_CHANGE",
+  "timing": {
+    "execution_seconds": 3026,
+    "queue_seconds": 0,
+    "total_seconds": 3026
+  },
+  "transport": {
+    "bytes": 8974,
+    "envelope": "FABRIC/2",
+    "prompt_bytes": 8658,
+    "prompt_sha256": "4b33b5433f922bb7e4f57bfbade029f7c5ae6e910a9c5b39a35ea41246d491c0",
+    "sha256": "08ce8de05ac749b681162a552f015d2abe592ad476b3cc39ba1dd05f3880e4f3"
+  }
+}
