@@ -152,6 +152,29 @@ runs this suite together with the existing command and worker suites; the
 normal package matrix, full suite and W0 canonical baseline remain
 database-independent.
 
+## CHG-133 generic immutable-artifact foundation
+
+CHG-133 adds storage-neutral immutable artifact contracts under
+`ephi.application.artifacts`, a directory-handle-anchored file-backed
+reference blob adapter under `ephi.infrastructure.artifacts`, and a separate
+scoped PostgreSQL catalog in migration
+`migrations/004_o2_artifact_catalog.sql`. Artifact identity is the canonical
+lowercase SHA-256 of exact bytes plus exact byte size. Catalog records are
+scoped and immutable; the same physical content hash may have separate records
+in separate scopes. Current Principal, AccessScope and read-capability checks
+run before metadata or byte disclosure, and verified reads recompute the hash
+and size. Publish-precondition verification fails closed for missing, corrupt,
+or wrong-scope references.
+
+The filesystem adapter requires an explicit absolute root and has a bounded
+16 MiB default maximum suitable only for tests/reference evidence. It is not
+the approved company immutable object-store binding. This change does not add
+scientific source artifacts, Episode evidence or upload UI, browser download
+transport, external object-store SDKs, credentials, signed URLs, retention
+policy binding or production-readiness claims. Those remain external
+deployment/qualification work. PostgreSQL artifact evidence is additive and
+DSN-gated; the ordinary package/full-suite/W0 paths remain database-independent.
+
 ## Pinned framework authority
 
 CHG-105 pins `nicegui-base` to Git commit `000298562d6bcbf6df304edbd41b98b30fe4bfcf`, framework version `3.0.0a8`, exactly `nicegui==3.15.0`, and Python `>=3.11,<3.14`. Application code uses public `from nicegui_base import ...` authorities only; it does not use direct `nicegui.ui` or private `nicegui_base.integrations.nicegui_*` APIs. The machine-readable runtime specification is [environment/nicegui_base_runtime.json](environment/nicegui_base_runtime.json).

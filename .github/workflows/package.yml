@@ -48,7 +48,7 @@ jobs:
         run: python tools/w0_repo_baseline.py
 
   postgresql-integration:
-    name: PostgreSQL command/worker/read integration (Python 3.13)
+    name: PostgreSQL command/worker/read/artifact integration (Python 3.13)
     runs-on: ubuntu-latest
     timeout-minutes: 10
     env:
@@ -93,3 +93,7 @@ jobs:
         env:
           EPHI_TEST_POSTGRES_DSN: postgresql://ephi_ci:ephi_ci_password@127.0.0.1:5432/ephi_ci
         run: python -m unittest tests.test_o2_postgresql_reads -v
+      - name: Run PostgreSQL immutable-artifact catalog integration tests
+        env:
+          EPHI_TEST_POSTGRES_DSN: postgresql://ephi_ci:ephi_ci_password@127.0.0.1:5432/ephi_ci
+        run: python -m unittest tests.test_o2_postgresql_artifacts -v
