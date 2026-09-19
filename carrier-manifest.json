@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "evidence_kind": "candidate_bound_fix_qualification",
+  "status": "PASS_BOUNDED_FIX",
+  "project": "ephi",
+  "request": "ephi-o3-attention-episode-w1-fix3",
+  "operation": "FIX",
+  "fabric_job": "CF-a861f914802e7e8a4f617f68",
+  "canonical_carrier_ref": "refs/heads/project-os-artifacts/ephi/ephi-o3-attention-episode-w1-fix3",
+  "target_base_sha": "cdf8bb54eeb42926029a9394814d79d17a282bd9",
+  "predecessor_candidate_sha": "d5af282415d6352ae5d52a520ecb2b9ea47b09c1",
+  "predecessor_candidate_tree": "2cc0ed256d3e3ee6753d17aa1bdbade54c4dae49",
+  "repair_candidate_sha": "6a3091eee40d18eb33819d72491dcaf205bcf591",
+  "repair_candidate_tree": "474db4e5aca2022e4446965d1f62fe366dc62f72",
+  "repair_candidate_parent": "d5af282415d6352ae5d52a520ecb2b9ea47b09c1",
+  "executable_reconnect_ancestor": "e6ad7c36953496ed4fdafbeb2975cfab99f3033e",
+  "framework": {
+    "distribution": "nicegui-base",
+    "version": "3.0.0a8",
+    "commit": "000298562d6bcbf6df304edbd41b98b30fe4bfcf",
+    "nicegui": "3.15.0",
+    "python": "3.11.7"
+  },
+  "browser": {
+    "engine": "Chromium",
+    "version": "151.0.7922.34",
+    "playwright": "1.62.0",
+    "extensions": "disabled",
+    "desktop": {"width": 1440, "height": 900, "device_scale_factor": 1},
+    "mobile": {"width": 390, "height": 844, "device_scale_factor": 1}
+  },
+  "postgresql": {
+    "server": "PostgreSQL 18.6 (Homebrew), aarch64-apple-darwin25.6.0",
+    "host": "127.0.0.1",
+    "port": 55439,
+    "application_role": "ephi_app",
+    "evidence_role": "ephi"
+  },
+  "scenario_status": {
+    "s09_async_expiry_guidance_refresh": "PASS",
+    "permission_revocation_fails_closed": "PASS",
+    "source_unavailable_and_restore_refresh": "PASS",
+    "ordinary_success_paging_and_latest_wins": "PASS",
+    "stale_version_conflict_restart_reconnect_receipts_audit_outbox": "PASS_REAL_POSTGRESQL",
+    "desktop_and_mobile_core_workflow": "PASS",
+    "console_page_runtime_error_bounds": "PASS_ZERO_BROWSER_ERRORS"
+  },
+  "screenshots": {
+    "retained_before_desktop.png": "410ad3a7dcb4249a9b185acbd21ae446c111e5c3769126137ba329f720872611",
+    "expired-desktop.png": "944a33bf5041c0964c22895c99fb4f2f814d6120ea759a49316fe363aa4ed61c",
+    "refreshed-desktop.png": "b50b60d7cd5ecb6c1f20c368c7f120778d01c0efbd04f838b3125cde9e06672e",
+    "mobile-attention.png": "7c649811238137b589a2a0c33b2acdb2bb21ae4f15c114bc4c83ae63a1c1fe31",
+    "mobile-episode-claimed.png": "602c84fddc8908965aa0b14de0e3ddd20f443c128e3429da6c7f505be55f3337",
+    "mobile-episode-acknowledged.png": "aba8e349a09c2a624d0f8c579cf8418f7aef83c5aaaeb2be4e02fc3f6d3ddae4",
+    "permission-denied-desktop.png": "f68526182c5ef88638ace4cd86499fe3f1a828d2162512103f792b213bdd437e",
+    "source-unavailable-desktop.png": "8f833d9c1afba4baf39597705b16ff5f3156d5f5938f5f06e0f423b08edb1867",
+    "source-recovered-desktop.png": "e8ea6af302ec524476789025c07488ee9e5345e4a6ee6383d0eee0192944abd3"
+  },
+  "structured_evidence": {
+    "native_summary.json": "e9f3447a4018c24602897595003293a14bd38da357aaf1dec118a085d2a6bc5a",
+    "s09-desktop.json": "5077e14bd08ded7ba1e5e9027ac2d3c911e3eefebc98d32c94a8450bbd1a713c",
+    "mobile-core.json": "123ba171cd748e9b7c4c1a4b417b4a8aa01c47ec7a9b6436997c1c453ef13631",
+    "permission-revocation.json": "9ca51ad0c2660e2f49b72aaf3d5f1b4f8e0e603796b0c3cda5a28a48159bdaaf",
+    "source-outage-recovery.json": "e0cef3e569beffb79c15b5c13ccd96f7b22f4dc111769dd2b0e2bf76e6c7ce32"
+  },
+  "bundle": {
+    "file": "ephi-o3-attention-episode-w1-fix3-bundle.tar.gz",
+    "sha256": "2a5ebb69c89ffdf2f5d91bf0cb01be827de2ff20f86f3be5a7ef478651af7c00",
+    "inventory_count": 14
+  },
+  "scope_boundary": "No main mutation, merge, integration PR, Notion credentials, synthetic AR-2 sidecar, O4 work or Project OS GO declaration."
+}
