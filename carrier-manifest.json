@@ -1,0 +1,29 @@
+{
+  "carrier_schema_version": 1,
+  "project": "ephi",
+  "request": "ephi-o4-metrology-source-ingress-v1",
+  "fabric_job": "CF-ceed0fa8a1482914a1bf7973",
+  "target_base_sha": "9577173fba418c695acc1b01661b14f81af315a4",
+  "candidate_sha": "83f62dd488bcd4df10ca5692c973bf7d6b5b8b19",
+  "candidate_tree": "a06c6beb53a743b6170f42210ceb05ecd22b2c75",
+  "candidate_branch": "codex/ephi-o4-metrology-source-ingress-v1",
+  "status": "VERIFY_BLOCKED_REAL_SOURCE",
+  "snapshot_qualification": "NOT_RUN",
+  "capability_state": "UNAVAILABLE",
+  "notion_credentials_used": false,
+  "synthetic_ar2_sidecar_used": false,
+  "bundle_sha256": "83e9d3d98dedddf6487bee9e427d39d4bdb0fabd539b3a4a62af5a74d7a7ae9b",
+  "inventory": [
+    {
+      "path": "chg_144_o4_metrology_source_ingress_v1.json",
+      "sha256": "f6cf64f0a23a5ea20ca08f01de09a2c1d1ef3586dcd89b2ef3e725a2078450eb"
+    }
+  ],
+  "remote_readback_required": {
+    "candidate_sha": true,
+    "candidate_tree": true,
+    "request": true,
+    "fabric_job": true,
+    "file_hashes": true
+  }
+}

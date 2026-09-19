@@ -1,0 +1,87 @@
+{
+  "evidence_kind": "candidate_bound_structured_change_evidence",
+  "status": "VERIFY_BLOCKED_REAL_SOURCE",
+  "project": "ephi",
+  "request": "ephi-o4-metrology-source-ingress-v1",
+  "fabric_job": "CF-ceed0fa8a1482914a1bf7973",
+  "operation": "IMPLEMENT",
+  "target_base_sha": "9577173fba418c695acc1b01661b14f81af315a4",
+  "candidate_branch": "codex/ephi-o4-metrology-source-ingress-v1",
+  "candidate_sha": "83f62dd488bcd4df10ca5692c973bf7d6b5b8b19",
+  "candidate_tree": "a06c6beb53a743b6170f42210ceb05ecd22b2c75",
+  "candidate_parent": "9577173fba418c695acc1b01661b14f81af315a4",
+  "implementation": {
+    "application_contract": "src/ephi/application/source_ingress.py",
+    "source_reality_seam": "src/ephi/application/source_reality.py and ephi --source-reality-preflight",
+    "postgresql_adapter": "src/ephi/infrastructure/postgresql_source.py",
+    "migration": "migrations/006_o4_source_snapshot_ingress.sql",
+    "raw_source_policy": "raw/bulk bytes stay in the approved read-only source or existing immutable artifact boundary; PostgreSQL stores bounded manifests/projections",
+    "composition_policy": "missing or mismatched observer adapter binding fails closed before application composition"
+  },
+  "source_reality": {
+    "discovery": "NO_APPROVED_REAL_METROLOGY_BINDING_FOUND",
+    "historical_metrology_names": "REFERENCE_ONLY_NOT_EXECUTABLE",
+    "preflight_status": "BLOCKED_REAL_SOURCE",
+    "snapshot_qualification": "NOT_RUN",
+    "capability_state": "UNAVAILABLE",
+    "missing_prerequisites": [
+      "EPHI_METROLOGY_SOURCE_ADAPTER",
+      "EPHI_METROLOGY_SOURCE_ID",
+      "EPHI_METROLOGY_PROVIDER_ID",
+      "EPHI_METROLOGY_FAMILY_ID",
+      "EPHI_METROLOGY_CAPABILITY_ID",
+      "EPHI_METROLOGY_SCOPE_ID",
+      "EPHI_METROLOGY_SCHEMA_ID",
+      "EPHI_METROLOGY_MAPPING_VERSION",
+      "EPHI_METROLOGY_MAPPING_HASH",
+      "EPHI_METROLOGY_UNIT",
+      "EPHI_METROLOGY_REFERENCE_POPULATION_ID_or_comparable_population_id",
+      "approved_observer_adapter_module_and_bounded_partition_probe"
+    ],
+    "secret_safe": true,
+    "synthetic_fixture_used_as_real_evidence": false
+  },
+  "qualification": {
+    "G02_temporal_integrity": "BLOCKED_REAL_SOURCE / NOT_RUN for real-family qualification; mechanics PASS",
+    "G06_source_scientific_qualification": "BLOCKED_REAL_SOURCE / NOT_RUN",
+    "G07_application_contracts_security": "PASS for scoped ingress/read negative paths",
+    "real_family_snapshot": "BLOCKED_REAL_SOURCE / NOT_RUN",
+    "production_readiness": "NOT_CLAIMED",
+    "project_os_go": false
+  },
+  "checks": {
+    "focused_source_ingress_unit": "PASS_7_TESTS",
+    "focused_source_ingress_real_postgresql": "PASS_6_TESTS_POSTGRESQL_18.6",
+    "existing_o2_o3_worker_read_artifact_reconnect_real_postgresql": "PASS_61_TESTS_POSTGRESQL_18.6",
+    "full_unittest": "PASS_183_TESTS_68_SKIPPED",
+    "w0_repo_baseline": "PASS_BASELINE_PASS",
+    "package_check_refresh_manifest": "PASS_165_PACKAGE_FILES",
+    "compileall": "PASS",
+    "git_diff_check": "PASS",
+    "pinned_nicegui_base": "PRESERVED_000298562d6bcbf6df304edbd41b98b30fe4bfcf",
+    "browser": "NOT_RUN_NOT_NEEDED_FOR_THIS_APPLICATION_INGRESS_SLICE",
+    "external_manufacturing_writes": "NONE"
+  },
+  "real_postgresql": {
+    "server": "PostgreSQL 18.6 (Homebrew)",
+    "connection": "postgresql://<redacted>@127.0.0.1:55439/postgres",
+    "source_tables": "source_snapshot and source_capability",
+    "proven": [
+      "schema idempotency and bounded fields",
+      "source_snapshot restart persistence",
+      "identical logical partition/revision idempotent republish",
+      "incompatible same-revision immutable conflict",
+      "source_snapshot update/delete immutability",
+      "scope-isolated read disclosure",
+      "READY/PARTIAL/STALE/UNAVAILABLE capability states",
+      "artifact presence and hash verification before publication"
+    ]
+  },
+  "artifact_bridge": {
+    "status": "PENDING_PUBLICATION",
+    "canonical_ref": "refs/heads/project-os-artifacts/ephi/ephi-o4-metrology-source-ingress-v1",
+    "notion_credentials_used": false,
+    "synthetic_ar2_sidecar_used": false
+  },
+  "scope_boundary": "No main mutation, merge, integration PR, Notion mutation, real-family snapshot claim, G02/G06 qualification claim or later O4/O5 product work."
+}
