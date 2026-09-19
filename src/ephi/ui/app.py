@@ -240,8 +240,12 @@ def _attention_columns() -> tuple[TableColumn, ...]:
     )
 
 
-def _render_attention_error(error: BaseException) -> None:
-    StateView(_state_for_error(error))
+def _render_attention_error(
+    error: BaseException,
+    *,
+    on_refresh: Callable[..., object] | None = None,
+) -> None:
+    StateView(_state_for_error(error), on_action=on_refresh)
 
 
 def build_attention_page(composition: EphiUiComposition) -> None:
@@ -259,9 +263,21 @@ def build_attention_page(composition: EphiUiComposition) -> None:
         with MasterDetailPage("Attention", "Scoped engineering work with retained, coherent reads") as page:
             with page.slot(LayoutSlot.FILTERS):
                 StateView(StateViewSpec(StateKind.EMPTY, "Attention is server-authorized", "Filters and order are translated to the bounded EPHI query contract.", compact=True))
-            with page.slot(LayoutSlot.DATA):
+            attention_data_slot = page.slot(LayoutSlot.DATA)
+            with attention_data_slot:
+                attention_table: DataSourceTable | None = None
+
+                async def refresh_attention() -> None:
+                    if attention_table is None:
+                        return
+                    await attention_table.refresh(force=True)
+
+                async def render_attention_error(error: BaseException) -> None:
+                    with attention_data_slot:
+                        _render_attention_error(error, on_refresh=refresh_attention)
+
                 try:
-                    DataSourceTable(
+                    attention_table = DataSourceTable(
                         composition.source,
                         schema=composition.source.schema_definition,
                         context=workspace.analysis,
@@ -283,6 +299,7 @@ def build_attention_page(composition: EphiUiComposition) -> None:
                             error_message="Attention is unavailable; last known truth is not replaced with zero.",
                         ),
                         on_row_double_click=lambda event: _select_episode(composition, event),
+                        on_error=render_attention_error,
                     )
                 except Exception as error:
                     _render_attention_error(error)

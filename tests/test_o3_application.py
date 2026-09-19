@@ -153,6 +153,12 @@ class O3ApplicationTests(unittest.TestCase):
         retained.expire = True
         with self.assertRaises(QuerySnapshotExpiredError):
             service.list_attention(self.principal, self.scope, page_size=1, snapshot_id=first.snapshot_id, cursor=second.next_cursor)
+        retained.expire = False
+        renewed = service.list_attention(self.principal, self.scope, page_size=1)
+        self.assertNotEqual(renewed.snapshot_id, first.snapshot_id)
+        revoked = Principal("engineer-1", (), (self.scope,), 2, 11)
+        with self.assertRaises(AuthorizationDeniedError):
+            service.list_attention(revoked, self.scope, page_size=1)
         with self.assertRaises(ValidationFailureError):
             service.list_attention(self.principal, self.scope, filters={"unknown": "x"})
         with self.assertRaises(ValidationFailureError):

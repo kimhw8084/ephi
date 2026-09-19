@@ -2,6 +2,7 @@
 
 import asyncio
 from datetime import datetime, timezone
+import inspect
 import os
 from pathlib import Path
 import sys
@@ -26,6 +27,7 @@ from ephi.application import (  # noqa: E402
     AuthorizationDeniedError,
     EpisodeBrief,
     Principal,
+    QuerySnapshotExpiredError,
     RevisionVector,
     StorageFailureError,
     ValidationFailureError,
@@ -33,7 +35,7 @@ from ephi.application import (  # noqa: E402
 
 if NICEGUI_BASE_AVAILABLE:
     from ephi.ui.provider import EphiReadDataSource  # noqa: E402
-    from ephi.ui.app import _DevelopmentIdentityProvider, _stable_command_id  # noqa: E402
+    from ephi.ui.app import _DevelopmentIdentityProvider, _render_attention_error, _stable_command_id, _state_for_error  # noqa: E402
 
 
 class _ProviderService:
@@ -137,6 +139,77 @@ class O3ProviderContractTests(unittest.TestCase):
         self.assertEqual(len(service.calls), 2)
         self.assertEqual(service.calls[1][0], current[0])
         self.assertEqual(service.calls[1][1], current_scope[0])
+
+    def test_async_snapshot_expiry_remains_typed_and_maps_to_explicit_state(self):
+        class ExpiringService(_ProviderService):
+            def list_attention(inner_self, principal, scope, **kwargs):
+                raise QuerySnapshotExpiredError(reason="security_revision_changed")
+
+        source = EphiReadDataSource(
+            ExpiringService(),
+            lambda: self.principal,
+            lambda: self.scope,
+        )
+        with self.assertRaises(QuerySnapshotExpiredError) as raised:
+            self.query_source(source, Query(limit=1))
+        spec = _state_for_error(raised.exception)
+        self.assertEqual(spec.title, "Attention snapshot expired")
+        self.assertIn("Refresh Attention", spec.message)
+        self.assertEqual(spec.action_label, "Refresh")
+
+    def test_source_unavailable_remains_differentiated_from_snapshot_expiry(self):
+        class UnavailableService(_ProviderService):
+            def list_attention(inner_self, principal, scope, **kwargs):
+                raise StorageFailureError("postgresql unavailable")
+
+        source = EphiReadDataSource(
+            UnavailableService(),
+            lambda: self.principal,
+            lambda: self.scope,
+        )
+        with self.assertRaises(StorageFailureError) as raised:
+            self.query_source(source, Query(limit=1))
+        spec = _state_for_error(raised.exception)
+        self.assertEqual(spec.title, "Source unavailable")
+        self.assertNotIn("snapshot expired", (spec.message or "").lower())
+
+    def test_public_data_source_table_error_callback_and_refresh_action_are_bound(self):
+        from nicegui_base import DataSourceTable, ServerDataTable
+
+        self.assertIn("kwargs", inspect.signature(DataSourceTable).parameters)
+        self.assertIn("on_error", inspect.signature(ServerDataTable).parameters)
+        refresh = mock.Mock()
+        with mock.patch("ephi.ui.app.StateView") as state_view:
+            _render_attention_error(QuerySnapshotExpiredError(), on_refresh=refresh)
+        spec = state_view.call_args.args[0]
+        self.assertEqual(spec.title, "Attention snapshot expired")
+        self.assertIs(state_view.call_args.kwargs["on_action"], refresh)
+
+    def test_public_latest_request_wins_discards_stale_completion(self):
+        from nicegui_base.async_tools import LatestRequestController
+
+        async def exercise():
+            controller = LatestRequestController(timeout=5, cache_size=0)
+            old_started = asyncio.Event()
+
+            async def old_request():
+                old_started.set()
+                await asyncio.Future()
+                return "old"
+
+            async def new_request():
+                await old_started.wait()
+                return await controller.run(("new",), lambda: "new")
+
+            current, stale = await asyncio.gather(
+                new_request(),
+                controller.run(("old",), old_request),
+            )
+            return current, stale
+
+        current, stale = asyncio.run(exercise())
+        self.assertEqual(current, "new")
+        self.assertIsNone(stale)
 
     def test_development_identity_and_command_identity_are_current_and_replayable(self):
         with mock.patch.dict(
