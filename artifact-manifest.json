@@ -1,0 +1,153 @@
+{
+  "schema_version": 1,
+  "project": "ephi",
+  "request": "ephi-o3-attention-episode-w1-verify1",
+  "operation": "VERIFY",
+  "fabric_job": "CF-7cf9a06942d8b293fcaa7f4d",
+  "candidate_source_sha": "ef959f577bc1aa223b260ac32cb42a18eadfaf9f",
+  "candidate_tree_sha": "3755ca31a2d9ba5b8e473fa67ab1338b00623055",
+  "target_base_sha": "cdf8bb54eeb42926029a9394814d79d17a282bd9",
+  "branch": "codex/ephi-o3-attention-episode-w1-verify1",
+  "status": "VERIFY_BLOCKED_PRODUCT_DEFECT",
+  "self_declared_go": false,
+  "artifact_bundle_path": "artifact-bundle.zip",
+  "artifact_bundle_hash_is_in_outer_receipt": true,
+  "files": [
+    {
+      "path": "browser-evidence.json",
+      "bytes": 8234,
+      "sha256": "b622cf6b2cb17508b97f918f23e2e3db9727f3c1eba6a6e4ae99d7d4a0422e88"
+    },
+    {
+      "path": "candidate-file-sha256.json",
+      "bytes": 27116,
+      "sha256": "8365a82872d6f6fd9ba3988dcf80d7413389810d701ce19b99cf97f0e123b497"
+    },
+    {
+      "path": "qualification-report.md",
+      "bytes": 2528,
+      "sha256": "8cd7c13906249890825487f7b84c6d4a6b0d1473a275c57e3431bf03d125ce9d"
+    },
+    {
+      "path": "screenshots/desktop-after-reconnect.png",
+      "bytes": 31373,
+      "sha256": "7f471a9ae4a59f67257d1e7943442d03912664dd804171b849b40e2101cf7f71",
+      "format": "PNG",
+      "dimensions_css": [
+        1440,
+        900
+      ]
+    },
+    {
+      "path": "screenshots/desktop-attention-ready.png",
+      "bytes": 71295,
+      "sha256": "6a3fc13947a08a55cdb14aaead086795b3c99bf5f5abcf53ebdc2cef3dba599c",
+      "format": "PNG",
+      "dimensions_css": [
+        1440,
+        900
+      ]
+    },
+    {
+      "path": "screenshots/desktop-conflict-stale.png",
+      "bytes": 29222,
+      "sha256": "aa1235d8200c3a20d704e4b46fab23f225387faacb11e106f1a9bc32fc06c354",
+      "format": "PNG",
+      "dimensions_css": [
+        1440,
+        900
+      ]
+    },
+    {
+      "path": "screenshots/desktop-episode-acknowledged.png",
+      "bytes": 28253,
+      "sha256": "65704616676e04920e8ac2fa6fb7ab9300c05577027a29c4da3968723464a12a",
+      "format": "PNG",
+      "dimensions_css": [
+        1440,
+        900
+      ]
+    },
+    {
+      "path": "screenshots/desktop-episode-brief-open.png",
+      "bytes": 40017,
+      "sha256": "3ab53cece1c62d0e4b221979ff88aa4699f662a91ef6d4bb90d03ff0cf2a5f5b",
+      "format": "PNG",
+      "dimensions_css": [
+        1440,
+        900
+      ]
+    },
+    {
+      "path": "screenshots/desktop-episode-claimed.png",
+      "bytes": 28851,
+      "sha256": "4afcd7e2b639b36b00f038ccccb55cb3d49304fd7f3dbe8ef77ab9c4517c82d3",
+      "format": "PNG",
+      "dimensions_css": [
+        1440,
+        900
+      ]
+    },
+    {
+      "path": "screenshots/desktop-permission-denied.png",
+      "bytes": 25417,
+      "sha256": "2e7ba92d5d5908d716166949076aecab4e28b6c8ec2a16cd742fc51fcee14bd4",
+      "format": "PNG",
+      "dimensions_css": [
+        1280,
+        720
+      ]
+    },
+    {
+      "path": "screenshots/desktop-source-restored.png",
+      "bytes": 103900,
+      "sha256": "8d0609ae6f4b08afe02157a2ad2cf69de0dac415c808ba729757c52db25ca98b",
+      "format": "PNG",
+      "dimensions_css": [
+        1440,
+        900
+      ]
+    },
+    {
+      "path": "screenshots/desktop-source-unavailable.png",
+      "bytes": 103900,
+      "sha256": "8d0609ae6f4b08afe02157a2ad2cf69de0dac415c808ba729757c52db25ca98b",
+      "format": "PNG",
+      "dimensions_css": [
+        1440,
+        900
+      ]
+    },
+    {
+      "path": "screenshots/mobile-attention-ready.png",
+      "bytes": 37210,
+      "sha256": "1a90c1ebf1ee88157667a68aa0524f47e9b44d6840e9ac3937844d535192769f",
+      "format": "PNG",
+      "dimensions_css": [
+        390,
+        844
+      ]
+    },
+    {
+      "path": "screenshots/mobile-episode-acknowledged.png",
+      "bytes": 46000,
+      "sha256": "954650402d9ec2e8eaa3497fb3f9160f9165f409a12b78a0a49d54a5e84d2be0",
+      "format": "PNG",
+      "dimensions_css": [
+        390,
+        844
+      ]
+    },
+    {
+      "path": "screenshots/mobile-episode-before-ack.png",
+      "bytes": 37804,
+      "sha256": "40026b94dc3e1d66cfa76a4015cb0f16fbfef165f64750d65dbb5f346ccc8d65",
+      "format": "PNG",
+      "dimensions_css": [
+        390,
+        844
+      ]
+    }
+  ],
+  "created_at_utc": "2026-09-19T04:43:57Z"
+}

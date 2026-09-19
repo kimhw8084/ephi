@@ -1,0 +1,162 @@
+{
+  "schema_version": 1,
+  "project": "ephi",
+  "request": "ephi-o3-attention-episode-w1-verify1",
+  "operation": "VERIFY",
+  "fabric_job": "CF-7cf9a06942d8b293fcaa7f4d",
+  "candidate_source_sha": "ef959f577bc1aa223b260ac32cb42a18eadfaf9f",
+  "candidate_tree_sha": "3755ca31a2d9ba5b8e473fa67ab1338b00623055",
+  "target_base_sha": "cdf8bb54eeb42926029a9394814d79d17a282bd9",
+  "branch": "codex/ephi-o3-attention-episode-w1-verify1",
+  "runtime": {
+    "python": "3.11.7",
+    "nicegui_base": "3.0.0a8",
+    "nicegui": "3.15.0",
+    "nicegui_base_commit": "000298562d6bcbf6df304edbd41b98b30fe4bfcf",
+    "psycopg": "3.3.6",
+    "postgresql": "17.11 (Homebrew)",
+    "browser": "Playwright bundled Chromium",
+    "browser_headless": true,
+    "application_url": "http://127.0.0.1:8767/",
+    "postgres_binding": "postgresql://ephi_test@127.0.0.1:55433/ephi_test",
+    "identity_binding": {
+      "environment": "development",
+      "subject": "engineer-1",
+      "scope_id": "o3-pg-scope",
+      "site_id": "site-1",
+      "area_id": "area-1",
+      "capabilities_initial": [
+        "ephi.episode.read",
+        "ephi.attention.read",
+        "ephi.episode.claim",
+        "ephi.episode.acknowledge"
+      ],
+      "capabilities_after_revocation": [
+        "ephi.episode.read",
+        "ephi.attention.read"
+      ],
+      "auth_session_revision_after_revocation": 2,
+      "security_revision_after_revocation": 2,
+      "storage_secret": "redacted"
+    }
+  },
+  "anchors": {
+    "desktop-1440x900-dpr1": {
+      "viewport_css": [1440, 900],
+      "device_scale_factor": 1,
+      "real_browser_executed": true,
+      "ready_screenshot": "screenshots/desktop-attention-ready.png",
+      "ready_screenshot_sha256": "6a3fc13947a08a55cdb14aaead086795b3c99bf5f5abcf53ebdc2cef3dba599c",
+      "overflow_px": 0,
+      "console_unexpected_errors": 0
+    },
+    "mobile-390x844-dpr1": {
+      "viewport_css": [390, 844],
+      "device_scale_factor": 1,
+      "is_mobile_context": true,
+      "real_browser_executed": true,
+      "ready_screenshot": "screenshots/mobile-attention-ready.png",
+      "ready_screenshot_sha256": "1a90c1ebf1ee88157667a68aa0524f47e9b44d6840e9ac3937844d535192769f",
+      "overflow_px": 0,
+      "console_unexpected_errors": 0
+    }
+  },
+  "scenarios": [
+    {
+      "id": "S01-attention-postgresql-base-table",
+      "status": "PASS",
+      "state": "desktop-ready",
+      "detail": "Attention rendered episode-1 through the real EphiReadDataSource/Base table path; PostgreSQL source row and 1 record were visible.",
+      "screenshot": "screenshots/desktop-attention-ready.png"
+    },
+    {
+      "id": "S02-coherent-episode-brief-selection-origin",
+      "status": "PASS",
+      "state": "desktop-episode-brief-open",
+      "detail": "Episode decision brief opened at /episode after Attention selection; episode-1, analysis-1, workflow version 0 and source READY were visible.",
+      "screenshot": "screenshots/desktop-episode-brief-open.png"
+    },
+    {
+      "id": "S03-claim-acknowledge-durable-command",
+      "status": "PASS",
+      "state": "desktop-acknowledged",
+      "detail": "Real UI Claim then Acknowledge committed episode-1 to workflow version 2. PostgreSQL showed 2 command receipts, 2 audit events and 2 outbox events.",
+      "screenshot": "screenshots/desktop-episode-acknowledged.png"
+    },
+    {
+      "id": "S04-restart-reconnect-postgresql-persistence",
+      "status": "PASS",
+      "state": "desktop-after-process-restart",
+      "detail": "Application process restarted while the browser page remained open; reload/reconnect rendered episode-1 ACKNOWLEDGED from PostgreSQL at workflow version 2.",
+      "screenshot": "screenshots/desktop-after-reconnect.png",
+      "expected_transport_rejection": "Planned restart produced bounded connection-refused WebSocket attempts before reload; no unexpected framework/page exception followed.",
+      "screenshot_sha256": "7f471a9ae4a59f67257d1e7943442d03912664dd804171b849b40e2101cf7f71"
+    },
+    {
+      "id": "S05-two-process-stale-version-conflict",
+      "status": "PASS_EXPECTED_CONFLICT",
+      "state": "desktop-conflict-stale",
+      "detail": "Independent engineer-1 and engineer-2 application processes loaded episode-3 at workflow version 0. Engineer-1 committed Claim version 1; engineer-2 stale Claim rendered Version conflict and Refresh. PostgreSQL retained one winner.",
+      "screenshot": "screenshots/desktop-conflict-stale.png",
+      "screenshot_sha256": "aa1235d8200c3a20d704e4b46fab23f225387faacb11e106f1a9bc32fc06c354"
+    },
+    {
+      "id": "S06-current-auth-revocation-retained-page",
+      "status": "PASS_EXPECTED_DENIAL",
+      "state": "desktop-permission-denied",
+      "detail": "Same subject page was retained across application restart; after capability removal and auth/security revision rotation, the next Acknowledge attempt rendered Permission denied. No receipt disclosure or page continuation bypassed current authorization.",
+      "screenshot": "screenshots/desktop-permission-denied.png",
+      "viewport_css": [1280, 720],
+      "device_scale_factor": 1,
+      "screenshot_sha256": "2e7ba92d5d5908d716166949076aecab4e28b6c8ec2a16cd742fc51fcee14bd4"
+    },
+    {
+      "id": "S07-postgresql-unavailable-degraded-render",
+      "status": "PASS_DEGRADED",
+      "state": "desktop-source-unavailable",
+      "detail": "PostgreSQL stopped while Attention remained open. UI retained 56 known records and rendered Stale data, not HEALTHY, empty-success or numeric zero.",
+      "screenshot": "screenshots/desktop-source-unavailable.png",
+      "screenshot_sha256": "8d0609ae6f4b08afe02157a2ad2cf69de0dac415c808ba729757c52db25ca98b"
+    },
+    {
+      "id": "S08-postgresql-restore-safe-refresh",
+      "status": "FAIL_PRODUCT_DEFECT",
+      "state": "desktop-source-restored",
+      "detail": "After PostgreSQL restart, the required UI Refresh did not recover. The page remained Stale data; server logged psycopg OperationalError: the connection is closed after the earlier AdminShutdown. This is a real candidate runtime defect requiring separate FIX.",
+      "screenshot": "screenshots/desktop-source-restored.png",
+      "screenshot_sha256": "8d0609ae6f4b08afe02157a2ad2cf69de0dac415c808ba729757c52db25ca98b"
+    },
+    {
+      "id": "S09-retained-snapshot-expiry-security-revision-refresh",
+      "status": "NOT_RUN_AFTER_DEFECT",
+      "state": "blocked-by-S08",
+      "detail": "Dedicated browser-page retained-snapshot expiry/Refresh qualification was not continued after the real restore/reconnect defect was discovered. Direct R2 PostgreSQL read-snapshot evidence remains prior candidate-bound evidence only."
+    },
+    {
+      "id": "S10-console-runtime-error-bounds",
+      "status": "PASS_BOUNDED_EXPECTED_REJECTIONS",
+      "state": "all-browser-runs",
+      "detail": "No unexpected browser console/page errors occurred during ready, workflow, conflict, revocation or mobile runs. Expected WebSocket connection-refused messages were isolated to the planned restart window. The S08 server-side closed-connection stack is recorded as the decisive product defect, not hidden."
+    },
+    {
+      "id": "S11-keyboard-focus-overflow",
+      "status": "PASS",
+      "state": "desktop-and-mobile",
+      "detail": "Mobile Acknowledge button received keyboard focus at x=41,y=675,w=308,h=44 within the 390x844 viewport; mobile overflow was 0px. Desktop ready/conflict/source states had no horizontal overflow; mobile ready had no horizontal overflow.",
+      "mobile_focus": {"element": "Acknowledge episode", "box": [41, 675, 308, 44], "overflow_px": 0}
+    }
+  ],
+  "database_observations": {
+    "episode_1": {"workflow_version": 2, "work_state": "ACKNOWLEDGED", "owner": "engineer-1"},
+    "episode_2": {"workflow_version": 1, "work_state": "CLAIMED", "owner": "engineer-1"},
+    "episode_3": {"workflow_version": 2, "work_state": "ACKNOWLEDGED", "owner": "engineer-1"},
+    "command_receipts": 5,
+    "audit_events": 5,
+    "outbox_events": 5,
+    "fallback_store": "none; application composition used explicit PostgreSQL DSN"
+  },
+  "overall_status": "VERIFY_BLOCKED_PRODUCT_DEFECT",
+  "self_declared_go": false,
+  "do_not_audit_as_go": true,
+  "executed_at_utc": "2026-09-19T04:43:57Z"
+}
