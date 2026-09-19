@@ -1,0 +1,418 @@
+{
+  "accepted_at": "2026-09-19T19:39:57Z",
+  "changed_files": [
+    {
+      "additions": 29,
+      "deletions": 0,
+      "path": "README.md",
+      "status": "M"
+    },
+    {
+      "additions": 53,
+      "deletions": 18,
+      "path": "manifest.json",
+      "status": "M"
+    },
+    {
+      "additions": 117,
+      "deletions": 0,
+      "path": "migrations/006_o4_source_snapshot_ingress.sql",
+      "status": "A"
+    },
+    {
+      "additions": 30,
+      "deletions": 0,
+      "path": "src/ephi/__init__.py",
+      "status": "M"
+    },
+    {
+      "additions": 6,
+      "deletions": 0,
+      "path": "src/ephi/app.py",
+      "status": "M"
+    },
+    {
+      "additions": 60,
+      "deletions": 0,
+      "path": "src/ephi/application/__init__.py",
+      "status": "M"
+    },
+    {
+      "additions": 41,
+      "deletions": 0,
+      "path": "src/ephi/application/errors.py",
+      "status": "M"
+    },
+    {
+      "additions": 603,
+      "deletions": 0,
+      "path": "src/ephi/application/source_ingress.py",
+      "status": "A"
+    },
+    {
+      "additions": 269,
+      "deletions": 0,
+      "path": "src/ephi/application/source_reality.py",
+      "status": "A"
+    },
+    {
+      "additions": 2,
+      "deletions": 0,
+      "path": "src/ephi/infrastructure/__init__.py",
+      "status": "M"
+    },
+    {
+      "additions": 9,
+      "deletions": 0,
+      "path": "src/ephi/infrastructure/postgresql.py",
+      "status": "M"
+    },
+    {
+      "additions": 404,
+      "deletions": 0,
+      "path": "src/ephi/infrastructure/postgresql_source.py",
+      "status": "A"
+    },
+    {
+      "additions": 6,
+      "deletions": 0,
+      "path": "src/ephi/ui/app.py",
+      "status": "M"
+    },
+    {
+      "additions": 17,
+      "deletions": 0,
+      "path": "tests/test_ephi_application.py",
+      "status": "M"
+    },
+    {
+      "additions": 246,
+      "deletions": 0,
+      "path": "tests/test_o4_source_ingress.py",
+      "status": "A"
+    },
+    {
+      "additions": 236,
+      "deletions": 0,
+      "path": "tests/test_o4_source_ingress_postgresql.py",
+      "status": "A"
+    },
+    {
+      "additions": 23,
+      "deletions": 0,
+      "path": "tools/source_reality_preflight.py",
+      "status": "A"
+    }
+  ],
+  "checks": [
+    {
+      "command": "/bin/zsh -lc \"pwd && printf '%s\\\\n' '--- repo status ---' && git status --short --branch && printf '%s\\\\n' '--- instruction files ---' && sed -n '1,240p' /Users/haewonkim/.codex/RTK.md && sed -n '1,260p' /Users/haewonkim/.codex/law.md && printf '%s\\\\n' '--- README ---' && sed -n '1,260p' README.md && printf '%s\\\\n' '--- 13_Package_Review ---' && sed -n '1,320p' 13_Package_Review.md\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short --branch && rtk git log --oneline --decorate -5 && rtk git rev-parse HEAD && rtk git rev-parse HEAD''^{tree} && rtk git show -s --format='\"'%H%n%T%n%P%n%s' 83f62dd488bcd4df10ca5692c973bf7d6b5b8b19 && rtk git branch --contains 83f62dd488bcd4df10ca5692c973bf7d6b5b8b19\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git merge --ff-only 83f62dd488bcd4df10ca5692c973bf7d6b5b8b19 && rtk git status --short --branch && rtk git rev-parse HEAD && rtk git rev-parse HEAD''^{tree} && rtk git rev-parse HEAD''^ && rtk git diff --exit-code 9577173fba418c695acc1b01661b14f81af315a4 83f62dd488bcd4df10ca5692c973bf7d6b5b8b19 --'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git diff --quiet 9577173fba418c695acc1b01661b14f81af315a4 83f62dd488bcd4df10ca5692c973bf7d6b5b8b19 -- && rtk git show --stat --oneline 83f62dd488bcd4df10ca5692c973bf7d6b5b8b19 && printf '%s\\\\n' '--- source-ingress tests ---' && sed -n '1,340p' tests/test_o4_source_ingress.py && printf '%s\\\\n' '--- postgres tests ---' && sed -n '1,340p' tests/test_o4_source_ingress_postgresql.py && printf '%s\\\\n' '--- relevant refs/paths ---' && rg -n \\\"project-os-artifacts|carrier|artifact.*evidence|Fabric|job ID|BUILD|VERIFY|source-reality|source reality|EPHI_TEST_POSTGRES_DSN|PostgreSQL 18\\\" -S . --glob '\"'!evidence/import/**'\"' --glob '\"'!*.pyc'\"' | head -n 300\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git diff --stat 9577173fba418c695acc1b01661b14f81af315a4 83f62dd488bcd4df10ca5692c973bf7d6b5b8b19 --\nrtk git show --stat --oneline 83f62dd488bcd4df10ca5692c973bf7d6b5b8b19\nprintf '%s\\\\n' '--- source-ingress tests ---'\nsed -n '1,340p' tests/test_o4_source_ingress.py\nprintf '%s\\\\n' '--- postgres tests ---'\nsed -n '1,340p' tests/test_o4_source_ingress_postgresql.py\nprintf '%s\\\\n' '--- relevant refs/paths ---'\nrg -n \\\"project-os-artifacts|carrier|artifact.*evidence|Fabric|job ID|BUILD|VERIFY|source-reality|source reality|EPHI_TEST_POSTGRES_DSN|PostgreSQL 18\\\" -S . --glob '\"'!evidence/import/**'\"' --glob '\"'!*.pyc'\"' | head -n 300\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"set +e\nprintf '%s\\\\n' '--- runtime/tool availability ---'\nrtk python3 --version\nrtk which psql\nrtk psql --version\nrtk python3 -c 'import psycopg; print(\\\"psycopg\\\", psycopg.__version__)'\nprintf '%s\\\\n' '--- DSN presence (value withheld) ---'\nif [ -n \\\"\"'${EPHI_TEST_POSTGRES_DSN:-}\" ]; then echo EPHI_TEST_POSTGRES_DSN=SET; else echo EPHI_TEST_POSTGRES_DSN=UNSET; fi\nprintf '\"'%s\\\\n' '--- focused source-ingress unit tests ---'\nrtk python3 -m unittest tests.test_o4_source_ingress -v\nfocused_status=\"'$?\nprintf '\"'focused_status=%s\\\\n' \\\"\"'$focused_status\"\nprintf '\"'%s\\\\n' '--- source-reality preflight ---'\nrtk python3 tools/source_reality_preflight.py --json\npreflight_status=\"'$?\nprintf '\"'preflight_status=%s\\\\n' \\\"\"'$preflight_status\"\nexit \"$focused_status\"'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"set +e\nprintf '%s\\\\n' '--- local PostgreSQL listeners ---'\nrtk pg_isready\nrtk psql -Atqc 'select version()' postgres\nprintf '%s\\\\n' '--- local service/container inventory ---'\nrtk brew services list | rg -i 'postgres|pg' || true\nrtk docker ps --format '{{.Names}} {{.Image}} {{.Status}}' 2>/dev/null || true\nprintf '%s\\\\n' '--- likely connection config names only ---'\nenv | cut -d= -f1 | rg '\"'^(EPHI|PG|POSTGRES|DATABASE)'\"' | sort || true\nprintf '%s\\\\n' '--- repository postgres references ---'\nrg -n \\\"EPHI_TEST_POSTGRES_DSN|postgresql://|PostgreSQL 18|postgres:18|PGPORT|PGHOST\\\" . --glob '\"'!evidence/import/**'\"' --glob '\"'!*.xml'\"' --glob '\"'!*.log'\"' | head -n 160\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"set +e\nprintf '%s\\\\n' '--- PostgreSQL 18 installation ---'\nrtk brew info postgresql@18\nprintf '%s\\\\n' '--- PostgreSQL 18 binaries ---'\nfor p in /opt/homebrew/opt/postgresql@18/bin/pg_ctl /opt/homebrew/opt/postgresql@18/bin/pg_isready /opt/homebrew/opt/postgresql@18/bin/initdb /opt/homebrew/opt/postgresql@18/bin/psql; do if [ -x \\\"\"'$p\" ]; then echo \"$p\"; fi; done\nprintf '\"'%s\\\\n' '--- PostgreSQL 18 data directories ---'\nfor p in /opt/homebrew/var/postgresql@18 /opt/homebrew/var/postgres /opt/homebrew/var/postgresql; do if [ -e \\\"\"'$p\" ]; then echo \"$p\"; rtk ls -ld \"$p\"; rtk ls -la \"$p\" | head -n 30; fi; done'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"set -e\nprintf '%s\\\\n' '--- start isolated PostgreSQL 18.6 test server ---'\n/opt/homebrew/opt/postgresql@18/bin/pg_ctl -D /opt/homebrew/var/postgresql@18 -o '-p 55432' -l /tmp/ephi-o4-postgresql-18.log start\n/opt/homebrew/opt/postgresql@18/bin/pg_isready -h 127.0.0.1 -p 55432\nPG18_VERSION=\"'$(/opt/homebrew/opt/postgresql@18/bin/psql -h 127.0.0.1 -p 55432 -d postgres -Atqc '\"'select version()')\nprintf '%s\\\\n' \\\"\"'$PG18_VERSION\"'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,160p' /tmp/ephi-o4-postgresql-18.log && rtk ps aux | rg '[p]ostgres' || true && rtk /opt/homebrew/opt/postgresql@18/bin/pg_ctl -D /opt/homebrew/var/postgresql@18 status || true\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk ps -p 48919 -o pid=,ppid=,user=,command= || true\nrtk lsof -nP -iTCP:55432 -sTCP:LISTEN || true\nrtk /opt/homebrew/opt/postgresql@18/bin/pg_isready -h 127.0.0.1 -p 55432 || true\nrtk /opt/homebrew/opt/postgresql@18/bin/psql -h 127.0.0.1 -p 55432 -d postgres -Atqc 'select version()' || true\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"set -e\n/opt/homebrew/opt/postgresql@18/bin/pg_ctl -D /opt/homebrew/var/postgresql@18 -o '-p 55433' -l /tmp/ephi-o4-postgresql-18.log start\n/opt/homebrew/opt/postgresql@18/bin/pg_isready -h 127.0.0.1 -p 55433\n/opt/homebrew/opt/postgresql@18/bin/psql -h 127.0.0.1 -p 55433 -d postgres -Atqc 'select version()'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"EPHI_TEST_POSTGRES_DSN='postgresql://haewonkim@127.0.0.1:55433/postgres' rtk python3 -m unittest tests.test_o4_source_ingress_postgresql -v\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"EPHI_TEST_POSTGRES_DSN='postgresql://haewonkim@127.0.0.1:55433/postgres' rtk python3 -m unittest -v tests.test_o2_postgresql tests.test_o2_worker_postgresql tests.test_o2_postgresql_reads tests.test_o2_postgresql_artifacts tests.test_o3_postgresql tests.test_postgresql_adapter_lifecycle\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"sed -n '1,220p' tools/w0_repo_baseline.py\nsed -n '220,520p' tools/w0_repo_baseline.py\nprintf '%s\\\\n' '--- integrity runner output paths/options ---'\nrg -n \\\"ArgumentParser|write|output|evidence|json|runtime artifacts|main\\\\(\\\" tools/w0_integrity_regressions.py | head -n 120\nsed -n '1,140p' tools/w0_integrity_regressions.py\nprintf '%s\\\\n' '--- Base/runtime config files ---'\nsed -n '1,220p' environment/nicegui_base_runtime.json\nsed -n '1,180p' pyproject.toml\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"sed -n '940,1210p' tools/w0_integrity_regressions.py\nprintf '%s\\\\n' '--- git ignore ---'\nrtk sed -n '1,240p' .gitignore 2>/dev/null || true\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'set -e\nrtk python3 tools/check_package.py --refresh-manifest\nrtk git diff --check\nrtk git status --short --branch\nrtk git rev-parse HEAD\nrtk git rev-parse HEAD''^{tree}'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"set +e\nprintf '%s\\\\n' '--- W0 repository baseline ---'\nrtk python3 tools/w0_repo_baseline.py > /tmp/ephi-o4-w0-baseline.json\nw0_status=\"'$?\nrtk tail -n 45 /tmp/ephi-o4-w0-baseline.json\nprintf '\"'w0_status=%s\\\\n' \\\"\"'$w0_status\"\nprintf '\"'%s\\\\n' '--- W0 canonical integrity regressions ---'\nrtk python3 tools/w0_integrity_regressions.py > /tmp/ephi-o4-w0-integrity.json\nintegrity_status=\"'$?\nrtk tail -n 70 /tmp/ephi-o4-w0-integrity.json\nprintf '\"'integrity_status=%s\\\\n' \\\"\"'$integrity_status\"\nprintf '\"'%s\\\\n' '--- compile checks ---'\nrtk python3 -m compileall -q src tools tests\ncompile_status=\"'$?\nprintf '\"'compile_status=%s\\\\n' \\\"\"'$compile_status\"\nexit $((w0_status || integrity_status || compile_status))'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"set +e\nEPHI_TEST_POSTGRES_DSN='postgresql://haewonkim@127.0.0.1:55433/postgres' rtk python3 -m unittest discover -s tests -v > /tmp/ephi-o4-full-unittest.log 2>&1\nfull_status=\"'$?\nrtk tail -n 75 /tmp/ephi-o4-full-unittest.log\nprintf '\"'full_status=%s\\\\n' \\\"\"'$full_status\"\nexit \"$full_status\"'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 tools/w0_runtime.py --help\nrg -n \\\"def (main|check|runtime)|subparsers|add_parser|check\\\" tools/w0_runtime.py | head -n 100\nsed -n '1,260p' tools/w0_runtime.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"sed -n '428,490p' tools/w0_runtime.py\nif [ -d artifacts/w0-runtime/venv ]; then echo 'existing w0 runtime venv=YES'; else echo 'existing w0 runtime venv=NO'; fi\nrtk python3 tools/w0_runtime.py check --current > /tmp/ephi-o4-base-runtime-check.json\nbase_status=\"'$?\nrtk tail -n 90 /tmp/ephi-o4-base-runtime-check.json\nprintf '\"'base_runtime_status=%s\\\\n' \\\"\"'$base_status\"\nexit \"$base_status\"'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"printf '%s\\\\n' '--- source ingress implementation (1-260) ---'\nsed -n '1,260p' src/ephi/application/source_ingress.py\nprintf '%s\\\\n' '--- source ingress implementation (261-620) ---'\nsed -n '261,620p' src/ephi/application/source_ingress.py\nprintf '%s\\\\n' '--- source reality implementation ---'\nsed -n '1,320p' src/ephi/application/source_reality.py\nprintf '%s\\\\n' '--- postgres source implementation ---'\nsed -n '1,460p' src/ephi/infrastructure/postgresql_source.py\nprintf '%s\\\\n' '--- migration ---'\nsed -n '1,240p' migrations/006_o4_source_snapshot_ingress.sql\nprintf '%s\\\\n' '--- composition/app boundary ---'\nsed -n '1,220p' src/ephi/application/__init__.py\nsed -n '1,160p' src/ephi/app.py\nsed -n '1,160p' src/ephi/ui/app.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"printf '%s\\\\n' '--- source ingress service and eligibility ---'\nsed -n '380,680p' src/ephi/application/source_ingress.py\nprintf '%s\\\\n' '--- source reality / binding ---'\nsed -n '1,300p' src/ephi/application/source_reality.py\nprintf '%s\\\\n' '--- postgres source 1 ---'\nsed -n '1,240p' src/ephi/infrastructure/postgresql_source.py\nprintf '%s\\\\n' '--- postgres source 2 ---'\nsed -n '241,480p' src/ephi/infrastructure/postgresql_source.py\nprintf '%s\\\\n' '--- ui composition source binding paths ---'\nrg -n -C 5 \\\"require_runtime_source_binding|metrology_source|source_capability|source_snapshot|raw|telemetry|PostgreSQL\\\" src/ephi/ui/app.py src/ephi/infrastructure/postgresql_source.py migrations/006_o4_source_snapshot_ingress.sql\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git remote -v\nprintf '%s\\\\n' '--- existing ephi artifact refs ---'\nrtk git ls-remote origin 'refs/heads/project-os-artifacts/ephi/*'\nprintf '%s\\\\n' '--- prior carrier commits and trees ---'\nrtk git show --no-patch --format='%H%n%T%n%P%n%s' 5bf6b44bf98b43697433678c6b7cfec990337461 2>/dev/null || true\nrtk git show --no-patch --format='%H%n%T%n%P%n%s' refs/remotes/origin/project-os-artifacts/ephi/ephi-o3-attention-episode-w1-fix3 2>/dev/null || true\nprintf '%s\\\\n' '--- carrier inventory examples ---'\nfor ref in refs/remotes/origin/project-os-artifacts/ephi/ephi-o3-attention-episode-w1-fix3 refs/remotes/origin/project-os-artifacts/ephi/ephi-o3-attention-episode-w1-fix2 refs/remotes/origin/project-os-artifacts/ephi/ephi-o3-attention-episode-w1; do if rtk git rev-parse --verify \\\"\"'$ref\" >/dev/null 2>&1; then echo \"$ref\"; rtk git ls-tree -r --name-only \"$ref\"; fi; done'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git show --no-patch --format='%H%n%T%n%P%n%s' 5bf6b44bf98b43697433678c6b7cfec990337461\nrtk git ls-tree -r --name-only 5bf6b44bf98b43697433678c6b7cfec990337461\nrtk git show 5bf6b44bf98b43697433678c6b7cfec990337461:carrier-manifest.json | sed -n '1,260p'\nprintf '%s\\\\n' '--- carrier tree entries ---'\nrtk git ls-tree -r --long 5bf6b44bf98b43697433678c6b7cfec990337461\"",
+      "exit_code": 128,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"set -e\nrtk git fetch origin '+refs/heads/project-os-artifacts/ephi/ephi-o4-metrology-source-ingress-v1:refs/remotes/origin/project-os-artifacts/ephi/ephi-o4-metrology-source-ingress-v1'\nrtk git show --no-patch --format='%H%n%T%n%P%n%s' refs/remotes/origin/project-os-artifacts/ephi/ephi-o4-metrology-source-ingress-v1\nrtk git ls-tree -r --long refs/remotes/origin/project-os-artifacts/ephi/ephi-o4-metrology-source-ingress-v1\nrtk git show refs/remotes/origin/project-os-artifacts/ephi/ephi-o4-metrology-source-ingress-v1:carrier-manifest.json | sed -n '1,280p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"printf '%s\\\\n' '--- task/job metadata variable names ---'\nenv | cut -d= -f1 | rg -i '(\"'^|_)(fabric|job|run|task|change|request|codex|worktree|linear)(_|$)'\"' | sort || true\nprintf '%s\\\\n' '--- current workspace metadata names/values with hashes redacted ---'\nfor f in /tmp/ephi* /Users/haewonkim/.codex-fabric/worktrees/CF-6338e872adfb891b95279490/.git; do if [ -e \\\"\"'$f\" ]; then rtk ls -ld \"$f\"; fi; done\nrtk git config --get branch.codex/ephi-o4-source-ingress-foundation-verify-v1.description || true\nrtk git reflog -5 --format='\"'%h %gs'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"printf '%s\\\\n' '--- prior bundle inventory ---'\nrtk git cat-file blob refs/remotes/origin/project-os-artifacts/ephi/ephi-o4-metrology-source-ingress-v1:ephi-o4-metrology-source-ingress-v1-bundle.tar.gz | tar -tzvf -\nprintf '%s\\\\n' '--- prior evidence record ---'\nrtk git show refs/remotes/origin/project-os-artifacts/ephi/ephi-o4-metrology-source-ingress-v1:chg_144_o4_metrology_source_ingress_v1.json | sed -n '1,300p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"set -e\nrtk python3 tools/source_reality_preflight.py --json > /tmp/ephi-o4-source-preflight-current.json\nEPHI_TEST_POSTGRES_DSN='postgresql://haewonkim@127.0.0.1:55433/postgres' rtk python3 -m unittest tests.test_o4_source_ingress -v > /tmp/ephi-o4-focused-unit.log 2>&1\nEPHI_TEST_POSTGRES_DSN='postgresql://haewonkim@127.0.0.1:55433/postgres' rtk python3 -m unittest tests.test_o4_source_ingress_postgresql -v > /tmp/ephi-o4-focused-postgres.log 2>&1\nEPHI_TEST_POSTGRES_DSN='postgresql://haewonkim@127.0.0.1:55433/postgres' rtk python3 -m unittest -v tests.test_o2_postgresql tests.test_o2_worker_postgresql tests.test_o2_postgresql_reads tests.test_o2_postgresql_artifacts tests.test_o3_postgresql tests.test_postgresql_adapter_lifecycle > /tmp/ephi-o4-regression-postgres.log 2>&1\nrtk python3 tools/check_package.py --refresh-manifest > /tmp/ephi-o4-package-check.log 2>&1\nprintf '%s\\\\n' '--- artifact input identities ---'\nfor p in /tmp/ephi-o4-source-preflight-current.json /tmp/ephi-o4-focused-unit.log /tmp/ephi-o4-focused-postgres.log /tmp/ephi-o4-regression-postgres.log /tmp/ephi-o4-full-unittest.log /tmp/ephi-o4-w0-baseline.json /tmp/ephi-o4-w0-integrity.json /tmp/ephi-o4-package-check.log; do rtk shasum -a 256 \\\"\"'$p\"; rtk wc -c < \"$p\"; done\nprintf '\"'%s\\\\n' '--- preflight status fields ---'\nrtk python3 -c 'import json; p=json.load(open(\\\"/tmp/ephi-o4-source-preflight-current.json\\\")); print(json.dumps({\\\"status\\\":p[\\\"status\\\"],\\\"snapshot_qualification\\\":p[\\\"snapshot_qualification\\\"],\\\"capability\\\":p[\\\"capability\\\"],\\\"secret_safety\\\":p[\\\"secret_safety\\\"],\\\"postgresql\\\":p[\\\"postgresql\\\"]}, sort_keys=True))'\nprintf '%s\\\\n' '--- test summaries ---'\nrtk tail -n 5 /tmp/ephi-o4-focused-unit.log\nrtk tail -n 5 /tmp/ephi-o4-focused-postgres.log\nrtk tail -n 5 /tmp/ephi-o4-regression-postgres.log\nprintf '%s\\\\n' '--- package/status/candidate identity ---'\nrtk git status --short --branch\nrtk git rev-parse HEAD\nrtk git rev-parse HEAD\"'^{tree}'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'mkdir -p .ephi-o4-verify-carrier-staging\nrtk git status --short --branch'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"set -e\nrtk python3 -m json.tool .ephi-o4-verify-carrier-staging/ephi-o4-source-ingress-foundation-verify-v1.json >/tmp/ephi-o4-carrier-evidence-validated.json\nrtk tar -czf .ephi-o4-verify-carrier-staging/ephi-o4-source-ingress-foundation-verify-v1-bundle.tar.gz -C .ephi-o4-verify-carrier-staging ephi-o4-source-ingress-foundation-verify-v1.json\nprintf '%s\\\\n' '--- staged file identities ---'\nfor p in .ephi-o4-verify-carrier-staging/ephi-o4-source-ingress-foundation-verify-v1.json .ephi-o4-verify-carrier-staging/ephi-o4-source-ingress-foundation-verify-v1-bundle.tar.gz; do rtk shasum -a 256 \\\"\"'$p\"; rtk wc -c < \"$p\"; done\nprintf '\"'%s\\\\n' '--- staged bundle inventory ---'\nrtk tar -tzvf .ephi-o4-verify-carrier-staging/ephi-o4-source-ingress-foundation-verify-v1-bundle.tar.gz\nrtk git status --short --branch\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"set -e\nrtk python3 -m json.tool .ephi-o4-verify-carrier-staging/carrier-manifest.json >/tmp/ephi-o4-carrier-manifest-validated.json\nrtk git -C .ephi-o4-verify-carrier-staging init -q\nrtk git -C .ephi-o4-verify-carrier-staging config user.name 'Project OS Artifact Publisher'\nrtk git -C .ephi-o4-verify-carrier-staging config user.email 'project-os-artifacts@users.noreply.github.com'\nrtk git -C .ephi-o4-verify-carrier-staging add carrier-manifest.json ephi-o4-source-ingress-foundation-verify-v1.json ephi-o4-source-ingress-foundation-verify-v1-bundle.tar.gz\nrtk git -C .ephi-o4-verify-carrier-staging commit -q -m 'Publish CHG-145 O4.1a VERIFY evidence carrier'\ncarrier_commit=\"'$(rtk git -C .ephi-o4-verify-carrier-staging rev-parse HEAD)\ncarrier_tree=$(rtk git -C .ephi-o4-verify-carrier-staging rev-parse HEAD''^{tree})\nprintf '\"'carrier_commit=%s\\\\ncarrier_tree=%s\\\\n' \\\"\"'$carrier_commit\" \"$carrier_tree\"\nrtk git -C .ephi-o4-verify-carrier-staging show --no-patch --format='\"'%H%n%T%n%P%n%s' HEAD\nrtk git ls-remote --exit-code origin refs/heads/project-os-artifacts/ephi/ephi-o4-source-ingress-foundation-verify-v1 >/tmp/ephi-o4-existing-carrier-ref 2>/dev/null\nexisting_status=\"'$?\nprintf '\"'existing_ref_status=%s\\\\n' \\\"\"'$existing_status\"\nexit \"$existing_status\"'",
+      "exit_code": 2,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'set -e\nrtk git -C .ephi-o4-verify-carrier-staging push origin HEAD:refs/heads/project-os-artifacts/ephi/ephi-o4-source-ingress-foundation-verify-v1\nrtk git ls-remote origin refs/heads/project-os-artifacts/ephi/ephi-o4-source-ingress-foundation-verify-v1'",
+      "exit_code": 128,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'set -e\ncarrier_origin=$(rtk git remote get-url origin)\nrtk git -C .ephi-o4-verify-carrier-staging remote add origin \"$carrier_origin\"\nrtk git -C .ephi-o4-verify-carrier-staging push origin HEAD:refs/heads/project-os-artifacts/ephi/ephi-o4-source-ingress-foundation-verify-v1\nrtk git ls-remote origin refs/heads/project-os-artifacts/ephi/ephi-o4-source-ingress-foundation-verify-v1'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"set -e\ncarrier_ref='refs/remotes/origin/project-os-artifacts/ephi/ephi-o4-source-ingress-foundation-verify-v1'\nrtk git fetch origin \\\"+refs/heads/project-os-artifacts/ephi/ephi-o4-source-ingress-foundation-verify-v1:\"'$carrier_ref\"\nreadback_dir=$(mktemp -d /tmp/ephi-o4-verify-readback.XXXXXX)\nrtk git archive \"$carrier_ref\" | rtk tar -x -C \"$readback_dir\"\nrtk python3 - \"$readback_dir\" <<'\"'PY'\nimport hashlib, json, pathlib, sys, tarfile\nroot = pathlib.Path(sys.argv[1])\nmanifest_path = root / \\\"carrier-manifest.json\\\"\nmanifest = json.loads(manifest_path.read_text())\nexpected = {\n    \\\"project\\\": \\\"ephi\\\",\n    \\\"request\\\": \\\"ephi-o4-source-ingress-foundation-verify-v1\\\",\n    \\\"operation\\\": \\\"VERIFY\\\",\n    \\\"fabric_job\\\": \\\"CF-6338e872adfb891b95279490\\\",\n    \\\"target_base_sha\\\": \\\"9577173fba418c695acc1b01661b14f81af315a4\\\",\n    \\\"candidate_sha\\\": \\\"83f62dd488bcd4df10ca5692c973bf7d6b5b8b19\\\",\n    \\\"candidate_tree\\\": \\\"a06c6beb53a743b6170f42210ceb05ecd22b2c75\\\",\n}\nassert {k: manifest[k] for k in expected} == expected\nassert manifest[\\\"status\\\"] == \\\"VERIFY_GENERIC_SUBSTRATE_PASS_BLOCKED_REAL_SOURCE\\\"\nassert manifest[\\\"source_reality_status\\\"] == \\\"BLOCKED_REAL_SOURCE\\\"\nassert manifest[\\\"snapshot_qualification\\\"] == \\\"NOT_RUN\\\"\nassert manifest[\\\"capability_state\\\"] == \\\"UNAVAILABLE\\\"\nassert manifest[\\\"g02_g06_real_family\\\"] == \\\"OUT_OF_SCOPE_NOT_RUN\\\"\nassert manifest[\\\"notion_credentials_used\\\"] is False\nassert manifest[\\\"synthetic_ar2_sidecar_used\\\"] is False\nactual_names = sorted(p.name for p in root.iterdir())\nassert actual_names == sorted([\\\"carrier-manifest.json\\\"] + [item[\\\"path\\\"] for item in manifest[\\\"inventory\\\"]])\nfor item in manifest[\\\"inventory\\\"]:\n    path = root / item[\\\"path\\\"]\n    raw = path.read_bytes()\n    assert len(raw) == item[\\\"bytes\\\"], (item[\\\"path\\\"], len(raw), item[\\\"bytes\\\"])\n    assert hashlib.sha256(raw).hexdigest() == item[\\\"sha256\\\"], item[\\\"path\\\"]\nbundle_path = root / \\\"ephi-o4-source-ingress-foundation-verify-v1-bundle.tar.gz\\\"\nassert hashlib.sha256(bundle_path.read_bytes()).hexdigest() == manifest[\\\"bundle_sha256\\\"]\nassert len(bundle_path.read_bytes()) == manifest[\\\"bundle_bytes\\\"]\nwith tarfile.open(bundle_path, \\\"r:gz\\\") as bundle:\n    members = [member for member in bundle.getmembers() if member.isfile()]\n    assert [member.name for member in members] == [\\\"ephi-o4-source-ingress-foundation-verify-v1.json\\\"]\n    content = bundle.extractfile(members[0]).read()\n    evidence = json.loads(content)\n    assert hashlib.sha256(content).hexdigest() == next(item[\\\"sha256\\\"] for item in manifest[\\\"inventory\\\"] if item[\\\"path\\\"].endswith(\\\".json\\\"))\n    assert evidence[\\\"project\\\"] == manifest[\\\"project\\\"]\n    assert evidence[\\\"request\\\"] == manifest[\\\"request\\\"]\n    assert evidence[\\\"operation\\\"] == manifest[\\\"operation\\\"]\n    assert evidence[\\\"fabric_job\\\"] == manifest[\\\"fabric_job\\\"]\n    assert evidence[\\\"candidate\\\"][\\\"candidate_sha\\\"] == manifest[\\\"candidate_sha\\\"]\n    assert evidence[\\\"candidate\\\"][\\\"candidate_tree\\\"] == manifest[\\\"candidate_tree\\\"]\n    assert evidence[\\\"source_reality\\\"][\\\"preflight_status\\\"] == \\\"BLOCKED_REAL_SOURCE\\\"\n    assert evidence[\\\"qualification_boundary\\\"][\\\"G02_temporal_integrity_real_family\\\"] == \\\"OUT_OF_SCOPE_NOT_RUN_BLOCKED_REAL_SOURCE\\\"\n    assert evidence[\\\"qualification_boundary\\\"][\\\"G06_source_scientific_qualification\\\"] == \\\"OUT_OF_SCOPE_NOT_RUN_BLOCKED_REAL_SOURCE\\\"\nprint(json.dumps({\n    \\\"status\\\": \\\"PASS\\\",\n    \\\"remote_tree_inventory\\\": actual_names,\n    \\\"manifest_sha256\\\": hashlib.sha256(manifest_path.read_bytes()).hexdigest(),\n    \\\"evidence_sha256\\\": next(item[\\\"sha256\\\"] for item in manifest[\\\"inventory\\\"] if item[\\\"path\\\"].endswith(\\\".json\\\")),\n    \\\"bundle_sha256\\\": manifest[\\\"bundle_sha256\\\"],\n    \\\"source_reality\\\": [manifest[\\\"source_reality_status\\\"], manifest[\\\"snapshot_qualification\\\"], manifest[\\\"capability_state\\\"]],\n    \\\"g02_g06\\\": manifest[\\\"g02_g06_real_family\\\"],\n}, sort_keys=True))\nPY\nrtk git status --short --branch\nrtk git rev-parse HEAD\nrtk git rev-parse HEAD\"'^{tree}'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git clean -ndff -- .ephi-o4-verify-carrier-staging\nrtk git status --short --branch\n/opt/homebrew/opt/postgresql@18/bin/pg_ctl -D /opt/homebrew/var/postgresql@18 status || true'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"set -e\nrtk git clean -dff -- .ephi-o4-verify-carrier-staging\n/opt/homebrew/opt/postgresql@18/bin/pg_ctl -D /opt/homebrew/var/postgresql@18 stop -m fast\nrtk git status --short --branch\nprintf '%s\\\\n' '--- exact candidate proof ---'\nrtk git rev-parse HEAD\nrtk git rev-parse HEAD\"'^{tree}\nrtk git rev-parse HEAD''^\nrtk git rev-list --count 9577173fba418c695acc1b01661b14f81af315a4..HEAD\nrtk git diff --quiet HEAD --\nprintf '\"'worktree_diff_status=0\\\\n'\nprintf '%s\\\\n' '--- Base pin unchanged from fresh base ---'\nrtk git diff --quiet 9577173fba418c695acc1b01661b14f81af315a4 HEAD -- pyproject.toml environment/nicegui_base_runtime.json evidence/review/nicegui_base_binding_manifest.json\nprintf 'base_pin_paths_unchanged=0\\\\n'\nrtk git diff --check\nprintf '%s\\\\n' '--- remote carrier ref ---'\nrtk git ls-remote origin refs/heads/project-os-artifacts/ephi/ephi-o4-source-ingress-foundation-verify-v1\nprintf '%s\\\\n' '--- final candidate changed paths from base ---'\nrtk git diff --name-only 9577173fba418c695acc1b01661b14f81af315a4 HEAD\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    }
+  ],
+  "codex": {
+    "cli_version": "codex-cli 0.154.0",
+    "configured_model": "gpt-5.6-luna",
+    "event_count": 94,
+    "provider_reported_model": null,
+    "reasoning_effort": "xhigh",
+    "terminal_type": "turn.completed",
+    "usage": {
+      "cache_hit_percent": 95.79,
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 2980096,
+      "fresh_input_tokens": 130883,
+      "input_tokens": 3110979,
+      "non_reasoning_output_tokens": 15246,
+      "output_tokens": 29858,
+      "reasoning_output_tokens": 14612,
+      "total_processed_tokens": 3140837
+    },
+    "warnings": []
+  },
+  "commits": [
+    {
+      "sha": "83f62dd488bcd4df10ca5692c973bf7d6b5b8b19",
+      "subject": "Implement O4.1 metrology source ingress boundary"
+    }
+  ],
+  "diff": {
+    "additions": 2151,
+    "changed_files": 17,
+    "commit_count": 1,
+    "deletions": 18
+  },
+  "error_code": null,
+  "evidence_manifest": {
+    "count": 2,
+    "items": [
+      {
+        "bytes": 14582,
+        "path": "README.md",
+        "sha256": "3f137a6d36033af8e933442dc9bc75eeaf62c7a624013c370bd8ac4ed91ae2eb"
+      },
+      {
+        "bytes": 29879,
+        "path": "manifest.json",
+        "sha256": "fdb267d9aee258ebf5dd21ddd41682d796b6d1887a18b769b1532037326b0d82"
+      }
+    ],
+    "version": 1
+  },
+  "evidence_publisher_release": "1.2.3-resume-candidate",
+  "fabric_capture": {
+    "applied": false,
+    "paths_before": 0,
+    "transient_untracked_removed": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "fabric_release": "1.2.3-resume-candidate",
+  "failure_class": null,
+  "finished_at": "2026-09-19T19:50:25Z",
+  "git": {
+    "base_is_ancestor": true,
+    "base_sha": "9577173fba418c695acc1b01661b14f81af315a4",
+    "branch": "codex/ephi-o4-source-ingress-foundation-verify-v1",
+    "detached_verify": false,
+    "head_sha": "83f62dd488bcd4df10ca5692c973bf7d6b5b8b19",
+    "remote_exact_head": true,
+    "remote_head_sha": "83f62dd488bcd4df10ca5692c973bf7d6b5b8b19",
+    "target_branch": "main",
+    "target_drifted_since_acceptance": false,
+    "target_head_observed_after_execution": "9577173fba418c695acc1b01661b14f81af315a4",
+    "work_branch": "codex/ephi-o4-source-ingress-foundation-verify-v1",
+    "worktree_clean": true
+  },
+  "instructions": {
+    "files": [
+      {
+        "bytes": 1458,
+        "path": "AGENTS.md",
+        "sha256": "4349f387a79d886ed1264604ff48c582698e539e08ed8fb2f9d8ab8fbf6f804a"
+      }
+    ],
+    "total_bytes": 1458,
+    "warning": null
+  },
+  "job_id": "CF-6338e872adfb891b95279490",
+  "kind": "codex-fabric-audit-evidence",
+  "locator": {
+    "branch": "codex-fabric/evidence/ephi/ephi-o4-source-ingress-foundation-verify-v1",
+    "path": ".codex-fabric/audit.json",
+    "ref": "refs/heads/codex-fabric/evidence/ephi/ephi-o4-source-ingress-foundation-verify-v1"
+  },
+  "operation": "VERIFY",
+  "policy": {
+    "environment_policy_sha256": "e077daca74297b3c30bee8989f00f8ca5338f7610b4d016a6c48db524205d064",
+    "fabric_release": "1.2.3-resume-candidate",
+    "policy_sha256": "44756118cd7fda0c45cd23ba1d31a48a3f4f2422d687df15264ba4406f40e1f2",
+    "registry_sha256": "cfc765f3211c37c7967a138f3b2d89a99341939b15b2623f92744d007f625d6f"
+  },
+  "project_id": "ephi",
+  "recovery": {
+    "model_rerun_safe": false,
+    "recovery_required": false,
+    "retry_safe": false,
+    "retry_scope": null,
+    "worktree_retained": true
+  },
+  "request": "ephi-o4-source-ingress-foundation-verify-v1",
+  "schema_version": 1,
+  "started_at": "2026-09-19T19:39:58Z",
+  "status": "EXECUTED_CHANGE",
+  "timing": {
+    "execution_seconds": 627,
+    "queue_seconds": 1,
+    "total_seconds": 628
+  },
+  "transport": {
+    "bytes": 7008,
+    "envelope": "FABRIC/2",
+    "prompt_bytes": 6669,
+    "prompt_sha256": "dfaaf7472f71094a6d192500818ebc95bcc3efbbc942c9119dc191951cc5c556",
+    "sha256": "6338e872adfb891b95279490b6e13bb450e39e47d501ac266f6f99d6401a13fe"
+  }
+}
