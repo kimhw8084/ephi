@@ -1,0 +1,42 @@
+{
+  "diff_check": {
+    "command": "git diff --check",
+    "status": "PASS"
+  },
+  "focused_o9": {
+    "command": "python3 -m unittest tests.test_o9_operations -v",
+    "status": "PASS",
+    "tests": 12
+  },
+  "full_repository": {
+    "command": "python3 -m unittest discover -s tests -v",
+    "passed": 127,
+    "skipped": 68,
+    "status": "PASS",
+    "tests": 195
+  },
+  "o2_o3_o4_real_postgresql_regression": {
+    "command": "EPHI_TEST_POSTGRES_DSN=<redacted> python3 -m unittest tests.test_o2_postgresql tests.test_o2_worker_postgresql tests.test_o2_postgresql_reads tests.test_o2_postgresql_artifacts tests.test_o3_postgresql tests.test_o4_source_ingress_postgresql -v",
+    "status": "PASS",
+    "tests": 54
+  },
+  "package": {
+    "command": "python3 tools/check_package.py --refresh-manifest",
+    "files": 178,
+    "status": "PASS"
+  },
+  "real_postgresql_rehearsal": {
+    "artifact_count": 1,
+    "dump_bytes": 45290,
+    "pg_dump_pg_restore_major": 18,
+    "server": "PostgreSQL 18.6",
+    "status": "PASS"
+  },
+  "schema_version": "o9.1.test-summary.v1",
+  "w0_repo_baseline": {
+    "command": "python3 tools/w0_repo_baseline.py",
+    "status": "BASELINE_PASS",
+    "tests_passed": 127,
+    "tests_skipped": 68
+  }
+}

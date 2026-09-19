@@ -1,0 +1,55 @@
+{
+  "axes": {
+    "durable_worker_job_state": {
+      "facts": {
+        "job_count": 2,
+        "state_inventory_known": true
+      },
+      "reason": "DURABLE_WORKER_STATE_REACHABLE",
+      "state": "READY"
+    },
+    "evidence_qualification_freshness": {
+      "facts": {
+        "freshness_known": false
+      },
+      "reason": "QUALIFICATION_AUTHORITY_NOT_BOUND",
+      "state": "NOT_QUALIFIED"
+    },
+    "immutable_artifact_integrity": {
+      "facts": {
+        "artifact_count": 1,
+        "inventory_known": true
+      },
+      "reason": "IMMUTABLE_ARTIFACT_INVENTORY_VERIFIED",
+      "state": "READY"
+    },
+    "postgres_readiness_durability": {
+      "facts": {
+        "critical_table_count": 14
+      },
+      "reason": "POSTGRES_REACHABLE_AND_SCHEMA_PRESENT",
+      "state": "READY"
+    },
+    "process_transport": {
+      "facts": {
+        "pid_present": true
+      },
+      "reason": "PROCESS_ENTRYPOINT_RESPONDED",
+      "state": "READY"
+    },
+    "source_capability_freshness": {
+      "facts": {
+        "freshness_known": false
+      },
+      "reason": "BLOCKED_REAL_SOURCE",
+      "state": "UNAVAILABLE"
+    }
+  },
+  "schema_version": "o9.1.v1",
+  "secret_safety": {
+    "credentials_printed": false,
+    "private_artifact_contents_printed": false,
+    "raw_rows_printed": false,
+    "tokens_printed": false
+  }
+}

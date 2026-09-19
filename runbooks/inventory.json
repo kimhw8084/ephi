@@ -1,0 +1,82 @@
+{
+  "qualification_summary": {
+    "authentic_family_qualification": "BLOCKED_REAL_SOURCE",
+    "generic_operations_health": "PASS",
+    "isolated_restore_reconciliation": "PASS",
+    "postgresql_backup_identity": "PASS",
+    "production_disaster_rpo_rto": "NOT_ESTABLISHED"
+  },
+  "runbooks": [
+    {
+      "path": "runbooks/postgresql-outage.md",
+      "sections_required": [
+        "degraded_user_behavior",
+        "diagnostic_evidence",
+        "safe_action",
+        "verification",
+        "rollback"
+      ]
+    },
+    {
+      "path": "runbooks/immutable-artifact-failure.md",
+      "sections_required": [
+        "degraded_user_behavior",
+        "diagnostic_evidence",
+        "safe_action",
+        "verification",
+        "rollback"
+      ]
+    },
+    {
+      "path": "runbooks/source-outage-staleness.md",
+      "sections_required": [
+        "degraded_user_behavior",
+        "diagnostic_evidence",
+        "safe_action",
+        "verification",
+        "rollback"
+      ]
+    },
+    {
+      "path": "runbooks/worker-crash-stale-lease.md",
+      "sections_required": [
+        "degraded_user_behavior",
+        "diagnostic_evidence",
+        "safe_action",
+        "verification",
+        "rollback"
+      ]
+    },
+    {
+      "path": "runbooks/projection-read-repair.md",
+      "sections_required": [
+        "degraded_user_behavior",
+        "diagnostic_evidence",
+        "safe_action",
+        "verification",
+        "rollback"
+      ]
+    },
+    {
+      "path": "runbooks/isolated-restore-rehearsal.md",
+      "sections_required": [
+        "degraded_user_behavior",
+        "diagnostic_evidence",
+        "safe_action",
+        "verification",
+        "rollback"
+      ]
+    },
+    {
+      "path": "runbooks/rollback-boundary.md",
+      "sections_required": [
+        "degraded_user_behavior",
+        "diagnostic_evidence",
+        "safe_action",
+        "verification",
+        "rollback"
+      ]
+    }
+  ],
+  "schema_version": "o9.1.runbook-inventory.v1"
+}
