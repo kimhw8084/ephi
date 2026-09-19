@@ -1,0 +1,48 @@
+{
+  "carrier_schema_version": 1,
+  "carrier_immutable": true,
+  "project": "ephi",
+  "request": "ephi-o4-source-ingress-foundation-verify-v1",
+  "operation": "VERIFY",
+  "fabric_job": "CF-6338e872adfb891b95279490",
+  "change": "CHG-145",
+  "slice": "O4.1a",
+  "target_base_sha": "9577173fba418c695acc1b01661b14f81af315a4",
+  "candidate_sha": "83f62dd488bcd4df10ca5692c973bf7d6b5b8b19",
+  "candidate_tree": "a06c6beb53a743b6170f42210ceb05ecd22b2c75",
+  "candidate_branch": "codex/ephi-o4-source-ingress-foundation-verify-v1",
+  "status": "VERIFY_GENERIC_SUBSTRATE_PASS_BLOCKED_REAL_SOURCE",
+  "generic_substrate_acceptance": "PASS",
+  "source_reality_status": "BLOCKED_REAL_SOURCE",
+  "snapshot_qualification": "NOT_RUN",
+  "capability_state": "UNAVAILABLE",
+  "g02_g06_real_family": "OUT_OF_SCOPE_NOT_RUN",
+  "notion_credentials_used": false,
+  "synthetic_ar2_sidecar_used": false,
+  "bundle_sha256": "fd826955542f972081689a92eccb71110607d4cebbf2aadae1d72ae91153e3fd",
+  "bundle_bytes": 3175,
+  "inventory": [
+    {
+      "path": "ephi-o4-source-ingress-foundation-verify-v1.json",
+      "bytes": 7319,
+      "sha256": "319f420aa62d5b13676c966769d600441722e8be7fd76493e79c3dbf353b3d9d"
+    },
+    {
+      "path": "ephi-o4-source-ingress-foundation-verify-v1-bundle.tar.gz",
+      "bytes": 3175,
+      "sha256": "fd826955542f972081689a92eccb71110607d4cebbf2aadae1d72ae91153e3fd"
+    }
+  ],
+  "readback_required": {
+    "project": true,
+    "request": true,
+    "operation": true,
+    "fabric_job": true,
+    "target_base_sha": true,
+    "candidate_sha": true,
+    "candidate_tree": true,
+    "file_hashes": true,
+    "bundle_hash": true,
+    "bundle_inventory": true
+  }
+}

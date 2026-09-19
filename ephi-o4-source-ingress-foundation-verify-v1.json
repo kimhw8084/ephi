@@ -1,0 +1,157 @@
+{
+  "schema_version": 1,
+  "evidence_kind": "candidate_bound_independent_verify_evidence",
+  "change": "CHG-145",
+  "slice": "O4.1a",
+  "project": "ephi",
+  "request": "ephi-o4-source-ingress-foundation-verify-v1",
+  "operation": "VERIFY",
+  "fabric_job": "CF-6338e872adfb891b95279490",
+  "status": "VERIFY_GENERIC_SUBSTRATE_PASS_BLOCKED_REAL_SOURCE",
+  "generic_substrate_acceptance": "PASS",
+  "project_os_go": false,
+  "candidate": {
+    "branch": "codex/ephi-o4-source-ingress-foundation-verify-v1",
+    "base_sha": "9577173fba418c695acc1b01661b14f81af315a4",
+    "candidate_sha": "83f62dd488bcd4df10ca5692c973bf7d6b5b8b19",
+    "candidate_tree": "a06c6beb53a743b6170f42210ceb05ecd22b2c75",
+    "candidate_parent": "9577173fba418c695acc1b01661b14f81af315a4",
+    "exact_one_commit_over_base": true,
+    "worktree_clean_after_verification": true,
+    "main_mutated_or_merged": false
+  },
+  "generic_acceptance_checks": {
+    "typed_bounded_fail_closed_binding_and_observation_contracts": "PASS",
+    "explicit_units_and_no_guessed_conversion": "PASS",
+    "timezone_aware_unambiguous_timestamps_and_distinct_event_available_ingested_publication_times": "PASS",
+    "future_source_facts_rejected_at_ingress_instant": "PASS",
+    "as_known_requires_event_source_available_ingested_and_published_by_cutoff": "PASS",
+    "source_replay_uses_source_availability_without_masquerading_as_ephi_knowledge": "PASS",
+    "artifact_bytes_verified_before_source_snapshot_publication": "PASS",
+    "immutable_bounded_hash_bound_scope_safe_restart_persistent_manifests": "PASS",
+    "identical_logical_partition_revision_reconciles_idempotently": "PASS",
+    "incompatible_same_logical_identity_is_explicit_conflict_without_overwrite": "PASS",
+    "source_capability_states_truthful_and_no_healthy_zero_fallback": "PASS",
+    "missing_capability_is_unavailable": "PASS",
+    "protected_reads_revalidate_scope_and_capability": "PASS",
+    "source_reality_preflight_deterministic_secret_safe_and_no_invented_facts": "PASS",
+    "production_composition_missing_or_mismatched_observer_fails_closed": "PASS",
+    "postgresql_stores_bounded_manifests_projections_not_raw_telemetry": "PASS",
+    "pinned_nicegui_base_commit_unchanged": "PASS"
+  },
+  "checks": {
+    "focused_source_ingress_unit": "PASS_7_TESTS",
+    "focused_source_ingress_real_postgresql": "PASS_6_TESTS_POSTGRESQL_18.6",
+    "existing_o2_o3_worker_read_artifact_reconnect_real_postgresql": "PASS_55_TESTS_POSTGRESQL_18.6",
+    "full_unittest_discovery_with_postgresql": "PASS_183_TESTS_9_SKIPPED",
+    "w0_repo_baseline": "PASS_BASELINE_PASS_115_PASSED_68_SKIPPED",
+    "w0_canonical_integrity_regressions": "PASS",
+    "package_check_refresh_manifest": "PASS_165_PACKAGE_FILES",
+    "compileall_src_tools_tests": "PASS",
+    "git_diff_check": "PASS",
+    "candidate_identity_before_and_after_tests": "PASS_EXACT_SHA_AND_TREE",
+    "base_runtime_gate": {
+      "status": "BLOCKED_ENVIRONMENT",
+      "reason": "No isolated nicegui-base installation is present in this runner; repository/package pin checks pass and no candidate defect is inferred."
+    }
+  },
+  "postgresql": {
+    "server": "PostgreSQL 18.6 (Homebrew) on aarch64-apple-darwin25.6.0",
+    "psycopg": "3.3.6",
+    "connection": "postgresql://<redacted>@127.0.0.1:55433/postgres",
+    "credentials_redacted": true,
+    "migration": "migrations/006_o4_source_snapshot_ingress.sql",
+    "bounded_tables": [
+      "source_snapshot",
+      "source_capability"
+    ],
+    "proven": [
+      "migration and schema idempotency",
+      "restart persistence",
+      "identical republish identity reconciliation",
+      "incompatible-content conflict without history overwrite",
+      "immutable update/delete rejection",
+      "scope-isolated protected reads",
+      "READY/PARTIAL/STALE/UNAVAILABLE/INSUFFICIENT capability behavior",
+      "artifact existence and exact-byte hash verification before publication",
+      "no raw_rows_json or telemetry_value_json persistence columns"
+    ]
+  },
+  "source_reality": {
+    "preflight_status": "BLOCKED_REAL_SOURCE",
+    "snapshot_qualification": "NOT_RUN",
+    "capability_state": "UNAVAILABLE",
+    "discovery": "NO_APPROVED_REAL_METROLOGY_BINDING_FOUND",
+    "missing_binding_or_observer": [
+      "EPHI_METROLOGY_SOURCE_ADAPTER",
+      "EPHI_METROLOGY_SOURCE_ID",
+      "EPHI_METROLOGY_PROVIDER_ID",
+      "EPHI_METROLOGY_FAMILY_ID",
+      "EPHI_METROLOGY_CAPABILITY_ID",
+      "EPHI_METROLOGY_SCOPE_ID",
+      "EPHI_METROLOGY_SCHEMA_ID",
+      "EPHI_METROLOGY_MAPPING_VERSION",
+      "EPHI_METROLOGY_MAPPING_HASH",
+      "EPHI_METROLOGY_UNIT",
+      "EPHI_METROLOGY_REFERENCE_POPULATION_ID_or_comparable_population_id",
+      "approved_observer_adapter_module_and_bounded_partition_probe"
+    ],
+    "secret_safe": true,
+    "synthetic_family_data_used": false,
+    "source_preflight_sha256": "3f78eb577011e4abca900c9741a39306f4ed77b10849d1b9f241b1524f16a8a2",
+    "source_preflight_bytes": 1586
+  },
+  "qualification_boundary": {
+    "G02_temporal_integrity_real_family": "OUT_OF_SCOPE_NOT_RUN_BLOCKED_REAL_SOURCE",
+    "G06_source_scientific_qualification": "OUT_OF_SCOPE_NOT_RUN_BLOCKED_REAL_SOURCE",
+    "real_family_snapshot": "BLOCKED_REAL_SOURCE / NOT_RUN",
+    "replay_golden_shadow_scientific_acceptance": "OUT_OF_SCOPE_NOT_RUN",
+    "company_credentials_endpoints_production_source_readiness": "NOT_CLAIMED",
+    "chg_144_authentic_real_source_gate": "SEPARATE_GATE",
+    "generic_source_ingress_defect_established": false
+  },
+  "pinned_framework": {
+    "distribution": "nicegui-base",
+    "version": "3.0.0a8",
+    "commit": "000298562d6bcbf6df304edbd41b98b30fe4bfcf",
+    "nicegui": "3.15.0",
+    "candidate_bytes_changed": false
+  },
+  "run_artifacts": {
+    "focused_unit_log": {
+      "sha256": "be8c6cb44c6b4362997cdef24af7d540bb431e82dc1989787c0402679627ed50",
+      "bytes": 1481
+    },
+    "focused_postgresql_log": {
+      "sha256": "6d4e3eb7629539ced8d2b5b6c77ecfba1e2fa5d1971f83cca05eece268ec322c",
+      "bytes": 1302
+    },
+    "regression_postgresql_log": {
+      "sha256": "534554a08589702ffb31244254f43bc23884ad066e5399da3bd6e05e362a7b5c",
+      "bytes": 10971
+    },
+    "full_unittest_log": {
+      "sha256": "86265701018ed52dd6257e3ffd9e80b765358f5e5e8853df33f7354f1c0dce1d",
+      "bytes": 33868
+    },
+    "w0_baseline_output": {
+      "sha256": "9d8727748bf497a5b51a34059d8959ff4ba8598e2e7c8eb0cbf57a163447f696",
+      "bytes": 2713
+    },
+    "w0_integrity_output": {
+      "sha256": "9df7b1aead2c8306dc7c2ba8ff56e88c1d46b0b4a48d00bec500d00ebb7292df",
+      "bytes": 11699
+    },
+    "package_check_output": {
+      "sha256": "3ea9dc9ca0c47040e39964a295de0a53c6bafd8dfdd4a058cbbc0cb2e020e654",
+      "bytes": 209
+    }
+  },
+  "artifact_bridge": {
+    "canonical_ref": "refs/heads/project-os-artifacts/ephi/ephi-o4-source-ingress-foundation-verify-v1",
+    "notion_credentials_used": false,
+    "synthetic_ar2_sidecar_used": false,
+    "external_manufacturing_writes": "NONE"
+  },
+  "scope_boundary": "This VERIFY accepts only the generic fail-closed source-ingress substrate for independent CHG-145/O4.1a audit. It does not claim a real metrology family, source snapshot, G02/G06 qualification, production readiness, broader O4 completion, main mutation, merge, integration PR, Notion mutation, or scientific shadow work."
+}
