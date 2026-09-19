@@ -184,6 +184,35 @@ outcomes/value, notifications, production credentials or release
 qualification. Missing PostgreSQL, identity, source, browser or Artifact
 Bridge infrastructure remains an explicit NOT_RUN/BLOCKED evidence result.
 
+## CHG-144 O4.1 bounded source ingress
+
+The O4.1 boundary adds only typed validation for one declared metrology
+family/capability, immutable PostgreSQL `source_snapshot` manifests,
+truthful `source_capability` state, and the existing scoped artifact/hash
+precondition. Raw telemetry is not copied into PostgreSQL. The canonical
+application has no company metrology adapter, so composition fails closed
+without an explicit observer adapter binding; historical `metrology/` names
+remain reference-only.
+
+Run the secret-safe reality preflight with:
+
+```bash
+python3 -m ephi --source-reality-preflight --json
+```
+
+The expected checkout result is `BLOCKED_REAL_SOURCE` / `NOT_RUN` with
+`UNAVAILABLE` capability state until an approved adapter, one family and its
+mapping/reference facts are supplied. Focused PostgreSQL evidence is additive
+and DSN-gated:
+
+```bash
+EPHI_TEST_POSTGRES_DSN='postgresql://user:password@host:5432/database' \
+  python3 -m unittest tests.test_o4_source_ingress_postgresql -v
+```
+
+This slice does not claim G02/G06, a real-family snapshot, scientific
+qualification or production readiness.
+
 ## CHG-133 generic immutable-artifact foundation
 
 CHG-133 adds storage-neutral immutable artifact contracts under

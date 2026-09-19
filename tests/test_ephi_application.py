@@ -1,6 +1,9 @@
 """Offline tests for the minimal canonical EPHI application boundary."""
 
 from pathlib import Path
+import json
+import os
+import subprocess
 import sys
 import unittest
 
@@ -38,6 +41,20 @@ class EphiApplicationTests(unittest.TestCase):
         self.assertEqual(result["behavioral_checks"]["F04"]["execution"], "NOT_RUN")
         self.assertEqual(result["behavioral_checks"]["F05"]["status"], "IMPLEMENTED")
         self.assertEqual(result["behavioral_checks"]["F05"]["execution"], "NOT_RUN")
+
+    def test_source_reality_preflight_is_available_from_the_canonical_cli(self):
+        result = subprocess.run(
+            [sys.executable, "-m", "ephi", "--source-reality-preflight", "--json"],
+            cwd=ROOT,
+            env={**os.environ, "PYTHONPATH": str(ROOT / "src")},
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        self.assertEqual(result.returncode, 0, result.stderr)
+        payload = json.loads(result.stdout)
+        self.assertEqual(payload["status"], "BLOCKED_REAL_SOURCE")
+        self.assertEqual(payload["snapshot_qualification"], "NOT_RUN")
 
     def test_entry_boundary_is_offline(self):
         self.assertEqual(main(["--self-check", "--json"]), 0)
