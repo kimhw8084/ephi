@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "evidence_kind": "newly_executed_qualification",
+  "project": "ephi",
+  "request": "ephi-o3-attention-episode-w1-fix2",
+  "operation": "FIX",
+  "fabric_job": "CF-08ce8de05ac749b681162a55",
+  "target_base_sha": "cdf8bb54eeb42926029a9394814d79d17a282bd9",
+  "candidate_source_sha": "e6ad7c36953496ed4fdafbeb2975cfab99f3033e",
+  "candidate_tree_sha": "24b06b7f575ab994681a7e0365b0b5bfe70186d4",
+  "predecessor_candidate_sha": "ef959f577bc1aa223b260ac32cb42a18eadfaf9f",
+  "predecessor_evidence_commit": "1e0b6135841d7b3a964456153c259df73214912c",
+  "status": "FIX_BLOCKED_EVIDENCE_GAPS",
+  "postgresql": {
+    "server": "18.6",
+    "suite": "55 tests PASS across O2 command/read/artifact/worker, O3, and adapter lifecycle",
+    "outage_restore": "PASS; AdminShutdown/OperationalError observed, failed in-flight operation not replayed, next operation reconnected after restart",
+    "durability": "aggregate/receipt/audit/outbox/retained snapshot contents preserved across outage"
+  },
+  "adapter_lifecycle": {
+    "explicit_close_terminal": "PASS",
+    "server_termination_replacement": "PASS",
+    "no_inflight_retry": "PASS",
+    "authorized_read_and_fresh_command_after_reconnect": "PASS",
+    "concurrent_replacement_ownership": "PASS",
+    "receipt_auth_version_semantics": "PASS",
+    "s09_expiry_security_revision_refresh": "PASS"
+  },
+  "base_checks": {
+    "runtime_contract": "PASS",
+    "runtime_smoke": "PASS",
+    "validate": "PASS",
+    "agent_check": "PASS",
+    "gate": "PASS",
+    "framework_commit": "000298562d6bcbf6df304edbd41b98b30fe4bfcf",
+    "nicegui": "3.15.0",
+    "nicegui_base": "3.0.0a8"
+  },
+  "package_checks": {
+    "check_package_refresh_manifest": "PASS",
+    "full_unittest": "PASS (165 tests, 58 skipped)",
+    "w0_repo_baseline": "PASS",
+    "git_diff_check": "PASS"
+  },
+  "blocking_boundary": [
+    "No durable screenshot files/hashes were available from the native CUA surface.",
+    "S09 browser sequence and exact viewport/DPR reconfirmations were not completed because a pre-existing extension repeatedly stole Chrome focus.",
+    "No callable Project OS Artifact Bridge was exposed; Notion and the synthetic AR-2 sidecar were not used."
+  ],
+  "self_declared_go": false
+}

@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "project": "ephi",
+  "request": "ephi-o3-attention-episode-w1-fix2",
+  "operation": "FIX",
+  "fabric_job": "CF-08ce8de05ac749b681162a55",
+  "target_base_sha": "cdf8bb54eeb42926029a9394814d79d17a282bd9",
+  "candidate_source_sha": "e6ad7c36953496ed4fdafbeb2975cfab99f3033e",
+  "candidate_tree_sha": "24b06b7f575ab994681a7e0365b0b5bfe70186d4",
+  "predecessor_candidate_sha": "ef959f577bc1aa223b260ac32cb42a18eadfaf9f",
+  "predecessor_candidate_tree": "3755ca31a2d9ba5b8e473fa67ab1338b00623055",
+  "status": "FIX_BLOCKED_EVIDENCE_GAPS",
+  "self_declared_go": false,
+  "viewport_dpr": "not verifiable; browser evidence records this explicitly",
+  "files": [
+    {
+      "path": "browser-evidence.json",
+      "bytes": 1718,
+      "sha256": "248e307aaa87102a7a1373c105a56b1069876286763acd7cc735297eda32169a"
+    },
+    {
+      "path": "candidate-file-sha256.json",
+      "bytes": 27459,
+      "sha256": "8087e723a9a91f18da69edc4e48e11d761a7ff4157866929d1f37d5842ab4c5b"
+    },
+    {
+      "path": "qualification-report.json",
+      "bytes": 2240,
+      "sha256": "e3b82e547fd8414473f5c8925fe68947b4f9842424bf25f6cb5a47909b7a2360"
+    }
+  ]
+}

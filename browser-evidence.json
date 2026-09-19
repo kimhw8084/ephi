@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "project": "ephi",
+  "request": "ephi-o3-attention-episode-w1-fix2",
+  "operation": "FIX",
+  "fabric_job": "CF-08ce8de05ac749b681162a55",
+  "candidate_source_sha": "e6ad7c36953496ed4fdafbeb2975cfab99f3033e",
+  "candidate_tree_sha": "24b06b7f575ab994681a7e0365b0b5bfe70186d4",
+  "status": "FIX_BLOCKED_EVIDENCE_GAPS",
+  "application": "real EPHI NiceGUI Base application with explicit PostgreSQL and development identity bindings",
+  "s08": {
+    "status": "PASS_OBSERVED_NOT_DURABLY_HASHED",
+    "viewport_dpr": "not verifiable in native CUA surface",
+    "source_down": "Refresh retained the known row and rendered Stale data; backend source health reported StorageFailure/source unavailable",
+    "source_restored": "PostgreSQL restart followed by supported Refresh returned healthy current row in the same app process/page",
+    "process_restart": false,
+    "memory_fallback": false,
+    "screenshot_files": [],
+    "screenshot_hashes": null
+  },
+  "s09": {
+    "status": "BLOCKED_NATIVE_CUA_FOCUS",
+    "functional_real_postgresql_regression": "PASS",
+    "expected_ui": "Attention snapshot expired; Refresh Attention to start a new retained query snapshot.",
+    "security_recheck": "PASS in real PostgreSQL lifecycle regression",
+    "new_snapshot_after_authorized_refresh": "PASS in real PostgreSQL lifecycle regression",
+    "browser_blocker": "pre-existing browser extension repeatedly stole focus before the retained-snapshot UI sequence could be completed"
+  },
+  "other_browser_reconfirmation": {
+    "desktop_1440x900_dpr1": "NOT_VERIFIABLE",
+    "mobile_390x844_dpr1": "NOT_RUN",
+    "core_workflows": "NOT_RUN_ON_REPAIRED_CANDIDATE",
+    "unexpected_errors": "NOT_RUN"
+  }
+}
