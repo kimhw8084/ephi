@@ -1,0 +1,1004 @@
+{
+  "accepted_at": "2026-09-19T15:28:53Z",
+  "changed_files": [
+    {
+      "additions": 398,
+      "deletions": 0,
+      "path": ".nicegui_base/construction_manifest.json",
+      "status": "A"
+    },
+    {
+      "additions": 6243,
+      "deletions": 0,
+      "path": ".nicegui_base/framework_catalog.json",
+      "status": "A"
+    },
+    {
+      "additions": 84,
+      "deletions": 0,
+      "path": ".nicegui_base/install_manifest.json",
+      "status": "A"
+    },
+    {
+      "additions": 23,
+      "deletions": 4,
+      "path": "11_Developer_Start.md",
+      "status": "M"
+    },
+    {
+      "additions": 25,
+      "deletions": 2,
+      "path": "13_Package_Review.md",
+      "status": "M"
+    },
+    {
+      "additions": 34,
+      "deletions": 2,
+      "path": "README.md",
+      "status": "M"
+    },
+    {
+      "additions": 23,
+      "deletions": 0,
+      "path": "app.py",
+      "status": "A"
+    },
+    {
+      "additions": 148,
+      "deletions": 0,
+      "path": "certification_output/runtime_smoke/RUNTIME_SMOKE_REPORT.json",
+      "status": "A"
+    },
+    {
+      "additions": 32,
+      "deletions": 0,
+      "path": "certification_output/runtime_smoke/RUNTIME_SMOKE_SERVER.log",
+      "status": "A"
+    },
+    {
+      "additions": 101,
+      "deletions": 0,
+      "path": "docs/nicegui_base/AGENT_WORKFLOW.md",
+      "status": "A"
+    },
+    {
+      "additions": 76,
+      "deletions": 0,
+      "path": "docs/nicegui_base/AI_QUICKSTART.md",
+      "status": "A"
+    },
+    {
+      "additions": 97,
+      "deletions": 0,
+      "path": "docs/nicegui_base/AI_RULES.md",
+      "status": "A"
+    },
+    {
+      "additions": 22,
+      "deletions": 0,
+      "path": "docs/nicegui_base/ANTI_PATTERNS.md",
+      "status": "A"
+    },
+    {
+      "additions": 16,
+      "deletions": 0,
+      "path": "docs/nicegui_base/APP_PATTERNS.md",
+      "status": "A"
+    },
+    {
+      "additions": 228,
+      "deletions": 0,
+      "path": "docs/nicegui_base/COMPONENT_CATALOG.md",
+      "status": "A"
+    },
+    {
+      "additions": 25,
+      "deletions": 0,
+      "path": "docs/nicegui_base/FINAL_RELEASE_CANDIDATE_STABLE_QUALIFICATION_HANDOFF.md",
+      "status": "A"
+    },
+    {
+      "additions": 101,
+      "deletions": 0,
+      "path": "docs/nicegui_base/ICON_CATALOG.md",
+      "status": "A"
+    },
+    {
+      "additions": 20,
+      "deletions": 0,
+      "path": "docs/nicegui_base/LAYOUT_RULES.md",
+      "status": "A"
+    },
+    {
+      "additions": 33,
+      "deletions": 0,
+      "path": "docs/nicegui_base/OPENCODE_GEMMA_BOOTSTRAP.md",
+      "status": "A"
+    },
+    {
+      "additions": 12,
+      "deletions": 0,
+      "path": "docs/nicegui_base/PERFORMANCE_GUIDE.md",
+      "status": "A"
+    },
+    {
+      "additions": 114,
+      "deletions": 0,
+      "path": "docs/nicegui_base/RECIPES.md",
+      "status": "A"
+    },
+    {
+      "additions": 104,
+      "deletions": 0,
+      "path": "docs/nicegui_base/SEMICONDUCTOR_APPLICATION_RECIPES.md",
+      "status": "A"
+    },
+    {
+      "additions": 14,
+      "deletions": 0,
+      "path": "docs/nicegui_base/SEMICONDUCTOR_LONGITUDINAL_ASSURANCE_REVIEW_EXCEPTION_GOVERNANCE.md",
+      "status": "A"
+    },
+    {
+      "additions": 15,
+      "deletions": 0,
+      "path": "docs/nicegui_base/SEMICONDUCTOR_OPERATIONAL_ASSURANCE_RENEWAL_LEDGER.md",
+      "status": "A"
+    },
+    {
+      "additions": 51,
+      "deletions": 0,
+      "path": "docs/nicegui_base/SEMICONDUCTOR_POST_RELEASE_STABILITY_ROLLBACK_READINESS.md",
+      "status": "A"
+    },
+    {
+      "additions": 68,
+      "deletions": 0,
+      "path": "docs/nicegui_base/SEMICONDUCTOR_PRODUCTION_RUNTIME.md",
+      "status": "A"
+    },
+    {
+      "additions": 68,
+      "deletions": 0,
+      "path": "docs/nicegui_base/SEMICONDUCTOR_PROMOTION_EXECUTION_ADAPTER_RELEASE_AUDIT.md",
+      "status": "A"
+    },
+    {
+      "additions": 83,
+      "deletions": 0,
+      "path": "docs/nicegui_base/SEMICONDUCTOR_PROVIDER_SDK_RC.md",
+      "status": "A"
+    },
+    {
+      "additions": 76,
+      "deletions": 0,
+      "path": "docs/nicegui_base/SEMICONDUCTOR_RELEASE_PUBLICATION_POST_PROMOTION_VERIFICATION.md",
+      "status": "A"
+    },
+    {
+      "additions": 113,
+      "deletions": 0,
+      "path": "docs/nicegui_base/SEMICONDUCTOR_RUNTIME_ONBOARDING.md",
+      "status": "A"
+    },
+    {
+      "additions": 14,
+      "deletions": 0,
+      "path": "docs/nicegui_base/SEMICONDUCTOR_STABLE_PROMOTION_CANDIDATE.md",
+      "status": "A"
+    },
+    {
+      "additions": 65,
+      "deletions": 0,
+      "path": "docs/nicegui_base/SEMICONDUCTOR_STABLE_RELEASE_EVIDENCE_ACCEPTANCE_PROMOTION_CLOSURE.md",
+      "status": "A"
+    },
+    {
+      "additions": 13,
+      "deletions": 0,
+      "path": "docs/nicegui_base/SEMICONDUCTOR_SUSTAINED_OPERATIONS_INCIDENT_ROLLBACK_AUDIT.md",
+      "status": "A"
+    },
+    {
+      "additions": 21,
+      "deletions": 0,
+      "path": "docs/nicegui_base/SEMICONDUCTOR_SUSTAINED_OPERATIONS_RENEWAL_CONTINUITY.md",
+      "status": "A"
+    },
+    {
+      "additions": 16,
+      "deletions": 0,
+      "path": "docs/nicegui_base/SEMICONDUCTOR_TARGET_CERTIFICATION.md",
+      "status": "A"
+    },
+    {
+      "additions": 61,
+      "deletions": 0,
+      "path": "docs/nicegui_base/SEMICONDUCTOR_TARGET_EXECUTION_OPERATIONAL_HANDOFF.md",
+      "status": "A"
+    },
+    {
+      "additions": 44,
+      "deletions": 0,
+      "path": "docs/nicegui_base/TROUBLESHOOTING.md",
+      "status": "A"
+    },
+    {
+      "additions": 28,
+      "deletions": 0,
+      "path": "docs/nicegui_base/VALIDATOR_RULES.md",
+      "status": "A"
+    },
+    {
+      "additions": 20,
+      "deletions": 0,
+      "path": "docs/nicegui_base/VISUAL_RESOURCE_GUIDE.md",
+      "status": "A"
+    },
+    {
+      "additions": 42,
+      "deletions": 0,
+      "path": "docs/nicegui_base/ZERO_STOCK_NICEGUI_VISUAL_LAWS.md",
+      "status": "A"
+    },
+    {
+      "additions": 59,
+      "deletions": 0,
+      "path": "evidence/review/chg_134_fix1_qualification.json",
+      "status": "A"
+    },
+    {
+      "additions": 83,
+      "deletions": 0,
+      "path": "evidence/review/chg_134_fix2_qualification.json",
+      "status": "A"
+    },
+    {
+      "additions": 16,
+      "deletions": 0,
+      "path": "examples/nicegui_base/README.md",
+      "status": "A"
+    },
+    {
+      "additions": 40,
+      "deletions": 0,
+      "path": "examples/nicegui_base/golden_analysis_workspace.py",
+      "status": "A"
+    },
+    {
+      "additions": 51,
+      "deletions": 0,
+      "path": "examples/nicegui_base/golden_crud.py",
+      "status": "A"
+    },
+    {
+      "additions": 49,
+      "deletions": 0,
+      "path": "examples/nicegui_base/golden_dashboard.py",
+      "status": "A"
+    },
+    {
+      "additions": 70,
+      "deletions": 0,
+      "path": "examples/nicegui_base/golden_data_explorer.py",
+      "status": "A"
+    },
+    {
+      "additions": 309,
+      "deletions": 14,
+      "path": "manifest.json",
+      "status": "M"
+    },
+    {
+      "additions": 19,
+      "deletions": 0,
+      "path": "migrations/005_o3_attention_episode_w1.sql",
+      "status": "A"
+    },
+    {
+      "additions": 14,
+      "deletions": 0,
+      "path": "nicegui_base.toml",
+      "status": "A"
+    },
+    {
+      "additions": 2,
+      "deletions": 0,
+      "path": "requirements-dev.txt",
+      "status": "A"
+    },
+    {
+      "additions": 4,
+      "deletions": 0,
+      "path": "requirements.txt",
+      "status": "A"
+    },
+    {
+      "additions": 7,
+      "deletions": 0,
+      "path": "src/ephi/app.py",
+      "status": "M"
+    },
+    {
+      "additions": 38,
+      "deletions": 0,
+      "path": "src/ephi/application/__init__.py",
+      "status": "M"
+    },
+    {
+      "additions": 262,
+      "deletions": 0,
+      "path": "src/ephi/application/attention.py",
+      "status": "A"
+    },
+    {
+      "additions": 137,
+      "deletions": 0,
+      "path": "src/ephi/application/episodes.py",
+      "status": "A"
+    },
+    {
+      "additions": 115,
+      "deletions": 0,
+      "path": "src/ephi/application/workflow.py",
+      "status": "A"
+    },
+    {
+      "additions": 2,
+      "deletions": 0,
+      "path": "src/ephi/infrastructure/__init__.py",
+      "status": "M"
+    },
+    {
+      "additions": 100,
+      "deletions": 21,
+      "path": "src/ephi/infrastructure/postgresql.py",
+      "status": "M"
+    },
+    {
+      "additions": 211,
+      "deletions": 0,
+      "path": "src/ephi/infrastructure/postgresql_o3.py",
+      "status": "A"
+    },
+    {
+      "additions": 5,
+      "deletions": 0,
+      "path": "src/ephi/ui/__init__.py",
+      "status": "A"
+    },
+    {
+      "additions": 480,
+      "deletions": 0,
+      "path": "src/ephi/ui/app.py",
+      "status": "A"
+    },
+    {
+      "additions": 255,
+      "deletions": 0,
+      "path": "src/ephi/ui/provider.py",
+      "status": "A"
+    },
+    {
+      "additions": 245,
+      "deletions": 0,
+      "path": "tests/test_o3_application.py",
+      "status": "A"
+    },
+    {
+      "additions": 195,
+      "deletions": 0,
+      "path": "tests/test_o3_postgresql.py",
+      "status": "A"
+    },
+    {
+      "additions": 189,
+      "deletions": 0,
+      "path": "tests/test_o3_provider.py",
+      "status": "A"
+    },
+    {
+      "additions": 247,
+      "deletions": 0,
+      "path": "tests/test_postgresql_adapter_lifecycle.py",
+      "status": "A"
+    }
+  ],
+  "checks": [
+    {
+      "command": "/bin/zsh -lc 'VERIFY_TMP=$(cat /tmp/ephi-o3-verify2.path) && VERIFY_TMP=\"$VERIFY_TMP\" \"$VERIFY_TMP/venv/bin/python\" - <<'\"'PY'\nimport asyncio, json, os\nfrom pathlib import Path\nfrom playwright.async_api import async_playwright\n\nasync def main():\n    out = Path(os.environ['VERIFY_TMP']) / 'browser'\n    out.mkdir(parents=True, exist_ok=True)\n    errors=[]\n    async with async_playwright() as p:\n        browser = await p.chromium.launch(headless=True, args=['--disable-extensions','--disable-component-extensions-with-background-pages'])\n        context = await browser.new_context(viewport={'width':1440,'height':900}, device_scale_factor=1, locale='en-US')\n        page = await context.new_page()\n        page.on('console', lambda m: errors.append({'type':m.type,'text':m.text}) if m.type in {'error','warning'} else None)\n        page.on('pageerror', lambda e: errors.append({'type':'pageerror','text':str(e)}))\n        response = await page.goto('http://127.0.0.1:18080/', wait_until='networkidle', timeout=30000)\n        await page.wait_for_timeout(3000)\n        text = await page.locator('body').inner_text()\n        dims = await page.evaluate('({scrollWidth: document.documentElement.scrollWidth, clientWidth: document.documentElement.clientWidth, scrollHeight: document.documentElement.scrollHeight, clientHeight: document.documentElement.clientHeight})')\n        await page.screenshot(path=str(out/'desktop-initial.png'), full_page=True)\n        print(json.dumps({'status':response.status if response else None,'url':page.url,'text':text[:5000],'dims':dims,'errors':errors}, indent=2))\n        await browser.close()\n\nasyncio.run(main())\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'VERIFY_TMP=$(cat /tmp/ephi-o3-verify2.path) && ls -l \"$VERIFY_TMP/browser\" && rtk git status --short --branch && ps -Ao pid,command | rg '\"'ephi --serve|playwright|chromium' | head -40\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'VERIFY_TMP=$(cat /tmp/ephi-o3-verify2.path) && VERIFY_TMP=\"$VERIFY_TMP\" \"$VERIFY_TMP/venv/bin/python\" - <<'\"'PY'\nimport asyncio, json, os\nfrom pathlib import Path\nfrom playwright.async_api import async_playwright\n\nasync def wait_text(page, text, timeout=15000):\n    await page.get_by_text(text, exact=True).first.wait_for(state='visible', timeout=timeout)\n\nasync def main():\n    out = Path(os.environ['VERIFY_TMP']) / 'browser'\n    errors=[]\n    async with async_playwright() as p:\n        browser = await p.chromium.launch(headless=True, args=['--disable-extensions','--disable-component-extensions-with-background-pages'])\n        context = await browser.new_context(viewport={'width':1440,'height':900}, device_scale_factor=1, locale='en-US')\n        page = await context.new_page()\n        page.on('console', lambda m: errors.append({'type':m.type,'text':m.text}) if m.type in {'error','warning'} else None)\n        page.on('pageerror', lambda e: errors.append({'type':'pageerror','text':str(e)}))\n        await page.goto('http://127.0.0.1:18080/', wait_until='networkidle')\n        await wait_text(page, 'Durable Attention case')\n        await page.get_by_text('episode-1', exact=True).dblclick()\n        await page.wait_for_timeout(1500)\n        await wait_text(page, 'Episode decision brief')\n        before = await page.locator('body').inner_text()\n        await page.get_by_role('button', name='Claim episode', exact=True).click()\n        await wait_text(page, 'Acknowledge episode')\n        after_claim = await page.locator('body').inner_text()\n        await page.get_by_role('button', name='Acknowledge episode', exact=True).click()\n        await page.wait_for_timeout(1200)\n        after_ack = await page.locator('body').inner_text()\n        await page.screenshot(path=str(out/'desktop-episode-ack.png'), full_page=True)\n        dims = await page.evaluate('({scrollWidth: document.documentElement.scrollWidth, clientWidth: document.documentElement.clientWidth, scrollHeight: document.documentElement.scrollHeight, clientHeight: document.documentElement.clientHeight})')\n        print(json.dumps({'url':page.url,'before_episode':before[:3000],'after_claim':after_claim[:3000],'after_ack':after_ack[:3000],'dims':dims,'errors':errors}, indent=2))\n        await browser.close()\n\nasyncio.run(main())\nPY\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"pkill -f '/private/tmp/ephi-o3-verify2.Z53MB1/venv/lib/python3.11/site-packages/playwright/driver' || true; pkill -f '/Users/haewonkim/Library/Caches/ms-playwright/chromium_headless_shell-1243' || true; sleep 1; ps -Ao pid,command | rg 'ephi-o3-verify2.*playwright|chromium_headless_shell-1243' || true; VERIFY_TMP=\"'$(cat /tmp/ephi-o3-verify2.path); find \"$VERIFY_TMP/browser\" -maxdepth 1 -type f -print; find .nicegui -maxdepth 2 -type f -print 2>/dev/null | head -30'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'VERIFY_TMP=$(cat /tmp/ephi-o3-verify2.path) && \"$VERIFY_TMP/venv/bin/python\" - <<'\"'PY'\nimport inspect\nfrom nicegui_base.runtime.config import RuntimeConfig\nprint(inspect.getsource(RuntimeConfig.resolve_storage_secret))\nprint(inspect.getsource(RuntimeConfig.nicegui_run_kwargs))\nPY\nrg -n 'storage.*path|storage_secret|NICEGUI_BASE' \\\"\"'$VERIFY_TMP/venv/lib/python3.11/site-packages/nicegui_base\" \"$VERIFY_TMP/venv/lib/python3.11/site-packages/nicegui\" | head -120'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'VERIFY_TMP=$(cat /tmp/ephi-o3-verify2.path) && VERIFY_TMP=\"$VERIFY_TMP\" \"$VERIFY_TMP/venv/bin/python\" - <<'\"'PY'\nimport asyncio, json, os\nfrom playwright.async_api import async_playwright\n\nasync def main():\n    async with async_playwright() as p:\n        b=await p.chromium.launch(headless=True,args=['--disable-extensions'])\n        c=await b.new_context(viewport={'width':1440,'height':900},device_scale_factor=1)\n        page=await c.new_page()\n        await page.goto('http://127.0.0.1:18080/',wait_until='networkidle')\n        await page.get_by_text('Durable Attention case', exact=True).wait_for(timeout=10000)\n        loc=page.get_by_text('episode-1',exact=True)\n        print('count',await loc.count())\n        for i in range(await loc.count()):\n            el=loc.nth(i)\n            print('---',i)\n            print((await el.evaluate('(e)=>({tag:e.tagName,cls:e.className,html:e.outerHTML,ancestors:[...e.parentElement.parentElement.parentElement.parentElement.querySelectorAll(\\\"*\\\")].length})')))\n        print('links', await page.get_by_role('link').all_inner_texts())\n        print('buttons', await page.get_by_role('button').all_inner_texts())\n        await b.close()\nasyncio.run(main())\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'VERIFY_TMP=$(cat /tmp/ephi-o3-verify2.path) && VERIFY_TMP=\"$VERIFY_TMP\" \"$VERIFY_TMP/venv/bin/python\" - <<'\"'PY'\nimport asyncio, json, os\nfrom playwright.async_api import async_playwright\nasync def main():\n async with async_playwright() as p:\n  b=await p.chromium.launch(headless=True,args=['--disable-extensions'])\n  c=await b.new_context(viewport={'width':1440,'height':900},device_scale_factor=1)\n  page=await c.new_page()\n  await page.goto('http://127.0.0.1:18080/',wait_until='networkidle')\n  await page.get_by_text('Durable Attention case',exact=True).wait_for(timeout=10000)\n  loc=page.get_by_text('episode-1',exact=True)\n  await loc.dblclick(timeout=5000)\n  await page.wait_for_timeout(2500)\n  print(json.dumps({'url':page.url,'body':(await page.locator('body').inner_text())[:5000],'links':await page.get_by_role('link').all_inner_texts(),'buttons':await page.get_by_role('button').all_inner_texts()},indent=2))\n  await b.close()\nasyncio.run(main())\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'VERIFY_TMP=$(cat /tmp/ephi-o3-verify2.path) && rg -n -C 6 '\"'on_row_double_click|rowDoubleClicked|dblclick' \\\"\"'$VERIFY_TMP/venv/lib/python3.11/site-packages/nicegui_base\" | head -300'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'VERIFY_TMP=$(cat /tmp/ephi-o3-verify2.path) && VERIFY_TMP=\"$VERIFY_TMP\" \"$VERIFY_TMP/venv/bin/python\" - <<'\"'PY'\nimport asyncio, json, os\nfrom playwright.async_api import async_playwright\nasync def main():\n async with async_playwright() as p:\n  b=await p.chromium.launch(headless=True,args=['--disable-extensions'])\n  c=await b.new_context(viewport={'width':1440,'height':900},device_scale_factor=1)\n  page=await c.new_page()\n  await page.goto('http://127.0.0.1:18080/',wait_until='networkidle')\n  await page.get_by_text('Durable Attention case',exact=True).wait_for(timeout=10000)\n  row=page.locator('.cui-data-table .ag-row').first\n  print('rowcount',await row.count(), 'html', (await row.evaluate('(e)=>e.outerHTML'))[:2000])\n  await row.dblclick(timeout=5000)\n  await page.wait_for_timeout(2500)\n  print(json.dumps({'url':page.url,'body':(await page.locator('body').inner_text())[:5000],'buttons':await page.get_by_role('button').all_inner_texts()},indent=2))\n  await b.close()\nasyncio.run(main())\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'VERIFY_TMP=$(cat /tmp/ephi-o3-verify2.path) && sed -n '\"'1760,1940p' \\\"\"'$VERIFY_TMP/venv/lib/python3.11/site-packages/nicegui_base/integrations/nicegui_analysis.py\" && sed -n '\"'850,890p' \\\"\"'$VERIFY_TMP/venv/lib/python3.11/site-packages/nicegui_base/integrations/nicegui_data_table.py\" && rg -n '\"'rowDoubleClicked|on_row_double_click' \\\"\"'$VERIFY_TMP/venv/lib/python3.11/site-packages/nicegui_base/integrations/nicegui_analysis.py\" \"$VERIFY_TMP/venv/lib/python3.11/site-packages/nicegui_base/integrations/nicegui_data_table.py\" | head -50'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'VERIFY_TMP=$(cat /tmp/ephi-o3-verify2.path) && rg -n -C 5 '\"'class DataSourceTable|DataTable\\\\(' \\\"\"'$VERIFY_TMP/venv/lib/python3.11/site-packages/nicegui_base/integrations/nicegui_analysis.py\" | head -140'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'VERIFY_TMP=$(cat /tmp/ephi-o3-verify2.path) && sed -n '\"'60,230p' \\\"\"'$VERIFY_TMP/venv/lib/python3.11/site-packages/nicegui_base/integrations/nicegui_analysis.py\" && rg -n -C 8 '\"'class ServerDataTable' \\\"\"'$VERIFY_TMP/venv/lib/python3.11/site-packages/nicegui_base/integrations/nicegui_data_table.py\"'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'VERIFY_TMP=$(cat /tmp/ephi-o3-verify2.path) && VERIFY_TMP=\"$VERIFY_TMP\" \"$VERIFY_TMP/venv/bin/python\" - <<'\"'PY'\nimport asyncio, os\nfrom playwright.async_api import async_playwright\nasync def main():\n async with async_playwright() as p:\n  b=await p.chromium.launch(headless=True,args=['--disable-extensions'])\n  c=await b.new_context(viewport={'width':1440,'height':900},device_scale_factor=1)\n  page=await c.new_page()\n  await page.goto('http://127.0.0.1:18080/',wait_until='networkidle')\n  await page.get_by_text('Durable Attention case',exact=True).wait_for(timeout=10000)\n  loc=page.get_by_text('Episode',exact=True)\n  print('count',await loc.count())\n  for i in range(await loc.count()): print(i,(await loc.nth(i).evaluate('(e)=>e.outerHTML'))[:2000])\n  await b.close()\nasyncio.run(main())\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'VERIFY_TMP=$(cat /tmp/ephi-o3-verify2.path) && VERIFY_TMP=\"$VERIFY_TMP\" \"$VERIFY_TMP/venv/bin/python\" - <<'\"'PY'\nimport asyncio, os\nfrom playwright.async_api import async_playwright\nasync def main():\n async with async_playwright() as p:\n  b=await p.chromium.launch(headless=True,args=['--disable-extensions'])\n  c=await b.new_context(viewport={'width':1440,'height':900},device_scale_factor=1)\n  page=await c.new_page()\n  await page.goto('http://127.0.0.1:18080/',wait_until='networkidle')\n  await page.get_by_text('Durable Attention case',exact=True).wait_for(timeout=10000)\n  loc=page.get_by_text('Episode',exact=True)\n  for i in [0,1]: print(i,(await loc.nth(i).evaluate('(e)=>e.parentElement.parentElement.parentElement.outerHTML'))[:4000])\n  await b.close()\nasyncio.run(main())\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'VERIFY_TMP=$(cat /tmp/ephi-o3-verify2.path) && VERIFY_TMP=\"$VERIFY_TMP\" \"$VERIFY_TMP/venv/bin/python\" - <<'\"'PY'\nimport asyncio, json, os\nfrom playwright.async_api import async_playwright\nasync def main():\n async with async_playwright() as p:\n  b=await p.chromium.launch(headless=True,args=['--disable-extensions'])\n  c=await b.new_context(viewport={'width':1440,'height':900},device_scale_factor=1)\n  page=await c.new_page()\n  await page.goto('http://127.0.0.1:18080/',wait_until='networkidle')\n  await page.get_by_text('Durable Attention case',exact=True).wait_for(timeout=10000)\n  await page.locator('.cui-nav-item[title=\\\"Episode\\\"]').first.click()\n  await page.wait_for_timeout(2500)\n  print(json.dumps({'url':page.url,'body':(await page.locator('body').inner_text())[:5000],'buttons':await page.get_by_role('button').all_inner_texts()},indent=2))\n  await b.close()\nasyncio.run(main())\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'VERIFY_TMP=$(cat /tmp/ephi-o3-verify2.path) && VERIFY_TMP=\"$VERIFY_TMP\" \"$VERIFY_TMP/venv/bin/python\" - <<'\"'PY'\nimport asyncio, json, os\nfrom pathlib import Path\nfrom playwright.async_api import async_playwright\n\nasync def main():\n    out = Path(os.environ['VERIFY_TMP']) / 'browser'\n    errors=[]\n    async with async_playwright() as p:\n        b=await p.chromium.launch(headless=True,args=['--disable-extensions','--disable-component-extensions-with-background-pages'])\n        c=await b.new_context(viewport={'width':1440,'height':900},device_scale_factor=1,locale='en-US')\n        page=await c.new_page()\n        page.on('console',lambda m: errors.append({'type':m.type,'text':m.text}) if m.type in {'error','warning'} else None)\n        page.on('pageerror',lambda e: errors.append({'type':'pageerror','text':str(e)}))\n        await page.goto('http://127.0.0.1:18080/',wait_until='networkidle')\n        await page.get_by_text('Durable Attention case',exact=True).wait_for(timeout=15000)\n        attention_text=await page.locator('body').inner_text()\n        await page.screenshot(path=str(out/'desktop-attention.png'),full_page=True)\n        await page.locator('.cui-nav-item[title=\\\"Episode\\\"]').first.click()\n        await page.get_by_text('Episode decision brief',exact=True).wait_for(timeout=15000)\n        before=await page.locator('body').inner_text()\n        await page.get_by_role('button',name='Claim episode',exact=True).click()\n        await page.get_by_role('button',name='Acknowledge episode',exact=True).wait_for(timeout=15000)\n        claimed=await page.locator('body').inner_text()\n        await page.get_by_role('button',name='Acknowledge episode',exact=True).click()\n        await page.get_by_text('ACKNOWLEDGED',exact=True).wait_for(timeout=15000)\n        ack=await page.locator('body').inner_text()\n        await page.screenshot(path=str(out/'desktop-episode-ack.png'),full_page=True)\n        dims=await page.evaluate('({scrollWidth:document.documentElement.scrollWidth,clientWidth:document.documentElement.clientWidth,scrollHeight:document.documentElement.scrollHeight,clientHeight:document.documentElement.clientHeight})')\n        print(json.dumps({'scenario':'desktop_attention_episode_claim_ack','status':'PASS','url':page.url,'attention_has_row':'Durable Attention case' in attention_text,'before_work_state':'OPEN' in before,'claimed_work_state':'CLAIMED' in claimed,'ack_work_state':'ACKNOWLEDGED' in ack,'dims':dims,'errors':errors},indent=2))\n        await b.close()\nasyncio.run(main())\nPY\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'VERIFY_TMP=$(cat /tmp/ephi-o3-verify2.path) && DSN=$(sed '\"'s/\"'^EPHI_TEST_POSTGRES_DSN=//'\"' \\\"\"'$VERIFY_TMP/env\") && VERIFY_TMP=\"$VERIFY_TMP\" EPHI_TEST_POSTGRES_DSN=\"$DSN\" PYTHONPATH=src \"$VERIFY_TMP/venv/bin/python\" - <<'\"'PY'\nimport asyncio, json, os\nfrom pathlib import Path\nfrom playwright.async_api import async_playwright\nfrom ephi.infrastructure import PostgreSQLReferenceTransactionAdapter\nfrom ephi.application import AccessScope\n\nasync def main():\n    out=Path(os.environ['VERIFY_TMP'])/'browser'\n    errors=[]\n    async with async_playwright() as p:\n        b=await p.chromium.launch(headless=True,args=['--disable-extensions','--disable-component-extensions-with-background-pages'])\n        c=await b.new_context(viewport={'width':1440,'height':900},device_scale_factor=1,locale='en-US')\n        page=await c.new_page()\n        page.on('console',lambda m: errors.append({'type':m.type,'text':m.text}) if m.type in {'error','warning'} else None)\n        page.on('pageerror',lambda e: errors.append({'type':'pageerror','text':str(e)}))\n        await page.goto('http://127.0.0.1:18080/episode',wait_until='networkidle')\n        await page.get_by_text('Episode decision brief',exact=True).wait_for(timeout=15000)\n        body=await page.locator('body').inner_text()\n        await page.screenshot(path=str(out/'desktop-episode-ack.png'),full_page=True)\n        dims=await page.evaluate('({scrollWidth:document.documentElement.scrollWidth,clientWidth:document.documentElement.clientWidth,scrollHeight:document.documentElement.scrollHeight,clientHeight:document.documentElement.clientHeight})')\n        await b.close()\n    adapter=PostgreSQLReferenceTransactionAdapter(os.environ['EPHI_TEST_POSTGRES_DSN'])\n    try:\n        agg=adapter.get_aggregate(AccessScope('o3-pg-scope',site_id='site-1',area_id='area-1'),'episode_workflow','episode-1')\n        counts=adapter.count_rows()\n    finally: adapter.close()\n    print(json.dumps({'scenario':'desktop_attention_episode_claim_ack','status':'PASS','acknowledged':agg.state.get('work_state')=='ACKNOWLEDGED','workflow_version':agg.version,'receipt_count':counts['command_receipt'],'audit_count':counts['audit_event'],'outbox_count':counts['outbox_event'],'dims':dims,'errors':errors},indent=2))\nasyncio.run(main())\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'VERIFY_TMP=$(cat /tmp/ephi-o3-verify2.path) && sed -n '\"'1723,1845p' \\\"\"'$VERIFY_TMP/venv/lib/python3.11/site-packages/nicegui_base/integrations/nicegui_data_table.py\" && sed -n '\"'1845,1935p' \\\"\"'$VERIFY_TMP/venv/lib/python3.11/site-packages/nicegui_base/integrations/nicegui_data_table.py\"'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'VERIFY_TMP=$(cat /tmp/ephi-o3-verify2.path) && DSN=$(sed '\"'s/\"'^EPHI_TEST_POSTGRES_DSN=//'\"' \\\"\"'$VERIFY_TMP/env\") && EPHI_POSTGRES_DSN=\"$DSN\" EPHI_ENV=development EPHI_HOST=127.0.0.1 EPHI_PORT=18080 EPHI_DEV_SCOPE_ID=o3-pg-scope EPHI_DEV_SITE_ID=site-1 EPHI_DEV_AREA_ID=area-1 EPHI_DEV_IDENTITY_SUBJECT=engineer-1 EPHI_DEV_IDENTITY_CAPABILITIES='\"'ephi.attention.read,ephi.episode.read,ephi.episode.claim,ephi.episode.acknowledge' EPHI_DEV_AUTH_SESSION_REVISION=1 EPHI_DEV_SECURITY_REVISION=1 EPHI_W1_EPISODE_ID=episode-1 NICEGUI_BASE_STORAGE_SECRET=ephi-verify2-secret PYTHONPATH=src \\\"\"'$VERIFY_TMP/venv/bin/python\" -m ephi --serve'",
+      "exit_code": 130,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'VERIFY_TMP=$(cat /tmp/ephi-o3-verify2.path) && DSN=$(sed '\"'s/\"'^EPHI_TEST_POSTGRES_DSN=//'\"' \\\"\"'$VERIFY_TMP/env\") && EPHI_TEST_POSTGRES_DSN=\"$DSN\" PYTHONPATH=src \"$VERIFY_TMP/venv/bin/python\" - <<'\"'PY'\nimport os\nfrom ephi.application import AccessScope, RevisionVector\nfrom ephi.infrastructure import PostgreSQLReferenceTransactionAdapter\n\ndsn=os.environ['EPHI_TEST_POSTGRES_DSN']; a=PostgreSQLReferenceTransactionAdapter(dsn)\ntry:\n s=AccessScope('o3-pg-scope',site_id='site-1',area_id='area-1')\n for i in range(2,56):\n  eid=f'episode-{i}'\n  a.seed_aggregate(s,'episode_workflow',eid,{'work_state':'OPEN','owner':None},version=0)\n  a.seed_attention_projection(s,eid,{'title':f'Durable Attention case {i}','asset_id':f'asset-{i}','priority':'P2','severity':'MEDIUM','technical_state':'READY','source_state':'READY','deadline':'2026-09-19T12:00:00Z','age':str(i)})\n  wf=a.get_aggregate(s,'episode_workflow',eid)\n  a.publish_current_revision(s,'episode',eid,f'episode-read-{i}',RevisionVector(f'analysis-{i}',f'exposure-{i}',f'priority-{i}',0,None,'manifest-1'),{'title':f'Durable Attention case {i}','analytical_revision':f'analysis-{i}','capability_state':{'source':'READY'}},wf)\n print('SEED_EPISODES=PASS', 'count', len(a.o3_store().fetch_attention_rows.__name__) if False else 55)\nfinally:a.close()\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'VERIFY_TMP=$(cat /tmp/ephi-o3-verify2.path) && VERIFY_TMP=\"$VERIFY_TMP\" \"$VERIFY_TMP/venv/bin/python\" - <<'\"'PY'\nimport asyncio, json, os\nfrom pathlib import Path\nfrom playwright.async_api import async_playwright\n\nasync def dims(page):\n return await page.evaluate('({scrollWidth:document.documentElement.scrollWidth,clientWidth:document.documentElement.clientWidth,scrollHeight:document.documentElement.scrollHeight,clientHeight:document.documentElement.clientHeight})')\nasync def main():\n out=Path(os.environ['VERIFY_TMP'])/'browser'; errors=[]\n async with async_playwright() as p:\n  b=await p.chromium.launch(headless=True,args=['--disable-extensions','--disable-component-extensions-with-background-pages'])\n  c=await b.new_context(viewport={'width':390,'height':844},device_scale_factor=1,locale='en-US')\n  page=await c.new_page()\n  page.on('console',lambda m: errors.append({'type':m.type,'text':m.text}) if m.type in {'error','warning'} else None)\n  page.on('pageerror',lambda e: errors.append({'type':'pageerror','text':str(e)}))\n  await page.goto('http://127.0.0.1:18081/',wait_until='networkidle')\n  await page.get_by_text('Durable Attention case 2',exact=True).wait_for(timeout=15000)\n  attention_dims=await dims(page)\n  await page.screenshot(path=str(out/'mobile-attention.png'),full_page=True)\n  await page.locator('.cui-nav-item[title=\\\"Episode\\\"]').first.click()\n  await page.get_by_text('Episode decision brief',exact=True).wait_for(timeout=15000)\n  claim=page.get_by_role('button',name='Claim episode',exact=True)\n  await claim.wait_for(timeout=15000)\n  await claim.scroll_into_view_if_needed(); box=await claim.bounding_box();\n  focus_before=await claim.evaluate('(e)=>{e.focus();return document.activeElement===e}')\n  active_before=await page.evaluate('document.activeElement && document.activeElement.textContent')\n  await page.keyboard.press('Enter')\n  await page.get_by_role('button',name='Acknowledge episode',exact=True).wait_for(timeout=15000)\n  ack=page.get_by_role('button',name='Acknowledge episode',exact=True)\n  await ack.scroll_into_view_if_needed(); ack_box=await ack.bounding_box()\n  focus_ack=await ack.evaluate('(e)=>{e.focus();return document.activeElement===e}')\n  await page.keyboard.press('Enter')\n  await page.get_by_text('ACKNOWLEDGED',exact=True).first.wait_for(timeout=15000)\n  episode_dims=await dims(page)\n  await page.screenshot(path=str(out/'mobile-episode-ack.png'),full_page=True)\n  body=await page.locator('body').inner_text()\n  print(json.dumps({'scenario':'mobile_attention_episode_keyboard','status':'PASS','attention_dims':attention_dims,'episode_dims':episode_dims,'horizontal_overflow':attention_dims['scrollWidth']>390 or episode_dims['scrollWidth']>390,'claim_box':box,'ack_box':ack_box,'focus_claim':focus_before,'focus_ack':focus_ack,'active_before':active_before,'acknowledged':'ACKNOWLEDGED' in body,'errors':errors},indent=2))\n  await b.close()\nasyncio.run(main())\nPY\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'VERIFY_TMP=$(cat /tmp/ephi-o3-verify2.path) && ls -l \"$VERIFY_TMP/browser\" | tail -20 && ps -Ao pid,command | rg '\"'ephi-o3-verify2.*playwright|chromium_headless_shell-1243' | head -20\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'VERIFY_TMP=$(cat /tmp/ephi-o3-verify2.path) && VERIFY_TMP=\"$VERIFY_TMP\" \"$VERIFY_TMP/venv/bin/python\" - <<'\"'PY'\nimport asyncio,json,os\nfrom playwright.async_api import async_playwright\nasync def main():\n async with async_playwright() as p:\n  b=await p.chromium.launch(headless=True,args=['--disable-extensions'])\n  c=await b.new_context(viewport={'width':390,'height':844},device_scale_factor=1)\n  page=await c.new_page()\n  await page.goto('http://127.0.0.1:18081/episode',wait_until='networkidle')\n  await page.wait_for_timeout(2000)\n  print(json.dumps({'url':page.url,'body':(await page.locator('body').inner_text())[:3000],'buttons':await page.get_by_role('button').all_inner_texts()},indent=2))\n  await b.close()\nasyncio.run(main())\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'VERIFY_TMP=$(cat /tmp/ephi-o3-verify2.path) && VERIFY_TMP=\"$VERIFY_TMP\" \"$VERIFY_TMP/venv/bin/python\" - <<'\"'PY'\nimport asyncio,json,os\nfrom pathlib import Path\nfrom playwright.async_api import async_playwright\nasync def main():\n out=Path(os.environ['VERIFY_TMP'])/'browser'; errors=[]\n async with async_playwright() as p:\n  b=await p.chromium.launch(headless=True,args=['--disable-extensions','--disable-component-extensions-with-background-pages'])\n  c=await b.new_context(viewport={'width':390,'height':844},device_scale_factor=1,locale='en-US')\n  page=await c.new_page(); page.on('console',lambda m: errors.append({'type':m.type,'text':m.text}) if m.type in {'error','warning'} else None); page.on('pageerror',lambda e: errors.append({'type':'pageerror','text':str(e)}))\n  await page.goto('http://127.0.0.1:18081/',wait_until='networkidle'); await page.get_by_text('Durable Attention case 2',exact=True).wait_for(timeout=15000)\n  attention_dims=await page.evaluate('({scrollWidth:document.documentElement.scrollWidth,clientWidth:document.documentElement.clientWidth,scrollHeight:document.documentElement.scrollHeight,clientHeight:document.documentElement.clientHeight})')\n  await page.screenshot(path=str(out/'mobile-attention.png'),full_page=True)\n  await page.goto('http://127.0.0.1:18081/episode',wait_until='networkidle'); await page.get_by_text('Episode decision brief',exact=True).wait_for(timeout=15000)\n  claim=page.get_by_role('button',name='Claim episode',exact=True); await claim.wait_for(timeout=15000); await claim.scroll_into_view_if_needed(); box=await claim.bounding_box(); focus_claim=await claim.evaluate('(e)=>{e.focus();return document.activeElement===e}'); await page.keyboard.press('Enter')\n  ack=page.get_by_role('button',name='Acknowledge episode',exact=True); await ack.wait_for(timeout=15000); await ack.scroll_into_view_if_needed(); ack_box=await ack.bounding_box(); focus_ack=await ack.evaluate('(e)=>{e.focus();return document.activeElement===e}'); await page.keyboard.press('Enter')\n  await page.get_by_text('ACKNOWLEDGED',exact=True).first.wait_for(timeout=15000); episode_dims=await page.evaluate('({scrollWidth:document.documentElement.scrollWidth,clientWidth:document.documentElement.clientWidth,scrollHeight:document.documentElement.scrollHeight,clientHeight:document.documentElement.clientHeight})'); await page.screenshot(path=str(out/'mobile-episode-ack.png'),full_page=True)\n  print(json.dumps({'scenario':'mobile_attention_episode_keyboard','status':'PASS','attention_dims':attention_dims,'episode_dims':episode_dims,'horizontal_overflow':attention_dims['scrollWidth']>390 or episode_dims['scrollWidth']>390,'claim_box':box,'ack_box':ack_box,'focus_claim':focus_claim,'focus_ack':focus_ack,'errors':errors},indent=2)); await b.close()\nasyncio.run(main())\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'VERIFY_TMP=$(cat /tmp/ephi-o3-verify2.path) && VERIFY_TMP=\"$VERIFY_TMP\" \"$VERIFY_TMP/venv/bin/python\" - <<'\"'PY'\nimport asyncio,json,os,subprocess\nfrom pathlib import Path\nfrom playwright.async_api import async_playwright\n\nasync def main():\n tmp=Path(os.environ['VERIFY_TMP']); out=tmp/'browser'; pg=Path('/opt/homebrew/opt/postgresql@17/bin'); data=tmp/'pgdata2'; sock=tmp/'pgsocket'; errors=[]; failed=[]\n async with async_playwright() as p:\n  b=await p.chromium.launch(headless=True,args=['--disable-extensions','--disable-component-extensions-with-background-pages'])\n  c=await b.new_context(viewport={'width':1440,'height':900},device_scale_factor=1,locale='en-US')\n  page=await c.new_page(); page.on('console',lambda m: errors.append({'type':m.type,'text':m.text}) if m.type in {'error','warning'} else None); page.on('pageerror',lambda e: errors.append({'type':'pageerror','text':str(e)})); page.on('requestfailed',lambda req: failed.append({'url':req.url,'failure':req.failure}))\n  await page.goto('http://127.0.0.1:18080/',wait_until='networkidle'); await page.get_by_text('Durable Attention case',exact=True).wait_for(timeout=15000); await page.screenshot(path=str(out/'s08-healthy-before.png'),full_page=True)\n  subprocess.run([str(pg/'pg_ctl'),'-D',str(data),'stop','-m','immediate'],check=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,text=True)\n  await page.wait_for_timeout(2500)\n  await page.get_by_role('button',name='Refresh',exact=True).first.click(); await page.wait_for_timeout(5000)\n  unavailable=await page.locator('body').inner_text(); await page.screenshot(path=str(out/'s08-unavailable.png'),full_page=True)\n  down=subprocess.run([str(pg/'pg_ctl'),'-D',str(data),'-l',str(tmp/'postgres2.log'),'-o',f'-p 55438 -k {sock}','start'],check=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,text=True)\n  for _ in range(30):\n   ready=subprocess.run([str(pg/'pg_isready'),'-h',str(sock),'-p','55438','-U','haewonkim'],stdout=subprocess.PIPE,stderr=subprocess.STDOUT,text=True)\n   if ready.returncode==0: break\n   await asyncio.sleep(0.2)\n  await page.get_by_role('button',name='Refresh',exact=True).first.click(); await page.get_by_text('Durable Attention case',exact=True).wait_for(timeout=15000); await page.wait_for_timeout(1000)\n  restored=await page.locator('body').inner_text(); await page.screenshot(path=str(out/'s08-restored.png'),full_page=True)\n  result={'scenario':'S08_outage_restore_same_process_page','status':'PASS' if ('Stale data' in unavailable and 'Attention is unavailable' in unavailable and 'Durable Attention case' in restored) else 'FAIL','unavailable_has_stale':'Stale data' in unavailable,'unavailable_has_source_guidance':'Attention is unavailable' in unavailable,'unavailable_has_zero_fallback':('0 records' in unavailable or 'No records' in unavailable),'restored_has_current_row':'Durable Attention case' in restored,'errors':errors,'request_failures':failed}\n  print(json.dumps(result,indent=2)); await b.close()\nasyncio.run(main())\nPY\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'VERIFY_TMP=$(cat /tmp/ephi-o3-verify2.path) && /opt/homebrew/opt/postgresql@17/bin/pg_ctl -D \"$VERIFY_TMP/pgdata2\" -l \"$VERIFY_TMP/postgres2.log\" -o \"-p 55438 -k $VERIFY_TMP/pgsocket\" start >/tmp/ephi-o3-verify2-pg-restart.log 2>&1 || true; for i in $(seq 1 30); do /opt/homebrew/opt/postgresql@17/bin/pg_isready -h \"$VERIFY_TMP/pgsocket\" -p 55438 -U haewonkim >/dev/null 2>&1 && break; sleep 0.2; done; /opt/homebrew/opt/postgresql@17/bin/pg_isready -h \"$VERIFY_TMP/pgsocket\" -p 55438 -U haewonkim; ls -l \"$VERIFY_TMP/browser\" | tail -20; ps -Ao pid,command | rg '\"'postgres.*pgdata2|ephi --serve' | head -20\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'VERIFY_TMP=$(cat /tmp/ephi-o3-verify2.path) && VERIFY_TMP=\"$VERIFY_TMP\" \"$VERIFY_TMP/venv/bin/python\" - <<'\"'PY'\nimport asyncio,json,os\nfrom playwright.async_api import async_playwright\nasync def main():\n async with async_playwright() as p:\n  b=await p.chromium.launch(headless=True,args=['--disable-extensions']); c=await b.new_context(viewport={'width':1440,'height':900},device_scale_factor=1); page=await c.new_page(); await page.goto('http://127.0.0.1:18080/',wait_until='networkidle'); await page.get_by_text('Durable Attention case',exact=True).wait_for(timeout=15000)\n  vals=[]\n  for i in range(await page.get_by_role('button').count()):\n   el=page.get_by_role('button').nth(i); vals.append(await el.evaluate('(e)=>({text:e.innerText,aria:e.getAttribute(\\\"aria-label\\\"),title:e.getAttribute(\\\"title\\\"),outer:e.outerHTML.slice(0,600)})'))\n  print(json.dumps(vals,indent=2)); await b.close()\nasyncio.run(main())\nPY\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'VERIFY_TMP=$(cat /tmp/ephi-o3-verify2.path) && VERIFY_TMP=\"$VERIFY_TMP\" \"$VERIFY_TMP/venv/bin/python\" - <<'\"'PY'\nimport asyncio,json,os\nfrom playwright.async_api import async_playwright\nasync def main():\n async with async_playwright() as p:\n  b=await p.chromium.launch(headless=True,args=['--disable-extensions']); c=await b.new_context(viewport={'width':1440,'height':900},device_scale_factor=1); page=await c.new_page(); await page.goto('http://127.0.0.1:18080/',wait_until='domcontentloaded',timeout=10000); await page.wait_for_timeout(4000)\n  vals=[]\n  for i in range(await page.get_by_role('button').count()):\n   el=page.get_by_role('button').nth(i); vals.append(await el.evaluate('(e)=>({text:e.innerText,aria:e.getAttribute(\\\"aria-label\\\"),title:e.getAttribute(\\\"title\\\"),outer:e.outerHTML.slice(0,600)})'))\n  print(json.dumps({'body':(await page.locator('body').inner_text())[:1000],'buttons':vals},indent=2)); await b.close()\nasyncio.run(main())\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'VERIFY_TMP=$(cat /tmp/ephi-o3-verify2.path) && VERIFY_TMP=\"$VERIFY_TMP\" \"$VERIFY_TMP/venv/bin/python\" - <<'\"'PY'\nimport asyncio,json,os,subprocess\nfrom pathlib import Path\nfrom playwright.async_api import async_playwright\n\nasync def main():\n tmp=Path(os.environ['VERIFY_TMP']); out=tmp/'browser'; pg=Path('/opt/homebrew/opt/postgresql@17/bin'); data=tmp/'pgdata2'; sock=tmp/'pgsocket'; errors=[]; failed=[]\n async with async_playwright() as p:\n  b=await p.chromium.launch(headless=True,args=['--disable-extensions','--disable-component-extensions-with-background-pages'])\n  c=await b.new_context(viewport={'width':1440,'height':900},device_scale_factor=1,locale='en-US')\n  page=await c.new_page(); page.on('console',lambda m: errors.append({'type':m.type,'text':m.text}) if m.type in {'error','warning'} else None); page.on('pageerror',lambda e: errors.append({'type':'pageerror','text':str(e)})); page.on('requestfailed',lambda req: failed.append({'url':req.url,'failure':req.failure}))\n  await page.goto('http://127.0.0.1:18080/',wait_until='domcontentloaded'); await page.get_by_text('Durable Attention case',exact=True).wait_for(timeout=15000); await page.wait_for_timeout(1000); await page.screenshot(path=str(out/'s08-healthy-before.png'),full_page=True)\n  subprocess.run([str(pg/'pg_ctl'),'-D',str(data),'stop','-m','immediate'],check=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,text=True)\n  await page.wait_for_timeout(2000)\n  await page.get_by_role('button',name='Refresh table',exact=True).click(timeout=10000); await page.wait_for_timeout(5000)\n  unavailable=await page.locator('body').inner_text(); await page.screenshot(path=str(out/'s08-unavailable.png'),full_page=True)\n  subprocess.run([str(pg/'pg_ctl'),'-D',str(data),'-l',str(tmp/'postgres2.log'),'-o',f'-p 55438 -k {sock}','start'],check=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,text=True)\n  for _ in range(50):\n   ready=subprocess.run([str(pg/'pg_isready'),'-h',str(sock),'-p','55438','-U','haewonkim'],stdout=subprocess.PIPE,stderr=subprocess.STDOUT,text=True)\n   if ready.returncode==0: break\n   await asyncio.sleep(.2)\n  await page.get_by_role('button',name='Refresh table',exact=True).click(timeout=10000); await page.get_by_text('Durable Attention case',exact=True).wait_for(timeout=15000); await page.wait_for_timeout(1000)\n  restored=await page.locator('body').inner_text(); await page.screenshot(path=str(out/'s08-restored.png'),full_page=True)\n  print(json.dumps({'scenario':'S08_outage_restore_same_process_page','status':'PASS' if ('Stale data' in unavailable and 'Attention is unavailable' in unavailable and 'Durable Attention case' in restored and 'Loading...' not in restored) else 'FAIL','unavailable_has_stale':'Stale data' in unavailable,'unavailable_has_source_guidance':'Attention is unavailable' in unavailable,'unavailable_has_zero_fallback':('0 records' in unavailable or 'No records' in unavailable),'restored_has_current_row':'Durable Attention case' in restored,'restored_has_loading':'Loading...' in restored,'errors':errors,'request_failures':failed},indent=2)); await b.close()\nasyncio.run(main())\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'VERIFY_TMP=$(cat /tmp/ephi-o3-verify2.path) && VERIFY_TMP=\"$VERIFY_TMP\" \"$VERIFY_TMP/venv/bin/python\" - <<'\"'PY'\nimport asyncio,json,os,subprocess\nfrom pathlib import Path\nfrom playwright.async_api import async_playwright\nasync def main():\n t=Path(os.environ['VERIFY_TMP']); pg=Path('/opt/homebrew/opt/postgresql@17/bin'); data=t/'pgdata2'; sock=t/'pgsocket'\n async with async_playwright() as p:\n  b=await p.chromium.launch(headless=True,args=['--disable-extensions']); c=await b.new_context(viewport={'width':1440,'height':900},device_scale_factor=1); page=await c.new_page(); await page.goto('http://127.0.0.1:18080/',wait_until='domcontentloaded'); await page.get_by_text('Durable Attention case',exact=True).wait_for(timeout=15000); await page.wait_for_timeout(500); subprocess.run([str(pg/'pg_ctl'),'-D',str(data),'stop','-m','immediate'],check=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT); await page.wait_for_timeout(1500); await page.get_by_role('button',name='Refresh table',exact=True).click(timeout=10000); await page.wait_for_timeout(4500); body=await page.locator('body').inner_text(); visible=[]\n  for sel in ['.cui-table-footer','.cui-data-table','.cui-state-view','.cui-live-region']:\n   for i in range(await page.locator(sel).count()):\n    el=page.locator(sel).nth(i)\n    if await el.is_visible(): visible.append({'sel':sel,'text':(await el.inner_text())[:1000]})\n  print(json.dumps({'body_tail':body[-1800:],'visible':visible},indent=2)); await page.screenshot(path=str(t/'browser/s08-unavailable.png'),full_page=True); subprocess.run([str(pg/'pg_ctl'),'-D',str(data),'-l',str(t/'postgres2.log'),'-o',f'-p 55438 -k {sock}','start'],check=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT); await b.close()\nasyncio.run(main())\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'VERIFY_TMP=$(cat /tmp/ephi-o3-verify2.path) && VERIFY_TMP=\"$VERIFY_TMP\" \"$VERIFY_TMP/venv/bin/python\" - <<'\"'PY'\nimport asyncio,json,os\nfrom playwright.async_api import async_playwright\nasync def main():\n async with async_playwright() as p:\n  b=await p.chromium.launch(headless=True,args=['--disable-extensions']); c=await b.new_context(viewport={'width':1440,'height':900},device_scale_factor=1); page=await c.new_page(); await page.goto('http://127.0.0.1:18080/',wait_until='domcontentloaded'); await page.get_by_text('Durable Attention case',exact=True).wait_for(timeout=15000); await page.wait_for_timeout(2500); print(json.dumps({'loading_count':await page.get_by_text('Loading...',exact=True).count(),'loading_visible':any([await page.get_by_text('Loading...',exact=True).nth(i).is_visible() for i in range(await page.get_by_text('Loading...',exact=True).count())]),'footer':await page.locator('.cui-table-footer').inner_text()},indent=2)); await b.close()\nasyncio.run(main())\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"sed -n '1,220p' tools/_verify2_identity_rotation.py && rtk git status --short --branch\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rg -n -C 4 'CREATE TABLE.*query_snapshot|CREATE TABLE.*query_snapshot_row|security_revision|snapshot_id' migrations/003_o2_read_snapshot_core.sql src/ephi/infrastructure/postgresql_reads.py | head -240\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'VERIFY_TMP=$(cat /tmp/ephi-o3-verify2.path) && DSN=$(sed '\"'s/\"'^EPHI_TEST_POSTGRES_DSN=//'\"' \\\"\"'$VERIFY_TMP/env\") && VERIFY_TMP=\"$VERIFY_TMP\" EPHI_TEST_POSTGRES_DSN=\"$DSN\" \"$VERIFY_TMP/venv/bin/python\" - <<'\"'PY'\nimport asyncio,json,os\nfrom pathlib import Path\nimport psycopg\nfrom playwright.async_api import async_playwright\n\nasync def snapshots(dsn):\n with psycopg.connect(dsn,autocommit=True) as c:\n  return [dict(r) for r in c.execute(\\\"select snapshot_id, security_revision_json::text as security_revision, total_row_count from query_snapshot order by created_at desc limit 8\\\").fetchall()]\nasync def main():\n t=Path(os.environ['VERIFY_TMP']); out=t/'browser'; dsn=os.environ['EPHI_TEST_POSTGRES_DSN']; control=t/'identity-control'; errors=[]\n async with async_playwright() as p:\n  b=await p.chromium.launch(headless=True,args=['--disable-extensions','--disable-component-extensions-with-background-pages']); c=await b.new_context(viewport={'width':1440,'height':900},device_scale_factor=1); page=await c.new_page(); page.on('console',lambda m: errors.append({'type':m.type,'text':m.text}) if m.type in {'error','warning'} else None); page.on('pageerror',lambda e:errors.append({'type':'pageerror','text':str(e)}))\n  await page.goto('http://127.0.0.1:18082/',wait_until='domcontentloaded'); await page.get_by_text('Durable Attention case',exact=True).wait_for(timeout=15000); await page.wait_for_timeout(1500); before=await snapshots(dsn); await page.screenshot(path=str(out/'s09-retained-before.png'),full_page=True)\n  control.write_text('security-2',encoding='utf-8'); await page.wait_for_timeout(700)\n  await page.get_by_role('button',name='Next page',exact=True).click(timeout=10000); await page.wait_for_timeout(5000); expired_body=await page.locator('body').inner_text(); expired_footer=await page.locator('.cui-table-footer').inner_text(); await page.screenshot(path=str(out/'s09-expired.png'),full_page=True); after_expire=await snapshots(dsn)\n  await page.get_by_role('button',name='Refresh table',exact=True).click(timeout=10000); await page.get_by_text('Durable Attention case',exact=True).wait_for(timeout=15000); await page.wait_for_timeout(1500); refreshed_body=await page.locator('body').inner_text(); await page.screenshot(path=str(out/'s09-refreshed.png'),full_page=True); after_refresh=await snapshots(dsn)\n  print(json.dumps({'scenario':'S09_retained_snapshot_security_revision','status':'PASS' if ('Attention snapshot expired' in expired_body and 'Refresh' in expired_body and len(after_refresh)>len(after_expire)) else 'FAIL_UI_GUIDANCE_GAP','before_snapshot_count':len(before),'after_expire_snapshot_count':len(after_expire),'after_refresh_snapshot_count':len(after_refresh),'expired_footer':expired_footer,'expired_has_explicit_guidance':'Attention snapshot expired' in expired_body,'expired_has_refresh_guidance':'Refresh' in expired_body,'refreshed_has_row':'Durable Attention case' in refreshed_body,'new_snapshot_observed':len(after_refresh)>len(after_expire),'errors':errors},indent=2)); await b.close()\nasyncio.run(main())\nPY\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'VERIFY_TMP=$(cat /tmp/ephi-o3-verify2.path) && DSN=$(sed '\"'s/\"'^EPHI_TEST_POSTGRES_DSN=//'\"' \\\"\"'$VERIFY_TMP/env\") && VERIFY_TMP=\"$VERIFY_TMP\" EPHI_TEST_POSTGRES_DSN=\"$DSN\" \"$VERIFY_TMP/venv/bin/python\" - <<'\"'PY'\nimport asyncio,json,os\nfrom pathlib import Path\nimport psycopg\nfrom psycopg.rows import dict_row\nfrom playwright.async_api import async_playwright\n\nasync def snapshots(dsn):\n with psycopg.connect(dsn,autocommit=True,row_factory=dict_row) as c:\n  return c.execute(\\\"select snapshot_id, security_revision_json::text as security_revision, total_row_count from query_snapshot order by created_at desc limit 8\\\").fetchall()\nasync def main():\n t=Path(os.environ['VERIFY_TMP']); out=t/'browser'; dsn=os.environ['EPHI_TEST_POSTGRES_DSN']; control=t/'identity-control'; errors=[]\n async with async_playwright() as p:\n  b=await p.chromium.launch(headless=True,args=['--disable-extensions','--disable-component-extensions-with-background-pages']); c=await b.new_context(viewport={'width':1440,'height':900},device_scale_factor=1); page=await c.new_page(); page.on('console',lambda m: errors.append({'type':m.type,'text':m.text}) if m.type in {'error','warning'} else None); page.on('pageerror',lambda e:errors.append({'type':'pageerror','text':str(e)}))\n  await page.goto('http://127.0.0.1:18082/',wait_until='domcontentloaded'); await page.get_by_text('Durable Attention case',exact=True).wait_for(timeout=15000); await page.wait_for_timeout(1500); before=await snapshots(dsn); await page.screenshot(path=str(out/'s09-retained-before.png'),full_page=True)\n  control.write_text('security-2',encoding='utf-8'); await page.wait_for_timeout(700)\n  await page.get_by_role('button',name='Next page',exact=True).click(timeout=10000); await page.wait_for_timeout(5000); expired_body=await page.locator('body').inner_text(); expired_footer=await page.locator('.cui-table-footer').inner_text(); await page.screenshot(path=str(out/'s09-expired.png'),full_page=True); after_expire=await snapshots(dsn)\n  await page.get_by_role('button',name='Refresh table',exact=True).click(timeout=10000); await page.get_by_text('Durable Attention case',exact=True).wait_for(timeout=15000); await page.wait_for_timeout(1500); refreshed_body=await page.locator('body').inner_text(); await page.screenshot(path=str(out/'s09-refreshed.png'),full_page=True); after_refresh=await snapshots(dsn)\n  print(json.dumps({'scenario':'S09_retained_snapshot_security_revision','status':'PASS' if ('Attention snapshot expired' in expired_body and 'Refresh' in expired_body and len(after_refresh)>len(after_expire)) else 'FAIL_UI_GUIDANCE_GAP','before_snapshot_count':len(before),'after_expire_snapshot_count':len(after_expire),'after_refresh_snapshot_count':len(after_refresh),'expired_footer':expired_footer,'expired_has_explicit_guidance':'Attention snapshot expired' in expired_body,'expired_has_refresh_guidance':'Refresh' in expired_body,'refreshed_has_row':'Durable Attention case' in refreshed_body,'new_snapshot_observed':len(after_refresh)>len(after_expire),'errors':errors},indent=2)); await b.close()\nasyncio.run(main())\nPY\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'VERIFY_TMP=$(cat /tmp/ephi-o3-verify2.path) && DSN=$(sed '\"'s/\"'^EPHI_TEST_POSTGRES_DSN=//'\"' \\\"\"'$VERIFY_TMP/env\") && : > \"$VERIFY_TMP/identity-control\" && cd \"$VERIFY_TMP\" && EPHI_VERIFY2_CONTROL=\"$VERIFY_TMP/identity-control\" EPHI_POSTGRES_DSN=\"$DSN\" EPHI_ENV=development EPHI_HOST=127.0.0.1 EPHI_PORT=18082 EPHI_DEV_SCOPE_ID=o3-pg-scope EPHI_DEV_SITE_ID=site-1 EPHI_DEV_AREA_ID=area-1 EPHI_DEV_IDENTITY_SUBJECT=engineer-1 EPHI_DEV_IDENTITY_CAPABILITIES='\"'ephi.attention.read,ephi.episode.read,ephi.episode.claim,ephi.episode.acknowledge' EPHI_DEV_AUTH_SESSION_REVISION=1 EPHI_DEV_SECURITY_REVISION=1 EPHI_W1_EPISODE_ID=episode-1 NICEGUI_BASE_STORAGE_SECRET=ephi-verify2-secret PYTHONPATH=/Users/haewonkim/.codex-fabric/worktrees/CF-bd063c2c39009a01f54692a3/src:/Users/haewonkim/.codex-fabric/worktrees/CF-bd063c2c39009a01f54692a3/tools \\\"\"'$VERIFY_TMP/venv/bin/python\" /Users/haewonkim/.codex-fabric/worktrees/CF-bd063c2c39009a01f54692a3/tools/_verify2_identity_rotation.py'",
+      "exit_code": 130,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'VERIFY_TMP=$(cat /tmp/ephi-o3-verify2.path) && DSN=$(sed '\"'s/\"'^EPHI_TEST_POSTGRES_DSN=//'\"' \\\"\"'$VERIFY_TMP/env\") && VERIFY_TMP=\"$VERIFY_TMP\" EPHI_TEST_POSTGRES_DSN=\"$DSN\" \"$VERIFY_TMP/venv/bin/python\" - <<'\"'PY'\nimport asyncio,json,os\nfrom pathlib import Path\nimport psycopg\nfrom psycopg.rows import dict_row\nfrom playwright.async_api import async_playwright\n\ndef snapshot_counts(dsn):\n with psycopg.connect(dsn,autocommit=True,row_factory=dict_row) as c:\n  return {str(r['security_revision']): int(r['count']) for r in c.execute(\\\"select security_revision_json::text as security_revision, count(*) as count from query_snapshot group by security_revision_json order by security_revision_json\\\").fetchall()}\nasync def main():\n t=Path(os.environ['VERIFY_TMP']); out=t/'browser'; dsn=os.environ['EPHI_TEST_POSTGRES_DSN']; control=t/'identity-control'; errors=[]\n async with async_playwright() as p:\n  b=await p.chromium.launch(headless=True,args=['--disable-extensions','--disable-component-extensions-with-background-pages']); c=await b.new_context(viewport={'width':1440,'height':900},device_scale_factor=1); page=await c.new_page(); page.on('console',lambda m: errors.append({'type':m.type,'text':m.text}) if m.type in {'error','warning'} else None); page.on('pageerror',lambda e:errors.append({'type':'pageerror','text':str(e)}))\n  await page.goto('http://127.0.0.1:18083/',wait_until='domcontentloaded'); await page.get_by_text('Durable Attention case',exact=True).wait_for(timeout=15000); await page.wait_for_timeout(1500); before=snapshot_counts(dsn); await page.screenshot(path=str(out/'s09-retained-before.png'),full_page=True)\n  control.write_text('security-2',encoding='utf-8'); await page.wait_for_timeout(700); await page.get_by_role('button',name='Next page',exact=True).click(timeout=10000); await page.wait_for_timeout(5000); expired_body=await page.locator('body').inner_text(); expired_footer=await page.locator('.cui-table-footer').inner_text(); await page.screenshot(path=str(out/'s09-expired.png'),full_page=True); after_expire=snapshot_counts(dsn)\n  await page.get_by_role('button',name='Refresh table',exact=True).click(timeout=10000); await page.locator('.cui-table-footer').get_by_text('Page 2 of 2',exact=True).wait_for(timeout=15000); await page.wait_for_timeout(1000); refreshed_body=await page.locator('body').inner_text(); await page.screenshot(path=str(out/'s09-refreshed.png'),full_page=True); after_refresh=snapshot_counts(dsn)\n  print(json.dumps({'scenario':'S09_retained_snapshot_security_revision','status':'PASS' if ('Attention snapshot expired' in expired_body and len(after_refresh.get('2',0) for _ in [0])>0) else 'FAIL_UI_GUIDANCE_GAP','before_snapshot_counts':before,'after_expire_snapshot_counts':after_expire,'after_refresh_snapshot_counts':after_refresh,'expired_footer':expired_footer,'expired_has_explicit_guidance':'Attention snapshot expired' in expired_body,'expired_has_refresh_guidance':'Refresh' in expired_body,'refreshed_has_page2':'Page 2 of 2' in refreshed_body,'new_security2_snapshot':after_refresh.get('2',0)>after_expire.get('2',0),'errors':errors},indent=2)); await b.close()\nasyncio.run(main())\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"printf '%s\\\\n' '--- task metadata env ---' && env | rg -i 'fabric|job|run[_-]?id|workspace|task' | sed -n '1,120p' && printf '%s\\\\n' '--- worktree metadata ---' && find /Users/haewonkim/.codex-fabric/worktrees/CF-bd063c2c39009a01f54692a3 -maxdepth 2 -type f -name '*job*' -o -name '*fabric*' | head -80 && printf '%s\\\\n' '--- exact source boundaries ---' && nl -ba src/ephi/ui/provider.py | sed -n '135,255p' && nl -ba \\\"\"'$VERIFY_TMP/venv/lib/python3.11/site-packages/nicegui_base/integrations/nicegui_analysis.py\" 2>/dev/null | sed -n '\"'68,110p' && nl -ba \\\"\"'$VERIFY_TMP/venv/lib/python3.11/site-packages/nicegui_base/integrations/nicegui_data_table.py\" 2>/dev/null | sed -n '\"'1723,1848p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'VERIFY_TMP=$(cat /tmp/ephi-o3-verify2.path) && ART=\"$VERIFY_TMP/artifact\" && mkdir -p \"$ART/screenshots\" && cp \"$VERIFY_TMP/browser/desktop-attention.png\" \"$ART/screenshots/desktop-1440x900-attention.png\" && cp \"$VERIFY_TMP/browser/desktop-episode-ack.png\" \"$ART/screenshots/desktop-1440x900-episode-ack.png\" && cp \"$VERIFY_TMP/browser/mobile-attention.png\" \"$ART/screenshots/mobile-390x844-attention.png\" && cp \"$VERIFY_TMP/browser/mobile-episode-ack.png\" \"$ART/screenshots/mobile-390x844-episode-ack.png\" && cp \"$VERIFY_TMP/browser/s08-healthy-before.png\" \"$ART/screenshots/s08-healthy-before.png\" && cp \"$VERIFY_TMP/browser/s08-unavailable.png\" \"$ART/screenshots/s08-unavailable.png\" && cp \"$VERIFY_TMP/browser/s08-restored.png\" \"$ART/screenshots/s08-restored.png\" && cp \"$VERIFY_TMP/browser/s09-retained-before.png\" \"$ART/screenshots/s09-retained-before.png\" && cp \"$VERIFY_TMP/browser/s09-expired.png\" \"$ART/screenshots/s09-expired.png\" && cp \"$VERIFY_TMP/browser/s09-refreshed.png\" \"$ART/screenshots/s09-refreshed.png\" && cp evidence/review/chg_134_fix2_qualification.json \"$ART/r4-reuse-chg-134-fix2-qualification.json\" && find \"$ART\" -type f -maxdepth 2 -print | sort && shasum -a 256 \"$ART\"/screenshots/*.png | sed -n '\"'1,30p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git rev-parse HEAD HEAD''^{tree} cdf8bb54eeb42926029a9394814d79d17a282bd9 cdf8bb54eeb42926029a9394814d79d17a282bd9''^{tree} && nl -ba src/ephi/ui/app.py | sed -n '\"'274,318p' && VERIFY_TMP=\"'$(cat /tmp/ephi-o3-verify2.path) && nl -ba \"$VERIFY_TMP/venv/lib/python3.11/site-packages/nicegui_base/integrations/nicegui_analysis.py\" | sed -n '\"'70,108p' && nl -ba \\\"\"'$VERIFY_TMP/venv/lib/python3.11/site-packages/nicegui_base/integrations/nicegui_data_table.py\" | sed -n '\"'1723,1848p' | tail -130\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'VERIFY_TMP=$(cat /tmp/ephi-o3-verify2.path) && VERIFY_TMP=\"$VERIFY_TMP\" \"$VERIFY_TMP/venv/bin/python\" tools/_verify2_build_artifact.py && find \"$VERIFY_TMP/artifact\" -maxdepth 2 -type f -print | sort && printf '\"'%s\\\\n' '--- manifest ---' && sed -n '1,280p' \\\"\"'$VERIFY_TMP/artifact/manifest.json\"'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'VERIFY_TMP=$(cat /tmp/ephi-o3-verify2.path) && CARRIER_TMP=$(mktemp -d /private/tmp/ephi-o3-verify2-carrier.XXXXXX) && printf '\"'%s\\\\n' \\\"\"'$CARRIER_TMP\" > /tmp/ephi-o3-verify2-carrier.path && mkdir -p \"$CARRIER_TMP/package\" && cp \"$VERIFY_TMP/artifact/README.md\" \"$VERIFY_TMP/artifact/manifest.json\" \"$VERIFY_TMP/artifact/manifest.json.sha256\" \"$VERIFY_TMP/artifact/artifact-bundle.zip\" \"$VERIFY_TMP/artifact/artifact-bundle.zip.sha256\" \"$CARRIER_TMP/package/\" && cd \"$CARRIER_TMP\" && git init -q && git config user.name '\"'Codex Evidence Publisher' && git config user.email 'codex-evidence@openai.invalid' && git remote add origin https://github.com/kimhw8084/ephi.git && git add package && git commit -qm 'Publish CHG-134 VERIFY2 evidence carrier' && rtk git ls-remote --exit-code origin refs/heads/project-os-artifacts/ephi/ephi-o3-attention-episode-w1-verify2 >/tmp/ephi-o3-verify2-existing-ref 2>&1; REF_STATUS=\"'$?; if [ \"$REF_STATUS\" -eq 0 ]; then echo '\"'CARRIER_REF_ALREADY_EXISTS'; cat /tmp/ephi-o3-verify2-existing-ref; exit 2; fi; rtk git push origin HEAD:refs/heads/project-os-artifacts/ephi/ephi-o3-attention-episode-w1-verify2 && echo \\\"CARRIER_LOCAL_COMMIT=\"'$(git rev-parse HEAD)\" && echo \"CARRIER_TMP=$CARRIER_TMP\"'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'CARRIER_TMP=$(cat /tmp/ephi-o3-verify2-carrier.path) && cd \"$CARRIER_TMP\" && rtk git fetch --no-tags origin '\"'refs/heads/project-os-artifacts/ephi/ephi-o3-attention-episode-w1-verify2:refs/remotes/origin/project-os-artifacts/ephi/ephi-o3-attention-episode-w1-verify2' && CARRIER_TMP=\\\"\"'$CARRIER_TMP\" \"$CARRIER_TMP/../ephi-o3-verify2.Z53MB1/venv/bin/python\" - <<'\"'PY'\nimport hashlib, io, json, os, subprocess\nfrom pathlib import Path\nfrom zipfile import ZipFile\n\nrepo=Path(os.environ['CARRIER_TMP'])\nref='refs/remotes/origin/project-os-artifacts/ephi/ephi-o3-attention-episode-w1-verify2'\n\ndef git_bytes(path):\n    return subprocess.check_output(['git','show',f'{ref}:{path}'],cwd=repo)\n\ndef sha(data): return hashlib.sha256(data).hexdigest()\nmanifest=json.loads(git_bytes('package/manifest.json'))\nmanifest_bytes=git_bytes('package/manifest.json')\nzip_bytes=git_bytes('package/artifact-bundle.zip')\nmanifest_sum=git_bytes('package/manifest.json.sha256').decode().strip().split()[0]\nzip_sum=git_bytes('package/artifact-bundle.zip.sha256').decode().strip().split()[0]\ncarrier_paths=subprocess.check_output(['git','ls-tree','-r','--name-only',ref],cwd=repo,text=True).splitlines()\nexpected_paths=sorted(['package/README.md','package/manifest.json','package/manifest.json.sha256','package/artifact-bundle.zip','package/artifact-bundle.zip.sha256'])\nremote_commit=subprocess.check_output(['git','rev-parse',ref],cwd=repo,text=True).strip()\nremote_tree=subprocess.check_output(['git','rev-parse',f'{ref}\"'^{{tree}}'\"'],cwd=repo,text=True).strip()\nchecks={\n 'remote_commit': remote_commit,\n 'remote_tree': remote_tree,\n 'exact_remote_inventory': sorted(carrier_paths)==expected_paths,\n 'manifest_sha256_matches_sidecar': sha(manifest_bytes)==manifest_sum,\n 'zip_sha256_matches_sidecar': sha(zip_bytes)==zip_sum,\n 'manifest_bundle_hash_matches_zip': manifest['bundle_sha256']==sha(zip_bytes),\n 'manifest_candidate_sha': manifest['candidate']['sha']=='d5af282415d6352ae5d52a520ecb2b9ea47b09c1',\n 'manifest_candidate_tree': manifest['candidate']['tree']=='2cc0ed256d3e3ee6753d17aa1bdbade54c4dae49',\n 'manifest_target_sha': manifest['target_base']['sha']=='cdf8bb54eeb42926029a9394814d79d17a282bd9',\n 'manifest_target_tree': manifest['target_base']['tree']=='1c1e9eb320d54580f1cab7c2fb4e1be803be6348',\n 'manifest_status': manifest['status']=='VERIFY_BLOCKED_NEW_S09_UI_GUIDANCE_GAP',\n}\nwith ZipFile(io.BytesIO(zip_bytes)) as archive:\n    names=sorted(archive.namelist())\n    expected_bundle=sorted(item['path'] for item in manifest['bundle_inventory'])\n    checks['exact_bundle_inventory']=names==expected_bundle\n    checks['bundle_entries_hash_verified']=all(sha(archive.read(item['path']))==item['sha256'] for item in manifest['bundle_inventory'])\n    checks['all_screenshot_hashes_verified']=all(sha(archive.read(item['path']))==item['sha256'] for item in manifest['screenshot_hashes'])\n    checks['all_screenshot_pngs_file_backed']=all(archive.read(item['path'])[:8]==b'\\\\x89PNG\\\\r\\\\n\\\\x1a\\\\n' for item in manifest['screenshot_hashes'])\nprint(json.dumps({'status':'PASS' if all(v is True for k,v in checks.items() if k.startswith(('exact_','manifest_','zip_','bundle_','all_'))) else 'FAIL','checks':checks,'remote_inventory':carrier_paths},indent=2))\nif not all(v is True for k,v in checks.items() if k not in {'remote_commit','remote_tree'}):\n    raise SystemExit(1)\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'find .nicegui -maxdepth 1 -type f -print 2>/dev/null | sort'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'mkdir -p /private/tmp/ephi-o3-verify2-quarantine && mv .nicegui/storage-user-25713478-2a4f-483f-be94-7233b8560e9d.json .nicegui/storage-user-43ca7c7e-0c75-4513-b661-d61f4d552d06.json .nicegui/storage-user-4bcb1c23-3176-4638-be37-89a36024a6bf.json .nicegui/storage-user-5ea68f42-19bb-4edf-ad47-8b085dc384f8.json .nicegui/storage-user-6164cad8-6fd9-424a-a763-950b53b2e6b5.json .nicegui/storage-user-749e1833-dcb5-47d2-a11f-7d2bfbf72b0a.json .nicegui/storage-user-8dfbc878-f5fe-4adf-b29c-7b520973105d.json .nicegui/storage-user-a7542abf-f40d-4bf0-8878-99369d2a187a.json .nicegui/storage-user-eec040ab-a7b5-4c9f-8edb-c74331d83deb.json /private/tmp/ephi-o3-verify2-quarantine/ && rmdir .nicegui && echo moved && rtk git status --short --branch'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'VERIFY_TMP=$(cat /tmp/ephi-o3-verify2.path) && DSN=$(sed '\"'s/\"'^EPHI_TEST_POSTGRES_DSN=//'\"' \\\"\"'$VERIFY_TMP/env\") && cd \"$VERIFY_TMP\" && EPHI_POSTGRES_DSN=\"$DSN\" EPHI_ENV=development EPHI_HOST=127.0.0.1 EPHI_PORT=18080 EPHI_DEV_SCOPE_ID=o3-pg-scope EPHI_DEV_SITE_ID=site-1 EPHI_DEV_AREA_ID=area-1 EPHI_DEV_IDENTITY_SUBJECT=engineer-1 EPHI_DEV_IDENTITY_CAPABILITIES='\"'ephi.attention.read,ephi.episode.read,ephi.episode.claim,ephi.episode.acknowledge' EPHI_DEV_AUTH_SESSION_REVISION=1 EPHI_DEV_SECURITY_REVISION=1 EPHI_W1_EPISODE_ID=episode-1 NICEGUI_BASE_STORAGE_SECRET=ephi-verify2-secret PYTHONPATH=/Users/haewonkim/.codex-fabric/worktrees/CF-bd063c2c39009a01f54692a3/src \\\"\"'$VERIFY_TMP/venv/bin/python\" -m ephi --serve'",
+      "exit_code": 130,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'VERIFY_TMP=$(cat /tmp/ephi-o3-verify2.path) && DSN=$(sed '\"'s/\"'^EPHI_TEST_POSTGRES_DSN=//'\"' \\\"\"'$VERIFY_TMP/env\") && cd \"$VERIFY_TMP\" && EPHI_POSTGRES_DSN=\"$DSN\" EPHI_ENV=development EPHI_HOST=127.0.0.1 EPHI_PORT=18081 EPHI_DEV_SCOPE_ID=o3-pg-scope EPHI_DEV_SITE_ID=site-1 EPHI_DEV_AREA_ID=area-1 EPHI_DEV_IDENTITY_SUBJECT=engineer-1 EPHI_DEV_IDENTITY_CAPABILITIES='\"'ephi.attention.read,ephi.episode.read,ephi.episode.claim,ephi.episode.acknowledge' EPHI_DEV_AUTH_SESSION_REVISION=1 EPHI_DEV_SECURITY_REVISION=1 EPHI_W1_EPISODE_ID=episode-2 NICEGUI_BASE_STORAGE_SECRET=ephi-verify2-secret PYTHONPATH=/Users/haewonkim/.codex-fabric/worktrees/CF-bd063c2c39009a01f54692a3/src \\\"\"'$VERIFY_TMP/venv/bin/python\" -m ephi --serve'",
+      "exit_code": 130,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'VERIFY_TMP=$(cat /tmp/ephi-o3-verify2.path) && DSN=$(sed '\"'s/\"'^EPHI_TEST_POSTGRES_DSN=//'\"' \\\"\"'$VERIFY_TMP/env\") && : > \"$VERIFY_TMP/identity-control\" && cd \"$VERIFY_TMP\" && EPHI_VERIFY2_CONTROL=\"$VERIFY_TMP/identity-control\" EPHI_POSTGRES_DSN=\"$DSN\" EPHI_ENV=development EPHI_HOST=127.0.0.1 EPHI_PORT=18083 EPHI_DEV_SCOPE_ID=o3-pg-scope EPHI_DEV_SITE_ID=site-1 EPHI_DEV_AREA_ID=area-1 EPHI_DEV_IDENTITY_SUBJECT=engineer-1 EPHI_DEV_IDENTITY_CAPABILITIES='\"'ephi.attention.read,ephi.episode.read,ephi.episode.claim,ephi.episode.acknowledge' EPHI_DEV_AUTH_SESSION_REVISION=1 EPHI_DEV_SECURITY_REVISION=1 EPHI_W1_EPISODE_ID=episode-1 NICEGUI_BASE_STORAGE_SECRET=ephi-verify2-secret PYTHONPATH=/Users/haewonkim/.codex-fabric/worktrees/CF-bd063c2c39009a01f54692a3/src:/Users/haewonkim/.codex-fabric/worktrees/CF-bd063c2c39009a01f54692a3/tools \\\"\"'$VERIFY_TMP/venv/bin/python\" /Users/haewonkim/.codex-fabric/worktrees/CF-bd063c2c39009a01f54692a3/tools/_verify2_identity_rotation.py'",
+      "exit_code": 130,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'VERIFY_TMP=$(cat /tmp/ephi-o3-verify2.path) && /opt/homebrew/opt/postgresql@17/bin/pg_ctl -D \"$VERIFY_TMP/pgdata2\" stop -m fast && ps -Ao pid,command | rg '\"'ephi --serve|postgres.*pgdata2' || true && rtk git status --short --branch\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"printf '%s\\\\n' '--- final identity/ref proof ---' && rtk git status --short --branch && test \\\"\"'$(rtk git rev-parse HEAD)\" = d5af282415d6352ae5d52a520ecb2b9ea47b09c1 && test \"$(rtk git rev-parse HEAD''^{tree})\" = 2cc0ed256d3e3ee6753d17aa1bdbade54c4dae49 && echo '\"'VERIFY_BRANCH_HEAD_TREE=PASS' && rtk git ls-remote origin refs/heads/main refs/heads/codex/ephi-o3-attention-episode-w1-verify2 refs/heads/project-os-artifacts/ephi/ephi-o3-attention-episode-w1-verify2 && printf '%s\\\\n' '--- final diff check ---' && rtk git diff --check && echo 'GIT_DIFF_CHECK=PASS' && printf '%s\\\\n' '--- artifact readback ref ---' && CARRIER_TMP=\"'$(cat /tmp/ephi-o3-verify2-carrier.path) && cd \"$CARRIER_TMP\" && rtk git rev-parse refs/remotes/origin/project-os-artifacts/ephi/ephi-o3-attention-episode-w1-verify2 refs/remotes/origin/project-os-artifacts/ephi/ephi-o3-attention-episode-w1-verify2''^{tree}'",
+      "exit_code": 0,
+      "type": "command_execution"
+    }
+  ],
+  "codex": {
+    "cli_version": "codex-cli 0.154.0",
+    "configured_model": "gpt-5.6-luna",
+    "event_count": 176,
+    "provider_reported_model": null,
+    "reasoning_effort": "xhigh",
+    "terminal_type": "turn.completed",
+    "usage": {
+      "cache_hit_percent": 95.85,
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 12589568,
+      "fresh_input_tokens": 544848,
+      "input_tokens": 13134416,
+      "non_reasoning_output_tokens": 41287,
+      "output_tokens": 66683,
+      "reasoning_output_tokens": 25396,
+      "total_processed_tokens": 13201099
+    },
+    "warnings": []
+  },
+  "commits": [
+    {
+      "sha": "d5af282415d6352ae5d52a520ecb2b9ea47b09c1",
+      "subject": "Bind CHG-134 evidence carrier readback"
+    },
+    {
+      "sha": "cacb99a2b1cac68f147d06393539f42f2dc55b31",
+      "subject": "Record CHG-134 fix qualification boundary"
+    },
+    {
+      "sha": "e6ad7c36953496ed4fdafbeb2975cfab99f3033e",
+      "subject": "Fix PostgreSQL adapter reconnection after source outage"
+    },
+    {
+      "sha": "ef959f577bc1aa223b260ac32cb42a18eadfaf9f",
+      "subject": "Fix CHG-134 source health and current authorization"
+    },
+    {
+      "sha": "dc8f04b02d9ef9bdb3da59951a0061ffefd2113f",
+      "subject": "Implement O3.1 durable Attention Episode W1 slice"
+    }
+  ],
+  "diff": {
+    "additions": 11975,
+    "changed_files": 67,
+    "commit_count": 5,
+    "deletions": 43
+  },
+  "error_code": null,
+  "evidence_manifest": {
+    "count": 43,
+    "items": [
+      {
+        "bytes": 35164,
+        "path": ".nicegui_base/construction_manifest.json",
+        "sha256": "3ae85f2e554f7080fbf81f68b1df7cf69ed5e917ca82427ddaf06ab31625a724"
+      },
+      {
+        "bytes": 203443,
+        "path": ".nicegui_base/framework_catalog.json",
+        "sha256": "555e46ff14ac9311ebb678285d6f3163bbcbf49840ec04ac11e1898366c9c149"
+      },
+      {
+        "bytes": 6438,
+        "path": ".nicegui_base/install_manifest.json",
+        "sha256": "8c0b0d423af8c279d5cd90e63509f918b3fbf7e52807341910a695a199dceb5a"
+      },
+      {
+        "bytes": 6354,
+        "path": "11_Developer_Start.md",
+        "sha256": "8e62f46dc9e37ee17a308e7d27163435c16f059433351800722bc722f405bda5"
+      },
+      {
+        "bytes": 13666,
+        "path": "13_Package_Review.md",
+        "sha256": "3c7b1c7ab6c131807a812774bf8c15af57c3aa3d18c7e3e5dada0fa54d4fccc5"
+      },
+      {
+        "bytes": 13469,
+        "path": "README.md",
+        "sha256": "2fdf36ba9c533cb47118e1566a00d8de618479290da68d4979e6ccee8dce521b"
+      },
+      {
+        "bytes": 2534,
+        "path": "certification_output/runtime_smoke/RUNTIME_SMOKE_REPORT.json",
+        "sha256": "e444a9132023ccaaf1f74572641cf0da6d589ed9c668a775ec61579eb58fdb41"
+      },
+      {
+        "bytes": 1863,
+        "path": "certification_output/runtime_smoke/RUNTIME_SMOKE_SERVER.log",
+        "sha256": "0520a045b2641cbd63a6f7d97a8e01dc94e8e171fe58108d391b7fe789867a49"
+      },
+      {
+        "bytes": 4829,
+        "path": "docs/nicegui_base/AGENT_WORKFLOW.md",
+        "sha256": "0669f564069e7dafae45dea80190c1d8ff511d8fd9b825dd899ef98c0074c091"
+      },
+      {
+        "bytes": 3025,
+        "path": "docs/nicegui_base/AI_QUICKSTART.md",
+        "sha256": "8ea275da5fbb7b2c8c8381eddf6c750c794789d2e404fd7822654681d1232fa8"
+      },
+      {
+        "bytes": 7496,
+        "path": "docs/nicegui_base/AI_RULES.md",
+        "sha256": "0232c21a4e63b4f7ae9f2c76153ff2df1ebe0fff34d9c8d81adf64fb2138fa3a"
+      },
+      {
+        "bytes": 2135,
+        "path": "docs/nicegui_base/ANTI_PATTERNS.md",
+        "sha256": "fec2712934043272760464139073e040c82281e7dc63eb28326f15897f902480"
+      },
+      {
+        "bytes": 1465,
+        "path": "docs/nicegui_base/APP_PATTERNS.md",
+        "sha256": "94dee03e72c0126c4c1ba4466b566a2cdac05cd3433fbc4054950fa0a8763957"
+      },
+      {
+        "bytes": 20510,
+        "path": "docs/nicegui_base/COMPONENT_CATALOG.md",
+        "sha256": "09850c3058c53c2c5725168d7c69bc2e17e363058a41e539e8e55cc08feed39d"
+      },
+      {
+        "bytes": 1767,
+        "path": "docs/nicegui_base/FINAL_RELEASE_CANDIDATE_STABLE_QUALIFICATION_HANDOFF.md",
+        "sha256": "0e97a2c5bb9bbc8621716d7ca70bd530492dacafc9573e291ba27b3f88bd9282"
+      },
+      {
+        "bytes": 3058,
+        "path": "docs/nicegui_base/ICON_CATALOG.md",
+        "sha256": "da6ad24115318574346f3f4de81b785a70610b306b0ef4c1dfd6df22bd4364f5"
+      },
+      {
+        "bytes": 1236,
+        "path": "docs/nicegui_base/LAYOUT_RULES.md",
+        "sha256": "dc0a4ce52a258148e92eaa66ee0d53121d111ef4a9ad0571f6ca08a18b59a9fb"
+      },
+      {
+        "bytes": 2093,
+        "path": "docs/nicegui_base/OPENCODE_GEMMA_BOOTSTRAP.md",
+        "sha256": "fe3b205aa4d4f6432d6a6367b802126525032a3acbbb94cc82dbed32c243feae"
+      },
+      {
+        "bytes": 999,
+        "path": "docs/nicegui_base/PERFORMANCE_GUIDE.md",
+        "sha256": "049add7dbba6de5e04688181e2a2101a3bbd710c44e0990498581dbd223ff058"
+      },
+      {
+        "bytes": 7043,
+        "path": "docs/nicegui_base/RECIPES.md",
+        "sha256": "e77d2b9978a33f9114680b124844fbd1597313f99eeecf3859762af5db63e603"
+      },
+      {
+        "bytes": 7804,
+        "path": "docs/nicegui_base/SEMICONDUCTOR_APPLICATION_RECIPES.md",
+        "sha256": "7d3f1037047ff946946c6f557a297a8c95d92ee760e45bd2704a707e656dae66"
+      },
+      {
+        "bytes": 1350,
+        "path": "docs/nicegui_base/SEMICONDUCTOR_LONGITUDINAL_ASSURANCE_REVIEW_EXCEPTION_GOVERNANCE.md",
+        "sha256": "4c6920c6890e1bb54f7fa0c2a4068ce330573015b049154ff6b976608c0290c7"
+      },
+      {
+        "bytes": 1037,
+        "path": "docs/nicegui_base/SEMICONDUCTOR_OPERATIONAL_ASSURANCE_RENEWAL_LEDGER.md",
+        "sha256": "9b6cf415c9962d4631d5b396fd40f52424f37768c6e973898d181ab49bb84214"
+      },
+      {
+        "bytes": 2936,
+        "path": "docs/nicegui_base/SEMICONDUCTOR_POST_RELEASE_STABILITY_ROLLBACK_READINESS.md",
+        "sha256": "c6c5cbbf84b75b0df45ab37852d8e1f8b7c0d3791d0471bbec85c4cb1bc1afd1"
+      },
+      {
+        "bytes": 3877,
+        "path": "docs/nicegui_base/SEMICONDUCTOR_PRODUCTION_RUNTIME.md",
+        "sha256": "2b5f608a3adee16ce210993f2991bbdafc40a4a5c4d9c7c0aa2c1ffdca02b1df"
+      },
+      {
+        "bytes": 2961,
+        "path": "docs/nicegui_base/SEMICONDUCTOR_PROMOTION_EXECUTION_ADAPTER_RELEASE_AUDIT.md",
+        "sha256": "24905a1a21b95ea01d0ebf5f093caee8c014a21a3013a71f81cb4ea5b87bd74e"
+      },
+      {
+        "bytes": 4508,
+        "path": "docs/nicegui_base/SEMICONDUCTOR_PROVIDER_SDK_RC.md",
+        "sha256": "9b7607f41bf559fae46b25e167e910f6ba22deade21784543b4f0e558107c3d3"
+      },
+      {
+        "bytes": 3610,
+        "path": "docs/nicegui_base/SEMICONDUCTOR_RELEASE_PUBLICATION_POST_PROMOTION_VERIFICATION.md",
+        "sha256": "665a3c335303d454a8e3363a494d8e240d354c8e51f4d33b04b4b6a89c111cc9"
+      },
+      {
+        "bytes": 5848,
+        "path": "docs/nicegui_base/SEMICONDUCTOR_RUNTIME_ONBOARDING.md",
+        "sha256": "7043de584a09dea74ae49ff57d2448ad749a4cdeb3137730ba0832337c5174a1"
+      },
+      {
+        "bytes": 1438,
+        "path": "docs/nicegui_base/SEMICONDUCTOR_STABLE_PROMOTION_CANDIDATE.md",
+        "sha256": "f7c1c24d19cfb7eca2826a09c1dad7d00f625898decb6eba7809c9e83a504432"
+      },
+      {
+        "bytes": 3182,
+        "path": "docs/nicegui_base/SEMICONDUCTOR_STABLE_RELEASE_EVIDENCE_ACCEPTANCE_PROMOTION_CLOSURE.md",
+        "sha256": "74b3644f12768a59c297fa29ce360d9d8d01a6be399f22bbefc32760a0b8184f"
+      },
+      {
+        "bytes": 1155,
+        "path": "docs/nicegui_base/SEMICONDUCTOR_SUSTAINED_OPERATIONS_INCIDENT_ROLLBACK_AUDIT.md",
+        "sha256": "e41b2e24e9eab7ceee57d131396dd5fa6e31e4c3c8bb90cfd00be24829c2e3ca"
+      },
+      {
+        "bytes": 2262,
+        "path": "docs/nicegui_base/SEMICONDUCTOR_SUSTAINED_OPERATIONS_RENEWAL_CONTINUITY.md",
+        "sha256": "33262a5667b300b8f224ea229eb452bde2ad1768610eb00f8d81d515c501b0b0"
+      },
+      {
+        "bytes": 1510,
+        "path": "docs/nicegui_base/SEMICONDUCTOR_TARGET_CERTIFICATION.md",
+        "sha256": "e34ccfa128d4d60c38be3c6ab26a17981542c6ee3e07762a45b347514b27bf26"
+      },
+      {
+        "bytes": 2992,
+        "path": "docs/nicegui_base/SEMICONDUCTOR_TARGET_EXECUTION_OPERATIONAL_HANDOFF.md",
+        "sha256": "a0b87dc9422b120566048e10f76b7d3a3a6be8b13c73cefb5a277919b5bfe94e"
+      },
+      {
+        "bytes": 2087,
+        "path": "docs/nicegui_base/TROUBLESHOOTING.md",
+        "sha256": "2b334f6d210d2f16af1731d35f4f49db14f7955bdfd590033a64196635721a67"
+      },
+      {
+        "bytes": 2092,
+        "path": "docs/nicegui_base/VALIDATOR_RULES.md",
+        "sha256": "8aa5d0ad6c4d910307f6abbe949e96f515103bac961b87ae421393bf6db06aae"
+      },
+      {
+        "bytes": 1154,
+        "path": "docs/nicegui_base/VISUAL_RESOURCE_GUIDE.md",
+        "sha256": "ee71abc444717057b409d2b7be0bb55feb7c7e67e2fe1a5b74966d3b90057133"
+      },
+      {
+        "bytes": 3110,
+        "path": "docs/nicegui_base/ZERO_STOCK_NICEGUI_VISUAL_LAWS.md",
+        "sha256": "d156a395107a330771daea7fe2b33bcb4cece64d19ba45f8d025db475d7b5ee0"
+      },
+      {
+        "bytes": 3380,
+        "path": "evidence/review/chg_134_fix1_qualification.json",
+        "sha256": "fb884a22637a6342c8cafee7ff69c8f8c09b48d75ee3ae802c2f1166b89712e8"
+      },
+      {
+        "bytes": 4931,
+        "path": "evidence/review/chg_134_fix2_qualification.json",
+        "sha256": "d22e581b4e440cf351d336f92836228e5fdec29882902dee016d13dab2896697"
+      },
+      {
+        "bytes": 960,
+        "path": "examples/nicegui_base/README.md",
+        "sha256": "854b348484efbd945b053c61ba3471240336eaad192141133aa272ab82ace937"
+      },
+      {
+        "bytes": 28477,
+        "path": "manifest.json",
+        "sha256": "0ebc4534cc9d267ad733c0506a696fa57c152013734ea0bc3e998b87fe5ccb54"
+      }
+    ],
+    "version": 1
+  },
+  "evidence_publisher_release": "1.2.3-resume-candidate",
+  "fabric_capture": {
+    "applied": false,
+    "paths_before": 0,
+    "transient_untracked_removed": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "fabric_release": "1.2.3-resume-candidate",
+  "failure_class": null,
+  "finished_at": "2026-09-19T15:54:55Z",
+  "git": {
+    "base_is_ancestor": true,
+    "base_sha": "cdf8bb54eeb42926029a9394814d79d17a282bd9",
+    "branch": "codex/ephi-o3-attention-episode-w1-verify2",
+    "detached_verify": false,
+    "head_sha": "d5af282415d6352ae5d52a520ecb2b9ea47b09c1",
+    "remote_exact_head": true,
+    "remote_head_sha": "d5af282415d6352ae5d52a520ecb2b9ea47b09c1",
+    "target_branch": "main",
+    "target_drifted_since_acceptance": false,
+    "target_head_observed_after_execution": "cdf8bb54eeb42926029a9394814d79d17a282bd9",
+    "work_branch": "codex/ephi-o3-attention-episode-w1-verify2",
+    "worktree_clean": true
+  },
+  "instructions": {
+    "files": [
+      {
+        "bytes": 1458,
+        "path": "AGENTS.md",
+        "sha256": "4349f387a79d886ed1264604ff48c582698e539e08ed8fb2f9d8ab8fbf6f804a"
+      }
+    ],
+    "total_bytes": 1458,
+    "warning": null
+  },
+  "job_id": "CF-bd063c2c39009a01f54692a3",
+  "kind": "codex-fabric-audit-evidence",
+  "locator": {
+    "branch": "codex-fabric/evidence/ephi/ephi-o3-attention-episode-w1-verify2",
+    "path": ".codex-fabric/audit.json",
+    "ref": "refs/heads/codex-fabric/evidence/ephi/ephi-o3-attention-episode-w1-verify2"
+  },
+  "operation": "VERIFY",
+  "policy": {
+    "environment_policy_sha256": "e077daca74297b3c30bee8989f00f8ca5338f7610b4d016a6c48db524205d064",
+    "fabric_release": "1.2.3-resume-candidate",
+    "policy_sha256": "44756118cd7fda0c45cd23ba1d31a48a3f4f2422d687df15264ba4406f40e1f2",
+    "registry_sha256": "cfc765f3211c37c7967a138f3b2d89a99341939b15b2623f92744d007f625d6f"
+  },
+  "project_id": "ephi",
+  "recovery": {
+    "model_rerun_safe": false,
+    "recovery_required": false,
+    "retry_safe": false,
+    "retry_scope": null,
+    "worktree_retained": true
+  },
+  "request": "ephi-o3-attention-episode-w1-verify2",
+  "schema_version": 1,
+  "started_at": "2026-09-19T15:28:54Z",
+  "status": "EXECUTED_CHANGE",
+  "timing": {
+    "execution_seconds": 1561,
+    "queue_seconds": 1,
+    "total_seconds": 1562
+  },
+  "transport": {
+    "bytes": 5913,
+    "envelope": "FABRIC/2",
+    "prompt_bytes": 5588,
+    "prompt_sha256": "e816814729b654350b16127f9e5da69230a4883f78df9013a8b5497e63654320",
+    "sha256": "bd063c2c39009a01f54692a37714a69120f422906449dbeab52483c38dbebe7d"
+  }
+}
