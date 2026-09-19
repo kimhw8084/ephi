@@ -1,0 +1,540 @@
+{
+  "accepted_at": "2026-09-19T00:00:37Z",
+  "changed_files": [
+    {
+      "additions": 5,
+      "deletions": 1,
+      "path": ".github/workflows/package.yml",
+      "status": "M"
+    },
+    {
+      "additions": 8,
+      "deletions": 0,
+      "path": "04_Data_and_Runtime.md",
+      "status": "M"
+    },
+    {
+      "additions": 20,
+      "deletions": 0,
+      "path": "13_Package_Review.md",
+      "status": "M"
+    },
+    {
+      "additions": 23,
+      "deletions": 0,
+      "path": "README.md",
+      "status": "M"
+    },
+    {
+      "additions": 36,
+      "deletions": 16,
+      "path": "manifest.json",
+      "status": "M"
+    },
+    {
+      "additions": 35,
+      "deletions": 0,
+      "path": "migrations/004_o2_artifact_catalog.sql",
+      "status": "A"
+    },
+    {
+      "additions": 46,
+      "deletions": 0,
+      "path": "src/ephi/application/__init__.py",
+      "status": "M"
+    },
+    {
+      "additions": 406,
+      "deletions": 0,
+      "path": "src/ephi/application/artifacts.py",
+      "status": "A"
+    },
+    {
+      "additions": 46,
+      "deletions": 0,
+      "path": "src/ephi/application/errors.py",
+      "status": "M"
+    },
+    {
+      "additions": 12,
+      "deletions": 0,
+      "path": "src/ephi/infrastructure/__init__.py",
+      "status": "M"
+    },
+    {
+      "additions": 21,
+      "deletions": 0,
+      "path": "src/ephi/infrastructure/artifacts/__init__.py",
+      "status": "A"
+    },
+    {
+      "additions": 400,
+      "deletions": 0,
+      "path": "src/ephi/infrastructure/artifacts/catalog.py",
+      "status": "A"
+    },
+    {
+      "additions": 397,
+      "deletions": 0,
+      "path": "src/ephi/infrastructure/artifacts/filesystem.py",
+      "status": "A"
+    },
+    {
+      "additions": 7,
+      "deletions": 0,
+      "path": "src/ephi/infrastructure/postgresql.py",
+      "status": "M"
+    },
+    {
+      "additions": 262,
+      "deletions": 0,
+      "path": "tests/test_o2_artifacts.py",
+      "status": "A"
+    },
+    {
+      "additions": 180,
+      "deletions": 0,
+      "path": "tests/test_o2_postgresql_artifacts.py",
+      "status": "A"
+    }
+  ],
+  "checks": [
+    {
+      "command": "/bin/zsh -lc \"rtk env PYTHONPATH=src python3 - <<'PY'\nimport os,tempfile,threading\nfrom pathlib import Path\nfor i in range(10):\n with tempfile.TemporaryDirectory() as d:\n  p=Path(d); fd1=os.open(p,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW); fd2=os.open(p,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW)\n  b=threading.Barrier(2); errs=[]\n  def f(fd):\n    try:\n      b.wait(); x=os.open('.lock',os.O_RDWR|os.O_CREAT|os.O_NOFOLLOW,0o600,dir_fd=fd); os.close(x)\n    except Exception as e: errs.append(type(e).__name__+':'+str(e))\n  ts=[threading.Thread(target=f,args=(fd,)) for fd in (fd1,fd2)]\n  [t.start() for t in ts]; [t.join() for t in ts]; print(i,errs)\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest tests.test_o2_artifacts -v'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n \\\"CHG-129|generic PostgreSQL read|Pinned framework\\\" README.md; rtk sed -n '80,175p' README.md; rtk tail -n 100 13_Package_Review.md; rtk sed -n '48,68p' 04_Data_and_Runtime.md\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '54,62p' 04_Data_and_Runtime.md\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest tests.test_o2_artifacts -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m compileall -q src tests'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest tests.test_o2_postgresql_artifacts -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest tests.test_o2_transactions tests.test_o2_read_contracts tests.test_w0_integrity_regressions -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk printenv EPHI_TEST_POSTGRES_DSN; rtk python3 - <<'PY'\ntry:\n    import psycopg\n    print('psycopg', psycopg.__version__)\nexcept Exception as exc:\n    print('psycopg unavailable:', type(exc).__name__, exc)\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest discover -s tests -v'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sh -c 'command -v postgres || true; command -v pg_isready || true; command -v docker || true; command -v podman || true; ls -1 /usr/local/var/postgres 2>/dev/null || true; ls -1 /opt/homebrew/var/postgresql@18 2>/dev/null || true'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk pg_isready || true; rtk ps aux | rtk rg '[p]ostgres' || true; rtk docker ps --format '{{.Names}} {{.Image}} {{.Status}}' || true\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sh -c 'command -v initdb || true; command -v pg_ctl || true; postgres --version; ls -1 /opt/homebrew/opt/postgresql* 2>/dev/null || true; /opt/homebrew/bin/pg_config --version 2>/dev/null || true'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk docker images --format '{{.Repository}}:{{.Tag}}' | rtk rg '\"'^postgres:'\"' || true\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk docker run -d --rm --name ephi-chg133-postgres -e POSTGRES_USER=ephi_ci -e POSTGRES_PASSWORD=ephi_ci_password -e POSTGRES_DB=ephi_ci -p 127.0.0.1:5433:5432 postgres:18.6'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk docker exec ephi-chg133-postgres pg_isready -U ephi_ci -d ephi_ci'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk env PYTHONPATH=src EPHI_TEST_POSTGRES_DSN=postgresql://ephi_ci:ephi_ci_password@127.0.0.1:5433/ephi_ci python3 -m unittest tests.test_o2_postgresql_artifacts -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk env PYTHONPATH=src EPHI_TEST_POSTGRES_DSN=postgresql://ephi_ci:ephi_ci_password@127.0.0.1:5433/ephi_ci python3 -m unittest tests.test_o2_postgresql -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk env PYTHONPATH=src EPHI_TEST_POSTGRES_DSN=postgresql://ephi_ci:ephi_ci_password@127.0.0.1:5433/ephi_ci python3 -m unittest tests.test_o2_worker_postgresql -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk env PYTHONPATH=src EPHI_TEST_POSTGRES_DSN=postgresql://ephi_ci:ephi_ci_password@127.0.0.1:5433/ephi_ci python3 -m unittest tests.test_o2_postgresql_reads -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,420p' src/ephi/application/artifacts.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,420p' src/ephi/infrastructure/artifacts/filesystem.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,460p' src/ephi/infrastructure/artifacts/catalog.py; rtk sed -n '1,220p' migrations/004_o2_artifact_catalog.sql\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short && rtk git diff --stat && rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,220p' src/ephi/application/__init__.py; rtk sed -n '380,430p' src/ephi/infrastructure/postgresql.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git diff -- manifest.json | sed -n '1,260p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git diff -- .github/workflows/package.yml README.md 04_Data_and_Runtime.md 13_Package_Review.md | sed -n '1,360p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/w0_integrity_regressions.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/w0_repo_baseline.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --check && rtk git status --short'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest discover -s tests -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/w0_repo_baseline.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk docker stop ephi-chg133-postgres'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk test ! -e .codex-fabric/audit.json && echo '\"'repo-local audit file untouched'; rtk find . -maxdepth 2 -type f -name '*.sqlite3' -o -name '*.tmp' | sed -n '1,80p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short --branch && rtk git diff --name-only && rtk git diff --stat'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sh -c 'if [ -e .codex-fabric/audit.json ]; then echo repo-local-audit-present; else echo repo-local-audit-absent; fi'; rtk rg --files -g '*.sqlite3' -g '*.tmp' -g '*.log' | sed -n '1,80p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m compileall -q src tests'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest tests.test_o2_artifacts -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/w0_integrity_regressions.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest discover -s tests -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/w0_repo_baseline.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git diff --check; rtk git status --short --branch; rtk sh -c 'if [ -e .codex-fabric/audit.json ]; then echo repo-local-audit-present; else echo repo-local-audit-absent; fi'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk ls -la /Users/haewonkim/.codex-fabric | sed -n '1,160p'; rtk rg --files /Users/haewonkim/.codex-fabric 2>/dev/null | rtk rg 'audit|fabric' | sed -n '1,120p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,260p' /Users/haewonkim/.codex-fabric/audit.json\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    }
+  ],
+  "codex": {
+    "cli_version": "codex-cli 0.154.0",
+    "configured_model": "gpt-5.6-luna",
+    "event_count": 227,
+    "provider_reported_model": null,
+    "reasoning_effort": "xhigh",
+    "terminal_type": "turn.completed",
+    "usage": {
+      "cache_hit_percent": 97.62,
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 9906944,
+      "fresh_input_tokens": 241091,
+      "input_tokens": 10148035,
+      "non_reasoning_output_tokens": 37084,
+      "output_tokens": 65128,
+      "reasoning_output_tokens": 28044,
+      "total_processed_tokens": 10213163
+    },
+    "warnings": []
+  },
+  "commits": [
+    {
+      "sha": "50d569be320c7736410c83669875269a7f22e7f4",
+      "subject": "fabric: capture completed model changes [CF-b042bdd4c7f29e17de57628e]"
+    }
+  ],
+  "diff": {
+    "additions": 1904,
+    "changed_files": 16,
+    "commit_count": 1,
+    "deletions": 17
+  },
+  "error_code": null,
+  "evidence_manifest": {
+    "count": 11,
+    "items": [
+      {
+        "bytes": 23345,
+        "path": "04_Data_and_Runtime.md",
+        "sha256": "5fc4a3cd83dbb5648c413e16a65e06268c66b9b19bd0d1b844f7510e8b9d2f47"
+      },
+      {
+        "bytes": 12255,
+        "path": "13_Package_Review.md",
+        "sha256": "d4e47fb046f563413023aa2e3894d1e83075653de2906b78cc6aff68990df128"
+      },
+      {
+        "bytes": 12000,
+        "path": "README.md",
+        "sha256": "49b3b5842feac54019a5a6ca36d4895cb289519a60dce2cb55d3ab01ae3ae61c"
+      },
+      {
+        "bytes": 17915,
+        "path": "manifest.json",
+        "sha256": "30aaa43c4f81d11355fceb1b4ab688aee3cfb2186bf2412e5498a0f061d4e0ec"
+      },
+      {
+        "bytes": 1928,
+        "path": "migrations/004_o2_artifact_catalog.sql",
+        "sha256": "667cd985add5c26e285817489fdd7568fbc0652685cc7d3833a9ef8906613460"
+      },
+      {
+        "bytes": 15562,
+        "path": "src/ephi/application/artifacts.py",
+        "sha256": "9f20e2c66da33afd9be099d2f8d01ef46b674d1397d94d48197b4d5c75c077ac"
+      },
+      {
+        "bytes": 661,
+        "path": "src/ephi/infrastructure/artifacts/__init__.py",
+        "sha256": "5ed03dc93f8bc1ca4af05c8e2b0739075806378ab698a45428b61ae586cb2dd4"
+      },
+      {
+        "bytes": 17815,
+        "path": "src/ephi/infrastructure/artifacts/catalog.py",
+        "sha256": "f2bbf051b98b2f5db32e195baa3d6b255f093e230bdbee0b56201fe6b0e65ee7"
+      },
+      {
+        "bytes": 17851,
+        "path": "src/ephi/infrastructure/artifacts/filesystem.py",
+        "sha256": "3f481cd8b1abd84d555b4f5e2f56bf8aedfd1ffdc9449e061f7637390e3314f1"
+      },
+      {
+        "bytes": 11491,
+        "path": "tests/test_o2_artifacts.py",
+        "sha256": "27bd49d821aea3d0ed3fc25a384a7ec4cd8a339d05b8bdde230cbfd88660500e"
+      },
+      {
+        "bytes": 7313,
+        "path": "tests/test_o2_postgresql_artifacts.py",
+        "sha256": "26282c695595245a83174b3c665627259f61dca253937b181d9ccca59f564cad"
+      }
+    ],
+    "version": 1
+  },
+  "evidence_publisher_release": "1.2.3-resume-candidate",
+  "fabric_capture": {
+    "applied": true,
+    "commit_message": "fabric: capture completed model changes [CF-b042bdd4c7f29e17de57628e]",
+    "commit_sha": "50d569be320c7736410c83669875269a7f22e7f4",
+    "paths_before": 14,
+    "status_before": [
+      " M .github/workflows/package.yml",
+      " M 04_Data_and_Runtime.md",
+      " M 13_Package_Review.md",
+      " M README.md",
+      " M manifest.json",
+      " M src/ephi/application/__init__.py",
+      " M src/ephi/application/errors.py",
+      " M src/ephi/infrastructure/__init__.py",
+      " M src/ephi/infrastructure/postgresql.py",
+      "?? migrations/004_o2_artifact_catalog.sql",
+      "?? src/ephi/application/artifacts.py",
+      "?? src/ephi/infrastructure/artifacts/",
+      "?? tests/test_o2_artifacts.py",
+      "?? tests/test_o2_postgresql_artifacts.py"
+    ],
+    "transient_untracked_removed": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "fabric_release": "1.2.3-resume-candidate",
+  "failure_class": null,
+  "finished_at": "2026-09-19T00:22:21Z",
+  "git": {
+    "base_is_ancestor": true,
+    "base_sha": "50327540d09993da25640cfad75c15b9d2393e87",
+    "branch": "codex/ephi-o2-immutable-artifacts-v1",
+    "detached_verify": false,
+    "head_sha": "50d569be320c7736410c83669875269a7f22e7f4",
+    "remote_exact_head": true,
+    "remote_head_sha": "50d569be320c7736410c83669875269a7f22e7f4",
+    "target_branch": "main",
+    "target_drifted_since_acceptance": false,
+    "target_head_observed_after_execution": "50327540d09993da25640cfad75c15b9d2393e87",
+    "work_branch": "codex/ephi-o2-immutable-artifacts-v1",
+    "worktree_clean": true
+  },
+  "instructions": {
+    "files": [
+      {
+        "bytes": 1458,
+        "path": "AGENTS.md",
+        "sha256": "4349f387a79d886ed1264604ff48c582698e539e08ed8fb2f9d8ab8fbf6f804a"
+      }
+    ],
+    "total_bytes": 1458,
+    "warning": null
+  },
+  "job_id": "CF-b042bdd4c7f29e17de57628e",
+  "kind": "codex-fabric-audit-evidence",
+  "locator": {
+    "branch": "codex-fabric/evidence/ephi/ephi-o2-immutable-artifacts-v1",
+    "path": ".codex-fabric/audit.json",
+    "ref": "refs/heads/codex-fabric/evidence/ephi/ephi-o2-immutable-artifacts-v1"
+  },
+  "operation": "BUILD",
+  "policy": {
+    "environment_policy_sha256": "e077daca74297b3c30bee8989f00f8ca5338f7610b4d016a6c48db524205d064",
+    "fabric_release": "1.2.3-resume-candidate",
+    "policy_sha256": "44756118cd7fda0c45cd23ba1d31a48a3f4f2422d687df15264ba4406f40e1f2",
+    "registry_sha256": "cfc765f3211c37c7967a138f3b2d89a99341939b15b2623f92744d007f625d6f"
+  },
+  "project_id": "ephi",
+  "recovery": {
+    "model_rerun_safe": false,
+    "recovery_required": false,
+    "retry_safe": false,
+    "retry_scope": null,
+    "worktree_retained": true
+  },
+  "request": "ephi-o2-immutable-artifacts-v1",
+  "schema_version": 1,
+  "started_at": "2026-09-19T00:00:37Z",
+  "status": "EXECUTED_CHANGE",
+  "timing": {
+    "execution_seconds": 1304,
+    "queue_seconds": 0,
+    "total_seconds": 1304
+  },
+  "transport": {
+    "bytes": 9281,
+    "envelope": "FABRIC/2",
+    "prompt_bytes": 8969,
+    "prompt_sha256": "466abfa0b5c281a469e611c46a25972e58fa978ac4bd83550389ba66c0695ba6",
+    "sha256": "b042bdd4c7f29e17de57628e587e9f96394640dae91e2c78409a03b1d64c3312"
+  }
+}
