@@ -1,0 +1,502 @@
+{
+  "accepted_at": "2026-09-19T18:48:48Z",
+  "changed_files": [
+    {
+      "additions": 29,
+      "deletions": 0,
+      "path": "README.md",
+      "status": "M"
+    },
+    {
+      "additions": 105,
+      "deletions": 0,
+      "path": "evidence/review/chg_144_o4_metrology_source_ingress_v1.json",
+      "status": "A"
+    },
+    {
+      "additions": 58,
+      "deletions": 18,
+      "path": "manifest.json",
+      "status": "M"
+    },
+    {
+      "additions": 117,
+      "deletions": 0,
+      "path": "migrations/006_o4_source_snapshot_ingress.sql",
+      "status": "A"
+    },
+    {
+      "additions": 30,
+      "deletions": 0,
+      "path": "src/ephi/__init__.py",
+      "status": "M"
+    },
+    {
+      "additions": 6,
+      "deletions": 0,
+      "path": "src/ephi/app.py",
+      "status": "M"
+    },
+    {
+      "additions": 60,
+      "deletions": 0,
+      "path": "src/ephi/application/__init__.py",
+      "status": "M"
+    },
+    {
+      "additions": 41,
+      "deletions": 0,
+      "path": "src/ephi/application/errors.py",
+      "status": "M"
+    },
+    {
+      "additions": 603,
+      "deletions": 0,
+      "path": "src/ephi/application/source_ingress.py",
+      "status": "A"
+    },
+    {
+      "additions": 269,
+      "deletions": 0,
+      "path": "src/ephi/application/source_reality.py",
+      "status": "A"
+    },
+    {
+      "additions": 2,
+      "deletions": 0,
+      "path": "src/ephi/infrastructure/__init__.py",
+      "status": "M"
+    },
+    {
+      "additions": 9,
+      "deletions": 0,
+      "path": "src/ephi/infrastructure/postgresql.py",
+      "status": "M"
+    },
+    {
+      "additions": 404,
+      "deletions": 0,
+      "path": "src/ephi/infrastructure/postgresql_source.py",
+      "status": "A"
+    },
+    {
+      "additions": 6,
+      "deletions": 0,
+      "path": "src/ephi/ui/app.py",
+      "status": "M"
+    },
+    {
+      "additions": 17,
+      "deletions": 0,
+      "path": "tests/test_ephi_application.py",
+      "status": "M"
+    },
+    {
+      "additions": 246,
+      "deletions": 0,
+      "path": "tests/test_o4_source_ingress.py",
+      "status": "A"
+    },
+    {
+      "additions": 236,
+      "deletions": 0,
+      "path": "tests/test_o4_source_ingress_postgresql.py",
+      "status": "A"
+    },
+    {
+      "additions": 23,
+      "deletions": 0,
+      "path": "tools/source_reality_preflight.py",
+      "status": "A"
+    }
+  ],
+  "checks": [
+    {
+      "command": "/bin/zsh -lc 'for socket in /tmp/ephi-pg.vkYcIw /tmp/ephi-fix2-pgsock.ecfNDV; do echo \"--- $socket ---\"; psql -h \"$socket\" -d postgres -Atc '\"'select current_user, version()' 2>&1 | sed -n '1,4p'; done\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'for data in /tmp/ephi-pg.vkYcIw /tmp/ephi-fix2-pgdata.aWV85j; do echo \"--- $data ---\"; if [ -f \"$data/postgresql.conf\" ]; then rg -n '\"'\"'^(port|listen_addresses|unix_socket_directories|user|data_directory)'\"' \\\"\"'$data/postgresql.conf\" || true; fi; done && printf '\"'%s\\\\n' '--- roles hints ---' && for data in /tmp/ephi-pg.vkYcIw /tmp/ephi-fix2-pgdata.aWV85j; do if [ -f \\\"\"'$data/pg_hba.conf\" ]; then rg -n '\"'\"'^[''^#].*'\"' \\\"\"'$data/pg_hba.conf\" | sed -n '\"'1,20p'; fi; done\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'for port in 55432 55438; do for role in ephi ephi_app ephi_test ephi_user; do out=$(psql \"postgresql://$role@127.0.0.1:$port/postgres\" -Atc '\"'select current_user, version()' 2>&1 | sed -n '1p'); case \\\"\"'$out\" in *\"version\"*|*\"PostgreSQL\"*) echo \"$port $role: $out\";; esac; done; done'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rg -n 'build_composition_from_environment|EPHI_POSTGRES_DSN|EPHI_DEV_' tests src | sed -n '1,240p' && rg -n 'build_composition|run_ephi' tests | sed -n '1,160p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"sed -n '105,205p' src/ephi/ui/app.py && sed -n '1,220p' src/ephi/application/__init__.py | tail -80 && python3 -m compileall -q src tools || true\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"PYTHONPATH=src python3 - <<'PY'\nimport ephi\nfrom ephi.application import MetrologySourceBinding, MetrologyObservation, SourceSnapshotDraft\nprint('imported', ephi.__version__, MetrologySourceBinding.__name__)\nPY\nPYTHONPATH=src python3 tools/source_reality_preflight.py\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"PYTHONPATH=src python3 - <<'PY'\nimport ephi\nfrom ephi.application import MetrologySourceBinding, MetrologyObservation, SourceSnapshotDraft\nprint('imported', ephi.__version__, MetrologySourceBinding.__name__)\nPY\nPYTHONPATH=src python3 tools/source_reality_preflight.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest tests.test_o4_source_ingress -v'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest tests.test_o4_source_ingress -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"EPHI_TEST_POSTGRES_DSN='postgresql://ephi@127.0.0.1:55432/postgres' rtk python3 -m unittest tests.test_o4_source_ingress_postgresql -v\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"EPHI_TEST_POSTGRES_DSN='postgresql://ephi@127.0.0.1:55432/postgres' rtk python3 -m unittest tests.test_o4_source_ingress_postgresql -v\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"EPHI_TEST_POSTGRES_DSN='postgresql://ephi@127.0.0.1:55432/postgres' rtk python3 -m unittest tests.test_o4_source_ingress_postgresql -v\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest discover -s tests -v'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -m unittest tests.test_o4_source_ingress -v && EPHI_TEST_POSTGRES_DSN='postgresql://ephi@127.0.0.1:55432/postgres' rtk python3 -m unittest tests.test_o4_source_ingress_postgresql -v\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"EPHI_TEST_POSTGRES_DSN='postgresql://ephi@127.0.0.1:55432/postgres' rtk python3 -m unittest tests.test_o2_postgresql tests.test_o2_worker_postgresql tests.test_o2_postgresql_reads tests.test_o2_postgresql_artifacts tests.test_o3_postgresql tests.test_postgresql_adapter_lifecycle -v\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rg -n 'SOURCE_ARTIFACT|class SourceSnapshotRecord|class SourceCapabilityRecord|_SOURCE_COLUMNS|_CAPABILITY_COLUMNS|_source_record|_capability_record|snapshot_id,|INSERT INTO source_capability|INSERT INTO source_snapshot|SourceSnapshotStatus' src/ephi/application/source_ingress.py src/ephi/infrastructure/postgresql_source.py migrations/006_o4_source_snapshot_ingress.sql | sed -n '1,260p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"sed -n '28,45p' src/ephi/application/source_ingress.py && sed -n '380,470p' src/ephi/application/source_ingress.py && sed -n '1,160p' src/ephi/infrastructure/postgresql_source.py && sed -n '180,290p' src/ephi/infrastructure/postgresql_source.py && sed -n '1,120p' migrations/006_o4_source_snapshot_ingress.sql\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"sed -n '75,155p' src/ephi/infrastructure/postgresql_source.py && sed -n '185,285p' src/ephi/infrastructure/postgresql_source.py && python3 - <<'PY'\nfrom pathlib import Path\ns=Path('src/ephi/infrastructure/postgresql_source.py').read_text()\nfor marker in (') VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s::jsonb, %s, %s, %s, %s, %s, %s, %s, %s, %s)',):\n print('cap placeholders', marker.count('%s'))\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"sed -n '270,320p' src/ephi/infrastructure/postgresql_source.py && sed -n '1,115p' migrations/006_o4_source_snapshot_ingress.sql | tail -45\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -m unittest tests.test_o4_source_ingress -v && EPHI_TEST_POSTGRES_DSN='postgresql://ephi@127.0.0.1:55432/postgres' rtk python3 -m unittest tests.test_o4_source_ingress_postgresql -v\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"git diff --stat && git diff --check && rtk python3 -m compileall -q src tools tests && printf '%s\\\\n' '--- changed paths ---' && git status --short\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"PYTHONPATH=src python3 - <<'PY'\nimport ephi\nprint(ephi.MetrologySourceBinding, ephi.PostgreSQLSourceSnapshotStore)\nPY\nrtk git diff --check && rtk python3 -m unittest tests.test_o4_source_ingress -q\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"sed -n '1,150p' tests/test_ephi_application.py && sed -n '1,80p' src/ephi/app.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest tests.test_ephi_application tests.test_o4_source_ingress -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sh -c '\nset -eu\no4_pg_tmp=\\\"\"'$(rtk mktemp -d -t ephi-o4-pg.XXXXXX)\"\no4_pg_port=55439\ntrap '\"'\\\\''rtk pg_ctl -D \\\"\"'$o4_pg_tmp\" -m immediate stop >/dev/null 2>&1 || true; rtk rm -rf \"$o4_pg_tmp\"'\"'\\\\'' EXIT\nrtk initdb -D \\\"\"'$o4_pg_tmp\" -U ephi --no-locale --encoding=UTF8 >/tmp/ephi-o4-pg-init.log\nrtk pg_ctl -D \"$o4_pg_tmp\" -o \"-p $o4_pg_port -h 127.0.0.1\" -w start >/tmp/ephi-o4-pg-start.log\nEPHI_TEST_POSTGRES_DSN=\"postgresql://ephi@127.0.0.1:$o4_pg_port/postgres\" rtk python3 -m unittest tests.test_o4_source_ingress_postgresql tests.test_o2_postgresql tests.test_o2_worker_postgresql tests.test_o2_postgresql_reads tests.test_o2_postgresql_artifacts tests.test_o3_postgresql tests.test_postgresql_adapter_lifecycle -v\n'\"'\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk ls -l /opt/homebrew/opt/postgresql@18/bin/initdb /opt/homebrew/opt/postgresql@18/bin/pg_ctl /opt/homebrew/opt/postgresql@18/bin/postgres'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sh -c '\nset -eu\no4_pg18_tmp=\\\"\"'$(rtk mktemp -d -t ephi-o4-pg18.XXXXXX)\"\no4_pg18_port=55439\ntrap '\"'\\\\''rtk /opt/homebrew/opt/postgresql@18/bin/pg_ctl -D \\\"\"'$o4_pg18_tmp\" -m immediate stop >/dev/null 2>&1 || true; rtk rm -rf \"$o4_pg18_tmp\"'\"'\\\\'' EXIT\nrtk /opt/homebrew/opt/postgresql@18/bin/initdb -D \\\"\"'$o4_pg18_tmp\" -U ephi --no-locale --encoding=UTF8 >/tmp/ephi-o4-pg18-init.log\nrtk /opt/homebrew/opt/postgresql@18/bin/pg_ctl -D \"$o4_pg18_tmp\" -o \"-p $o4_pg18_port -h 127.0.0.1\" -w start >/tmp/ephi-o4-pg18-start.log\nEPHI_TEST_POSTGRES_DSN=\"postgresql://ephi@127.0.0.1:$o4_pg18_port/postgres\" rtk python3 -m unittest tests.test_o4_source_ingress_postgresql tests.test_o2_postgresql tests.test_o2_worker_postgresql tests.test_o2_postgresql_reads tests.test_o2_postgresql_artifacts tests.test_o3_postgresql tests.test_postgresql_adapter_lifecycle -v\n'\"'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --check && rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest discover -s tests -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/w0_repo_baseline.py && rtk python3 tools/check_package.py && rtk git diff --check && PYTHONPATH=src rtk python3 -m ephi --source-reality-preflight --json'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"git diff -- README.md src/ephi/__init__.py src/ephi/app.py src/ephi/application/__init__.py src/ephi/application/errors.py src/ephi/infrastructure/__init__.py src/ephi/infrastructure/postgresql.py src/ephi/ui/app.py tests/test_ephi_application.py | sed -n '1,520p' && printf '%s\\\\n' '--- source ingress excerpt ---' && sed -n '1,680p' src/ephi/application/source_ingress.py | sed -n '1,260p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git status --short --branch && rtk git diff --check && rtk git add README.md manifest.json migrations/006_o4_source_snapshot_ingress.sql src/ephi/__init__.py src/ephi/app.py src/ephi/application/__init__.py src/ephi/application/errors.py src/ephi/application/source_ingress.py src/ephi/application/source_reality.py src/ephi/infrastructure/__init__.py src/ephi/infrastructure/postgresql.py src/ephi/infrastructure/postgresql_source.py src/ephi/ui/app.py tests/test_ephi_application.py tests/test_o4_source_ingress.py tests/test_o4_source_ingress_postgresql.py tools/source_reality_preflight.py && rtk git diff --cached --check && rtk git commit -m 'Implement O4.1 metrology source ingress boundary'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git rev-parse HEAD && rtk git rev-parse HEAD''^{tree} && rtk git status --short --branch'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 tools/check_package.py --refresh-manifest && rtk git diff --check && rtk git add evidence/review/chg_144_o4_metrology_source_ingress_v1.json manifest.json && rtk git diff --cached --check && rtk git commit -m 'Record O4.1 source ingress candidate evidence' && rtk git rev-parse HEAD && rtk git rev-parse HEAD\"'^{tree}'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk mktemp -d -t ephi-o4-carrier.XXXXXX'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk shasum -a 256 evidence/review/chg_144_o4_metrology_source_ingress_v1.json && PYTHONPATH=src rtk python3 -m ephi --source-reality-preflight --json | rtk shasum -a 256'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk cp evidence/review/chg_144_o4_metrology_source_ingress_v1.json /var/folders/nz/6q2p_ldx3txdbw_gttbpnwjr0000gn/T/ephi-o4-carrier.XXXXXX.dzialqxE6x/chg_144_o4_metrology_source_ingress_v1.json && rtk tar -czf /var/folders/nz/6q2p_ldx3txdbw_gttbpnwjr0000gn/T/ephi-o4-carrier.XXXXXX.dzialqxE6x/ephi-o4-metrology-source-ingress-v1-bundle.tar.gz -C /var/folders/nz/6q2p_ldx3txdbw_gttbpnwjr0000gn/T/ephi-o4-carrier.XXXXXX.dzialqxE6x chg_144_o4_metrology_source_ingress_v1.json && rtk shasum -a 256 /var/folders/nz/6q2p_ldx3txdbw_gttbpnwjr0000gn/T/ephi-o4-carrier.XXXXXX.dzialqxE6x/ephi-o4-metrology-source-ingress-v1-bundle.tar.gz'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git -C /var/folders/nz/6q2p_ldx3txdbw_gttbpnwjr0000gn/T/ephi-o4-carrier.XXXXXX.dzialqxE6x init -q && rtk git -C /var/folders/nz/6q2p_ldx3txdbw_gttbpnwjr0000gn/T/ephi-o4-carrier.XXXXXX.dzialqxE6x config user.name 'EPHI Project OS Artifact Carrier' && rtk git -C /var/folders/nz/6q2p_ldx3txdbw_gttbpnwjr0000gn/T/ephi-o4-carrier.XXXXXX.dzialqxE6x config user.email 'kimhw8084@gmail.com' && rtk git -C /var/folders/nz/6q2p_ldx3txdbw_gttbpnwjr0000gn/T/ephi-o4-carrier.XXXXXX.dzialqxE6x add carrier-manifest.json chg_144_o4_metrology_source_ingress_v1.json ephi-o4-metrology-source-ingress-v1-bundle.tar.gz && rtk git -C /var/folders/nz/6q2p_ldx3txdbw_gttbpnwjr0000gn/T/ephi-o4-carrier.XXXXXX.dzialqxE6x commit -qm 'Publish EPHI O4.1 candidate evidence carrier' && rtk git -C /var/folders/nz/6q2p_ldx3txdbw_gttbpnwjr0000gn/T/ephi-o4-carrier.XXXXXX.dzialqxE6x rev-parse HEAD && rtk git -C /var/folders/nz/6q2p_ldx3txdbw_gttbpnwjr0000gn/T/ephi-o4-carrier.XXXXXX.dzialqxE6x rev-parse HEAD\"'^{tree}'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git ls-remote origin refs/heads/project-os-artifacts/ephi/ephi-o4-metrology-source-ingress-v1'",
+      "exit_code": 128,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git remote add origin https://github.com/kimhw8084/ephi.git && rtk git ls-remote origin refs/heads/project-os-artifacts/ephi/ephi-o4-metrology-source-ingress-v1'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git push origin HEAD:refs/heads/project-os-artifacts/ephi/ephi-o4-metrology-source-ingress-v1'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"o4_carrier_ref='refs/remotes/origin/project-os-artifacts/ephi/ephi-o4-metrology-source-ingress-v1'\nrtk git fetch origin 'refs/heads/project-os-artifacts/ephi/ephi-o4-metrology-source-ingress-v1:'\\\"\"'$o4_carrier_ref\"\no4_remote_commit=\"$(rtk git rev-parse \"$o4_carrier_ref\")\"\no4_remote_tree=\"$(rtk git rev-parse \"$o4_carrier_ref''^{tree}\")\"\no4_manifest_sha=\"$(rtk git show \"$o4_carrier_ref:carrier-manifest.json\" | rtk shasum -a 256 | rtk awk '\"'{print \"'$1}'\"')\\\"\no4_bundle_sha=\\\"\"'$(rtk git show \"$o4_carrier_ref:ephi-o4-metrology-source-ingress-v1-bundle.tar.gz\" | rtk shasum -a 256 | rtk awk '\"'{print \"'$1}'\"')\\\"\no4_manifest_candidate=\\\"\"'$(rtk git show \"$o4_carrier_ref:carrier-manifest.json\" | rtk python3 -c '\"'import json,sys; print(json.load(sys.stdin)[\\\"candidate_sha\\\"])')\\\"\no4_manifest_tree=\\\"\"'$(rtk git show \"$o4_carrier_ref:carrier-manifest.json\" | rtk python3 -c '\"'import json,sys; print(json.load(sys.stdin)[\\\"candidate_tree\\\"])')\\\"\no4_manifest_request=\\\"\"'$(rtk git show \"$o4_carrier_ref:carrier-manifest.json\" | rtk python3 -c '\"'import json,sys; print(json.load(sys.stdin)[\\\"request\\\"])')\\\"\no4_manifest_job=\\\"\"'$(rtk git show \"$o4_carrier_ref:carrier-manifest.json\" | rtk python3 -c '\"'import json,sys; print(json.load(sys.stdin)[\\\"fabric_job\\\"])')\\\"\no4_remote_files=\\\"\"'$(rtk git ls-tree -r --name-only \"$o4_carrier_ref\" | rtk wc -l | rtk tr -d '\"' ')\\\"\nrtk git ls-remote origin refs/heads/project-os-artifacts/ephi/ephi-o4-metrology-source-ingress-v1\nprintf '%s\\\\n' \\\"remote_commit=\"'$o4_remote_commit\" \"remote_tree=$o4_remote_tree\" \"manifest_sha=$o4_manifest_sha\" \"bundle_sha=$o4_bundle_sha\" \"candidate_sha=$o4_manifest_candidate\" \"candidate_tree=$o4_manifest_tree\" \"request=$o4_manifest_request\" \"fabric_job=$o4_manifest_job\" \"remote_file_count=$o4_remote_files\"'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sh -c '\nset -eu\no4_carrier_ref=\\\"refs/remotes/origin/project-os-artifacts/ephi/ephi-o4-metrology-source-ingress-v1\\\"\no4_remote_commit=\\\"\"'$(rtk git rev-parse \"$o4_carrier_ref\")\"\no4_remote_tree=\"$(rtk git rev-parse \"$o4_carrier_ref''^{tree}\")\"\no4_manifest_sha=\"$(rtk git show \"${o4_carrier_ref}:carrier-manifest.json\" | rtk shasum -a 256 | rtk awk \"{print '\"\\\\\"'$1}\")\"\no4_bundle_sha=\"$(rtk git show \"${o4_carrier_ref}:ephi-o4-metrology-source-ingress-v1-bundle.tar.gz\" | rtk shasum -a 256 | rtk awk \"{print '\"\\\\\"'$1}\")\"\no4_manifest_candidate=\"$(rtk git show \"${o4_carrier_ref}:carrier-manifest.json\" | rtk python3 -c \"import json,sys; print(json.load(sys.stdin)['\"\\\\\\\"candidate_sha\\\\\\\"])\\\")\\\"\no4_manifest_tree=\\\"\"'$(rtk git show \"${o4_carrier_ref}:carrier-manifest.json\" | rtk python3 -c \"import json,sys; print(json.load(sys.stdin)['\"\\\\\\\"candidate_tree\\\\\\\"])\\\")\\\"\no4_manifest_request=\\\"\"'$(rtk git show \"${o4_carrier_ref}:carrier-manifest.json\" | rtk python3 -c \"import json,sys; print(json.load(sys.stdin)['\"\\\\\\\"request\\\\\\\"])\\\")\\\"\no4_manifest_job=\\\"\"'$(rtk git show \"${o4_carrier_ref}:carrier-manifest.json\" | rtk python3 -c \"import json,sys; print(json.load(sys.stdin)['\"\\\\\\\"fabric_job\\\\\\\"])\\\")\\\"\no4_remote_files=\\\"\"'$(rtk git ls-tree -r --name-only \"$o4_carrier_ref\" | rtk wc -l | rtk tr -d \" \")\"\nrtk git ls-remote origin refs/heads/project-os-artifacts/ephi/ephi-o4-metrology-source-ingress-v1\nrtk printf \"%s'\"\\\\\\\\n\\\" \\\"remote_commit=\"'$o4_remote_commit\" \"remote_tree=$o4_remote_tree\" \"manifest_sha=$o4_manifest_sha\" \"bundle_sha=$o4_bundle_sha\" \"candidate_sha=$o4_manifest_candidate\" \"candidate_tree=$o4_manifest_tree\" \"request=$o4_manifest_request\" \"fabric_job=$o4_manifest_job\" \"remote_file_count=$o4_remote_files\"\n'\"'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk shasum -a 256 carrier-manifest.json ephi-o4-metrology-source-ingress-v1-bundle.tar.gz && rtk git show HEAD:carrier-manifest.json | rtk shasum -a 256 && rtk git show HEAD:ephi-o4-metrology-source-ingress-v1-bundle.tar.gz | rtk shasum -a 256 && rtk git cat-file -s HEAD:carrier-manifest.json && rtk git cat-file -s HEAD:ephi-o4-metrology-source-ingress-v1-bundle.tar.gz'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk proxy git cat-file blob HEAD:ephi-o4-metrology-source-ingress-v1-bundle.tar.gz | shasum -a 256 && rtk proxy git cat-file blob HEAD:carrier-manifest.json | shasum -a 256'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 tools/check_package.py --refresh-manifest && rtk git diff --check && rtk git add evidence/review/chg_144_o4_metrology_source_ingress_v1.json manifest.json && rtk git diff --cached --check && rtk git commit -m 'Bind O4.1 evidence to remote artifact carrier' && rtk git rev-parse HEAD && rtk git rev-parse HEAD\"'^{tree}'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py && rtk python3 tools/w0_repo_baseline.py && rtk python3 -m unittest discover -s tests -v && rtk git diff --check && rtk git status --short --branch'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short --branch && rtk git rev-parse HEAD && rtk git rev-parse HEAD''^{tree} && rtk git log -3 --oneline --decorate && rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/source_reality_preflight.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    }
+  ],
+  "codex": {
+    "cli_version": "codex-cli 0.154.0",
+    "configured_model": "gpt-5.6-luna",
+    "event_count": 195,
+    "provider_reported_model": null,
+    "reasoning_effort": "xhigh",
+    "terminal_type": "turn.completed",
+    "usage": {
+      "cache_hit_percent": 98.11,
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 15535872,
+      "fresh_input_tokens": 299642,
+      "input_tokens": 15835514,
+      "non_reasoning_output_tokens": 46550,
+      "output_tokens": 80513,
+      "reasoning_output_tokens": 33963,
+      "total_processed_tokens": 15916027
+    },
+    "warnings": []
+  },
+  "commits": [
+    {
+      "sha": "b51b5af06d44d0019f7c818bd62a094f38436b66",
+      "subject": "Bind O4.1 evidence to remote artifact carrier"
+    },
+    {
+      "sha": "558022d06c3cefea596d38fde1ff5a8012baf251",
+      "subject": "Record O4.1 source ingress candidate evidence"
+    },
+    {
+      "sha": "83f62dd488bcd4df10ca5692c973bf7d6b5b8b19",
+      "subject": "Implement O4.1 metrology source ingress boundary"
+    }
+  ],
+  "diff": {
+    "additions": 2261,
+    "changed_files": 18,
+    "commit_count": 3,
+    "deletions": 18
+  },
+  "error_code": null,
+  "evidence_manifest": {
+    "count": 3,
+    "items": [
+      {
+        "bytes": 14582,
+        "path": "README.md",
+        "sha256": "3f137a6d36033af8e933442dc9bc75eeaf62c7a624013c370bd8ac4ed91ae2eb"
+      },
+      {
+        "bytes": 5149,
+        "path": "evidence/review/chg_144_o4_metrology_source_ingress_v1.json",
+        "sha256": "9b1ff552090239cb0fc93ca31be88d14bfea28654125165bbf68adebc46c16d1"
+      },
+      {
+        "bytes": 30073,
+        "path": "manifest.json",
+        "sha256": "8812603e70274b449c4f12bbca04c1a3870e16bdc9d20a9675a6ef52c3f92f42"
+      }
+    ],
+    "version": 1
+  },
+  "evidence_publisher_release": "1.2.3-resume-candidate",
+  "fabric_capture": {
+    "applied": false,
+    "paths_before": 0,
+    "transient_untracked_removed": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "fabric_release": "1.2.3-resume-candidate",
+  "failure_class": null,
+  "finished_at": "2026-09-19T19:17:18Z",
+  "git": {
+    "base_is_ancestor": true,
+    "base_sha": "9577173fba418c695acc1b01661b14f81af315a4",
+    "branch": "codex/ephi-o4-metrology-source-ingress-v1",
+    "detached_verify": false,
+    "head_sha": "b51b5af06d44d0019f7c818bd62a094f38436b66",
+    "remote_exact_head": true,
+    "remote_head_sha": "b51b5af06d44d0019f7c818bd62a094f38436b66",
+    "target_branch": "main",
+    "target_drifted_since_acceptance": false,
+    "target_head_observed_after_execution": "9577173fba418c695acc1b01661b14f81af315a4",
+    "work_branch": "codex/ephi-o4-metrology-source-ingress-v1",
+    "worktree_clean": true
+  },
+  "instructions": {
+    "files": [
+      {
+        "bytes": 1458,
+        "path": "AGENTS.md",
+        "sha256": "4349f387a79d886ed1264604ff48c582698e539e08ed8fb2f9d8ab8fbf6f804a"
+      }
+    ],
+    "total_bytes": 1458,
+    "warning": null
+  },
+  "job_id": "CF-ceed0fa8a1482914a1bf7973",
+  "kind": "codex-fabric-audit-evidence",
+  "locator": {
+    "branch": "codex-fabric/evidence/ephi/ephi-o4-metrology-source-ingress-v1",
+    "path": ".codex-fabric/audit.json",
+    "ref": "refs/heads/codex-fabric/evidence/ephi/ephi-o4-metrology-source-ingress-v1"
+  },
+  "operation": "BUILD",
+  "policy": {
+    "environment_policy_sha256": "e077daca74297b3c30bee8989f00f8ca5338f7610b4d016a6c48db524205d064",
+    "fabric_release": "1.2.3-resume-candidate",
+    "policy_sha256": "44756118cd7fda0c45cd23ba1d31a48a3f4f2422d687df15264ba4406f40e1f2",
+    "registry_sha256": "cfc765f3211c37c7967a138f3b2d89a99341939b15b2623f92744d007f625d6f"
+  },
+  "project_id": "ephi",
+  "recovery": {
+    "model_rerun_safe": false,
+    "recovery_required": false,
+    "retry_safe": false,
+    "retry_scope": null,
+    "worktree_retained": true
+  },
+  "request": "ephi-o4-metrology-source-ingress-v1",
+  "schema_version": 1,
+  "started_at": "2026-09-19T18:48:49Z",
+  "status": "EXECUTED_CHANGE",
+  "timing": {
+    "execution_seconds": 1709,
+    "queue_seconds": 1,
+    "total_seconds": 1710
+  },
+  "transport": {
+    "bytes": 10814,
+    "envelope": "FABRIC/2",
+    "prompt_bytes": 10491,
+    "prompt_sha256": "f72a4ada3e805506da4d6f3d62cab14eeec7a63783f291a5655bf9b79421c841",
+    "sha256": "ceed0fa8a1482914a1bf79731a6a72b7c7e6461caf630dde18552dd0951c0adc"
+  }
+}
