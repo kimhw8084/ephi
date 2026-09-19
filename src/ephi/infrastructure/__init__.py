@@ -9,6 +9,13 @@ from .sqlite import (
 from .postgresql import PostgreSQLReferenceTransactionAdapter, PostgresReferenceTransactionAdapter
 from .postgresql_worker import PostgreSQLWorkerStore
 from .postgresql_reads import PostgreSQLReadSnapshotStore
+from .artifacts import (
+    DEFAULT_REFERENCE_MAX_ARTIFACT_SIZE,
+    FileArtifactBlobStore,
+    FilesystemArtifactBlobStore,
+    PostgreSQLArtifactCatalog,
+    SQLiteArtifactCatalog,
+)
 
 __all__ = [
     "AggregateSnapshot",
@@ -19,4 +26,9 @@ __all__ = [
     "PostgresReferenceTransactionAdapter",
     "PostgreSQLWorkerStore",
     "PostgreSQLReadSnapshotStore",
+    "DEFAULT_REFERENCE_MAX_ARTIFACT_SIZE",
+    "FileArtifactBlobStore",
+    "FilesystemArtifactBlobStore",
+    "PostgreSQLArtifactCatalog",
+    "SQLiteArtifactCatalog",
 ]

@@ -170,6 +170,52 @@ class QueryCursorValidationError(QueryIdentityMismatchError):
     code = "QUERY_CURSOR_INVALID"
 
 
+class ArtifactError(CommandError):
+    """Base error for the generic immutable-artifact boundary."""
+
+
+class ArtifactIntegrityError(ArtifactError):
+    """Stored bytes do not prove the content identity recorded by the caller."""
+
+    code = "ARTIFACT_INTEGRITY_ERROR"
+
+
+class ArtifactMetadataConflictError(ArtifactError):
+    """A scoped content identity is already registered with other metadata."""
+
+    code = "ARTIFACT_METADATA_CONFLICT"
+
+
+class ArtifactNotFoundError(ArtifactError):
+    """The requested immutable blob or scoped catalog record is unavailable."""
+
+    code = "ARTIFACT_NOT_FOUND"
+
+
+class ArtifactStorageConfigurationError(ArtifactError):
+    """The reference filesystem adapter has an unsafe or incomplete setup."""
+
+    code = "ARTIFACT_STORAGE_CONFIGURATION_ERROR"
+
+
+class ArtifactStorageSafetyError(ArtifactError):
+    """The reference adapter cannot establish a safe filesystem boundary."""
+
+    code = "ARTIFACT_STORAGE_SAFETY_ERROR"
+
+
+class ArtifactTooLargeError(ArtifactError):
+    """Reference filesystem storage rejected content above its explicit bound."""
+
+    code = "ARTIFACT_TOO_LARGE"
+
+
+class ArtifactWriteInterruptedError(ArtifactError):
+    """A deterministic test fault interrupted a write before publication."""
+
+    code = "ARTIFACT_WRITE_INTERRUPTED"
+
+
 # A concise compatibility name for callers that describe the persistence
 # boundary as durable storage rather than a retryable infrastructure failure.
 DurableStorageError = StorageFailureError

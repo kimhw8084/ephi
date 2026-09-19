@@ -51,8 +51,8 @@
     },
     {
       "path": ".github/workflows/package.yml",
-      "bytes": 3577,
-      "sha256": "68dd82591080dd8088eea2db66aad334bedea5f96f65195d860699a4c6ca888d"
+      "bytes": 3838,
+      "sha256": "4a746b22209dd813f68238e988da2f240fdd759a4f98a9732c34c267ff52f7f9"
     },
     {
       "path": ".gitignore",
@@ -81,8 +81,8 @@
     },
     {
       "path": "04_Data_and_Runtime.md",
-      "bytes": 22844,
-      "sha256": "c8dd2588f8e72f4691b8914d6b1e7c4cdc6826a75239639b6f7d139fd0e69d04"
+      "bytes": 23345,
+      "sha256": "5fc4a3cd83dbb5648c413e16a65e06268c66b9b19bd0d1b844f7510e8b9d2f47"
     },
     {
       "path": "05_UX_and_Interaction_Design.md",
@@ -126,8 +126,8 @@
     },
     {
       "path": "13_Package_Review.md",
-      "bytes": 11027,
-      "sha256": "0cddb3422b119b73a8dec555ea18e233d3d5a353744ece59a547b03fa894947b"
+      "bytes": 12255,
+      "sha256": "d4e47fb046f563413023aa2e3894d1e83075653de2906b78cc6aff68990df128"
     },
     {
       "path": "AGENTS.md",
@@ -141,8 +141,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 10596,
-      "sha256": "379b2c5ebde8a7855031204f28c004e70cf94d677eb66a46f794154a038daee0"
+      "bytes": 12000,
+      "sha256": "49b3b5842feac54019a5a6ca36d4895cb289519a60dce2cb55d3ab01ae3ae61c"
     },
     {
       "path": "environment/nicegui_base_requirements.txt",
@@ -255,6 +255,11 @@
       "sha256": "22163a8fb1e6447188b254d4449cc3018cbb947c2deb48969f387dd796ef6389"
     },
     {
+      "path": "migrations/004_o2_artifact_catalog.sql",
+      "bytes": 1928,
+      "sha256": "667cd985add5c26e285817489fdd7568fbc0652685cc7d3833a9ef8906613460"
+    },
+    {
       "path": "pyproject.toml",
       "bytes": 657,
       "sha256": "0ef88ce76633bbebfada55628717ff5189b05eb05bf276f1f27d4ceeac27f0a1"
@@ -296,8 +301,13 @@
     },
     {
       "path": "src/ephi/application/__init__.py",
-      "bytes": 3485,
-      "sha256": "1ef9f52f635488138973ed7039c295d8b222ee8ac3341e60df5b243d8126a9b4"
+      "bytes": 4802,
+      "sha256": "fa75a72291d367aadd259d5279171ec09eaef29763abf6404c5546a58f7c5971"
+    },
+    {
+      "path": "src/ephi/application/artifacts.py",
+      "bytes": 15562,
+      "sha256": "9f20e2c66da33afd9be099d2f8d01ef46b674d1397d94d48197b4d5c75c077ac"
     },
     {
       "path": "src/ephi/application/context.py",
@@ -306,8 +316,8 @@
     },
     {
       "path": "src/ephi/application/errors.py",
-      "bytes": 5174,
-      "sha256": "74a0974f00ff74d72026b76f19ec137022c8cbdf115e06607f94436e07c24919"
+      "bytes": 6469,
+      "sha256": "6350511dec0bd02cab7870d728bc3e3cea331d74b8d44a80ebac569eae7cb1c8"
     },
     {
       "path": "src/ephi/application/hashing.py",
@@ -351,13 +361,13 @@
     },
     {
       "path": "src/ephi/infrastructure/__init__.py",
-      "bytes": 693,
-      "sha256": "77fb3cd3ba6272d9ad7b6c30bd7fb6798adc11350fd69eec9aca3930b6c87aec"
+      "bytes": 1048,
+      "sha256": "dd737312dc0532295d85b52ee682db24d753d7c6b96c75a5d6eb9151dcb35c22"
     },
     {
       "path": "src/ephi/infrastructure/postgresql.py",
-      "bytes": 24803,
-      "sha256": "2f47323ede7f67a074ffbf2a5ed5fbffd829e3cf009f6b2bee755b2a7fdfa0a2"
+      "bytes": 25017,
+      "sha256": "9bec3354105e0dd9fbf8b1fb5a4fbf112b30c58c38b9d8f9f73661a4e8ad484f"
     },
     {
       "path": "src/ephi/infrastructure/postgresql_reads.py",
@@ -415,9 +425,19 @@
       "sha256": "0f87a410f75a7d3fee4f5d277f953a0ef0791776f30e5f0d69f058e6f17372db"
     },
     {
+      "path": "tests/test_o2_artifacts.py",
+      "bytes": 11491,
+      "sha256": "27bd49d821aea3d0ed3fc25a384a7ec4cd8a339d05b8bdde230cbfd88660500e"
+    },
+    {
       "path": "tests/test_o2_postgresql.py",
       "bytes": 16343,
       "sha256": "7b1f0dffa7554f426f8cf28fda54d2666ebdb1335b7337ec3609e5f447992bcf"
+    },
+    {
+      "path": "tests/test_o2_postgresql_artifacts.py",
+      "bytes": 7313,
+      "sha256": "26282c695595245a83174b3c665627259f61dca253937b181d9ccca59f564cad"
     },
     {
       "path": "tests/test_o2_postgresql_reads.py",

@@ -403,6 +403,13 @@ class PostgreSQLReferenceTransactionAdapter:
 
         return PostgreSQLReadSnapshotStore(self)
 
+    def artifact_catalog(self):
+        """Return the separate CHG-133 scoped artifact catalog adapter."""
+
+        from .artifacts import PostgreSQLArtifactCatalog
+
+        return PostgreSQLArtifactCatalog(self)
+
     def publish_read_revision(self, *args, **kwargs):
         return self.read_store().publish_read_revision(*args, **kwargs)
 

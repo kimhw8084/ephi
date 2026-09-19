@@ -56,6 +56,14 @@ All entities include schema version, created_at and scope unless specified. Fore
 
 A compute job reads a fixed input manifest and prior checkpoint, computes outside database locks, writes any immutable artifacts, then performs a short transaction: revalidate lease epoch and expected previous checkpoint/head; insert revision and effect receipt; update checkpoint; publish the coherent head; update affected attention rows; append outbox event; commit. Referenced artifacts must exist with verified hashes before head publication. Orphan artifacts from failed publication are safe and later collected by reference-aware retention.
 
+The CHG-133 generic artifact boundary implements only this identity/reference
+precondition: exact-byte SHA-256 plus byte size, scoped catalog registration
+after blob verification, and current-authorized verified reads. Its file-backed
+adapter is reference evidence with an explicit bounded size, not the approved
+company immutable object-store deployment binding. Upload transport, scientific
+source artifacts, browser downloads, signed links and retention policy remain
+external qualification work.
+
 Publish operational results only against their stated analytical revision. A late WIP result may update operational urgency while retaining exactly the same technical hash. A stale worker cannot overwrite a newer head just because its computation finished later. Reject mismatched/reordered publication and schedule a recomputation if needed.
 
 Episode brief reads the current head and workflow within one database read transaction and returns a revision vector. Expensive evidence and chart artifacts are then fetched by immutable references. A client may display “new revision available”; it must not silently splice a new exposure population into an old causal comparison.

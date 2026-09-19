@@ -105,6 +105,26 @@ primitives to the first durable Attention → Episode UI slice. Historical
 evidence remains `REFERENCE_ONLY`, and PostgreSQL evidence remains additive to
 the database-independent package/full-suite/W0 checks.
 
+## CHG-133 generic immutable-artifact foundation
+
+CHG-133 adds the narrow immutable-artifact boundary required by the maintained
+contracts: exact-byte SHA-256/size identity, scoped metadata/reference
+contracts, separate blob/catalog/service ports, atomic file-backed reference
+storage, an idempotent PostgreSQL scoped catalog, current-authorization
+retrieval, verified reads and publish preconditions. The file adapter rejects
+implicit or memory roots, caller-selected paths and unsafe symlink/path
+substitution, and uses a bounded reference-only size limit. The PostgreSQL
+catalog stores no unrestricted filesystem path, public download URL or signed
+URL; its server-recorded rows are immutable and scoped.
+
+This is generic foundation evidence only. It does not bind the approved
+company immutable object store, implement scientific source artifacts, Episode
+evidence or upload UI, provide browser download transport, add external SDKs
+or credentials, select retention policy, issue signed links or claim
+production readiness. Artifact PostgreSQL tests are additive to the existing
+command, worker, coherent-read and retained-snapshot integration suites; the
+ordinary package/full-suite/W0 checks remain database-independent.
+
 ## CHG-105 W0 runtime delta
 
 The independent framework/dependency qualification slice is recorded separately in [the runtime evidence](evidence/review/nicegui_base_runtime_evidence.json) and linked from [the NiceGUI Base binding manifest](evidence/review/nicegui_base_binding_manifest.json). It verified an isolated Python 3.11.7 environment, the exact NiceGUI Base VCS commit/version, exact `nicegui==3.15.0`, and 21/21 CHG-104 public-root authority imports. All six requested installed discovery commands returned machine-readable output. `runtime-contract` and browserless framework `runtime-smoke --port 0` PASS; application/browser/production qualification remain NOT_RUN. The canonical package self-check and Git-native baseline are the current W0 execution targets.
