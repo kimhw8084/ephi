@@ -1,0 +1,533 @@
+{
+  "accepted_at": "2026-09-19T20:02:59Z",
+  "changed_files": [
+    {
+      "additions": 22,
+      "deletions": 0,
+      "path": "09_Delivery_and_Gates.md",
+      "status": "M"
+    },
+    {
+      "additions": 15,
+      "deletions": 0,
+      "path": "README.md",
+      "status": "M"
+    },
+    {
+      "additions": 71,
+      "deletions": 6,
+      "path": "manifest.json",
+      "status": "M"
+    },
+    {
+      "additions": 39,
+      "deletions": 0,
+      "path": "operations/README.md",
+      "status": "A"
+    },
+    {
+      "additions": 21,
+      "deletions": 0,
+      "path": "operations/runbooks/README.md",
+      "status": "A"
+    },
+    {
+      "additions": 21,
+      "deletions": 0,
+      "path": "operations/runbooks/immutable-artifact-failure.md",
+      "status": "A"
+    },
+    {
+      "additions": 23,
+      "deletions": 0,
+      "path": "operations/runbooks/isolated-restore-rehearsal.md",
+      "status": "A"
+    },
+    {
+      "additions": 22,
+      "deletions": 0,
+      "path": "operations/runbooks/postgresql-outage.md",
+      "status": "A"
+    },
+    {
+      "additions": 22,
+      "deletions": 0,
+      "path": "operations/runbooks/projection-read-repair.md",
+      "status": "A"
+    },
+    {
+      "additions": 22,
+      "deletions": 0,
+      "path": "operations/runbooks/rollback-boundary.md",
+      "status": "A"
+    },
+    {
+      "additions": 20,
+      "deletions": 0,
+      "path": "operations/runbooks/source-outage-staleness.md",
+      "status": "A"
+    },
+    {
+      "additions": 21,
+      "deletions": 0,
+      "path": "operations/runbooks/worker-crash-stale-lease.md",
+      "status": "A"
+    },
+    {
+      "additions": 10,
+      "deletions": 0,
+      "path": "src/ephi/application/__init__.py",
+      "status": "M"
+    },
+    {
+      "additions": 297,
+      "deletions": 0,
+      "path": "src/ephi/application/operations.py",
+      "status": "A"
+    },
+    {
+      "additions": 213,
+      "deletions": 0,
+      "path": "tests/test_o9_operations.py",
+      "status": "A"
+    },
+    {
+      "additions": 800,
+      "deletions": 0,
+      "path": "tools/o9_operations.py",
+      "status": "A"
+    },
+    {
+      "additions": 337,
+      "deletions": 0,
+      "path": "tools/o9_real_rehearsal.py",
+      "status": "A"
+    }
+  ],
+  "checks": [
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nimport psycopg\nc=psycopg.connect('postgresql://postgres@127.0.0.1:55439/ephi_o9_source')\nfor q in ['SHOW client_encoding','SELECT current_setting(\\\\'server_version\\\\'), current_setting(\\\\'lc_ctype\\\\')','SELECT 1::text, \\\\'abc\\\\'::varchar, \\\\'abc\\\\'::jsonb']:\n row=c.execute(q).fetchone(); print(q,repr(row),[type(v).__name__ for v in row])\nprint(c.info.encoding)\nPY\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk locale -a | head -20'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk /opt/homebrew/opt/postgresql@18/bin/pg_ctl -D /tmp/ephi-o9-pg18.r6ppBb -w stop'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk rm -rf /tmp/ephi-o9-pg18.r6ppBb && rtk /opt/homebrew/opt/postgresql@18/bin/initdb -D /tmp/ephi-o9-pg18.r6ppBb --auth=trust --username=postgres --locale=C.UTF-8 --encoding=UTF8 && rtk /opt/homebrew/opt/postgresql@18/bin/pg_ctl -D /tmp/ephi-o9-pg18.r6ppBb -o \"-p 55439 -h 127.0.0.1\" -l /tmp/ephi-o9-pg18.r6ppBb/server.log -w start && rtk /opt/homebrew/opt/postgresql@18/bin/createdb -h 127.0.0.1 -p 55439 -U postgres ephi_o9_source'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'PATH=/opt/homebrew/opt/postgresql@18/bin:$PATH rtk python3 tools/o9_real_rehearsal.py --dsn postgresql://postgres@127.0.0.1:55439/ephi_o9_source --admin-dsn postgresql://postgres@127.0.0.1:55439/ephi_o9_source --artifact-root /tmp/ephi-o9-run.lHqOJ2/source-artifacts --backup-dir /tmp/ephi-o9-run.lHqOJ2/backup --target-artifact-root /tmp/ephi-o9-run.lHqOJ2/restored-artifacts --target-database ephi_o9_restore --evidence-dir /tmp/ephi-o9-run.lHqOJ2/evidence'",
+      "exit_code": 2,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'PATH=/opt/homebrew/opt/postgresql@18/bin:$PATH rtk python3 tools/o9_real_rehearsal.py --dsn postgresql://postgres@127.0.0.1:55439/ephi_o9_source --admin-dsn postgresql://postgres@127.0.0.1:55439/ephi_o9_source --artifact-root /tmp/ephi-o9-run.lHqOJ2/source-artifacts --backup-dir /tmp/ephi-o9-run.lHqOJ2/backup --target-artifact-root /tmp/ephi-o9-run.lHqOJ2/restored-artifacts --target-database ephi_o9_restore --evidence-dir /tmp/ephi-o9-run.lHqOJ2/evidence'",
+      "exit_code": 2,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'PATH=/opt/homebrew/opt/postgresql@18/bin:$PATH rtk python3 tools/o9_real_rehearsal.py --dsn postgresql://postgres@127.0.0.1:55439/ephi_o9_source --admin-dsn postgresql://postgres@127.0.0.1:55439/ephi_o9_source --artifact-root /tmp/ephi-o9-run.lHqOJ2/source-artifacts --backup-dir /tmp/ephi-o9-run.lHqOJ2/backup --target-artifact-root /tmp/ephi-o9-run.lHqOJ2/restored-artifacts --target-database ephi_o9_restore --evidence-dir /tmp/ephi-o9-run.lHqOJ2/evidence'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk ls -l /tmp/ephi-o9-run.lHqOJ2/backup/database.dump; rtk /opt/homebrew/opt/postgresql@18/bin/pg_restore --list /tmp/ephi-o9-run.lHqOJ2/backup/database.dump | head -20'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk ls -l -- - 2>/dev/null || true; rtk git status --short | head -30'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk /opt/homebrew/opt/postgresql@18/bin/psql -h 127.0.0.1 -p 55439 -U postgres -d ephi_o9_restore -c '\\\\dt' | head -30\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk /opt/homebrew/opt/postgresql@18/bin/dropdb -h 127.0.0.1 -p 55439 -U postgres --if-exists ephi_o9_restore && rtk rm -rf /tmp/ephi-o9-run.lHqOJ2/backup /tmp/ephi-o9-run.lHqOJ2/restored-artifacts /tmp/ephi-o9-run.lHqOJ2/evidence && rtk rm -- -'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'PATH=/opt/homebrew/opt/postgresql@18/bin:$PATH rtk python3 tools/o9_real_rehearsal.py --dsn postgresql://postgres@127.0.0.1:55439/ephi_o9_source --admin-dsn postgresql://postgres@127.0.0.1:55439/ephi_o9_source --artifact-root /tmp/ephi-o9-run.lHqOJ2/source-artifacts --backup-dir /tmp/ephi-o9-run.lHqOJ2/backup --target-artifact-root /tmp/ephi-o9-run.lHqOJ2/restored-artifacts --target-database ephi_o9_restore --evidence-dir /tmp/ephi-o9-run.lHqOJ2/evidence'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m py_compile src/ephi/application/operations.py tools/o9_operations.py tools/o9_real_rehearsal.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest tests.test_o9_operations -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk /opt/homebrew/opt/postgresql@18/bin/dropdb -h 127.0.0.1 -p 55439 -U postgres --if-exists ephi_o9_restore && rtk rm -rf /tmp/ephi-o9-run.lHqOJ2/backup /tmp/ephi-o9-run.lHqOJ2/restored-artifacts /tmp/ephi-o9-run.lHqOJ2/evidence'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'PATH=/opt/homebrew/opt/postgresql@18/bin:$PATH rtk python3 tools/o9_real_rehearsal.py --dsn postgresql://postgres@127.0.0.1:55439/ephi_o9_source --admin-dsn postgresql://postgres@127.0.0.1:55439/ephi_o9_source --artifact-root /tmp/ephi-o9-run.lHqOJ2/source-artifacts --backup-dir /tmp/ephi-o9-run.lHqOJ2/backup --target-artifact-root /tmp/ephi-o9-run.lHqOJ2/restored-artifacts --target-database ephi_o9_restore --evidence-dir /tmp/ephi-o9-run.lHqOJ2/evidence'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '600,720p' tools/o9_operations.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'EPHI_TEST_POSTGRES_DSN=postgresql://postgres@127.0.0.1:55439/ephi_o9_source rtk python3 -m unittest tests.test_o2_postgresql tests.test_o2_worker_postgresql tests.test_o2_postgresql_reads tests.test_o2_postgresql_artifacts tests.test_o3_postgresql tests.test_o4_source_ingress_postgresql -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest discover -s tests -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --check && rtk git status --short --branch && rtk git diff --stat'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk rg -n \"dsn|password|token|raw|material|healthy|RPO|RTO|NOT_ESTABLISHED|VERIFIED\" tools/o9_operations.py tools/o9_real_rehearsal.py operations src/ephi/application/operations.py | head -240'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk find operations -type f -maxdepth 3 | sort | xargs -n1 wc -l && rtk wc -l tests/test_o9_operations.py tools/o9_operations.py tools/o9_real_rehearsal.py'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff -- README.md 09_Delivery_and_Gates.md src/ephi/application/__init__.py manifest.json | head -400'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git add 09_Delivery_and_Gates.md README.md manifest.json operations src/ephi/application/__init__.py src/ephi/application/operations.py tests/test_o9_operations.py tools/o9_operations.py tools/o9_real_rehearsal.py && rtk git diff --cached --check && rtk git diff --cached --stat && rtk git commit -m \"Add O9 operations health and restore rehearsal tooling\"'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git rev-parse HEAD && rtk git rev-parse HEAD''^{tree} && rtk git status --short --branch'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'PATH=/opt/homebrew/opt/postgresql@18/bin:$PATH rtk python3 -m unittest tests.test_o9_operations -v && rtk python3 tools/check_package.py && rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk mktemp -d /tmp/ephi-o9-final.XXXXXX'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'PATH=/opt/homebrew/opt/postgresql@18/bin:$PATH rtk /opt/homebrew/opt/postgresql@18/bin/dropdb -h 127.0.0.1 -p 55439 -U postgres --if-exists ephi_o9_source && PATH=/opt/homebrew/opt/postgresql@18/bin:$PATH rtk /opt/homebrew/opt/postgresql@18/bin/createdb -h 127.0.0.1 -p 55439 -U postgres ephi_o9_source'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'PATH=/opt/homebrew/opt/postgresql@18/bin:$PATH rtk python3 tools/o9_real_rehearsal.py --dsn postgresql://postgres@127.0.0.1:55439/ephi_o9_source --admin-dsn postgresql://postgres@127.0.0.1:55439/ephi_o9_source --artifact-root /tmp/ephi-o9-final.phe5TA/source-artifacts --backup-dir /tmp/ephi-o9-final.phe5TA/backup --target-artifact-root /tmp/ephi-o9-final.phe5TA/restored-artifacts --target-database ephi_o9_restore_final --evidence-dir /tmp/ephi-o9-final.phe5TA/evidence'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '320,370p' tools/w0_repo_baseline.py && rtk sed -n '1,80p' tools/w0_repo_baseline.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --check && rtk python3 -m py_compile src/ephi/application/operations.py tools/o9_operations.py tools/o9_real_rehearsal.py tests/test_o9_operations.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/w0_repo_baseline.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git status --short --branch && rtk git diff --stat && rtk git log -1 --format='%H %T %s'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk find /tmp/ephi-o9-final.phe5TA/evidence -maxdepth 1 -type f -print -exec wc -c {} \\\\;\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nimport json\nfrom pathlib import Path\np=Path('/tmp/ephi-o9-final.phe5TA/backup/backup_manifest.json')\nvalue=json.loads(p.read_text())\nprint(value['repository'])\nprint(value['postgresql']['server_version'])\nprint(value['dump'])\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk mktemp -d /tmp/ephi-o9-carrier.XXXXXX'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk mkdir -p /tmp/ephi-o9-carrier.Gvfmyx/evidence /tmp/ephi-o9-carrier.Gvfmyx/runbooks && rtk cp /tmp/ephi-o9-final.phe5TA/evidence/operations_health.json /tmp/ephi-o9-carrier.Gvfmyx/evidence/operations_health.json && rtk cp /tmp/ephi-o9-final.phe5TA/evidence/backup_manifest.json /tmp/ephi-o9-carrier.Gvfmyx/evidence/backup_manifest.json && rtk cp /tmp/ephi-o9-final.phe5TA/evidence/restore_reconciliation_report.json /tmp/ephi-o9-carrier.Gvfmyx/evidence/isolated_restore_reconciliation.json && rtk cp operations/runbooks/README.md /tmp/ephi-o9-carrier.Gvfmyx/runbooks/README.md && rtk cp operations/runbooks/postgresql-outage.md /tmp/ephi-o9-carrier.Gvfmyx/runbooks/postgresql-outage.md && rtk cp operations/runbooks/immutable-artifact-failure.md /tmp/ephi-o9-carrier.Gvfmyx/runbooks/immutable-artifact-failure.md && rtk cp operations/runbooks/source-outage-staleness.md /tmp/ephi-o9-carrier.Gvfmyx/runbooks/source-outage-staleness.md && rtk cp operations/runbooks/worker-crash-stale-lease.md /tmp/ephi-o9-carrier.Gvfmyx/runbooks/worker-crash-stale-lease.md && rtk cp operations/runbooks/projection-read-repair.md /tmp/ephi-o9-carrier.Gvfmyx/runbooks/projection-read-repair.md && rtk cp operations/runbooks/isolated-restore-rehearsal.md /tmp/ephi-o9-carrier.Gvfmyx/runbooks/isolated-restore-rehearsal.md && rtk cp operations/runbooks/rollback-boundary.md /tmp/ephi-o9-carrier.Gvfmyx/runbooks/rollback-boundary.md'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\n\nimport hashlib, json\nfrom pathlib import Path\ncarrier = Path(\\\"/tmp/ephi-o9-carrier.Gvfmyx\\\")\nbackup = json.loads((carrier / \\\"evidence\\\" / \\\"backup_manifest.json\\\").read_text())\nrunbooks = [\n    \\\"postgresql-outage.md\\\",\n    \\\"immutable-artifact-failure.md\\\",\n    \\\"source-outage-staleness.md\\\",\n    \\\"worker-crash-stale-lease.md\\\",\n    \\\"projection-read-repair.md\\\",\n    \\\"isolated-restore-rehearsal.md\\\",\n    \\\"rollback-boundary.md\\\",\n]\n(carrier / \\\"runbooks\\\" / \\\"inventory.json\\\").write_text(json.dumps({\n    \\\"schema_version\\\": \\\"o9.1.runbook-inventory.v1\\\",\n    \\\"qualification_summary\\\": {\n        \\\"generic_operations_health\\\": \\\"PASS\\\",\n        \\\"postgresql_backup_identity\\\": \\\"PASS\\\",\n        \\\"isolated_restore_reconciliation\\\": \\\"PASS\\\",\n        \\\"authentic_family_qualification\\\": \\\"BLOCKED_REAL_SOURCE\\\",\n        \\\"production_disaster_rpo_rto\\\": \\\"NOT_ESTABLISHED\\\",\n    },\n    \\\"runbooks\\\": [{\\\"path\\\": \\\"runbooks/\\\" + name, \\\"sections_required\\\": [\\\"degraded_user_behavior\\\", \\\"diagnostic_evidence\\\", \\\"safe_action\\\", \\\"verification\\\", \\\"rollback\\\"]} for name in runbooks],\n}, sort_keys=True, indent=2) + \\\"\\\\n\\\")\n(carrier / \\\"test_summary.json\\\").write_text(json.dumps({\n    \\\"schema_version\\\": \\\"o9.1.test-summary.v1\\\",\n    \\\"focused_o9\\\": {\\\"status\\\": \\\"PASS\\\", \\\"tests\\\": 12, \\\"command\\\": \\\"python3 -m unittest tests.test_o9_operations -v\\\"},\n    \\\"real_postgresql_rehearsal\\\": {\\\"status\\\": \\\"PASS\\\", \\\"server\\\": \\\"PostgreSQL 18.6\\\", \\\"pg_dump_pg_restore_major\\\": 18, \\\"dump_bytes\\\": backup[\\\"dump\\\"][\\\"byte_size\\\"], \\\"artifact_count\\\": backup[\\\"immutable_artifacts\\\"][\\\"count\\\"]},\n    \\\"o2_o3_o4_real_postgresql_regression\\\": {\\\"status\\\": \\\"PASS\\\", \\\"tests\\\": 54, \\\"command\\\": \\\"EPHI_TEST_POSTGRES_DSN=<redacted> python3 -m unittest tests.test_o2_postgresql tests.test_o2_worker_postgresql tests.test_o2_postgresql_reads tests.test_o2_postgresql_artifacts tests.test_o3_postgresql tests.test_o4_source_ingress_postgresql -v\\\"},\n    \\\"full_repository\\\": {\\\"status\\\": \\\"PASS\\\", \\\"tests\\\": 195, \\\"passed\\\": 127, \\\"skipped\\\": 68, \\\"command\\\": \\\"python3 -m unittest discover -s tests -v\\\"},\n    \\\"package\\\": {\\\"status\\\": \\\"PASS\\\", \\\"files\\\": 178, \\\"command\\\": \\\"python3 tools/check_package.py --refresh-manifest\\\"},\n    \\\"w0_repo_baseline\\\": {\\\"status\\\": \\\"BASELINE_PASS\\\", \\\"tests_passed\\\": 127, \\\"tests_skipped\\\": 68, \\\"command\\\": \\\"python3 tools/w0_repo_baseline.py\\\"},\n    \\\"diff_check\\\": {\\\"status\\\": \\\"PASS\\\", \\\"command\\\": \\\"git diff --check\\\"},\n}, sort_keys=True, indent=2) + \\\"\\\\n\\\")\ndef digest(path):\n    data = path.read_bytes()\n    return {\\\"path\\\": path.relative_to(carrier).as_posix(), \\\"sha256\\\": hashlib.sha256(data).hexdigest(), \\\"byte_size\\\": len(data)}\npayload_files = sorted(path for path in carrier.rglob(\\\"*\\\") if path.is_file())\nmanifest = {\n    \\\"schema_version\\\": \\\"project-os-artifact-carrier.v1\\\",\n    \\\"project\\\": \\\"kimhw8084/ephi\\\",\n    \\\"request\\\": \\\"Project OS CHG-147 / O9.1\\\",\n    \\\"operation\\\": \\\"operations-health-backup-restore-rehearsal\\\",\n    \\\"job\\\": \\\"codex/ephi-o9-operations-restore-rehearsal-v1\\\",\n    \\\"base\\\": {\\\"sha\\\": backup[\\\"repository\\\"][\\\"base_sha\\\"], \\\"tree\\\": \\\"a06c6beb53a743b6170f42210ceb05ecd22b2c75\\\"},\n    \\\"candidate\\\": {\\\"sha\\\": backup[\\\"repository\\\"][\\\"source_sha\\\"], \\\"tree\\\": backup[\\\"repository\\\"][\\\"source_tree\\\"], \\\"branch\\\": backup[\\\"repository\\\"][\\\"candidate_branch\\\"]},\n    \\\"artifact_ref\\\": \\\"refs/heads/project-os-artifacts/ephi/ephi-o9-operations-restore-rehearsal-v1\\\",\n    \\\"inventory_scope\\\": \\\"secret-safe carrier payload; manifest itself is excluded from the payload inventory\\\",\n    \\\"files\\\": [digest(path) for path in payload_files],\n    \\\"external_evidence\\\": {\n        \\\"database_dump\\\": {\\\"sha256\\\": backup[\\\"dump\\\"][\\\"sha256\\\"], \\\"byte_size\\\": backup[\\\"dump\\\"][\\\"byte_size\\\"], \\\"published_as\\\": \\\"hash_only_not_payload\\\"},\n        \\\"immutable_artifact_inventory\\\": {\\\"sha256\\\": backup[\\\"immutable_artifacts\\\"][\\\"inventory_sha256\\\"], \\\"count\\\": backup[\\\"immutable_artifacts\\\"][\\\"count\\\"], \\\"published_as\\\": \\\"manifest_hashes_only\\\"},\n    },\n    \\\"claims\\\": {\n        \\\"backup_verification\\\": \\\"VERIFIED\\\",\n        \\\"isolated_restore\\\": \\\"VERIFIED\\\",\n        \\\"production_disaster_rpo_rto_claim\\\": \\\"NOT_ESTABLISHED\\\",\n        \\\"authentic_family_qualification\\\": \\\"BLOCKED_REAL_SOURCE\\\",\n        \\\"traffic_switched\\\": False,\n        \\\"notion_mutated\\\": False,\n        \\\"raw_sensitive_records_present\\\": False,\n        \\\"credentials_tokens_present\\\": False,\n    },\n}\n(carrier / \\\"carrier_manifest.json\\\").write_text(json.dumps(manifest, sort_keys=True, indent=2) + \\\"\\\\n\\\")\n\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk find /tmp/ephi-o9-carrier.Gvfmyx -type f -print | sort'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nimport json\nfrom pathlib import Path\np=Path('/tmp/ephi-o9-carrier.Gvfmyx/carrier_manifest.json')\nv=json.loads(p.read_text())\nprint(v['candidate'])\nprint(len(v['files']), v['claims'])\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n 'postgresql://|postgres://|password|token|secret-user|secret-password|raw_rows|material_id' /tmp/ephi-o9-carrier.Gvfmyx || true\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git -C /tmp/ephi-o9-carrier.Gvfmyx init --quiet && rtk git -C /tmp/ephi-o9-carrier.Gvfmyx add carrier_manifest.json evidence runbooks test_summary.json && rtk git -C /tmp/ephi-o9-carrier.Gvfmyx -c user.name='OpenAI Codex' -c user.email='codex@openai.invalid' commit -m 'Publish EPHI O9.1 operations restore evidence' && rtk git -C /tmp/ephi-o9-carrier.Gvfmyx rev-parse HEAD && rtk git -C /tmp/ephi-o9-carrier.Gvfmyx rev-parse HEAD\"'^{tree}'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git remote get-url origin'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git -C /tmp/ephi-o9-carrier.Gvfmyx remote add origin https://github.com/kimhw8084/ephi.git && rtk git -C /tmp/ephi-o9-carrier.Gvfmyx push origin 56e388676e902c90ea15259b27c43a3fb6626bcd:refs/heads/project-os-artifacts/ephi/ephi-o9-operations-restore-rehearsal-v1'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git fetch origin refs/heads/project-os-artifacts/ephi/ephi-o9-operations-restore-rehearsal-v1:refs/remotes/origin/project-os-artifacts/ephi/ephi-o9-operations-restore-rehearsal-v1 && rtk git rev-parse refs/remotes/origin/project-os-artifacts/ephi/ephi-o9-operations-restore-rehearsal-v1 && rtk git rev-parse refs/remotes/origin/project-os-artifacts/ephi/ephi-o9-operations-restore-rehearsal-v1''^{tree}'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nimport hashlib, json, subprocess\nref='refs/remotes/origin/project-os-artifacts/ephi/ephi-o9-operations-restore-rehearsal-v1'\ndef show(path):\n    return subprocess.check_output(['git','show',ref+':'+path])\nmanifest=json.loads(show('carrier_manifest.json'))\nerrors=[]\nfor item in manifest['files']:\n    data=show(item['path'])\n    actual={'path':item['path'],'sha256':hashlib.sha256(data).hexdigest(),'byte_size':len(data)}\n    if actual \"'!= item:\n        errors.append((item,actual))\nprint(json.dumps({\n    '\"'carrier_commit': subprocess.check_output(['git','rev-parse',ref],text=True).strip(),\n    'candidate': manifest['candidate'],\n    'base': manifest['base'],\n    'file_count_declared': len(manifest['files']),\n    'file_hashes_verified': not errors,\n    'errors': errors,\n    'backup_verification': manifest['claims']['backup_verification'],\n    'restore': manifest['claims']['isolated_restore'],\n    'production_disaster_rpo_rto_claim': manifest['claims']['production_disaster_rpo_rto_claim'],\n    'secret_safe_claims': {key: manifest['claims'][key] for key in ('credentials_tokens_present','raw_sensitive_records_present','notion_mutated','traffic_switched')},\n}, sort_keys=True, indent=2))\nraise SystemExit(1 if errors else 0)\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git push origin HEAD:refs/heads/codex/ephi-o9-operations-restore-rehearsal-v1'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk /opt/homebrew/opt/postgresql@18/bin/pg_ctl -D /tmp/ephi-o9-pg18.r6ppBb -w stop && rtk rm -rf /tmp/ephi-o9-pg18.r6ppBb /tmp/ephi-o9-run.lHqOJ2 /tmp/ephi-o9-final.phe5TA /tmp/ephi-o9-carrier.Gvfmyx && rtk git diff --check && rtk git status --short --branch && rtk git rev-parse HEAD && rtk git ls-remote origin refs/heads/codex/ephi-o9-operations-restore-rehearsal-v1 refs/heads/project-os-artifacts/ephi/ephi-o9-operations-restore-rehearsal-v1'",
+      "exit_code": 0,
+      "type": "command_execution"
+    }
+  ],
+  "codex": {
+    "cli_version": "codex-cli 0.154.0",
+    "configured_model": "gpt-5.6-luna",
+    "event_count": 310,
+    "provider_reported_model": null,
+    "reasoning_effort": "xhigh",
+    "terminal_type": "turn.completed",
+    "usage": {
+      "cache_hit_percent": 98.3,
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 16154880,
+      "fresh_input_tokens": 279043,
+      "input_tokens": 16433923,
+      "non_reasoning_output_tokens": 60731,
+      "output_tokens": 90061,
+      "reasoning_output_tokens": 29330,
+      "total_processed_tokens": 16523984
+    },
+    "warnings": []
+  },
+  "commits": [
+    {
+      "sha": "c8fee6dcd1ccd87f00d965697e436726f269abc9",
+      "subject": "Add O9 operations health and restore rehearsal tooling"
+    }
+  ],
+  "diff": {
+    "additions": 1976,
+    "changed_files": 17,
+    "commit_count": 1,
+    "deletions": 6
+  },
+  "error_code": null,
+  "evidence_manifest": {
+    "count": 12,
+    "items": [
+      {
+        "bytes": 19922,
+        "path": "09_Delivery_and_Gates.md",
+        "sha256": "973603d1f81b22e0494b66bf0e8b5a63436081bb610c7e10e23edd5cb822749d"
+      },
+      {
+        "bytes": 15203,
+        "path": "README.md",
+        "sha256": "752c2231555228dfe8771d38e99c9713ddc9b3f3f86e7de599526cb7f96c5d15"
+      },
+      {
+        "bytes": 32110,
+        "path": "manifest.json",
+        "sha256": "575f84de86e64330e737aa73fe4033cbda5edee9c05f164a2df44c3b5bca377a"
+      },
+      {
+        "bytes": 1884,
+        "path": "operations/README.md",
+        "sha256": "501fc602e0229530e5dc605e018fc346eb5399921bad33f3315b2b2c67018808"
+      },
+      {
+        "bytes": 1288,
+        "path": "operations/runbooks/README.md",
+        "sha256": "5818f66e177e5712db6d8fff6161889b190af31e083f8f773faf80fce8ae6640"
+      },
+      {
+        "bytes": 976,
+        "path": "operations/runbooks/immutable-artifact-failure.md",
+        "sha256": "18e25daed615764bd6fde50f22557d90f08c648ce11cedf4ebfe9c1b8a904a53"
+      },
+      {
+        "bytes": 1222,
+        "path": "operations/runbooks/isolated-restore-rehearsal.md",
+        "sha256": "c65187264dcf2fbbb1e52e134fc74fe40c87483a7b32d0d1c0f07c3edcaabb24"
+      },
+      {
+        "bytes": 1049,
+        "path": "operations/runbooks/postgresql-outage.md",
+        "sha256": "75820bfa7c26d28b0e96e5e2ca82d031bd404e7e0dfbc50cac01641491f9739e"
+      },
+      {
+        "bytes": 1063,
+        "path": "operations/runbooks/projection-read-repair.md",
+        "sha256": "bfe5a05293767bdca944a5f138f310144eb9bff865b5ed232607ddc774092f8f"
+      },
+      {
+        "bytes": 1030,
+        "path": "operations/runbooks/rollback-boundary.md",
+        "sha256": "9cb80f32953c06a53ba4bf651c2092b24522a4bc0b4f233f65873aa67c364400"
+      },
+      {
+        "bytes": 1022,
+        "path": "operations/runbooks/source-outage-staleness.md",
+        "sha256": "187211055c8b152462205a33fc991220eaa16157b5e1d2de20358ad69906656e"
+      },
+      {
+        "bytes": 999,
+        "path": "operations/runbooks/worker-crash-stale-lease.md",
+        "sha256": "b04ceb75e98613d065681fc55ccfc1b47e42f908a77bec8fb3511c69b4c4a40c"
+      }
+    ],
+    "version": 1
+  },
+  "evidence_publisher_release": "1.2.3-resume-candidate",
+  "fabric_capture": {
+    "applied": false,
+    "paths_before": 0,
+    "transient_untracked_removed": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "fabric_release": "1.2.3-resume-candidate",
+  "failure_class": null,
+  "finished_at": "2026-09-19T20:33:09Z",
+  "git": {
+    "base_is_ancestor": true,
+    "base_sha": "4e927cc6436a302134249a50e7ccdbb1c29dc89f",
+    "branch": "codex/ephi-o9-operations-restore-rehearsal-v1",
+    "detached_verify": false,
+    "head_sha": "c8fee6dcd1ccd87f00d965697e436726f269abc9",
+    "remote_exact_head": true,
+    "remote_head_sha": "c8fee6dcd1ccd87f00d965697e436726f269abc9",
+    "target_branch": "main",
+    "target_drifted_since_acceptance": false,
+    "target_head_observed_after_execution": "4e927cc6436a302134249a50e7ccdbb1c29dc89f",
+    "work_branch": "codex/ephi-o9-operations-restore-rehearsal-v1",
+    "worktree_clean": true
+  },
+  "instructions": {
+    "files": [
+      {
+        "bytes": 1458,
+        "path": "AGENTS.md",
+        "sha256": "4349f387a79d886ed1264604ff48c582698e539e08ed8fb2f9d8ab8fbf6f804a"
+      }
+    ],
+    "total_bytes": 1458,
+    "warning": null
+  },
+  "job_id": "CF-6226981ca9d577cfa3760e6b",
+  "kind": "codex-fabric-audit-evidence",
+  "locator": {
+    "branch": "codex-fabric/evidence/ephi/ephi-o9-operations-restore-rehearsal-v1",
+    "path": ".codex-fabric/audit.json",
+    "ref": "refs/heads/codex-fabric/evidence/ephi/ephi-o9-operations-restore-rehearsal-v1"
+  },
+  "operation": "BUILD",
+  "policy": {
+    "environment_policy_sha256": "e077daca74297b3c30bee8989f00f8ca5338f7610b4d016a6c48db524205d064",
+    "fabric_release": "1.2.3-resume-candidate",
+    "policy_sha256": "44756118cd7fda0c45cd23ba1d31a48a3f4f2422d687df15264ba4406f40e1f2",
+    "registry_sha256": "cfc765f3211c37c7967a138f3b2d89a99341939b15b2623f92744d007f625d6f"
+  },
+  "project_id": "ephi",
+  "recovery": {
+    "model_rerun_safe": false,
+    "recovery_required": false,
+    "retry_safe": false,
+    "retry_scope": null,
+    "worktree_retained": true
+  },
+  "request": "ephi-o9-operations-restore-rehearsal-v1",
+  "schema_version": 1,
+  "started_at": "2026-09-19T20:02:59Z",
+  "status": "EXECUTED_CHANGE",
+  "timing": {
+    "execution_seconds": 1810,
+    "queue_seconds": 0,
+    "total_seconds": 1810
+  },
+  "transport": {
+    "bytes": 13102,
+    "envelope": "FABRIC/2",
+    "prompt_bytes": 12771,
+    "prompt_sha256": "809c0ea3a7880c83718f77e0527a041398f2d23e40711e834e2864cbf42264bd",
+    "sha256": "6226981ca9d577cfa3760e6b5330a3339a01d7f1e43ee38f2ab39f18db46568f"
+  }
+}
