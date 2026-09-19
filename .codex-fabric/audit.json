@@ -1,0 +1,975 @@
+{
+  "accepted_at": "2026-09-19T04:25:55Z",
+  "changed_files": [
+    {
+      "additions": 398,
+      "deletions": 0,
+      "path": ".nicegui_base/construction_manifest.json",
+      "status": "A"
+    },
+    {
+      "additions": 6243,
+      "deletions": 0,
+      "path": ".nicegui_base/framework_catalog.json",
+      "status": "A"
+    },
+    {
+      "additions": 84,
+      "deletions": 0,
+      "path": ".nicegui_base/install_manifest.json",
+      "status": "A"
+    },
+    {
+      "additions": 23,
+      "deletions": 4,
+      "path": "11_Developer_Start.md",
+      "status": "M"
+    },
+    {
+      "additions": 25,
+      "deletions": 2,
+      "path": "13_Package_Review.md",
+      "status": "M"
+    },
+    {
+      "additions": 34,
+      "deletions": 2,
+      "path": "README.md",
+      "status": "M"
+    },
+    {
+      "additions": 23,
+      "deletions": 0,
+      "path": "app.py",
+      "status": "A"
+    },
+    {
+      "additions": 148,
+      "deletions": 0,
+      "path": "certification_output/runtime_smoke/RUNTIME_SMOKE_REPORT.json",
+      "status": "A"
+    },
+    {
+      "additions": 32,
+      "deletions": 0,
+      "path": "certification_output/runtime_smoke/RUNTIME_SMOKE_SERVER.log",
+      "status": "A"
+    },
+    {
+      "additions": 101,
+      "deletions": 0,
+      "path": "docs/nicegui_base/AGENT_WORKFLOW.md",
+      "status": "A"
+    },
+    {
+      "additions": 76,
+      "deletions": 0,
+      "path": "docs/nicegui_base/AI_QUICKSTART.md",
+      "status": "A"
+    },
+    {
+      "additions": 97,
+      "deletions": 0,
+      "path": "docs/nicegui_base/AI_RULES.md",
+      "status": "A"
+    },
+    {
+      "additions": 22,
+      "deletions": 0,
+      "path": "docs/nicegui_base/ANTI_PATTERNS.md",
+      "status": "A"
+    },
+    {
+      "additions": 16,
+      "deletions": 0,
+      "path": "docs/nicegui_base/APP_PATTERNS.md",
+      "status": "A"
+    },
+    {
+      "additions": 228,
+      "deletions": 0,
+      "path": "docs/nicegui_base/COMPONENT_CATALOG.md",
+      "status": "A"
+    },
+    {
+      "additions": 25,
+      "deletions": 0,
+      "path": "docs/nicegui_base/FINAL_RELEASE_CANDIDATE_STABLE_QUALIFICATION_HANDOFF.md",
+      "status": "A"
+    },
+    {
+      "additions": 101,
+      "deletions": 0,
+      "path": "docs/nicegui_base/ICON_CATALOG.md",
+      "status": "A"
+    },
+    {
+      "additions": 20,
+      "deletions": 0,
+      "path": "docs/nicegui_base/LAYOUT_RULES.md",
+      "status": "A"
+    },
+    {
+      "additions": 33,
+      "deletions": 0,
+      "path": "docs/nicegui_base/OPENCODE_GEMMA_BOOTSTRAP.md",
+      "status": "A"
+    },
+    {
+      "additions": 12,
+      "deletions": 0,
+      "path": "docs/nicegui_base/PERFORMANCE_GUIDE.md",
+      "status": "A"
+    },
+    {
+      "additions": 114,
+      "deletions": 0,
+      "path": "docs/nicegui_base/RECIPES.md",
+      "status": "A"
+    },
+    {
+      "additions": 104,
+      "deletions": 0,
+      "path": "docs/nicegui_base/SEMICONDUCTOR_APPLICATION_RECIPES.md",
+      "status": "A"
+    },
+    {
+      "additions": 14,
+      "deletions": 0,
+      "path": "docs/nicegui_base/SEMICONDUCTOR_LONGITUDINAL_ASSURANCE_REVIEW_EXCEPTION_GOVERNANCE.md",
+      "status": "A"
+    },
+    {
+      "additions": 15,
+      "deletions": 0,
+      "path": "docs/nicegui_base/SEMICONDUCTOR_OPERATIONAL_ASSURANCE_RENEWAL_LEDGER.md",
+      "status": "A"
+    },
+    {
+      "additions": 51,
+      "deletions": 0,
+      "path": "docs/nicegui_base/SEMICONDUCTOR_POST_RELEASE_STABILITY_ROLLBACK_READINESS.md",
+      "status": "A"
+    },
+    {
+      "additions": 68,
+      "deletions": 0,
+      "path": "docs/nicegui_base/SEMICONDUCTOR_PRODUCTION_RUNTIME.md",
+      "status": "A"
+    },
+    {
+      "additions": 68,
+      "deletions": 0,
+      "path": "docs/nicegui_base/SEMICONDUCTOR_PROMOTION_EXECUTION_ADAPTER_RELEASE_AUDIT.md",
+      "status": "A"
+    },
+    {
+      "additions": 83,
+      "deletions": 0,
+      "path": "docs/nicegui_base/SEMICONDUCTOR_PROVIDER_SDK_RC.md",
+      "status": "A"
+    },
+    {
+      "additions": 76,
+      "deletions": 0,
+      "path": "docs/nicegui_base/SEMICONDUCTOR_RELEASE_PUBLICATION_POST_PROMOTION_VERIFICATION.md",
+      "status": "A"
+    },
+    {
+      "additions": 113,
+      "deletions": 0,
+      "path": "docs/nicegui_base/SEMICONDUCTOR_RUNTIME_ONBOARDING.md",
+      "status": "A"
+    },
+    {
+      "additions": 14,
+      "deletions": 0,
+      "path": "docs/nicegui_base/SEMICONDUCTOR_STABLE_PROMOTION_CANDIDATE.md",
+      "status": "A"
+    },
+    {
+      "additions": 65,
+      "deletions": 0,
+      "path": "docs/nicegui_base/SEMICONDUCTOR_STABLE_RELEASE_EVIDENCE_ACCEPTANCE_PROMOTION_CLOSURE.md",
+      "status": "A"
+    },
+    {
+      "additions": 13,
+      "deletions": 0,
+      "path": "docs/nicegui_base/SEMICONDUCTOR_SUSTAINED_OPERATIONS_INCIDENT_ROLLBACK_AUDIT.md",
+      "status": "A"
+    },
+    {
+      "additions": 21,
+      "deletions": 0,
+      "path": "docs/nicegui_base/SEMICONDUCTOR_SUSTAINED_OPERATIONS_RENEWAL_CONTINUITY.md",
+      "status": "A"
+    },
+    {
+      "additions": 16,
+      "deletions": 0,
+      "path": "docs/nicegui_base/SEMICONDUCTOR_TARGET_CERTIFICATION.md",
+      "status": "A"
+    },
+    {
+      "additions": 61,
+      "deletions": 0,
+      "path": "docs/nicegui_base/SEMICONDUCTOR_TARGET_EXECUTION_OPERATIONAL_HANDOFF.md",
+      "status": "A"
+    },
+    {
+      "additions": 44,
+      "deletions": 0,
+      "path": "docs/nicegui_base/TROUBLESHOOTING.md",
+      "status": "A"
+    },
+    {
+      "additions": 28,
+      "deletions": 0,
+      "path": "docs/nicegui_base/VALIDATOR_RULES.md",
+      "status": "A"
+    },
+    {
+      "additions": 20,
+      "deletions": 0,
+      "path": "docs/nicegui_base/VISUAL_RESOURCE_GUIDE.md",
+      "status": "A"
+    },
+    {
+      "additions": 42,
+      "deletions": 0,
+      "path": "docs/nicegui_base/ZERO_STOCK_NICEGUI_VISUAL_LAWS.md",
+      "status": "A"
+    },
+    {
+      "additions": 59,
+      "deletions": 0,
+      "path": "evidence/review/chg_134_fix1_qualification.json",
+      "status": "A"
+    },
+    {
+      "additions": 16,
+      "deletions": 0,
+      "path": "examples/nicegui_base/README.md",
+      "status": "A"
+    },
+    {
+      "additions": 40,
+      "deletions": 0,
+      "path": "examples/nicegui_base/golden_analysis_workspace.py",
+      "status": "A"
+    },
+    {
+      "additions": 51,
+      "deletions": 0,
+      "path": "examples/nicegui_base/golden_crud.py",
+      "status": "A"
+    },
+    {
+      "additions": 49,
+      "deletions": 0,
+      "path": "examples/nicegui_base/golden_dashboard.py",
+      "status": "A"
+    },
+    {
+      "additions": 70,
+      "deletions": 0,
+      "path": "examples/nicegui_base/golden_data_explorer.py",
+      "status": "A"
+    },
+    {
+      "additions": 299,
+      "deletions": 14,
+      "path": "manifest.json",
+      "status": "M"
+    },
+    {
+      "additions": 19,
+      "deletions": 0,
+      "path": "migrations/005_o3_attention_episode_w1.sql",
+      "status": "A"
+    },
+    {
+      "additions": 14,
+      "deletions": 0,
+      "path": "nicegui_base.toml",
+      "status": "A"
+    },
+    {
+      "additions": 2,
+      "deletions": 0,
+      "path": "requirements-dev.txt",
+      "status": "A"
+    },
+    {
+      "additions": 4,
+      "deletions": 0,
+      "path": "requirements.txt",
+      "status": "A"
+    },
+    {
+      "additions": 7,
+      "deletions": 0,
+      "path": "src/ephi/app.py",
+      "status": "M"
+    },
+    {
+      "additions": 38,
+      "deletions": 0,
+      "path": "src/ephi/application/__init__.py",
+      "status": "M"
+    },
+    {
+      "additions": 262,
+      "deletions": 0,
+      "path": "src/ephi/application/attention.py",
+      "status": "A"
+    },
+    {
+      "additions": 137,
+      "deletions": 0,
+      "path": "src/ephi/application/episodes.py",
+      "status": "A"
+    },
+    {
+      "additions": 115,
+      "deletions": 0,
+      "path": "src/ephi/application/workflow.py",
+      "status": "A"
+    },
+    {
+      "additions": 2,
+      "deletions": 0,
+      "path": "src/ephi/infrastructure/__init__.py",
+      "status": "M"
+    },
+    {
+      "additions": 10,
+      "deletions": 0,
+      "path": "src/ephi/infrastructure/postgresql.py",
+      "status": "M"
+    },
+    {
+      "additions": 210,
+      "deletions": 0,
+      "path": "src/ephi/infrastructure/postgresql_o3.py",
+      "status": "A"
+    },
+    {
+      "additions": 5,
+      "deletions": 0,
+      "path": "src/ephi/ui/__init__.py",
+      "status": "A"
+    },
+    {
+      "additions": 480,
+      "deletions": 0,
+      "path": "src/ephi/ui/app.py",
+      "status": "A"
+    },
+    {
+      "additions": 255,
+      "deletions": 0,
+      "path": "src/ephi/ui/provider.py",
+      "status": "A"
+    },
+    {
+      "additions": 245,
+      "deletions": 0,
+      "path": "tests/test_o3_application.py",
+      "status": "A"
+    },
+    {
+      "additions": 195,
+      "deletions": 0,
+      "path": "tests/test_o3_postgresql.py",
+      "status": "A"
+    },
+    {
+      "additions": 189,
+      "deletions": 0,
+      "path": "tests/test_o3_provider.py",
+      "status": "A"
+    }
+  ],
+  "checks": [
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n 'def apply_migrations|MIGRATION|migrations/' src/ephi/infrastructure/postgresql.py src/ephi/infrastructure/postgresql_o3.py src/ephi/infrastructure -g '*.py' | rtk sed -n '1,200p'\nrtk sed -n '1,220p' src/ephi/infrastructure/postgresql.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk command -v initdb || true\nrtk command -v pg_ctl || true\nrtk ls -l /opt/homebrew/Cellar/postgresql@17/17.11/bin/initdb /opt/homebrew/Cellar/postgresql@17/17.11/bin/pg_ctl /opt/homebrew/Cellar/postgresql@17/17.11/bin/postgres 2>&1'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n 'initdb|pg_ctl|createdb|POSTGRES_USER|postgres:18|ephi_test_password|55432' /Users/haewonkim/.codex-fabric/results/*/codex.events.jsonl 2>/dev/null | rtk sed -n '1,260p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy find /Users/haewonkim/.codex-fabric -type d -name .venv -print 2>/dev/null | rtk sed -n '1,100p'\nrtk proxy find /Users/haewonkim -path '*/site-packages/nicegui_base' -type d -print 2>/dev/null | rtk sed -n '1,100p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk psql -h 127.0.0.1 -p 55432 -U ephi_ci -d ephi_ci -Atqc \\\"select current_user,current_database(),version();\\\" 2>&1 | rtk sed -n '1,8p' || true\nrtk psql -h 127.0.0.1 -p 55432 -U ephi_ci -d postgres -Atqc \\\"select datname from pg_database where datistemplate = false order by datname;\\\" 2>&1 | rtk sed -n '1,20p' || true\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy find /opt/homebrew/Cellar/postgresql@17/17.11 -name postgres.bki -o -name '*.so' | rtk sed -n '1,80p'\nrtk ls -la /opt/homebrew/Cellar/postgresql@17/17.11/share/postgresql@17 2>&1 | rtk sed -n '1,60p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk mktemp -d /tmp/ephi-r3-pgdata.XXXXXX'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk initdb -D /tmp/ephi-r3-pgdata.ElvClc/data -L /opt/homebrew/Cellar/postgresql@17/17.11/share/postgresql -U ephi_test --auth=trust --no-locale --encoding=UTF8'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk pg_ctl -D /tmp/ephi-r3-pgdata.ElvClc/data -o '-p 55433 -h 127.0.0.1' -l /tmp/ephi-r3-pgdata.ElvClc/postgres.log start\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk createdb -h 127.0.0.1 -p 55433 -U ephi_test ephi_test && rtk psql -h 127.0.0.1 -p 55433 -U ephi_test -d ephi_test -Atqc 'select current_user,current_database(),version();'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy find /Users/haewonkim/.codex-fabric /Users/haewonkim/.cache -type f -path '*/bin/nicegui-base' -print 2>/dev/null | rtk sed -n '1,100p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m venv /tmp/ephi-r3-venv'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk /tmp/ephi-r3-venv/bin/pip show nicegui-base nicegui psycopg | rtk sed -n '1,120p' && rtk /tmp/ephi-r3-venv/bin/python -c 'import nicegui_base,nicegui,psycopg; print(\\\"runtime\\\", nicegui_base.__file__, nicegui.__version__, psycopg.__version__)'\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk /tmp/ephi-r3-venv/bin/pip install 'nicegui-base @ git+https://github.com/kimhw8084/nicegui-base.git@000298562d6bcbf6df304edbd41b98b30fe4bfcf' 'nicegui==3.15.0' 'psycopg[binary]==3.3.6'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk /tmp/ephi-r3-venv/bin/pip install --no-cache-dir 'nicegui-base @ git+https://github.com/kimhw8084/nicegui-base.git@000298562d6bcbf6df304edbd41b98b30fe4bfcf' 'nicegui==3.15.0' 'psycopg[binary]==3.3.6'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk env PYTHONPATH=src EPHI_TEST_POSTGRES_DSN='postgresql://ephi_test@127.0.0.1:55433/ephi_test' /tmp/ephi-r3-venv/bin/python - <<'PY'\nfrom ephi.application import AccessScope, Principal, RevisionVector\nfrom ephi.infrastructure import PostgreSQLReferenceTransactionAdapter\n\ndsn = 'postgresql://ephi_test@127.0.0.1:55433/ephi_test'\nstore = PostgreSQLReferenceTransactionAdapter(dsn)\nstore.apply_migrations()\nstore.connection.execute('TRUNCATE o3_attention_projection, query_snapshot_row, query_snapshot, read_head, read_revision, outbox_event, audit_event, command_receipt, aggregate_state')\nscope = AccessScope('o3-pg-scope', site_id='site-1', area_id='area-1')\nprincipal = Principal('engineer-1', ('ephi.episode.read','ephi.attention.read','ephi.episode.claim','ephi.episode.acknowledge'), (scope,), 1, 1)\nstore.seed_aggregate(scope, 'episode_workflow', 'episode-1', {'work_state':'OPEN','owner':None}, version=0)\nstore.seed_attention_projection(scope, 'episode-1', {'title':'Durable Attention case','asset_id':'asset-1','priority':'P1','severity':'HIGH','technical_state':'READY','source_state':'READY','deadline':'2026-09-19T12:00:00Z','age':'10'})\nworkflow = store.get_aggregate(scope, 'episode_workflow', 'episode-1')\nstore.publish_current_revision(scope, 'episode', 'episode-1', 'episode-read-1', RevisionVector('analysis-1','exposure-1','priority-1',0,None,'manifest-1'), {'title':'Durable Attention case','analytical_revision':'analysis-1','capability_state':{'source':'READY'}}, workflow)\nprint({'server':store.server_version(),'tables':store.count_rows(),'scope':scope.canonical_key,'subject':principal.subject})\nstore.close()\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,260p' src/ephi/config.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk env PYTHONPATH=src EPHI_ENV=development EPHI_PORT=8767 EPHI_POSTGRES_DSN='postgresql://ephi_test@127.0.0.1:55433/ephi_test' EPHI_DEV_SCOPE_ID=o3-pg-scope EPHI_DEV_SITE_ID=site-1 EPHI_DEV_AREA_ID=area-1 EPHI_DEV_IDENTITY_SUBJECT=engineer-1 EPHI_DEV_IDENTITY_CAPABILITIES='ephi.episode.read,ephi.attention.read,ephi.episode.claim,ephi.episode.acknowledge' EPHI_DEV_AUTH_SESSION_REVISION=1 EPHI_DEV_SECURITY_REVISION=1 EPHI_W1_EPISODE_ID=episode-1 /tmp/ephi-r3-venv/bin/python -m ephi --serve\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy lsof -nP -iTCP:8767 -sTCP:LISTEN 2>/dev/null || true\nrtk curl -sS -I http://127.0.0.1:8767/ | rtk sed -n '1,20p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk curl -sS -I http://127.0.0.1:8767/ | rtk sed -n '1,20p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk mktemp -d /tmp/ephi-r3-evidence.XXXXXX'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '240,360p' src/ephi/ui/app.py && rtk sed -n '360,455p' src/ephi/ui/app.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk psql -h 127.0.0.1 -p 55433 -U ephi_test -d ephi_test -Atqc \\\"select version,state_json from aggregate_state where aggregate_type='episode_workflow' and aggregate_id='episode-1'; select count(*) from command_receipt; select count(*) from audit_event; select count(*) from outbox_event;\\\"\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk env PYTHONPATH=src EPHI_ENV=development EPHI_PORT=8767 NICEGUI_BASE_STORAGE_SECRET='ephi-r3-verify-local-storage-secret' EPHI_POSTGRES_DSN='postgresql://ephi_test@127.0.0.1:55433/ephi_test' EPHI_DEV_SCOPE_ID=o3-pg-scope EPHI_DEV_SITE_ID=site-1 EPHI_DEV_AREA_ID=area-1 EPHI_DEV_IDENTITY_SUBJECT=engineer-1 EPHI_DEV_IDENTITY_CAPABILITIES='ephi.episode.read,ephi.attention.read,ephi.episode.claim,ephi.episode.acknowledge' EPHI_DEV_AUTH_SESSION_REVISION=1 EPHI_DEV_SECURITY_REVISION=1 EPHI_W1_EPISODE_ID=episode-1 /tmp/ephi-r3-venv/bin/python -m ephi --serve\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk env PYTHONPATH=src /tmp/ephi-r3-venv/bin/python - <<'PY'\nfrom ephi.application import AccessScope, RevisionVector\nfrom ephi.infrastructure import PostgreSQLReferenceTransactionAdapter\n\ndsn='postgresql://ephi_test@127.0.0.1:55433/ephi_test'\nstore=PostgreSQLReferenceTransactionAdapter(dsn)\nscope=AccessScope('o3-pg-scope',site_id='site-1',area_id='area-1')\nstore.seed_aggregate(scope,'episode_workflow','episode-2',{'work_state':'OPEN','owner':None},version=0)\nstore.seed_attention_projection(scope,'episode-2',{'title':'Conflict Attention case','asset_id':'asset-2','priority':'P2','severity':'MEDIUM','technical_state':'READY','source_state':'READY','deadline':'2026-09-20T12:00:00Z','age':'5'})\nworkflow=store.get_aggregate(scope,'episode_workflow','episode-2')\nstore.publish_current_revision(scope,'episode','episode-2','episode-read-2',RevisionVector('analysis-2','exposure-2','priority-2',0,None,'manifest-2'),{'title':'Conflict Attention case','analytical_revision':'analysis-2','capability_state':{'source':'READY'}},workflow)\nprint(store.count_rows())\nstore.close()\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk env PYTHONPATH=src /tmp/ephi-r3-venv/bin/python - <<'PY'\nfrom ephi.application import AccessScope, RevisionVector\nfrom ephi.infrastructure import PostgreSQLReferenceTransactionAdapter\n\ndsn='postgresql://ephi_test@127.0.0.1:55433/ephi_test'\nstore=PostgreSQLReferenceTransactionAdapter(dsn)\nscope=AccessScope('o3-pg-scope',site_id='site-1',area_id='area-1')\nstore.seed_aggregate(scope,'episode_workflow','episode-3',{'work_state':'OPEN','owner':None},version=0)\nstore.seed_attention_projection(scope,'episode-3',{'title':'Two-session Conflict case','asset_id':'asset-3','priority':'P1','severity':'HIGH','technical_state':'READY','source_state':'READY','deadline':'2026-09-21T12:00:00Z','age':'3'})\nworkflow=store.get_aggregate(scope,'episode_workflow','episode-3')\nstore.publish_current_revision(scope,'episode','episode-3','episode-read-3',RevisionVector('analysis-3','exposure-3','priority-3',0,None,'manifest-3'),{'title':'Two-session Conflict case','analytical_revision':'analysis-3','capability_state':{'source':'READY'}},workflow)\nprint(store.count_rows())\nstore.close()\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk env PYTHONPATH=src EPHI_ENV=development EPHI_PORT=8767 NICEGUI_BASE_STORAGE_SECRET='ephi-r3-verify-local-storage-secret' EPHI_POSTGRES_DSN='postgresql://ephi_test@127.0.0.1:55433/ephi_test' EPHI_DEV_SCOPE_ID=o3-pg-scope EPHI_DEV_SITE_ID=site-1 EPHI_DEV_AREA_ID=area-1 EPHI_DEV_IDENTITY_SUBJECT=engineer-1 EPHI_DEV_IDENTITY_CAPABILITIES='ephi.episode.read,ephi.attention.read,ephi.episode.claim,ephi.episode.acknowledge' EPHI_DEV_AUTH_SESSION_REVISION=1 EPHI_DEV_SECURITY_REVISION=1 EPHI_W1_EPISODE_ID=episode-1 /tmp/ephi-r3-venv/bin/python -m ephi --serve\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,280p' src/ephi/application/attention.py && rtk sed -n '1,300p' src/ephi/application/read.py | rtk rg -n -C 3 'ttl|create_query_snapshot|expired|security_revision'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk env PYTHONPATH=src /tmp/ephi-r3-venv/bin/python - <<'PY'\nfrom ephi.application import AccessScope\nfrom ephi.infrastructure import PostgreSQLReferenceTransactionAdapter\n\ndsn='postgresql://ephi_test@127.0.0.1:55433/ephi_test'\nstore=PostgreSQLReferenceTransactionAdapter(dsn)\nscope=AccessScope('o3-pg-scope',site_id='site-1',area_id='area-1')\nfor index in range(100,153):\n    store.seed_attention_projection(scope,f'episode-{index}',{'title':f'Pagination case {index}','asset_id':f'asset-{index}','priority':'P3','severity':'LOW','technical_state':'READY','source_state':'READY','deadline':'2026-10-01T12:00:00Z','age':str(index)})\nprint(store.count_rows())\nstore.close()\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk psql -h 127.0.0.1 -p 55433 -U ephi_test -d ephi_test -Atqc \\\"select count(*) from o3_attention_projection; select count(*) from o3_attention_projection where scope_key like '%o3-pg-scope%';\\\"\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '90,190p' src/ephi/infrastructure/postgresql_o3.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk env PYTHONPATH=src /tmp/ephi-r3-venv/bin/python - <<'PY'\nfrom ephi.application import AccessScope\nfrom ephi.infrastructure import PostgreSQLReferenceTransactionAdapter\nstore=PostgreSQLReferenceTransactionAdapter('postgresql://ephi_test@127.0.0.1:55433/ephi_test')\nscope=AccessScope('o3-pg-scope',site_id='site-1',area_id='area-1')\nfor index in range(100,153):\n    store.seed_aggregate(scope,'episode_workflow',f'episode-{index}',{'work_state':'OPEN','owner':None},version=0)\nprint(store.count_rows())\nstore.close()\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk psql -h 127.0.0.1 -p 55433 -U ephi_test -d ephi_test -c '\\\\d query_snapshot' | rtk sed -n '1,120p'\nrtk psql -h 127.0.0.1 -p 55433 -U ephi_test -d ephi_test -Atqc \\\"select snapshot_id,security_revision_json,expires_at,total_row_count from query_snapshot order by created_at desc limit 3;\\\"\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n 'DEFAULT_SNAPSHOT_TTL_SECONDS|expires_at|ttl_seconds' src/ephi/application/read.py | rtk sed -n '1,100p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk pg_ctl -D /tmp/ephi-r3-pgdata.ElvClc/data -m fast stop'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk pg_ctl -D /tmp/ephi-r3-pgdata.ElvClc/data -o '-p 55433 -h 127.0.0.1' -l /tmp/ephi-r3-pgdata.ElvClc/postgres.log start && rtk psql -h 127.0.0.1 -p 55433 -U ephi_test -d ephi_test -Atqc 'select 1;'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n --glob '*.py' --glob '*.md' --glob '*.json' --glob '*.toml' 'project-os-artifacts|Artifact Bridge|artifact carrier|Git artifact|canonical.*carrier|real Product' /Users/haewonkim/.codex-fabric /Users/haewonkim/.projectos 2>/dev/null | rtk sed -n '1,260p' || true\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk mkdir -p /tmp/ephi-r3-evidence.qznoFO/carrier /tmp/ephi-r3-evidence.qznoFO/screenshots\nrtk cp /tmp/ephi-r3-evidence.qznoFO/*.png /tmp/ephi-r3-evidence.qznoFO/screenshots/\nrtk date -u '+%Y-%m-%dT%H:%M:%SZ'\nrtk shasum -a 256 /tmp/ephi-r3-evidence.qznoFO/*.png\nrtk sips -g pixelWidth -g pixelHeight /tmp/ephi-r3-evidence.qznoFO/*.png | rtk sed -n '1,120p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk psql -h 127.0.0.1 -p 55433 -U ephi_test -d ephi_test -Atqc \\\"select version(); select aggregate_id,version,state_json from aggregate_state where aggregate_type='episode_workflow' and aggregate_id in ('episode-1','episode-2','episode-3') order by aggregate_id; select count(*) from command_receipt; select count(*) from audit_event; select count(*) from outbox_event;\\\"\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git status --short --branch && rtk git show -s --format='HEAD=%H%nTREE=%T%nPARENTS=%P%nSUBJECT=%s' HEAD && rtk git diff --quiet && echo WORKTREE_DIFF=PASS && rtk git diff --cached --quiet && echo INDEX_DIFF=PASS && rtk git diff --check && echo DIFF_CHECK=PASS && rtk git diff --name-only ef959f577bc1aa223b260ac32cb42a18eadfaf9f --\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk /tmp/ephi-r3-venv/bin/python -c 'import sys,nicegui,nicegui_base,psycopg; print({\\\"python\\\":sys.version.split()[0],\\\"nicegui\\\":nicegui.__version__,\\\"nicegui_base\\\":getattr(nicegui_base,\\\"__version__\\\",\\\"3.0.0a8\\\"),\\\"psycopg\\\":psycopg.__version__})'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk ls -la .nicegui && rtk proxy find .nicegui -maxdepth 2 -type f -print | rtk sed -n '1,80p' && rtk proxy rm -rf -- .nicegui && rtk git status --short --branch\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy python3 - <<'PY'\nfrom pathlib import Path\nfrom datetime import datetime, timezone\nimport hashlib, json, shutil, struct, subprocess, zipfile\n\nroot = Path('/tmp/ephi-r3-evidence.qznoFO')\ncarrier = root / 'carrier'\nshots = carrier / 'screenshots'\nshots.mkdir(parents=True, exist_ok=True)\nfor source in sorted(root.glob('*.png')):\n    shutil.copy2(source, shots / source.name)\n\ndef sha(path):\n    h = hashlib.sha256()\n    with path.open('rb') as f:\n        for block in iter(lambda: f.read(1024 * 1024), b''):\n            h.update(block)\n    return h.hexdigest()\n\ndef png_dims(path):\n    data = path.read_bytes()\n    if data[:8] \"'!= b'\"'\\\\x89PNG\\\\r\\\\n\\\\x1a\\\\n':\n        raise SystemExit(f'not a PNG: {path}')\n    return list(struct.unpack('>II', data[16:24]))\n\ndef tracked_sha256():\n    names = subprocess.check_output(['git', 'ls-files', '-z'], cwd='/Users/haewonkim/.codex-fabric/worktrees/CF-7cf9a06942d8b293fcaa7f4d').split(b'\\\\0')\n    result = []\n    for raw in names:\n        if not raw:\n            continue\n        path = raw.decode()\n        file = Path('/Users/haewonkim/.codex-fabric/worktrees/CF-7cf9a06942d8b293fcaa7f4d') / path\n        result.append({'path': path, 'bytes': file.stat().st_size, 'sha256': sha(file)})\n    return result\n\ncandidate = tracked_sha256()\n(candidate_path := carrier / 'candidate-file-sha256.json').write_text(json.dumps({\n    'schema_version': 1,\n    'project': 'ephi',\n    'request': 'ephi-o3-attention-episode-w1-verify1',\n    'operation': 'VERIFY',\n    'fabric_job': 'CF-7cf9a06942d8b293fcaa7f4d',\n    'source_sha': 'ef959f577bc1aa223b260ac32cb42a18eadfaf9f',\n    'tree_sha': '3755ca31a2d9ba5b8e473fa67ab1338b00623055',\n    'tracked_file_count': len(candidate),\n    'tracked_files': candidate,\n}, indent=2) + '\\\\n')\n\nfor name in ['browser-evidence.json', 'qualification-report.md']:\n    shutil.copy2(root / name, carrier / name)\n\nfiles = []\nfor path in sorted(p for p in carrier.rglob('*') if p.is_file() and p.name \"'!= '\"'artifact-bundle.zip'):\n    rel = path.relative_to(carrier).as_posix()\n    entry = {'path': rel, 'bytes': path.stat().st_size, 'sha256': sha(path)}\n    if path.suffix == '.png':\n        entry['format'] = 'PNG'\n        entry['dimensions_css'] = png_dims(path)\n    files.append(entry)\nmanifest = {\n    'schema_version': 1,\n    'project': 'ephi',\n    'request': 'ephi-o3-attention-episode-w1-verify1',\n    'operation': 'VERIFY',\n    'fabric_job': 'CF-7cf9a06942d8b293fcaa7f4d',\n    'candidate_source_sha': 'ef959f577bc1aa223b260ac32cb42a18eadfaf9f',\n    'candidate_tree_sha': '3755ca31a2d9ba5b8e473fa67ab1338b00623055',\n    'target_base_sha': 'cdf8bb54eeb42926029a9394814d79d17a282bd9',\n    'branch': 'codex/ephi-o3-attention-episode-w1-verify1',\n    'status': 'VERIFY_BLOCKED_PRODUCT_DEFECT',\n    'self_declared_go': False,\n    'artifact_bundle_path': 'artifact-bundle.zip',\n    'artifact_bundle_hash_is_in_outer_receipt': True,\n    'files': files,\n    'created_at_utc': '2026-09-19T04:43:57Z',\n}\nmanifest_path = carrier / 'artifact-manifest.json'\nmanifest_path.write_text(json.dumps(manifest, indent=2) + '\\\\n')\n\nmembers = sorted(p.relative_to(carrier).as_posix() for p in carrier.rglob('*') if p.is_file() and p.name not in {'artifact-bundle.zip', 'git-publish-receipt.json'})\nbundle_path = carrier / 'artifact-bundle.zip'\nwith zipfile.ZipFile(bundle_path, 'w', compression=zipfile.ZIP_DEFLATED, compresslevel=9) as z:\n    for rel in members:\n        data = (carrier / rel).read_bytes()\n        info = zipfile.ZipInfo(rel, date_time=(2026, 9, 19, 0, 0, 0))\n        info.compress_type = zipfile.ZIP_DEFLATED\n        info.external_attr = 0o100644 << 16\n        z.writestr(info, data)\nprint(json.dumps({\n    'carrier': str(carrier),\n    'tracked_candidate_file_count': len(candidate),\n    'carrier_file_count_before_receipt': len(files) + 1,\n    'bundle_members': len(members),\n    'manifest_sha256': sha(manifest_path),\n    'bundle_sha256': sha(bundle_path),\n}, indent=2))\nPY\nrtk find /tmp/ephi-r3-evidence.qznoFO/carrier -maxdepth 2 -type f -print | rtk sort\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy python3 - <<'PY'\nfrom pathlib import Path\nimport hashlib, json, shutil, subprocess, tempfile\n\nrepo = Path('/Users/haewonkim/.codex-fabric/worktrees/CF-7cf9a06942d8b293fcaa7f4d')\nroot = Path('/tmp/ephi-r3-evidence.qznoFO')\ncarrier = root / 'carrier'\nref = 'refs/heads/project-os-artifacts/ephi/ephi-o3-attention-episode-w1-verify1'\nremote_url = subprocess.check_output(['git','-C',str(repo),'remote','get-url','origin'], text=True).strip()\nexisting = subprocess.check_output(['git','-C',str(repo),'ls-remote','origin',ref], text=True).strip()\nif existing:\n    raise SystemExit(f'GIT_ARTIFACT_CONFLICT existing={existing}')\n\ndef sha(path):\n    h=hashlib.sha256()\n    with path.open('rb') as f:\n        for block in iter(lambda:f.read(1024*1024),b''):\n            h.update(block)\n    return h.hexdigest()\n\nrequired = sorted(p.relative_to(carrier).as_posix() for p in carrier.rglob('*') if p.is_file() and p.name \"'!= '\"'git-publish-receipt.json')\nreceipt = {\n    'schema_version': 1,\n    'project': 'ephi',\n    'request': 'ephi-o3-attention-episode-w1-verify1',\n    'operation': 'VERIFY',\n    'fabric_job': 'CF-7cf9a06942d8b293fcaa7f4d',\n    'candidate_source_sha': 'ef959f577bc1aa223b260ac32cb42a18eadfaf9f',\n    'candidate_tree_sha': '3755ca31a2d9ba5b8e473fa67ab1338b00623055',\n    'target_base_sha': 'cdf8bb54eeb42926029a9394814d79d17a282bd9',\n    'branch': 'codex/ephi-o3-attention-episode-w1-verify1',\n    'status': 'VERIFY_BLOCKED_PRODUCT_DEFECT',\n    'self_declared_go': False,\n    'artifact_ref': ref,\n    'remote_url': remote_url,\n    'carrier_mode': 'dedicated_git_artifact_carrier',\n    'notion_used': False,\n    'synthetic_ar2_sidecar_used': False,\n    'manifest_sha256': sha(carrier/'artifact-manifest.json'),\n    'bundle_sha256': sha(carrier/'artifact-bundle.zip'),\n    'required_files': [\n        {'path': rel, 'bytes': (carrier/rel).stat().st_size, 'sha256': sha(carrier/rel)}\n        for rel in required\n    ],\n    'remote_commit_and_tree': 'recorded in external remote-readback-receipt.json after one publish',\n    'published_at_utc': '2026-09-19T04:43:57Z'\n}\n(carrier/'git-publish-receipt.json').write_text(json.dumps(receipt, indent=2) + '\\\\n')\n\npublish_repo = Path(tempfile.mkdtemp(prefix='ephi-r3-carrier-', dir='/tmp'))\nshutil.copytree(carrier, publish_repo, dirs_exist_ok=True)\nsubprocess.run(['git','-C',str(publish_repo),'init','-q','--initial-branch=carrier'], check=True)\nsubprocess.run(['git','-C',str(publish_repo),'remote','add','origin',remote_url], check=True)\nsubprocess.run(['git','-C',str(publish_repo),'add','.'], check=True)\nmessage = 'Project OS EPHI CHG-134 VERIFY blocked: project=ephi request=ephi-o3-attention-episode-w1-verify1 fabric_job=CF-7cf9a06942d8b293fcaa7f4d source=ef959f577bc1aa223b260ac32cb42a18eadfaf9f tree=3755ca31a2d9ba5b8e473fa67ab1338b00623055'\nsubprocess.run(['git','-C',str(publish_repo),'-c','user.name=Project OS Artifact Publisher','-c','user.email=project-os-artifacts@users.noreply.github.com','commit','-q','-m',message], check=True)\nlocal_commit = subprocess.check_output(['git','-C',str(publish_repo),'rev-parse','HEAD'], text=True).strip()\nsubprocess.run(['git','-C',str(publish_repo),'push','origin',f'HEAD:{ref}'], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)\n\nreadback_repo = Path(tempfile.mkdtemp(prefix='ephi-r3-readback-', dir='/tmp'))\nsubprocess.run(['git','init','-q','--initial-branch=readback',str(readback_repo)], check=True)\nsubprocess.run(['git','-C',str(readback_repo),'remote','add','origin',remote_url], check=True)\nsubprocess.run(['git','-C',str(readback_repo),'fetch','-q','--no-tags','origin',ref], check=True)\nremote_commit = subprocess.check_output(['git','-C',str(readback_repo),'rev-parse','FETCH_HEAD'], text=True).strip()\nremote_tree = subprocess.check_output(['git','-C',str(readback_repo),'rev-parse','FETCH_HEAD\"'^{tree}'\"'], text=True).strip()\nif remote_commit \"'!= local_commit:\n    raise SystemExit(f'\"'REMOTE_COMMIT_MISMATCH {remote_commit} \"'!= {local_commit}'\"')\nremote_paths = subprocess.check_output(['git','-C',str(readback_repo),'ls-tree','-r','--name-only','FETCH_HEAD'], text=True).splitlines()\nexpected_paths = sorted(str(p.relative_to(carrier)) for p in carrier.rglob('*') if p.is_file())\nif sorted(remote_paths) \"'!= expected_paths:\n    raise SystemExit(f'\"'REMOTE_INVENTORY_MISMATCH {remote_paths} \"'!= {expected_paths}'\"')\ndef remote_bytes(rel):\n    return subprocess.check_output(['git','-C',str(readback_repo),'show',f'FETCH_HEAD:{rel}'])\nremote_hashes = {rel: hashlib.sha256(remote_bytes(rel)).hexdigest() for rel in expected_paths}\nlocal_hashes = {rel: sha(carrier/rel) for rel in expected_paths}\nif remote_hashes \"'!= local_hashes:\n    raise SystemExit('\"'REMOTE_HASH_MISMATCH')\nmanifest = json.loads(remote_bytes('artifact-manifest.json'))\nevidence = json.loads(remote_bytes('browser-evidence.json'))\nreceipt_remote = json.loads(remote_bytes('git-publish-receipt.json'))\nidentity = ('ephi','ephi-o3-attention-episode-w1-verify1','VERIFY')\nfor name, data in [('manifest',manifest),('evidence',evidence),('receipt',receipt_remote)]:\n    if (data.get('project'),data.get('request'),data.get('operation')) \"'!= identity:\n        raise SystemExit(f'\"'IDENTITY_MISMATCH {name}')\nif manifest['candidate_source_sha'] \"'!= '\"'ef959f577bc1aa223b260ac32cb42a18eadfaf9f' or manifest['candidate_tree_sha'] \"'!= '\"'3755ca31a2d9ba5b8e473fa67ab1338b00623055':\n    raise SystemExit('CANDIDATE_BINDING_MISMATCH')\nreadback = {\n    'schema_version': 1,\n    'project': 'ephi',\n    'request': 'ephi-o3-attention-episode-w1-verify1',\n    'operation': 'VERIFY',\n    'fabric_job': 'CF-7cf9a06942d8b293fcaa7f4d',\n    'artifact_ref': ref,\n    'remote_commit': remote_commit,\n    'remote_tree_sha': remote_tree,\n    'candidate_source_sha': 'ef959f577bc1aa223b260ac32cb42a18eadfaf9f',\n    'candidate_tree_sha': '3755ca31a2d9ba5b8e473fa67ab1338b00623055',\n    'remote_inventory_exact': True,\n    'remote_file_count': len(remote_paths),\n    'all_required_files_readable': True,\n    'all_required_hashes_match_local': True,\n    'manifest_sha256': remote_hashes['artifact-manifest.json'],\n    'bundle_sha256': remote_hashes['artifact-bundle.zip'],\n    'remote_hashes': remote_hashes,\n    'readback_repository': str(readback_repo),\n    'verified_at_utc': '2026-09-19T04:43:57Z'\n}\n(root/'remote-readback-receipt.json').write_text(json.dumps(readback, indent=2) + '\\\\n')\nprint(json.dumps({\n    'artifact_ref': ref,\n    'remote_commit': remote_commit,\n    'remote_tree_sha': remote_tree,\n    'file_count': len(remote_paths),\n    'manifest_sha256': remote_hashes['artifact-manifest.json'],\n    'bundle_sha256': remote_hashes['artifact-bundle.zip'],\n    'all_required_files_readable': True,\n    'all_required_hashes_match_local': True,\n    'remote_readback_receipt': str(root/'remote-readback-receipt.json')\n}, indent=2))\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk env PYTHONPATH=src EPHI_ENV=development EPHI_PORT=8767 NICEGUI_BASE_STORAGE_SECRET='ephi-r3-verify-local-storage-secret-revoked' EPHI_POSTGRES_DSN='postgresql://ephi_test@127.0.0.1:55433/ephi_test' EPHI_DEV_SCOPE_ID=o3-pg-scope EPHI_DEV_SITE_ID=site-1 EPHI_DEV_AREA_ID=area-1 EPHI_DEV_IDENTITY_SUBJECT=engineer-1 EPHI_DEV_IDENTITY_CAPABILITIES='ephi.episode.read,ephi.attention.read' EPHI_DEV_AUTH_SESSION_REVISION=2 EPHI_DEV_SECURITY_REVISION=2 EPHI_W1_EPISODE_ID=episode-2 /tmp/ephi-r3-venv/bin/python -m ephi --serve\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk env PYTHONPATH=src EPHI_ENV=development EPHI_PORT=8768 NICEGUI_BASE_STORAGE_SECRET='ephi-r3-verify-local-storage-secret-b' EPHI_POSTGRES_DSN='postgresql://ephi_test@127.0.0.1:55433/ephi_test' EPHI_DEV_SCOPE_ID=o3-pg-scope EPHI_DEV_SITE_ID=site-1 EPHI_DEV_AREA_ID=area-1 EPHI_DEV_IDENTITY_SUBJECT=engineer-2 EPHI_DEV_IDENTITY_CAPABILITIES='ephi.episode.read,ephi.attention.read,ephi.episode.claim,ephi.episode.acknowledge' EPHI_DEV_AUTH_SESSION_REVISION=1 EPHI_DEV_SECURITY_REVISION=1 EPHI_W1_EPISODE_ID=episode-3 /tmp/ephi-r3-venv/bin/python -m ephi --serve\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk pg_ctl -D /tmp/ephi-r3-pgdata.ElvClc/data -m fast stop 2>&1 | rtk sed -n '1,20p'\nrtk proxy lsof -nP -iTCP:8767 -sTCP:LISTEN 2>/dev/null || true\nrtk proxy lsof -nP -iTCP:8768 -sTCP:LISTEN 2>/dev/null || true\nrtk proxy lsof -nP -iTCP:55433 -sTCP:LISTEN 2>/dev/null || true\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk shasum -a 256 /tmp/ephi-r3-evidence.qznoFO/carrier/artifact-manifest.json /tmp/ephi-r3-evidence.qznoFO/carrier/artifact-bundle.zip /tmp/ephi-r3-evidence.qznoFO/carrier/browser-evidence.json /tmp/ephi-r3-evidence.qznoFO/carrier/qualification-report.md /tmp/ephi-r3-evidence.qznoFO/carrier/git-publish-receipt.json'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git status --short --branch && rtk git show -s --format='HEAD=%H%nTREE=%T%nPARENTS=%P' HEAD && rtk git diff --quiet && rtk git diff --cached --quiet && rtk git diff --check && echo FINAL_SOURCE_INTEGRITY=PASS\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git ls-remote origin refs/heads/project-os-artifacts/ephi/ephi-o3-attention-episode-w1-verify1 && rtk sed -n '1,220p' /tmp/ephi-r3-evidence.qznoFO/remote-readback-receipt.json\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    }
+  ],
+  "codex": {
+    "cli_version": "codex-cli 0.154.0",
+    "configured_model": "gpt-5.6-luna",
+    "event_count": 279,
+    "provider_reported_model": null,
+    "reasoning_effort": "xhigh",
+    "terminal_type": "turn.completed",
+    "usage": {
+      "cache_hit_percent": 98.37,
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 18554240,
+      "fresh_input_tokens": 307538,
+      "input_tokens": 18861778,
+      "non_reasoning_output_tokens": 33310,
+      "output_tokens": 55366,
+      "reasoning_output_tokens": 22056,
+      "total_processed_tokens": 18917144
+    },
+    "warnings": []
+  },
+  "commits": [
+    {
+      "sha": "ef959f577bc1aa223b260ac32cb42a18eadfaf9f",
+      "subject": "Fix CHG-134 source health and current authorization"
+    },
+    {
+      "sha": "dc8f04b02d9ef9bdb3da59951a0061ffefd2113f",
+      "subject": "Implement O3.1 durable Attention Episode W1 slice"
+    }
+  ],
+  "diff": {
+    "additions": 11544,
+    "changed_files": 65,
+    "commit_count": 2,
+    "deletions": 22
+  },
+  "error_code": null,
+  "evidence_manifest": {
+    "count": 42,
+    "items": [
+      {
+        "bytes": 35164,
+        "path": ".nicegui_base/construction_manifest.json",
+        "sha256": "3ae85f2e554f7080fbf81f68b1df7cf69ed5e917ca82427ddaf06ab31625a724"
+      },
+      {
+        "bytes": 203443,
+        "path": ".nicegui_base/framework_catalog.json",
+        "sha256": "555e46ff14ac9311ebb678285d6f3163bbcbf49840ec04ac11e1898366c9c149"
+      },
+      {
+        "bytes": 6438,
+        "path": ".nicegui_base/install_manifest.json",
+        "sha256": "8c0b0d423af8c279d5cd90e63509f918b3fbf7e52807341910a695a199dceb5a"
+      },
+      {
+        "bytes": 6354,
+        "path": "11_Developer_Start.md",
+        "sha256": "8e62f46dc9e37ee17a308e7d27163435c16f059433351800722bc722f405bda5"
+      },
+      {
+        "bytes": 13666,
+        "path": "13_Package_Review.md",
+        "sha256": "3c7b1c7ab6c131807a812774bf8c15af57c3aa3d18c7e3e5dada0fa54d4fccc5"
+      },
+      {
+        "bytes": 13469,
+        "path": "README.md",
+        "sha256": "2fdf36ba9c533cb47118e1566a00d8de618479290da68d4979e6ccee8dce521b"
+      },
+      {
+        "bytes": 2534,
+        "path": "certification_output/runtime_smoke/RUNTIME_SMOKE_REPORT.json",
+        "sha256": "e444a9132023ccaaf1f74572641cf0da6d589ed9c668a775ec61579eb58fdb41"
+      },
+      {
+        "bytes": 1863,
+        "path": "certification_output/runtime_smoke/RUNTIME_SMOKE_SERVER.log",
+        "sha256": "0520a045b2641cbd63a6f7d97a8e01dc94e8e171fe58108d391b7fe789867a49"
+      },
+      {
+        "bytes": 4829,
+        "path": "docs/nicegui_base/AGENT_WORKFLOW.md",
+        "sha256": "0669f564069e7dafae45dea80190c1d8ff511d8fd9b825dd899ef98c0074c091"
+      },
+      {
+        "bytes": 3025,
+        "path": "docs/nicegui_base/AI_QUICKSTART.md",
+        "sha256": "8ea275da5fbb7b2c8c8381eddf6c750c794789d2e404fd7822654681d1232fa8"
+      },
+      {
+        "bytes": 7496,
+        "path": "docs/nicegui_base/AI_RULES.md",
+        "sha256": "0232c21a4e63b4f7ae9f2c76153ff2df1ebe0fff34d9c8d81adf64fb2138fa3a"
+      },
+      {
+        "bytes": 2135,
+        "path": "docs/nicegui_base/ANTI_PATTERNS.md",
+        "sha256": "fec2712934043272760464139073e040c82281e7dc63eb28326f15897f902480"
+      },
+      {
+        "bytes": 1465,
+        "path": "docs/nicegui_base/APP_PATTERNS.md",
+        "sha256": "94dee03e72c0126c4c1ba4466b566a2cdac05cd3433fbc4054950fa0a8763957"
+      },
+      {
+        "bytes": 20510,
+        "path": "docs/nicegui_base/COMPONENT_CATALOG.md",
+        "sha256": "09850c3058c53c2c5725168d7c69bc2e17e363058a41e539e8e55cc08feed39d"
+      },
+      {
+        "bytes": 1767,
+        "path": "docs/nicegui_base/FINAL_RELEASE_CANDIDATE_STABLE_QUALIFICATION_HANDOFF.md",
+        "sha256": "0e97a2c5bb9bbc8621716d7ca70bd530492dacafc9573e291ba27b3f88bd9282"
+      },
+      {
+        "bytes": 3058,
+        "path": "docs/nicegui_base/ICON_CATALOG.md",
+        "sha256": "da6ad24115318574346f3f4de81b785a70610b306b0ef4c1dfd6df22bd4364f5"
+      },
+      {
+        "bytes": 1236,
+        "path": "docs/nicegui_base/LAYOUT_RULES.md",
+        "sha256": "dc0a4ce52a258148e92eaa66ee0d53121d111ef4a9ad0571f6ca08a18b59a9fb"
+      },
+      {
+        "bytes": 2093,
+        "path": "docs/nicegui_base/OPENCODE_GEMMA_BOOTSTRAP.md",
+        "sha256": "fe3b205aa4d4f6432d6a6367b802126525032a3acbbb94cc82dbed32c243feae"
+      },
+      {
+        "bytes": 999,
+        "path": "docs/nicegui_base/PERFORMANCE_GUIDE.md",
+        "sha256": "049add7dbba6de5e04688181e2a2101a3bbd710c44e0990498581dbd223ff058"
+      },
+      {
+        "bytes": 7043,
+        "path": "docs/nicegui_base/RECIPES.md",
+        "sha256": "e77d2b9978a33f9114680b124844fbd1597313f99eeecf3859762af5db63e603"
+      },
+      {
+        "bytes": 7804,
+        "path": "docs/nicegui_base/SEMICONDUCTOR_APPLICATION_RECIPES.md",
+        "sha256": "7d3f1037047ff946946c6f557a297a8c95d92ee760e45bd2704a707e656dae66"
+      },
+      {
+        "bytes": 1350,
+        "path": "docs/nicegui_base/SEMICONDUCTOR_LONGITUDINAL_ASSURANCE_REVIEW_EXCEPTION_GOVERNANCE.md",
+        "sha256": "4c6920c6890e1bb54f7fa0c2a4068ce330573015b049154ff6b976608c0290c7"
+      },
+      {
+        "bytes": 1037,
+        "path": "docs/nicegui_base/SEMICONDUCTOR_OPERATIONAL_ASSURANCE_RENEWAL_LEDGER.md",
+        "sha256": "9b6cf415c9962d4631d5b396fd40f52424f37768c6e973898d181ab49bb84214"
+      },
+      {
+        "bytes": 2936,
+        "path": "docs/nicegui_base/SEMICONDUCTOR_POST_RELEASE_STABILITY_ROLLBACK_READINESS.md",
+        "sha256": "c6c5cbbf84b75b0df45ab37852d8e1f8b7c0d3791d0471bbec85c4cb1bc1afd1"
+      },
+      {
+        "bytes": 3877,
+        "path": "docs/nicegui_base/SEMICONDUCTOR_PRODUCTION_RUNTIME.md",
+        "sha256": "2b5f608a3adee16ce210993f2991bbdafc40a4a5c4d9c7c0aa2c1ffdca02b1df"
+      },
+      {
+        "bytes": 2961,
+        "path": "docs/nicegui_base/SEMICONDUCTOR_PROMOTION_EXECUTION_ADAPTER_RELEASE_AUDIT.md",
+        "sha256": "24905a1a21b95ea01d0ebf5f093caee8c014a21a3013a71f81cb4ea5b87bd74e"
+      },
+      {
+        "bytes": 4508,
+        "path": "docs/nicegui_base/SEMICONDUCTOR_PROVIDER_SDK_RC.md",
+        "sha256": "9b7607f41bf559fae46b25e167e910f6ba22deade21784543b4f0e558107c3d3"
+      },
+      {
+        "bytes": 3610,
+        "path": "docs/nicegui_base/SEMICONDUCTOR_RELEASE_PUBLICATION_POST_PROMOTION_VERIFICATION.md",
+        "sha256": "665a3c335303d454a8e3363a494d8e240d354c8e51f4d33b04b4b6a89c111cc9"
+      },
+      {
+        "bytes": 5848,
+        "path": "docs/nicegui_base/SEMICONDUCTOR_RUNTIME_ONBOARDING.md",
+        "sha256": "7043de584a09dea74ae49ff57d2448ad749a4cdeb3137730ba0832337c5174a1"
+      },
+      {
+        "bytes": 1438,
+        "path": "docs/nicegui_base/SEMICONDUCTOR_STABLE_PROMOTION_CANDIDATE.md",
+        "sha256": "f7c1c24d19cfb7eca2826a09c1dad7d00f625898decb6eba7809c9e83a504432"
+      },
+      {
+        "bytes": 3182,
+        "path": "docs/nicegui_base/SEMICONDUCTOR_STABLE_RELEASE_EVIDENCE_ACCEPTANCE_PROMOTION_CLOSURE.md",
+        "sha256": "74b3644f12768a59c297fa29ce360d9d8d01a6be399f22bbefc32760a0b8184f"
+      },
+      {
+        "bytes": 1155,
+        "path": "docs/nicegui_base/SEMICONDUCTOR_SUSTAINED_OPERATIONS_INCIDENT_ROLLBACK_AUDIT.md",
+        "sha256": "e41b2e24e9eab7ceee57d131396dd5fa6e31e4c3c8bb90cfd00be24829c2e3ca"
+      },
+      {
+        "bytes": 2262,
+        "path": "docs/nicegui_base/SEMICONDUCTOR_SUSTAINED_OPERATIONS_RENEWAL_CONTINUITY.md",
+        "sha256": "33262a5667b300b8f224ea229eb452bde2ad1768610eb00f8d81d515c501b0b0"
+      },
+      {
+        "bytes": 1510,
+        "path": "docs/nicegui_base/SEMICONDUCTOR_TARGET_CERTIFICATION.md",
+        "sha256": "e34ccfa128d4d60c38be3c6ab26a17981542c6ee3e07762a45b347514b27bf26"
+      },
+      {
+        "bytes": 2992,
+        "path": "docs/nicegui_base/SEMICONDUCTOR_TARGET_EXECUTION_OPERATIONAL_HANDOFF.md",
+        "sha256": "a0b87dc9422b120566048e10f76b7d3a3a6be8b13c73cefb5a277919b5bfe94e"
+      },
+      {
+        "bytes": 2087,
+        "path": "docs/nicegui_base/TROUBLESHOOTING.md",
+        "sha256": "2b334f6d210d2f16af1731d35f4f49db14f7955bdfd590033a64196635721a67"
+      },
+      {
+        "bytes": 2092,
+        "path": "docs/nicegui_base/VALIDATOR_RULES.md",
+        "sha256": "8aa5d0ad6c4d910307f6abbe949e96f515103bac961b87ae421393bf6db06aae"
+      },
+      {
+        "bytes": 1154,
+        "path": "docs/nicegui_base/VISUAL_RESOURCE_GUIDE.md",
+        "sha256": "ee71abc444717057b409d2b7be0bb55feb7c7e67e2fe1a5b74966d3b90057133"
+      },
+      {
+        "bytes": 3110,
+        "path": "docs/nicegui_base/ZERO_STOCK_NICEGUI_VISUAL_LAWS.md",
+        "sha256": "d156a395107a330771daea7fe2b33bcb4cece64d19ba45f8d025db475d7b5ee0"
+      },
+      {
+        "bytes": 3380,
+        "path": "evidence/review/chg_134_fix1_qualification.json",
+        "sha256": "fb884a22637a6342c8cafee7ff69c8f8c09b48d75ee3ae802c2f1166b89712e8"
+      },
+      {
+        "bytes": 960,
+        "path": "examples/nicegui_base/README.md",
+        "sha256": "854b348484efbd945b053c61ba3471240336eaad192141133aa272ab82ace937"
+      },
+      {
+        "bytes": 28117,
+        "path": "manifest.json",
+        "sha256": "fe4816b69739092f9fa2353b4de4c74a5730250b3f6129b2beeee62f038fe789"
+      }
+    ],
+    "version": 1
+  },
+  "evidence_publisher_release": "1.2.3-resume-candidate",
+  "fabric_capture": {
+    "applied": false,
+    "paths_before": 0,
+    "transient_untracked_removed": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "fabric_release": "1.2.3-resume-candidate",
+  "failure_class": null,
+  "finished_at": "2026-09-19T04:48:23Z",
+  "git": {
+    "base_is_ancestor": true,
+    "base_sha": "cdf8bb54eeb42926029a9394814d79d17a282bd9",
+    "branch": "codex/ephi-o3-attention-episode-w1-verify1",
+    "detached_verify": false,
+    "head_sha": "ef959f577bc1aa223b260ac32cb42a18eadfaf9f",
+    "remote_exact_head": true,
+    "remote_head_sha": "ef959f577bc1aa223b260ac32cb42a18eadfaf9f",
+    "target_branch": "main",
+    "target_drifted_since_acceptance": false,
+    "target_head_observed_after_execution": "cdf8bb54eeb42926029a9394814d79d17a282bd9",
+    "work_branch": "codex/ephi-o3-attention-episode-w1-verify1",
+    "worktree_clean": true
+  },
+  "instructions": {
+    "files": [
+      {
+        "bytes": 1458,
+        "path": "AGENTS.md",
+        "sha256": "4349f387a79d886ed1264604ff48c582698e539e08ed8fb2f9d8ab8fbf6f804a"
+      }
+    ],
+    "total_bytes": 1458,
+    "warning": null
+  },
+  "job_id": "CF-7cf9a06942d8b293fcaa7f4d",
+  "kind": "codex-fabric-audit-evidence",
+  "locator": {
+    "branch": "codex-fabric/evidence/ephi/ephi-o3-attention-episode-w1-verify1",
+    "path": ".codex-fabric/audit.json",
+    "ref": "refs/heads/codex-fabric/evidence/ephi/ephi-o3-attention-episode-w1-verify1"
+  },
+  "operation": "VERIFY",
+  "policy": {
+    "environment_policy_sha256": "e077daca74297b3c30bee8989f00f8ca5338f7610b4d016a6c48db524205d064",
+    "fabric_release": "1.2.3-resume-candidate",
+    "policy_sha256": "44756118cd7fda0c45cd23ba1d31a48a3f4f2422d687df15264ba4406f40e1f2",
+    "registry_sha256": "cfc765f3211c37c7967a138f3b2d89a99341939b15b2623f92744d007f625d6f"
+  },
+  "project_id": "ephi",
+  "recovery": {
+    "model_rerun_safe": false,
+    "recovery_required": false,
+    "retry_safe": false,
+    "retry_scope": null,
+    "worktree_retained": true
+  },
+  "request": "ephi-o3-attention-episode-w1-verify1",
+  "schema_version": 1,
+  "started_at": "2026-09-19T04:25:56Z",
+  "status": "EXECUTED_CHANGE",
+  "timing": {
+    "execution_seconds": 1347,
+    "queue_seconds": 1,
+    "total_seconds": 1348
+  },
+  "transport": {
+    "bytes": 7952,
+    "envelope": "FABRIC/2",
+    "prompt_bytes": 7627,
+    "prompt_sha256": "8665c5b83a02bab96c56928184ffffe8f0ea84b1e691ee4afedcbb9f08dc544e",
+    "sha256": "7cf9a06942d8b293fcaa7f4dc4d4e6850c1c1ca545ec4d862cd475b16756193a"
+  }
+}
