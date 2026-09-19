@@ -400,6 +400,11 @@
       "sha256": "fb884a22637a6342c8cafee7ff69c8f8c09b48d75ee3ae802c2f1166b89712e8"
     },
     {
+      "path": "evidence/review/chg_134_fix2_qualification.json",
+      "bytes": 4456,
+      "sha256": "a4f7f86639e3eabb2ad04bdcd0eca7a948fd8cc93f451bd4a5028d08df1e9bf2"
+    },
+    {
       "path": "evidence/review/nicegui_base_binding_manifest.json",
       "bytes": 15859,
       "sha256": "797ebcc38c8aa8846c3bd65305b1f20686ff2e17b43b6f770400ec10c826649c"
