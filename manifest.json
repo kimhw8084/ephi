@@ -616,13 +616,13 @@
     },
     {
       "path": "src/ephi/infrastructure/postgresql.py",
-      "bytes": 25370,
-      "sha256": "015df8b32acb4eecd159eab980d3b757db21bcfd4dff3b1621d8a8f15c2e2d7b"
+      "bytes": 27986,
+      "sha256": "c5acbcfbeb062927c5440b9246fc6067de94ba3c9b6d40703d3db95e47d3b6a3"
     },
     {
       "path": "src/ephi/infrastructure/postgresql_o3.py",
-      "bytes": 9862,
-      "sha256": "3b375919820ddafde5fbd7cd30a7a3e49bc1a01c9054df83ce3107d6f8d399ce"
+      "bytes": 9879,
+      "sha256": "7c8d99c45f10ba165c70e884b09097fa423ed04c9279aa23e505dd693df557c9"
     },
     {
       "path": "src/ephi/infrastructure/postgresql_reads.py",
@@ -748,6 +748,11 @@
       "path": "tests/test_package.py",
       "bytes": 4524,
       "sha256": "240751ed087c4ffe26cdbe82e54e6372bbbb1fbee94bf2d66ad2793e4f91eacf"
+    },
+    {
+      "path": "tests/test_postgresql_adapter_lifecycle.py",
+      "bytes": 10495,
+      "sha256": "9294ab5ffcec0de76702ebb8f21c503eaafb150cca79673e8379604b25f8d739"
     },
     {
       "path": "tests/test_recovery_integrity.py",

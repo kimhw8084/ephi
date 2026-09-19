@@ -190,9 +190,10 @@ class PostgreSQLO3ProductStore:
         normalized = normalize_domain_payload(payload)
         if not isinstance(normalized, dict):
             raise ValidationFailureError("Attention payload must be an object")
+        connection = self.connection
         try:
-            self.connection.execute("BEGIN")
-            self.connection.execute(
+            connection.execute("BEGIN")
+            connection.execute(
                 """
                 INSERT INTO o3_attention_projection(scope_key, episode_id, row_version, payload_json)
                 VALUES (%s, %s, %s, %s::jsonb)
@@ -201,10 +202,10 @@ class PostgreSQLO3ProductStore:
                 """,
                 (scope.canonical_key, episode_id, str(row_version), canonical_json(normalized)),
             )
-            self.connection.commit()
+            connection.commit()
         except Exception as exc:
             try:
-                self.connection.rollback()
+                connection.rollback()
             except Exception:
                 pass
             raise StorageFailureError("durable PostgreSQL Attention projection seed failed") from exc

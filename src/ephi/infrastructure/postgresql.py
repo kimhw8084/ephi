@@ -11,6 +11,7 @@ from collections.abc import Iterator
 import hashlib
 import json
 from pathlib import Path
+from threading import Lock
 from typing import Any
 
 from ephi.application.context import AccessScope
@@ -32,6 +33,20 @@ MIGRATION_PATHS = tuple(sorted(MIGRATION_DIR.glob("*.sql")))
 # migration specifically.  ``apply_migrations`` applies every numbered file.
 MIGRATION_PATH = MIGRATION_DIR / "001_o2_command_core.sql"
 _TABLES = ("aggregate_state", "command_receipt", "audit_event", "outbox_event")
+_REQUIRED_SCHEMA_TABLES = (
+    "aggregate_state",
+    "command_receipt",
+    "audit_event",
+    "outbox_event",
+    "job",
+    "applied_effect",
+    "read_revision",
+    "read_head",
+    "query_snapshot",
+    "query_snapshot_row",
+    "artifact_catalog",
+    "o3_attention_projection",
+)
 
 
 def _sql_statements(script: str) -> Iterator[str]:
@@ -357,6 +372,9 @@ class PostgreSQLReferenceTransactionAdapter:
             raise StorageFailureError("PostgreSQL support requires psycopg[binary]==3.3.6") from exc
         self.dsn = dsn
         self._psycopg = psycopg
+        self._row_factory = dict_row
+        self._connection_lock = Lock()
+        self._explicitly_closed = False
         self._connection: Any = None
         try:
             self._connection = psycopg.connect(dsn, autocommit=True, row_factory=dict_row)
@@ -374,20 +392,70 @@ class PostgreSQLReferenceTransactionAdapter:
 
     @property
     def connection(self) -> Any:
-        if self._connection is None:
-            raise StorageFailureError("durable PostgreSQL storage is closed")
-        return self._connection
+        with self._connection_lock:
+            if self._explicitly_closed or self._connection is None:
+                raise StorageFailureError("durable PostgreSQL storage is closed")
+            connection = self._connection
+            if not self._connection_is_broken(connection):
+                return connection
+            replacement: Any | None = None
+            try:
+                replacement = self._psycopg.connect(
+                    self.dsn,
+                    autocommit=True,
+                    row_factory=self._row_factory,
+                )
+                self._validate_existing_schema(replacement)
+            except Exception as exc:
+                if replacement is not None:
+                    try:
+                        replacement.close()
+                    except Exception:
+                        pass
+                raise StorageFailureError("durable PostgreSQL storage could not reconnect") from exc
+            self._connection = replacement
+            try:
+                connection.close()
+            except Exception:
+                pass
+            return replacement
+
+    @staticmethod
+    def _connection_is_broken(connection: Any) -> bool:
+        try:
+            return bool(connection.closed) or bool(connection.broken)
+        except Exception:
+            return True
+
+    @staticmethod
+    def _validate_existing_schema(connection: Any) -> None:
+        placeholders = ", ".join("%s" for _ in _REQUIRED_SCHEMA_TABLES)
+        rows = connection.execute(
+            "SELECT table_name FROM information_schema.tables "
+            "WHERE table_schema = current_schema() AND table_name IN (" + placeholders + ")",
+            _REQUIRED_SCHEMA_TABLES,
+        ).fetchall()
+        present = {row["table_name"] for row in rows}
+        missing = sorted(set(_REQUIRED_SCHEMA_TABLES) - present)
+        if missing:
+            raise StorageFailureError(
+                "durable PostgreSQL schema validation failed; missing tables: " + ", ".join(missing)
+            )
 
     def apply_migrations(self) -> None:
-        try:
-            for migration_path in MIGRATION_PATHS:
-                migration = migration_path.read_text(encoding="utf-8")
-                for statement in _sql_statements(migration):
-                    self.connection.execute(statement)
-        except (OSError, StorageFailureError):
-            raise
-        except Exception as exc:
-            raise StorageFailureError("durable PostgreSQL migration could not be applied") from exc
+        with self._connection_lock:
+            if self._explicitly_closed or self._connection is None:
+                raise StorageFailureError("durable PostgreSQL storage is closed")
+            connection = self._connection
+            try:
+                for migration_path in MIGRATION_PATHS:
+                    migration = migration_path.read_text(encoding="utf-8")
+                    for statement in _sql_statements(migration):
+                        connection.execute(statement)
+            except (OSError, StorageFailureError):
+                raise
+            except Exception as exc:
+                raise StorageFailureError("durable PostgreSQL migration could not be applied") from exc
 
     def worker_store(self, *, config: WorkerLeaseConfig | None = None):
         """Return the generic durable worker adapter on this PostgreSQL connection."""
@@ -460,12 +528,12 @@ class PostgreSQLReferenceTransactionAdapter:
         return _PostgreSQLCommandTransaction(self)
 
     def close(self) -> None:
-        connection = getattr(self, "_connection", None)
-        if connection is not None:
-            try:
+        with self._connection_lock:
+            self._explicitly_closed = True
+            connection = self._connection
+            self._connection = None
+            if connection is not None:
                 connection.close()
-            finally:
-                self._connection = None
 
     def __enter__(self) -> "PostgreSQLReferenceTransactionAdapter":
         return self
@@ -498,16 +566,17 @@ class PostgreSQLReferenceTransactionAdapter:
         if not isinstance(normalized, dict):
             raise ValidationFailureError("aggregate state must be a mapping")
         state_json = canonical_json(normalized)
+        connection = self.connection
         try:
-            self.connection.execute("BEGIN")
-            self.connection.execute(
+            connection.execute("BEGIN")
+            connection.execute(
                 "INSERT INTO aggregate_state(scope_key, aggregate_type, aggregate_id, version, state_json) VALUES (%s, %s, %s, %s, %s::jsonb)",
                 (scope.canonical_key, aggregate_type, aggregate_id, version, state_json),
             )
-            self.connection.commit()
+            connection.commit()
         except Exception as exc:
             try:
-                self.connection.rollback()
+                connection.rollback()
             except Exception:
                 pass
             if getattr(exc, "sqlstate", None) == "23505":
