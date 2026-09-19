@@ -1,0 +1,83 @@
+{
+  "evidence_kind": "newly_executed_qualification_and_handoff_record",
+  "status": "FIX_BLOCKED_EVIDENCE_GAPS",
+  "project": "ephi",
+  "request": "ephi-o3-attention-episode-w1-fix2",
+  "fabric_job": "CF-08ce8de05ac749b681162a55",
+  "operation": "FIX",
+  "target_base_sha": "cdf8bb54eeb42926029a9394814d79d17a282bd9",
+  "predecessor_candidate_sha": "ef959f577bc1aa223b260ac32cb42a18eadfaf9f",
+  "predecessor_candidate_tree": "3755ca31a2d9ba5b8e473fa67ab1338b00623055",
+  "predecessor_evidence_commit": "1e0b6135841d7b3a964456153c259df73214912c",
+  "repair_candidate_sha": "e6ad7c36953496ed4fdafbeb2975cfab99f3033e",
+  "repair_candidate_tree": "24b06b7f575ab994681a7e0365b0b5bfe70186d4",
+  "repair_candidate_parent": "ef959f577bc1aa223b260ac32cb42a18eadfaf9f",
+  "repair_summary": {
+    "boundary": "PostgreSQLReferenceTransactionAdapter.connection",
+    "reconnect_policy": "next-operation only; explicit close is terminal",
+    "connection_contract": "same DSN, autocommit=true, dict_row",
+    "concurrency": "adapter lock serializes replacement ownership",
+    "schema_policy": "initial construction applies migrations; reconnect validates required existing tables only",
+    "in_flight_policy": "bound operation connection is never replaced or replayed mid-operation"
+  },
+  "checks": {
+    "focused_adapter_lifecycle": "PASS_7_TESTS",
+    "real_postgresql_o2_o3_worker_read_artifact": "PASS_55_TESTS",
+    "real_postgresql_outage_restore": "PASS",
+    "explicit_close_terminal": "PASS",
+    "server_terminated_next_operation_reconnect": "PASS",
+    "failed_in_flight_not_retried": "PASS",
+    "concurrent_reconnect_single_replacement_owner": "PASS",
+    "receipt_audit_outbox_version_auth_semantics": "PASS",
+    "s09_expiry_authorized_refresh_regression": "PASS_REAL_POSTGRESQL",
+    "nicegui_base_runtime_contract": "PASS",
+    "nicegui_base_runtime_smoke": "PASS",
+    "nicegui_base_validate": "PASS",
+    "nicegui_base_agent_check": "PASS",
+    "nicegui_base_gate": "PASS",
+    "package_check_refresh_manifest": "PASS",
+    "full_unittest": "PASS_165_TESTS_58_SKIPPED",
+    "w0_repo_baseline": "PASS",
+    "git_diff_check": "PASS",
+    "browser_s08_outage_restore": "PASS_OBSERVED_NOT_DURABLY_HASHED",
+    "browser_s09_expiry_refresh": "BLOCKED_NATIVE_CUA_FOCUS",
+    "desktop_1440x900_dpr1_hash_bound_capture": "NOT_VERIFIABLE",
+    "mobile_390x844_dpr1_reconfirmation": "NOT_RUN",
+    "core_browser_reconfirmation_on_repaired_candidate": "NOT_RUN",
+    "unexpected_browser_runtime_error_scan": "NOT_RUN"
+  },
+  "real_postgresql": {
+    "server": "PostgreSQL 18.6",
+    "qualification": "one adapter/application authority stopped by immediate server shutdown, failed while unavailable, then reconnected after restart on the next requested operation",
+    "down_state": "StorageFailure/source unavailable; no success or empty-state inference",
+    "restored_state": "same adapter read durable state and accepted a fresh command transaction after restart",
+    "durable_contents": "aggregate, receipt, audit, outbox, retained snapshot preserved across failed operation; retry used normal receipt semantics",
+    "server_evidence": "server log contained immediate shutdown/terminating connection and client OperationalError"
+  },
+  "browser_observations": [
+    "Real NiceGUI Base EPHI application rendered the PostgreSQL-backed Attention row.",
+    "After PostgreSQL stop, Refresh left the retained row visible with Stale data and the backend reported source unavailable.",
+    "After PostgreSQL restart, the same application process/page Refresh returned the healthy current row without process restart.",
+    "The native CUA surface did not provide a durable file/hash channel for the two screenshots and an extension repeatedly stole focus before S09 could be completed in-browser."
+  ],
+  "artifact_bridge": {
+    "status": "PUBLISHED_BLOCKED_EVIDENCE_GAPS",
+    "canonical_ref": "refs/heads/project-os-artifacts/ephi/ephi-o3-attention-episode-w1-fix2",
+    "reason": "The dedicated Git artifact carrier was available and was used. The browser evidence remains explicitly blocked where the native CUA surface could not provide durable screenshot hashes or complete S09.",
+    "notion_credentials_used": false,
+    "synthetic_ar2_sidecar_used": false,
+    "remote_commit": "8d7b05b20f265a58cef932f30776c8d81e9e886f",
+    "remote_tree": "05401978f455af379db3a55a2a80353004431895",
+    "manifest_sha256": "8868a4efd06d2bea5a7ecb2f922585841b1f5a7634debe557a65b8c4b6521cc8",
+    "bundle_sha256": "03a71beaa0f3addb1f45f606cc6f885a68974630bc1d15c10f17516d32302abc",
+    "remote_readback": {
+      "remote_file_count": 6,
+      "required_files_readable": true,
+      "all_remote_hashes_recorded": true,
+      "candidate_binding_verified": true,
+      "status_boundary_verified": true
+    }
+  },
+  "self_declared_go": false,
+  "audit_boundary": "Independent Project OS audit remains required; this record does not declare GO."
+}

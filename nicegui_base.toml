@@ -1,0 +1,14 @@
+[nicegui_base]
+framework_version = "3.0.0a8"
+application_name = "EPHI"
+module_name = "ephi"
+template = "analysis-workspace"
+pattern = "analysis_workspace"
+entrypoint = "app:main"
+build_page = "app:build_page"
+
+[nicegui_base.gates]
+require_zero_validator_findings = true
+require_tests = true
+require_exact_framework_pin = true
+require_live_for_release = true

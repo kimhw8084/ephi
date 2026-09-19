@@ -66,10 +66,17 @@ def self_check() -> dict[str, object]:
 
 def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--serve", action="store_true", help="run the fail-closed PostgreSQL-backed W1 UI")
     parser.add_argument("--self-check", action="store_true", help="emit the deterministic canonical baseline self-check")
     parser.add_argument("--json", action="store_true", help="emit JSON rather than the compact identity line")
     parser.add_argument("--version", action="store_true", help="print the canonical package version")
     args = parser.parse_args(argv)
+
+    if args.serve:
+        from .ui.app import run_ephi
+
+        run_ephi()
+        return 0
 
     if args.version:
         print(ApplicationIdentity.version)
