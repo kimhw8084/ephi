@@ -410,6 +410,11 @@
       "sha256": "74325a651776d5c638b7ed1df81f3ebfe001d0452f7e16647bfcdd9e57a75dad"
     },
     {
+      "path": "evidence/review/chg_144_o4_metrology_source_ingress_v1.json",
+      "bytes": 4269,
+      "sha256": "f6cf64f0a23a5ea20ca08f01de09a2c1d1ef3586dcd89b2ef3e725a2078450eb"
+    },
+    {
       "path": "evidence/review/nicegui_base_binding_manifest.json",
       "bytes": 15859,
       "sha256": "797ebcc38c8aa8846c3bd65305b1f20686ff2e17b43b6f770400ec10c826649c"
