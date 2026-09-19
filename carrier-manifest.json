@@ -46,7 +46,7 @@
     "console_page_runtime_error_bounds": "PASS_ZERO_BROWSER_ERRORS"
   },
   "screenshots": {
-    "retained_before_desktop.png": "410ad3a7dcb4249a9b185acbd21ae446c111e5c3769126137ba329f720872611",
+    "retained-before-desktop.png": "410ad3a7dcb4249a9b185acbd21ae446c111e5c3769126137ba329f720872611",
     "expired-desktop.png": "944a33bf5041c0964c22895c99fb4f2f814d6120ea759a49316fe363aa4ed61c",
     "refreshed-desktop.png": "b50b60d7cd5ecb6c1f20c368c7f120778d01c0efbd04f838b3125cde9e06672e",
     "mobile-attention.png": "7c649811238137b589a2a0c33b2acdb2bb21ae4f15c114bc4c83ae63a1c1fe31",
@@ -57,7 +57,7 @@
     "source-recovered-desktop.png": "e8ea6af302ec524476789025c07488ee9e5345e4a6ee6383d0eee0192944abd3"
   },
   "structured_evidence": {
-    "native_summary.json": "e9f3447a4018c24602897595003293a14bd38da357aaf1dec118a085d2a6bc5a",
+    "native-summary.json": "e9f3447a4018c24602897595003293a14bd38da357aaf1dec118a085d2a6bc5a",
     "s09-desktop.json": "5077e14bd08ded7ba1e5e9027ac2d3c911e3eefebc98d32c94a8450bbd1a713c",
     "mobile-core.json": "123ba171cd748e9b7c4c1a4b417b4a8aa01c47ec7a9b6436997c1c453ef13631",
     "permission-revocation.json": "9ca51ad0c2660e2f49b72aaf3d5f1b4f8e0e603796b0c3cda5a28a48159bdaaf",
