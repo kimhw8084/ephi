@@ -1,0 +1,148 @@
+{
+  "ok": true,
+  "port": 58710,
+  "route_count": 23,
+  "routes": [
+    {
+      "path": "/healthz",
+      "status": 200,
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "path": "/readyz",
+      "status": 200,
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "path": "/",
+      "status": 200,
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "path": "/foundation",
+      "status": 200,
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "path": "/shell",
+      "status": 200,
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "path": "/controls",
+      "status": 200,
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "path": "/forms",
+      "status": 200,
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "path": "/data",
+      "status": 200,
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "path": "/charts",
+      "status": 200,
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "path": "/content",
+      "status": 200,
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "path": "/engineering",
+      "status": 200,
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "path": "/states",
+      "status": 200,
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "path": "/performance",
+      "status": 200,
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "path": "/patterns/dashboard",
+      "status": 200,
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "path": "/patterns/explorer",
+      "status": 200,
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "path": "/patterns/master-detail",
+      "status": 200,
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "path": "/patterns/crud",
+      "status": 200,
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "path": "/patterns/monitoring",
+      "status": 200,
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "path": "/patterns/search",
+      "status": 200,
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "path": "/patterns/settings",
+      "status": 200,
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "path": "/patterns/wizard",
+      "status": 200,
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "path": "/patterns/comparison",
+      "status": 200,
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "path": "/patterns/analysis",
+      "status": 200,
+      "ok": true,
+      "detail": ""
+    }
+  ],
+  "log_path": "certification_output/runtime_smoke/RUNTIME_SMOKE_SERVER.log",
+  "log_error_patterns": [],
+  "process_returncode": -15
+}

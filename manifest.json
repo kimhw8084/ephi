@@ -60,6 +60,21 @@
       "sha256": "648492eb1969ce04671d676ccfd1e2a1259d41a19269238120c59c9d6b66e3ad"
     },
     {
+      "path": ".nicegui_base/construction_manifest.json",
+      "bytes": 35164,
+      "sha256": "3ae85f2e554f7080fbf81f68b1df7cf69ed5e917ca82427ddaf06ab31625a724"
+    },
+    {
+      "path": ".nicegui_base/framework_catalog.json",
+      "bytes": 203443,
+      "sha256": "555e46ff14ac9311ebb678285d6f3163bbcbf49840ec04ac11e1898366c9c149"
+    },
+    {
+      "path": ".nicegui_base/install_manifest.json",
+      "bytes": 6438,
+      "sha256": "8c0b0d423af8c279d5cd90e63509f918b3fbf7e52807341910a695a199dceb5a"
+    },
+    {
       "path": "00_START_HERE.md",
       "bytes": 4498,
       "sha256": "efb192102e27c711e0173ea6db4cbdc163c1b77139178c88f955effbadb296e9"
@@ -145,6 +160,176 @@
       "sha256": "2fdf36ba9c533cb47118e1566a00d8de618479290da68d4979e6ccee8dce521b"
     },
     {
+      "path": "app.py",
+      "bytes": 419,
+      "sha256": "07c35339e0bc06391eba9adb8335ad42febfa7d4017d0379106f0cc8df97dd83"
+    },
+    {
+      "path": "certification_output/runtime_smoke/RUNTIME_SMOKE_REPORT.json",
+      "bytes": 2534,
+      "sha256": "e444a9132023ccaaf1f74572641cf0da6d589ed9c668a775ec61579eb58fdb41"
+    },
+    {
+      "path": "certification_output/runtime_smoke/RUNTIME_SMOKE_SERVER.log",
+      "bytes": 1863,
+      "sha256": "0520a045b2641cbd63a6f7d97a8e01dc94e8e171fe58108d391b7fe789867a49"
+    },
+    {
+      "path": "docs/nicegui_base/AGENT_WORKFLOW.md",
+      "bytes": 4829,
+      "sha256": "0669f564069e7dafae45dea80190c1d8ff511d8fd9b825dd899ef98c0074c091"
+    },
+    {
+      "path": "docs/nicegui_base/AI_QUICKSTART.md",
+      "bytes": 3025,
+      "sha256": "8ea275da5fbb7b2c8c8381eddf6c750c794789d2e404fd7822654681d1232fa8"
+    },
+    {
+      "path": "docs/nicegui_base/AI_RULES.md",
+      "bytes": 7496,
+      "sha256": "0232c21a4e63b4f7ae9f2c76153ff2df1ebe0fff34d9c8d81adf64fb2138fa3a"
+    },
+    {
+      "path": "docs/nicegui_base/ANTI_PATTERNS.md",
+      "bytes": 2135,
+      "sha256": "fec2712934043272760464139073e040c82281e7dc63eb28326f15897f902480"
+    },
+    {
+      "path": "docs/nicegui_base/APP_PATTERNS.md",
+      "bytes": 1465,
+      "sha256": "94dee03e72c0126c4c1ba4466b566a2cdac05cd3433fbc4054950fa0a8763957"
+    },
+    {
+      "path": "docs/nicegui_base/COMPONENT_CATALOG.md",
+      "bytes": 20510,
+      "sha256": "09850c3058c53c2c5725168d7c69bc2e17e363058a41e539e8e55cc08feed39d"
+    },
+    {
+      "path": "docs/nicegui_base/FINAL_RELEASE_CANDIDATE_STABLE_QUALIFICATION_HANDOFF.md",
+      "bytes": 1767,
+      "sha256": "0e97a2c5bb9bbc8621716d7ca70bd530492dacafc9573e291ba27b3f88bd9282"
+    },
+    {
+      "path": "docs/nicegui_base/ICON_CATALOG.md",
+      "bytes": 3058,
+      "sha256": "da6ad24115318574346f3f4de81b785a70610b306b0ef4c1dfd6df22bd4364f5"
+    },
+    {
+      "path": "docs/nicegui_base/LAYOUT_RULES.md",
+      "bytes": 1236,
+      "sha256": "dc0a4ce52a258148e92eaa66ee0d53121d111ef4a9ad0571f6ca08a18b59a9fb"
+    },
+    {
+      "path": "docs/nicegui_base/OPENCODE_GEMMA_BOOTSTRAP.md",
+      "bytes": 2093,
+      "sha256": "fe3b205aa4d4f6432d6a6367b802126525032a3acbbb94cc82dbed32c243feae"
+    },
+    {
+      "path": "docs/nicegui_base/PERFORMANCE_GUIDE.md",
+      "bytes": 999,
+      "sha256": "049add7dbba6de5e04688181e2a2101a3bbd710c44e0990498581dbd223ff058"
+    },
+    {
+      "path": "docs/nicegui_base/RECIPES.md",
+      "bytes": 7043,
+      "sha256": "e77d2b9978a33f9114680b124844fbd1597313f99eeecf3859762af5db63e603"
+    },
+    {
+      "path": "docs/nicegui_base/SEMICONDUCTOR_APPLICATION_RECIPES.md",
+      "bytes": 7804,
+      "sha256": "7d3f1037047ff946946c6f557a297a8c95d92ee760e45bd2704a707e656dae66"
+    },
+    {
+      "path": "docs/nicegui_base/SEMICONDUCTOR_LONGITUDINAL_ASSURANCE_REVIEW_EXCEPTION_GOVERNANCE.md",
+      "bytes": 1350,
+      "sha256": "4c6920c6890e1bb54f7fa0c2a4068ce330573015b049154ff6b976608c0290c7"
+    },
+    {
+      "path": "docs/nicegui_base/SEMICONDUCTOR_OPERATIONAL_ASSURANCE_RENEWAL_LEDGER.md",
+      "bytes": 1037,
+      "sha256": "9b6cf415c9962d4631d5b396fd40f52424f37768c6e973898d181ab49bb84214"
+    },
+    {
+      "path": "docs/nicegui_base/SEMICONDUCTOR_POST_RELEASE_STABILITY_ROLLBACK_READINESS.md",
+      "bytes": 2936,
+      "sha256": "c6c5cbbf84b75b0df45ab37852d8e1f8b7c0d3791d0471bbec85c4cb1bc1afd1"
+    },
+    {
+      "path": "docs/nicegui_base/SEMICONDUCTOR_PRODUCTION_RUNTIME.md",
+      "bytes": 3877,
+      "sha256": "2b5f608a3adee16ce210993f2991bbdafc40a4a5c4d9c7c0aa2c1ffdca02b1df"
+    },
+    {
+      "path": "docs/nicegui_base/SEMICONDUCTOR_PROMOTION_EXECUTION_ADAPTER_RELEASE_AUDIT.md",
+      "bytes": 2961,
+      "sha256": "24905a1a21b95ea01d0ebf5f093caee8c014a21a3013a71f81cb4ea5b87bd74e"
+    },
+    {
+      "path": "docs/nicegui_base/SEMICONDUCTOR_PROVIDER_SDK_RC.md",
+      "bytes": 4508,
+      "sha256": "9b7607f41bf559fae46b25e167e910f6ba22deade21784543b4f0e558107c3d3"
+    },
+    {
+      "path": "docs/nicegui_base/SEMICONDUCTOR_RELEASE_PUBLICATION_POST_PROMOTION_VERIFICATION.md",
+      "bytes": 3610,
+      "sha256": "665a3c335303d454a8e3363a494d8e240d354c8e51f4d33b04b4b6a89c111cc9"
+    },
+    {
+      "path": "docs/nicegui_base/SEMICONDUCTOR_RUNTIME_ONBOARDING.md",
+      "bytes": 5848,
+      "sha256": "7043de584a09dea74ae49ff57d2448ad749a4cdeb3137730ba0832337c5174a1"
+    },
+    {
+      "path": "docs/nicegui_base/SEMICONDUCTOR_STABLE_PROMOTION_CANDIDATE.md",
+      "bytes": 1438,
+      "sha256": "f7c1c24d19cfb7eca2826a09c1dad7d00f625898decb6eba7809c9e83a504432"
+    },
+    {
+      "path": "docs/nicegui_base/SEMICONDUCTOR_STABLE_RELEASE_EVIDENCE_ACCEPTANCE_PROMOTION_CLOSURE.md",
+      "bytes": 3182,
+      "sha256": "74b3644f12768a59c297fa29ce360d9d8d01a6be399f22bbefc32760a0b8184f"
+    },
+    {
+      "path": "docs/nicegui_base/SEMICONDUCTOR_SUSTAINED_OPERATIONS_INCIDENT_ROLLBACK_AUDIT.md",
+      "bytes": 1155,
+      "sha256": "e41b2e24e9eab7ceee57d131396dd5fa6e31e4c3c8bb90cfd00be24829c2e3ca"
+    },
+    {
+      "path": "docs/nicegui_base/SEMICONDUCTOR_SUSTAINED_OPERATIONS_RENEWAL_CONTINUITY.md",
+      "bytes": 2262,
+      "sha256": "33262a5667b300b8f224ea229eb452bde2ad1768610eb00f8d81d515c501b0b0"
+    },
+    {
+      "path": "docs/nicegui_base/SEMICONDUCTOR_TARGET_CERTIFICATION.md",
+      "bytes": 1510,
+      "sha256": "e34ccfa128d4d60c38be3c6ab26a17981542c6ee3e07762a45b347514b27bf26"
+    },
+    {
+      "path": "docs/nicegui_base/SEMICONDUCTOR_TARGET_EXECUTION_OPERATIONAL_HANDOFF.md",
+      "bytes": 2992,
+      "sha256": "a0b87dc9422b120566048e10f76b7d3a3a6be8b13c73cefb5a277919b5bfe94e"
+    },
+    {
+      "path": "docs/nicegui_base/TROUBLESHOOTING.md",
+      "bytes": 2087,
+      "sha256": "2b334f6d210d2f16af1731d35f4f49db14f7955bdfd590033a64196635721a67"
+    },
+    {
+      "path": "docs/nicegui_base/VALIDATOR_RULES.md",
+      "bytes": 2092,
+      "sha256": "8aa5d0ad6c4d910307f6abbe949e96f515103bac961b87ae421393bf6db06aae"
+    },
+    {
+      "path": "docs/nicegui_base/VISUAL_RESOURCE_GUIDE.md",
+      "bytes": 1154,
+      "sha256": "ee71abc444717057b409d2b7be0bb55feb7c7e67e2fe1a5b74966d3b90057133"
+    },
+    {
+      "path": "docs/nicegui_base/ZERO_STOCK_NICEGUI_VISUAL_LAWS.md",
+      "bytes": 3110,
+      "sha256": "d156a395107a330771daea7fe2b33bcb4cece64d19ba45f8d025db475d7b5ee0"
+    },
+    {
       "path": "environment/nicegui_base_requirements.txt",
       "bytes": 201,
       "sha256": "d1eb9ce4f1863254f4e9d3bc60a5ae7fc87eb3a4c9a7ef1472ab10c9e37e4072"
@@ -210,6 +395,11 @@
       "sha256": "79351a0696b782c30a194bedd1ac536ae30ec66bbf963c0159ca10c03cb3e558"
     },
     {
+      "path": "evidence/review/chg_134_fix1_qualification.json",
+      "bytes": 3380,
+      "sha256": "fb884a22637a6342c8cafee7ff69c8f8c09b48d75ee3ae802c2f1166b89712e8"
+    },
+    {
       "path": "evidence/review/nicegui_base_binding_manifest.json",
       "bytes": 15859,
       "sha256": "797ebcc38c8aa8846c3bd65305b1f20686ff2e17b43b6f770400ec10c826649c"
@@ -240,6 +430,31 @@
       "sha256": "d995b28e9196c0a2145655905e5c3ddac6c1821c42af0e5a9a79aee0737cef75"
     },
     {
+      "path": "examples/nicegui_base/README.md",
+      "bytes": 960,
+      "sha256": "854b348484efbd945b053c61ba3471240336eaad192141133aa272ab82ace937"
+    },
+    {
+      "path": "examples/nicegui_base/golden_analysis_workspace.py",
+      "bytes": 1440,
+      "sha256": "8fc851d348ec06f43715156f152b7d1a55e54d45e6e70ca3344af30fefa2899e"
+    },
+    {
+      "path": "examples/nicegui_base/golden_crud.py",
+      "bytes": 1703,
+      "sha256": "ba937cd0e10c003255248985ec6d81e593219d3744397c4c95509433a86d963e"
+    },
+    {
+      "path": "examples/nicegui_base/golden_dashboard.py",
+      "bytes": 1685,
+      "sha256": "95d78e71c46d326cab7ec47160900b725eba9952410881e6a1e3ca19a7e7dd0e"
+    },
+    {
+      "path": "examples/nicegui_base/golden_data_explorer.py",
+      "bytes": 2435,
+      "sha256": "a85ac5e49e00cd56217dd81d6c3f563cc5d6b8cedb582735a0c669ae9f24b73a"
+    },
+    {
       "path": "migrations/001_o2_command_core.sql",
       "bytes": 2723,
       "sha256": "a1f6446278e05112e80f02d694ded584491b77502537919a92cdafd5faf56a33"
@@ -265,9 +480,24 @@
       "sha256": "0b960b6ef46af60925fd9930e613d419c2344651e6a32a0e51196f5565e58dd9"
     },
     {
+      "path": "nicegui_base.toml",
+      "bytes": 358,
+      "sha256": "c15ff7d2962a98badac22def617368b6e3dc03fb77c3d54f03d2e8b6d9d6087c"
+    },
+    {
       "path": "pyproject.toml",
       "bytes": 657,
       "sha256": "0ef88ce76633bbebfada55628717ff5189b05eb05bf276f1f27d4ceeac27f0a1"
+    },
+    {
+      "path": "requirements-dev.txt",
+      "bytes": 33,
+      "sha256": "b2cf40cfde63ffcd654d233d12aebeb06ea2092d1cbd22aa25c34efacfcfd804"
+    },
+    {
+      "path": "requirements.txt",
+      "bytes": 214,
+      "sha256": "5d893863311eceeda4e895c59a756b62263dbe107801ed8334f5b8a05e3677fe"
     },
     {
       "path": "src/ephi/__init__.py",
@@ -316,8 +546,8 @@
     },
     {
       "path": "src/ephi/application/attention.py",
-      "bytes": 9716,
-      "sha256": "9dbc340dcf8ee7625f361b969ce3cee270dbee0dc0c7be29d5e4765642fc4632"
+      "bytes": 10247,
+      "sha256": "2bdc5dc2996f837a5e56e5dfa5e03916172d66b2ffb850957d8198d3d15ab998"
     },
     {
       "path": "src/ephi/application/context.py",
@@ -391,8 +621,8 @@
     },
     {
       "path": "src/ephi/infrastructure/postgresql_o3.py",
-      "bytes": 9084,
-      "sha256": "53adfa8a2d9b583db8103cd058922ef1d59371bd7bb4fa8d21239382f1abbbaa"
+      "bytes": 9862,
+      "sha256": "3b375919820ddafde5fbd7cd30a7a3e49bc1a01c9054df83ce3107d6f8d399ce"
     },
     {
       "path": "src/ephi/infrastructure/postgresql_reads.py",
@@ -426,13 +656,13 @@
     },
     {
       "path": "src/ephi/ui/app.py",
-      "bytes": 17260,
-      "sha256": "daa17a21e9803aaaf6963f92667f4f55996612aacd2f172be3ad1a0931ea8c8f"
+      "bytes": 19374,
+      "sha256": "d903cdbe7253a18788fd9469d41a98ac4a79e2684e49d1b75942642c32663da4"
     },
     {
       "path": "src/ephi/ui/provider.py",
-      "bytes": 9572,
-      "sha256": "2810c17f2e85ab5da75810eaf5ef8e2d7157005f30ef697fa29a015fbb713dd1"
+      "bytes": 10290,
+      "sha256": "e295f162b3a3b1d2d8ed0440f42966cb7f84a057eba2d26e735c996e598fdba5"
     },
     {
       "path": "src/ephi/value/__init__.py",
@@ -511,8 +741,8 @@
     },
     {
       "path": "tests/test_o3_provider.py",
-      "bytes": 3093,
-      "sha256": "5a4cc5a007b43c337602743e4fcea7afe5db203a82bd0a0c64323c323de1adf2"
+      "bytes": 7723,
+      "sha256": "60787d3a48bce6ed14dcb480185602783097fdccdad94d3cc1c02bbbd2b85384"
     },
     {
       "path": "tests/test_package.py",

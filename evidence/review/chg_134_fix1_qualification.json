@@ -1,0 +1,59 @@
+{
+  "evidence_kind": "newly_executed_qualification_and_handoff_record",
+  "status": "BLOCKED_FOR_AUDIT_HANDOFF",
+  "project": "ephi",
+  "request": "ephi-o3-attention-episode-w1-fix1",
+  "fabric_job": "CF-2011eb81064222a70174274d",
+  "target_base_sha": "cdf8bb54eeb42926029a9394814d79d17a282bd9",
+  "r1_candidate_sha": "dc8f04b02d9ef9bdb3da59951a0061ffefd2113f",
+  "r1_evidence_commit": "51682526e6e61cd095459d723728ddca3e0b2feb",
+  "r1_evidence_ref": "codex-fabric/evidence/ephi/ephi-o3-attention-episode-w1-v1",
+  "source_binding": {
+    "repair_commit": "recorded in the final native audit handoff",
+    "repair_source_tree": "67e2a19172814caf7eacc9adc46d605bdf18bd24",
+    "repair_source_tree_kind": "git index tree for src/ephi after repair"
+  },
+  "checks": {
+    "source_health_real_postgresql_probe": "PASS",
+    "current_principal_per_protected_operation": "PASS",
+    "stable_logical_command_retry_identity": "PASS",
+    "nicegui_base_runtime_contract": "PASS",
+    "nicegui_base_browserless_runtime_smoke": "PASS",
+    "nicegui_base_application_validate": "PASS",
+    "nicegui_base_agent_check": "PASS",
+    "nicegui_base_gate": "PASS_AFTER_MANIFEST_REFRESH",
+    "provider_conformance": "PASS_DEDICATED_O3_PROVIDER_SUITE",
+    "nicegui_base_semiconductor_provider_check": "NOT_APPLICABLE",
+    "real_postgresql_o3_and_o2": "PASS",
+    "desktop_browser_workflow_and_adverse_states": "PASS_OBSERVED_NOT_DURABLY_PUBLISHED",
+    "mobile_390x844_dpr1_anchor": "BLOCKED_NOT_RUN",
+    "artifact_bridge_publication": "BLOCKED"
+  },
+  "browser_observations": [
+    "Attention list rendered a PostgreSQL-backed episode.",
+    "Episode brief rendered and Claim then Acknowledge committed durably.",
+    "Reloaded Episode state showed the acknowledged workflow after the process was restarted.",
+    "Changed capability/security bindings while the page remained open produced Permission denied.",
+    "Stopping PostgreSQL rendered source unavailable and did not replace truth with healthy or zero rows.",
+    "A mobile 390x844 device-scale-factor-1 capture was not verifiable through the available native CUA host."
+  ],
+  "artifact_bridge": {
+    "status": "BLOCKED",
+    "reason": "No callable canonical Project OS Artifact Bridge for project=ephi was available. The only local helper is a synthetic AR-2 direct-Notion sidecar and is not an EPHI/Fabric publication path.",
+    "helper_path": "/Users/haewonkim/.projectos/sidecars/artifact-bridge-v1-ar2-candidate/projectos-artifact-stage",
+    "helper_sha256": "b681067b6c162943b7e032839389c514603b5dd3e3ea2f88e2660fe5f23dcaaf",
+    "help_command_exit": 0,
+    "qualification_command_exit": 2,
+    "qualification_error_code": "INVALID_ARTIFACT_ROOT",
+    "qualification_status": "BLOCKED",
+    "qualification_fabric_job": "AR2-MODEL-FREE-NOT-FABRIC",
+    "base_provider_check_command": "PYTHONPATH=src nicegui-base provider-check ephi.ui.provider:EphiReadDataSource --profile production --format json",
+    "base_provider_check_exit": 1,
+    "base_provider_check_reason": "The pinned Base command loads semiconductor adapter objects and cannot instantiate EphiReadDataSource, which is a provider-neutral DataSource requiring EPHI service and identity dependencies.",
+    "notion_credentials_used": false,
+    "artifact_run_id": null,
+    "bundle_sha256": null,
+    "independent_readback": null
+  },
+  "self_declared_go": false
+}

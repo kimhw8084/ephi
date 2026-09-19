@@ -173,9 +173,9 @@ class EphiReadDataSource(DataSource):
         if query.search_fields and any(field not in {"episode_id", "title", "asset_id"} for field in query.search_fields):
             raise ValidationFailureError("unsupported EPHI Attention search field")
         order = self._order(query.sorts)
+        started = monotonic()
         principal = self.principal_provider()
         scope = self.scope_provider()
-        started = monotonic()
         page = self.service.list_attention(principal, scope, filters=filters, order=order, page_size=limit)
         remaining = query.offset
         collected: list[dict[str, Any]] = []
@@ -189,6 +189,10 @@ class EphiReadDataSource(DataSource):
             remaining = max(0, remaining - len(page.rows))
             if page.next_cursor is None:
                 break
+            # Retained-page continuations are new protected operations.  Do
+            # not carry the authority snapshot from the first page forward.
+            principal = self.principal_provider()
+            scope = self.scope_provider()
             page = self.service.list_attention(
                 principal,
                 scope,
@@ -231,9 +235,21 @@ class EphiReadDataSource(DataSource):
         raise ValidationFailureError("EPHI Attention does not expose distinct pushdown")
 
     async def health(self) -> SourceHealth:
+        started = monotonic()
         try:
-            self.principal_provider()
-            self.scope_provider()
-            return SourceHealth.current(SourceHealthStatus.HEALTHY, metadata={"authority": "ephi.postgresql"})
+            principal = self.principal_provider()
+            scope = self.scope_provider()
+            self.service.check_source(principal, scope)
         except Exception as exc:
-            return SourceHealth.current(SourceHealthStatus.UNAVAILABLE, message=str(exc))
+            return SourceHealth.current(
+                SourceHealthStatus.UNAVAILABLE,
+                message=str(exc),
+                latency_ms=(monotonic() - started) * 1000,
+                metadata={"authority": "ephi.postgresql", "source_check": "failed"},
+            )
+        return SourceHealth.current(
+            SourceHealthStatus.HEALTHY,
+            message="required EPHI PostgreSQL source reachable",
+            latency_ms=(monotonic() - started) * 1000,
+            metadata={"authority": "ephi.postgresql", "source_check": "passed"},
+        )

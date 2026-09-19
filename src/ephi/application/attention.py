@@ -7,7 +7,13 @@ from dataclasses import dataclass
 from typing import Any, Protocol
 
 from .context import AccessScope, Principal
-from .errors import QueryCursorValidationError, QueryIdentityMismatchError, QueryTooBroadError, ValidationFailureError
+from .errors import (
+    QueryCursorValidationError,
+    QueryIdentityMismatchError,
+    QueryTooBroadError,
+    StorageFailureError,
+    ValidationFailureError,
+)
 from .read import (
     DEFAULT_SNAPSHOT_TTL_SECONDS,
     MAX_PAGE_SIZE,
@@ -155,6 +161,8 @@ class AttentionPage:
 
 
 class AttentionRowSource(Protocol):
+    def check_attention_source(self, principal: Principal, scope: AccessScope) -> None: ...
+
     def fetch_attention_rows(
         self,
         principal: Principal,
@@ -182,6 +190,14 @@ class AttentionQueryService:
             raise TypeError("read_store must implement the durable read snapshot boundary")
         self.row_source = row_source
         self.read_store = read_store
+
+    def check_source(self, principal: Principal, scope: AccessScope) -> None:
+        """Run the bounded, authorized health probe for the required source."""
+
+        checker = getattr(self.row_source, "check_attention_source", None)
+        if not callable(checker):
+            raise StorageFailureError("Attention source health authority is unavailable")
+        checker(principal, scope)
 
     def list_attention(
         self,
@@ -244,4 +260,3 @@ class AttentionQueryService:
 
 # Concise vocabulary aliases used by API/UI adapters.
 ListAttention = AttentionQueryService
-

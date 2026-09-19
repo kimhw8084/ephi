@@ -1,0 +1,398 @@
+{
+  "agent_interface": {
+    "bootstrap_command": "nicegui-base agent-init .",
+    "bootstrap_guide": "docs/nicegui_base/OPENCODE_GEMMA_BOOTSTRAP.md",
+    "discovery_commands": {
+      "benchmark": "nicegui-base agent-benchmark agent_tasks/manifest.json --format json",
+      "catalog_audit": "nicegui-base catalog-audit --format json",
+      "catalog_search": "nicegui-base catalog-search \"<intent>\" --format json",
+      "pattern_recommendation": "nicegui-base recommend-pattern \"<requirement>\" --format json",
+      "scaffold_plan": "nicegui-base scaffold-plan \"<requirement>\" --format json",
+      "visualization_recommendation": "nicegui-base recommend-visualization \"<intent>\" --schema <field> --format json"
+    },
+    "golden_examples": [
+      "examples/nicegui_base/golden_dashboard.py",
+      "examples/nicegui_base/golden_data_explorer.py",
+      "examples/nicegui_base/golden_crud.py",
+      "examples/nicegui_base/golden_analysis_workspace.py",
+      "examples/phase61_spc_wafer_investigation.py",
+      "examples/phase61_fdc_tool_health.py",
+      "examples/phase61_rca_commonality.py"
+    ],
+    "preflight_command": "nicegui-base agent-check .",
+    "rule": "Task-specific context plus golden paths should constrain agent search before code generation.",
+    "task_context_command": "nicegui-base agent-context \"<task>\"",
+    "workflow_guide": "docs/nicegui_base/AGENT_WORKFLOW.md"
+  },
+  "construction_order": [
+    "Understand business requirement and data contract",
+    "Choose the closest registered page pattern",
+    "Choose semantic layout slots/primitives only where the pattern is insufficient",
+    "Reuse registered components, interactions, tables, charts and engineering primitives",
+    "Connect service/repository logic to component events",
+    "Use registered content/detail/workflow/viewer primitives before creating application-specific presentation components",
+    "Add state/async/convenience primitives where required",
+    "Apply security/runtime primitives when authentication, uploads, permissions or deployment are involved",
+    "Run python -m nicegui_base.validate <app-root>",
+    "Run application tests, startup smoke, and rendered browser checks for visual changes",
+    "Only request a framework extension when no registered primitive can satisfy the requirement"
+  ],
+  "design_constitution": "DESIGN_CONSTITUTION_V1_6.md",
+  "escape_hatch": {
+    "policy": "Use only when the registered framework vocabulary cannot satisfy a legitimate requirement.",
+    "required_actions": [
+      "Document why the existing framework is insufficient.",
+      "Keep custom code isolated behind an application-specific component or adapter.",
+      "Consume NiceGUI Base tokens, accessibility behavior and lifecycle primitives.",
+      "Add # nicegui-base: allow-<rule-id> immediately above an intentionally exempt validator line.",
+      "Consider promoting broadly reusable behavior into the framework."
+    ]
+  },
+  "framework_version": "3.0.0a8",
+  "hard_prohibitions": [
+    "Do not invent NiceGUI Base classes, functions, enum values or parameters.",
+    "Do not import NiceGUI directly in normal application modules.",
+    "Do not create raw AG Grid or ECharts instances in normal application modules.",
+    "Do not use arbitrary app-level CSS, pixel spacing, colors, radius, shadows or motion.",
+    "Do not download or hotlink UI icons, fonts, images or other visual resources.",
+    "Do not use emoji as interface iconography.",
+    "Do not manipulate app.storage directly for normal application state.",
+    "Do not place database SQL directly in page/view modules.",
+    "Do not silently modify NiceGUI Base framework internals or public APIs.",
+    "Do not infer causal certainty from commonality or evidence-ranking scores.",
+    "Do not create unbounded application caches.",
+    "Do not retry non-idempotent mutations automatically.",
+    "Do not run blocking CPU or synchronous I/O directly on the NiceGUI async event loop.",
+    "Stock NiceGUI/Quasar visual presentation in canonical application UI",
+    "ui.notify/ui.menu_item/raw ui.icon in NiceGUI Base integrations",
+    "AG Grid without the Company .cui-data-table visual theme",
+    "Do not add app-level margins/gaps/radii to repair composition; use Company layout primitives.",
+    "Do not use radius values outside control/surface/overlay/pill semantics.",
+    "Do not create generic scatter plots for wafer/die spatial engineering views.",
+    "Do not constrain the outer .cui-page with app-specific max-width or asymmetric margins; use inner ContentColumn for reading width.",
+    "Do not create visible lab/demo actions that have no functional behavior when the action is intended to be testable.",
+    "Do not use a generic chart where a Company semiconductor-native renderer exists for the engineering signature.",
+    "Do not use raw ui.range or ui.linear_progress in canonical NiceGUI Base application surfaces.",
+    "Do not convert inspection/detail/form drawers into centered dialogs; use Company side-sheet primitives.",
+    "Do not render textual footer actions in the compact navigation rail.",
+    "Do not add a second workflow connector or per-segment rounded seams inside stacked bars."
+  ],
+  "instruction_precedence": [
+    "User business requirement",
+    "AGENTS.md",
+    "docs/AI_RULES.md",
+    "docs/APP_PATTERNS.md",
+    "docs/LAYOUT_RULES.md",
+    "docs/COMPONENT_CATALOG.md",
+    "docs/RECIPES.md",
+    "docs/ANTI_PATTERNS.md",
+    "Framework typed APIs and registries",
+    "Canonical executable examples"
+  ],
+  "nicegui_version": "3.15.0",
+  "performance_guide": "PERFORMANCE_GUIDE.md",
+  "production_completion": {
+    "accessibility": "Use framework field wrappers and accessible labels; do not remove ARIA relationships or skip navigation.",
+    "content": "Use CONTENT_REGISTRY for metrics, detail presentation, viewers, hierarchy, workflow, comparison, command palette and activity surfaces.",
+    "durable_jobs": "Use DurableJobAdapter for work that must survive process restart; InProcessJobAdapter is not restart-durable.",
+    "tables": "Use rendered NiceGUI Base table toolbar/selection/column/density/server/editing controls; do not bypass with raw AG Grid.",
+    "visual_resources": "Use Icons.* and packaged illustrations; remote UI resources remain prohibited."
+  },
+  "purpose": "Deterministic construction contract for Gemma/OpenCode applications built on NiceGUI Base.",
+  "schema_version": 6,
+  "strict_validation_command": "nicegui-base agent-check .",
+  "validation_command": "python -m nicegui_base.validate .",
+  "visual_interaction_hotfix_guide": "V171_VISUAL_INTERACTION_HOTFIX.md",
+  "wave60_analysis_platform": {
+    "data_rule": "Translate table/chart selections into typed shared selections and query filters; keep server-side DataSource pushdown for scalable surfaces.",
+    "preferred_surfaces": [
+      "AnalysisContext",
+      "SelectionBus",
+      "AnalysisBinding",
+      "AnalyticalPanel",
+      "DataSourceTable",
+      "WorkspaceController",
+      "NiceGUIWorkspace"
+    ],
+    "rule": "Use one AnalysisContext and SelectionBus per analytical workspace; bind DataSource-backed tables and panels to that shared context instead of page-local filter/callback state.",
+    "workspace_rule": "Use WorkspaceController for move/resize/collapse/hide/lock/dock/split/duplicate/reset/undo state; do not create a parallel layout-state model."
+  },
+  "wave61_semiconductor_platform": {
+    "calculation_rule": "Keep SPC/FDC/RCA/yield/DOE calculations rendering-independent and fail explicitly on invalid inputs.",
+    "catalog_registry": "registries.semiconductor",
+    "golden_examples": [
+      "examples/phase61_spc_wafer_investigation.py",
+      "examples/phase61_fdc_tool_health.py",
+      "examples/phase61_rca_commonality.py"
+    ],
+    "intent_examples": {
+      "RCA commonality for an excursion": [
+        "rca_commonality_ranking",
+        "rca_commonality_matrix",
+        "rca_genealogy_graph",
+        "rca_evidence_matrix"
+      ],
+      "compare chambers after PM": [
+        "fdc_tool_chamber_compare",
+        "rca_affected_control",
+        "fdc_equipment_event_overlay"
+      ],
+      "is chamber B drifting": [
+        "spc_i_mr",
+        "rca_affected_control",
+        "fdc_chamber_fingerprint"
+      ],
+      "where on wafer did the process change": [
+        "wafer_delta",
+        "wafer_radial",
+        "wafer_ring",
+        "wafer_sector"
+      ]
+    },
+    "rule": "Use the canonical semiconductor entity model, SemiconductorAnalysisContext over the shared AnalysisContext, DataSource-backed dependent filters, shared populations/SelectionBus, and registered semiconductor surfaces; never create an application-local competing state/filter/population/visualization architecture.",
+    "scale_rule": "Preserve DataSource query/pushdown boundaries for fab-scale data; dependency-free reference analytics may be replaced by optimized providers behind adapters.",
+    "surface_count": 58
+  },
+  "wave62_semiconductor_recipe_factory": {
+    "catalog_registry": "registries.semiconductor_recipes",
+    "create_command": "nicegui-base create ./<app> --name \"<App Name>\" --template analysis-workspace --recipe <recipe>",
+    "data_rule": "Resolve required source semantics from DataSchema aliases/roles or explicit overrides. Fail strict assembly explicitly when required semantics are absent; never fabricate fields or values.",
+    "discovery_command": "nicegui-base recipes \"<engineering intent>\"",
+    "guide": "SEMICONDUCTOR_APPLICATION_RECIPES.md",
+    "layout_rule": "Use recipe PanelSpec metadata through WorkspaceController/NiceGUIWorkspace. Do not create recipe-specific grid or state ownership.",
+    "recipe_count": 8,
+    "recipes": [
+      "spc-monitor",
+      "excursion-defense-line",
+      "fdc-tool-health",
+      "lot-wafer-explorer",
+      "yield-loss",
+      "pm-effect-analysis",
+      "chamber-matching",
+      "rca-cockpit"
+    ],
+    "rule": "Prefer a registered semiconductor application recipe before hand-assembling repeated SPC/FDC/wafer/yield/RCA workflows. Recipes compose the existing Wave 59\u201361 authorities; they are not a second runtime.",
+    "state_rule": "Reuse one AnalysisContext and SelectionBus plus the Wave 61 SemiconductorAnalysisContext/manufacturing filters; preserve server-side DataSource pushdown."
+  },
+  "wave63_semiconductor_runtime_onboarding": {
+    "authority": "Wave 59\u201362 DataSource/AnalysisContext/SelectionBus/workspace/semiconductor recipe and surface contracts remain authoritative",
+    "create_command": "nicegui-base create <path> --name <name> --recipe <recipe> [--variant <variant>]",
+    "generated_project_files": [
+      "services/data_adapter.py",
+      "recipe_config.py",
+      "pages/home.py"
+    ],
+    "guide": "SEMICONDUCTOR_RUNTIME_ONBOARDING.md",
+    "provider_hook": "SemiconductorSourceAdapter returns an existing Wave 59 DataSource, explicit overrides and diagnostics metadata",
+    "runtime": "create_semiconductor_recipe_runtime() with bounded refresh, shared context/selections, stale/error/empty states and paginated records",
+    "smart_binding": "Explainable confidence-ranked binding; ambiguous candidates require explicit override",
+    "variant_registry": "registries.semiconductor_recipe_variants"
+  },
+  "wave64_semiconductor_production_hardening": {
+    "adapter_conformance": "run_semiconductor_adapter_conformance() uses bounded provider-neutral DataSource probes and audits capability claims through QueryStats",
+    "authority": "Wave 59\u201363 DataSource/AnalysisContext/SelectionBus/workspace/recipe/onboarding/runtime contracts remain authoritative",
+    "guide": "SEMICONDUCTOR_PRODUCTION_RUNTIME.md",
+    "onboarding_ux": "SemiconductorRecipeRuntime.onboarding_view() + SemiconductorOnboardingPanel; unresolved ambiguity remains an explicit choice",
+    "performance": "SemiconductorRecipeRuntime.performance_report() validates bounded filter/pagination/projection pushdown without loading the source",
+    "presets": "capture_preset()/restore_preset() reuse Wave 60 context, selection and workspace snapshot persistence",
+    "runtime_experience": "SemiconductorRecipeRuntime.experience_state() + SemiconductorRuntimeStatusPanel standardize ready/loading/stale/empty/partial/error",
+    "target_certification": "build_semiconductor_target_runtime_certification() keeps missing installed NiceGUI/server/browser/company-adapter/human-baseline evidence PENDING"
+  },
+  "wave65_semiconductor_provider_sdk_rc": {
+    "authority": "Wave 59 DataSource + Wave 62 recipe + Wave 63 runtime/onboarding + Wave 64 conformance/runtime-experience authorities remain canonical.",
+    "benchmark_profiles": "registries.semiconductor_benchmark_profiles",
+    "generated_project_files": [
+      "services/data_adapter.py",
+      "services/provider_fixtures.json",
+      "services/release_evidence.py",
+      "recipe_config.py"
+    ],
+    "guided_setup": "SemiconductorRecipeRuntime.prepare_setup_workflow() + SemiconductorSetupWizard",
+    "operational_guardrails": "registries.semiconductor_operational_guardrails",
+    "provider_cli": [
+      "python -m nicegui_base provider-init <directory>",
+      "python -m nicegui_base provider-check module:object --profile production --recipe <recipe>"
+    ],
+    "provider_profiles": "registries.semiconductor_provider_profiles",
+    "provider_sdk": "SemiconductorProviderAdapterBase + ProviderAdapterManifest; adapters return Wave 59 DataSource and own no competing query semantics.",
+    "release_rule": "Development fixtures may make an app runnable but never release-ready; production conformance, representative provider benchmark and explicit target/browser/human evidence are separate gates.",
+    "target_evidence": "build_semiconductor_target_evidence_bundle(); missing installed runtime/browser/company/human evidence stays PENDING."
+  },
+  "wave66_semiconductor_target_certification_orchestrator": {
+    "authority": "Wave 59 DataSource + Wave 60 AnalysisContext/SelectionBus + Wave 62 recipes + Wave 63 runtime + Wave 64 conformance/performance + Wave 65 evidence bundles remain canonical.",
+    "evidence_identity": "New target evidence records framework_version and nicegui_required; legacy identity gaps remain PENDING and mismatches BLOCK stable promotion.",
+    "evidence_traceability": "Evidence freshness, artifact hashes and external PASS artifact linkage are required for stable promotion.",
+    "generated_project_helper": "services/release_evidence.py::evaluate_stable_promotion",
+    "guide": "SEMICONDUCTOR_TARGET_CERTIFICATION.md",
+    "machine_registries": [
+      "registries.semiconductor_operational_runbooks",
+      "registries.semiconductor_promotion_policies",
+      "registries.semiconductor_evidence_freshness_policies"
+    ],
+    "operational_readiness": "assess_semiconductor_operational_readiness() separates runnable from release-ready; runbooks cover all registered recipes.",
+    "promotion": "build_semiconductor_promotion_decision() is fail-closed: failed/corrupt/version-mismatched evidence BLOCKED; stale/missing/untraced/legacy-identity evidence PENDING; only complete current evidence PROMOTABLE.",
+    "provider_qualification": "build_provider_qualification_pack() aggregates newest per-recipe evidence for one provider with deterministic qualification identity.",
+    "release_rule": "Source tests, historical browser evidence, development fixtures and manual assertions never substitute for target PASS; unavailable target evidence remains PENDING.",
+    "target_qualification_cli": "nicegui-base target-qualify <evidence...> [--operational-readiness <report>] keeps incomplete inputs PENDING and returns non-zero."
+  },
+  "wave67_semiconductor_stable_promotion_candidate": {
+    "authority": "Wave 66 provider qualification, traceability, operational readiness and stable-promotion decision remain canonical; Wave 67 only assimilates/packages those results.",
+    "candidate": "build_stable_promotion_candidate() binds evidence to stable channel/current framework/exact NiceGUI identity and recorded runbook rehearsals.",
+    "cli": [
+      "nicegui-base promotion-candidate <evidence...>",
+      "nicegui-base promotion-rehearse <recipe> <kind>"
+    ],
+    "diagnostics": "StablePromotionCandidate.gaps / next_actions expose actionable target-evidence, identity, traceability, readiness and rehearsal gaps.",
+    "enterprise_evidence": "assimilate_enterprise_target_evidence() creates deterministic evidence-set identity from Wave 65/66 evidence and operational reports.",
+    "generated_project_helper": "services/release_evidence.py::assemble_stable_promotion_candidate + package_release_candidate",
+    "guide": "SEMICONDUCTOR_STABLE_PROMOTION_CANDIDATE.md",
+    "packaging": "package_stable_promotion_candidate() writes deterministic ZIP evidence handoff and copies only still hash-verified artifact bytes.",
+    "rehearsals": "build_promotion_rehearsal() records promotion/rollback/incident/evidence-capture runbook progress and never mutates target gate status.",
+    "release_rule": "A packaged candidate does not imply promotion. Missing real target/runtime/browser/company/human evidence remains PENDING."
+  },
+  "wave68_semiconductor_target_execution_operationalization": {
+    "authority": "Wave 65 target-evidence bundles, Wave 66 qualification/promotion truth, and Wave 67 stable-candidate/rehearsal/package authority remain canonical; Wave 68 only imports real external execution artifacts and prepares operational handoff evidence.",
+    "cli": [
+      "nicegui-base target-intake <evidence> <manifest>",
+      "nicegui-base promotion-handoff <candidate.json> <candidate.zip>",
+      "nicegui-base promotion-operation <handoff.json> <recipe> <kind>"
+    ],
+    "fail_closed": "Requested PASS without current artifact/release identity remains PENDING; changed artifact, framework mismatch, wrong exact NiceGUI identity, or candidate archive corruption is BLOCKED.",
+    "generated_project_helper": "services/release_evidence.py::assimilate_target_execution + prepare_operational_handoff + record_operational_execution",
+    "guide": "SEMICONDUCTOR_TARGET_EXECUTION_OPERATIONAL_HANDOFF.md",
+    "operation_evidence": "PromotionOperationRecord binds actual artifacts to canonical Wave 67 runbook step/evidence keys and never mutates candidate or target-gate status.",
+    "operational_handoff": "StablePromotionOperationalHandoff binds the Wave 67 candidate to independently reverified candidate ZIP bytes; READY means ready to hand to an approved company process, not deployed.",
+    "release_rule": "No generic company deployment is executed or inferred; unavailable company/runtime/browser/human evidence remains PENDING.",
+    "target_execution_intake": "TargetExecutionIntake + JsonTargetExecutionIntakeAdapter hash actual artifact bytes and can update only installed_nicegui/server_websocket/supported_browser/human_visual_baseline in an existing canonical evidence bundle."
+  },
+  "wave69_semiconductor_promotion_execution_adapter_release_audit": {
+    "authority": "Wave 66 stable-promotion truth, Wave 67 candidate/rehearsal/package authority, and Wave 68 target-intake/handoff/operation evidence remain canonical; Wave 69 only qualifies external promotion execution adapters and audits closure.",
+    "cli": [
+      "nicegui-base execution-adapter-qualify <manifest>",
+      "nicegui-base release-audit <handoff.json> <qualification.json> [operation.json ...]"
+    ],
+    "execution_adapter_qualification": "PromotionExecutionAdapterQualification + JsonPromotionExecutionAdapterQualificationAdapter bind declared capabilities and external qualification status to current artifact bytes and exact framework/NiceGUI identity.",
+    "fail_closed": "Untraced requested qualification or missing release identity remains PENDING; external failure, wrong identity, changed artifacts, candidate archive drift, operation evidence tamper, or ambiguous duplicate records are BLOCKED.",
+    "generated_project_helper": "services/release_evidence.py::qualify_promotion_execution_adapter + close_release_audit",
+    "guide": "SEMICONDUCTOR_PROMOTION_EXECUTION_ADAPTER_RELEASE_AUDIT.md",
+    "packaging": "package_release_audit_closure() creates a deterministic self-contained audit ZIP with candidate archive, qualification artifacts, operation evidence and MANIFEST.sha256.",
+    "release_audit": "ReleaseAuditClosure requires a READY Wave 68 handoff, artifact-backed QUALIFIED execution adapter, and complete PASS promotion-operation evidence for each candidate recipe under the stable audit policy.",
+    "release_rule": "Audit CLOSED is evidence completeness only; it never mutates candidate/target-gate status, infers promotion approval, or means the generic framework deployed anything."
+  },
+  "wave70_semiconductor_stable_release_evidence_acceptance_promotion_closure": {
+    "audit_archive_verification": "verify_release_audit_archive() independently verifies archive safety, manifest hashes, persisted audit identity, embedded candidate archive, adapter evidence and operation evidence.",
+    "authority": "Wave 66 stable-promotion truth, Wave 67 candidate authority, Wave 68 operational handoff/evidence, and Wave 69 adapter qualification/release audit remain canonical; Wave 70 only accepts external release evidence and closes the documentary evidence chain.",
+    "cli": [
+      "nicegui-base release-evidence-accept <audit.json> <audit.zip> <acceptance-manifest.json>",
+      "nicegui-base promotion-close <audit.json> <audit.zip> <acceptance.json>"
+    ],
+    "evidence_acceptance": "StableReleaseEvidenceAcceptance + JsonStableReleaseEvidenceAcceptanceAdapter bind external acceptance to exact audit/candidate/archive bytes and current framework/exact-NiceGUI identity.",
+    "fail_closed": "Missing artifacts/identity/authority for requested ACCEPTED remains PENDING; mismatch, tamper, wrong subject, corrupt archive or canonical BLOCKED state is BLOCKED.",
+    "generated_project_helper": "services/release_evidence.py::accept_stable_release_evidence + close_stable_promotion_evidence",
+    "guide": "SEMICONDUCTOR_STABLE_RELEASE_EVIDENCE_ACCEPTANCE_PROMOTION_CLOSURE.md",
+    "packaging": "package_stable_release_promotion_closure() creates a deterministic self-contained closure ZIP containing the exact Wave 69 audit package plus acceptance artifacts and MANIFEST.sha256.",
+    "release_rule": "Closure CLOSED means verified evidence acceptance only; it never mutates canonical promotion truth or target gates and never deploys/publishes stable 3.0.0."
+  },
+  "wave71_semiconductor_release_publication_post_promotion_verification": {
+    "authority": "Wave 66 promotion truth, Wave 67 candidate authority, Wave 68 operational handoff/evidence, Wave 69 release audit, and Wave 70 acceptance/documentary closure remain canonical; Wave 71 only verifies external publication/post-release evidence.",
+    "cli": [
+      "nicegui-base release-publication-intake <closure.json> <closure.zip> <publication-manifest.json>",
+      "nicegui-base post-promotion-verify <closure.json> <closure.zip> <publication.json> <post-release-manifest.json>"
+    ],
+    "closure_archive_verification": "verify_stable_promotion_closure_archive() independently verifies the exact Wave 70 closure ZIP, its manifest, embedded acceptance, and nested Wave 69 audit package.",
+    "fail_closed": "Requested PUBLISHED/VERIFIED without current artifacts, observed identity and traceable authority/reference remains PENDING; mismatch/tamper/wrong subject/corrupt archive is BLOCKED.",
+    "generated_project_helper": "services/release_evidence.py::intake_stable_release_publication + verify_post_promotion_release",
+    "guide": "SEMICONDUCTOR_RELEASE_PUBLICATION_POST_PROMOTION_VERIFICATION.md",
+    "packaging": "package_stable_post_promotion_verification() creates a deterministic self-contained evidence ZIP; PENDING may package for gap handoff while BLOCKED is refused.",
+    "post_promotion_verification": "StablePostPromotionVerification requires artifact-backed publication plus generic publication-integrity and post-release-runtime-smoke evidence under the stable policy.",
+    "publication_intake": "StableReleasePublicationEvidence + JsonStableReleasePublicationEvidenceAdapter bind external PUBLISHED evidence to exact closure/candidate/archive bytes and current framework/exact-NiceGUI identity.",
+    "release_rule": "PUBLISHED/VERIFIED are evidence states only. The generic framework never deploys, publishes, rolls back, approves, or continuously monitors a company release."
+  },
+  "wave72_semiconductor_post_release_stability_rollback_readiness": {
+    "authority": "Wave 66 promotion truth through Wave 71 publication/post-promotion verification remain canonical; Wave 72 only verifies external production-health/incident/rollback-readiness evidence.",
+    "cli": [
+      "nicegui-base post-release-stability-intake <post-verification.json> <post-promotion.zip> <stability-manifest.json>",
+      "nicegui-base rollback-readiness-verify <post-verification.json> <post-promotion.zip> <stability.json> <rollback-manifest.json>"
+    ],
+    "fail_closed": "Requested STABLE/READY without required artifacts, observed identity or traceable authority/reference remains PENDING; mismatch/tamper/wrong subject/corrupt archive is BLOCKED.",
+    "generated_project_helper": "services/release_evidence.py::intake_post_release_stability + verify_rollback_readiness",
+    "guide": "SEMICONDUCTOR_POST_RELEASE_STABILITY_ROLLBACK_READINESS.md",
+    "packaging": "package_stable_rollback_readiness_verification() creates a deterministic self-contained dossier; PENDING may package for gap handoff while BLOCKED is refused.",
+    "post_promotion_archive_verification": "verify_stable_post_promotion_archive() independently verifies the exact Wave 71 ZIP, manifest, post-promotion identity, separately embedded publication evidence and nested Wave 70 closure binding.",
+    "release_rule": "STABLE/READY are evidence states only. NiceGUI Base performs no continuous monitoring, incident response, rollback, deployment or publication; external rollback-execution artifacts are evidence only.",
+    "rollback_readiness": "StableRollbackReadinessVerification requires verified stability evidence plus generic rollback-plan-validation, rollback-artifact-integrity and rollback-rehearsal artifacts.",
+    "stability_intake": "PostReleaseStabilityEvidence + JsonPostReleaseStabilityEvidenceAdapter bind external production-health/incident evidence to exact Wave 71 verification/archive bytes and current framework/exact-NiceGUI identity."
+  },
+  "wave73_semiconductor_sustained_operations_incident_rollback_audit": {
+    "authority": "Wave 66 promotion truth through Wave 72 stability/rollback readiness remain canonical; Wave 73 only accepts external sustained-operations evidence and closes the documentary incident/rollback audit.",
+    "cli": [
+      "nicegui-base sustained-operations-accept <readiness.json> <readiness.zip> <manifest.json>",
+      "nicegui-base incident-rollback-audit-close <readiness.json> <readiness.zip> <acceptance.json> <manifest.json>"
+    ],
+    "fail_closed": "Requested ACCEPTED/CLOSED without required artifacts or traceable authority/reference remains PENDING; wrong identity, mismatch/tamper/unsafe archive is BLOCKED.",
+    "generated_project_helper": "services/release_evidence.py::accept_sustained_operations + close_incident_rollback_audit",
+    "guide": "SEMICONDUCTOR_SUSTAINED_OPERATIONS_INCIDENT_ROLLBACK_AUDIT.md",
+    "incident_rollback_audit": "IncidentRollbackAuditClosure requires accepted sustained-operations evidence, READY Wave 72 rollback readiness, and generic incident-audit-closure/rollback-audit-closure artifacts.",
+    "packaging": "package_incident_rollback_audit_closure() creates a deterministic self-contained dossier; PENDING may package for gap handoff while BLOCKED is refused.",
+    "readiness_archive_verification": "verify_stable_rollback_readiness_archive() independently verifies the exact Wave 72 ZIP, manifest, readiness/stability identities and nested Wave 71 package.",
+    "release_rule": "ACCEPTED/CLOSED are evidence states only. NiceGUI Base performs no continuous monitoring, incident response, rollback, deployment or publication.",
+    "sustained_operations_acceptance": "SustainedOperationsEvidenceAcceptance binds external sustained-operations and incident-audit evidence to exact Wave 72 readiness/stability/archive bytes and current framework/exact-NiceGUI identity."
+  },
+  "wave74_semiconductor_sustained_operations_renewal_continuity": {
+    "authority": "Wave 66 promotion truth through Wave 73 sustained-operations acceptance/incident-rollback audit closure remain canonical; Wave 74 only renews external evidence and verifies documentary operational-assurance continuity.",
+    "cli": [
+      "nicegui-base operations-evidence-renew <audit.json> <audit.zip> <manifest.json>",
+      "nicegui-base operational-assurance-continuity <audit.json> <audit.zip> <renewal.json>"
+    ],
+    "fail_closed": "Missing/expired external renewal evidence remains PENDING; future-clock contradictions, wrong framework/exact-NiceGUI identity, changed artifacts, wrong subject or corrupt/unsafe Wave 73 archive are BLOCKED.",
+    "freshness": "OperationsEvidenceFreshness distinguishes current, expiring, expired, missing and contradictory evidence under a configurable bounded policy.",
+    "generated_project_helper": "services/release_evidence.py::renew_sustained_operations + build_operational_assurance_continuity",
+    "guide": "SEMICONDUCTOR_SUSTAINED_OPERATIONS_RENEWAL_CONTINUITY.md",
+    "packaging": "package_operational_assurance_continuity_dossier() creates a deterministic self-contained dossier; PENDING/EXPIRING may package for external renewal handoff while BLOCKED is refused.",
+    "release_rule": "RENEWED/ASSURED/EXPIRING are evidence states only. NiceGUI Base performs no continuous monitoring, incident response, rollback, deployment or publication and never mutates historical Wave 73 truth.",
+    "wave73_archive_verification": "verify_incident_rollback_audit_archive() independently verifies the exact Wave 73 ZIP, manifest, audit/acceptance identities, nested Wave 72 package binding and embedded evidence bytes."
+  },
+  "wave75_semiconductor_operational_assurance_renewal_ledger": {
+    "authority": "Wave 66 promotion truth through Wave 74 renewal/continuity remain canonical; Wave 75 only governs immutable Wave 74 periods longitudinally.",
+    "cli": [
+      "nicegui-base operational-assurance-ledger <wave74.zip> [<wave74.zip> ...]",
+      "nicegui-base longitudinal-assurance <ledger.json>"
+    ],
+    "fail_closed": "Missing/stale or uncovered external periods remain PENDING; corrupt/tampered/unsafe archives, changed bound package bytes, contradictory identities, target/runtime drift, or future-clock contradictions are BLOCKED.",
+    "generated_project_helper": "services/release_evidence.py::build_operational_assurance_history + build_longitudinal_assurance",
+    "guide": "SEMICONDUCTOR_OPERATIONAL_ASSURANCE_RENEWAL_LEDGER.md",
+    "longitudinal_governance": "OperationalAssuranceRenewalLedger deterministically sorts verified Wave 74 periods, evaluates gaps/overlaps/stale windows and preserves historical Wave 74 truth.",
+    "packaging": "package_longitudinal_operational_assurance_dossier() creates a deterministic self-contained review handoff with the exact Wave 74 package chain; PENDING/EXPIRING may package while BLOCKED is refused.",
+    "release_rule": "ASSURED/EXPIRING are documentary evidence states only. NiceGUI Base performs no monitoring, incident response, rollback, deployment or publication.",
+    "wave74_archive_verification": "verify_operational_assurance_continuity_archive() independently verifies the exact Wave 74 ZIP, manifest, continuity/renewal identities and nested Wave 73 chain."
+  },
+  "wave76_semiconductor_longitudinal_assurance_review_exception_governance": {
+    "authority": "Wave 75 remains the longitudinal evidence authority; Wave 76 only records external review and bounded exception governance against exact immutable Wave 75 identities.",
+    "cli": [
+      "nicegui-base longitudinal-assurance-review <dossier.json> <wave75.zip> <review-manifest.json>",
+      "nicegui-base evidence-exception-governance <review.json>"
+    ],
+    "exception_policy": "LongitudinalEvidenceExceptionPolicy bounds exceptionable finding codes and expiry; blocked evidence is non-waivable by default and accepted exceptions never create synthetic PASS.",
+    "fail_closed": "Expired/revoked/missing authority remains PENDING; tampered/contradictory/unsafe/identity-mismatched review evidence is BLOCKED.",
+    "generated_project_helper": "services/release_evidence.py::review_longitudinal_assurance + govern_evidence_exceptions",
+    "guide": "SEMICONDUCTOR_LONGITUDINAL_ASSURANCE_REVIEW_EXCEPTION_GOVERNANCE.md",
+    "packaging": "package_evidence_exception_governance_dossier() creates a deterministic self-contained review handoff and refuses BLOCKED or changed evidence.",
+    "release_rule": "REVIEWED/GOVERNED are documentary review states only and do not mutate Wave 75 evidence truth or perform monitoring, incident response, rollback, deployment or publication.",
+    "review_governance": "LongitudinalAssuranceReviewRecord binds reviewer, authority, reference, authority validity and artifacts to the exact Wave 75 dossier/package.",
+    "wave75_archive_verification": "verify_longitudinal_operational_assurance_archive() independently verifies the Wave 75 manifest, dossier/ledger identity and every embedded Wave 74 package."
+  },
+  "wave77_final_release_candidate_consolidation": {
+    "artifact_integrity": "Central stdlib release-artifact helpers generate/verify SHA-256 manifests, verify wheel RECORD/metadata, build deterministic mode-preserving ZIPs, and reverify archive manifests.",
+    "authority": "No new truth authority. Waves 59\u201376 remain canonical; Wave 77 audits ownership, release construction and stable-qualification handoff only.",
+    "certification_phase": "Source certification derives its phase floor from release_authority.json rather than a hard-coded wave number.",
+    "cli": [
+      "nicegui-base final-audit --root . --output FINAL_RELEASE_CANDIDATE_AUDIT.json",
+      "nicegui-base stable-qualification-handoff --root . --output STABLE_QUALIFICATION_HANDOFF.json"
+    ],
+    "guide": "FINAL_RELEASE_CANDIDATE_STABLE_QUALIFICATION_HANDOFF.md",
+    "historical_evidence": "Historical browser/gold/promotion evidence is indexed as historical/stale and is never refreshed merely by release identity synchronization.",
+    "release_identity": "nicegui_base/release_authority.json owns current wave/phase/version/NiceGUI identity.",
+    "stable_qualification_rule": "SOURCE_COMPLETE only means the current source/package release candidate passed its source gates. Real company runtime/browser/provider/data/human/reviewer/deployment/publication/operations evidence remains PENDING until externally executed and verified."
+  },
+  "zero_stock_visual_guide": "ZERO_STOCK_NICEGUI_VISUAL_LAWS.md"
+}

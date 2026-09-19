@@ -4,9 +4,10 @@ from __future__ import annotations
 
 import asyncio
 from dataclasses import dataclass
+import hashlib
+import json
 import os
 from collections.abc import Callable
-from uuid import uuid4
 
 from nicegui_base import (
     ActionButton,
@@ -76,6 +77,36 @@ class _StaleResponseError(RuntimeError):
     """A superseded async response was intentionally discarded."""
 
 
+@dataclass(slots=True)
+class _DevelopmentIdentityProvider:
+    """Resolve the explicit development/test identity at operation time."""
+
+    def scope(self) -> AccessScope:
+        return AccessScope(
+            _required_environment("EPHI_DEV_SCOPE_ID"),
+            site_id=os.environ.get("EPHI_DEV_SITE_ID") or None,
+            area_id=os.environ.get("EPHI_DEV_AREA_ID") or None,
+            family_id=os.environ.get("EPHI_DEV_FAMILY_ID") or None,
+        )
+
+    def principal(self) -> Principal:
+        return _development_principal_from_environment(self.scope())
+
+
+def _stable_command_id(action: str, brief: EpisodeBrief, scope: AccessScope, subject: str) -> str:
+    """Derive one replay identity for one rendered decision action."""
+
+    identity = {
+        "action": action,
+        "episode_id": brief.episode_id,
+        "revision_id": brief.revision_id,
+        "revision_vector": brief.revision_vector.as_dict(),
+        "scope": scope.canonical_key,
+        "subject": subject,
+    }
+    return hashlib.sha256(json.dumps(identity, sort_keys=True, separators=(",", ":")).encode("utf-8")).hexdigest()
+
+
 def _identity(value: str, field: str) -> str:
     if not value or value != value.strip() or "\x00" in value:
         raise RuntimeError(f"missing or invalid {field} binding")
@@ -135,16 +166,14 @@ def build_composition_from_environment() -> EphiUiComposition:
     """Compose only from explicit PostgreSQL and identity bindings."""
 
     dsn = _required_environment("EPHI_POSTGRES_DSN")
-    scope = AccessScope(
-        _required_environment("EPHI_DEV_SCOPE_ID"),
-        site_id=os.environ.get("EPHI_DEV_SITE_ID") or None,
-        area_id=os.environ.get("EPHI_DEV_AREA_ID") or None,
-        family_id=os.environ.get("EPHI_DEV_FAMILY_ID") or None,
-    )
+    identity = _DevelopmentIdentityProvider()
+    principal_provider = identity.principal
+    scope_provider = identity.scope
+    # Validate the current binding during composition, but never retain this
+    # Principal as page authority.  Every protected operation calls the bound
+    # provider again.
+    principal_provider()
     adapter = PostgreSQLReferenceTransactionAdapter(dsn)
-    principal = _development_principal_from_environment(scope)
-    principal_provider = lambda: principal
-    scope_provider = lambda: scope
     o3_store = adapter.o3_store()
     attention = AttentionQueryService(o3_store, adapter.read_store())
     briefs = EpisodeBriefQueryService(adapter.read_store())
@@ -153,7 +182,6 @@ def build_composition_from_environment() -> EphiUiComposition:
     runtime = ApplicationRuntime()
     runtime.data.register_source(source)
     workspace = runtime.open_workspace("ephi-attention-episode-w1")
-    workspace.open_data_session(source.key)
     workspace.state.set(FILTER_KEY, {}, source="ephi.initial")
     return EphiUiComposition(
         adapter,
@@ -231,7 +259,7 @@ def build_attention_page(composition: EphiUiComposition) -> None:
         with MasterDetailPage("Attention", "Scoped engineering work with retained, coherent reads") as page:
             with page.slot(LayoutSlot.FILTERS):
                 StateView(StateViewSpec(StateKind.EMPTY, "Attention is server-authorized", "Filters and order are translated to the bounded EPHI query contract.", compact=True))
-            with page.slot(LayoutSlot.PRIMARY):
+            with page.slot(LayoutSlot.DATA):
                 try:
                     DataSourceTable(
                         composition.source,
@@ -292,12 +320,16 @@ async def _load_brief(composition: EphiUiComposition, episode_id: str, guard: St
 
 
 def _render_brief_actions(composition: EphiUiComposition, brief: EpisodeBrief, guard: StaleResponseGuard) -> None:
-    principal = composition.principal_provider()
-    scope = composition.scope_provider()
+    initial_scope = composition.scope_provider()
+    initial_subject = composition.principal_provider().subject
+    claim_command_id = _stable_command_id("ClaimEpisode", brief, initial_scope, initial_subject)
+    acknowledge_command_id = _stable_command_id("AcknowledgeEpisode", brief, initial_scope, initial_subject)
 
     async def commit_claim() -> None:
+        principal = composition.principal_provider()
+        scope = composition.scope_provider()
         command = CommandContext(
-            uuid4().hex,
+            claim_command_id,
             principal,
             scope,
             brief.revision_vector.workflow_version,
@@ -312,8 +344,10 @@ def _render_brief_actions(composition: EphiUiComposition, brief: EpisodeBrief, g
             _render_brief_error(error)
 
     async def commit_acknowledge() -> None:
+        principal = composition.principal_provider()
+        scope = composition.scope_provider()
         command = CommandContext(
-            uuid4().hex,
+            acknowledge_command_id,
             principal,
             scope,
             brief.revision_vector.workflow_version,
@@ -327,6 +361,7 @@ def _render_brief_actions(composition: EphiUiComposition, brief: EpisodeBrief, g
         except Exception as error:
             _render_brief_error(error)
 
+    principal = composition.principal_provider()
     if brief.workflow.get("work_state") == "OPEN":
         ActionButton("Claim episode", intent=ButtonIntent.PRIMARY, on_click=commit_claim)
     elif brief.workflow.get("work_state") == "CLAIMED" and brief.workflow.get("owner") == principal.subject:
@@ -392,6 +427,27 @@ async def build_episode_page(composition: EphiUiComposition) -> None:
                 _render_brief_error(error)
                 return
             _render_episode_body(composition, brief, guard)
+
+
+def build_page() -> None:
+    """Base scaffold page; missing bindings render an explicit fail-closed state."""
+
+    try:
+        composition = build_composition_from_environment()
+    except Exception as error:
+        with AppShell(
+            "EPHI",
+            _navigation(),
+            active_route="/",
+            environment=os.environ.get("EPHI_ENV", "development"),
+            subtitle="Attention → Episode",
+            user_name="Unavailable",
+            user_role="Unknown",
+            debugger=False,
+        ):
+            _render_attention_error(error)
+        return
+    build_attention_page(composition)
 
 
 def run_ephi() -> None:

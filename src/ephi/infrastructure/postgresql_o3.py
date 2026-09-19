@@ -66,6 +66,21 @@ class PostgreSQLO3ProductStore:
         if not principal.has_capability(ATTENTION_READ_CAPABILITY):
             raise AuthorizationDeniedError("principal is not currently granted the Attention read capability")
 
+    def check_attention_source(self, principal: Principal, scope: AccessScope) -> None:
+        """Probe the required projection through the same current authority."""
+
+        self._authorize(principal, scope)
+        try:
+            # The bounded query must touch the required O3 source table.  A
+            # reachable source with no matching rows is still distinguishable
+            # from a source/database failure by successful query completion.
+            self.connection.execute(
+                "SELECT 1 FROM o3_attention_projection WHERE scope_key = %s LIMIT 1",
+                (scope.canonical_key,),
+            ).fetchone()
+        except Exception as exc:
+            raise StorageFailureError("durable PostgreSQL Attention source is unavailable") from exc
+
     @staticmethod
     def _sort_sql(order: Sequence[Mapping[str, str]]) -> str:
         expressions = {

@@ -1,0 +1,4 @@
+# The Base application gate requires this exact framework distribution pin.
+# The canonical package install remains governed by pyproject.toml's exact
+# pinned Git commit and NiceGUI version.
+nicegui-base==3.0.0a8
