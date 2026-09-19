@@ -80,13 +80,32 @@ EPHI_TEST_POSTGRES_DSN='postgresql://user:password@host:5432/database' \
   python3 -m unittest tests.test_o2_postgresql_reads -v
 ```
 
-This remains generic PostgreSQL foundation evidence, not production/company
-binding and not `ListAttention`, `GetEpisodeBrief`, Claim/Acknowledge,
+At the CHG-129 baseline, this was generic PostgreSQL foundation evidence, not
+production/company binding and not `ListAttention`, `GetEpisodeBrief`, Claim/Acknowledge,
 NiceGUI/browser, company identity, scientific-source or notification
-implementation. O3 will bind these primitives to the first durable Attention
+implementation. CHG-134 now binds these primitives to the first durable Attention
 → Episode UI slice. Every page is a separate bounded transaction; no browser
 request carries a PostgreSQL transaction across requests.
 
+## CHG-134 O3.1 W1 implementation boundary
+
+The authorized O3.1 slice is now the narrow Attention → Episode path under
+`ephi.application.attention`, `ephi.application.episodes`,
+`ephi.application.workflow`, `ephi.infrastructure.postgresql_o3` and
+`ephi.ui`. It must remain on the existing O2 command/read/snapshot authorities:
+do not add a second cursor, receipt, workflow, browser-state or authorization
+store. Production composition requires explicit PostgreSQL, server-resolved
+identity and source bindings; the reference SQLite adapter is test/development
+evidence only. Run focused O3 tests, the DSN-gated PostgreSQL O3 suite, the
+installed Base runtime contract/qualification commands and browser evidence
+when those bindings are available. Stop after W1; do not extend into
+metrology-family binding, WIP/exposure, investigation/RCA, recovery,
+closure/reopen, outcomes/value, notifications or release qualification.
+
 ## Scope boundary
 
-The first canonical package contains identity, a runtime/config boundary, a deterministic entry self-check and public framework-authority lookup. It does not contain broad UI, company adapters, production storage, speculative science modules or fake product behavior. Continue from [09_Delivery_and_Gates.md](09_Delivery_and_Gates.md) and stop at the authorized wave exit criteria.
+The canonical package contains the narrow W1 UI and durable reference/runtime
+composition in addition to the W0/O2/O2-read foundations. It still does not
+contain company adapters, production credentials, speculative science modules
+or fake product behavior. Continue from [09_Delivery_and_Gates.md](09_Delivery_and_Gates.md)
+and stop at the authorized wave exit criteria.

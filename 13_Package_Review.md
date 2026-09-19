@@ -97,8 +97,8 @@ isolation under mutable fixture changes, current authorization/security-
 revision revalidation, tamper/identity failures, missing retained members and
 restart-query expiry.
 
-This evidence is generic PostgreSQL read/snapshot foundation evidence only. It
-does not implement `ListAttention`, `GetEpisodeBrief`, Claim/Acknowledge
+At the CHG-129 baseline, this was generic PostgreSQL read/snapshot foundation
+evidence only. It did not implement `ListAttention`, `GetEpisodeBrief`, Claim/Acknowledge
 commands, NiceGUI pages, browser state, company identity adapters, scientific
 source queries, notifications or production readiness. O3 will bind these
 primitives to the first durable Attention → Episode UI slice. Historical
@@ -124,6 +124,29 @@ or credentials, select retention policy, issue signed links or claim
 production readiness. Artifact PostgreSQL tests are additive to the existing
 command, worker, coherent-read and retained-snapshot integration suites; the
 ordinary package/full-suite/W0 checks remain database-independent.
+
+## CHG-134 O3.1 W1 candidate
+
+The O3.1 candidate adds only the durable Attention → Episode W1 vertical slice.
+`ephi.application.attention` validates the bounded query vocabulary and
+delegates retention, cursor integrity, expiry and current authorization to the
+existing read-snapshot authority. `ephi.application.episodes` constructs one
+coherent Episode brief from the existing current/historical bundle contract.
+`ephi.application.workflow` delegates claim/acknowledge to the existing
+`VersionedAggregateCommandExecutor`, preserving expected-version CAS, viewed
+revision binding, receipt replay/idempotency, audit and outbox atomicity.
+PostgreSQL adds only the indexed Attention projection; workflow/read truth
+remains in the O2/O2-read tables.
+
+The installed NiceGUI Base public catalog was used for the runtime, shell,
+workspace, lifecycle/stale-response, state, table/master-detail,
+analysis-workspace and DataSource composition. The application does not import
+`nicegui.ui`, private Base integration internals or copied framework/demo
+implementations. Runtime-contract and browserless framework smoke are PASS;
+application/browser/production qualification remain dependent on explicit
+PostgreSQL, identity, source and browser evidence. `tests/test_o3_postgresql.py`
+is the real-PostgreSQL restart/concurrency/atomicity evidence and is
+`NOT_RUN` when `EPHI_TEST_POSTGRES_DSN` is absent.
 
 ## CHG-105 W0 runtime delta
 

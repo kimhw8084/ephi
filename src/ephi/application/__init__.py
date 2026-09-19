@@ -81,6 +81,28 @@ from .read import (
     canonical_query_identity,
 )
 from .transactions import CommandResult, VersionedAggregateCommandExecutor
+from .attention import (
+    ATTENTION_READ_CAPABILITY,
+    AttentionPage,
+    AttentionQueryService,
+    AttentionRow,
+    ListAttention,
+)
+from .episodes import (
+    EPISODE_ENTITY_TYPE,
+    EPISODE_READ_CAPABILITY,
+    EPISODE_WORKFLOW_AGGREGATE_TYPE,
+    EpisodeBrief,
+    EpisodeBriefQueryService,
+    GetEpisodeBrief,
+)
+from .workflow import (
+    ACKNOWLEDGE_EPISODE_CAPABILITY,
+    CLAIM_EPISODE_CAPABILITY,
+    AcknowledgeEpisode,
+    ClaimEpisode,
+    EpisodeWorkflowCommandService,
+)
 from .worker import (
     DEFAULT_HEARTBEAT_INTERVAL,
     DEFAULT_LEASE_DURATION,
@@ -93,6 +115,7 @@ from .worker import (
 
 __all__ = [
     "AccessScope",
+    "ACKNOWLEDGE_EPISODE_CAPABILITY",
     "AggregateNotFoundError",
     "ARTIFACT_METADATA_MAX_BYTES",
     "ArtifactBlobStore",
@@ -111,6 +134,10 @@ __all__ = [
     "ArtifactStorageSafetyError",
     "ArtifactTooLargeError",
     "ArtifactWriteInterruptedError",
+    "AttentionPage",
+    "AttentionQueryService",
+    "AttentionRow",
+    "ATTENTION_READ_CAPABILITY",
     "ArtifactWriteResult",
     "AuthorizationError",
     "AuthorizationDeniedError",
@@ -120,8 +147,16 @@ __all__ = [
     "CommandResult",
     "CommandStorage",
     "CommandUnitOfWork",
+    "ClaimEpisode",
+    "CLAIM_EPISODE_CAPABILITY",
     "DurableStorageError",
     "EffectIdempotencyConflictError",
+    "EPISODE_ENTITY_TYPE",
+    "EPISODE_READ_CAPABILITY",
+    "EPISODE_WORKFLOW_AGGREGATE_TYPE",
+    "EpisodeBrief",
+    "EpisodeBriefQueryService",
+    "EpisodeWorkflowCommandService",
     "InvalidTransitionError",
     "IdempotencyConflictError",
     "JobNotFoundError",
@@ -145,6 +180,7 @@ __all__ = [
     "CurrentReadBundle",
     "CurrentReadHead",
     "HistoricalReadBundle",
+    "GetEpisodeBrief",
     "ImmutableReadRevision",
     "PageResult",
     "RetainedQuerySnapshot",
@@ -166,6 +202,8 @@ __all__ = [
     "ValidationFailureError",
     "VersionConflictError",
     "VersionedAggregateCommandExecutor",
+    "AcknowledgeEpisode",
+    "ListAttention",
     "VerifiedArtifactRead",
     "AppliedEffectReceipt",
     "DEFAULT_HEARTBEAT_INTERVAL",

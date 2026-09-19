@@ -143,14 +143,46 @@ EPHI_TEST_POSTGRES_DSN='postgresql://user:password@host:5432/database' \
   python3 -m unittest tests.test_o2_postgresql_reads -v
 ```
 
-This is generic PostgreSQL read/snapshot foundation evidence only. It does not
-implement `ListAttention`, `GetEpisodeBrief`, Claim/Acknowledge commands,
+At the CHG-129 baseline, this was generic PostgreSQL read/snapshot foundation
+evidence only. It did not implement `ListAttention`, `GetEpisodeBrief`, Claim/Acknowledge commands,
 NiceGUI pages, browser state, company identity adapters, scientific source
 queries, notifications or production readiness. O3 will bind these primitives
 to the first durable Attention → Episode UI slice. The CI PostgreSQL 18.x job
 runs this suite together with the existing command and worker suites; the
 normal package matrix, full suite and W0 canonical baseline remain
 database-independent.
+
+## CHG-134 O3.1 durable Attention → Episode W1 slice
+
+CHG-134 binds the O2 command and CHG-129 read authorities into the smallest
+real O3 slice: a bounded, stably ordered PostgreSQL Attention projection; a
+coherent current/historical Episode brief; and durable `ClaimEpisode` and
+`AcknowledgeEpisode` transitions with expected-version CAS, viewed revisions,
+authorization-aware receipt replay, immutable audit and outbox writes. Retained
+Attention pages use the existing durable snapshot/cursor contract, expire by
+database time and revalidate current scope/capability/security revision on
+every continuation. The UI uses only the installed NiceGUI Base public root
+contract and one EPHI DataSource provider; it has no memory, SQLite or demo
+fixture production fallback.
+
+Focused application evidence is database-independent:
+
+```bash
+python3 -m unittest tests.test_o3_application -v
+```
+
+The real PostgreSQL evidence is additive and DSN-gated:
+
+```bash
+EPHI_TEST_POSTGRES_DSN='postgresql://user:password@host:5432/database' \
+  python3 -m unittest tests.test_o3_postgresql -v
+```
+
+This slice deliberately does not bind company identity, scientific metrology
+families, WIP/exposure, investigation/RCA, recovery, closure/reopen,
+outcomes/value, notifications, production credentials or release
+qualification. Missing PostgreSQL, identity, source, browser or Artifact
+Bridge infrastructure remains an explicit NOT_RUN/BLOCKED evidence result.
 
 ## CHG-133 generic immutable-artifact foundation
 

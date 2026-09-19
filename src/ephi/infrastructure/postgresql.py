@@ -403,6 +403,16 @@ class PostgreSQLReferenceTransactionAdapter:
 
         return PostgreSQLReadSnapshotStore(self)
 
+    def o3_store(self):
+        """Return the narrow CHG-134 product projection adapter on this connection."""
+
+        from .postgresql_o3 import PostgreSQLO3ProductStore
+
+        return PostgreSQLO3ProductStore(self)
+
+    def seed_attention_projection(self, *args, **kwargs):
+        return self.o3_store().seed_attention_projection(*args, **kwargs)
+
     def artifact_catalog(self):
         """Return the separate CHG-133 scoped artifact catalog adapter."""
 
