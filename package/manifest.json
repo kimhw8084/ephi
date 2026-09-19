@@ -1,0 +1,249 @@
+{
+  "browser_runtime": {
+    "browser": "Chromium headless-shell 1243",
+    "desktop_viewport_dpr": "1440x900@1",
+    "extensions_disabled": true,
+    "framework_distribution": "nicegui-base",
+    "framework_git_commit": "000298562d6bcbf6df304edbd41b98b30fe4bfcf",
+    "framework_version": "3.0.0a8",
+    "fresh_disposable_contexts": true,
+    "headless": true,
+    "mobile_viewport_dpr": "390x844@1",
+    "nicegui": "3.15.0",
+    "playwright_python": "1.63.0",
+    "postgres_browser_target": "PostgreSQL 17.11 disposable local cluster",
+    "postgres_r4_reused": "PostgreSQL 18.6 exact-candidate qualification in CF-08ce8de05ac749b681162a55",
+    "psycopg": "3.3.6",
+    "python": "3.11.7"
+  },
+  "bundle_inventory": [
+    {
+      "path": "README.md",
+      "sha256": "198b7a9dbbd16764f3d04a1dfb8acb14352420ab53f5c91c80991058e67ff08f",
+      "size": 682
+    },
+    {
+      "path": "browser-runtime.json",
+      "sha256": "47f9c65177c3126d725744c8184aa639efb14be095c9104ec4fb5abd8900cb2f",
+      "size": 640
+    },
+    {
+      "path": "r4-reuse-chg-134-fix2-qualification.json",
+      "sha256": "d22e581b4e440cf351d336f92836228e5fdec29882902dee016d13dab2896697",
+      "size": 4931
+    },
+    {
+      "path": "s09-ui-guidance-gap.md",
+      "sha256": "adb56e016910ffd5cbfd0a904458b5727d7f90899dc1cf1b15290bd96ebe62bd",
+      "size": 1663
+    },
+    {
+      "path": "scenario-results.json",
+      "sha256": "f029e2acfc574149030eda863e21e85fe9f391ae0f2c52334d5c3d7cbd1307b5",
+      "size": 4986
+    },
+    {
+      "height": 900,
+      "path": "screenshots/desktop-1440x900-attention.png",
+      "sha256": "3db62424f6e498c713e616954dbaabc87b0c4072c15adaf75e5dba2e9a45b9c2",
+      "size": 71309,
+      "width": 1440
+    },
+    {
+      "height": 5601,
+      "path": "screenshots/desktop-1440x900-episode-ack.png",
+      "sha256": "fe172a9d7304ff736524173a23680161d783a99a1d657f1729106890508cbdb0",
+      "size": 118509,
+      "width": 1440
+    },
+    {
+      "height": 2828,
+      "path": "screenshots/mobile-390x844-attention.png",
+      "sha256": "dd80a97ae181c9173eec327ee659f7901b6b83f5e017ad5aa87cb584fc714151",
+      "size": 139998,
+      "width": 390
+    },
+    {
+      "height": 2137,
+      "path": "screenshots/mobile-390x844-episode-ack.png",
+      "sha256": "564a0e502b5df05ddfb79ca323796ff6a3b4668a2f3300152c732a232ea0aa24",
+      "size": 99024,
+      "width": 390
+    },
+    {
+      "height": 2475,
+      "path": "screenshots/s08-healthy-before.png",
+      "sha256": "4208c622f5b5f53dbdf2a5a539c22f378a05f8395da7412feebf6d510d493d69",
+      "size": 279624,
+      "width": 1440
+    },
+    {
+      "height": 2475,
+      "path": "screenshots/s08-restored.png",
+      "sha256": "0847eb4551c78250ccc13b4bf6cb2952775078e35451c24410c583aa9c4ce693",
+      "size": 280269,
+      "width": 1440
+    },
+    {
+      "height": 2475,
+      "path": "screenshots/s08-unavailable.png",
+      "sha256": "8d5b5fef06022d46b531ef86ee48de06ef424d60f7de534b8b85b2a6d7e14f97",
+      "size": 281116,
+      "width": 1440
+    },
+    {
+      "height": 900,
+      "path": "screenshots/s09-expired.png",
+      "sha256": "7ac40fa3b5f5bfc1d361b1412e564d954585e0a760eaefa1350196f06bf79160",
+      "size": 87704,
+      "width": 1440
+    },
+    {
+      "height": 900,
+      "path": "screenshots/s09-refreshed.png",
+      "sha256": "ef6c4a9e537ebb18c93b5dfff3eba5e2c595fc14aed52b08748978e69a7741b9",
+      "size": 88340,
+      "width": 1440
+    },
+    {
+      "height": 2475,
+      "path": "screenshots/s09-retained-before.png",
+      "sha256": "4208c622f5b5f53dbdf2a5a539c22f378a05f8395da7412feebf6d510d493d69",
+      "size": 279624,
+      "width": 1440
+    }
+  ],
+  "bundle_sha256": "403eef8d7736731942b57f572de005de1be63cee15776bb9ce1f3d5e8288dfd0",
+  "candidate": {
+    "branch": "codex/ephi-o3-attention-episode-w1-verify2",
+    "sha": "d5af282415d6352ae5d52a520ecb2b9ea47b09c1",
+    "tree": "2cc0ed256d3e3ee6753d17aa1bdbade54c4dae49"
+  },
+  "carrier_inventory": [
+    {
+      "path": "README.md",
+      "sha256": "198b7a9dbbd16764f3d04a1dfb8acb14352420ab53f5c91c80991058e67ff08f",
+      "size": 682
+    },
+    {
+      "hash_record": "manifest.json.sha256",
+      "path": "manifest.json"
+    },
+    {
+      "path": "manifest.json.sha256",
+      "sha256": "recorded after manifest finalization"
+    },
+    {
+      "path": "artifact-bundle.zip",
+      "sha256": "403eef8d7736731942b57f572de005de1be63cee15776bb9ce1f3d5e8288dfd0",
+      "size": 1340546
+    },
+    {
+      "path": "artifact-bundle.zip.sha256",
+      "sha256": "797ae07ed555742478510fe21f841515018baff1d4a80457d1377bace8d2052e",
+      "size": 86
+    }
+  ],
+  "evidence_kind": "immutable_project_os_verify_carrier",
+  "fabric_job": "CF-bd063c2c39009a01f54692a3",
+  "notion_credentials_used": false,
+  "operation": "VERIFY",
+  "project": "ephi",
+  "r4_reuse": {
+    "job": "CF-08ce8de05ac749b681162a55",
+    "record": "r4-reuse-chg-134-fix2-qualification.json",
+    "scope": "PostgreSQL 18.6 O2/O3/lifecycle, outage/reconnect, no in-flight retry, explicit-close terminal, concurrent ownership, receipt/auth/version, Base runtime checks, package/full unittest/W0/git diff"
+  },
+  "request": "ephi-o3-attention-episode-w1-verify2",
+  "scenario_statuses": {
+    "1_desktop_attention_episode_claim_ack": "PASS_BROWSER",
+    "2_mobile_attention_episode_keyboard": "PASS_BROWSER",
+    "3_S08_outage_restore_same_process_page": "PASS_BROWSER_STALE_RESTORED",
+    "4_S09_retained_snapshot_security_revision": "FAIL_UI_GUIDANCE_GAP",
+    "5_stale_version_conflict": "NOT_RUN_STOPPED_AT_S09_BLOCKER",
+    "6_current_auth_revocation": "NOT_RUN_STOPPED_AT_S09_BLOCKER",
+    "7_process_restart_reconnect": "NOT_RUN_STOPPED_AT_S09_BLOCKER",
+    "8_browser_console_page_runtime_errors": "PASS_FOR_EXECUTED_SCENARIOS"
+  },
+  "schema_version": 1,
+  "screenshot_hashes": [
+    {
+      "height": 900,
+      "path": "screenshots/desktop-1440x900-attention.png",
+      "sha256": "3db62424f6e498c713e616954dbaabc87b0c4072c15adaf75e5dba2e9a45b9c2",
+      "size": 71309,
+      "width": 1440
+    },
+    {
+      "height": 5601,
+      "path": "screenshots/desktop-1440x900-episode-ack.png",
+      "sha256": "fe172a9d7304ff736524173a23680161d783a99a1d657f1729106890508cbdb0",
+      "size": 118509,
+      "width": 1440
+    },
+    {
+      "height": 2828,
+      "path": "screenshots/mobile-390x844-attention.png",
+      "sha256": "dd80a97ae181c9173eec327ee659f7901b6b83f5e017ad5aa87cb584fc714151",
+      "size": 139998,
+      "width": 390
+    },
+    {
+      "height": 2137,
+      "path": "screenshots/mobile-390x844-episode-ack.png",
+      "sha256": "564a0e502b5df05ddfb79ca323796ff6a3b4668a2f3300152c732a232ea0aa24",
+      "size": 99024,
+      "width": 390
+    },
+    {
+      "height": 2475,
+      "path": "screenshots/s08-healthy-before.png",
+      "sha256": "4208c622f5b5f53dbdf2a5a539c22f378a05f8395da7412feebf6d510d493d69",
+      "size": 279624,
+      "width": 1440
+    },
+    {
+      "height": 2475,
+      "path": "screenshots/s08-restored.png",
+      "sha256": "0847eb4551c78250ccc13b4bf6cb2952775078e35451c24410c583aa9c4ce693",
+      "size": 280269,
+      "width": 1440
+    },
+    {
+      "height": 2475,
+      "path": "screenshots/s08-unavailable.png",
+      "sha256": "8d5b5fef06022d46b531ef86ee48de06ef424d60f7de534b8b85b2a6d7e14f97",
+      "size": 281116,
+      "width": 1440
+    },
+    {
+      "height": 900,
+      "path": "screenshots/s09-expired.png",
+      "sha256": "7ac40fa3b5f5bfc1d361b1412e564d954585e0a760eaefa1350196f06bf79160",
+      "size": 87704,
+      "width": 1440
+    },
+    {
+      "height": 900,
+      "path": "screenshots/s09-refreshed.png",
+      "sha256": "ef6c4a9e537ebb18c93b5dfff3eba5e2c595fc14aed52b08748978e69a7741b9",
+      "size": 88340,
+      "width": 1440
+    },
+    {
+      "height": 2475,
+      "path": "screenshots/s09-retained-before.png",
+      "sha256": "4208c622f5b5f53dbdf2a5a539c22f378a05f8395da7412feebf6d510d493d69",
+      "size": 279624,
+      "width": 1440
+    }
+  ],
+  "self_declared_go": false,
+  "status": "VERIFY_BLOCKED_NEW_S09_UI_GUIDANCE_GAP",
+  "synthetic_ar2_sidecar_used": false,
+  "target_base": {
+    "ref": "main",
+    "sha": "cdf8bb54eeb42926029a9394814d79d17a282bd9",
+    "tree": "1c1e9eb320d54580f1cab7c2fb4e1be803be6348"
+  }
+}
