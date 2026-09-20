@@ -1,8 +1,8 @@
 {
   "bundle": {
-    "bytes": 1486222,
+    "bytes": 1486691,
     "path": "ephi-o10-rendered-accessibility-fix1-bundle.tar.gz",
-    "sha256": "ff2bac18be9f98df4e0e3fb9b7d8a398b4c5fb051f414846758c70281e0f7e8a"
+    "sha256": "aaaaadf869c94a49189c34bd5d4557647a38527d7252f50cc145d538372a731b"
   },
   "carrier_ref": "refs/heads/project-os-artifacts/ephi/ephi-o10-rendered-accessibility-fix1",
   "evidence_kind": "project_os_artifact_carrier",
@@ -91,32 +91,32 @@
       "sha256": "11325811fc04416c3849c174897a94119c5a9d20459b7898372917675808d4cc"
     },
     "structured/o10-rendered/screenshots/episode-1024x768.png": {
-      "bytes": 183530,
-      "sha256": "eb37fb0ce859b19d825c878b9ee46a8b2237f15c169cc23a26f8775740ba5d11"
+      "bytes": 183562,
+      "sha256": "68d10c0ab41625a9f4e88f2d7b337b09306ac6d0c0a01eb5dc1799ee4ec2b5c6"
     },
     "structured/o10-rendered/screenshots/episode-1440x900.png": {
-      "bytes": 196519,
-      "sha256": "3c9cf014e9e4fe07cf523490bd691721004271f24cc1b9497df4cd03b9c317fd"
+      "bytes": 196553,
+      "sha256": "c1ae678528f1b027be804c405e3c512ca7221f050fd0516fd3072be584af921b"
     },
     "structured/o10-rendered/screenshots/episode-320x800.png": {
-      "bytes": 71168,
-      "sha256": "820a9cd50ffe04d336149a700ddd73119526e843ad69fb51a0429c8e10642ab4"
+      "bytes": 71615,
+      "sha256": "1e02fae34369cc66a0c192e2cb9f378ec61354336f50c9bb8f66c4716fd4523c"
     },
     "structured/o10-rendered/screenshots/episode-390x844.png": {
-      "bytes": 71857,
-      "sha256": "982ff457474955baf658bd1be8128f6ab04a195c95695c5144e572d79198c47f"
+      "bytes": 72313,
+      "sha256": "575a4e5785146a4b788993ab45f9a05adfd4c65de83205a512ff3ffd463491f8"
     },
     "structured/o10-rendered/screenshots/episode-768x1024.png": {
-      "bytes": 80215,
-      "sha256": "f228e37add69220bfc89d81587d01e47881b1092c985fad30d09051702a4f170"
+      "bytes": 80682,
+      "sha256": "f5fc7c2014091ccf1743482722ee54209b94f3db947b96767a7e42ae05e82691"
     },
     "structured/o10-rendered/screenshots/episode-capability-states.png": {
       "bytes": 47653,
       "sha256": "8c99703f3b1a4dc9477dd6b98f04d60b721bfa03bb871fc3842879cd9aa4826d"
     },
     "structured/o10-rendered/screenshots/episode-claimed-1440x900.png": {
-      "bytes": 201826,
-      "sha256": "8f8dfa6fd36d3ba60117d42899d0737b92e76ca514a3c977bbd30d8563543681"
+      "bytes": 201557,
+      "sha256": "114ef05595291c264e4875d323e0b8f505dde3e13668607ee5a773f87b848c85"
     },
     "structured/o10-rendered/screenshots/episode-coherent-conflict.png": {
       "bytes": 29049,
@@ -139,8 +139,8 @@
       "sha256": "4e6d07e5f21f3eee62d620b1bd8e3dc0dd4efb5b7c2a9106833c8cd44fad3904"
     },
     "structured/o10-rendered/screenshots/episode-populated-1440x900.png": {
-      "bytes": 196574,
-      "sha256": "a9d2d38ccc59216b9c8daea6ab527b75f7a47a740196bef6f14d3418be757b4c"
+      "bytes": 196510,
+      "sha256": "2a0e0350dd76fbe6dd05213f62f5f517fda898faec79eb8b533334bbc064b4b1"
     },
     "structured/o10-rendered/screenshots/episode-version-conflict.png": {
       "bytes": 29246,
@@ -161,8 +161,8 @@
   "status": "PASS_BOUNDED_FIX_WITH_EXPLICIT_GO_AUDIT_BOUNDARY",
   "structured_evidence": {
     "structured/o10-rendered/report.json": {
-      "bytes": 44103,
-      "sha256": "419edc829390012e9c19f3a37b9f09392ca03b5a82ccaf972aac693368489027"
+      "bytes": 44563,
+      "sha256": "4b88edf64e12e7668d3cfdb11c3e2a4b572f634574084f50921e021251c762c6"
     },
     "structured/o8/ephi-o8-fix1-direct3.json": {
       "bytes": 33589,
