@@ -1,0 +1,34 @@
+{
+  "schema_version": "o9.1.fix2.root-cause.v1",
+  "scope": "repository-native integration evidence",
+  "authority": {
+    "repository": "kimhw8084/ephi",
+    "pull_request": 17,
+    "base": "4e927cc6436a302134249a50e7ccdbb1c29dc89f",
+    "candidate": "aef1d06073749339403f688d60b4f6185c822bff",
+    "initial_check_suite": "96086449110",
+    "independent_retry_workflow": "35484785817",
+    "independent_retry_check_suite": "96087546404",
+    "postgresql_job": "106009059281",
+    "postgresql_job_status": "PASS"
+  },
+  "observed_failure": {
+    "canonical_and_package_lanes": "FAIL",
+    "package_lane_report": "198 tests, one error, 69 skipped",
+    "test": "tests/test_o9_operations.py::O9OperationsContractTests.test_native_tool_argv_is_secret_free_for_uri_and_keyword_conninfo",
+    "traceback_path": [
+      "tools/o9_operations.py::_run_dump",
+      "tools/o9_operations.py::_subprocess_env",
+      "tools/o9_operations.py::_libpq_parameters",
+      "import psycopg.conninfo",
+      "OperationsFailure('PostgreSQL native-tool connection settings are unavailable')"
+    ],
+    "classification": "deterministic_source_test_boundary_defect_not_github_transient"
+  },
+  "fix_boundary": {
+    "runtime_parser_authority": "existing optional psycopg.conninfo/libpq parser retained",
+    "offline_transform": "parsed parameter mapping is transformed by _private_libpq_environment",
+    "offline_parser_use": "tests patch _libpq_parameters with deterministic prepared maps",
+    "failure_path": "offline failure-text test reaches mocked native-tool subprocess and asserts secret-safe error text"
+  }
+}

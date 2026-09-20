@@ -1,0 +1,23 @@
+{
+  "schema_version": "o9.1.fix2.native-tool-security.v1",
+  "focused_contract": "tests.test_o9_operations.O9OperationsContractTests.test_native_tool_argv_is_secret_free_for_uri_and_keyword_conninfo",
+  "offline_status": "PASS with parser boundary prepared maps",
+  "real_parser_status": "PASS in PostgreSQL 18.6 CI",
+  "inputs": {
+    "password_bearing_uri": {"parser": "psycopg.conninfo_to_dict", "percent_encoded_password": true},
+    "password_bearing_keyword_conninfo": {"parser": "psycopg.conninfo_to_dict"}
+  },
+  "native_tool_argv": {
+    "pg_dump": {"credential_bearing_dsn_absent": true, "password_absent": true, "database_argument": "omitted", "snapshot_argument": "present"},
+    "pg_restore": {"credential_bearing_dsn_absent": true, "password_absent": true, "database_argument": "parsed non-secret database identity only"}
+  },
+  "private_subprocess_environment": {
+    "password_channel": "PGPASSWORD",
+    "host_port_user_database_preserved": true,
+    "full_secret_bearing_dsn_present": false,
+    "raw_secret_emitted_to_stdout": false,
+    "raw_secret_emitted_to_stderr": false,
+    "failure_text_secret_safe": true
+  },
+  "scope": "native PostgreSQL tool argv and error-evidence boundary only"
+}

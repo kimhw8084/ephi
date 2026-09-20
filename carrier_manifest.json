@@ -1,0 +1,81 @@
+{
+  "artifact_ref": "refs/heads/project-os-artifacts/ephi/ephi-o9-operations-restore-rehearsal-fix2",
+  "base": {
+    "sha": "4e927cc6436a302134249a50e7ccdbb1c29dc89f",
+    "tree": "a06c6beb53a743b6170f42210ceb05ecd22b2c75"
+  },
+  "bundle": {
+    "byte_size": 7387,
+    "path": "ephi-o9-operations-restore-rehearsal-fix2-bundle.tar.gz",
+    "scope": "evidence and runbooks only; no database dump or immutable artifact bytes",
+    "sha256": "ab8043a340a814f94ab9f6cf5aadd733c4a95de5522b7444fb76191f1bc9077c"
+  },
+  "candidate": {
+    "branch": "codex/ephi-o9-operations-restore-rehearsal-fix2",
+    "sha": "3e1f65aca31371a87df10aa352a950456e354f3d",
+    "tree": "6f9e72ff22af2d7b04d3c1dd0625bfb7c58a40a1"
+  },
+  "claims": {
+    "actual_psycopg_parser_qualification": "VERIFIED_IN_POSTGRESQL_18.6_CI",
+    "artifact_and_schema_fail_closed": "VERIFIED",
+    "credential_bearing_dsns_present": false,
+    "dependency_free_full_suite": "PASS_WITH_EXPECTED_SKIPS",
+    "durable_worker_health_and_o2_o3_o4_regressions": "VERIFIED_IN_POSTGRESQL_18.6_CI",
+    "isolated_restore_and_reconciliation": "VERIFIED_IN_POSTGRESQL_18.6_CI",
+    "native_tool_argv_secret_free": "VERIFIED",
+    "notion_credentials_present": false,
+    "notion_mutated": false,
+    "production_disaster_rpo_rto_claim": "NOT_ESTABLISHED",
+    "raw_sensitive_records_present": false,
+    "synthetic_ar2_sidecar_present": false,
+    "timing_evidence_scope": "LOCAL_RESTORE_REHEARSAL_ONLY",
+    "traffic_switched": false,
+    "workflow_dependency_boundary": "VERIFIED"
+  },
+  "continuation": {
+    "r1_predecessor_candidate": "c8fee6dcd1ccd87f00d965697e436726f269abc9",
+    "r2_predecessor_candidate": "aef1d06073749339403f688d60b4f6185c822bff",
+    "r2_predecessor_tree": "1a99a0ddad46bccf1907e29b93569fdde30187a8",
+    "r2_deterministic_evidence": "58ab4dd43e88d2ddafc81da1e94c1da98d479a99",
+    "r2_fabric_job": "CF-e1b5ebf59c8a399f862cdd92",
+    "r2_carrier": "project-os-artifacts/ephi/ephi-o9-operations-restore-rehearsal-fix1@0a1cdce8ce75c09b6559b54974e3b9486c88d6e0"
+  },
+  "evidence": {
+    "fail_closed_cases": "evidence/fail_closed_cases.json",
+    "postgresql_regressions": "evidence/postgresql_regressions.json",
+    "restore_reconciliation_preservation": "evidence/restore_reconciliation_preservation.json",
+    "root_cause_reproduction": "evidence/root_cause_reproduction.json",
+    "security_argv": "evidence/security_argv.json",
+    "test_summary": "evidence/test_summary.json",
+    "workflow_lane_contract": "evidence/workflow_lane_contract.json",
+    "runbook_inventory": "runbooks/inventory.json"
+  },
+  "fabric_job": "CF-6bcad7b499031e4bd9851010",
+  "file_count": 17,
+  "files": [
+    {"byte_size": 7387, "path": "ephi-o9-operations-restore-rehearsal-fix2-bundle.tar.gz", "sha256": "ab8043a340a814f94ab9f6cf5aadd733c4a95de5522b7444fb76191f1bc9077c"},
+    {"byte_size": 451, "path": "evidence/fail_closed_cases.json", "sha256": "51ebc40768cd1f316d4e417593ee3e9c4f826ff8ba5d17fbf5407e01579583f6"},
+    {"byte_size": 935, "path": "evidence/postgresql_regressions.json", "sha256": "138415b5143b7db2e2b9edd08a809a313433e14f82174ceadc3db3c9c566214f"},
+    {"byte_size": 1449, "path": "evidence/restore_reconciliation_preservation.json", "sha256": "2e953d6ef1a88bcd81a5e109a90773ab2c44bd614d83a43bfbc5363b8f0efa7a"},
+    {"byte_size": 1600, "path": "evidence/root_cause_reproduction.json", "sha256": "4b72517999bd0ca6f686d5ef66b5c6c1421320bad87583312cd322d546c4d91d"},
+    {"byte_size": 1214, "path": "evidence/security_argv.json", "sha256": "141d78965c64ce118f71540d4c83b070c30fce98ae3e85954f769f17451c1577"},
+    {"byte_size": 1747, "path": "evidence/test_summary.json", "sha256": "c9a722a086329e2f8db7b2a6ef78cc9ed682f51232f0cfadbf7a674ec4d2dfe6"},
+    {"byte_size": 1098, "path": "evidence/workflow_lane_contract.json", "sha256": "8195676cd73ca233abe248eca84b4546d6f0f00595bba750faaca1d3f4d3b3d1"},
+    {"byte_size": 1288, "path": "runbooks/README.md", "sha256": "5818f66e177e5712db6d8fff6161889b190af31e083f8f773faf80fce8ae6640"},
+    {"byte_size": 976, "path": "runbooks/immutable-artifact-failure.md", "sha256": "18e25daed615764bd6fde50f22557d90f08c648ce11cedf4ebfe9c1b8a904a53"},
+    {"byte_size": 1436, "path": "runbooks/inventory.json", "sha256": "158dc95424a7507f33453b8ad135bc4780d3eef8c64bee1cb42a0aacc982c8d6"},
+    {"byte_size": 1222, "path": "runbooks/isolated-restore-rehearsal.md", "sha256": "c65187264dcf2fbbb1e52e134fc74fe40c87483a7b32d0d1c0f07c3edcaabb24"},
+    {"byte_size": 1049, "path": "runbooks/postgresql-outage.md", "sha256": "75820bfa7c26d28b0e96e5e2ca82d031bd404e7e0dfbc50cac01641491f9739e"},
+    {"byte_size": 1063, "path": "runbooks/projection-read-repair.md", "sha256": "bfe5a05293767bdca944a5f138f310144eb9bff865b5ed232607ddc774092f8f"},
+    {"byte_size": 1030, "path": "runbooks/rollback-boundary.md", "sha256": "9cb80f32953c06a53ba4bf651c2092b24522a4bc0b4f233f65873aa67c364400"},
+    {"byte_size": 1022, "path": "runbooks/source-outage-staleness.md", "sha256": "187211055c8b152462205a33fc991220eaa16157b5e1d2de20358ad69906656e"},
+    {"byte_size": 999, "path": "runbooks/worker-crash-stale-lease.md", "sha256": "b04ceb75e98613d065681fc55ccfc1b47e42f908a77bec8fb3511c69b4c4a40c"
+    }
+  ],
+  "inventory_scope": "secret-safe carrier payload; carrier_manifest.json is excluded from payload inventory",
+  "operation": "FIX",
+  "project": "ephi",
+  "repository": "kimhw8084/ephi",
+  "request": "ephi-o9-operations-restore-rehearsal-fix2",
+  "schema_version": "project-os-artifact-carrier.v2"
+}

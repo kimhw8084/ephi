@@ -1,0 +1,30 @@
+{
+  "schema_version": "o9.1.fix2.restore-preservation.v1",
+  "status": "PASS",
+  "new_candidate_scope": "offline-vs-PostgreSQL test/dependency boundary and CI qualification only",
+  "r2_lineage": {
+    "r1_candidate": "c8fee6dcd1ccd87f00d965697e436726f269abc9",
+    "r2_candidate": "aef1d06073749339403f688d60b4f6185c822bff",
+    "r2_tree": "1a99a0ddad46bccf1907e29b93569fdde30187a8",
+    "r2_deterministic_evidence": "58ab4dd43e88d2ddafc81da1e94c1da98d479a99",
+    "r2_fabric_job": "CF-e1b5ebf59c8a399f862cdd92",
+    "r2_carrier": "project-os-artifacts/ephi/ephi-o9-operations-restore-rehearsal-fix1@0a1cdce8ce75c09b6559b54974e3b9486c88d6e0"
+  },
+  "preserved_authorities": [
+    "REPEATABLE READ exported snapshot consistency",
+    "immutable artifact verification and copy",
+    "isolated logical restore and post-cutoff reconciliation",
+    "restored receipt/audit/outbox, O3 read/workflow, O2 worker effect/fencing, and O4 source mechanics",
+    "LOCAL_RESTORE_REHEARSAL_ONLY timing scope",
+    "production_disaster_rpo_rto_claim=NOT_ESTABLISHED",
+    "exact carrier transport identity semantics"
+  ],
+  "fix2_rehearsal": {
+    "ci_run": "35486698118",
+    "logical_dump_and_isolated_restore": "VERIFIED",
+    "post_cutoff_reconciliation": "VERIFIED; restored snapshot excludes post-cutoff writes",
+    "artifact_and_schema_fail_closed": "VERIFIED",
+    "traffic_switched": false
+  },
+  "production_disaster_rpo_rto_claim": "NOT_ESTABLISHED"
+}

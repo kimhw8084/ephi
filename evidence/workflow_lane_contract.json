@@ -1,0 +1,26 @@
+{
+  "schema_version": "o9.1.fix2.workflow-lane-contract.v1",
+  "workflow": ".github/workflows/package.yml",
+  "status": "VERIFIED",
+  "dependency_free_lanes": {
+    "package_matrix": ["3.11", "3.12", "3.13", "3.14"],
+    "steps": ["python tools/check_package.py", "python -m unittest discover -s tests -v", "git diff --check"],
+    "psycopg_install": false,
+    "canonical_baseline_psycopg_install": false,
+    "canonical_baseline": "python tools/w0_repo_baseline.py",
+    "requires_python": ">=3.11,<3.14"
+  },
+  "postgresql_lane": {
+    "server": "postgres:18.6",
+    "psycopg_install": "psycopg[binary]==3.3.6",
+    "native_client": "postgresql-client-18",
+    "focused_o9_step": "python -m unittest tests.test_o9_operations -v",
+    "restore_rehearsal": "tools/o9_real_rehearsal.py with ephemeral CI paths and isolated target database",
+    "scope": "only lane installing optional PostgreSQL dependency and client tools"
+  },
+  "declarations_preserved": {
+    "core_dependencies_changed": false,
+    "postgres_optional_extra_changed": false,
+    "python_3_14_package_lane_retained": true
+  }
+}

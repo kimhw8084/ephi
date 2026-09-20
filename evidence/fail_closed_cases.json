@@ -1,0 +1,13 @@
+{
+  "schema_version": "o9.1.fix2.fail-closed.v1",
+  "status": "PASS",
+  "cases": [
+    "missing immutable artifact",
+    "corrupt immutable artifact bytes",
+    "migration/schema identity mismatch",
+    "secret-bearing native-tool failure text"
+  ],
+  "offline_test": "tests.test_o9_operations",
+  "real_rehearsal": "PostgreSQL 18.6 CI logical dump and isolated restore verification passed",
+  "production_disaster_rpo_rto_claim": "NOT_ESTABLISHED"
+}

@@ -1,0 +1,53 @@
+{
+  "schema_version": "o9.1.fix2.test-summary.v1",
+  "candidate": {
+    "base": "4e927cc6436a302134249a50e7ccdbb1c29dc89f",
+    "branch": "codex/ephi-o9-operations-restore-rehearsal-fix2",
+    "sha": "3e1f65aca31371a87df10aa352a950456e354f3d",
+    "tree": "6f9e72ff22af2d7b04d3c1dd0625bfb7c58a40a1"
+  },
+  "offline_dependency_free": {
+    "full_suite": {
+      "command": "python3 -m unittest discover -s tests -v with psycopg imports blocked",
+      "status": "PASS",
+      "tests": 200,
+      "skipped": 70,
+      "errors": 0
+    },
+    "focused_o9": {
+      "command": "python3 -m unittest tests.test_o9_operations -v with psycopg imports blocked",
+      "status": "PASS",
+      "tests": 17,
+      "passed": 15,
+      "skipped": 2,
+      "skip_scope": [
+        "actual psycopg.conninfo parser qualification",
+        "EPHI_TEST_POSTGRES_DSN worker-health integration"
+      ]
+    },
+    "secret_contracts": "argv, private environment, stdout/stderr and failure text assertions executed"
+  },
+  "real_parser_qualification": {
+    "local": "PASS with installed psycopg; password-bearing URI and keyword conninfo parsed",
+    "ci": "PASS; actual parser test executed, not skipped",
+    "dependency": "psycopg[binary]==3.3.6",
+    "percent_encoded_uri_password": true
+  },
+  "local_final_checks": {
+    "package": "PASS",
+    "package_file_count": 178,
+    "w0_repo_baseline": "BASELINE_PASS",
+    "w0_tests_passed": 131,
+    "w0_tests_skipped": 69,
+    "full_suite": "200 passed, 69 skipped",
+    "compileall": "PASS",
+    "git_diff_check": "PASS",
+    "worktree_clean": true
+  },
+  "workflow_ci": {
+    "run": "35486698118",
+    "postgresql_job": "106014292609",
+    "status": "PASS",
+    "python_matrix": ["3.11", "3.12", "3.13", "3.14"]
+  }
+}

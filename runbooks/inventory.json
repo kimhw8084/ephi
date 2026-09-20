@@ -1,0 +1,45 @@
+{
+  "files": [
+    {
+      "byte_size": 1288,
+      "path": "runbooks/README.md",
+      "sha256": "5818f66e177e5712db6d8fff6161889b190af31e083f8f773faf80fce8ae6640"
+    },
+    {
+      "byte_size": 976,
+      "path": "runbooks/immutable-artifact-failure.md",
+      "sha256": "18e25daed615764bd6fde50f22557d90f08c648ce11cedf4ebfe9c1b8a904a53"
+    },
+    {
+      "byte_size": 1222,
+      "path": "runbooks/isolated-restore-rehearsal.md",
+      "sha256": "c65187264dcf2fbbb1e52e134fc74fe40c87483a7b32d0d1c0f07c3edcaabb24"
+    },
+    {
+      "byte_size": 1049,
+      "path": "runbooks/postgresql-outage.md",
+      "sha256": "75820bfa7c26d28b0e96e5e2ca82d031bd404e7e0dfbc50cac01641491f9739e"
+    },
+    {
+      "byte_size": 1063,
+      "path": "runbooks/projection-read-repair.md",
+      "sha256": "bfe5a05293767bdca944a5f138f310144eb9bff865b5ed232607ddc774092f8f"
+    },
+    {
+      "byte_size": 1030,
+      "path": "runbooks/rollback-boundary.md",
+      "sha256": "9cb80f32953c06a53ba4bf651c2092b24522a4bc0b4f233f65873aa67c364400"
+    },
+    {
+      "byte_size": 1022,
+      "path": "runbooks/source-outage-staleness.md",
+      "sha256": "187211055c8b152462205a33fc991220eaa16157b5e1d2de20358ad69906656e"
+    },
+    {
+      "byte_size": 999,
+      "path": "runbooks/worker-crash-stale-lease.md",
+      "sha256": "b04ceb75e98613d065681fc55ccfc1b47e42f908a77bec8fb3511c69b4c4a40c"
+    }
+  ],
+  "schema_version": "o9.1.runbook-inventory.v1"
+}
