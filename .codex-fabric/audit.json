@@ -1,0 +1,115 @@
+{
+  "schema_version": "codex-fabric.evidence-audit.v1",
+  "repository": "kimhw8084/ephi",
+  "project": "ephi",
+  "request": "ephi-o8-browser-session-security-fix1",
+  "operation": "FIX",
+  "fabric_job": "CF-2603159c5dc66034e6d64cea",
+  "target": {
+    "main_remote_head": "c9a128a202095ffa5bb63f3c5ca7583908397f98",
+    "registered_base": "c9a128a202095ffa5bb63f3c5ca7583908397f98",
+    "main_modified_or_merged": false,
+    "target_drift": false
+  },
+  "base": {
+    "sha": "c9a128a202095ffa5bb63f3c5ca7583908397f98",
+    "tree": "77ac006855533b9b8115c106a34eced0150f20c1"
+  },
+  "candidate": {
+    "branch": "codex/ephi-o8-browser-session-security-fix1",
+    "sha": "ea25b397b19a361433c8a6aa3c072258143454ce",
+    "tree": "dcb1f18978a372075abb81dfd180dda0a216245d",
+    "remote_head_verified": true
+  },
+  "predecessor": {
+    "r1_candidate": "ea6f12260b0e4954dd353062adf00e997fa0f784",
+    "r1_tree": "d08f656686e85f40a8a59483260c165281e9183c",
+    "r1_fabric_job": "CF-148ce820de18f2ecc76e2684",
+    "r1_evidence_commit": "e735b8c9b38150b95cb5c510e298aa8fd6e2f01c",
+    "r1_carrier_commit": "fa386bf2a4210831b7c0391425b3991a692dd401",
+    "r1_candidate_is_ancestor": true,
+    "first_parent_chain_from_fix1": [
+      "ea25b397b19a361433c8a6aa3c072258143454ce",
+      "2c6b3d380e502950245c5a3acedeb82df3c89ab7",
+      "2258f690c21192aea4d9eb65f0b59277c188a1f9",
+      "ea6f12260b0e4954dd353062adf00e997fa0f784"
+    ]
+  },
+  "checks": {
+    "middleware_stack_and_denied_headers": "PASS",
+    "preflight_startup_equivalence": "PASS",
+    "qa_https_secure_cookie_invariant": "PASS",
+    "direct_headless_browser": "PASS",
+    "proxy_root_path_headless_browser": "PASS",
+    "current_authorization_and_postgresql_durability": "PASS",
+    "postgresql_regression_test_count": 82,
+    "real_restore_rehearsal": "REAL_RESTORE_REHEARSAL_PASS",
+    "current_surface_absence_inventory": "PASS",
+    "repository_native_ci": {"run_id": 35511811949, "conclusion": "success"},
+    "package_manifest_refresh": "PASS",
+    "unit_discovery": {"tests": 232, "skipped": 64, "status": "PASS"},
+    "w0_repo_baseline": "BASELINE_PASS",
+    "compileall": "PASS",
+    "git_diff_check": "PASS"
+  },
+  "changed_file_inventory": {
+    "file_count": 8,
+    "path_set_equal": true,
+    "candidate_hashes_and_sizes_verified": true,
+    "paths": [
+      ".github/workflows/package.yml",
+      "manifest.json",
+      "src/ephi/app.py",
+      "src/ephi/transport.py",
+      "src/ephi/ui/app.py",
+      "tests/test_o8_browser_transport.py",
+      "tools/o8_browser_qualification.py",
+      "tools/o8_surface_inventory.py"
+    ]
+  },
+  "carrier": {
+    "ref": "refs/heads/project-os-artifacts/ephi/ephi-o8-browser-session-security-fix1",
+    "commit": "b43b6e8df17d8a1e78dc8d9a2ff9aaf2f53a8443",
+    "parent": "ea25b397b19a361433c8a6aa3c072258143454ce",
+    "bundle_sha256": "85a57ce3b823e1ea181631fd39cf11b949755ff26d3abd7b25031570ac1758cb",
+    "bundle_bytes": 5300,
+    "evidence_file_count": 7,
+    "remote_identity_hash_readback": "PASS",
+    "remote_inventory_hash_size_readback": "PASS"
+  },
+  "remote_readback": {
+    "work_branch": "refs/heads/codex/ephi-o8-browser-session-security-fix1",
+    "work_head": "ea25b397b19a361433c8a6aa3c072258143454ce",
+    "main_head": "c9a128a202095ffa5bb63f3c5ca7583908397f98",
+    "carrier_ref": "refs/heads/project-os-artifacts/ephi/ephi-o8-browser-session-security-fix1",
+    "carrier_commit": "b43b6e8df17d8a1e78dc8d9a2ff9aaf2f53a8443",
+    "carrier_parent": "ea25b397b19a361433c8a6aa3c072258143454ce",
+    "bundle_members_verified": true,
+    "candidate_file_hashes_verified": true,
+    "main_unchanged": true,
+    "status": "PASS"
+  },
+  "worktree": {
+    "branch": "codex/ephi-o8-browser-session-security-fix1",
+    "clean": true,
+    "status": "clean at evidence capture"
+  },
+  "scope_boundary": {
+    "CHG_144": "REMAINS_BLOCKED_REAL_SOURCE",
+    "company_identity_established": false,
+    "target_tls_ingress_established": false,
+    "integration_pr_created": false,
+    "notion_mutated": false,
+    "project_os_go_self_declared": false,
+    "o8_whole_closed": false,
+    "later_O8_O10_O11_work": false
+  },
+  "secret_safety": {
+    "authorization_header_recorded": false,
+    "cookie_value_recorded": false,
+    "dsn_recorded": false,
+    "raw_artifact_bytes_recorded": false,
+    "storage_secret_recorded": false
+  },
+  "audit_commit_parent_expected": "ea25b397b19a361433c8a6aa3c072258143454ce"
+}
