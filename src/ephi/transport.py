@@ -225,9 +225,24 @@ class BrowserTransportMiddleware:
         await send({"type": "websocket.close", "code": 1008, "reason": reason})
 
 
+def install_browser_transport_stack(app: Any, runtime_adapter: Any, policy: BrowserTransportPolicy) -> None:
+    """Register the Origin gate before the pinned Base middleware stack.
+
+    FastAPI inserts each new middleware at ``user_middleware[0]`` and
+    Starlette composes that list in reverse. Registering the gate first keeps
+    Base correlation/security (and a future Base identity adapter) outside the
+    gate, while the gate remains before NiceGUI routing and session handling.
+    """
+
+    app.add_middleware(BrowserTransportMiddleware, policy=policy)
+    runtime_adapter.install_middleware(app)
+
+
 def _parse_bool(value: str | None, *, default: bool = False) -> bool:
     if value is None or value == "":
         return default
+    if not isinstance(value, str):
+        raise BrowserTransportPolicyError("INVALID_BOOLEAN_CONFIGURATION")
     normalized = value.lower().strip()
     if normalized in _TRUE_VALUES:
         return True
@@ -243,6 +258,8 @@ def _parse_optional_bool(value: str | None) -> bool | None:
 
 
 def normalize_root_path(value: str) -> str:
+    if not isinstance(value, str):
+        raise BrowserTransportPolicyError("INVALID_ROOT_PATH")
     if value == "/":
         return ""
     if value and (not value.startswith("/") or "?" in value or "#" in value or "\\" in value or "//" in value):
@@ -277,13 +294,27 @@ def build_runtime_config(settings: Any, environ: Mapping[str, str] | None = None
     if environment is None:
         raise BrowserTransportPolicyError("INVALID_ENVIRONMENT")
     trusted = _trusted_proxies(values)
+    proxy_enabled = _parse_bool(values.get("NICEGUI_BASE_PROXY_ENABLED"), default=False)
+    if proxy_enabled and not trusted:
+        raise BrowserTransportPolicyError("TRUSTED_PROXY_REQUIRED")
+    expected_replicas_raw = values.get("NICEGUI_BASE_EXPECTED_REPLICAS", "1")
+    try:
+        expected_replicas = int(expected_replicas_raw)
+    except (TypeError, ValueError) as exc:
+        raise BrowserTransportPolicyError("INVALID_EXPECTED_REPLICAS") from exc
+    if expected_replicas < 1:
+        raise BrowserTransportPolicyError("INVALID_EXPECTED_REPLICAS")
+    same_site = str(values.get("NICEGUI_BASE_SAME_SITE", "strict")).lower().strip()
+    if same_site not in {"lax", "strict", "none"}:
+        raise BrowserTransportPolicyError("INVALID_SAMESITE")
+    secure_session_cookie = _parse_optional_bool(values.get("NICEGUI_BASE_SECURE_SESSION_COOKIE"))
+    if same_site == "none" and (secure_session_cookie is False or (secure_session_cookie is None and environment is not RuntimeEnvironment.PROD)):
+        raise BrowserTransportPolicyError("INSECURE_SAMESITE_NONE")
     proxy = ProxyConfig(
-        enabled=_parse_bool(values.get("NICEGUI_BASE_PROXY_ENABLED"), default=False),
+        enabled=proxy_enabled,
         trusted_proxies=trusted,
         root_path=normalize_root_path(values.get("NICEGUI_BASE_ROOT_PATH", "")),
     )
-    expected_replicas = int(values.get("NICEGUI_BASE_EXPECTED_REPLICAS", "1"))
-    same_site = values.get("NICEGUI_BASE_SAME_SITE", "strict").lower().strip()
     config = RuntimeConfig(
         app_name=settings.application_name,
         app_version="0.1.0",
@@ -295,7 +326,7 @@ def build_runtime_config(settings: Any, environ: Mapping[str, str] | None = None
         reload=False,
         storage_secret_env="NICEGUI_BASE_STORAGE_SECRET",
         require_storage_secret=True,
-        secure_session_cookie=_parse_optional_bool(values.get("NICEGUI_BASE_SECURE_SESSION_COOKIE")),
+        secure_session_cookie=secure_session_cookie,
         same_site=same_site,
         proxy=proxy,
         diagnostics_enabled=_parse_bool(values.get("NICEGUI_BASE_DIAGNOSTICS_ENABLED"), default=False),
@@ -314,71 +345,115 @@ def _origin_observations(values: Mapping[str, str]) -> tuple[list[str], list[str
             normalized.append(normalize_browser_origin(item))
         except BrowserTransportPolicyError as exc:
             errors.append(str(exc))
-    return sorted(set(normalized)), sorted(set(errors))
+    return sorted(normalized), sorted(set(errors))
+
+
+def _base_issue_code(issue: str) -> str:
+    if issue.startswith("missing:"):
+        return "MISSING_STORAGE_SECRET"
+    return {
+        "production_cookie_not_secure": "PRODUCTION_COOKIE_NOT_SECURE",
+        "multi_replica_without_shared_storage": "MULTI_REPLICA_WITHOUT_SHARED_STORAGE",
+        "multi_replica_without_session_affinity_confirmation": "MULTI_REPLICA_WITHOUT_SESSION_AFFINITY_CONFIRMATION",
+        "proxy_mode_bound_to_loopback": "PROXY_MODE_BOUND_TO_LOOPBACK",
+    }.get(issue, "INVALID_RUNTIME_CONFIGURATION")
+
+
+def _validate_browser_cookie_policy(policy: BrowserTransportPolicy, config: Any) -> None:
+    if policy.environment in {"qa", "production"} and any(
+        urlsplit(origin).scheme == "https" for origin in policy.allowed_origins
+    ) and not config.effective_secure_cookie:
+        raise BrowserTransportPolicyError("HTTPS_BROWSER_ORIGIN_REQUIRES_SECURE_COOKIE")
+
+
+def build_runtime_security_contract(settings: Any, environ: Mapping[str, str] | None = None) -> tuple[BrowserTransportPolicy, Any]:
+    """Build the exact browser policy and Base runtime configuration used at startup."""
+
+    values = os.environ if environ is None else environ
+    policy = BrowserTransportPolicy.from_environment(values)
+    config = build_runtime_config(settings, values)
+    issues = config.validate_environment(values)
+    if issues:
+        raise BrowserTransportPolicyError(_base_issue_code(issues[0]))
+    _validate_browser_cookie_policy(policy, config)
+    return policy, config
 
 
 def security_preflight(environ: Mapping[str, str] | None = None) -> dict[str, object]:
     """Return bounded, secret-safe EPHI/Base runtime security facts."""
 
     values = os.environ if environ is None else environ
-    environment = values.get("EPHI_ENV", "development").strip().lower()
+    environment = str(values.get("EPHI_ENV", "development")).strip().lower()
     normalized_origins, origin_errors = _origin_observations(values)
     reasons = list(origin_errors)
-    if environment not in _ENVIRONMENTS:
-        reasons.append("INVALID_ENVIRONMENT")
-    if not normalized_origins:
-        reasons.append("BROWSER_ORIGIN_ALLOWLIST_REQUIRED")
+    policy = None
+    try:
+        policy = BrowserTransportPolicy.from_environment(values)
+    except BrowserTransportPolicyError as exc:
+        reasons.append(str(exc))
+
+    from .config import RuntimeSettings
+
+    settings = None
+    try:
+        settings = RuntimeSettings.from_environment(values)
+    except (TypeError, ValueError):
+        reasons.append("INVALID_RUNTIME_SETTINGS")
+
+    config = None
+    if settings is not None:
+        try:
+            config = build_runtime_config(settings, values)
+        except BrowserTransportPolicyError as exc:
+            reasons.append(str(exc))
+        except (TypeError, ValueError):
+            reasons.append("INVALID_RUNTIME_CONFIGURATION")
+    if config is not None:
+        reasons.extend(_base_issue_code(issue) for issue in config.validate_environment(values))
+    if policy is not None and config is not None:
+        try:
+            _validate_browser_cookie_policy(policy, config)
+        except BrowserTransportPolicyError as exc:
+            reasons.append(str(exc))
 
     storage_secret_present = bool(values.get("NICEGUI_BASE_STORAGE_SECRET"))
-    if not storage_secret_present:
-        reasons.append("MISSING_STORAGE_SECRET")
-
-    try:
-        secure_override = _parse_optional_bool(values.get("NICEGUI_BASE_SECURE_SESSION_COOKIE"))
-    except BrowserTransportPolicyError as exc:
-        secure_override = None
-        reasons.append(str(exc))
-    effective_secure_cookie = secure_override if secure_override is not None else environment == "production"
-    same_site = values.get("NICEGUI_BASE_SAME_SITE", "strict").strip().lower()
-    if same_site not in {"lax", "strict", "none"}:
-        reasons.append("INVALID_SAMESITE")
-    if same_site == "none" and not effective_secure_cookie:
-        reasons.append("INSECURE_SAMESITE_NONE")
-    if environment == "production" and not effective_secure_cookie:
-        reasons.append("PRODUCTION_COOKIE_NOT_SECURE")
-
+    if config is not None:
+        effective_secure_cookie = config.effective_secure_cookie
+    else:
+        try:
+            secure_override = _parse_optional_bool(values.get("NICEGUI_BASE_SECURE_SESSION_COOKIE"))
+            effective_secure_cookie = secure_override if secure_override is not None else environment == "production"
+        except BrowserTransportPolicyError:
+            effective_secure_cookie = None
+    same_site = str(values.get("NICEGUI_BASE_SAME_SITE", "strict")).strip().lower()
     try:
         proxy_enabled = _parse_bool(values.get("NICEGUI_BASE_PROXY_ENABLED"), default=False)
-        trusted = _trusted_proxies(values)
-    except BrowserTransportPolicyError as exc:
+    except BrowserTransportPolicyError:
         proxy_enabled = False
+    try:
+        trusted = _trusted_proxies(values)
+    except BrowserTransportPolicyError:
         trusted = ()
-        reasons.append(str(exc))
-    if proxy_enabled and not trusted:
-        reasons.append("TRUSTED_PROXY_REQUIRED")
-    if proxy_enabled and values.get("EPHI_HOST", "127.0.0.1") in {"127.0.0.1", "localhost", "::1"}:
-        reasons.append("PROXY_MODE_BOUND_TO_LOOPBACK")
     try:
         root_path = normalize_root_path(values.get("NICEGUI_BASE_ROOT_PATH", ""))
-    except BrowserTransportPolicyError as exc:
+    except BrowserTransportPolicyError:
         root_path = ""
-        reasons.append(str(exc))
-
     try:
         expected_replicas = int(values.get("NICEGUI_BASE_EXPECTED_REPLICAS", "1"))
         if expected_replicas < 1:
-            raise ValueError
-    except ValueError:
+            expected_replicas = 0
+    except (TypeError, ValueError):
         expected_replicas = 0
-        reasons.append("INVALID_EXPECTED_REPLICAS")
     shared_storage = bool(values.get("NICEGUI_REDIS_URL"))
     session_affinity = values.get("NICEGUI_BASE_SESSION_AFFINITY_CONFIRMED", "").lower() in _TRUE_VALUES
     if expected_replicas > 1 and not shared_storage:
         reasons.append("MULTI_REPLICA_WITHOUT_SHARED_STORAGE")
     if expected_replicas > 1 and not session_affinity:
         reasons.append("MULTI_REPLICA_WITHOUT_SESSION_AFFINITY_CONFIRMATION")
-
-    diagnostics_enabled = values.get("NICEGUI_BASE_DIAGNOSTICS_ENABLED", "").lower() in _TRUE_VALUES
+    try:
+        diagnostics_enabled = _parse_bool(values.get("NICEGUI_BASE_DIAGNOSTICS_ENABLED"), default=False)
+    except BrowserTransportPolicyError:
+        diagnostics_enabled = False
     reason_codes = sorted(set(reasons))
     return {
         "environment": environment,
@@ -406,6 +481,7 @@ def security_preflight(environ: Mapping[str, str] | None = None) -> dict[str, ob
         },
         "company_identity_established": False,
         "target_tls_ingress_qualification_established": False,
+        "qa_http_insecure_cookie_policy": "Only an explicitly HTTP QA origin may use an insecure cookie for isolated qualification; target TLS/ingress remains NOT_ESTABLISHED.",
         "qualification_boundary": "Real company identity and target TLS/ingress qualification are NOT established by CHG-152/O8.2.",
     }
 
@@ -424,6 +500,8 @@ __all__ = [
     "BrowserTransportPolicyError",
     "OriginDeniedError",
     "build_runtime_config",
+    "build_runtime_security_contract",
+    "install_browser_transport_stack",
     "normalize_browser_origin",
     "normalize_root_path",
     "require_security_preflight",

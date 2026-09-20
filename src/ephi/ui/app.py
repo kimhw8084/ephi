@@ -64,9 +64,8 @@ from ephi.application.source_reality import require_runtime_source_binding
 from ephi.config import RuntimeSettings
 from ephi.infrastructure.postgresql import PostgreSQLReferenceTransactionAdapter
 from ephi.transport import (
-    BrowserTransportMiddleware,
-    BrowserTransportPolicy,
-    build_runtime_config,
+    build_runtime_security_contract,
+    install_browser_transport_stack,
     require_security_preflight,
 )
 from .provider import EphiReadDataSource
@@ -483,21 +482,12 @@ def build_page() -> None:
 def run_ephi() -> None:
     settings = RuntimeSettings.from_environment()
     require_security_preflight()
-    config = build_runtime_config(settings)
-    base_issues = config.validate_environment()
-    if base_issues:
-        raise RuntimeError(f"EPHI security preflight blocked: {','.join(base_issues)}")
-    policy = BrowserTransportPolicy.from_environment()
-    policy.validate()
+    policy, config = build_runtime_security_contract(settings)
     composition = build_composition_from_environment()
     runtime_adapter = NiceGUIRuntimeAdapter(config)
-    runtime_adapter.install_middleware()
-    # The transport gate is added after Base middleware registration so its
-    # pure-ASGI check remains outside NiceGUI routing/client creation while
-    # Base SecurityHeadersMiddleware remains the outer response policy.
     from nicegui import app as nicegui_app
 
-    nicegui_app.add_middleware(BrowserTransportMiddleware, policy=policy)
+    install_browser_transport_stack(nicegui_app, runtime_adapter, policy)
     runtime_adapter.run(
         root=lambda: build_attention_page(composition),
         pages={"/episode": lambda: build_episode_page(composition)},

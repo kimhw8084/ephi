@@ -1,16 +1,21 @@
 """CHG-152/O8.2 exact-origin and secret-safe runtime boundary tests."""
 
 import asyncio
+import importlib.util
 import json
 import unittest
 
+from ephi.config import RuntimeSettings
 from ephi.transport import (
     BrowserTransportMiddleware,
     BrowserTransportPolicy,
     BrowserTransportPolicyError,
     OriginDeniedError,
+    build_runtime_security_contract,
+    install_browser_transport_stack,
     normalize_browser_origin,
     normalize_root_path,
+    require_security_preflight,
     security_preflight,
 )
 
@@ -132,6 +137,103 @@ class BrowserTransportMiddlewareTests(unittest.TestCase):
             self.invoke(BrowserTransportMiddleware(protected, self.policy), _scope("http", method="POST", origin="http://127.0.0.1:8080"))
 
 
+@unittest.skipUnless(importlib.util.find_spec("nicegui_base"), "pinned Base runtime is installed only in integration qualification")
+class ComposedMiddlewareStackTests(unittest.TestCase):
+    def setUp(self):
+        from fastapi import FastAPI
+        from nicegui_base import NiceGUIRuntimeAdapter
+
+        self.app = FastAPI(docs_url=None, redoc_url=None, openapi_url=None)
+        self.calls = []
+
+        @self.app.get("/")
+        async def page():
+            self.calls.append("page")
+            return {"status": "ok"}
+
+        @self.app.post("/mutate")
+        async def mutate():
+            self.calls.append("mutate")
+            return {"status": "mutated"}
+
+        @self.app.websocket("/socket")
+        async def socket(websocket):
+            self.calls.append("websocket")
+            await websocket.accept()
+            await websocket.close()
+
+        values = {
+            "EPHI_ENV": "test",
+            "EPHI_HOST": "127.0.0.1",
+            "EPHI_ALLOWED_BROWSER_ORIGINS": "http://127.0.0.1:8080",
+            "NICEGUI_BASE_STORAGE_SECRET": "secret-value-never-recorded",
+        }
+        settings = RuntimeSettings.from_environment(values)
+        policy, config = build_runtime_security_contract(settings, values)
+        self.policy = policy
+        self.config = config
+        self.adapter = NiceGUIRuntimeAdapter(config)
+        install_browser_transport_stack(self.app, self.adapter, policy)
+
+    def test_actual_composed_stack_keeps_base_outer_and_gate_before_route(self):
+        names = [middleware.cls.__name__ for middleware in self.app.user_middleware]
+        self.assertEqual(names, ["CorrelationIdMiddleware", "SecurityHeadersMiddleware", "BrowserTransportMiddleware"])
+
+        async def exercise():
+            import httpx
+
+            transport = httpx.ASGITransport(app=self.app)
+            async with httpx.AsyncClient(transport=transport, base_url="http://testserver") as client:
+                denied = await client.post("/mutate", headers={"Origin": "http://127.0.0.1.attacker.test:8080"})
+                allowed = await client.get("/", headers={"Origin": "http://127.0.0.1:8080"})
+            return denied, allowed
+
+        denied, allowed = asyncio.run(exercise())
+        required = {
+            "x-content-type-options",
+            "referrer-policy",
+            "x-frame-options",
+            "permissions-policy",
+        }
+        self.assertEqual(denied.status_code, 403)
+        self.assertTrue(required.issubset(denied.headers))
+        self.assertNotIn("server", denied.headers)
+        self.assertEqual(allowed.status_code, 200)
+        self.assertTrue(required.issubset(allowed.headers))
+        self.assertNotIn("server", allowed.headers)
+        self.assertEqual(self.calls, ["page"])
+
+    def test_actual_composed_stack_rejects_websocket_before_route(self):
+        messages = self.invoke(self.app, _scope("websocket", origin="http://127.0.0.1.attacker.test:8080", path="/socket"))
+        self.assertEqual(messages[0]["type"], "websocket.close")
+        self.assertEqual(messages[0]["code"], 1008)
+        self.assertEqual(self.calls, [])
+
+    def test_future_base_identity_remains_outer_than_correlation_security_and_gate(self):
+        from fastapi import FastAPI
+        from nicegui_base import NiceGUIRuntimeAdapter
+
+        class FutureCompanyIdentityAdapter:
+            async def authenticate(self, headers, client_host):
+                return None
+
+        app = FastAPI()
+        adapter = NiceGUIRuntimeAdapter(self.config, auth_adapter=FutureCompanyIdentityAdapter())
+        install_browser_transport_stack(app, adapter, self.policy)
+        names = [middleware.cls.__name__ for middleware in app.user_middleware]
+        self.assertEqual(names, ["IdentityMiddleware", "CorrelationIdMiddleware", "SecurityHeadersMiddleware", "BrowserTransportMiddleware"])
+
+    @staticmethod
+    def invoke(app, scope):
+        messages = []
+
+        async def send(message):
+            messages.append(message)
+
+        asyncio.run(app(scope, lambda: None, send))
+        return messages
+
+
 class SecurityPreflightTests(unittest.TestCase):
     def test_pass_report_is_bounded_and_normalized(self):
         report = security_preflight(
@@ -178,6 +280,64 @@ class SecurityPreflightTests(unittest.TestCase):
         self.assertTrue(secure["effective_secure_cookie"])
         self.assertEqual(secure["same_site"], "strict")
         self.assertIn("INSECURE_SAMESITE_NONE", insecure_none["reason_codes"])
+
+    def test_preflight_and_startup_contract_are_equivalent(self):
+        common = {
+            "EPHI_ENV": "test",
+            "EPHI_ALLOWED_BROWSER_ORIGINS": "http://127.0.0.1:8080",
+            "NICEGUI_BASE_STORAGE_SECRET": "secret-value-never-recorded",
+        }
+        cases = [
+            ("valid loopback", {}, True),
+            ("non-loopback development", {"EPHI_ALLOWED_BROWSER_ORIGINS": "https://qa.example.test"}, False),
+            ("duplicate origins", {"EPHI_ALLOWED_BROWSER_ORIGINS": "http://127.0.0.1:8080,HTTP://127.0.0.1:8080"}, False),
+            ("invalid boolean", {"NICEGUI_BASE_DEBUG": "maybe"}, False),
+            ("invalid expected replicas", {"NICEGUI_BASE_EXPECTED_REPLICAS": "many"}, False),
+            ("invalid root path", {"NICEGUI_BASE_ROOT_PATH": "ephi"}, False),
+        ]
+        for label, overrides, expected_pass in cases:
+            with self.subTest(label=label):
+                values = {**common, **overrides}
+                report = security_preflight(values)
+                constructible = True
+                try:
+                    settings = RuntimeSettings.from_environment(values)
+                    build_runtime_security_contract(settings, values)
+                except (BrowserTransportPolicyError, TypeError, ValueError):
+                    constructible = False
+                self.assertEqual(report["status"] == "PASS", constructible)
+                self.assertEqual(constructible, expected_pass)
+                if constructible:
+                    self.assertEqual(require_security_preflight(values)["status"], "PASS")
+                else:
+                    with self.assertRaises(RuntimeError):
+                        require_security_preflight(values)
+
+    def test_preflight_matrix_covers_qa_https_cookie_and_proxy_contracts(self):
+        base = {
+            "EPHI_ENV": "qa",
+            "EPHI_ALLOWED_BROWSER_ORIGINS": "https://qa.example.test",
+            "NICEGUI_BASE_STORAGE_SECRET": "secret-value-never-recorded",
+        }
+        matrix = [
+            ("qa https default insecure cookie is blocked", {}, "BLOCKED", False),
+            ("qa https explicit secure cookie", {"NICEGUI_BASE_SECURE_SESSION_COOKIE": "true"}, "PASS", True),
+            ("qa https insecure override", {"NICEGUI_BASE_SECURE_SESSION_COOKIE": "false"}, "BLOCKED", False),
+            ("qa http loopback", {"EPHI_ALLOWED_BROWSER_ORIGINS": "http://127.0.0.1:8080"}, "PASS", False),
+            ("production https default", {"EPHI_ENV": "production", "EPHI_ALLOWED_BROWSER_ORIGINS": "https://ephi.example.test"}, "PASS", True),
+            ("production insecure override", {"EPHI_ENV": "production", "EPHI_ALLOWED_BROWSER_ORIGINS": "https://ephi.example.test", "NICEGUI_BASE_SECURE_SESSION_COOKIE": "false"}, "BLOCKED", False),
+            ("SameSite None insecure", {"NICEGUI_BASE_SAME_SITE": "none", "NICEGUI_BASE_SECURE_SESSION_COOKIE": "false"}, "BLOCKED", False),
+            ("proxy explicit trust", {"EPHI_HOST": "0.0.0.0", "NICEGUI_BASE_PROXY_ENABLED": "true", "NICEGUI_BASE_TRUSTED_PROXIES": "127.0.0.1", "NICEGUI_BASE_ROOT_PATH": "/ephi", "NICEGUI_BASE_SECURE_SESSION_COOKIE": "true"}, "PASS", True),
+            ("proxy empty trust", {"EPHI_HOST": "0.0.0.0", "NICEGUI_BASE_PROXY_ENABLED": "true", "NICEGUI_BASE_TRUSTED_PROXIES": ""}, "BLOCKED", False),
+            ("proxy wildcard trust", {"EPHI_HOST": "0.0.0.0", "NICEGUI_BASE_PROXY_ENABLED": "true", "NICEGUI_BASE_TRUSTED_PROXIES": "*"}, "BLOCKED", False),
+            ("multi replica without substrate", {"NICEGUI_BASE_EXPECTED_REPLICAS": "2"}, "BLOCKED", False),
+        ]
+        for label, overrides, expected_status, expected_secure in matrix:
+            with self.subTest(label=label):
+                report = security_preflight({**base, **overrides})
+                self.assertEqual(report["status"], expected_status)
+                self.assertEqual(report["effective_secure_cookie"], expected_secure)
+                self.assertNotIn("secret-value-never-recorded", json.dumps(report, sort_keys=True))
 
     def test_proxy_and_multi_replica_contracts_are_reported(self):
         report = security_preflight(
