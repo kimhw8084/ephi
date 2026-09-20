@@ -1,0 +1,106 @@
+{
+  "schema": "ephi.o8.runtime-transport-preflight.fix1.v1",
+  "identity": {
+    "project": "ephi",
+    "request": "ephi-o8-browser-session-security-fix1",
+    "operation": "FIX",
+    "fabric_job": "CF-2603159c5dc66034e6d64cea",
+    "base_sha": "c9a128a202095ffa5bb63f3c5ca7583908397f98",
+    "candidate_sha": "ea25b397b19a361433c8a6aa3c072258143454ce",
+    "candidate_tree": "dcb1f18978a372075abb81dfd180dda0a216245d",
+    "work_branch": "codex/ephi-o8-browser-session-security-fix1",
+    "predecessor": {
+      "candidate_sha": "ea6f12260b0e4954dd353062adf00e997fa0f784",
+      "candidate_tree": "d08f656686e85f40a8a59483260c165281e9183c",
+      "fabric_job": "CF-148ce820de18f2ecc76e2684",
+      "evidence_commit": "e735b8c9b38150b95cb5c510e298aa8fd6e2f01c",
+      "carrier_commit": "fa386bf2a4210831b7c0391425b3991a692dd401"
+    }
+  },
+  "middleware_stack": {
+    "registration": [
+      "BrowserTransportMiddleware",
+      "runtime_adapter.install_middleware"
+    ],
+    "actual_fastapi_user_middleware_order": [
+      "CorrelationIdMiddleware",
+      "SecurityHeadersMiddleware",
+      "BrowserTransportMiddleware"
+    ],
+    "future_company_identity_compatible_order": [
+      "IdentityMiddleware",
+      "CorrelationIdMiddleware",
+      "SecurityHeadersMiddleware",
+      "BrowserTransportMiddleware"
+    ],
+    "denied_http": {
+      "status": 403,
+      "downstream_handler_invoked": false,
+      "headers": {
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "no-referrer",
+        "x-frame-options": "DENY",
+        "permissions-policy": "camera=(), microphone=(), geolocation=(), payment=(), usb=()",
+        "server_header_absent": true
+      }
+    },
+    "allowed_http": {
+      "status": 200,
+      "downstream_handler_invoked": true,
+      "same_base_headers": true,
+      "server_header_absent": true
+    },
+    "denied_websocket": {
+      "close_code": 1008,
+      "downstream_route_invoked": false,
+      "nicegui_client_or_session_created": false
+    },
+    "proof": "tests.test_o8_browser_transport.ComposedMiddlewareStackTests uses the actual FastAPI app, pinned NiceGUIRuntimeAdapter, httpx ASGI transport and websocket scope."
+  },
+  "preflight_runtime_equivalence": {
+    "canonical_policy_constructor": "BrowserTransportPolicy.from_environment",
+    "canonical_runtime_constructor": "build_runtime_config / Base RuntimeConfig",
+    "dependency_free_package_projection": "used only when nicegui-base is intentionally absent from package jobs; browser policy and strict boundary parsing remain shared",
+    "matrix": [
+      {"case": "valid test loopback HTTP", "status": "PASS", "reason_codes": [], "effective_secure_cookie": false},
+      {"case": "development/test non-loopback", "status": "BLOCKED", "reason_codes": ["NON_LOOPBACK_DEVELOPMENT_ORIGIN"], "effective_secure_cookie": false},
+      {"case": "duplicate origins", "status": "BLOCKED", "reason_codes": ["DUPLICATE_BROWSER_ORIGIN"], "effective_secure_cookie": false},
+      {"case": "empty QA/production allowlist", "status": "BLOCKED", "reason_codes": ["BROWSER_ORIGIN_ALLOWLIST_REQUIRED"], "effective_secure_cookie": false},
+      {"case": "missing storage secret", "status": "BLOCKED", "reason_codes": ["HTTPS_BROWSER_ORIGIN_REQUIRES_SECURE_COOKIE", "MISSING_STORAGE_SECRET"], "effective_secure_cookie": false},
+      {"case": "QA HTTPS with secure cookie", "status": "PASS", "reason_codes": [], "effective_secure_cookie": true},
+      {"case": "QA HTTPS with insecure cookie", "status": "BLOCKED", "reason_codes": ["HTTPS_BROWSER_ORIGIN_REQUIRES_SECURE_COOKIE"], "effective_secure_cookie": false},
+      {"case": "production secure plus Strict", "status": "PASS", "reason_codes": [], "effective_secure_cookie": true},
+      {"case": "production insecure override", "status": "BLOCKED", "reason_codes": ["HTTPS_BROWSER_ORIGIN_REQUIRES_SECURE_COOKIE", "PRODUCTION_COOKIE_NOT_SECURE"], "effective_secure_cookie": false},
+      {"case": "SameSite=None plus insecure", "status": "BLOCKED", "reason_codes": ["INSECURE_SAMESITE_NONE"], "effective_secure_cookie": false},
+      {"case": "proxy enabled plus explicit trusted proxy", "status": "PASS", "reason_codes": [], "effective_secure_cookie": true},
+      {"case": "proxy enabled plus empty trust", "status": "BLOCKED", "reason_codes": ["TRUSTED_PROXY_REQUIRED"], "effective_secure_cookie": false},
+      {"case": "proxy wildcard trust", "status": "BLOCKED", "reason_codes": ["WILDCARD_TRUSTED_PROXY_FORBIDDEN"], "effective_secure_cookie": false},
+      {"case": "multi-replica without shared storage or affinity", "status": "BLOCKED", "reason_codes": ["HTTPS_BROWSER_ORIGIN_REQUIRES_SECURE_COOKIE", "MULTI_REPLICA_WITHOUT_SESSION_AFFINITY_CONFIRMATION", "MULTI_REPLICA_WITHOUT_SHARED_STORAGE"], "effective_secure_cookie": false},
+      {"case": "invalid relevant boolean", "status": "BLOCKED", "reason_codes": ["INVALID_BOOLEAN_CONFIGURATION"], "effective_secure_cookie": false}
+    ],
+    "require_security_preflight_agrees_with_startup": true,
+    "normalized_origin_facts_preserved_when_blocked": true
+  },
+  "cookie_invariant": {
+    "qa_https_default_or_insecure_override": "BLOCKED",
+    "qa_https_secure_override": "PASS",
+    "production_default": "secure",
+    "development_test_loopback_http": "may be insecure for isolated qualification",
+    "samesite_none": "requires secure cookie",
+    "qa_http_policy": "Only explicitly HTTP QA may use an insecure cookie for isolated qualification; target TLS/ingress remains NOT_ESTABLISHED."
+  },
+  "pinned_runtime": {
+    "nicegui_base_commit": "000298562d6bcbf6df304edbd41b98b30fe4bfcf",
+    "nicegui_base_version": "3.0.0a8",
+    "nicegui_version": "3.15.0",
+    "python_requires": ">=3.11,<3.14",
+    "security_headers": "Base-controlled; CSP NOT_ENABLED pending certification; docs disabled; server header suppressed"
+  },
+  "secret_safety": {
+    "storage_secret_recorded": false,
+    "cookie_value_recorded": false,
+    "authorization_header_recorded": false,
+    "dsn_recorded": false
+  },
+  "status": "PASS"
+}

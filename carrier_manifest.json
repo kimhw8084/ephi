@@ -1,0 +1,83 @@
+{
+  "schema_version": "project-os.artifact-carrier.v1",
+  "project": "ephi",
+  "request": "ephi-o8-browser-session-security-fix1",
+  "operation": "FIX",
+  "artifact_ref": "refs/heads/project-os-artifacts/ephi/ephi-o8-browser-session-security-fix1",
+  "repository": "kimhw8084/ephi",
+  "fabric_job": "CF-2603159c5dc66034e6d64cea",
+  "work_branch": "codex/ephi-o8-browser-session-security-fix1",
+  "base": {
+    "sha": "c9a128a202095ffa5bb63f3c5ca7583908397f98",
+    "tree": "77ac006855533b9b8115c106a34eced0150f20c1"
+  },
+  "candidate": {
+    "sha": "ea25b397b19a361433c8a6aa3c072258143454ce",
+    "tree": "dcb1f18978a372075abb81dfd180dda0a216245d",
+    "parent": "2c6b3d380e502950245c5a3acedeb82df3c89ab7"
+  },
+  "predecessor_lineage": {
+    "r1_candidate": "ea6f12260b0e4954dd353062adf00e997fa0f784",
+    "r1_tree": "d08f656686e85f40a8a59483260c165281e9183c",
+    "r1_fabric_job": "CF-148ce820de18f2ecc76e2684",
+    "r1_evidence_commit": "e735b8c9b38150b95cb5c510e298aa8fd6e2f01c",
+    "r1_carrier": "project-os-artifacts/ephi/ephi-o8-browser-session-security-v1@fa386bf2a4210831b7c0391425b3991a692dd401",
+    "direct_ancestor_asserted": true
+  },
+  "bundle": {
+    "path": "ephi-o8-browser-session-security-fix1-bundle.tar.gz",
+    "byte_size": 5300,
+    "sha256": "85a57ce3b823e1ea181631fd39cf11b949755ff26d3abd7b25031570ac1758cb",
+    "scope": "secret-safe structured evidence only; no credentials, DSNs, cookie values, authorization headers, identities, protected payloads or artifact bytes"
+  },
+  "evidence": [
+    "evidence/browser_session_qualification.json",
+    "evidence/changed_file_inventory.json",
+    "evidence/ci_results.json",
+    "evidence/origin_negative_matrix.json",
+    "evidence/postgresql_regressions_restore.json",
+    "evidence/runtime_transport_preflight.json",
+    "evidence/surface_inventory.json"
+  ],
+  "file_count": 7,
+  "files": [
+    {"path": "evidence/browser_session_qualification.json", "byte_size": 3580, "sha256": "4ecedb76e5a132d56408849362d606e8bd04fa18b7ce587363ff3f5b288ddf52"},
+    {"path": "evidence/changed_file_inventory.json", "byte_size": 1728, "sha256": "6942b7c9782950fc718b490b4a1a27a0f1d583f7a3470f73bf8749aa1445d2ea"},
+    {"path": "evidence/ci_results.json", "byte_size": 1453, "sha256": "33723016c0475585620b66c5bc7485dbe64d95bd7de68870b58dc5b82c7c762c"},
+    {"path": "evidence/origin_negative_matrix.json", "byte_size": 1073, "sha256": "4593c06f72e7fdc7cf13c3d665d0215250f77afa78b5158947f3d356e7e1673e"},
+    {"path": "evidence/postgresql_regressions_restore.json", "byte_size": 1446, "sha256": "5727571d5959d5813951c549a09772c52584a626d69d4f18e360d7ff0d6cf626"},
+    {"path": "evidence/runtime_transport_preflight.json", "byte_size": 6031, "sha256": "e4f5ba0b2028bf774685a398e55ebe529fe0a75ad7cee58fbe7ac059a5b40f30"},
+    {"path": "evidence/surface_inventory.json", "byte_size": 845, "sha256": "cccf3c80a0c026e63449f8dfa1a88cdb8bd6ac049b672956bc0121ef1606f0eb"
+    }
+  ],
+  "mechanical_consistency": {
+    "evidence_array_count_matches_file_count": true,
+    "evidence_paths_sorted": true,
+    "evidence_hashes_and_sizes_verified": true,
+    "bundle_member_paths_equal_evidence_paths": true,
+    "candidate_inventory_count_and_hashes_verified": true,
+    "candidate_tree_matches_manifest": true
+  },
+  "claims": {
+    "status": "candidate-bound evidence for independent review",
+    "project_os_go_self_declared": false,
+    "o8_whole_closed": false,
+    "company_identity_qualification_claimed": false,
+    "target_tls_ingress_qualification_claimed": false,
+    "historical_source_identity_claimed": false,
+    "historical_algorithm_equivalence_claimed": false
+  },
+  "scope_boundary": {
+    "CHG_144": "REMAINS_BLOCKED_REAL_SOURCE",
+    "integration_pr_created": false,
+    "main_modified_or_merged": false,
+    "notion_mutated": false,
+    "later_O8_O10_O11_work": false
+  },
+  "transport": {
+    "remote": "https://github.com/kimhw8084/ephi.git",
+    "identity": "kimhw8084/ephi",
+    "secret_safe": true,
+    "readback_required": true
+  }
+}

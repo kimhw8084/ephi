@@ -1,0 +1,67 @@
+{
+  "schema": "ephi.o8.browser-session-qualification.fix1.v1",
+  "identity": {
+    "project": "ephi",
+    "request": "ephi-o8-browser-session-security-fix1",
+    "operation": "FIX",
+    "fabric_job": "CF-2603159c5dc66034e6d64cea",
+    "candidate_sha": "ea25b397b19a361433c8a6aa3c072258143454ce",
+    "candidate_tree": "dcb1f18978a372075abb81dfd180dda0a216245d"
+  },
+  "qualification": {
+    "browser": "isolated headless Chromium via Playwright",
+    "foreground_desktop_or_accessibility_automation": false,
+    "postgresql": "18.6",
+    "direct_capture": {"status": "PASS", "bytes": 32517, "sha256": "b03d4dd367ea4f6e85afdad0673697afb5de769b1390bcb0c6ee65961677d78b"},
+    "proxy_capture": {"status": "PASS", "bytes": 32763, "sha256": "4e3ebb500e6e0f773df3ef32fa42ea319ea73b494ef5c43712317ae0e0b8d43b"}
+  },
+  "direct_loopback": {
+    "proxy_enabled": false,
+    "root_path": "",
+    "trusted_proxy_count": 2,
+    "attention_page_rendered": true,
+    "episode_page_rendered": true,
+    "real_nicegui_websocket_observed": true,
+    "console_errors": [],
+    "failed_network_urls": [],
+    "allowed_origin_websocket": true,
+    "disallowed_websocket_origins_rejected_before_use": true,
+    "disallowed_polling_post": {"status": 403, "mutation_rejected": true, "base_headers_present": true, "server_header_absent": true},
+    "session_cookie_attributes_only": {"httpOnly": true, "sameSite": "Strict", "secure": false, "value_recorded": false},
+    "durable_claim_effect": {"aggregate_version": 1, "command_receipt_count": 1, "work_state_present": true},
+    "security_headers": {"x-content-type-options": "nosniff", "referrer-policy": "no-referrer", "x-frame-options": "DENY", "permissions-policy": "camera=(), microphone=(), geolocation=(), payment=(), usb=()"},
+    "docs_disabled_and_server_fingerprint_absent": true
+  },
+  "proxy_root_path": {
+    "proxy_enabled": true,
+    "root_path": "/ephi",
+    "trusted_proxy_count": 1,
+    "wildcard_trusted_proxy": false,
+    "untrusted_forwarded_headers_not_authoritative": true,
+    "prefix_rewriting_harness": "browser-facing /ephi prefix stripped before backend; Base root_path preserved for URL generation",
+    "attention_page_rendered": true,
+    "episode_page_rendered": true,
+    "static_resources_loaded_under_root_path": true,
+    "observed_page_paths": ["/ephi/", "/ephi/episode"],
+    "observed_websocket_path": "/ephi/_nicegui_ws/socket.io",
+    "real_nicegui_websocket_observed": true,
+    "console_errors": [],
+    "failed_network_urls": [],
+    "allowed_origin_websocket": true,
+    "disallowed_websocket_origins_rejected_before_use": true,
+    "disallowed_polling_post": {"status": 403, "mutation_rejected": true, "base_headers_present": true, "server_header_absent": true},
+    "session_cookie_attributes_only": {"httpOnly": true, "sameSite": "Strict", "secure": false, "value_recorded": false},
+    "durable_claim_effect": {"aggregate_version": 1, "command_receipt_count": 1, "work_state_present": true},
+    "security_headers": {"x-content-type-options": "nosniff", "referrer-policy": "no-referrer", "x-frame-options": "DENY", "permissions-policy": "camera=(), microphone=(), geolocation=(), payment=(), usb=()"},
+    "docs_disabled_and_server_fingerprint_absent": true
+  },
+  "secret_safety": {
+    "storage_secret_recorded": false,
+    "cookie_value_recorded": false,
+    "authorization_header_recorded": false,
+    "dsn_recorded": false,
+    "raw_rows_recorded": false
+  },
+  "target_boundary": {"target_tls_ingress_qualification_established": false, "company_identity_established": false},
+  "status": "PASS"
+}

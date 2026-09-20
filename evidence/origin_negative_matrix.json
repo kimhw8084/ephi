@@ -1,0 +1,15 @@
+{
+  "schema": "ephi.o8.origin-negative-matrix.fix1.v1",
+  "identity": {"candidate_sha": "ea25b397b19a361433c8a6aa3c072258143454ce", "candidate_tree": "dcb1f18978a372075abb81dfd180dda0a216245d"},
+  "allowed": {"configured": "HTTP://127.0.0.1:8080", "normalized": "http://127.0.0.1:8080", "websocket": "PASS", "state_changing_http": "PASS"},
+  "rejected_websocket_origins": [
+    {"case": "attacker suffix", "origin": "http://127.0.0.1.attacker.test:8080", "rejected_before_use": true},
+    {"case": "wrong scheme", "origin": "https://127.0.0.1:8080", "rejected_before_use": true},
+    {"case": "wrong port", "origin": "http://127.0.0.1:8081", "rejected_before_use": true},
+    {"case": "null", "origin": "null", "rejected_before_use": true},
+    {"case": "missing", "origin": null, "rejected_before_use": true}
+  ],
+  "rejected_http": {"transport": "Socket.IO polling POST", "status": 403, "downstream_mutation_invoked": false},
+  "normalization_rejections": ["wildcard", "null", "malformed", "path", "query", "fragment", "userinfo", "ambiguous host"],
+  "status": "PASS"
+}

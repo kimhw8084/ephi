@@ -1,0 +1,16 @@
+{
+  "schema": "ephi.o8.current-surface-inventory.fix1.v1",
+  "identity": {"candidate_sha": "ea25b397b19a361433c8a6aa3c072258143454ce", "candidate_tree": "dcb1f18978a372075abb81dfd180dda0a216245d"},
+  "method": "AST/application source plus runtime route/component inspection; docs and tests excluded as primary proof",
+  "parsed_python_file_count": 44,
+  "registered_application_routes": ["/", "/episode"],
+  "surfaces": {
+    "user_upload": {"present": false, "evidence": []},
+    "markdown_or_raw_html": {"present": false, "evidence": []},
+    "csv_or_spreadsheet_export": {"present": false, "evidence": []},
+    "ai_or_llm": {"present": false, "evidence": []}
+  },
+  "qualification_required_if_introduced": true,
+  "capture": {"bytes": 21549, "sha256": "b483b214eceb6df9053c4a331a4eeba66ebc2f9ef22af365998a468db7af1a69"},
+  "status": "PASS"
+}

@@ -1,0 +1,21 @@
+{
+  "schema": "ephi.o8.postgresql-regressions-restore.fix1.v1",
+  "identity": {"candidate_sha": "ea25b397b19a361433c8a6aa3c072258143454ce", "candidate_tree": "dcb1f18978a372075abb81dfd180dda0a216245d"},
+  "repository_native_job": {"run_id": 35511811949, "job_id": 106080904807, "name": "PostgreSQL command/worker/read/artifact/O9 integration (Python 3.13)", "conclusion": "success"},
+  "postgresql": {"major_minor": "18.6", "container_image": "postgres:18.6"},
+  "test_groups": [
+    {"scope": "O9 parser and worker-health", "tests": 17, "status": "PASS"},
+    {"scope": "O2 transaction integration", "tests": 13, "status": "PASS"},
+    {"scope": "O2 worker lease integration", "tests": 17, "status": "PASS"},
+    {"scope": "O2 coherent-read and retained-snapshot integration", "tests": 9, "status": "PASS"},
+    {"scope": "O2 immutable-artifact catalog integration", "tests": 5, "status": "PASS"},
+    {"scope": "O3 Attention/Episode integration", "tests": 4, "status": "PASS"},
+    {"scope": "O8 CurrentAuthorizationAuthority integration", "tests": 4, "status": "PASS"},
+    {"scope": "O4 source ingress integration", "tests": 6, "status": "PASS"},
+    {"scope": "PostgreSQL adapter lifecycle", "tests": 7, "status": "PASS"}
+  ],
+  "total_tests": 82,
+  "restore_rehearsal": "REAL_RESTORE_REHEARSAL_PASS",
+  "claim_episode_durability": {"receipt_and_effect_semantics_preserved": true, "duplicate_effect_not_created": true},
+  "status": "PASS"
+}

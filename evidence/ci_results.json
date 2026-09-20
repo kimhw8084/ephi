@@ -1,0 +1,32 @@
+{
+  "schema": "ephi.o8.repository-native-ci.fix1.v1",
+  "identity": {
+    "repository": "kimhw8084/ephi",
+    "run_id": 35511811949,
+    "head_sha": "ea25b397b19a361433c8a6aa3c072258143454ce",
+    "conclusion": "success"
+  },
+  "jobs": [
+    {"name": "Canonical repository baseline", "status": "success"},
+    {"name": "Package checks (Python 3.11)", "status": "success"},
+    {"name": "Package checks (Python 3.12)", "status": "success"},
+    {"name": "Package checks (Python 3.13)", "status": "success"},
+    {"name": "Package checks (Python 3.14)", "status": "success"},
+    {"name": "PostgreSQL command/worker/read/artifact/O9 integration (Python 3.13)", "job_id": 106080904807, "status": "success"},
+    {"name": "O8.2 browser/session security integration (Python 3.13)", "job_id": 106080904855, "status": "success"}
+  ],
+  "browser_job_steps": [
+    "focused O8.2 transport/preflight/middleware-order tests: 22 PASS",
+    "direct loopback PostgreSQL and headless browser/session qualification: PASS",
+    "proxy/root-path PostgreSQL and headless browser/session qualification: PASS",
+    "direct and proxy browser qualification evidence assertion: O8_2_BROWSER_SESSION_SECURITY_PASS"
+  ],
+  "local_final_checks": {
+    "package_checker_refresh": "PASS",
+    "unit_discovery": {"tests": 232, "skipped": 64, "status": "PASS"},
+    "w0_repo_baseline": "BASELINE_PASS",
+    "compileall": "PASS",
+    "git_diff_check": "PASS"
+  },
+  "status": "PASS"
+}
