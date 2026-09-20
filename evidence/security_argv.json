@@ -1,0 +1,37 @@
+{
+  "schema_version": "o9.1.native-tool-security.v1",
+  "focused_test": "tests.test_o9_operations.O9OperationsContractTests.test_native_tool_argv_is_secret_free_for_uri_and_keyword_conninfo",
+  "inputs": {
+    "password_bearing_uri": {
+      "libpq_parser": "psycopg.conninfo_to_dict",
+      "percent_encoded_password": true,
+      "full_conninfo_in_argv": false
+    },
+    "password_bearing_keyword_conninfo": {
+      "libpq_parser": "psycopg.conninfo_to_dict",
+      "full_conninfo_in_argv": false
+    }
+  },
+  "native_tool_argv": {
+    "pg_dump": {
+      "credential_bearing_dsn_absent": true,
+      "password_absent": true,
+      "database_argument": "omitted; PGDATABASE environment only",
+      "snapshot_argument": "present"
+    },
+    "pg_restore": {
+      "credential_bearing_dsn_absent": true,
+      "password_absent": true,
+      "database_argument": "present as parsed non-secret PGDATABASE identity"
+    }
+  },
+  "private_subprocess_environment": {
+    "password_channel": "PGPASSWORD",
+    "host_port_user_database_preserved": true,
+    "full_secret_bearing_dsn_present": false,
+    "raw_secret_emitted_to_stdout": false,
+    "raw_secret_emitted_to_stderr": false,
+    "failure_text_secret_safe": true
+  },
+  "scope": "native PostgreSQL tool argv and error-evidence boundary only"
+}

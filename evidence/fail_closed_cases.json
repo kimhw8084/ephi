@@ -1,0 +1,17 @@
+{
+  "results": {
+    "corrupt_immutable_artifact": {
+      "reason": "immutable artifact backup contains missing or corrupt bytes",
+      "status": "FAIL_CLOSED"
+    },
+    "missing_immutable_artifact": {
+      "reason": "immutable artifact backup contains missing or corrupt bytes",
+      "status": "FAIL_CLOSED"
+    },
+    "schema_migration_mismatch": {
+      "reason": "migration/schema identity mismatch",
+      "status": "FAIL_CLOSED"
+    }
+  },
+  "schema_version": "o9.1.fail-closed.v1"
+}

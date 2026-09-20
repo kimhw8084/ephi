@@ -1,0 +1,83 @@
+{
+  "candidate": {
+    "base": "4e927cc6436a302134249a50e7ccdbb1c29dc89f",
+    "branch": "codex/ephi-o9-operations-restore-rehearsal-fix1",
+    "predecessor": "c8fee6dcd1ccd87f00d965697e436726f269abc9",
+    "sha": "aef1d06073749339403f688d60b4f6185c822bff",
+    "tree": "1a99a0ddad46bccf1907e29b93569fdde30187a8"
+  },
+  "fail_closed": {
+    "cases": [
+      "missing_immutable_artifact",
+      "corrupt_immutable_artifact",
+      "schema_migration_mismatch"
+    ],
+    "evidence": "evidence/fail_closed_cases.json",
+    "status": "PASS"
+  },
+  "focused_o9": {
+    "command": "EPHI_TEST_POSTGRES_DSN=<redacted> python3 -m unittest tests.test_o9_operations -v",
+    "status": "PASS",
+    "tests": 15
+  },
+  "full_repository": {
+    "command": "python3 -m unittest discover -s tests -v",
+    "skipped": 69,
+    "status": "PASS",
+    "tests": 198
+  },
+  "package": {
+    "command": "python3 tools/check_package.py",
+    "files": 178,
+    "status": "PASS"
+  },
+  "postgresql_regressions": {
+    "command": "EPHI_TEST_POSTGRES_DSN=<redacted> python3 -m unittest tests.test_o2_postgresql tests.test_o2_worker_postgresql tests.test_o2_postgresql_reads tests.test_o2_postgresql_artifacts tests.test_o3_postgresql tests.test_o4_source_ingress_postgresql tests.test_postgresql_adapter_lifecycle tests.test_o9_operations -v",
+    "server": "PostgreSQL 18.6",
+    "status": "PASS",
+    "tests": 76
+  },
+  "real_postgresql_rehearsal": {
+    "critical_authorities": {
+      "artifact_catalog_references": "VERIFIED",
+      "command_receipt_audit_outbox": "VERIFIED",
+      "o4_source_snapshot_capability": "VERIFIED",
+      "retained_read_snapshot": "VERIFIED",
+      "worker_effect_fencing_identity": "VERIFIED",
+      "workflow_o3": "VERIFIED"
+    },
+    "dump": {
+      "byte_size": 46615,
+      "path": "database.dump",
+      "sha256": "3ef9e40a9dbf79a58547dab5d36f481b90b9a5e565171da2061a2b79cf4ef8f9"
+    },
+    "pg_dump": {
+      "pg_dump_major": 18,
+      "pg_dump_version": "pg_dump (PostgreSQL) 18.6 (Homebrew)"
+    },
+    "pg_restore": {
+      "pg_restore": "pg_restore (PostgreSQL) 18.6 (Homebrew)"
+    },
+    "reconciliation": {
+      "post_cutoff_delta_count": 4,
+      "post_cutoff_writes_present_in_restored_snapshot": false,
+      "production_disaster_rpo_rto_claim": "NOT_ESTABLISHED",
+      "timing_evidence_scope": "LOCAL_RESTORE_REHEARSAL_ONLY"
+    },
+    "restore_verification": "VERIFIED",
+    "server": "PostgreSQL 18.6 (Homebrew) on aarch64-apple-darwin25.6.0, compiled by Apple clang version 21.0.0 (clang-2100.1.1.101), 64-bit",
+    "status": "PASS"
+  },
+  "schema_version": "o9.1.test-summary.v2",
+  "security_argv": {
+    "evidence": "evidence/security_argv.json",
+    "status": "PASS"
+  },
+  "w0_repo_baseline": {
+    "command": "python3 tools/w0_repo_baseline.py",
+    "status": "BASELINE_PASS",
+    "tests_passed": 129,
+    "tests_skipped": 69,
+    "worktree_clean": true
+  }
+}
