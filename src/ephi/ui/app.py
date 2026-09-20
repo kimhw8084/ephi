@@ -45,8 +45,6 @@ from nicegui_base import (
     StaleResponseGuard,
     WorkspaceController,
     NiceGUIRuntimeAdapter,
-    RuntimeConfig,
-    RuntimeEnvironment,
 )
 
 from ephi.application.attention import AttentionQueryService
@@ -65,6 +63,11 @@ from ephi.application.workflow import EpisodeWorkflowCommandService
 from ephi.application.source_reality import require_runtime_source_binding
 from ephi.config import RuntimeSettings
 from ephi.infrastructure.postgresql import PostgreSQLReferenceTransactionAdapter
+from ephi.transport import (
+    build_runtime_security_contract,
+    install_browser_transport_stack,
+    require_security_preflight,
+)
 from .provider import EphiReadDataSource
 
 
@@ -478,28 +481,13 @@ def build_page() -> None:
 
 def run_ephi() -> None:
     settings = RuntimeSettings.from_environment()
+    require_security_preflight()
+    policy, config = build_runtime_security_contract(settings)
     composition = build_composition_from_environment()
-    environment = {
-        "development": RuntimeEnvironment.DEV,
-        "test": RuntimeEnvironment.TEST,
-        "qa": RuntimeEnvironment.QA,
-        "production": RuntimeEnvironment.PROD,
-    }.get(settings.environment.lower())
-    if environment is None:
-        composition.close()
-        raise RuntimeError("EPHI_ENV must be development, test, qa, or production")
-    config = RuntimeConfig(
-        app_name="ephi",
-        app_version="0.1.0",
-        environment=environment,
-        host=settings.host,
-        port=settings.port,
-        title="EPHI",
-        show_browser=False,
-        reload=False,
-        require_storage_secret=True,
-    )
     runtime_adapter = NiceGUIRuntimeAdapter(config)
+    from nicegui import app as nicegui_app
+
+    install_browser_transport_stack(nicegui_app, runtime_adapter, policy)
     runtime_adapter.run(
         root=lambda: build_attention_page(composition),
         pages={"/episode": lambda: build_episode_page(composition)},

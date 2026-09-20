@@ -9,6 +9,7 @@ from typing import Sequence
 from .config import RuntimeSettings
 from .identity import ApplicationIdentity
 from .application.source_reality import preflight_source_reality
+from .transport import security_preflight
 
 
 FRAMEWORK_IDENTITY = {
@@ -70,6 +71,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser.add_argument("--serve", action="store_true", help="run the fail-closed PostgreSQL-backed W1 UI")
     parser.add_argument("--self-check", action="store_true", help="emit the deterministic canonical baseline self-check")
     parser.add_argument("--source-reality-preflight", action="store_true", help="emit the secret-safe real-source binding preflight")
+    parser.add_argument("--security-preflight", action="store_true", help="emit the secret-safe browser/session/proxy security preflight")
     parser.add_argument("--json", action="store_true", help="emit JSON rather than the compact identity line")
     parser.add_argument("--version", action="store_true", help="print the canonical package version")
     args = parser.parse_args(argv)
@@ -86,6 +88,10 @@ def main(argv: Sequence[str] | None = None) -> int:
 
     if args.source_reality_preflight:
         print(json.dumps(preflight_source_reality(), sort_keys=True))
+        return 0
+
+    if args.security_preflight:
+        print(json.dumps(security_preflight(), sort_keys=True))
         return 0
 
     result = self_check()
