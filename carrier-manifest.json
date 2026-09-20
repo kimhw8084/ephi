@@ -1,0 +1,72 @@
+{
+  "actual_fabric_job_id": "CF-368950d1cbdb342586974252",
+  "base_sha": "8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e",
+  "bundle": {
+    "bytes": 20480,
+    "path": "ephi-o10-performance-capacity-v1.bundle.tar",
+    "sha256": "1ec5b8cad9a426759a276a58d3848a9c2e895ecbd5d83fe1e4a099376fec9796"
+  },
+  "carrier_kind": "project-os-artifact-carrier",
+  "carrier_ref": "refs/heads/project-os-artifacts/ephi/ephi-o10-performance-capacity-v1",
+  "changed_files": {
+    "count": 7,
+    "files": [
+      {
+        "bytes": 21663,
+        "path": "09_Delivery_and_Gates.md",
+        "sha256": "4b8c5b2e3c7232e155a6160cff0f69892d941d3e62175c13f72e008213667136"
+      },
+      {
+        "bytes": 17744,
+        "path": "README.md",
+        "sha256": "c9eb1c317088cd8e731fe0469d97c7a9796b18618448d9a4aba0b8f93b30550e"
+      },
+      {
+        "bytes": 3948,
+        "path": "evidence/review/chg_161_o10_performance_capacity.json",
+        "sha256": "89eda48689631ae6ab6180daf5b2f62753ef2f63ceb72991b3f7511713620ee8"
+      },
+      {
+        "bytes": 34310,
+        "path": "manifest.json",
+        "sha256": "9a7f2633a65498e69ed0f0171528606b42d28bce68fc7f94327bc8598ce0afe2"
+      },
+      {
+        "bytes": 36120,
+        "path": "src/ephi/infrastructure/postgresql_reads.py",
+        "sha256": "7c9d4336605bc99b71915f96e811c2c1793033648457b42518ee56c87e79edd3"
+      },
+      {
+        "bytes": 3165,
+        "path": "tests/test_o10_performance_capacity.py",
+        "sha256": "17111e4637427eec1fd2e11ab17e3103aa751539d37ee508033e8e4fbf457fe8"
+      },
+      {
+        "bytes": 82493,
+        "path": "tools/o10_performance_capacity.py",
+        "sha256": "44843f5aaa4ea32dc62b24e8901d0868ec77c2dceac64637d8cd1b2b41ed70d1"
+      }
+    ]
+  },
+  "final_candidate_sha": "e6539fc9746434d9b16fa110836588a45a398296",
+  "final_candidate_tree_sha": "a51d83f2f08f6cba7d628671889d23b469fc17a2",
+  "operation": "BUILD",
+  "project": "ephi",
+  "qualification_state": "BLOCKED_BENCHMARK_ENVIRONMENT",
+  "remote_readback": {
+    "required_ref": "refs/heads/project-os-artifacts/ephi/ephi-o10-performance-capacity-v1",
+    "status": "PENDING"
+  },
+  "request": "ephi-o10-performance-capacity-v1",
+  "schema_version": "ephi-o10.2-project-os-carrier.v1",
+  "secret_safety": {
+    "auth_headers": false,
+    "cookies": false,
+    "dsns": false,
+    "protected_payloads": false,
+    "raw_benchmark_payloads": false,
+    "raw_identity_values": false,
+    "storage_values": false
+  },
+  "work_branch": "codex/ephi-o10-performance-capacity-v1"
+}
