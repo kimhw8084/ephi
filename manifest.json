@@ -911,8 +911,8 @@
     },
     {
       "path": "tools/o8_browser_qualification.py",
-      "bytes": 20166,
-      "sha256": "dfd904acae328939c3354009a1b08785c8bff157440972bdf82d4580a07ecebb"
+      "bytes": 20413,
+      "sha256": "ddc58e5b851a08dca459cafd8bf1f90b72716a4db77dc641ea35ca39e32ef5e8"
     },
     {
       "path": "tools/o8_surface_inventory.py",

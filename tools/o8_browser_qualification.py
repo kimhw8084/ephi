@@ -339,7 +339,18 @@ class _BrowserContext:
         self.page.on("console", lambda message: self.events["console_errors"].append(message.text) if message.type == "error" else None)
         self.page.on("requestfailed", lambda request: self.events["request_failures"].append(request.url))
         self.page.on("websocket", lambda websocket: self.events["websocket_urls"].append(websocket.url))
-        self.page.on("response", lambda response: self.events["responses"].append({"url": response.url, "path": urlsplit(response.url).path, "status": response.status, "headers": {key: value for key, value in response.all_headers().items() if key in {"x-content-type-options", "referrer-policy", "x-frame-options", "permissions-policy", "server", "set-cookie"}}}))
+
+        def record_response(response: Any) -> None:
+            headers = {
+                key: value
+                for key, value in response.all_headers().items()
+                if key in {"x-content-type-options", "referrer-policy", "x-frame-options", "permissions-policy", "server", "set-cookie"}
+            }
+            if "set-cookie" in headers:
+                headers["set-cookie"] = "present"
+            self.events["responses"].append({"url": response.url, "path": urlsplit(response.url).path, "status": response.status, "headers": headers})
+
+        self.page.on("response", record_response)
         self.page.goto(self.page_url, wait_until="domcontentloaded")
         self.page.get_by_text("Attention list").wait_for(timeout=30000)
         self.page.goto(self.page_url.rstrip("/") + "/episode", wait_until="domcontentloaded")
