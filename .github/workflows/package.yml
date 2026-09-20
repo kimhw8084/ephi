@@ -48,7 +48,7 @@ jobs:
         run: python tools/w0_repo_baseline.py
 
   postgresql-integration:
-    name: PostgreSQL command/worker/read/artifact integration (Python 3.13)
+    name: PostgreSQL command/worker/read/artifact/O9 integration (Python 3.13)
     runs-on: ubuntu-latest
     timeout-minutes: 10
     env:
@@ -76,11 +76,50 @@ jobs:
           python-version: '3.13'
       - name: Install PostgreSQL optional dependency
         run: python -m pip install 'psycopg[binary]==3.3.6'
+      - name: Install PostgreSQL 18 client tools for restore rehearsal
+        run: |
+          sudo install -d /usr/share/postgresql-common/pgdg
+          curl --fail --silent --show-error https://www.postgresql.org/media/keys/ACCC4CF8.asc \
+            | sudo tee /usr/share/postgresql-common/pgdg/apt.postgresql.org.asc >/dev/null
+          echo "deb [signed-by=/usr/share/postgresql-common/pgdg/apt.postgresql.org.asc] https://apt.postgresql.org/pub/repos/apt $(. /etc/os-release && echo \"$VERSION_CODENAME\")-pgdg main" \
+            | sudo tee /etc/apt/sources.list.d/pgdg.list >/dev/null
+          sudo apt-get update
+          sudo apt-get install -y postgresql-client-18
+          echo "/usr/lib/postgresql/18/bin" >> "$GITHUB_PATH"
       - name: Apply migration and assert PostgreSQL 18.x
         env:
           EPHI_TEST_POSTGRES_DSN: postgresql://ephi_ci:ephi_ci_password@127.0.0.1:5432/ephi_ci
         run: |
           python -c "import os; from ephi.infrastructure import PostgreSQLReferenceTransactionAdapter as A; s=A(os.environ['EPHI_TEST_POSTGRES_DSN']); s.apply_migrations(); assert s.server_version().startswith('18.'), s.server_version(); assert type(s).__name__ == 'PostgreSQLReferenceTransactionAdapter'; s.close()"
+      - name: Run PostgreSQL logical dump and isolated restore rehearsal
+        env:
+          EPHI_TEST_POSTGRES_DSN: postgresql://ephi_ci:ephi_ci_password@127.0.0.1:5432/ephi_ci
+        run: |
+          rehearsal_root="$(mktemp -d)"
+          python tools/o9_real_rehearsal.py \
+            --dsn "$EPHI_TEST_POSTGRES_DSN" \
+            --admin-dsn "$EPHI_TEST_POSTGRES_DSN" \
+            --artifact-root "$rehearsal_root/source-artifacts" \
+            --backup-dir "$rehearsal_root/backup" \
+            --target-artifact-root "$rehearsal_root/restored-artifacts" \
+            --target-database ephi_restore_ci \
+            --evidence-dir "$rehearsal_root/evidence" \
+            > "$rehearsal_root/summary.json"
+          python - "$rehearsal_root/summary.json" <<'PY'
+          import json
+          import sys
+
+          summary = json.loads(open(sys.argv[1], encoding="utf-8").read())
+          assert summary["backup_verification"]["verification_state"] == "VERIFIED"
+          assert summary["restore"]["verification_state"] == "VERIFIED"
+          assert summary["post_snapshot_reconciliation"]["production_disaster_rpo_rto_claim"] == "NOT_ESTABLISHED"
+          assert summary["timing"]["scope"] == "LOCAL_RESTORE_REHEARSAL"
+          print("REAL_RESTORE_REHEARSAL_PASS")
+          PY
+      - name: Run PostgreSQL operations parser and worker-health tests
+        env:
+          EPHI_TEST_POSTGRES_DSN: postgresql://ephi_ci:ephi_ci_password@127.0.0.1:5432/ephi_ci
+        run: python -m unittest tests.test_o9_operations -v
       - name: Run PostgreSQL transaction integration tests
         env:
           EPHI_TEST_POSTGRES_DSN: postgresql://ephi_ci:ephi_ci_password@127.0.0.1:5432/ephi_ci
@@ -97,3 +136,15 @@ jobs:
         env:
           EPHI_TEST_POSTGRES_DSN: postgresql://ephi_ci:ephi_ci_password@127.0.0.1:5432/ephi_ci
         run: python -m unittest tests.test_o2_postgresql_artifacts -v
+      - name: Run PostgreSQL O3 attention and episode integration tests
+        env:
+          EPHI_TEST_POSTGRES_DSN: postgresql://ephi_ci:ephi_ci_password@127.0.0.1:5432/ephi_ci
+        run: python -m unittest tests.test_o3_postgresql -v
+      - name: Run PostgreSQL O4 source ingress integration tests
+        env:
+          EPHI_TEST_POSTGRES_DSN: postgresql://ephi_ci:ephi_ci_password@127.0.0.1:5432/ephi_ci
+        run: python -m unittest tests.test_o4_source_ingress_postgresql -v
+      - name: Run PostgreSQL adapter lifecycle regression tests
+        env:
+          EPHI_TEST_POSTGRES_DSN: postgresql://ephi_ci:ephi_ci_password@127.0.0.1:5432/ephi_ci
+        run: python -m unittest tests.test_postgresql_adapter_lifecycle -v

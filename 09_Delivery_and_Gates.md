@@ -97,6 +97,28 @@ Time-to-detect, time-to-acknowledge, active investigation effort, decision lead 
 
 Feature flags operate per family/capability and separate visibility from compute. Rollback may disable new UI/actions and continue read-only access to last trustworthy state. Preserve accepted commands, evidence and ledger revisions. A scientific rollback creates a new versioned result from an approved prior engine; it never rewrites history. Schema rollback must not drop accepted new events. Prefer expand/contract migrations and forward correction. Do not roll back to a known false-recovery or false-as-of behavior in production.
 
+## O9.1 CHG-147 operations boundary
+
+The O9.1 candidate may add only the typed operations-health boundary, backup
+identity/verification, isolated PostgreSQL restore rehearsal, deterministic
+post-cutoff reconciliation, and operator runbooks. It reads the existing O2
+command/receipt/audit/outbox, worker lease/effect, read/snapshot, artifact
+catalog/filesystem, O3 workflow, and O4 source snapshot/capability authorities;
+it does not create a parallel state authority, copy raw telemetry, switch
+traffic, mutate Notion, or broaden into O11 release work.
+
+Health is exposed as separate process/transport, PostgreSQL, immutable-artifact,
+source capability/freshness, durable worker/job, and evidence/qualification
+axes. Source absence remains `UNAVAILABLE` / `BLOCKED_REAL_SOURCE`. The backup
+manifest records a PostgreSQL server-time cutoff/high-water and only reports
+`VERIFIED` when required schema, dump identity, and every referenced immutable
+artifact hash/size verify. Restore is isolated and never automatic.
+
+Reconciliation reports durable identities accepted after the cutoff without
+claiming they are in the restored snapshot. Local timing is labeled
+`LOCAL_RESTORE_REHEARSAL`; `production_disaster_rpo_rto_claim` remains
+`NOT_ESTABLISHED` until a later target-environment qualification.
+
 ## Q. Implementation waves in dependency/ROI order
 
 Each wave ends with a healthy repository, a runnable vertical result, exact commands/status/evidence and a concise change log. No arbitrary sprint duration is asserted.

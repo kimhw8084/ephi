@@ -51,8 +51,8 @@
     },
     {
       "path": ".github/workflows/package.yml",
-      "bytes": 3838,
-      "sha256": "4a746b22209dd813f68238e988da2f240fdd759a4f98a9732c34c267ff52f7f9"
+      "bytes": 6858,
+      "sha256": "3b7e470b6f86d0c1d25352a8f0b530e64dff6e85f6666cef30b3f87566fe2cd1"
     },
     {
       "path": ".gitignore",
@@ -121,8 +121,8 @@
     },
     {
       "path": "09_Delivery_and_Gates.md",
-      "bytes": 18625,
-      "sha256": "b90e8372910a2cf3f104dd6b7c776575ad04567c00d4f239357d6ca8b44e2bd9"
+      "bytes": 19922,
+      "sha256": "973603d1f81b22e0494b66bf0e8b5a63436081bb610c7e10e23edd5cb822749d"
     },
     {
       "path": "10_Traceability_and_Decisions.md",
@@ -156,8 +156,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 14582,
-      "sha256": "3f137a6d36033af8e933442dc9bc75eeaf62c7a624013c370bd8ac4ed91ae2eb"
+      "bytes": 15203,
+      "sha256": "752c2231555228dfe8771d38e99c9713ddc9b3f3f86e7de599526cb7f96c5d15"
     },
     {
       "path": "app.py",
@@ -500,6 +500,51 @@
       "sha256": "c15ff7d2962a98badac22def617368b6e3dc03fb77c3d54f03d2e8b6d9d6087c"
     },
     {
+      "path": "operations/README.md",
+      "bytes": 1884,
+      "sha256": "501fc602e0229530e5dc605e018fc346eb5399921bad33f3315b2b2c67018808"
+    },
+    {
+      "path": "operations/runbooks/README.md",
+      "bytes": 1288,
+      "sha256": "5818f66e177e5712db6d8fff6161889b190af31e083f8f773faf80fce8ae6640"
+    },
+    {
+      "path": "operations/runbooks/immutable-artifact-failure.md",
+      "bytes": 976,
+      "sha256": "18e25daed615764bd6fde50f22557d90f08c648ce11cedf4ebfe9c1b8a904a53"
+    },
+    {
+      "path": "operations/runbooks/isolated-restore-rehearsal.md",
+      "bytes": 1222,
+      "sha256": "c65187264dcf2fbbb1e52e134fc74fe40c87483a7b32d0d1c0f07c3edcaabb24"
+    },
+    {
+      "path": "operations/runbooks/postgresql-outage.md",
+      "bytes": 1049,
+      "sha256": "75820bfa7c26d28b0e96e5e2ca82d031bd404e7e0dfbc50cac01641491f9739e"
+    },
+    {
+      "path": "operations/runbooks/projection-read-repair.md",
+      "bytes": 1063,
+      "sha256": "bfe5a05293767bdca944a5f138f310144eb9bff865b5ed232607ddc774092f8f"
+    },
+    {
+      "path": "operations/runbooks/rollback-boundary.md",
+      "bytes": 1030,
+      "sha256": "9cb80f32953c06a53ba4bf651c2092b24522a4bc0b4f233f65873aa67c364400"
+    },
+    {
+      "path": "operations/runbooks/source-outage-staleness.md",
+      "bytes": 1022,
+      "sha256": "187211055c8b152462205a33fc991220eaa16157b5e1d2de20358ad69906656e"
+    },
+    {
+      "path": "operations/runbooks/worker-crash-stale-lease.md",
+      "bytes": 999,
+      "sha256": "b04ceb75e98613d065681fc55ccfc1b47e42f908a77bec8fb3511c69b4c4a40c"
+    },
+    {
       "path": "pyproject.toml",
       "bytes": 657,
       "sha256": "0ef88ce76633bbebfada55628717ff5189b05eb05bf276f1f27d4ceeac27f0a1"
@@ -551,8 +596,8 @@
     },
     {
       "path": "src/ephi/application/__init__.py",
-      "bytes": 7491,
-      "sha256": "cea759cef3a9c90cd9ab5bd42668b143a7203fd621d807bdb10985a2789db445"
+      "bytes": 7735,
+      "sha256": "d970902f41bb45c57a00ac916bfb1e86ee1230281fa8f0292365fe9a6c1dc7a6"
     },
     {
       "path": "src/ephi/application/artifacts.py",
@@ -583,6 +628,11 @@
       "path": "src/ephi/application/hashing.py",
       "bytes": 6357,
       "sha256": "f607423b3b89eb8a3af5245ce9c4b3129d0890ebc4d8e3624d22689757bd671d"
+    },
+    {
+      "path": "src/ephi/application/operations.py",
+      "bytes": 11596,
+      "sha256": "0b36b24017bc9bbbfe682f21f79dc68bc3dd4392f3d05a83bf38fa3eec16f22f"
     },
     {
       "path": "src/ephi/application/read.py",
@@ -785,6 +835,11 @@
       "sha256": "3e427543824021ee5f1e2df257a8f23ac856cf48e5f603bc15c017c3b4de3f2d"
     },
     {
+      "path": "tests/test_o9_operations.py",
+      "bytes": 23415,
+      "sha256": "562ae02a401249d5641fb23b34c8a486351e4623226a826e6ddc7d4b40364b48"
+    },
+    {
       "path": "tests/test_package.py",
       "bytes": 4524,
       "sha256": "240751ed087c4ffe26cdbe82e54e6372bbbb1fbee94bf2d66ad2793e4f91eacf"
@@ -833,6 +888,16 @@
       "path": "tools/check_package.py",
       "bytes": 11490,
       "sha256": "a353043571493380c81a93a56d1426cb4b9e2f3a78eb620bc75a24ace8d55da0"
+    },
+    {
+      "path": "tools/o9_operations.py",
+      "bytes": 39374,
+      "sha256": "354ffce9ff0643fda03667dff39c2f4307b8e87ea2084f6061d3df5f25a09794"
+    },
+    {
+      "path": "tools/o9_real_rehearsal.py",
+      "bytes": 15895,
+      "sha256": "29949170010636568be3dc0fb0034e8e5948af1146059a496c80a89d42e9d735"
     },
     {
       "path": "tools/source_preflight.py",

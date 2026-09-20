@@ -238,6 +238,21 @@ DSN-gated; the ordinary package/full-suite/W0 paths remain database-independent.
 
 ## Pinned framework authority
 
+## CHG-147 O9.1 operations and restore rehearsal
+
+The CLI-only O9.1 boundary is documented in [operations](operations/README.md).
+It exposes separate secret-safe operational axes, deterministic PostgreSQL
+logical-backup identity, immutable-artifact verification, isolated restore, and
+post-cutoff reconciliation through the existing O2/O3/O4 authorities. Run:
+
+```bash
+python3 tools/o9_operations.py status --json
+```
+
+Local rehearsal timing is evidence only. The tooling always records
+`production_disaster_rpo_rto_claim = NOT_ESTABLISHED`; it does not claim the
+E7 target RPO/RTO or authenticate a real source family.
+
 CHG-105 pins `nicegui-base` to Git commit `000298562d6bcbf6df304edbd41b98b30fe4bfcf`, framework version `3.0.0a8`, exactly `nicegui==3.15.0`, and Python `>=3.11,<3.14`. Application code uses public `from nicegui_base import ...` authorities only; it does not use direct `nicegui.ui` or private `nicegui_base.integrations.nicegui_*` APIs. The machine-readable runtime specification is [environment/nicegui_base_runtime.json](environment/nicegui_base_runtime.json).
 
 For an isolated dependency/bootstrap qualification, use the existing CHG-105 tool separately:
