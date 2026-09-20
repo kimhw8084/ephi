@@ -1,8 +1,8 @@
 {
   "bundle": {
-    "bytes": 1471364,
+    "bytes": 1486222,
     "path": "ephi-o10-rendered-accessibility-fix1-bundle.tar.gz",
-    "sha256": "b525f9a79623468aa15cec61584643144fc613fde1882705b48e575f1d27a7e7"
+    "sha256": "ff2bac18be9f98df4e0e3fb9b7d8a398b4c5fb051f414846758c70281e0f7e8a"
   },
   "carrier_ref": "refs/heads/project-os-artifacts/ephi/ephi-o10-rendered-accessibility-fix1",
   "evidence_kind": "project_os_artifact_carrier",
@@ -21,6 +21,8 @@
     "acceptance_status": "PASS",
     "changed_file_inventory_included": true,
     "human_ux_review": "PENDING",
+    "o8_direct": "PASS",
+    "o8_proxy": "PASS",
     "production_performance_claim": "NOT_CLAIMED",
     "remote_readback_included": true,
     "report_status": "PASS",
@@ -33,9 +35,9 @@
     },
     "screenshot_count": 26
   },
-  "repair_candidate_parent": "e75872d974c4edeaf55356855e96b3b8ca275dab",
-  "repair_candidate_sha": "c479a1d5ec79dff59f65300f8d644411cac1bd56",
-  "repair_candidate_tree": "0852829d78f0f9bd86e53208fe80e44cce7867c7",
+  "repair_candidate_parent": "c479a1d5ec79dff59f65300f8d644411cac1bd56",
+  "repair_candidate_sha": "6837ad1f9d7a5f12e579c642c2f2669a72354ab7",
+  "repair_candidate_tree": "de2063907127a988844179e058e435d7b7666c96",
   "request": "ephi-o10-rendered-accessibility-fix1",
   "schema_version": 1,
   "scope_boundary": "No main mutation, merge, integration PR, Notion mutation, production-like performance claim, human UX-review claim, or later O10/O11 work.",
@@ -161,6 +163,14 @@
     "structured/o10-rendered/report.json": {
       "bytes": 44103,
       "sha256": "419edc829390012e9c19f3a37b9f09392ca03b5a82ccaf972aac693368489027"
+    },
+    "structured/o8/ephi-o8-fix1-direct3.json": {
+      "bytes": 33589,
+      "sha256": "4d93dccff9b1aa09bc4c8590060c87b40f6b321e9ec1eb8ac9c2b2113a81e9e0"
+    },
+    "structured/o8/ephi-o8-fix1-proxy3.json": {
+      "bytes": 34135,
+      "sha256": "88f8947a379028a5ca492d36015ce059cff661b83351e2fe623514af293be3e0"
     },
     "structured/o9/backup_manifest.json": {
       "bytes": 13917,
