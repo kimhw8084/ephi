@@ -906,8 +906,8 @@
     },
     {
       "path": "tools/o9_real_rehearsal.py",
-      "bytes": 15895,
-      "sha256": "29949170010636568be3dc0fb0034e8e5948af1146059a496c80a89d42e9d735"
+      "bytes": 16303,
+      "sha256": "9023d32d694608d6272289a5b3cc65de49813c6eeb5dc9121e52a31ccf9e50d9"
     },
     {
       "path": "tools/source_preflight.py",
