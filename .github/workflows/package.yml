@@ -175,39 +175,12 @@ jobs:
           import sys
 
           report = json.load(open(sys.argv[1], encoding='utf-8'))
+          from ephi.application.o10 import evaluate_o10_acceptance
+
+          acceptance = evaluate_o10_acceptance(report)
+          assert report['status'] == acceptance['status'], acceptance
           assert report['status'] == 'PASS'
-          assert report['postgres']['real_postgresql_18']
-          real = report['real_browser']
-          assert not real['events']['console_errors']
-          assert not real['events']['page_errors']
-          assert not real['events']['request_failures']
-          assert real['critical_path']['selected_episode_identity_preserved']
-          assert real['critical_path']['return_restored_attention']
-          assert all(real['critical_path']['selected_row_preview']['fields_present'].values())
-          focus = real['critical_path']['focus_continuity']
-          assert focus['after_selection'] == 'Open episode'
-          assert focus['before_primary_action'] in ('Claim episode', 'Acknowledge episode')
-          assert focus['after_successful_claim'] in ('Claim episode', 'Acknowledge episode')
-          assert focus['after_return'] == 'Attention'
-          assert real['keyboard_walkthrough']['reached_search']
-          assert real['keyboard_walkthrough']['no_empty_focus']
-          assert real['no_episode_selected']['status']
-          assert real['reduced_motion']['match_media']
-          assert real['forced_colors']['status'] in ('PASS', 'NOT_SUPPORTED')
-          assert all(item['status'] != 'FAIL' for item in real['contrast'].values())
-          assert real['critical_path']['focus_indicator_contrast']['status'] != 'FAIL'
-          assert real['secret_safety']['cookies_recorded'] is False
-          for viewport, facts in report['responsive'].items():
-              assert facts['status'] == 'PASS', viewport
-              if viewport in ('390x844', '320x800'):
-                  assert facts['attention_overflow'] is False
-                  assert facts['episode_overflow'] is False
-                  for name, box in facts['critical_target_measurements'].items():
-                      if box['width'] is not None:
-                          assert box['width'] >= 44 and box['height'] >= 44, (viewport, name, box)
-          assert all(facts['status'] == 'PASS' and facts['bounded_text'] for facts in report['degraded_state_matrix'].values())
-          assert report['durable_command']['command_receipt_count'] >= 1
-          assert report['durable_command']['work_state_present']
+          assert acceptance['criteria'], acceptance
           print('O10_1_RENDERED_ACCESSIBILITY_PASS')
           PY
       - name: Upload secret-safe O10 rendered evidence

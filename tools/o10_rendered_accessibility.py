@@ -10,6 +10,7 @@ StateView mapping without adding a production route or runtime switch.
 from __future__ import annotations
 
 import argparse
+from collections.abc import Mapping
 from contextlib import closing
 import hashlib
 import json
@@ -31,6 +32,12 @@ from tools.o8_browser_qualification import (  # noqa: E402
     _fixture_module,
     _seed_database,
     _wait_for_port,
+)
+from ephi.application.o10 import (  # noqa: E402
+    contrast as _contrast,
+    evaluate_o10_acceptance,
+    focus_contrast as _focus_contrast,
+    parse_color as _parse_color,
 )
 
 
@@ -65,77 +72,6 @@ def _port() -> int:
 def _safe_issue(value: object) -> dict[str, str]:
     text = str(value)
     return {"type": type(value).__name__, "digest": _sha256(text)}
-
-
-def _parse_color(value: str) -> tuple[float, float, float, float] | None:
-    value = value.strip().lower()
-    if value == "transparent":
-        return (0.0, 0.0, 0.0, 0.0)
-    if value.startswith("rgb"):
-        left, right = value.find("("), value.rfind(")")
-        if left < 0 or right < 0:
-            return None
-        parts = [item.strip() for item in value[left + 1:right].replace("/", ",").split(",")]
-        if len(parts) not in {3, 4}:
-            return None
-        try:
-            channels = [float(item[:-1]) * 2.55 if item.endswith("%") else float(item) for item in parts[:3]]
-            alpha = float(parts[3][:-1]) / 100 if len(parts) == 4 and parts[3].endswith("%") else float(parts[3]) if len(parts) == 4 else 1.0
-        except ValueError:
-            return None
-        return tuple(max(0.0, min(255.0, channel)) / 255.0 for channel in channels) + (max(0.0, min(1.0, alpha)),)
-    if value.startswith("#"):
-        raw = value[1:]
-        if len(raw) in {3, 4}:
-            raw = "".join(char * 2 for char in raw)
-        if len(raw) in {6, 8}:
-            try:
-                channels = tuple(int(raw[index:index + 2], 16) / 255 for index in (0, 2, 4))
-                alpha = int(raw[6:8], 16) / 255 if len(raw) == 8 else 1.0
-                return channels + (alpha,)
-            except ValueError:
-                return None
-    if value.startswith("color(srgb"):
-        raw = value[value.find("(") + 1:value.rfind(")")].replace("/", " ").split()
-        if raw and raw[0].lower() == "srgb":
-            try:
-                channels = tuple(float(item) for item in raw[1:4])
-                alpha = float(raw[4]) if len(raw) > 4 else 1.0
-                return tuple(max(0.0, min(1.0, channel)) for channel in channels) + (max(0.0, min(1.0, alpha)),)
-            except (ValueError, IndexError):
-                return None
-    return None
-
-
-def _composite(foreground: tuple[float, float, float, float], background: tuple[float, float, float, float]) -> tuple[float, float, float, float]:
-    alpha = foreground[3] + background[3] * (1 - foreground[3])
-    if alpha == 0:
-        return (0.0, 0.0, 0.0, 0.0)
-    return tuple((foreground[index] * foreground[3] + background[index] * background[3] * (1 - foreground[3])) / alpha for index in range(3)) + (alpha,)
-
-
-def _relative_luminance(color: tuple[float, float, float, float]) -> float:
-    channels = []
-    for channel in color[:3]:
-        channels.append(channel / 12.92 if channel <= 0.04045 else ((channel + 0.055) / 1.055) ** 2.4)
-    return 0.2126 * channels[0] + 0.7152 * channels[1] + 0.0722 * channels[2]
-
-
-def _contrast(foreground: str, background: str, threshold: float) -> dict[str, object]:
-    fg = _parse_color(foreground)
-    bg = _parse_color(background)
-    if fg is None or bg is None or fg[3] < 1 or bg[3] < 1:
-        return {"foreground": foreground, "background": background, "ratio": None, "threshold": threshold, "status": "NOT_MEASURABLE"}
-    ratio = (max(_relative_luminance(fg), _relative_luminance(bg)) + 0.05) / (min(_relative_luminance(fg), _relative_luminance(bg)) + 0.05)
-    return {"foreground": foreground, "background": background, "ratio": round(ratio, 3), "threshold": threshold, "status": "PASS" if ratio >= threshold else "FAIL"}
-
-
-def _focus_contrast(style: dict[str, object]) -> dict[str, object]:
-    if style.get("outlineStyle") not in {"none", "hidden"} and str(style.get("outlineWidth")) not in {"0px", "0"}:
-        return _contrast(str(style.get("outlineColor")), str(style.get("backgroundColor")), 3.0)
-    if style.get("boxShadow") not in {None, "none"} and "0 0 0 0" not in str(style.get("boxShadow")):
-        return {"foreground": "computed box-shadow", "background": str(style.get("backgroundColor")), "ratio": None, "threshold": 3.0, "status": "NOT_MEASURABLE", "evidence": str(style.get("boxShadow"))}
-    return {"foreground": None, "background": str(style.get("backgroundColor")), "ratio": None, "threshold": 3.0, "status": "FAIL", "reason": "no visible computed focus indicator"}
 
 
 def _aria_snapshot(page: Any) -> str:
@@ -224,19 +160,94 @@ def _visible_button(page: Any, *names: str) -> Any:
     raise RuntimeError(f"visible button not found: {names}")
 
 
-def _semantic_facts(page: Any) -> dict[str, object]:
-    names = {}
-    for role, label in (("searchbox", "Search table"), ("button", "Refresh table"), ("button", "Export CSV"), ("main", None), ("navigation", "Primary navigation"), ("toolbar", "Table controls"), ("region", "Attention results table")):
-        locator = page.get_by_role(role, name=label) if label else page.get_by_role(role)
-        names[f"{role}:{label or '*'}"] = locator.count()
-    return {
+def _semantic_facts(page: Any, *, surface: str, episode_id: str | None = None, aria_snapshot: str = "") -> dict[str, object]:
+    """Capture named landmark/control facts for one fully rendered surface."""
+
+    def count(role: str, name: str | None = None) -> int:
+        locator = page.get_by_role(role, name=name) if name is not None else page.get_by_role(role)
+        return locator.count()
+
+    h1_text = page.locator("h1").all_inner_texts()
+    common = {
         "h1_count": page.locator("h1").count(),
-        "h1_text": page.locator("h1").all_inner_texts(),
-        "role_counts": names,
-        "status_count": page.get_by_role("status").count(),
-        "search_name_stable": page.get_by_role("searchbox", name="Search table").count() == 1,
-        "navigation_name_stable": page.get_by_role("navigation", name="Primary navigation").count() == 1,
+        "h1_text": h1_text,
+        "main_count": count("main"),
+        "primary_navigation_count": count("navigation", "Primary navigation"),
+        "status_count": count("status"),
+        "mobile_navigation_count": count("button", "Open navigation"),
     }
+    if surface == "attention":
+        required = {
+            "search_table_count": count("searchbox", "Search table"),
+            "table_controls_count": count("toolbar", "Table controls"),
+            "attention_results_region_count": count("region", "Attention results table"),
+            "refresh_count": count("button", "Refresh table"),
+            "open_episode_count": count("button", "Open episode"),
+        }
+        stable_names = all(required[key] == 1 for key in ("search_table_count", "table_controls_count", "attention_results_region_count", "refresh_count", "open_episode_count"))
+        result = {**common, **required, "stable_names": stable_names}
+        if aria_snapshot:
+            result["populated_aria_contains_episode"] = bool(episode_id and episode_id in aria_snapshot)
+            result["populated_aria_not_empty_state"] = "No permitted Attention rows" not in aria_snapshot
+        return result
+
+    action_count = count("button", "Claim episode") + count("button", "Acknowledge episode")
+    return {
+        **common,
+        "episode_region_count": count("region", "Episode rendered state"),
+        "return_count": count("button", "Return to Attention"),
+        "eligible_primary_action": action_count == 1,
+        "selected_episode_identity": bool(episode_id and _visible_text_present(page, episode_id)),
+        "episode_aria_truthful": bool(episode_id and episode_id in aria_snapshot and "Workflow state" in aria_snapshot and "Source / capability state" in aria_snapshot and ("Claim episode" in aria_snapshot or "Acknowledge episode" in aria_snapshot)),
+        "stable_names": count("button", "Return to Attention") == 1 and action_count == 1,
+    }
+
+
+def _wait_for_authorized_attention_row(page: Any, episode_id: str, timeout: int = 30000) -> None:
+    _wait_for_visible_text(page, episode_id, timeout=timeout)
+    page.wait_for_function(
+        """() => [...document.querySelectorAll('[role=status]')].some(node => {
+            const text = (node.innerText || node.textContent || '').replace(/\\s+/g, ' ').trim();
+            return text.includes('permitted Attention row') && !text.startsWith('Loading');
+        })""",
+        timeout=timeout,
+    )
+
+
+def _wait_for_authoritative_status(page: Any, expected: str, timeout: int = 30000) -> None:
+    page.wait_for_function(
+        """(expected) => [...document.querySelectorAll('[role=status]')].some(node =>
+            (node.innerText || node.textContent || '').replace(/\\s+/g, ' ').includes(expected))""",
+        arg=expected,
+        timeout=timeout,
+    )
+
+
+def _wait_for_visible_text(page: Any, text: str, timeout: int = 30000) -> None:
+    page.wait_for_function(
+        """(expected) => {
+            const body = document.body;
+            const rect = body?.getBoundingClientRect();
+            const style = body ? getComputedStyle(body) : null;
+            return Boolean(body && (body.innerText || '').includes(expected) && rect?.width > 0 && rect?.height > 0
+                && style?.visibility !== 'hidden' && style?.display !== 'none');
+        }""",
+        arg=text,
+        timeout=timeout,
+    )
+
+
+def _visible_text_present(page: Any, text: str) -> bool:
+    return bool(page.evaluate(
+        """(expected) => {
+            const body = document.body;
+            const rect = body?.getBoundingClientRect();
+            const style = body ? getComputedStyle(body) : null;
+            return Boolean(body && (body.innerText || '').includes(expected) && rect?.width > 0 && rect?.height > 0
+                && style?.visibility !== 'hidden' && style?.display !== 'none');
+        }""",
+        arg=text,
+    ))
 
 
 def _contrast_facts(page: Any) -> dict[str, object]:
@@ -281,29 +292,58 @@ def _wait_for_text(page: Any, text: str, timeout: int = 30000) -> None:
     page.get_by_text(text, exact=False).first.wait_for(timeout=timeout)
 
 
-def _keyboard_select(page: Any) -> None:
+def _keyboard_select(page: Any, episode_id: str) -> dict[str, object]:
+    """Select the synthetic row with keyboard events and no pointer input."""
+
+    search = page.get_by_role("searchbox", name="Search table")
+    search.wait_for(timeout=30000)
     grid = page.locator(".cui-data-table .ag-root-wrapper").first
     grid.wait_for(timeout=30000)
-    grid.focus()
+    reached_grid_by_tab = False
+    for _ in range(100):
+        page.keyboard.press("Tab")
+        reached_grid_by_tab = bool(page.evaluate("Boolean(document.activeElement?.closest('.cui-data-table .ag-root-wrapper'))"))
+        if reached_grid_by_tab:
+            break
+    if not reached_grid_by_tab:
+        # The grid is the application-owned keyboard surface. Programmatic
+        # focus only establishes its starting point; selection remains keys.
+        grid.focus()
     page.keyboard.press("Tab")
     page.keyboard.press("ArrowDown")
     page.keyboard.press("Space")
-    page.wait_for_timeout(250)
-    if page.get_by_role("button", name="Open episode").count() == 0:
+    preview = page.locator('[aria-label="Selected episode preview"]')
+    preview_action = preview.get_by_role("button", name="Open episode")
+    try:
+        preview_action.wait_for(timeout=10000)
+    except Exception:
         cell = page.locator(".cui-data-table .ag-center-cols-container .ag-row").first.locator(".ag-cell").first
         cell.focus()
         page.keyboard.press("Space")
-        page.wait_for_timeout(250)
-    page.get_by_role("button", name="Open episode").wait_for(timeout=10000)
+        preview_action.wait_for(timeout=10000)
+    selected = preview.count() == 1 and _visible_text_present(page, episode_id)
+    if not selected:
+        raise RuntimeError(f"keyboard selection did not expose expected episode {episode_id}")
+    return {"reached_grid_by_tab": reached_grid_by_tab, "selected_episode_id": episode_id, "selection_input": "keyboard"}
 
 
 def _keyboard_open_and_claim(page: Any, base: str, episode_id: str, evidence_dir: Path) -> dict[str, object]:
     page.goto(base + "/", wait_until="domcontentloaded")
     _wait_for_text(page, "Attention")
+    _wait_for_authorized_attention_row(page, episode_id)
     attention_aria = _aria_snapshot(page)
     initial_status = page.get_by_role("status").all_inner_texts()
+    populated_attention = {
+        "expected_episode_id": episode_id,
+        "aria_contains_episode": episode_id in attention_aria,
+        "aria_not_empty_state": "No permitted Attention rows" not in attention_aria,
+        "data_row_count": page.locator(".cui-data-table .ag-center-cols-container .ag-row").count(),
+        "search_controls_present": page.get_by_role("searchbox", name="Search table").count() == 1,
+        "table_controls_present": page.get_by_role("toolbar", name="Table controls").count() == 1,
+    }
     page.screenshot(path=str(evidence_dir / "attention-populated-1440x900.png"), full_page=True)
-    _keyboard_select(page)
+    selection = _keyboard_select(page, episode_id)
+    attention_selected_aria = _aria_snapshot(page)
     preview_text = page.locator('[aria-label="Selected episode preview"]').inner_text()
     preview_fields = ("Episode ID", "Issue / title", "Priority", "Source state", "Owner", "Workflow state", "Decision deadline")
     preview_facts = {field: field in preview_text for field in preview_fields}
@@ -313,29 +353,49 @@ def _keyboard_open_and_claim(page: Any, base: str, episode_id: str, evidence_dir
     preview_button.press("Enter")
     page.wait_for_url("**/episode", timeout=30000)
     _wait_for_text(page, "Episode decision brief")
+    _wait_for_visible_text(page, episode_id)
+    page.locator("dl").get_by_text("OPEN", exact=True).wait_for(timeout=30000)
+    page.get_by_role("button", name="Claim episode").wait_for(timeout=30000)
     episode_aria = _aria_snapshot(page)
+    episode_semantic_facts = _semantic_facts(page, surface="episode", episode_id=episode_id, aria_snapshot=episode_aria)
     page.screenshot(path=str(evidence_dir / "episode-populated-1440x900.png"), full_page=True)
     primary = _keyboard_focus_target(page, "Claim episode")
     primary_focus = _focus_style(page, primary, already_keyboard_focused=True)
     focus_before_primary = _focused_name(page)
     primary.press("Enter")
     page.locator("dl").get_by_text("CLAIMED", exact=True).wait_for(timeout=30000)
-    page.wait_for_timeout(1200)
+    page.wait_for_function(
+        """() => {
+            const node = document.querySelector('[data-ephi-focus-target="primary-action"]');
+            return Boolean(node && document.activeElement === node && node.getBoundingClientRect().width > 0);
+        }""",
+        timeout=30000,
+    )
     claim_status = page.get_by_role("status").all_inner_texts()
     focus_after_claim = _focused_name(page)
     focus_after_claim_details = _focused_details(page)
     contrast = _contrast_facts(page)
-    selected_episode_visible = page.get_by_text(episode_id, exact=True).count() > 0
+    selected_episode_visible = _visible_text_present(page, episode_id)
     page.screenshot(path=str(evidence_dir / "episode-claimed-1440x900.png"), full_page=True)
     page.get_by_role("button", name="Return to Attention").last.focus()
     page.keyboard.press("Enter")
     page.wait_for_url("**/", timeout=30000)
     _wait_for_text(page, "Attention")
-    restored_preview = page.get_by_text("Selected episode preview", exact=True).count() == 1
+    _wait_for_authorized_attention_row(page, episode_id)
+    preview = page.locator('[aria-label="Selected episode preview"]')
+    _wait_for_visible_text(page, episode_id)
+    restored_preview = page.get_by_text("Selected episode preview", exact=True).count() == 1 and preview.get_by_role("button", name="Open episode").count() == 1
+    page.wait_for_function("() => (document.activeElement?.innerText || '').trim() === 'Attention'", timeout=30000)
     focus_after_return = _focused_name(page)
+    attention_semantic_facts = _semantic_facts(page, surface="attention", episode_id=episode_id, aria_snapshot=_aria_snapshot(page))
     return {
         "attention_aria_snapshot": attention_aria,
+        "attention_selected_aria_snapshot": attention_selected_aria,
+        "populated_attention": populated_attention,
+        "selection": selection,
         "episode_aria_snapshot": episode_aria,
+        "episode_semantic_facts": episode_semantic_facts,
+        "attention_semantic_facts": attention_semantic_facts,
         "initial_status": initial_status,
         "selected_row_preview": {"fields_present": preview_facts, "open_action_name": "Open episode"},
         "focus_continuity": {
@@ -343,6 +403,12 @@ def _keyboard_open_and_claim(page: Any, base: str, episode_id: str, evidence_dir
             "before_primary_action": focus_before_primary,
             "after_successful_claim": focus_after_claim,
             "after_return": focus_after_return,
+            "expected_sequence": _focus_path_ok({
+                "after_selection": focus_after_selection,
+                "before_primary_action": focus_before_primary,
+                "after_successful_claim": focus_after_claim,
+                "after_return": focus_after_return,
+            }),
         },
         "focus_after_claim_details": focus_after_claim_details,
         "preview_focus_style": preview_focus,
@@ -352,6 +418,20 @@ def _keyboard_open_and_claim(page: Any, base: str, episode_id: str, evidence_dir
         "contrast": contrast,
         "return_restored_attention": restored_preview,
         "selected_episode_identity_preserved": selected_episode_visible,
+        "keyboard_path_complete": bool(selection.get("selected_episode_id") == episode_id and focus_after_selection == "Open episode" and focus_before_primary in {"Claim episode", "Acknowledge episode"} and focus_after_return == "Attention"),
+        "focus_continuity_complete": _focus_path_ok({
+            "after_selection": focus_after_selection,
+            "before_primary_action": focus_before_primary,
+            "after_successful_claim": focus_after_claim,
+            "after_return": focus_after_return,
+        }),
+        "populated_attention_truthful": bool(
+            populated_attention["aria_contains_episode"]
+            and populated_attention["aria_not_empty_state"]
+            and populated_attention["data_row_count"] >= 1
+            and populated_attention["search_controls_present"]
+            and populated_attention["table_controls_present"]
+        ),
     }
 
 
@@ -366,30 +446,49 @@ def _focus_path_ok(path: dict[str, object]) -> bool:
     )
 
 
-def _exercise_search(page: Any, evidence_dir: Path) -> dict[str, object]:
+def _exercise_search(page: Any, evidence_dir: Path, episode_id: str) -> dict[str, object]:
+    unfiltered_row = page.locator('[aria-label="Selected episode preview"]').get_by_text(episode_id, exact=True)
+    unfiltered_row_existed = unfiltered_row.count() == 1
     search = page.get_by_role("searchbox", name="Search table")
     search.fill("synthetic-no-match-156")
-    page.wait_for_timeout(400)
+    expected = "No permitted Attention rows match this search. This is not a zero-risk result."
+    _wait_for_authoritative_status(page, expected)
     status = page.get_by_role("status").all_inner_texts()
+    overlay = page.locator(".cui-data-table").inner_text()
     page.screenshot(path=str(evidence_dir / "attention-no-matching-rows-1440x900.png"), full_page=True)
-    return {"status_text": status, "truthful_no_match": any("not a zero-risk" in item.lower() for item in status)}
+    return {
+        "status_text": status,
+        "truthful_no_match": expected in status and "zero-risk" in expected,
+        "unfiltered_authorized_row_existed": unfiltered_row_existed,
+        "neutral_empty_overlay": "No permitted Attention rows" not in overlay,
+    }
 
 
 def _keyboard_walkthrough(page: Any) -> dict[str, object]:
     page.goto(page.url.split("/episode", 1)[0], wait_until="domcontentloaded")
     _wait_for_text(page, "Attention")
     names = []
-    for _ in range(40):
+    reached_table = False
+    for _ in range(80):
         page.keyboard.press("Tab")
         name = _focused_name(page)
-        if name:
-            names.append(name)
-        if "Search table" in name and any("Primary navigation" in item for item in names):
+        details = page.evaluate(
+            """() => ({
+                role: document.activeElement?.getAttribute('role') || '',
+                inGrid: Boolean(document.activeElement?.closest('.cui-data-table .ag-root-wrapper')),
+                tag: document.activeElement?.tagName || ''
+            })"""
+        )
+        token = name or details["role"] or ("grid" if details["inGrid"] else details["tag"])
+        names.append(token)
+        reached_table = reached_table or bool(details["inGrid"])
+        if "Search table" in name and reached_table and any("Attention" in item or "Primary navigation" in item for item in names):
             break
     return {
         "focus_names": names,
         "reached_navigation": any("Attention" in item or "Primary navigation" in item for item in names),
         "reached_search": any("Search table" in item for item in names),
+        "reached_table": reached_table,
         "no_empty_focus": all(bool(item) for item in names),
     }
 
@@ -409,8 +508,8 @@ def _real_browser(base: str, seed: dict[str, str], evidence_dir: Path) -> dict[s
         no_selection["focus_observer"] = page.evaluate("Boolean(window.__ephiO10FocusObserver)")
         page.screenshot(path=str(evidence_dir / "episode-no-selection-1440x900.png"), full_page=True)
         critical = _keyboard_open_and_claim(page, base, seed["episode_id"], evidence_dir)
-        search = _exercise_search(page, evidence_dir)
-        semantics_attention = _semantic_facts(page)
+        search = _exercise_search(page, evidence_dir, seed["episode_id"])
+        semantics_attention = critical["attention_semantic_facts"]
         walkthrough = _keyboard_walkthrough(page)
         page.goto(base + "/episode", wait_until="domcontentloaded")
         _wait_for_text(page, "Episode decision brief")
@@ -418,12 +517,32 @@ def _real_browser(base: str, seed: dict[str, str], evidence_dir: Path) -> dict[s
         try:
             page.emulate_media(forced_colors="active")
             forced_target = _keyboard_focus_target(page, "Return to Attention")
-            forced_colors = {"status": "PASS", "focus": _focus_style(page, forced_target, already_keyboard_focused=True)}
+            forced_focus = _focus_style(page, forced_target, already_keyboard_focused=True)
+            forced_indicator = _focus_contrast(forced_focus)
+            focus_observable = forced_focus.get("matchesFocus") is True and (
+                forced_focus.get("outlineStyle") not in {"none", "hidden"} and str(forced_focus.get("outlineWidth")) not in {"0px", "0"}
+                or forced_focus.get("boxShadow") not in {None, "none"}
+            )
+            if focus_observable and forced_indicator.get("status") == "NOT_MEASURABLE":
+                forced_indicator = {
+                    **forced_indicator,
+                    "status": "PASS",
+                    "measurement": "computed non-zero forced-colors focus treatment; system-representable outline",
+                    "contrast_status": "NOT_MEASURABLE",
+                }
+            forced_colors = {
+                "status": "PASS" if focus_observable and forced_indicator.get("status") == "PASS" else "FAIL",
+                "focus": forced_focus,
+                "focus_indicator": forced_indicator,
+                "focus_observable": focus_observable,
+            }
         except (TypeError, NotImplementedError) as exc:
             forced_colors = {"status": "NOT_SUPPORTED", "environment_fact": type(exc).__name__}
+        except Exception as exc:
+            forced_colors = {"status": "FAIL", "environment_fact": {"type": type(exc).__name__, "digest": _sha256(str(exc))}}
         finally:
             page.emulate_media(forced_colors="none")
-        semantics_episode = _semantic_facts(page)
+        semantics_episode = critical["episode_semantic_facts"]
         contrast = critical["contrast"]
         facts = {
             "critical_path": critical,
@@ -443,47 +562,152 @@ def _real_browser(base: str, seed: dict[str, str], evidence_dir: Path) -> dict[s
     return facts
 
 
-def _responsive_browser(base: str, evidence_dir: Path) -> dict[str, object]:
+def _visible_and_unclipped(locator: Any, page: Any) -> bool:
+    if not locator.count() or not locator.is_visible():
+        return False
+    return bool(locator.evaluate(
+        """(element) => {
+            const rect = element.getBoundingClientRect();
+            const style = getComputedStyle(element);
+            return rect.width > 0 && rect.height > 0 && style.visibility !== 'hidden' && style.display !== 'none'
+                && rect.right <= window.innerWidth + 1 && rect.left >= -1;
+        }"""
+    ))
+
+
+def _overflow_facts(page: Any) -> dict[str, object]:
+    return page.evaluate(
+        """() => {
+            const table = [...document.querySelectorAll('.cui-data-table')].find(node =>
+                node.scrollWidth > node.clientWidth || node.querySelector('.ag-body-viewport'));
+            const tableViewport = table?.querySelector('.ag-body-viewport, .ag-center-cols-viewport') || table;
+            const bodyOverflow = document.body.scrollWidth > document.body.clientWidth;
+            const documentOverflow = document.documentElement.scrollWidth > document.documentElement.clientWidth;
+            return {
+                document_scroll_width: document.documentElement.scrollWidth,
+                document_client_width: document.documentElement.clientWidth,
+                body_scroll_width: document.body.scrollWidth,
+                body_client_width: document.body.clientWidth,
+                document_overflow: documentOverflow,
+                body_overflow: bodyOverflow,
+                application_horizontal_overflow: documentOverflow || bodyOverflow,
+                table_internal_overflow: Boolean(tableViewport && tableViewport.scrollWidth > tableViewport.clientWidth),
+                table_scroll_width: tableViewport?.scrollWidth || 0,
+                table_client_width: tableViewport?.clientWidth || 0
+            };
+        }"""
+    )
+
+
+def _surface_facts(page: Any, episode_id: str) -> dict[str, object]:
+    """Return bounded, secret-safe facts when one responsive step cannot settle."""
+
+    return page.evaluate(
+        """(episodeId) => ({
+            path: window.location.pathname,
+            h1: [...document.querySelectorAll('h1')].map(node => (node.innerText || '').trim()),
+            status: [...document.querySelectorAll('[role=status]')].map(node => (node.innerText || '').trim().slice(0, 180)),
+            episode_identity_visible: [...document.querySelectorAll('body *')].some(node => {
+                const rect = node.getBoundingClientRect();
+                return (node.innerText || node.textContent || '').trim() === episodeId && rect.width > 0 && rect.height > 0;
+            }),
+            no_episode_selected: (document.body.innerText || '').includes('No episode selected'),
+            preview_count: document.querySelectorAll('[aria-label="Selected episode preview"]').length,
+            primary_buttons: [...document.querySelectorAll('button')].map(node => (node.getAttribute('aria-label') || node.innerText || '').trim()).filter(name => name === 'Claim episode' || name === 'Acknowledge episode'),
+        })""",
+        arg=episode_id,
+    )
+
+
+def _responsive_browser(base: str, evidence_dir: Path, episode_id: str, events: dict[str, list[dict[str, str]]]) -> dict[str, object]:
     from playwright.sync_api import sync_playwright
 
     results = {}
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch(headless=True)
         for width, height in VIEWPORTS:
+            stage = "context"
             context = browser.new_context(viewport={"width": width, "height": height}, device_scale_factor=1, reduced_motion="reduce")
             page = context.new_page()
+            _attach_events(page, events)
+            stage = "attention_navigation"
             page.goto(base + "/", wait_until="domcontentloaded")
             _wait_for_text(page, "Attention")
+            stage = "attention_data"
+            _wait_for_authorized_attention_row(page, episode_id)
             screenshot_name = f"attention-{width}x{height}.png"
             page.screenshot(path=str(evidence_dir / screenshot_name), full_page=True)
-            overflow = page.evaluate("document.documentElement.scrollWidth > document.documentElement.clientWidth")
+            attention_overflow = _overflow_facts(page)
             controls = {}
             for label in ("Open navigation", "Refresh table", "Export CSV", "Open episode"):
                 locator = page.get_by_role("button", name=label)
                 if locator.count():
                     controls[label] = _box(page, locator.last)
             try:
-                _keyboard_select(page)
-                controls["Open episode preview"] = _box(page, page.get_by_role("button", name="Open episode").last)
-                page.get_by_role("button", name="Open episode").last.focus()
+                stage = "keyboard_selection"
+                _keyboard_select(page, episode_id)
+                attention_open = page.locator('[aria-label="Selected episode preview"]').get_by_role("button", name="Open episode")
+                attention_open.wait_for(timeout=10000)
+                controls["Open episode preview"] = _box(page, attention_open)
+                attention_content_visibility = {
+                    "attention_heading": _visible_and_unclipped(page.get_by_role("heading", name="Attention"), page),
+                    "attention_status": _visible_and_unclipped(page.locator(".ephi-o10-live-status"), page),
+                    "attention_preview": _visible_and_unclipped(page.locator('[aria-label="Selected episode preview"]'), page),
+                    "attention_open_action": _visible_and_unclipped(attention_open, page),
+                }
+                stage = "episode_navigation"
+                attention_open.focus()
                 page.keyboard.press("Enter")
                 page.wait_for_url("**/episode", timeout=30000)
                 _wait_for_text(page, "Episode decision brief")
+                stage = "episode_identity"
+                _wait_for_visible_text(page, episode_id)
                 page.screenshot(path=str(evidence_dir / f"episode-{width}x{height}.png"), full_page=True)
-                controls["Episode primary"] = _box(page, _visible_button(page, "Claim episode", "Acknowledge episode"))
-                episode_overflow = page.evaluate("document.documentElement.scrollWidth > document.documentElement.clientWidth")
+                stage = "episode_measurement"
+                episode_primary = _visible_button(page, "Claim episode", "Acknowledge episode")
+                controls["Episode primary"] = _box(page, episode_primary)
+                episode_overflow = _overflow_facts(page)
+                content_visibility = {
+                    **attention_content_visibility,
+                    "episode_heading": _visible_and_unclipped(page.get_by_role("heading", name="Episode decision brief"), page),
+                    "episode_status": _visible_and_unclipped(page.locator(".ephi-o10-live-status"), page),
+                    "episode_primary": _visible_and_unclipped(episode_primary, page),
+                }
             except Exception as exc:
-                episode_overflow = None
-                results[f"{width}x{height}"] = {"status": "FAIL", "error": _safe_issue(exc), "overflow": bool(overflow), "controls": controls}
+                episode_overflow = {}
+                results[f"{width}x{height}"] = {
+                    "status": "FAIL",
+                    "stage": stage,
+                    "error": _safe_issue(exc),
+                    "surface_facts": _surface_facts(page, episode_id),
+                    "attention_overflow": attention_overflow,
+                    "episode_overflow": episode_overflow,
+                    "controls": controls,
+                }
                 context.close()
                 continue
+            critical = {key: value for key, value in controls.items() if key in {"Open episode preview", "Episode primary", "Refresh table", "Open navigation"}}
+            all_targets_measured = all(value.get("width") is not None and value.get("height") is not None for value in critical.values())
+            phone_targets_ok = width not in {390, 320} or all(value["width"] >= 44 and value["height"] >= 44 for value in critical.values() if value.get("width") is not None)
+            target_visibility = all(
+                value.get("width") is not None and value.get("height") is not None and value["width"] > 0 and value["height"] > 0
+                for value in critical.values()
+            )
+            content_ok = all(content_visibility.values())
+            viewport_status = all_targets_measured and phone_targets_ok and target_visibility and content_ok and attention_overflow.get("application_horizontal_overflow") is False and episode_overflow.get("application_horizontal_overflow") is False
             results[f"{width}x{height}"] = {
-                "status": "PASS",
-                "attention_overflow": bool(overflow),
-                "episode_overflow": bool(episode_overflow),
+                "status": "PASS" if viewport_status else "FAIL",
+                "attention_overflow": attention_overflow.get("application_horizontal_overflow"),
+                "episode_overflow": episode_overflow.get("application_horizontal_overflow"),
+                "document_overflow": bool(attention_overflow.get("document_overflow") or episode_overflow.get("document_overflow")),
+                "body_overflow": bool(attention_overflow.get("body_overflow") or episode_overflow.get("body_overflow")),
+                "application_horizontal_overflow": bool(attention_overflow.get("application_horizontal_overflow") or episode_overflow.get("application_horizontal_overflow")),
+                "table_internal_overflow": {"attention": attention_overflow.get("table_internal_overflow"), "episode": episode_overflow.get("table_internal_overflow")},
+                "content_visibility": content_visibility,
+                "critical_targets_visible": content_ok and target_visibility,
                 "controls": controls,
                 "critical_target_minimum_css_px": 44,
-                "critical_target_measurements": {key: value for key, value in controls.items() if key in {"Open episode preview", "Episode primary", "Refresh table", "Open navigation"}},
+                "critical_target_measurements": critical,
             }
             context.close()
         browser.close()
@@ -509,6 +733,8 @@ def _harness_states(evidence_dir: Path) -> dict[str, object]:
             with sync_playwright() as playwright:
                 browser = playwright.chromium.launch(headless=True)
                 page = browser.new_page(viewport={"width": 1440, "height": 900})
+                events: dict[str, list[dict[str, str]]] = {"console_errors": [], "page_errors": [], "request_failures": []}
+                _attach_events(page, events)
                 page.goto(f"http://127.0.0.1:{port}/", wait_until="domcontentloaded")
                 page.locator("h1").wait_for(timeout=30000)
                 body = page.locator("body").inner_text()
@@ -528,11 +754,12 @@ def _harness_states(evidence_dir: Path) -> dict[str, object]:
                     "episode-capability-states": ("ready", "stale", "partial", "insufficient", "unavailable"),
                 }[scenario]
                 results[scenario] = {
-                    "status": "PASS" if all(token in body.lower() for token in expected) else "FAIL",
+                    "status": "PASS" if all(token in body.lower() for token in expected) and not any(events.values()) else "FAIL",
                     "aria_snapshot": _aria_snapshot(page),
                     "screenshot": screenshot.name,
                     "body_digest": _sha256(body),
                     "bounded_text": not any(secret in body for secret in ("DSN", "postgresql://", "not recorded")),
+                    "events": events,
                 }
                 browser.close()
         finally:
@@ -611,17 +838,11 @@ def qualify(dsn: str, output: Path, evidence_dir: Path) -> dict[str, object]:
         real = run_server("real", lambda base: _real_browser(base, seed, evidence_dir))
         command = _database_command_facts(dsn, seed["episode_id"])
         _seed_database(dsn)
-        responsive = run_server("responsive", lambda base: _responsive_browser(base, evidence_dir))
+        responsive_events: dict[str, list[dict[str, str]]] = {"console_errors": [], "page_errors": [], "request_failures": []}
+        responsive = run_server("responsive", lambda base: _responsive_browser(base, evidence_dir, seed["episode_id"], responsive_events))
+        for key in responsive_events:
+            real["events"][key].extend(responsive_events[key])
     degraded = _harness_states(evidence_dir)
-    focus_path_ok = _focus_path_ok(real["critical_path"]["focus_continuity"])
-    focus_indicator_ok = real["critical_path"]["focus_indicator_contrast"].get("status") != "FAIL"
-    browser_ok = (
-        not any(real["events"][key] for key in ("console_errors", "page_errors", "request_failures"))
-        and focus_path_ok
-        and focus_indicator_ok
-    )
-    responsive_ok = all(item.get("status") == "PASS" for item in responsive.values())
-    degraded_ok = all(item.get("status") == "PASS" and item.get("bounded_text") for item in degraded.values())
     output.parent.mkdir(parents=True, exist_ok=True)
     screenshot_inventory = [
         {"path": item.name, "bytes": item.stat().st_size, "sha256": _sha256(item.read_bytes())}
@@ -629,26 +850,34 @@ def qualify(dsn: str, output: Path, evidence_dir: Path) -> dict[str, object]:
     ]
     report = {
         "schema_version": 1,
-        "status": "PASS" if browser_ok and responsive_ok and degraded_ok else "FAIL",
         "project": "ephi",
-        "request": "ephi-o10-rendered-accessibility-v1",
+        "request": "ephi-o10-rendered-accessibility-fix1",
         "base": "9262533404f13df52ef20a7a1245b120f4438b04",
         "scope": {"routes": ["/", "/episode"], "synthetic_identity": True, "human_ux_review": "PENDING", "production_performance": "NOT_CLAIMED"},
         "postgres": {"version": seed["postgres_version"], "real_postgresql_18": seed["postgres_version"].startswith("18.")},
         "real_browser": real,
-        "interaction_keyboard_matrix": [
-            {"step": "Attention single-row selection", "input": "keyboard row focus + Space", "status": "PASS"},
-            {"step": "Open episode", "input": "keyboard Tab + Enter on preview action", "status": "PASS"},
-            {"step": "Episode Claim/Acknowledge", "input": "keyboard Tab + Enter on current eligible action", "status": "PASS"},
-            {"step": "Durable refresh", "input": "PostgreSQL receipt/workflow read plus rendered refresh", "status": "PASS"},
-            {"step": "Return to Attention", "input": "keyboard Enter on return action", "status": "PASS"},
-        ],
+        "interaction_keyboard_matrix": [],
         "responsive": responsive,
         "degraded_state_matrix": degraded,
         "durable_command": command,
         "secret_safety": {"cookies_recorded": False, "storage_recorded": False, "authorization_headers_recorded": False, "dsn_recorded": False, "raw_protected_rows_recorded": False},
         "screenshot_inventory": screenshot_inventory,
     }
+    acceptance = evaluate_o10_acceptance(report)
+    critical = real.get("critical_path", {})
+    selection = critical.get("selection", {}) if isinstance(critical, Mapping) else {}
+    preview = critical.get("selected_row_preview", {}) if isinstance(critical, Mapping) else {}
+    focus = critical.get("focus_continuity", {}) if isinstance(critical, Mapping) else {}
+    episode = critical.get("episode_semantic_facts", {}) if isinstance(critical, Mapping) else {}
+    report["interaction_keyboard_matrix"] = [
+        {"step": "Attention single-row selection", "input": "keyboard row focus + Space", "status": "PASS" if selection.get("selection_input") == "keyboard" and selection.get("selected_episode_id") == seed["episode_id"] else "FAIL"},
+        {"step": "Open episode", "input": "keyboard Tab + Enter on preview action", "status": "PASS" if preview.get("open_action_name") == "Open episode" and episode.get("selected_episode_identity") is True else "FAIL"},
+        {"step": "Episode Claim/Acknowledge", "input": "keyboard Tab + Enter on current eligible action", "status": "PASS" if focus.get("after_successful_claim") == "Acknowledge episode" and critical.get("claim_status") else "FAIL"},
+        {"step": "Durable refresh", "input": "PostgreSQL receipt/workflow read plus rendered refresh", "status": "PASS" if command.get("command_receipt_count") == 1 and command.get("work_state_present") is True else "FAIL"},
+        {"step": "Return to Attention", "input": "keyboard Enter on return action", "status": "PASS" if critical.get("return_restored_attention") is True else "FAIL"},
+    ]
+    report["acceptance"] = acceptance
+    report["status"] = acceptance["status"]
     output.write_text(json.dumps(report, sort_keys=True, indent=2) + "\n", encoding="utf-8")
     return report
 
@@ -661,7 +890,7 @@ def main() -> int:
     args = parser.parse_args()
     args.artifacts.mkdir(parents=True, exist_ok=True)
     if not args.dsn:
-        report = {"schema_version": 1, "status": "NOT_RUN", "reason": "EPHI_TEST_POSTGRES_DSN_NOT_SET", "project": "ephi", "request": "ephi-o10-rendered-accessibility-v1"}
+        report = {"schema_version": 1, "status": "NOT_RUN", "reason": "EPHI_TEST_POSTGRES_DSN_NOT_SET", "project": "ephi", "request": "ephi-o10-rendered-accessibility-fix1"}
         args.output.write_text(json.dumps(report, sort_keys=True, indent=2) + "\n", encoding="utf-8")
         print(json.dumps({"status": report["status"], "output": str(args.output)}, sort_keys=True))
         return 0

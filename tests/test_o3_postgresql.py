@@ -124,6 +124,35 @@ class PostgreSQLO3AttentionEpisodeTests(unittest.TestCase):
         self.assertEqual(self.store.count_rows()["audit_event"], 1)
         self.assertEqual(self.store.count_rows()["outbox_event"], 1)
 
+    def test_server_side_attention_search_predicate_changes_postgresql_results(self):
+        self.store.seed_aggregate(
+            self.scope,
+            "episode_workflow",
+            "episode-2",
+            {"work_state": "OPEN", "owner": None},
+            version=0,
+        )
+        self.store.seed_attention_projection(
+            self.scope,
+            "episode-2",
+            {
+                "title": "Other Attention case",
+                "asset_id": "asset-2",
+                "priority": "P2",
+                "severity": "MEDIUM",
+                "technical_state": "READY",
+                "source_state": "READY",
+                "deadline": "2026-09-20T12:00:00Z",
+                "age": "2",
+            },
+        )
+
+        matching = self.attention.list_attention(self.principal, self.scope, filters={"search": "Durable"})
+        self.assertEqual([row.episode_id for row in matching.rows], ["episode-1"])
+        absent = self.attention.list_attention(self.principal, self.scope, filters={"search": "no-match-o3"})
+        self.assertEqual(absent.total_count, 0)
+        self.assertEqual(absent.rows, ())
+
     def test_two_sessions_expected_version_conflict_and_atomic_acknowledgement(self):
         first = PostgreSQLReferenceTransactionAdapter(DSN)
         second = PostgreSQLReferenceTransactionAdapter(DSN)

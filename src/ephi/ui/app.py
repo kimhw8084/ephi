@@ -51,16 +51,13 @@ from nicegui_base import (
 from ephi.application.attention import AttentionQueryService
 from ephi.application.context import AccessScope, CommandContext, CurrentAuthorizationAuthority, Principal
 from ephi.application.episodes import EpisodeBrief, EpisodeBriefQueryService
-from ephi.application.errors import (
-    AuthorizationDeniedError,
-    CommandError,
-    CoherentReadConflictError,
-    QuerySnapshotExpiredError,
-    ScopeDeniedError,
-    StorageFailureError,
-    VersionConflictError,
-)
 from ephi.application.workflow import EpisodeWorkflowCommandService
+from ephi.application.o10 import (
+    attention_result_status as _attention_result_status,
+    display_value as _display_value,
+    episode_action as _episode_action,
+    state_for_error as _state_for_error_facts,
+)
 from ephi.application.source_reality import require_runtime_source_binding
 from ephi.config import RuntimeSettings
 from ephi.infrastructure.postgresql import PostgreSQLReferenceTransactionAdapter
@@ -128,6 +125,16 @@ _O10_UI_CSS = """
 .ephi-o10-attention-surface .cui-table-search {
     box-sizing: border-box;
 }
+.ephi-o10-preview .cui-button,
+.ephi-o10-episode-surface .cui-button {
+    min-height: 44px !important;
+}
+.ephi-o10-preview .cui-button {
+    min-width: 44px !important;
+}
+.ephi-o10-episode-surface .cui-button {
+    min-width: 44px !important;
+}
 .ephi-o10-preview h2 {
     margin: 0 0 var(--cui-space-2);
     color: var(--cui-text-primary);
@@ -158,6 +165,10 @@ html body button.ephi-o10-focus-target:focus-visible,
 @media (max-width: 899px) {
     .ephi-o10-action-row > * {
         min-width: min(100%, 15rem);
+    }
+    .cui-shell-mobile-menu.cui-icon-button {
+        min-width: 44px !important;
+        width: 44px !important;
     }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -333,17 +344,9 @@ def _intent_for_capability(state: object) -> StatusIntent:
 def _state_for_error(error: BaseException) -> StateViewSpec:
     if isinstance(error, _StaleResponseError):
         return StateViewSpec(StateKind.ERROR, "Stale response", "A newer request is authoritative; the older response was discarded.")
-    if isinstance(error, (AuthorizationDeniedError, ScopeDeniedError)):
-        return StateViewSpec(StateKind.PERMISSION, "Permission denied", "Current authorization does not permit this data or action.")
-    if isinstance(error, QuerySnapshotExpiredError):
-        return StateViewSpec(StateKind.ERROR, "Attention snapshot expired", "Refresh Attention to start a new retained query snapshot.", action_label="Refresh")
-    if isinstance(error, VersionConflictError):
-        return StateViewSpec(StateKind.ERROR, "Version conflict", "The workflow changed in another session. Refresh the Episode before retrying.", action_label="Refresh")
-    if isinstance(error, CoherentReadConflictError):
-        return StateViewSpec(StateKind.ERROR, "Stale decision read", "The analytical revision and workflow state were not one coherent read.", action_label="Refresh")
-    if isinstance(error, StorageFailureError):
-        return StateViewSpec(StateKind.OFFLINE, "Source unavailable", "PostgreSQL or the required EPHI source is unavailable. No healthy or empty state is inferred.", action_label="Retry")
-    return StateViewSpec(StateKind.ERROR, "EPHI request failed", "The operation did not commit. Retry only after reviewing the current state.")
+    state = _state_for_error_facts(error)
+    state_kind = {"permission": StateKind.PERMISSION, "offline": StateKind.OFFLINE}.get(state.kind, StateKind.ERROR)
+    return StateViewSpec(state_kind, state.title, state.message, action_label=state.action_label)
 
 
 def _attention_columns() -> tuple[TableColumn, ...]:
@@ -440,7 +443,7 @@ def _mark_focus_target(element: object, marker: str) -> None:
     # focus token inline so the rendered browser proof is deterministic.
     element.style(  # type: ignore[attr-defined]
         "outline-style: solid !important; outline-width: 3px !important; "
-        "outline-color: var(--cui-focus-ring, var(--cui-accent)) !important; outline-offset: 2px !important;"
+        "outline-offset: 2px !important;"
     )
 
 
@@ -454,37 +457,6 @@ def _semantic_heading(title: str, description: str, *, autofocus: bool = False) 
             ui.label(title)
         ui.label(description).classes("ephi-o10-page-description")
     return heading
-
-
-def _display_value(value: object, *, unavailable: str = "Unavailable / not yet qualified") -> str:
-    if value is None or value == "":
-        return unavailable
-    if isinstance(value, Mapping):
-        return ", ".join(f"{key}: {_display_value(item)}" for key, item in sorted(value.items()))
-    return str(value)
-
-
-def _attention_result_status(*, total_count: int | None, search: str = "", loading: bool = False) -> str:
-    if loading:
-        return "Loading authorized Attention rows; source coverage is not yet known."
-    if total_count == 0 and search.strip():
-        return "No permitted Attention rows match this search. This is not a zero-risk result."
-    if total_count == 0:
-        return "No permitted Attention rows are available in this authorized view; unavailable data is not treated as zero risk."
-    if total_count is None:
-        return "Attention results are available only after the authorized query completes."
-    noun = "row" if total_count == 1 else "rows"
-    return f"{total_count} permitted Attention {noun}; source coverage is limited to this authorized result."
-
-
-def _episode_action(brief: EpisodeBrief, principal: Principal) -> tuple[str, str] | None:
-    work_state = brief.workflow.get("work_state")
-    owner = brief.workflow.get("owner")
-    if work_state == "OPEN" and "ephi.episode.claim" in principal.capabilities:
-        return ("Claim episode", "ClaimEpisode")
-    if work_state == "CLAIMED" and owner == principal.subject and "ephi.episode.acknowledge" in principal.capabilities:
-        return ("Acknowledge episode", "AcknowledgeEpisode")
-    return None
 
 
 def _set_attention_selection(composition: EphiUiComposition, row: Mapping[str, object]) -> bool:
@@ -593,6 +565,9 @@ def build_attention_page(composition: EphiUiComposition) -> None:
         user_role="Engineer",
         debugger=False,
     ):
+        from nicegui import ui
+
+        ui.query("main").props('role="region" aria-label="EPHI application content"')
         with MasterDetailPage("", None) as page:
             heading = _semantic_heading(
                 "Attention",
@@ -600,8 +575,6 @@ def build_attention_page(composition: EphiUiComposition) -> None:
                 autofocus=workspace.state.get(FOCUS_KEY) == "attention_heading",
             )
             with page.slot(LayoutSlot.FILTERS):
-                from nicegui import ui
-
                 ui.label("Authorized scope and source coverage").classes("ephi-o10-scope-note")
                 attention_status = ui.label(_attention_result_status(total_count=None, loading=True)).classes("ephi-o10-live-status")
                 attention_status.props('role="status" aria-live="polite" aria-atomic="true" tabindex="-1"')
@@ -639,6 +612,32 @@ def build_attention_page(composition: EphiUiComposition) -> None:
                                 preview.render_row(visible_row)
                                 break
 
+                attention_search_generation = 0
+
+                async def on_attention_search(event: object) -> None:
+                    """Reflect Base's completed server search in the app-owned live region."""
+
+                    nonlocal attention_search_generation
+                    attention_search_generation += 1
+                    generation = attention_search_generation
+                    raw_value = getattr(event, "args", "")
+                    if isinstance(raw_value, Mapping):
+                        raw_value = raw_value.get("value", "")
+                    if isinstance(raw_value, (tuple, list)):
+                        raw_value = raw_value[0] if raw_value else ""
+                    expected_search = str(raw_value or "")
+                    attention_status.set_text(_attention_result_status(total_count=None, search=expected_search, loading=True))  # type: ignore[attr-defined]
+                    for _ in range(3000):
+                        if generation != attention_search_generation or attention_table is None:
+                            return
+                        query = getattr(attention_table, "query", None)
+                        if not getattr(attention_table, "loading", True) and str(getattr(query, "search", "") or "") == expected_search:
+                            count = getattr(attention_table, "total", None)
+                            attention_status.set_text(_attention_result_status(total_count=count, search=expected_search))  # type: ignore[attr-defined]
+                            return
+                        await asyncio.sleep(0.01)
+                    attention_status.set_text("Attention query completion was not confirmed; the current result is unavailable.")  # type: ignore[attr-defined]
+
                 try:
                     from nicegui import ui
 
@@ -661,7 +660,7 @@ def build_attention_page(composition: EphiUiComposition) -> None:
                                 page_size_options=(25, 50, 100),
                                 cancel_stale_requests=True,
                                 cache_pages=0,
-                                empty_message="No permitted Attention rows",
+                                empty_message="No rows in the current Attention view",
                                 error_message="Attention is unavailable; last known truth is not replaced with zero.",
                             ),
                             row_actions=(
@@ -677,6 +676,16 @@ def build_attention_page(composition: EphiUiComposition) -> None:
                             on_view_changed=on_attention_view_changed,
                             on_error=render_attention_error,
                         )
+                        search_input = getattr(getattr(attention_table, "toolbar", None), "search_input", None)
+                        if search_input is not None:
+                            search_input.on(
+                                "input",
+                                on_attention_search,
+                                throttle=0.18,
+                                leading_events=False,
+                                trailing_events=True,
+                                js_handler="e => emit(e.target.value)",
+                            )
                 except Exception as error:
                     _render_attention_error(error)
             with page.slot(LayoutSlot.DETAILS):
@@ -898,7 +907,7 @@ class _EpisodeView:
                                 )
                             )
                         back = ActionButton("Return to Attention", intent=ButtonIntent.SECONDARY, on_click=return_to_attention)
-                        back.element.classes("ephi-o10-focus-target")
+                        _mark_focus_target(back.element, "return-attention")
 
         self._mount(render)
         if focus_target == "primary" and self.primary_action is not None:
@@ -932,15 +941,16 @@ async def build_episode_page(composition: EphiUiComposition) -> None:
         user_role="Engineer",
         debugger=False,
     ):
+        from nicegui import ui
+
+        ui.query("main").props('role="region" aria-label="EPHI application content"')
         with AnalysisWorkspacePage("", None):
             heading = _semantic_heading(
                 "Episode decision brief",
                 "One coherent analytical/read revision with live durable workflow",
                 autofocus=not episode_id or workspace.state.get(FOCUS_KEY) == "episode_heading",
             )
-            from nicegui import ui
-
-            episode_host = ui.element("div").classes("ephi-o10-episode-surface").props('tabindex="-1" aria-label="Episode rendered state"')
+            episode_host = ui.element("div").classes("ephi-o10-episode-surface").props('tabindex="-1" role="region" aria-label="Episode rendered state"')
             if not episode_id:
                 focus_request = ui.element("div").props('data-ephi-focus-request="" aria-hidden="true"')
                 view = _EpisodeView(composition, episode_host, heading, "", focus_request)
@@ -970,6 +980,9 @@ def build_page() -> None:
             user_role="Unknown",
             debugger=False,
         ):
+            from nicegui import ui
+
+            ui.query("main").props('role="region" aria-label="EPHI application content"')
             _render_attention_error(error)
         return
     build_attention_page(composition)

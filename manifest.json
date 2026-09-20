@@ -51,8 +51,8 @@
     },
     {
       "path": ".github/workflows/package.yml",
-      "bytes": 15638,
-      "sha256": "7d9d957184bca492f2d8b31a132614ecda8f5e4e83b1b4952f7d5fe251de416e"
+      "bytes": 13675,
+      "sha256": "84b78ae6723829c4aa19ffeb571901e672027854f7566529114f8016773e9b1f"
     },
     {
       "path": ".gitignore",
@@ -630,6 +630,11 @@
       "sha256": "f607423b3b89eb8a3af5245ce9c4b3129d0890ebc4d8e3624d22689757bd671d"
     },
     {
+      "path": "src/ephi/application/o10.py",
+      "bytes": 14748,
+      "sha256": "9a47ddaaf1318807687829342e38afeb3e5ff289bdf495907c9132e493250f98"
+    },
+    {
       "path": "src/ephi/application/operations.py",
       "bytes": 11596,
       "sha256": "0b36b24017bc9bbbfe682f21f79dc68bc3dd4392f3d05a83bf38fa3eec16f22f"
@@ -741,8 +746,8 @@
     },
     {
       "path": "src/ephi/ui/app.py",
-      "bytes": 43519,
-      "sha256": "17073490275251a3bef93c754e059b8fadc05548135e172e1fed4b3d6876d8f1"
+      "bytes": 43863,
+      "sha256": "6a31fa847ef4e2f7dd0763bcfc1de6af79fcfdeb0ee74320c6b5c9f8f3d65171"
     },
     {
       "path": "src/ephi/ui/provider.py",
@@ -781,8 +786,8 @@
     },
     {
       "path": "tests/test_o10_rendered_accessibility.py",
-      "bytes": 3590,
-      "sha256": "6918e86a89ae576f3b541227a9de1c9f556500aa1640d67cb56cfc9b86b72010"
+      "bytes": 4289,
+      "sha256": "9d8b0c55d1c6c703e059d2a837c887e774074e5a7ebd34a565612a65f2091dae"
     },
     {
       "path": "tests/test_o2_artifacts.py",
@@ -826,8 +831,8 @@
     },
     {
       "path": "tests/test_o3_postgresql.py",
-      "bytes": 9205,
-      "sha256": "6387ce7ebdfbe6aafd75f181c7962cb886060c27b049ac4abfa549f9e9668e46"
+      "bytes": 10343,
+      "sha256": "5685d49d94868b1b25c994e7a61924f095a7578b2193b885d2500308974e2607"
     },
     {
       "path": "tests/test_o3_provider.py",
@@ -916,8 +921,8 @@
     },
     {
       "path": "tools/o10_rendered_accessibility.py",
-      "bytes": 33352,
-      "sha256": "059a96b2c1f2aa329ee858d81742b784455b6f95bf53d0ff94275d67f9b82bd5"
+      "bytes": 47191,
+      "sha256": "ad56f95d731da535a42b8c878cd86417de676ec4d4cab1a99cf562b3ce5f5a5b"
     },
     {
       "path": "tools/o10_state_harness.py",
