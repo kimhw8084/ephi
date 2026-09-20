@@ -1,0 +1,114 @@
+{
+  "audit_commit_parent_expected": "ea25b397b19a361433c8a6aa3c072258143454ce",
+  "base": {
+    "sha": "c9a128a202095ffa5bb63f3c5ca7583908397f98",
+    "tree": "77ac006855533b9b8115c106a34eced0150f20c1"
+  },
+  "candidate": {
+    "branch": "codex/ephi-o8-browser-session-security-verify1",
+    "remote_head_verified": true,
+    "sha": "ea25b397b19a361433c8a6aa3c072258143454ce",
+    "tree": "dcb1f18978a372075abb81dfd180dda0a216245d"
+  },
+  "carrier": {
+    "bundle_bytes": 4404,
+    "bundle_sha256": "5be0d123a2e4e40946371170ac58b86fad236d7428b24961657de52cd2aee0f0",
+    "commit": "d7afe561788c861f87efcb5b2c84993a868b6e3b",
+    "evidence_file_count": 6,
+    "parent": "ea25b397b19a361433c8a6aa3c072258143454ce",
+    "ref": "refs/heads/project-os-artifacts/ephi/ephi-o8-browser-session-security-verify1",
+    "remote_identity_hash_readback": "PASS",
+    "remote_inventory_hash_size_readback": "PASS"
+  },
+  "checks": {
+    "candidate_byte_preservation": true,
+    "changed_file_inventory": {
+      "candidate_hashes_and_sizes_verified": true,
+      "count": 8,
+      "recomputed_from_git_objects": true
+    },
+    "current_surface_absence": "PASS_BY_EXACT_IMMUTABLE_R2_IDENTITY",
+    "forwarded_header_authority": {
+      "configured_trusted_proxy_set": [
+        "127.0.0.1"
+      ],
+      "evidence_file": "evidence/forwarded_header_authority.json",
+      "forwarded_allow_ips_not_wildcard": true,
+      "prefix_rewriting_proxy_backend_peer_observed_as_trusted": true,
+      "status": "PASS",
+      "trusted_values_honored": true,
+      "untrusted_spoofed_forwarded_headers_ignored": true
+    },
+    "r2_middleware_preflight_cookie_browser_proxy_postgresql_surface_conclusions": "PASS_BY_EXACT_IMMUTABLE_R2_IDENTITY",
+    "repository_native_ci": {
+      "all_seven_jobs_green_on_each_run": true,
+      "r2_check_suite_id": 96153991829,
+      "r2_conclusion": "success",
+      "r2_run_id": 35511811949,
+      "verify_branch_check_suite_id": 96157259635,
+      "verify_branch_conclusion": "success",
+      "verify_branch_run_id": 35513112197
+    }
+  },
+  "fabric_job": "CF-40024fcc0bcaa30fca96f676",
+  "operation": "VERIFY",
+  "predecessor": {
+    "r1_candidate": "ea6f12260b0e4954dd353062adf00e997fa0f784",
+    "r1_candidate_is_ancestor": true,
+    "r1_carrier_commit": "fa386bf2a4210831b7c0391425b3991a692dd401",
+    "r1_evidence_commit": "e735b8c9b38150b95cb5c510e298aa8fd6e2f01c",
+    "r1_fabric_job": "CF-148ce820de18f2ecc76e2684",
+    "r1_tree": "d08f656686e85f40a8a59483260c165281e9183c",
+    "r2_candidate": "ea25b397b19a361433c8a6aa3c072258143454ce",
+    "r2_carrier_commit": "b43b6e8df17d8a1e78dc8d9a2ff9aaf2f53a8443",
+    "r2_deterministic_evidence_parent_exact_candidate": true,
+    "r2_evidence_commit": "c132c0f436271033552f00e8a3bb9373c299b3d4",
+    "r2_fabric_job": "CF-2603159c5dc66034e6d64cea"
+  },
+  "project": "ephi",
+  "remote_readback": {
+    "bundle_members_verified": true,
+    "candidate_file_hashes_verified": true,
+    "carrier_commit": "d7afe561788c861f87efcb5b2c84993a868b6e3b",
+    "carrier_parent": "ea25b397b19a361433c8a6aa3c072258143454ce",
+    "carrier_ref": "refs/heads/project-os-artifacts/ephi/ephi-o8-browser-session-security-verify1",
+    "main_head": "c9a128a202095ffa5bb63f3c5ca7583908397f98",
+    "main_unchanged": true,
+    "remote_carrier_tree": "64bb12f18eeb9af047d3671bb5bf831f17851a2d",
+    "status": "PASS",
+    "work_branch": "refs/heads/codex/ephi-o8-browser-session-security-verify1",
+    "work_head": "ea25b397b19a361433c8a6aa3c072258143454ce"
+  },
+  "repository": "kimhw8084/ephi",
+  "request": "ephi-o8-browser-session-security-verify1",
+  "schema_version": "codex-fabric.evidence-audit.v1",
+  "scope_boundary": {
+    "CHG_144": "REMAINS_BLOCKED_REAL_SOURCE",
+    "company_identity_established": false,
+    "integration_pr_created": false,
+    "later_O8_O10_O11_work": false,
+    "notion_mutated": false,
+    "o8_whole_closed": false,
+    "project_os_go_self_declared": false,
+    "target_tls_ingress_established": false
+  },
+  "secret_safety": {
+    "authorization_header_recorded": false,
+    "cookie_value_recorded": false,
+    "dsn_recorded": false,
+    "protected_payload_recorded": false,
+    "raw_artifact_bytes_recorded": false,
+    "storage_secret_recorded": false
+  },
+  "target": {
+    "main_modified_or_merged": false,
+    "main_remote_head": "c9a128a202095ffa5bb63f3c5ca7583908397f98",
+    "registered_base": "c9a128a202095ffa5bb63f3c5ca7583908397f98",
+    "target_drift": false
+  },
+  "worktree": {
+    "branch": "codex/ephi-o8-browser-session-security-verify1",
+    "clean": true,
+    "status": "clean at audit capture"
+  }
+}
