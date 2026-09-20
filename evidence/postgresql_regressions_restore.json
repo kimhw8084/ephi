@@ -1,0 +1,51 @@
+{
+  "identity": {
+    "base_sha": "c9a128a202095ffa5bb63f3c5ca7583908397f98",
+    "base_tree": "77ac006855533b9b8115c106a34eced0150f20c1",
+    "candidate_sha": "ea6f12260b0e4954dd353062adf00e997fa0f784",
+    "candidate_tree": "d08f656686e85f40a8a59483260c165281e9183c",
+    "fabric_job": "CF-148ce820de18f2ecc76e2684",
+    "repository": "kimhw8084/ephi",
+    "work_branch": "codex/ephi-o8-browser-session-security-v1"
+  },
+  "local_real_postgresql": {
+    "browser_session_qualification": "PASS",
+    "restore_rehearsal": {
+      "isolated_restore": true,
+      "raw_database_identifiers_recorded": false,
+      "status": "REAL_RESTORE_REHEARSAL_PASS"
+    },
+    "suite_results": [
+      {
+        "scope": "O2 transaction/worker/read/artifact PostgreSQL integration",
+        "tests_passed": 44
+      },
+      {
+        "scope": "O3 Attention/Episode + O8.1 current-authorization + O4 source-ingress + adapter lifecycle PostgreSQL integration",
+        "tests_passed": 21
+      },
+      {
+        "scope": "O9 operations/parser/worker-health PostgreSQL integration",
+        "tests_passed": 17
+      }
+    ],
+    "version": "18.6 (Homebrew)"
+  },
+  "non_claims": {
+    "CHG_144": "REMAINS_BLOCKED_REAL_SOURCE",
+    "authentic_family_G02_G06": "NOT_CLAIMED",
+    "company_identity": "NOT_ESTABLISHED",
+    "target_tls_ingress": "NOT_ESTABLISHED"
+  },
+  "repository_native_ci_regression": {
+    "all_jobs_success": true,
+    "browser_job": "O8.2 browser/session security integration (Python 3.13)",
+    "conclusion": "success",
+    "head_sha": "ea6f12260b0e4954dd353062adf00e997fa0f784",
+    "postgres_job": "PostgreSQL command/worker/read/artifact/O9 integration (Python 3.13)",
+    "run_id": 35492391411,
+    "workflow": "Package integrity"
+  },
+  "schema": "ephi.o8.postgresql-regression-restore.v1",
+  "status": "PASS"
+}

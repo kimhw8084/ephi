@@ -1,0 +1,121 @@
+{
+  "authorization_boundary": "The origin gate is defense in depth; CHG-150 CurrentAuthorizationAuthority remains the application authorization authority for command and receipt replay, reads, Attention, artifacts, and UI continuations.",
+  "cases": [
+    {
+      "case": "exact allowed origin",
+      "result": "PASS"
+    },
+    {
+      "case": "attacker suffix origin",
+      "result": "REJECT"
+    },
+    {
+      "case": "wrong scheme",
+      "result": "REJECT"
+    },
+    {
+      "case": "wrong port",
+      "result": "REJECT"
+    },
+    {
+      "case": "null origin",
+      "result": "REJECT"
+    },
+    {
+      "case": "missing Origin on WebSocket in test policy",
+      "result": "REJECT"
+    },
+    {
+      "case": "wildcard configuration",
+      "result": "REJECT"
+    },
+    {
+      "case": "malformed origin",
+      "result": "REJECT"
+    },
+    {
+      "case": "path-bearing origin",
+      "result": "REJECT"
+    },
+    {
+      "case": "QA/production empty allowlist",
+      "result": "BLOCK"
+    },
+    {
+      "case": "explicit development/test loopback origin",
+      "result": "PASS"
+    },
+    {
+      "case": "disallowed WebSocket before downstream invocation",
+      "result": "REJECT_BEFORE_DOWNSTREAM"
+    },
+    {
+      "case": "allowed WebSocket to downstream runtime",
+      "result": "PASS_TO_DOWNSTREAM"
+    },
+    {
+      "case": "disallowed state-changing HTTP before mutation",
+      "result": "REJECT_BEFORE_HANDLER"
+    },
+    {
+      "case": "safe GET/HEAD page/static",
+      "result": "PASS"
+    },
+    {
+      "case": "CurrentAuthorizationAuthority remains required",
+      "result": "PRESERVED"
+    },
+    {
+      "case": "production cookie secure + Strict",
+      "result": "PASS"
+    }
+  ],
+  "http_gate": {
+    "access_control_allow_origin_wildcard": false,
+    "origin_checked_before_protected_handler": true,
+    "permissive_cors": false,
+    "safe_methods_allowed": [
+      "GET",
+      "HEAD"
+    ],
+    "state_changing_methods": [
+      "POST",
+      "PUT",
+      "PATCH",
+      "DELETE"
+    ]
+  },
+  "identity": {
+    "base_sha": "c9a128a202095ffa5bb63f3c5ca7583908397f98",
+    "base_tree": "77ac006855533b9b8115c106a34eced0150f20c1",
+    "candidate_sha": "ea6f12260b0e4954dd353062adf00e997fa0f784",
+    "candidate_tree": "d08f656686e85f40a8a59483260c165281e9183c",
+    "fabric_job": "CF-148ce820de18f2ecc76e2684",
+    "repository": "kimhw8084/ephi",
+    "work_branch": "codex/ephi-o8-browser-session-security-v1"
+  },
+  "normalization": {
+    "algorithm": "scheme + structural host + effective port",
+    "exact_match_only": true,
+    "rejected_values": [
+      "null",
+      "*",
+      "wildcard host",
+      "malformed",
+      "path-bearing",
+      "query-bearing",
+      "fragment-bearing",
+      "userinfo",
+      "ambiguous host forms"
+    ],
+    "suffix_substring_wildcard_reflection_matching": false
+  },
+  "schema": "ephi.o8.origin-negative-matrix.v1",
+  "status": "PASS",
+  "websocket_gate": {
+    "disallowed_close_code": 1008,
+    "nicegui_client_or_session_capability_created_on_rejection": false,
+    "origin_checked_before_downstream": true,
+    "scope": "websocket"
+  }
+}

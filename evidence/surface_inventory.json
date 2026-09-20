@@ -1,0 +1,48 @@
+{
+  "identity": {
+    "base_sha": "c9a128a202095ffa5bb63f3c5ca7583908397f98",
+    "base_tree": "77ac006855533b9b8115c106a34eced0150f20c1",
+    "candidate_sha": "ea6f12260b0e4954dd353062adf00e997fa0f784",
+    "candidate_tree": "d08f656686e85f40a8a59483260c165281e9183c",
+    "fabric_job": "CF-148ce820de18f2ecc76e2684",
+    "repository": "kimhw8084/ephi",
+    "work_branch": "codex/ephi-o8-browser-session-security-v1"
+  },
+  "method": "AST source inventory limited to src/ephi plus real runtime route inspection; documentation and tests excluded; no naive documentation/test string scan used as proof.",
+  "parsed_python_file_count": 44,
+  "qualification_required_if_introduced": true,
+  "qualification_statement": "Absence is scoped release evidence only; qualification becomes mandatory if any listed surface is later introduced.",
+  "registered_application_routes": [
+    "/",
+    "/episode"
+  ],
+  "runtime_observed_page_paths": [
+    "/",
+    "/episode"
+  ],
+  "schema": "ephi.o8.current-surface-inventory.v1",
+  "scope": "src/ephi application source only; documentation and tests excluded",
+  "status": "PASS",
+  "surfaces": {
+    "ai_or_llm": {
+      "description": "AI/LLM input/output feature",
+      "evidence": [],
+      "present": false
+    },
+    "csv_or_spreadsheet_export": {
+      "description": "CSV/spreadsheet export endpoint/action",
+      "evidence": [],
+      "present": false
+    },
+    "markdown_or_raw_html": {
+      "description": "arbitrary Markdown/raw HTML rendering/editor accepting user content",
+      "evidence": [],
+      "present": false
+    },
+    "user_upload": {
+      "description": "user upload component/route",
+      "evidence": [],
+      "present": false
+    }
+  }
+}

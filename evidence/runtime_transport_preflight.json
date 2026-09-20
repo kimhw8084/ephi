@@ -1,0 +1,105 @@
+{
+  "boundary": {
+    "csp_boundary": "Base security law requires certification against NiceGUI scripts/WebSockets/static resources before enabling CSP; CSP is not enabled by CHG-152.",
+    "csp_enabled": false,
+    "current_authorization_remains_application_authority": true,
+    "real_company_identity_established": false,
+    "target_tls_ingress_qualification_established": false,
+    "transport_middleware_does_not_replace_or_bypass_current_authorization": true
+  },
+  "identity": {
+    "base_sha": "c9a128a202095ffa5bb63f3c5ca7583908397f98",
+    "base_tree": "77ac006855533b9b8115c106a34eced0150f20c1",
+    "candidate_sha": "ea6f12260b0e4954dd353062adf00e997fa0f784",
+    "candidate_tree": "d08f656686e85f40a8a59483260c165281e9183c",
+    "fabric_job": "CF-148ce820de18f2ecc76e2684",
+    "repository": "kimhw8084/ephi",
+    "work_branch": "codex/ephi-o8-browser-session-security-v1"
+  },
+  "pinned_runtime": {
+    "composition": "pinned Base RuntimeConfig + Base SecurityHeadersMiddleware + EPHI BrowserTransportMiddleware before NiceGUI protected handling",
+    "nicegui_base_commit": "000298562d6bcbf6df304edbd41b98b30fe4bfcf",
+    "nicegui_base_version": "3.0.0a8",
+    "nicegui_base_wheel_sha256": "a826c62a581783a5d003d8fd25fcadb89b61718298448e1e507bb2a6242435b1",
+    "nicegui_version": "3.15.0",
+    "observed_client_transports": [
+      "websocket",
+      "polling fallback"
+    ],
+    "socketio_path": "/socket.io",
+    "transport_mount": "/_nicegui_ws/"
+  },
+  "qualified_negative_facts": [
+    {
+      "case": "QA/production missing storage secret",
+      "reason_code": "MISSING_STORAGE_SECRET",
+      "result": "BLOCKED",
+      "secret_value_recorded": false
+    },
+    {
+      "case": "QA/production empty origin allowlist",
+      "reason_code": "EMPTY_BROWSER_ORIGIN_ALLOWLIST",
+      "result": "BLOCKED"
+    },
+    {
+      "case": "production insecure cookie",
+      "reason_code": "INSECURE_PRODUCTION_COOKIE",
+      "result": "BLOCKED"
+    },
+    {
+      "case": "SameSite=None without secure transport",
+      "reason_code": "SAMESITE_NONE_REQUIRES_SECURE",
+      "result": "BLOCKED"
+    },
+    {
+      "case": "proxy enabled with empty trust",
+      "reason_code": "EMPTY_TRUSTED_PROXY_ALLOWLIST",
+      "result": "BLOCKED"
+    },
+    {
+      "case": "proxy wildcard trust",
+      "reason_code": "WILDCARD_TRUSTED_PROXY",
+      "result": "BLOCKED"
+    },
+    {
+      "case": "multi-replica without shared storage/session affinity",
+      "reason_code": "MULTI_REPLICA_SHARED_STORAGE_REQUIRED",
+      "result": "BLOCKED"
+    }
+  ],
+  "schema": "ephi.o8.runtime-transport-preflight.v1",
+  "secret_safety": {
+    "authorization_header_recorded": false,
+    "cookie_value_recorded": false,
+    "dsn_recorded": false,
+    "storage_secret_recorded": false
+  },
+  "security_preflight_facts": {
+    "configured_normalized_origin_count": 1,
+    "diagnostics_enabled": false,
+    "effective_secure_cookie": false,
+    "environment": "test",
+    "expected_replicas": 1,
+    "normalized_non_secret_origins": [
+      "http://127.0.0.1:58765"
+    ],
+    "normalized_root_path": "",
+    "proxy_enabled": false,
+    "reason_codes": [],
+    "same_site": "strict",
+    "security_headers_policy": {
+      "csp": "NOT_ENABLED",
+      "endpoint_documentation": "none",
+      "fastapi_docs": false,
+      "identity": "nicegui-base.SecurityHeadersMiddleware",
+      "server_header": false,
+      "summary": "Base security headers active; CSP intentionally not enabled pending certification; production HSTS is Base-controlled"
+    },
+    "session_affinity_confirmed": false,
+    "shared_storage_configured": false,
+    "status": "PASS",
+    "storage_secret_present": true,
+    "trusted_proxy_count": 2
+  },
+  "status": "PASS"
+}

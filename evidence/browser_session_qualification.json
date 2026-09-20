@@ -1,0 +1,145 @@
+{
+  "docs_and_fingerprint": {
+    "endpoints": {
+      "/docs": {
+        "generated_docs_marker_absent": true,
+        "server_header_absent": true,
+        "status": 200
+      },
+      "/openapi.json": {
+        "generated_docs_marker_absent": true,
+        "server_header_absent": true,
+        "status": 200
+      },
+      "/redoc": {
+        "generated_docs_marker_absent": true,
+        "server_header_absent": true,
+        "status": 200
+      }
+    },
+    "generated_docs_disabled": true,
+    "server_header_absent": true
+  },
+  "durable_command": {
+    "aggregate_version": 1,
+    "command_receipt_count": 1,
+    "work_state_present": true
+  },
+  "execution": {
+    "browser": "isolated headless Chromium via Playwright",
+    "foreground_desktop_or_accessibility_automation": false,
+    "postgres_version": "18.6 (Homebrew)",
+    "proxy_mode": false,
+    "root_path": "",
+    "viewport": {
+      "device_scale_factor": 1,
+      "height": 720,
+      "width": 1280
+    }
+  },
+  "identity": {
+    "base_sha": "c9a128a202095ffa5bb63f3c5ca7583908397f98",
+    "base_tree": "77ac006855533b9b8115c106a34eced0150f20c1",
+    "candidate_sha": "ea6f12260b0e4954dd353062adf00e997fa0f784",
+    "candidate_tree": "d08f656686e85f40a8a59483260c165281e9183c",
+    "fabric_job": "CF-148ce820de18f2ecc76e2684",
+    "repository": "kimhw8084/ephi",
+    "work_branch": "codex/ephi-o8-browser-session-security-v1"
+  },
+  "qualification_boundary": "CHG-152 qualifies the current browser/session transport only; company identity and target TLS/ingress remain NOT_ESTABLISHED.",
+  "rendered_application": {
+    "attention_page_rendered": true,
+    "console_errors": [],
+    "document_cookie_contains_session": false,
+    "episode_page_rendered": true,
+    "failed_network_urls": [],
+    "websocket_session_observed": true
+  },
+  "response_security_headers": {
+    "facts": {
+      "permissions-policy": "camera=(), microphone=(), geolocation=(), payment=(), usb=()",
+      "referrer-policy": "no-referrer",
+      "set-cookie": "present",
+      "x-content-type-options": "nosniff",
+      "x-frame-options": "DENY"
+    },
+    "generated_docs_disabled": true,
+    "names_present": [
+      "permissions-policy",
+      "referrer-policy",
+      "set-cookie",
+      "x-content-type-options",
+      "x-frame-options"
+    ],
+    "raw_set_cookie_value_recorded": false,
+    "server_header_absent": true
+  },
+  "runtime_route_inventory": {
+    "observed_http_response_path_count": 21,
+    "observed_http_response_paths": [
+      "/",
+      "/_nicegui/3.15.0/components/4cd8f5dc71f02312671ee4e68c4ac55f/aggrid.js",
+      "/_nicegui/3.15.0/components/50808f343f9d39efb70f4fe21b9a193b/html.js",
+      "/_nicegui/3.15.0/components/573d0129acaebad907d825007cd6fa02/query.js",
+      "/_nicegui/3.15.0/components/7416ad0839166372589af103d2dac97f/link.js",
+      "/_nicegui/3.15.0/components/b3fd268d934c6085e7dbfa4ba57f4b4b/dark_mode.js",
+      "/_nicegui/3.15.0/esm/ce781217513f674f11796076012a375d/index.js",
+      "/_nicegui/3.15.0/static/dompurify.mjs",
+      "/_nicegui/3.15.0/static/fonts.css",
+      "/_nicegui/3.15.0/static/fonts/2474057f3040a08c.woff2",
+      "/_nicegui/3.15.0/static/lang/en-US.umd.prod.js",
+      "/_nicegui/3.15.0/static/nicegui.css",
+      "/_nicegui/3.15.0/static/nicegui.js",
+      "/_nicegui/3.15.0/static/quasar.important.prod.css",
+      "/_nicegui/3.15.0/static/quasar.umd.prod.js",
+      "/_nicegui/3.15.0/static/quasar.unimportant.prod.css",
+      "/_nicegui/3.15.0/static/socket.io.min.js",
+      "/_nicegui/3.15.0/static/tailwindcss.min.js",
+      "/_nicegui/3.15.0/static/utils/dynamic_properties.js",
+      "/_nicegui/3.15.0/static/vue.esm-browser.prod.js",
+      "/episode"
+    ],
+    "observed_page_paths": [
+      "/",
+      "/episode"
+    ],
+    "observed_websocket_path": "/_nicegui_ws/socket.io",
+    "status": "PASS"
+  },
+  "schema": "ephi.o8.browser-session-qualification.v1",
+  "secret_safety": {
+    "authorization_header_recorded": false,
+    "cookie_value_recorded": false,
+    "dsn_recorded": false,
+    "raw_rows_recorded": false,
+    "storage_secret_recorded": false
+  },
+  "session_cookie_attributes": [
+    {
+      "domain": "127.0.0.1",
+      "httpOnly": true,
+      "name": "session",
+      "path": "/",
+      "sameSite": "Strict",
+      "secure": false
+    }
+  ],
+  "source_fixture_identity": "deterministic test identity and source fixture only; real company identity not established",
+  "status": "PASS",
+  "transport": {
+    "allowed_exact_origin_websocket": "ACCEPTED",
+    "attacker_suffix": "REJECTED_BEFORE_SESSION_USE",
+    "disallowed_socketio_polling_post": {
+      "body_digest": "0fa7b36f5e4ee5418174b77452498b539646497e1cd96f63a71eb91d007480dd",
+      "content_type": "application/json",
+      "mutation_rejected": true,
+      "status": 403
+    },
+    "missing_origin": "REJECTED_BEFORE_SESSION_USE",
+    "null_origin": "REJECTED_BEFORE_SESSION_USE",
+    "observed_websocket_path": "/_nicegui_ws/socket.io",
+    "state_changing_transport_fact": "NiceGUI emitted a WebSocket session path and the installed Socket.IO polling fallback POST was observed and origin-gated; no separate application state-changing HTTP endpoint was fabricated.",
+    "wrong_port": "REJECTED_BEFORE_SESSION_USE",
+    "wrong_scheme": "REJECTED_BEFORE_SESSION_USE"
+  }
+}

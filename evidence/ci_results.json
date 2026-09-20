@@ -1,0 +1,55 @@
+{
+  "browser_dependency_boundary": "Browser and PostgreSQL dependencies are isolated to the O8.2 integration job; package matrix lanes remain dependency-free.",
+  "conclusion": "success",
+  "head_sha": "ea6f12260b0e4954dd353062adf00e997fa0f784",
+  "jobs": [
+    {
+      "conclusion": "success",
+      "id": 106029442967,
+      "name": "Package checks (Python 3.12)",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "id": 106029442968,
+      "name": "O8.2 browser/session security integration (Python 3.13)",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "id": 106029442999,
+      "name": "Canonical repository baseline",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "id": 106029443000,
+      "name": "PostgreSQL command/worker/read/artifact/O9 integration (Python 3.13)",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "id": 106029443030,
+      "name": "Package checks (Python 3.11)",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "id": 106029443038,
+      "name": "Package checks (Python 3.14)",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "id": 106029443064,
+      "name": "Package checks (Python 3.13)",
+      "status": "completed"
+    }
+  ],
+  "run_id": 35492391411,
+  "schema": "ephi.o8.repository-native-ci.v1",
+  "status": "PASS",
+  "status_value": "completed",
+  "url": "https://github.com/kimhw8084/ephi/actions/runs/35492391411",
+  "workflow": "Package integrity"
+}
