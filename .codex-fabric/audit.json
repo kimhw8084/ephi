@@ -1,0 +1,558 @@
+{
+  "accepted_at": "2026-09-20T03:53:52Z",
+  "changed_files": [
+    {
+      "additions": 4,
+      "deletions": 0,
+      "path": ".github/workflows/package.yml",
+      "status": "M"
+    },
+    {
+      "additions": 4,
+      "deletions": 0,
+      "path": "03_Application_Contracts.md",
+      "status": "M"
+    },
+    {
+      "additions": 2,
+      "deletions": 0,
+      "path": "08_Security_Notifications_AI_Operations.md",
+      "status": "M"
+    },
+    {
+      "additions": 21,
+      "deletions": 0,
+      "path": "README.md",
+      "status": "M"
+    },
+    {
+      "additions": 52,
+      "deletions": 42,
+      "path": "manifest.json",
+      "status": "M"
+    },
+    {
+      "additions": 10,
+      "deletions": 1,
+      "path": "src/ephi/application/__init__.py",
+      "status": "M"
+    },
+    {
+      "additions": 20,
+      "deletions": 13,
+      "path": "src/ephi/application/artifacts.py",
+      "status": "M"
+    },
+    {
+      "additions": 16,
+      "deletions": 2,
+      "path": "src/ephi/application/attention.py",
+      "status": "M"
+    },
+    {
+      "additions": 85,
+      "deletions": 1,
+      "path": "src/ephi/application/context.py",
+      "status": "M"
+    },
+    {
+      "additions": 8,
+      "deletions": 3,
+      "path": "src/ephi/application/episodes.py",
+      "status": "M"
+    },
+    {
+      "additions": 10,
+      "deletions": 11,
+      "path": "src/ephi/application/transactions.py",
+      "status": "M"
+    },
+    {
+      "additions": 3,
+      "deletions": 4,
+      "path": "src/ephi/application/workflow.py",
+      "status": "M"
+    },
+    {
+      "additions": 7,
+      "deletions": 4,
+      "path": "src/ephi/ui/app.py",
+      "status": "M"
+    },
+    {
+      "additions": 7,
+      "deletions": 6,
+      "path": "tests/test_o2_artifacts.py",
+      "status": "M"
+    },
+    {
+      "additions": 16,
+      "deletions": 8,
+      "path": "tests/test_o2_postgresql.py",
+      "status": "M"
+    },
+    {
+      "additions": 8,
+      "deletions": 5,
+      "path": "tests/test_o2_postgresql_artifacts.py",
+      "status": "M"
+    },
+    {
+      "additions": 9,
+      "deletions": 5,
+      "path": "tests/test_o2_transactions.py",
+      "status": "M"
+    },
+    {
+      "additions": 11,
+      "deletions": 7,
+      "path": "tests/test_o3_application.py",
+      "status": "M"
+    },
+    {
+      "additions": 15,
+      "deletions": 10,
+      "path": "tests/test_o3_postgresql.py",
+      "status": "M"
+    },
+    {
+      "additions": 12,
+      "deletions": 2,
+      "path": "tests/test_o4_source_ingress_postgresql.py",
+      "status": "M"
+    },
+    {
+      "additions": 390,
+      "deletions": 0,
+      "path": "tests/test_o8_current_authorization.py",
+      "status": "A"
+    },
+    {
+      "additions": 234,
+      "deletions": 0,
+      "path": "tests/test_o8_postgresql.py",
+      "status": "A"
+    },
+    {
+      "additions": 10,
+      "deletions": 6,
+      "path": "tests/test_postgresql_adapter_lifecycle.py",
+      "status": "M"
+    },
+    {
+      "additions": 11,
+      "deletions": 8,
+      "path": "tools/o9_real_rehearsal.py",
+      "status": "M"
+    }
+  ],
+  "checks": [
+    {
+      "command": "/bin/zsh -lc 'rtk gh run list --branch codex/ephi-o8-current-authorization-v1 --limit 5 --json databaseId,headSha,status,conclusion,workflowName,url,createdAt'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest && rtk git diff --stat && rtk git diff --check && rtk git status --short'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git diff -- manifest.json && rtk git add manifest.json && rtk git commit -m 'Refresh package manifest for O9 authority wiring' && rtk git push origin codex/ephi-o8-current-authorization-v1\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest tests.test_o8_current_authorization tests.test_o8_postgresql -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk env EPHI_TEST_POSTGRES_DSN='postgresql://haewonkim@127.0.0.1:55440/ephi_ci' python3 -m unittest tests.test_o2_postgresql tests.test_o2_postgresql_reads tests.test_o2_postgresql_artifacts tests.test_o2_worker_postgresql tests.test_o3_postgresql tests.test_o4_source_ingress_postgresql tests.test_postgresql_adapter_lifecycle tests.test_o9_operations -v\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk gh run watch 35488971606 --exit-status'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest discover -s tests -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk gh run list --branch codex/ephi-o8-current-authorization-v1 --limit 3 --json databaseId,headSha,status,conclusion,workflowName,url'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk env EPHI_TEST_POSTGRES_DSN='postgresql://haewonkim@127.0.0.1:55440/ephi_ci' python3 -m unittest tests.test_o8_postgresql -v\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/w0_repo_baseline.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m compileall -q src tests tools/o9_real_rehearsal.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk gh run list --branch codex/ephi-o8-current-authorization-v1 --limit 2 --json databaseId,headSha,status,conclusion,url'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk gh run watch 35488992471 --exit-status'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git rev-parse HEAD HEAD''^{tree} 2981ffaccc62e48b605ca498117c9caab5a058c2''^{tree} && rtk git status --porcelain=v1 --branch && rtk git show -s --format='\"'%H%n%T%n%s' HEAD && rtk git ls-remote origin refs/heads/codex/ephi-o8-current-authorization-v1 refs/heads/main\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git diff --name-only 2981ffaccc62e48b605ca498117c9caab5a058c2 HEAD && rtk git diff --name-only 2981ffaccc62e48b605ca498117c9caab5a058c2 HEAD | while IFS= read -r f; do rtk stat -f '%z' \\\"\"'$f\"; rtk shasum -a 256 \"$f\"; done'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk mktemp -d /tmp/ephi-o8-carrier.XXXXXX'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk mkdir -p /tmp/ephi-o8-carrier.pHmE6G/evidence'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk find /tmp/ephi-o8-carrier.pHmE6G /tmp/ephi-o8-carrier -maxdepth 3 -type f -print 2>/dev/null'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk find /tmp/ephi-o8-carrier.pHmE6G/evidence -maxdepth 1 -type f -print | sort'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c \\\"import json, pathlib; paths=sorted(pathlib.Path('/tmp/ephi-o8-carrier.pHmE6G/evidence').glob('*.json')); [json.loads(p.read_text()) for p in paths]; print(len(paths), [p.name for p in paths])\\\" && rtk tar -czf /tmp/ephi-o8-carrier.pHmE6G/ephi-o8-current-authorization-v1-bundle.tar.gz -C /tmp/ephi-o8-carrier.pHmE6G evidence && rtk ls -l /tmp/ephi-o8-carrier.pHmE6G/ephi-o8-current-authorization-v1-bundle.tar.gz && rtk shasum -a 256 /tmp/ephi-o8-carrier.pHmE6G/ephi-o8-current-authorization-v1-bundle.tar.gz\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk shasum -a 256 /tmp/ephi-o8-carrier.pHmE6G/evidence/*.json && rtk wc -c /tmp/ephi-o8-carrier.pHmE6G/evidence/*.json'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk wc -c /tmp/ephi-o8-carrier.pHmE6G/ephi-o8-current-authorization-v1-bundle.tar.gz && rtk shasum -a 256 /tmp/ephi-o8-carrier.pHmE6G/ephi-o8-current-authorization-v1-bundle.tar.gz'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c \\\"import json; json.load(open('/tmp/ephi-o8-carrier.pHmE6G/carrier_manifest.json')); print('manifest-json-ok')\\\" && rtk shasum -a 256 /tmp/ephi-o8-carrier.pHmE6G/carrier_manifest.json && rtk wc -c /tmp/ephi-o8-carrier.pHmE6G/carrier_manifest.json && rtk tar -tzf /tmp/ephi-o8-carrier.pHmE6G/ephi-o8-current-authorization-v1-bundle.tar.gz\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk cp /tmp/ephi-o8-carrier.pHmE6G/carrier_manifest.json /tmp/ephi-o8-carrier.pHmE6G/ephi-o8-current-authorization-v1-bundle.tar.gz /tmp/ephi-o8-carrier.pHmE6G/carrier-repo/'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk mkdir /tmp/ephi-o8-carrier.pHmE6G/carrier-repo'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk cp /tmp/ephi-o8-carrier.pHmE6G/carrier_manifest.json /tmp/ephi-o8-carrier.pHmE6G/ephi-o8-current-authorization-v1-bundle.tar.gz /tmp/ephi-o8-carrier.pHmE6G/carrier-repo/'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git init -q /tmp/ephi-o8-carrier.pHmE6G/carrier-repo'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git -C /tmp/ephi-o8-carrier.pHmE6G/carrier-repo add carrier_manifest.json ephi-o8-current-authorization-v1-bundle.tar.gz'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git -C /tmp/ephi-o8-carrier.pHmE6G/carrier-repo -c user.name='Project OS Carrier' -c user.email='project-os-carrier@users.noreply.github.com' commit -q -m 'ephi O8.1 current authorization carrier'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git -C /tmp/ephi-o8-carrier.pHmE6G/carrier-repo remote add origin https://github.com/kimhw8084/ephi.git'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git -C /tmp/ephi-o8-carrier.pHmE6G/carrier-repo push origin HEAD:refs/heads/project-os-artifacts/ephi/ephi-o8-current-authorization-v1'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git -C /tmp/ephi-o8-carrier.pHmE6G/carrier-repo fetch -q origin refs/heads/project-os-artifacts/ephi/ephi-o8-current-authorization-v1'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git -C /tmp/ephi-o8-carrier.pHmE6G/carrier-repo rev-parse FETCH_HEAD'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git -C /tmp/ephi-o8-carrier.pHmE6G/carrier-repo show -s --format='%H%n%T%n%s' FETCH_HEAD\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git -C /tmp/ephi-o8-carrier.pHmE6G/carrier-repo ls-tree -r --name-only FETCH_HEAD'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk mkdir /tmp/ephi-o8-carrier.pHmE6G/readback'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git -C /tmp/ephi-o8-carrier.pHmE6G/carrier-repo archive --format=tar -o /tmp/ephi-o8-carrier.pHmE6G/readback.tar FETCH_HEAD'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk tar -xf /tmp/ephi-o8-carrier.pHmE6G/readback.tar -C /tmp/ephi-o8-carrier.pHmE6G/readback'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk cmp /tmp/ephi-o8-carrier.pHmE6G/carrier_manifest.json /tmp/ephi-o8-carrier.pHmE6G/readback/carrier_manifest.json'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk cmp /tmp/ephi-o8-carrier.pHmE6G/ephi-o8-current-authorization-v1-bundle.tar.gz /tmp/ephi-o8-carrier.pHmE6G/readback/ephi-o8-current-authorization-v1-bundle.tar.gz'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk shasum -a 256 /tmp/ephi-o8-carrier.pHmE6G/readback/ephi-o8-current-authorization-v1-bundle.tar.gz'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk wc -c /tmp/ephi-o8-carrier.pHmE6G/readback/ephi-o8-current-authorization-v1-bundle.tar.gz'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk mkdir -p /tmp/ephi-o8-carrier.pHmE6G/readback/bundle && rtk tar -xzf /tmp/ephi-o8-carrier.pHmE6G/readback/ephi-o8-current-authorization-v1-bundle.tar.gz -C /tmp/ephi-o8-carrier.pHmE6G/readback/bundle && rtk git ls-remote https://github.com/kimhw8084/ephi.git refs/heads/project-os-artifacts/ephi/ephi-o8-current-authorization-v1'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 /tmp/ephi-o8-carrier.pHmE6G/verify_carrier.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk /opt/homebrew/opt/postgresql@18/bin/pg_ctl -D /tmp/ephi-o8-o9.5qE9jO/data -m fast stop'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short --branch'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git rev-parse HEAD HEAD''^{tree}'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git ls-remote origin refs/heads/codex/ephi-o8-current-authorization-v1 refs/heads/main refs/heads/project-os-artifacts/ephi/ephi-o8-current-authorization-v1'",
+      "exit_code": 0,
+      "type": "command_execution"
+    }
+  ],
+  "codex": {
+    "cli_version": "codex-cli 0.155.1",
+    "configured_model": "gpt-5.6-luna",
+    "event_count": 399,
+    "provider_reported_model": null,
+    "reasoning_effort": "xhigh",
+    "terminal_type": "turn.completed",
+    "usage": {
+      "cache_hit_percent": 97.08,
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 20097024,
+      "fresh_input_tokens": 603705,
+      "input_tokens": 20700729,
+      "non_reasoning_output_tokens": 48897,
+      "output_tokens": 78413,
+      "reasoning_output_tokens": 29516,
+      "total_processed_tokens": 20779142
+    },
+    "warnings": []
+  },
+  "commits": [
+    {
+      "sha": "c555792ff8b76e07ef9a43cd811677bcc35a5b09",
+      "subject": "Refresh package manifest for O9 authority wiring"
+    },
+    {
+      "sha": "09e11bccb7a697f416dfa80af9dfbcfaccb5a3cf",
+      "subject": "Wire O9 rehearsal through current authorization"
+    },
+    {
+      "sha": "807c8c2694d783bd7b1d14cc9ccabbe0e506cee4",
+      "subject": "Implement O8 current authorization freshness boundary"
+    }
+  ],
+  "diff": {
+    "additions": 965,
+    "changed_files": 24,
+    "commit_count": 3,
+    "deletions": 138
+  },
+  "error_code": null,
+  "evidence_manifest": {
+    "count": 7,
+    "items": [
+      {
+        "bytes": 19271,
+        "path": "03_Application_Contracts.md",
+        "sha256": "634c89c24a24fff9f1e483e7edd30c37b1232351bbc953fafe403ac929e42be8"
+      },
+      {
+        "bytes": 11248,
+        "path": "08_Security_Notifications_AI_Operations.md",
+        "sha256": "02890d4891a422e59971a521084c67c09bb45325514f218f4e2153121b132f2b"
+      },
+      {
+        "bytes": 16551,
+        "path": "README.md",
+        "sha256": "4e8bae39734c5cde4be0578cb43ad8a4e7e5a2fb6f80679c971951a76b7b0ea8"
+      },
+      {
+        "bytes": 32448,
+        "path": "manifest.json",
+        "sha256": "0ff138e3ba6b14fb9f6074754202dbf7f27f709c055bb7006bec3a9ebaaf5561"
+      },
+      {
+        "bytes": 15857,
+        "path": "src/ephi/application/artifacts.py",
+        "sha256": "b0f1a4c9c809e36c3dd90506c461b22753add81aaafcc3198e3eeac6b6c6514e"
+      },
+      {
+        "bytes": 11701,
+        "path": "tests/test_o2_artifacts.py",
+        "sha256": "6d3d83da504050e208210c6294bf169b068f7394030a326ade99393f0dee0693"
+      },
+      {
+        "bytes": 7604,
+        "path": "tests/test_o2_postgresql_artifacts.py",
+        "sha256": "6e74adaa3019a6ce416e4569beb2e8f8343edc8c31eaa48b477b1d9b45734871"
+      }
+    ],
+    "version": 1
+  },
+  "evidence_publisher_release": "1.2.3-resume-candidate",
+  "fabric_capture": {
+    "applied": false,
+    "paths_before": 0,
+    "transient_untracked_removed": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "fabric_release": "1.2.3-resume-candidate",
+  "failure_class": null,
+  "finished_at": "2026-09-20T04:29:36Z",
+  "git": {
+    "base_is_ancestor": true,
+    "base_sha": "2981ffaccc62e48b605ca498117c9caab5a058c2",
+    "branch": "codex/ephi-o8-current-authorization-v1",
+    "detached_verify": false,
+    "head_sha": "c555792ff8b76e07ef9a43cd811677bcc35a5b09",
+    "remote_exact_head": true,
+    "remote_head_sha": "c555792ff8b76e07ef9a43cd811677bcc35a5b09",
+    "target_branch": "main",
+    "target_drifted_since_acceptance": false,
+    "target_head_observed_after_execution": "2981ffaccc62e48b605ca498117c9caab5a058c2",
+    "work_branch": "codex/ephi-o8-current-authorization-v1",
+    "worktree_clean": true
+  },
+  "instructions": {
+    "files": [
+      {
+        "bytes": 1458,
+        "path": "AGENTS.md",
+        "sha256": "4349f387a79d886ed1264604ff48c582698e539e08ed8fb2f9d8ab8fbf6f804a"
+      }
+    ],
+    "total_bytes": 1458,
+    "warning": null
+  },
+  "job_id": "CF-4d7c2093b3946a4ad1b368a7",
+  "kind": "codex-fabric-audit-evidence",
+  "locator": {
+    "branch": "codex-fabric/evidence/ephi/ephi-o8-current-authorization-v1",
+    "path": ".codex-fabric/audit.json",
+    "ref": "refs/heads/codex-fabric/evidence/ephi/ephi-o8-current-authorization-v1"
+  },
+  "operation": "BUILD",
+  "policy": {
+    "environment_policy_sha256": "e077daca74297b3c30bee8989f00f8ca5338f7610b4d016a6c48db524205d064",
+    "fabric_release": "1.2.3-resume-candidate",
+    "policy_sha256": "a642c9f63bab2cb555704bdb0b9d1f28222591f133f934c1d0f93cc5a25ab8a1",
+    "registry_sha256": "cfc765f3211c37c7967a138f3b2d89a99341939b15b2623f92744d007f625d6f"
+  },
+  "project_id": "ephi",
+  "recovery": {
+    "model_rerun_safe": false,
+    "recovery_required": false,
+    "retry_safe": false,
+    "retry_scope": null,
+    "worktree_retained": true
+  },
+  "request": "ephi-o8-current-authorization-v1",
+  "schema_version": 1,
+  "started_at": "2026-09-20T03:53:53Z",
+  "status": "EXECUTED_CHANGE",
+  "timing": {
+    "execution_seconds": 2143,
+    "queue_seconds": 1,
+    "total_seconds": 2144
+  },
+  "transport": {
+    "bytes": 15792,
+    "envelope": "FABRIC/2",
+    "prompt_bytes": 15475,
+    "prompt_sha256": "8017e94c4ed6b38a8209bdb9512848a963dcf2290f44d0e8f6ad26e1080aa0ac",
+    "sha256": "4d7c2093b3946a4ad1b368a7ce03e41b88772f06cbe6ba929221977cd99133b5"
+  }
+}
