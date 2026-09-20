@@ -1,0 +1,246 @@
+{
+  "application_restart_and_semantics": {
+    "acknowledged_receipt_replay": {
+      "ack_result_hash": "92d3e14ef582a0c59256f7fd8b60dec47b7a1807c2a56c24f32a550785a858da",
+      "claim_result_hash": "ce8a33a7b23f1d54dd8ab1e7b23877612ff4ce2303acef4bbf07ac0145b28dbb",
+      "no_new_receipt": true
+    },
+    "read_restart": {
+      "attention_rows": 1,
+      "episode_workflow": "ACKNOWLEDGED",
+      "retained_snapshot_reopened": true,
+      "workflow_version": 2
+    },
+    "stale_worker_fencing": {
+      "effect_applied_once": true,
+      "effect_replay_same_identity": true,
+      "old_epoch": 1,
+      "stale_rejected": true,
+      "takeover_epoch": 2
+    }
+  },
+  "backup_verification": {
+    "dump": {
+      "byte_size": 46424,
+      "sha256": "88b31addc6e99f085d0bf4881254a06e4d9ccf2ba2965257c16d16856562482c"
+    },
+    "immutable_artifacts": {
+      "count": 1,
+      "verification": "VERIFIED"
+    },
+    "manifest": "backup_manifest.json",
+    "migration_schema_identity": {
+      "files": [
+        {
+          "byte_size": 2723,
+          "path": "migrations/001_o2_command_core.sql",
+          "sha256": "a1f6446278e05112e80f02d694ded584491b77502537919a92cdafd5faf56a33"
+        },
+        {
+          "byte_size": 2317,
+          "path": "migrations/002_o2_worker_core.sql",
+          "sha256": "9c8e4dea1c0625ccb18bffa5717b750caf02204f204b77d1747bc3495274e963"
+        },
+        {
+          "byte_size": 4938,
+          "path": "migrations/003_o2_read_snapshot_core.sql",
+          "sha256": "22163a8fb1e6447188b254d4449cc3018cbb947c2deb48969f387dd796ef6389"
+        },
+        {
+          "byte_size": 1928,
+          "path": "migrations/004_o2_artifact_catalog.sql",
+          "sha256": "667cd985add5c26e285817489fdd7568fbc0652685cc7d3833a9ef8906613460"
+        },
+        {
+          "byte_size": 1015,
+          "path": "migrations/005_o3_attention_episode_w1.sql",
+          "sha256": "0b960b6ef46af60925fd9930e613d419c2344651e6a32a0e51196f5565e58dd9"
+        },
+        {
+          "byte_size": 6355,
+          "path": "migrations/006_o4_source_snapshot_ingress.sql",
+          "sha256": "0fb09ed09f3f9a86d66f44dd76316f30a581cec8b4d712cad4403f7971d70259"
+        }
+      ],
+      "identity_sha256": "0a5e582322961d70c44fda7e57e22cfe18357dd2e2e46ccd94df115d270e3709",
+      "migration_count": 6
+    },
+    "schema_version": "o9.1.backup-verification.v1",
+    "tooling": {
+      "pg_restore": "pg_restore (PostgreSQL) 18.6 (Homebrew)"
+    },
+    "verification_state": "VERIFIED"
+  },
+  "operation": "CHG-147/O9.1",
+  "operations_health": {
+    "axes": {
+      "durable_worker_job_state": {
+        "facts": {
+          "authoritative_clock_used": true,
+          "dead_letter_count": 0,
+          "expired_running_count": 0,
+          "failed_count": 0,
+          "job_count": 2,
+          "running_count": 1
+        },
+        "reason": "DURABLE_WORKER_STATE_REACHABLE",
+        "state": "READY"
+      },
+      "evidence_qualification_freshness": {
+        "facts": {
+          "freshness_known": false
+        },
+        "reason": "QUALIFICATION_AUTHORITY_NOT_BOUND",
+        "state": "NOT_QUALIFIED"
+      },
+      "immutable_artifact_integrity": {
+        "facts": {
+          "artifact_count": 1,
+          "inventory_known": true
+        },
+        "reason": "IMMUTABLE_ARTIFACT_INVENTORY_VERIFIED",
+        "state": "READY"
+      },
+      "postgres_readiness_durability": {
+        "facts": {
+          "critical_table_count": 14
+        },
+        "reason": "POSTGRES_REACHABLE_AND_SCHEMA_PRESENT",
+        "state": "READY"
+      },
+      "process_transport": {
+        "facts": {
+          "pid_present": true
+        },
+        "reason": "PROCESS_ENTRYPOINT_RESPONDED",
+        "state": "READY"
+      },
+      "source_capability_freshness": {
+        "facts": {
+          "freshness_known": false
+        },
+        "reason": "BLOCKED_REAL_SOURCE",
+        "state": "UNAVAILABLE"
+      }
+    },
+    "schema_version": "o9.1.v1",
+    "secret_safety": {
+      "credentials_printed": false,
+      "private_artifact_contents_printed": false,
+      "raw_rows_printed": false,
+      "tokens_printed": false
+    }
+  },
+  "post_snapshot_reconciliation": {
+    "backup_cutoff": {
+      "cutoff_at_server": "2026-09-20T16:33:13.767197Z",
+      "snapshot_exported_for_pg_dump": true,
+      "transaction_id": 26974,
+      "transaction_snapshot": "26974:26974:"
+    },
+    "observed_at": "2026-09-20T16:33:13.919730Z",
+    "observed_post_cutoff_delta_window_seconds": 0.152533,
+    "post_cutoff_delta_count": 4,
+    "post_cutoff_deltas": [
+      {
+        "changed_identity_hashes": [
+          "14cc8322c20682c7b5f23cc175f92b58f3cbcfa95608579f7776911550659a46"
+        ],
+        "classification": "CONTROLLED_RECONCILIATION_REQUIRED",
+        "count": 1,
+        "new_identity_hashes": [],
+        "table": "aggregate_state"
+      },
+      {
+        "changed_identity_hashes": [],
+        "classification": "AUDIT_ONLY_CONTROLLED_HANDLING",
+        "count": 1,
+        "new_identity_hashes": [
+          "f10e4707a83ddff92f6ce0416737c50cd0c140e035037b95c249909b3b9daa4b"
+        ],
+        "table": "audit_event"
+      },
+      {
+        "changed_identity_hashes": [],
+        "classification": "CONSEQUENTIAL_OR_EXTERNAL_REQUIRES_CONTROLLED_HANDLING",
+        "count": 1,
+        "new_identity_hashes": [
+          "b92888c87a2ff37cd3319a4ed96f197b05680179b6af78944d2bcf65ae65a93a"
+        ],
+        "table": "command_receipt"
+      },
+      {
+        "changed_identity_hashes": [],
+        "classification": "EXTERNAL_DELIVERY_REQUIRES_CONTROLLED_RECONCILIATION",
+        "count": 1,
+        "new_identity_hashes": [
+          "dbf9525e7e9486345ea5b927ed323fefdd03a0bb85eed10742b0755ebecd969a"
+        ],
+        "table": "outbox_event"
+      }
+    ],
+    "post_cutoff_writes_present_in_restored_snapshot": false,
+    "production_disaster_rpo_rto_claim": "NOT_ESTABLISHED",
+    "required_controlled_recovery_action": true,
+    "schema_version": "o9.1.reconciliation.v1",
+    "timing_evidence_scope": "LOCAL_RESTORE_REHEARSAL_ONLY"
+  },
+  "production_disaster_rpo_rto_claim": "NOT_ESTABLISHED",
+  "qualification_boundary": "GENERIC_MECHANICS_ONLY_NO_AUTHENTIC_FAMILY_QUALIFICATION",
+  "restore": {
+    "critical_authorities": {
+      "artifact_catalog_references": "VERIFIED",
+      "command_receipt_audit_outbox": "VERIFIED",
+      "o4_source_snapshot_capability": "VERIFIED",
+      "retained_read_snapshot": "VERIFIED",
+      "worker_effect_fencing_identity": "VERIFIED",
+      "workflow_o3": "VERIFIED"
+    },
+    "durable_state": {
+      "state_sha256": "218402d1d84a1c3b92103e2914850efe4442a58c8874872563a089bf776f32a4",
+      "verification": "VERIFIED"
+    },
+    "immutable_artifacts": {
+      "count": 1,
+      "verification": "VERIFIED"
+    },
+    "production_disaster_rpo_rto_claim": "NOT_ESTABLISHED",
+    "restore_target": {
+      "database_identity": "ea0bf5cae6e81d3b5d956132b27b253143ed8f4bea3923542be1d3ea8476ccca",
+      "isolated": true,
+      "traffic_switched": false
+    },
+    "schema_version": "o9.1.restore-rehearsal.v1",
+    "timing": {
+      "restore_duration_seconds": 0.056171,
+      "scope": "LOCAL_RESTORE_REHEARSAL",
+      "verification_duration_seconds": 0.006187
+    },
+    "verification_state": "VERIFIED"
+  },
+  "schema_version": "o9.1.rehearsal-summary.v1",
+  "seeded_authority_identities": {
+    "acknowledge_result_hash": "92d3e14ef582a0c59256f7fd8b60dec47b7a1807c2a56c24f32a550785a858da",
+    "claim_result_hash": "ce8a33a7b23f1d54dd8ab1e7b23877612ff4ce2303acef4bbf07ac0145b28dbb",
+    "effect_job_hash": "fae48b23e0b72ed30417b9d835ffe22b70f4bffa3743f624b65eb63fff3c5e71",
+    "effect_result_hash": "2037db9f258c5eee1e90f68627ab17a9dcb4ed6293a655c180bfa8b1f5d27671",
+    "episode_hash": "a398a05a10b4dc4c03ecfa0b1a34c77b2e96b3c530acc2763f6cb899d5d63277",
+    "postcutoff_command_id": "o9-post-cutoff-1",
+    "retained_snapshot_hash": "0c7a93bdaf80b280f41d4b177e578c1d1130bcd666b607398fd8e515c843a43f",
+    "scope_hash": "cb7eab66d23151c5f85e4dcd33144dd4dfac1af6083205b225452821c5323452",
+    "source_capability_state": "READY",
+    "source_snapshot_hash": "10a39c2c97b30d0b584f64388ccc1f032e07c293c4c48e8c470c891e098347d2",
+    "stale_epoch": 1,
+    "stale_job_hash": "fbca9c01be2e2153b06e1d26f239f08721ca893ec223d75199c4a8c8c5157539",
+    "stale_owner_hash": "d65cb18e2446bb88ed6462328aca92e7c16864032a0b27c720d3a755f482f768"
+  },
+  "timing": {
+    "backup_cutoff_at_server": "2026-09-20T16:33:13.767197Z",
+    "backup_duration_seconds": 0.096309,
+    "observed_post_cutoff_delta_window_seconds": 0.152533,
+    "restore_duration_seconds": 0.056171,
+    "scope": "LOCAL_RESTORE_REHEARSAL",
+    "verification_duration_seconds": 0.006187
+  },
+  "timing_evidence_scope": "LOCAL_RESTORE_REHEARSAL"
+}

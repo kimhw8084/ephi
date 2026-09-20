@@ -1,0 +1,363 @@
+{
+  "backup_cutoff_high_water": {
+    "cutoff_at_server": "2026-09-20T16:33:13.767197Z",
+    "snapshot_exported_for_pg_dump": true,
+    "transaction_id": 26974,
+    "transaction_snapshot": "26974:26974:"
+  },
+  "database_scope": {
+    "critical_tables": [
+      "aggregate_state",
+      "command_receipt",
+      "audit_event",
+      "outbox_event",
+      "job",
+      "applied_effect",
+      "read_revision",
+      "read_head",
+      "query_snapshot",
+      "query_snapshot_row",
+      "artifact_catalog",
+      "o3_attention_projection",
+      "source_snapshot",
+      "source_capability"
+    ],
+    "mode": "POSTGRESQL_LOGICAL_DUMP",
+    "raw_telemetry_backup": "EXCLUDED_NOT_MODELED_BY_CANONICAL_SCHEMA"
+  },
+  "dump": {
+    "byte_size": 46424,
+    "path": "database.dump",
+    "sha256": "88b31addc6e99f085d0bf4881254a06e4d9ccf2ba2965257c16d16856562482c"
+  },
+  "durable_state": {
+    "state_sha256": "218402d1d84a1c3b92103e2914850efe4442a58c8874872563a089bf776f32a4",
+    "tables": {
+      "_state": {
+        "content_sha256": "218402d1d84a1c3b92103e2914850efe4442a58c8874872563a089bf776f32a4",
+        "row_count": 20,
+        "table_count": 14
+      },
+      "aggregate_state": {
+        "content_sha256": "bcb3645074f7047547281562d3e057d9d9b89c10ebc316fef16c24176f0611a4",
+        "row_count": 3,
+        "row_identity_hashes": [
+          "14cc8322c20682c7b5f23cc175f92b58f3cbcfa95608579f7776911550659a46",
+          "2b2260bde1de40a2edaa9d110310093848dd86e484173c7fb1231962abadd589",
+          "39946a6147a22651f256559dbab0a09b23cc59382fc096ed0d7fd8b859994600"
+        ],
+        "row_versions": [
+          {
+            "identity_hash": "14cc8322c20682c7b5f23cc175f92b58f3cbcfa95608579f7776911550659a46",
+            "row_hash": "76d7dbfab490aaf15b56e398100544ec01bd7ae49a9e5c18250789633a21c2f5",
+            "version": 0
+          },
+          {
+            "identity_hash": "2b2260bde1de40a2edaa9d110310093848dd86e484173c7fb1231962abadd589",
+            "row_hash": "13929b4324ed1bd952ed6483da9fe828893f3bde246da57d3d76bde70e5bd1f5",
+            "version": 1
+          },
+          {
+            "identity_hash": "39946a6147a22651f256559dbab0a09b23cc59382fc096ed0d7fd8b859994600",
+            "row_hash": "135b4de9f964dbb578e40aae9d5990601234067602bbe1b25cb5b214df0c5617",
+            "version": 2
+          }
+        ]
+      },
+      "applied_effect": {
+        "content_sha256": "9db682f489e6b12e9e3762cdb81aab4ab764c373e8753f6fd6fecff25c16dbb2",
+        "row_count": 1,
+        "row_identity_hashes": [
+          "4e1bf3ffac29c8aab25b3fd0b88a735c3532d926cdd2d5cbb98ba214dd5afef0"
+        ],
+        "row_versions": [
+          {
+            "identity_hash": "4e1bf3ffac29c8aab25b3fd0b88a735c3532d926cdd2d5cbb98ba214dd5afef0",
+            "row_hash": "b4b364bd99a5e2e725a4fceb9adf492ad6c03f7f313ff984101a33c71a7c8e27",
+            "version": null
+          }
+        ]
+      },
+      "artifact_catalog": {
+        "content_sha256": "1aa8d65ceaf4c28fda072ebd27b17a04dac76a2acad94fe5b3cfeb07a24c9be0",
+        "row_count": 1,
+        "row_identity_hashes": [
+          "0327f4cc8b81c7f5d055c8c61454c39ca0bb77981fa7b58f7087a64fdb4cfd61"
+        ],
+        "row_versions": [
+          {
+            "identity_hash": "0327f4cc8b81c7f5d055c8c61454c39ca0bb77981fa7b58f7087a64fdb4cfd61",
+            "row_hash": "a7005ed2033fe3abdd51526e7fb7d9a23e03bbf6b4355d65a0aa8258497ddcf1",
+            "version": null
+          }
+        ]
+      },
+      "audit_event": {
+        "content_sha256": "cf5d95df9ca92640857305792d10b336884fc82177df954a8bdbed0568727d2a",
+        "row_count": 2,
+        "row_identity_hashes": [
+          "45536c043c13d674c4bd1e8b9ee6d44cb977ab19dde4de769df54ae1d3f6d600",
+          "86a376872418db92d17e8d3250e1968ddaa577fc255d8d2872640ab6eccbd0d3"
+        ],
+        "row_versions": [
+          {
+            "identity_hash": "45536c043c13d674c4bd1e8b9ee6d44cb977ab19dde4de769df54ae1d3f6d600",
+            "row_hash": "02b0bae273e7d330ae376ade67d154af59e2a40db0d74460f43ab68657be4859",
+            "version": 2
+          },
+          {
+            "identity_hash": "86a376872418db92d17e8d3250e1968ddaa577fc255d8d2872640ab6eccbd0d3",
+            "row_hash": "32f6c733e66d1c27710f32449d57492b55c019beaffeb84de57b1a509862e677",
+            "version": 1
+          }
+        ]
+      },
+      "command_receipt": {
+        "content_sha256": "0e4496efa67dfe7d7b170afbfd07f37e52a64c1c3fce2c367678345746aeb6a7",
+        "row_count": 2,
+        "row_identity_hashes": [
+          "31e305026255d950240c44da76d2e6614fcc758fd568b8da113ccb72e1300b59",
+          "b53780a463ce513669701e5edec060483169a590f25fe080cc003c8f5ac23349"
+        ],
+        "row_versions": [
+          {
+            "identity_hash": "31e305026255d950240c44da76d2e6614fcc758fd568b8da113ccb72e1300b59",
+            "row_hash": "7993db1998d77399d26ee34daf9d155e51ba47da660029aec1cc24f1f785ad4a",
+            "version": 1
+          },
+          {
+            "identity_hash": "b53780a463ce513669701e5edec060483169a590f25fe080cc003c8f5ac23349",
+            "row_hash": "40bf78c0f035ecf7907f51f450d73b83d89cd65a8726ebbdd96d753a3d4aaf23",
+            "version": 2
+          }
+        ]
+      },
+      "job": {
+        "content_sha256": "b68a80cfe60c5595d0a13ee691e7ebe246638d7a01db57a1689179a447120355",
+        "row_count": 2,
+        "row_identity_hashes": [
+          "47af6e21f421f17834c1d81199b814baa83082108ad4d17dce0cee4b44a92e4a",
+          "d1bf91645856b068d0eb76ffbb747f26ebb2d3c997d885a85bb21220a2e7db03"
+        ],
+        "row_versions": [
+          {
+            "identity_hash": "47af6e21f421f17834c1d81199b814baa83082108ad4d17dce0cee4b44a92e4a",
+            "row_hash": "1fb07cba08430e09aae3651b8ebb9bdab31acbc927605046893acffe526aa534",
+            "version": 1
+          },
+          {
+            "identity_hash": "d1bf91645856b068d0eb76ffbb747f26ebb2d3c997d885a85bb21220a2e7db03",
+            "row_hash": "64ec2c74ad08aadf910b9c479ebfff922f00d7b3513701779c2876582cdf374b",
+            "version": 1
+          }
+        ]
+      },
+      "o3_attention_projection": {
+        "content_sha256": "fa142f901b81cee25dadc150c4638d101d8c5bc4c7698c873cd107eecd50c4d7",
+        "row_count": 1,
+        "row_identity_hashes": [
+          "8661c7335be547e3c3b6ca2d93836c82428dafb0e3674d234398da3a8b782435"
+        ],
+        "row_versions": [
+          {
+            "identity_hash": "8661c7335be547e3c3b6ca2d93836c82428dafb0e3674d234398da3a8b782435",
+            "row_hash": "c6d422b7841e73873734a450a12e4d4d5ec321b6d09a5f14629690512aea12cc",
+            "version": "1"
+          }
+        ]
+      },
+      "outbox_event": {
+        "content_sha256": "a2ac10fd70ea4a27bf9bb02480ef5e15e8507db631a70eabc2b598e3d65fccc7",
+        "row_count": 2,
+        "row_identity_hashes": [
+          "195bdf02523e07cdca97ea9dffbf84f9fad244db27301bb32a17de06571379f0",
+          "c99de79b5f4dcc850d92f4490c47dd40366f5449f394b00096615be0287df84f"
+        ],
+        "row_versions": [
+          {
+            "identity_hash": "195bdf02523e07cdca97ea9dffbf84f9fad244db27301bb32a17de06571379f0",
+            "row_hash": "d69a3fdc25685a64ceb4c86a911037a2ad3c1efaca3dff1501c085ead7b7452a",
+            "version": 1
+          },
+          {
+            "identity_hash": "c99de79b5f4dcc850d92f4490c47dd40366f5449f394b00096615be0287df84f",
+            "row_hash": "89fd137204b156a490b5b810976a095d27416c0165af85261dc53fc7d2952104",
+            "version": 2
+          }
+        ]
+      },
+      "query_snapshot": {
+        "content_sha256": "2f4b0abd022aa82083e34161f30cf848cecb1b25838047cce0d8ab8de3f4abd6",
+        "row_count": 1,
+        "row_identity_hashes": [
+          "85841295e2fa7ba04352be3fac9a3947075d044bcbd998cee15b22aa64218aae"
+        ],
+        "row_versions": [
+          {
+            "identity_hash": "85841295e2fa7ba04352be3fac9a3947075d044bcbd998cee15b22aa64218aae",
+            "row_hash": "e96dc312a41aa53046f10ac7830659b333aff9bf93aec3999e841ea01cdad74f",
+            "version": null
+          }
+        ]
+      },
+      "query_snapshot_row": {
+        "content_sha256": "32c5f4cfd224aa9d3ab35c85f47a5f3b9462c0c31a9d684ace432dcdee59829a",
+        "row_count": 1,
+        "row_identity_hashes": [
+          "633a0b88315e9d03feeeb80e3490e49866b919c4f0a1048afb959c851477125d"
+        ],
+        "row_versions": [
+          {
+            "identity_hash": "633a0b88315e9d03feeeb80e3490e49866b919c4f0a1048afb959c851477125d",
+            "row_hash": "5acdb3085e051f5c8982c45ccbe0c4d1496ab10775e51b40e1c65dce3beaec7b",
+            "version": 1
+          }
+        ]
+      },
+      "read_head": {
+        "content_sha256": "0dbd5543313aa44a1dd37396c776b8b07a159fdd89f4de5d123dca6d51dc6c10",
+        "row_count": 1,
+        "row_identity_hashes": [
+          "6e4a21205df91efb2776c68b7426813068a023e22fb7fc992ad4dfcbcc4d1bef"
+        ],
+        "row_versions": [
+          {
+            "identity_hash": "6e4a21205df91efb2776c68b7426813068a023e22fb7fc992ad4dfcbcc4d1bef",
+            "row_hash": "24a35b1fbda6fe7301db5d161e6eed731af17b605bcaa77481f6adc1f9f6c05b",
+            "version": 1
+          }
+        ]
+      },
+      "read_revision": {
+        "content_sha256": "4c6c794c9f22c170e9f6b653202ce02232db9628ff9f493530a9a1ed06fcd723",
+        "row_count": 1,
+        "row_identity_hashes": [
+          "c3987634008240fd1b44ff4f0bed0f30fa9c6c1a97f427e89f5dae5e3b4d18bf"
+        ],
+        "row_versions": [
+          {
+            "identity_hash": "c3987634008240fd1b44ff4f0bed0f30fa9c6c1a97f427e89f5dae5e3b4d18bf",
+            "row_hash": "673234241beea3025ab843e03b2bc75e584f703334058315be7bc9cfa5c0a22c",
+            "version": null
+          }
+        ]
+      },
+      "source_capability": {
+        "content_sha256": "60055b2936299dc34da253f321cab2a86fa077547099eda1a69faaa7a9daf568",
+        "row_count": 1,
+        "row_identity_hashes": [
+          "5509231480d61e11f74bbac977643024ac512a3300818a65381eb11a95f0dc1a"
+        ],
+        "row_versions": [
+          {
+            "identity_hash": "5509231480d61e11f74bbac977643024ac512a3300818a65381eb11a95f0dc1a",
+            "row_hash": "45578d5139c644a90abf9d94f4e7e2ae42a55a7ff7c33d6fc234b4000dcc9b20",
+            "version": null
+          }
+        ]
+      },
+      "source_snapshot": {
+        "content_sha256": "70e824bf4b591ee156e3a3b3a79b2d7b0a2f20df942364337143483d81a8acfa",
+        "row_count": 1,
+        "row_identity_hashes": [
+          "6d8e3f3646df2b308e10a9fae10985bf8611905dcc69ebc131580fa7d82e4178"
+        ],
+        "row_versions": [
+          {
+            "identity_hash": "6d8e3f3646df2b308e10a9fae10985bf8611905dcc69ebc131580fa7d82e4178",
+            "row_hash": "c32e12286079906d0ba18ace114a0823466e3273e17a8064b0953907c2f7c520",
+            "version": null
+          }
+        ]
+      }
+    }
+  },
+  "immutable_artifacts": {
+    "backup_root": "artifacts",
+    "count": 1,
+    "inventory": [
+      {
+        "byte_size": 69,
+        "metadata_sha256": "48a1e3ee39317ab3c4c58c78a467b271331f1fbe3b1ed507b42cf3efbc23ad18",
+        "scope_key_sha256": "cb7eab66d23151c5f85e4dcd33144dd4dfac1af6083205b225452821c5323452",
+        "sha256": "a429cb161549a7af1c1571878449d19edec7674968313a67b8e7dd767616032b"
+      }
+    ],
+    "inventory_sha256": "00326d6700a33252fdeb3b40b3c97c07b7494a7cbef5d13a10a58c72410c5550"
+  },
+  "migration_schema_identity": {
+    "files": [
+      {
+        "byte_size": 2723,
+        "path": "migrations/001_o2_command_core.sql",
+        "sha256": "a1f6446278e05112e80f02d694ded584491b77502537919a92cdafd5faf56a33"
+      },
+      {
+        "byte_size": 2317,
+        "path": "migrations/002_o2_worker_core.sql",
+        "sha256": "9c8e4dea1c0625ccb18bffa5717b750caf02204f204b77d1747bc3495274e963"
+      },
+      {
+        "byte_size": 4938,
+        "path": "migrations/003_o2_read_snapshot_core.sql",
+        "sha256": "22163a8fb1e6447188b254d4449cc3018cbb947c2deb48969f387dd796ef6389"
+      },
+      {
+        "byte_size": 1928,
+        "path": "migrations/004_o2_artifact_catalog.sql",
+        "sha256": "667cd985add5c26e285817489fdd7568fbc0652685cc7d3833a9ef8906613460"
+      },
+      {
+        "byte_size": 1015,
+        "path": "migrations/005_o3_attention_episode_w1.sql",
+        "sha256": "0b960b6ef46af60925fd9930e613d419c2344651e6a32a0e51196f5565e58dd9"
+      },
+      {
+        "byte_size": 6355,
+        "path": "migrations/006_o4_source_snapshot_ingress.sql",
+        "sha256": "0fb09ed09f3f9a86d66f44dd76316f30a581cec8b4d712cad4403f7971d70259"
+      }
+    ],
+    "identity_sha256": "0a5e582322961d70c44fda7e57e22cfe18357dd2e2e46ccd94df115d270e3709",
+    "migration_count": 6
+  },
+  "operation": "CHG-147/O9.1",
+  "postgresql": {
+    "safe_database_identity": {
+      "connection": {
+        "configured": true,
+        "credentials_redacted": true,
+        "database_present": true,
+        "host_present": true,
+        "port_present": true,
+        "scheme": "postgresql"
+      },
+      "database_name": "ephi_o10_local",
+      "schema_name": "public"
+    },
+    "server_major": 18,
+    "server_version": "PostgreSQL 18.6 (Homebrew) on aarch64-apple-darwin25.6.0, compiled by Apple clang version 21.0.0 (clang-2100.1.1.101), 64-bit",
+    "tooling": {
+      "pg_dump_major": 18,
+      "pg_dump_version": "pg_dump (PostgreSQL) 18.6 (Homebrew)"
+    }
+  },
+  "repository": {
+    "base_sha": "4e927cc6436a302134249a50e7ccdbb1c29dc89f",
+    "candidate_branch": "codex/ephi-o10-rendered-accessibility-v1",
+    "source_sha": "9262533404f13df52ef20a7a1245b120f4438b04",
+    "source_tree": "dcb1f18978a372075abb81dfd180dda0a216245d"
+  },
+  "schema_version": "o9.1.backup.v1",
+  "timing": {
+    "backup_duration_seconds": 0.096309,
+    "production_disaster_rpo_rto_claim": "NOT_ESTABLISHED",
+    "scope": "LOCAL_RESTORE_REHEARSAL"
+  },
+  "verification": {
+    "artifact_bytes_verified_at_capture": true,
+    "manifest_consistent": true,
+    "overall_verification_state": "VERIFIED",
+    "required_schema_present_at_capture": true
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "canonical_w0_baseline": {
+    "command": "python3 tools/w0_repo_baseline.py",
+    "status": "PASS"
+  },
+  "compileall": {
+    "command": "python3 -m compileall -q src tests tools",
+    "status": "PASS"
+  },
+  "focused_o10_unit": {
+    "status": "PASS",
+    "tests": 5
+  },
+  "full_dependency_free_unittest": {
+    "passed": 237,
+    "reason_for_skips": "PostgreSQL DSN is not set in dependency-free lane",
+    "skipped": 64,
+    "status": "PASS",
+    "tests": 237
+  },
+  "git_diff_check": {
+    "command": "git diff --check",
+    "status": "PASS"
+  },
+  "o8_browser_session_transport": {
+    "direct": "evidence/o8/direct.json",
+    "postgresql_version": "18.6",
+    "proxy_root_path": "evidence/o8/proxy.json",
+    "secrets_recorded": false,
+    "status": "PASS"
+  },
+  "o9_real_restore_rehearsal": {
+    "application_restart_and_semantics": "VERIFIED",
+    "production_rpo_rto": "NOT_ESTABLISHED",
+    "real_source_qualification": "BLOCKED_REAL_SOURCE",
+    "restore_verification": "VERIFIED",
+    "status": "PASS",
+    "summary": "evidence/o9/restore_reconciliation_report.json"
+  },
+  "package_manifest": {
+    "command": "python3 tools/check_package.py --refresh-manifest",
+    "status": "PASS"
+  },
+  "real_postgresql_regression_subset": {
+    "postgresql_version": "18.6",
+    "scope": "O2/O3/O4/O8/O9 subsets",
+    "status": "PASS",
+    "tests": 82
+  },
+  "repository_native_ci": {
+    "candidate_sha": "e75872d974c4edeaf55356855e96b3b8ca275dab",
+    "job": "rendered-accessibility-integration",
+    "note": "No GitHub Actions run was available in this local Fabric execution; no CI pass is asserted.",
+    "status": "PENDING_GITHUB_ACTIONS",
+    "workflow": ".github/workflows/package.yml"
+  },
+  "schema_version": 1,
+  "scope": "local deterministic qualification; no production readiness claim"
+}

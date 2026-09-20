@@ -1,0 +1,258 @@
+{
+  "base": "9262533404f13df52ef20a7a1245b120f4438b04",
+  "bundle": {
+    "bytes": 1428117,
+    "path": "evidence/ephi-o10-rendered-accessibility-v1.tar.gz",
+    "sha256": "0ec847e37bfd761d7f66a05c1b658b6fe30d0b186d00eb72f14d1e8b8a8d2b9e"
+  },
+  "candidate_sha": "e75872d974c4edeaf55356855e96b3b8ca275dab",
+  "candidate_tree": "349a9468dffdce2df73d0a542063d66e431ae578",
+  "changed_files": {
+    "count": 7,
+    "files": [
+      {
+        "bytes": 15638,
+        "path": ".github/workflows/package.yml",
+        "sha256": "7d9d957184bca492f2d8b31a132614ecda8f5e4e83b1b4952f7d5fe251de416e"
+      },
+      {
+        "bytes": 33616,
+        "path": "manifest.json",
+        "sha256": "4edca5d1fb821fbf7a3e1447e67cc333f563a693cb20078fe01cc8e0115ad70a"
+      },
+      {
+        "bytes": 9926,
+        "path": "src/ephi/infrastructure/postgresql_o3.py",
+        "sha256": "814d1f5c3af5fcda9cede47f9e52d66073045845a4aa590be8bcbdf67e7fef51"
+      },
+      {
+        "bytes": 43519,
+        "path": "src/ephi/ui/app.py",
+        "sha256": "17073490275251a3bef93c754e059b8fadc05548135e172e1fed4b3d6876d8f1"
+      },
+      {
+        "bytes": 3590,
+        "path": "tests/test_o10_rendered_accessibility.py",
+        "sha256": "6918e86a89ae576f3b541227a9de1c9f556500aa1640d67cb56cfc9b86b72010"
+      },
+      {
+        "bytes": 33352,
+        "path": "tools/o10_rendered_accessibility.py",
+        "sha256": "059a96b2c1f2aa329ee858d81742b784455b6f95bf53d0ff94275d67f9b82bd5"
+      },
+      {
+        "bytes": 5064,
+        "path": "tools/o10_state_harness.py",
+        "sha256": "8047759c834921ce4de7d6c5d9b933caaec2554917cc74c8368e7968dbebd922"
+      }
+    ],
+    "path_equality_with_candidate_diff": true,
+    "paths": [
+      ".github/workflows/package.yml",
+      "manifest.json",
+      "src/ephi/infrastructure/postgresql_o3.py",
+      "src/ephi/ui/app.py",
+      "tests/test_o10_rendered_accessibility.py",
+      "tools/o10_rendered_accessibility.py",
+      "tools/o10_state_harness.py"
+    ]
+  },
+  "claim_boundaries": {
+    "human_ux_review": "PENDING",
+    "production_performance_capacity": "NOT_CLAIMED",
+    "project_os_go": "NOT_SELF_DECLARED",
+    "real_source_qualification": "BLOCKED_REAL_SOURCE"
+  },
+  "evidence": {
+    "aria_and_state_snapshots": "embedded in evidence/rendered/report.json",
+    "o10_rendered_report": {
+      "bytes": 32959,
+      "path": "evidence/rendered/report.json",
+      "sha256": "d36b216a99c0f0aecd7812d15297be2887147dcb3cff284457a608e265ccbd48"
+    },
+    "o8_regressions": [
+      {
+        "bytes": 33233,
+        "path": "evidence/o8/direct.json",
+        "sha256": "b22d6fed82bbc78c9ca2451b5af6ce48be88f524a9b9f10c203b7caea6a44490"
+      },
+      {
+        "bytes": 33479,
+        "path": "evidence/o8/proxy.json",
+        "sha256": "92549388fefd01ddaff0985779b468910409d198c58ee6147357e4d1941a9ef6"
+      }
+    ],
+    "o9_restore": [
+      {
+        "bytes": 8758,
+        "path": "evidence/o9/restore_reconciliation_report.json",
+        "sha256": "190f5d173749a20bde725ef8f418825da039e177498b877f38cad8692a597143"
+      },
+      {
+        "bytes": 13925,
+        "path": "evidence/o9/backup_manifest.json",
+        "sha256": "a37f64717b2fa46bc590957056ec083067d76d25c859f175e89522d1ca9e74a7"
+      },
+      {
+        "bytes": 1466,
+        "path": "evidence/o9/operations_health.json",
+        "sha256": "f8ecda2048605bb532c9798d03c269f86be5619e45bcbc24bbb6f826d47a30cc"
+      }
+    ],
+    "regression_results": {
+      "bytes": 1812,
+      "path": "evidence/regression-results.json",
+      "sha256": "445a6d8b7d13bbc65e84735d439d2e01ed5078f0c78f7e54dadb05bb9bfdadee"
+    },
+    "screenshots": [
+      {
+        "bytes": 70084,
+        "path": "evidence/rendered/screenshots/attention-1024x768.png",
+        "sha256": "fddf0277ec4aa317378cb6faaf9191cd664e8a02af5cc48a051f257d56782a32"
+      },
+      {
+        "bytes": 73614,
+        "path": "evidence/rendered/screenshots/attention-1440x900.png",
+        "sha256": "38bb2865efe4abd8231f1f7c546553abe70c005b8c99a5f52546154df36c58fe"
+      },
+      {
+        "bytes": 51546,
+        "path": "evidence/rendered/screenshots/attention-320x800.png",
+        "sha256": "8b09721490b0f942f77a9c065ddb7faa0d97c6a94d046df5d37f1b1470a08f4a"
+      },
+      {
+        "bytes": 50175,
+        "path": "evidence/rendered/screenshots/attention-390x844.png",
+        "sha256": "4462d4c68d9022d55a2c7f47d398db4dda62ca65e00f80d91bffb1997ff1298c"
+      },
+      {
+        "bytes": 63211,
+        "path": "evidence/rendered/screenshots/attention-768x1024.png",
+        "sha256": "5f0ffc884b09ce777151c3d030418236fa87de12101ecd8d9d7f1364e5815c41"
+      },
+      {
+        "bytes": 25371,
+        "path": "evidence/rendered/screenshots/attention-failure.png",
+        "sha256": "275e09a9b9baf5dde6a7939756f90ac72f494ab1293388d944299a761c8a0180"
+      },
+      {
+        "bytes": 90273,
+        "path": "evidence/rendered/screenshots/attention-no-matching-rows-1440x900.png",
+        "sha256": "10dff332911e90d5b817c95f48788a2fa94232763a9ef66413fb9b80b71f4c74"
+      },
+      {
+        "bytes": 26541,
+        "path": "evidence/rendered/screenshots/attention-no-permitted-rows.png",
+        "sha256": "6ce1e9074dbf53dad714b2455f8054a5c525fb881071ce30dd3fff0acb34ea0f"
+      },
+      {
+        "bytes": 27680,
+        "path": "evidence/rendered/screenshots/attention-offline.png",
+        "sha256": "314678b7bde2ad56b19134ba5fc56709d8ec138228bf5651b29be88ecab168f0"
+      },
+      {
+        "bytes": 24829,
+        "path": "evidence/rendered/screenshots/attention-permission.png",
+        "sha256": "dbfe5026fe50e94933fbfb87829761c090c458e927c08c68d1d3138ff7fe2887"
+      },
+      {
+        "bytes": 75373,
+        "path": "evidence/rendered/screenshots/attention-populated-1440x900.png",
+        "sha256": "b8d7dec3175e64f164eeeed076054829a89251889cad041ff4122b85de4fb324"
+      },
+      {
+        "bytes": 27077,
+        "path": "evidence/rendered/screenshots/attention-stale.png",
+        "sha256": "11325811fc04416c3849c174897a94119c5a9d20459b7898372917675808d4cc"
+      },
+      {
+        "bytes": 182952,
+        "path": "evidence/rendered/screenshots/episode-1024x768.png",
+        "sha256": "d0698c05103ef9f41f2e525a0b7b89087aada6eeaf69c245b052414de62ab2a8"
+      },
+      {
+        "bytes": 196204,
+        "path": "evidence/rendered/screenshots/episode-1440x900.png",
+        "sha256": "61cb18d7e142228a10b9714fb609f53b6ededebb68c77b88a109ab0f2c112ecd"
+      },
+      {
+        "bytes": 70942,
+        "path": "evidence/rendered/screenshots/episode-320x800.png",
+        "sha256": "49107528ca2f3bd2f7ae4beea52866579222b84667e6701a8e118786d8a8e81c"
+      },
+      {
+        "bytes": 71706,
+        "path": "evidence/rendered/screenshots/episode-390x844.png",
+        "sha256": "8051d7625a57707633d5b8b0ed750ad0bcc4fffbd5d056bda18f3179cd48c92c"
+      },
+      {
+        "bytes": 79969,
+        "path": "evidence/rendered/screenshots/episode-768x1024.png",
+        "sha256": "4f44a80fffc5e349d697b27927bcdaddd06c19fcd981ea72cae9215aac757352"
+      },
+      {
+        "bytes": 47653,
+        "path": "evidence/rendered/screenshots/episode-capability-states.png",
+        "sha256": "8c99703f3b1a4dc9477dd6b98f04d60b721bfa03bb871fc3842879cd9aa4826d"
+      },
+      {
+        "bytes": 201653,
+        "path": "evidence/rendered/screenshots/episode-claimed-1440x900.png",
+        "sha256": "2516cd72db46ba74e9ab7d50afc891168ae538f2fc66f269a30d2cc94c346dae"
+      },
+      {
+        "bytes": 29049,
+        "path": "evidence/rendered/screenshots/episode-coherent-conflict.png",
+        "sha256": "cba20fdc445f5dcbc460b9f80b4d21b6f84f0daffd181321b9a20c6657662035"
+      },
+      {
+        "bytes": 60503,
+        "path": "evidence/rendered/screenshots/episode-no-selection-1440x900.png",
+        "sha256": "d8653ce7abf410c2c36dc57159f280192e3c3b39ce8beee28ff1c68ac853d192"
+      },
+      {
+        "bytes": 29274,
+        "path": "evidence/rendered/screenshots/episode-offline.png",
+        "sha256": "bde8919c3f492b620356513b5d2867aed558dfe0c6c71d44c52679ecc6588e2b"
+      },
+      {
+        "bytes": 28275,
+        "path": "evidence/rendered/screenshots/episode-owner-changed.png",
+        "sha256": "fe483369b2d36f7fd8d45eee82c272154c49872a62dd6bb590d844e41612a278"
+      },
+      {
+        "bytes": 27104,
+        "path": "evidence/rendered/screenshots/episode-permission.png",
+        "sha256": "4e6d07e5f21f3eee62d620b1bd8e3dc0dd4efb5b7c2a9106833c8cd44fad3904"
+      },
+      {
+        "bytes": 196369,
+        "path": "evidence/rendered/screenshots/episode-populated-1440x900.png",
+        "sha256": "24cd183755d01cb5fe9ed88d12c7d2c9ede5f76a1945eab31072bc06e3cb3918"
+      },
+      {
+        "bytes": 29246,
+        "path": "evidence/rendered/screenshots/episode-version-conflict.png",
+        "sha256": "6605fc14b9ce614e148f9172829e5a263aa6a7728c0747e7e98707c00ee4bb53"
+      }
+    ]
+  },
+  "fabric_job_id": "CF-fec431c5cf2d9f477672de0e",
+  "kind": "project-os-artifact-carrier",
+  "operation": "BUILD",
+  "project": "ephi",
+  "remote_ref": "refs/heads/project-os-artifacts/ephi/ephi-o10-rendered-accessibility-v1",
+  "request": "ephi-o10-rendered-accessibility-v1",
+  "schema_version": 1,
+  "secret_safety": {
+    "authorization_headers": false,
+    "cookies": false,
+    "dsns": false,
+    "notion_credentials": false,
+    "protected_rows": false,
+    "raw_artifact_bytes": false,
+    "storage_session_secrets": false,
+    "synthetic_qualification_data_only": true
+  },
+  "work_branch": "codex/ephi-o10-rendered-accessibility-v1"
+}
