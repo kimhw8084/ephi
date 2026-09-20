@@ -550,7 +550,7 @@ class _BrowserContext:
 
         self.page.on("response", record_response)
         self.page.goto(self.page_url, wait_until="domcontentloaded")
-        self.page.get_by_text("Attention list").wait_for(timeout=30000)
+        self.page.get_by_role("heading", name="Attention").wait_for(timeout=30000)
         self.page.goto(self.page_url.rstrip("/") + "/episode", wait_until="domcontentloaded")
         self.page.get_by_text("Episode decision brief").wait_for(timeout=30000)
         self.page.get_by_role("button", name="Claim episode").click()
