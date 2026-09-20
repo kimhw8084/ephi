@@ -45,8 +45,6 @@ from nicegui_base import (
     StaleResponseGuard,
     WorkspaceController,
     NiceGUIRuntimeAdapter,
-    RuntimeConfig,
-    RuntimeEnvironment,
 )
 
 from ephi.application.attention import AttentionQueryService
@@ -65,6 +63,12 @@ from ephi.application.workflow import EpisodeWorkflowCommandService
 from ephi.application.source_reality import require_runtime_source_binding
 from ephi.config import RuntimeSettings
 from ephi.infrastructure.postgresql import PostgreSQLReferenceTransactionAdapter
+from ephi.transport import (
+    BrowserTransportMiddleware,
+    BrowserTransportPolicy,
+    build_runtime_config,
+    require_security_preflight,
+)
 from .provider import EphiReadDataSource
 
 
@@ -478,28 +482,22 @@ def build_page() -> None:
 
 def run_ephi() -> None:
     settings = RuntimeSettings.from_environment()
+    require_security_preflight()
+    config = build_runtime_config(settings)
+    base_issues = config.validate_environment()
+    if base_issues:
+        raise RuntimeError(f"EPHI security preflight blocked: {','.join(base_issues)}")
+    policy = BrowserTransportPolicy.from_environment()
+    policy.validate()
     composition = build_composition_from_environment()
-    environment = {
-        "development": RuntimeEnvironment.DEV,
-        "test": RuntimeEnvironment.TEST,
-        "qa": RuntimeEnvironment.QA,
-        "production": RuntimeEnvironment.PROD,
-    }.get(settings.environment.lower())
-    if environment is None:
-        composition.close()
-        raise RuntimeError("EPHI_ENV must be development, test, qa, or production")
-    config = RuntimeConfig(
-        app_name="ephi",
-        app_version="0.1.0",
-        environment=environment,
-        host=settings.host,
-        port=settings.port,
-        title="EPHI",
-        show_browser=False,
-        reload=False,
-        require_storage_secret=True,
-    )
     runtime_adapter = NiceGUIRuntimeAdapter(config)
+    runtime_adapter.install_middleware()
+    # The transport gate is added after Base middleware registration so its
+    # pure-ASGI check remains outside NiceGUI routing/client creation while
+    # Base SecurityHeadersMiddleware remains the outer response policy.
+    from nicegui import app as nicegui_app
+
+    nicegui_app.add_middleware(BrowserTransportMiddleware, policy=policy)
     runtime_adapter.run(
         root=lambda: build_attention_page(composition),
         pages={"/episode": lambda: build_episode_page(composition)},

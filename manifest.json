@@ -51,8 +51,8 @@
     },
     {
       "path": ".github/workflows/package.yml",
-      "bytes": 7095,
-      "sha256": "d78a47e5b16e8af4dd4530dcc27b2f5faea975d55bc88ecb387571012c8f9cb3"
+      "bytes": 9549,
+      "sha256": "ada3bbae9f92b7b022dbb02c308a93f00a4927f8caa1214ab1784a5a9073fc66"
     },
     {
       "path": ".gitignore",
@@ -591,8 +591,8 @@
     },
     {
       "path": "src/ephi/app.py",
-      "bytes": 3202,
-      "sha256": "e0fd9022ecd934c832932fbc3f61467c74ddb9c633a6c9fcdc61ca23cb4d85c6"
+      "bytes": 3497,
+      "sha256": "0573269f76b962d0491892e43b5f8264067df0a7c1fd32e8d3130527feda63e9"
     },
     {
       "path": "src/ephi/application/__init__.py",
@@ -730,14 +730,19 @@
       "sha256": "ef64f07215a7f7a885cc7073d4721937a488d0de0c9566c8deed52e4d89e294f"
     },
     {
+      "path": "src/ephi/transport.py",
+      "bytes": 17993,
+      "sha256": "0e009bc23aa827c4d2810bf2dd990b9bf9ce7855da0c71258b3e5195a9fb585b"
+    },
+    {
       "path": "src/ephi/ui/__init__.py",
       "bytes": 137,
       "sha256": "f7cbe70bf024f8dd51c204ebf330a0f06534bbb78b6441d11f36d4c00a58ba7b"
     },
     {
       "path": "src/ephi/ui/app.py",
-      "bytes": 20652,
-      "sha256": "b7370323051f425056a9584e2230ca506b3c5e949599937e82b12916bd2adf8f"
+      "bytes": 20793,
+      "sha256": "647d965eb71d58e2f5a584b57f62d2dd86d7cd4b0cddc63da53d2b690cfe42df"
     },
     {
       "path": "src/ephi/ui/provider.py",
@@ -835,6 +840,11 @@
       "sha256": "129c767c2ab1b8a2f613fc52db6fd684d97f709d953f3ab4f965712446b9988a"
     },
     {
+      "path": "tests/test_o8_browser_transport.py",
+      "bytes": 9854,
+      "sha256": "18e9d38915e48b87da8cc530382f571e48abab91df87f5215586d194149fbebc"
+    },
+    {
       "path": "tests/test_o8_current_authorization.py",
       "bytes": 16156,
       "sha256": "20e029aa3b3badbfd607becd64f5fe2e3fb2157faa5adf0938789c2658d49cc4"
@@ -898,6 +908,16 @@
       "path": "tools/check_package.py",
       "bytes": 11490,
       "sha256": "a353043571493380c81a93a56d1426cb4b9e2f3a78eb620bc75a24ace8d55da0"
+    },
+    {
+      "path": "tools/o8_browser_qualification.py",
+      "bytes": 20166,
+      "sha256": "dfd904acae328939c3354009a1b08785c8bff157440972bdf82d4580a07ecebb"
+    },
+    {
+      "path": "tools/o8_surface_inventory.py",
+      "bytes": 5722,
+      "sha256": "be0d83cfa2f28e90abada270d3a49bd9ef86e782ee6813eaa6ed1f618ed14f64"
     },
     {
       "path": "tools/o9_operations.py",
