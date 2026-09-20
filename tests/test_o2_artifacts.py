@@ -23,8 +23,8 @@ from ephi.application import (  # noqa: E402
     ArtifactTooLargeError,
     ArtifactWriteInterruptedError,
     AuthorizationDeniedError,
+    MutableCurrentAuthorizationAuthority,
     Principal,
-    ScopeDeniedError,
     ScopedArtifactReference,
     ValidationFailureError,
 )
@@ -55,7 +55,8 @@ class ArtifactReferenceTests(unittest.TestCase):
         self.store = FileArtifactBlobStore(self.root, max_artifact_size=1024)
         self.catalog = SQLiteArtifactCatalog(self.catalog_path)
         self.addCleanup(self.catalog.close)
-        self.service = ArtifactService(self.store, self.catalog)
+        self.current_authorization = MutableCurrentAuthorizationAuthority(self.principal)
+        self.service = ArtifactService(self.store, self.catalog, self.current_authorization)
 
     def write(self, content=b"canonical bytes", **kwargs):
         return self.service.write_and_register(
@@ -108,14 +109,14 @@ class ArtifactReferenceTests(unittest.TestCase):
         self.store = FileArtifactBlobStore(self.root, max_artifact_size=1024)
         self.catalog = SQLiteArtifactCatalog(self.catalog_path)
         self.addCleanup(self.catalog.close)
-        self.service = ArtifactService(self.store, self.catalog)
+        self.service = ArtifactService(self.store, self.catalog, self.current_authorization)
         retrieved = self.service.retrieve(self.principal, reference, self.read_capability)
         self.assertEqual(retrieved.content, b"canonical bytes")
         self.assertEqual(retrieved.metadata, written.metadata)
         self.assertNotIn(str(self.root), str(retrieved.metadata.as_dict()))
 
         no_scope = Principal("subject-2", (self.read_capability,), (self.other_scope,), 2, 3)
-        with self.assertRaises(ScopeDeniedError):
+        with self.assertRaises(AuthorizationDeniedError):
             self.service.retrieve(no_scope, reference, self.read_capability)
         no_capability = Principal("subject-1", (), (self.scope,), 2, 3)
         with self.assertRaises(AuthorizationDeniedError):
@@ -168,7 +169,7 @@ class ArtifactReferenceTests(unittest.TestCase):
         self.assertNotIn("object_key", result.metadata[0].as_dict())
 
         wrong_scope_reference = ScopedArtifactReference(self.other_scope, reference.content)
-        with self.assertRaises(ScopeDeniedError):
+        with self.assertRaises(AuthorizationDeniedError):
             self.service.verify_publish_preconditions(self.principal, (wrong_scope_reference,), self.read_capability)
 
     def test_atomic_fault_before_publish_leaves_no_final_object_or_catalog_row(self):
@@ -177,7 +178,7 @@ class ArtifactReferenceTests(unittest.TestCase):
             raise RuntimeError("deterministic test fault")
 
         faulted_store = FileArtifactBlobStore(self.root, max_artifact_size=1024, fault_injector=interrupt)
-        faulted_service = ArtifactService(faulted_store, self.catalog)
+        faulted_service = ArtifactService(faulted_store, self.catalog, self.current_authorization)
         with self.assertRaises(ArtifactWriteInterruptedError):
             faulted_service.write_and_register(
                 self.principal,

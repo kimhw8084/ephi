@@ -18,6 +18,7 @@ from ephi.application import (  # noqa: E402
     EpisodeBriefQueryService,
     EpisodeWorkflowCommandService,
     IdempotencyConflictError,
+    MutableCurrentAuthorizationAuthority,
     Principal,
     QuerySnapshotExpiredError,
     ReadRevision,
@@ -129,6 +130,7 @@ class O3ApplicationTests(unittest.TestCase):
             1,
             10,
         )
+        self.current_authorization = MutableCurrentAuthorizationAuthority(self.principal)
 
     def test_attention_validation_and_retained_order_are_explicit(self):
         rows = FakeAttentionRows(
@@ -138,7 +140,7 @@ class O3ApplicationTests(unittest.TestCase):
             )
         )
         retained = FakeReadStore()
-        service = AttentionQueryService(rows, retained)
+        service = AttentionQueryService(rows, retained, self.current_authorization)
         first = service.list_attention(self.principal, self.scope, page_size=1)
         self.assertEqual([row.episode_id for row in first.rows], ["ep-1"])
         second = service.list_attention(
@@ -180,12 +182,12 @@ class O3ApplicationTests(unittest.TestCase):
         )
         current_workflow = AggregateSnapshot(self.scope.canonical_key, "episode_workflow", "ep-1", 2, {"owner": "engineer-1", "work_state": "CLAIMED"})
         retained.current = CurrentReadBundle(revision, current_workflow, RevisionVector("analysis-1", None, None, 2, None, "manifest-1"))
-        brief = EpisodeBriefQueryService(retained).get_episode_brief(self.principal, self.scope, "ep-1")
+        brief = EpisodeBriefQueryService(retained, self.current_authorization).get_episode_brief(self.principal, self.scope, "ep-1")
         self.assertEqual(brief.revision_id, "read-1")
         self.assertEqual(brief.revision_vector.workflow_version, 2)
         self.assertEqual(brief.capability_state["source"], "READY")
         retained.historical["read-1"] = HistoricalReadBundle(revision, workflow_v1, revision.revision_vector)
-        historical = EpisodeBriefQueryService(retained).get_episode_brief(self.principal, self.scope, "ep-1", revision_id="read-1")
+        historical = EpisodeBriefQueryService(retained, self.current_authorization).get_episode_brief(self.principal, self.scope, "ep-1", revision_id="read-1")
         self.assertTrue(historical.historical)
 
         retained.current = CurrentReadBundle(
@@ -201,14 +203,14 @@ class O3ApplicationTests(unittest.TestCase):
             revision.revision_vector,
         )
         with self.assertRaises(CoherentReadConflictError):
-            EpisodeBriefQueryService(retained).get_episode_brief(self.principal, self.scope, "ep-1")
+            EpisodeBriefQueryService(retained, self.current_authorization).get_episode_brief(self.principal, self.scope, "ep-1")
 
     def test_claim_acknowledge_cas_replay_conflict_revocation_and_restart(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "o3.sqlite3"
             store = SQLiteReferenceTransactionAdapter(path)
             store.seed_aggregate(self.scope, "episode_workflow", "ep-1", {"owner": None, "work_state": "OPEN"})
-            service = EpisodeWorkflowCommandService(store)
+            service = EpisodeWorkflowCommandService(store, self.current_authorization)
             vector = RevisionVector("analysis-1", None, None, 0, None, "manifest-1")
             context = CommandContext("claim-1", self.principal, self.scope, 0, vector, "claim")
             committed = service.claim_episode(context, "ep-1")
@@ -216,12 +218,14 @@ class O3ApplicationTests(unittest.TestCase):
             with self.assertRaises(IdempotencyConflictError):
                 service.claim_episode(CommandContext("claim-1", self.principal, self.scope, 0, vector, "different"), "ep-1")
             competing = Principal("engineer-2", (self.claim_capability,), (self.scope,), 2, 11)
+            self.current_authorization.set_principal(competing)
             with self.assertRaises(VersionConflictError):
                 service.claim_episode(
                     CommandContext("claim-2", competing, self.scope, 0, vector),
                     "ep-1",
                 )
             ack_vector = RevisionVector("analysis-1", None, None, 1, None, "manifest-1")
+            self.current_authorization.set_principal(self.principal)
             acknowledged = service.acknowledge_episode(
                 CommandContext("ack-1", self.principal, self.scope, 1, ack_vector, "ack"),
                 "ep-1",
@@ -231,7 +235,7 @@ class O3ApplicationTests(unittest.TestCase):
             reopened = SQLiteReferenceTransactionAdapter(path)
             self.assertEqual(reopened.get_aggregate(self.scope, "episode_workflow", "ep-1").state["work_state"], "ACKNOWLEDGED")
             with self.assertRaises(AuthorizationDeniedError):
-                service_reopened = EpisodeWorkflowCommandService(reopened)
+                service_reopened = EpisodeWorkflowCommandService(reopened, self.current_authorization)
                 service_reopened.acknowledge_episode(
                     CommandContext("ack-1", Principal("engineer-1", (), (self.scope,), 3, 12), self.scope, 1, ack_vector),
                     "ep-1",
@@ -243,7 +247,7 @@ class O3ApplicationTests(unittest.TestCase):
             store = SQLiteReferenceTransactionAdapter(Path(directory) / "o3.sqlite3")
             store.seed_aggregate(self.scope, "episode_workflow", "ep-1", {"owner": None, "work_state": "OPEN"})
             with self.assertRaises(ValidationFailureError):
-                EpisodeWorkflowCommandService(store).claim_episode(CommandContext("x", self.principal, self.scope, 0, None), "ep-1")
+                EpisodeWorkflowCommandService(store, self.current_authorization).claim_episode(CommandContext("x", self.principal, self.scope, 0, None), "ep-1")
             store.close()
 
 

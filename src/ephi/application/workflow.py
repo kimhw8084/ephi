@@ -6,7 +6,7 @@ from collections.abc import Mapping
 from datetime import datetime, timezone
 from typing import Any
 
-from .context import CommandContext, RevisionVector
+from .context import CommandContext, CurrentAuthorizationAuthority, RevisionVector
 from .errors import AuthorizationDeniedError, InvalidTransitionError, ValidationFailureError
 from .transactions import CommandResult, VersionedAggregateCommandExecutor
 
@@ -43,8 +43,8 @@ def _workflow_state(current: Mapping[str, Any]) -> dict[str, Any]:
 class EpisodeWorkflowCommandService:
     """Thin domain facade over the existing VersionedAggregateCommandExecutor."""
 
-    def __init__(self, store):
-        self.executor = VersionedAggregateCommandExecutor(store)
+    def __init__(self, store, current_authorization: CurrentAuthorizationAuthority):
+        self.executor = VersionedAggregateCommandExecutor(store, current_authorization)
 
     def claim_episode(
         self,
@@ -112,4 +112,3 @@ class EpisodeWorkflowCommandService:
 
 ClaimEpisode = EpisodeWorkflowCommandService.claim_episode
 AcknowledgeEpisode = EpisodeWorkflowCommandService.acknowledge_episode
-

@@ -18,8 +18,8 @@ from ephi.application import (  # noqa: E402
     ArtifactNotFoundError,
     ArtifactService,
     AuthorizationDeniedError,
+    MutableCurrentAuthorizationAuthority,
     Principal,
-    ScopeDeniedError,
     ScopedArtifactReference,
 )
 from ephi.infrastructure import (  # noqa: E402
@@ -55,7 +55,8 @@ class PostgreSQLArtifactCatalogTests(unittest.TestCase):
         )
         self.store = FileArtifactBlobStore(self.root, max_artifact_size=1024)
         self.catalog = PostgreSQLArtifactCatalog(self.adapter)
-        self.service = ArtifactService(self.store, self.catalog)
+        self.current_authorization = MutableCurrentAuthorizationAuthority(self.principal)
+        self.service = ArtifactService(self.store, self.catalog, self.current_authorization)
 
     def write(self, content=b"postgres artifact", **kwargs):
         return self.service.write_and_register(
@@ -103,12 +104,13 @@ class PostgreSQLArtifactCatalogTests(unittest.TestCase):
         service = ArtifactService(
             FileArtifactBlobStore(self.root, max_artifact_size=1024),
             PostgreSQLArtifactCatalog(self.adapter),
+            self.current_authorization,
         )
         retrieved = service.retrieve(self.principal, reference, self.read_capability)
         self.assertEqual(retrieved.content, b"postgres artifact")
         self.assertEqual(retrieved.metadata.immutable_metadata_key(), written.metadata.immutable_metadata_key())
 
-        with self.assertRaises(ScopeDeniedError):
+        with self.assertRaises(AuthorizationDeniedError):
             service.retrieve(
                 Principal("subject-2", (self.read_capability,), (self.other_scope,), 4, 5),
                 reference,
@@ -141,10 +143,11 @@ class PostgreSQLArtifactCatalogTests(unittest.TestCase):
             1,
             1,
         )
-        other_service = ArtifactService(self.store, self.catalog)
+        other_authority = MutableCurrentAuthorizationAuthority(other_principal)
+        other_service = ArtifactService(self.store, self.catalog, other_authority)
         other_service.register_existing(other_principal, second, required_write_capability=self.write_capability)
         self.assertEqual(self.catalog.count(), 2)
-        with self.assertRaises(ScopeDeniedError):
+        with self.assertRaises(AuthorizationDeniedError):
             self.service.retrieve(self.principal, second.reference, self.read_capability)
 
     def test_registration_is_idempotent_or_typed_conflict_without_rewrite(self):

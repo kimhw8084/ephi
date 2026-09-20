@@ -15,13 +15,11 @@ import re
 import unicodedata
 from typing import Protocol, runtime_checkable
 
-from .context import AccessScope, Principal
+from .context import AccessScope, CurrentAuthorizationAuthority, Principal
 from .errors import (
     ArtifactIntegrityError,
     ArtifactNotFoundError,
     ArtifactStorageConfigurationError,
-    AuthorizationDeniedError,
-    ScopeDeniedError,
     ValidationFailureError,
 )
 
@@ -260,23 +258,27 @@ def internal_artifact_object_key(identity: ArtifactContentIdentity) -> str:
 class ArtifactService:
     """Coordinate current authorization, immutable bytes and scoped metadata."""
 
-    def __init__(self, blob_store: ArtifactBlobStore, catalog: ArtifactCatalog):
+    def __init__(
+        self,
+        blob_store: ArtifactBlobStore,
+        catalog: ArtifactCatalog,
+        current_authorization: CurrentAuthorizationAuthority,
+    ):
         if not isinstance(blob_store, ArtifactBlobStore) or not isinstance(catalog, ArtifactCatalog):
             raise ArtifactStorageConfigurationError("artifact service requires separate blob-store and catalog ports")
+        if not isinstance(current_authorization, CurrentAuthorizationAuthority):
+            raise ArtifactStorageConfigurationError(
+                "artifact service requires a current authorization authority"
+            )
         self.blob_store = blob_store
         self.catalog = catalog
+        self.current_authorization = current_authorization
 
-    @staticmethod
-    def _authorize(principal: Principal, scope: AccessScope, capability: str) -> None:
-        if not isinstance(principal, Principal):
-            raise AuthorizationDeniedError("a current server-derived Principal is required")
+    def _authorize(self, principal: Principal, scope: AccessScope, capability: str) -> None:
         if not isinstance(scope, AccessScope):
             raise ValidationFailureError("scope must be an AccessScope")
         capability = _validate_required_capability(capability)
-        if not principal.grants_scope(scope):
-            raise ScopeDeniedError("principal is not granted the requested artifact scope")
-        if not principal.has_capability(capability):
-            raise AuthorizationDeniedError("principal is not currently granted the required artifact capability")
+        self.current_authorization.authorize(principal, scope, capability)
 
     def _register_verified(self, metadata: ArtifactMetadata) -> ArtifactCatalogRegistration:
         self.blob_store.verify(metadata.content)
@@ -376,12 +378,17 @@ class ArtifactService:
         for reference in references:
             if not isinstance(reference, ScopedArtifactReference):
                 raise ValidationFailureError("artifact references must contain ScopedArtifactReference values")
+            verified_references.append(reference)
+        # Preflight every requested scope/capability before any catalog or
+        # blob existence check, including multi-reference publish paths.
+        for reference in verified_references:
+            self._authorize(principal, reference.scope, required_read_capability)
+        for reference in verified_references:
             metadata = self.get_metadata(principal, reference, required_read_capability)
             # get_metadata has already performed current authorization and a
             # verified blob read; the second explicit check documents the
             # publish-before-head invariant at this boundary.
             self.blob_store.verify(reference.content)
-            verified_references.append(reference)
             verified_metadata.append(metadata)
         return PublishPreconditionResult(tuple(verified_references), tuple(verified_metadata))
 

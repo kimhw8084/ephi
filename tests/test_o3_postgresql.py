@@ -16,7 +16,7 @@ from ephi.application import (  # noqa: E402
     CommandContext,
     EpisodeBriefQueryService,
     EpisodeWorkflowCommandService,
-    IdempotencyConflictError,
+    MutableCurrentAuthorizationAuthority,
     Principal,
     QuerySnapshotExpiredError,
     RevisionVector,
@@ -50,6 +50,7 @@ class PostgreSQLO3AttentionEpisodeTests(unittest.TestCase):
             auth_session_revision=1,
             security_revision=1,
         )
+        self.current_authorization = MutableCurrentAuthorizationAuthority(self.principal)
         self.store.seed_aggregate(
             self.scope,
             "episode_workflow",
@@ -71,9 +72,9 @@ class PostgreSQLO3AttentionEpisodeTests(unittest.TestCase):
                 "age": "10",
             },
         )
-        self.workflow = EpisodeWorkflowCommandService(self.store)
-        self.attention = AttentionQueryService(self.store.o3_store(), self.store.read_store())
-        self.briefs = EpisodeBriefQueryService(self.store.read_store())
+        self.workflow = EpisodeWorkflowCommandService(self.store, self.current_authorization)
+        self.attention = AttentionQueryService(self.store.o3_store(), self.store.read_store(), self.current_authorization)
+        self.briefs = EpisodeBriefQueryService(self.store.read_store(), self.current_authorization)
         workflow = self.store.get_aggregate(self.scope, "episode_workflow", "episode-1")
         self.store.publish_current_revision(
             self.scope,
@@ -112,9 +113,9 @@ class PostgreSQLO3AttentionEpisodeTests(unittest.TestCase):
 
         self.store = PostgreSQLReferenceTransactionAdapter(DSN)
         self.addCleanup(self.store.close)
-        self.workflow = EpisodeWorkflowCommandService(self.store)
-        self.attention = AttentionQueryService(self.store.o3_store(), self.store.read_store())
-        self.briefs = EpisodeBriefQueryService(self.store.read_store())
+        self.workflow = EpisodeWorkflowCommandService(self.store, self.current_authorization)
+        self.attention = AttentionQueryService(self.store.o3_store(), self.store.read_store(), self.current_authorization)
+        self.briefs = EpisodeBriefQueryService(self.store.read_store(), self.current_authorization)
         replay = self.workflow.claim_episode(self.context("claim-1"), "episode-1")
         self.assertEqual(replay, committed)
         current = self.briefs.get_episode_brief(self.principal, self.scope, "episode-1")
@@ -128,8 +129,8 @@ class PostgreSQLO3AttentionEpisodeTests(unittest.TestCase):
         second = PostgreSQLReferenceTransactionAdapter(DSN)
         self.addCleanup(first.close)
         self.addCleanup(second.close)
-        first_workflow = EpisodeWorkflowCommandService(first)
-        second_workflow = EpisodeWorkflowCommandService(second)
+        first_workflow = EpisodeWorkflowCommandService(first, self.current_authorization)
+        second_workflow = EpisodeWorkflowCommandService(second, self.current_authorization)
         barrier = threading.Barrier(2)
         committed = []
         conflicts = []
@@ -166,13 +167,16 @@ class PostgreSQLO3AttentionEpisodeTests(unittest.TestCase):
     def test_current_authorization_blocks_retained_page_receipt_replay_and_write(self):
         page = self.attention.list_attention(self.principal, self.scope, page_size=1)
         revoked = Principal("engineer-1", (), (self.scope,), 2, 2)
+        self.current_authorization.set_principal(revoked)
         with self.assertRaises(AuthorizationDeniedError):
             self.attention.list_attention(revoked, self.scope, snapshot_id=page.snapshot_id, cursor=page.next_cursor, page_size=1)
 
+        self.current_authorization.set_principal(self.principal)
         committed = self.workflow.claim_episode(self.context("revoked-claim"), "episode-1")
+        self.current_authorization.set_principal(revoked)
         with self.assertRaises(AuthorizationDeniedError):
             self.workflow.claim_episode(self.context("revoked-claim", principal=revoked), "episode-1")
-        with self.assertRaises(IdempotencyConflictError):
+        with self.assertRaises(AuthorizationDeniedError):
             self.workflow.claim_episode(self.context("revoked-claim", reason="different semantic payload"), "episode-1")
         self.assertEqual(committed.aggregate_version, 1)
 
@@ -185,6 +189,7 @@ class PostgreSQLO3AttentionEpisodeTests(unittest.TestCase):
             auth_session_revision=1,
             security_revision=2,
         )
+        self.current_authorization.set_principal(rotated)
         with self.assertRaises(QuerySnapshotExpiredError):
             self.attention.list_attention(
                 rotated,

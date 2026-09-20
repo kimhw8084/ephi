@@ -51,8 +51,8 @@
     },
     {
       "path": ".github/workflows/package.yml",
-      "bytes": 6858,
-      "sha256": "3b7e470b6f86d0c1d25352a8f0b530e64dff6e85f6666cef30b3f87566fe2cd1"
+      "bytes": 7095,
+      "sha256": "d78a47e5b16e8af4dd4530dcc27b2f5faea975d55bc88ecb387571012c8f9cb3"
     },
     {
       "path": ".gitignore",
@@ -91,8 +91,8 @@
     },
     {
       "path": "03_Application_Contracts.md",
-      "bytes": 17826,
-      "sha256": "7b9628138522c25bd595550cf18ed2db8a165a1bec07cd20bf5a9fd714ecde70"
+      "bytes": 19271,
+      "sha256": "634c89c24a24fff9f1e483e7edd30c37b1232351bbc953fafe403ac929e42be8"
     },
     {
       "path": "04_Data_and_Runtime.md",
@@ -116,8 +116,8 @@
     },
     {
       "path": "08_Security_Notifications_AI_Operations.md",
-      "bytes": 10273,
-      "sha256": "5b9a23fc2d7372a5b6cd1b9dd64a3a3503350084c3d61f4ab00201c2b1aacd22"
+      "bytes": 11248,
+      "sha256": "02890d4891a422e59971a521084c67c09bb45325514f218f4e2153121b132f2b"
     },
     {
       "path": "09_Delivery_and_Gates.md",
@@ -156,8 +156,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 15203,
-      "sha256": "752c2231555228dfe8771d38e99c9713ddc9b3f3f86e7de599526cb7f96c5d15"
+      "bytes": 16551,
+      "sha256": "4e8bae39734c5cde4be0578cb43ad8a4e7e5a2fb6f80679c971951a76b7b0ea8"
     },
     {
       "path": "app.py",
@@ -596,28 +596,28 @@
     },
     {
       "path": "src/ephi/application/__init__.py",
-      "bytes": 7735,
-      "sha256": "d970902f41bb45c57a00ac916bfb1e86ee1230281fa8f0292365fe9a6c1dc7a6"
+      "bytes": 7914,
+      "sha256": "1812f82f651775e8ea3812cee78091ee9161e97186e327d1634f6d9388008f1f"
     },
     {
       "path": "src/ephi/application/artifacts.py",
-      "bytes": 15562,
-      "sha256": "9f20e2c66da33afd9be099d2f8d01ef46b674d1397d94d48197b4d5c75c077ac"
+      "bytes": 15857,
+      "sha256": "b0f1a4c9c809e36c3dd90506c461b22753add81aaafcc3198e3eeac6b6c6514e"
     },
     {
       "path": "src/ephi/application/attention.py",
-      "bytes": 10247,
-      "sha256": "2bdc5dc2996f837a5e56e5dfa5e03916172d66b2ffb850957d8198d3d15ab998"
+      "bytes": 11112,
+      "sha256": "6111e647c9e323833c2166885060a1cee43f90e526b6b177e54aeb75584b534b"
     },
     {
       "path": "src/ephi/application/context.py",
-      "bytes": 7922,
-      "sha256": "a9daa0e494a752025f9cc1442a02add86717e89348bcc965858a915e9a0b34ed"
+      "bytes": 11418,
+      "sha256": "c62d1b4210d37a44e072e9bad2eb5f9516550d951e1b1106a39fba046a1fb59d"
     },
     {
       "path": "src/ephi/application/episodes.py",
-      "bytes": 5574,
-      "sha256": "944db08f9eca3174047997fb4e8b67a3b64d357187dff8451f18ed5dd56216f8"
+      "bytes": 6130,
+      "sha256": "a1d13485fe77f181b1861859f3a597f696a8fa6430bb39a1c1da1a4127b13a13"
     },
     {
       "path": "src/ephi/application/errors.py",
@@ -656,8 +656,8 @@
     },
     {
       "path": "src/ephi/application/transactions.py",
-      "bytes": 15269,
-      "sha256": "9597741331cba159bcf4621fc0e0bc9e537f34f15fa09604c07c28fa169862e0"
+      "bytes": 15474,
+      "sha256": "b030c63df05f6470b55a6a02e3f5c59da2f5491af581886c6d2ca27e2df553d8"
     },
     {
       "path": "src/ephi/application/worker.py",
@@ -666,8 +666,8 @@
     },
     {
       "path": "src/ephi/application/workflow.py",
-      "bytes": 4904,
-      "sha256": "04a41eabc410f0bb3fb5324603dcde7f0ea14cdd65e01060530579382daaeb84"
+      "bytes": 5011,
+      "sha256": "6a776f1af4805d431014ccf71a4013fe07501381e9ee58568164ef361b8aa172"
     },
     {
       "path": "src/ephi/config.py",
@@ -736,8 +736,8 @@
     },
     {
       "path": "src/ephi/ui/app.py",
-      "bytes": 20372,
-      "sha256": "22cf05c9ed4f7c30512bc97360e9895c2ca0020bbe5740df2a447c88bd94a811"
+      "bytes": 20652,
+      "sha256": "b7370323051f425056a9584e2230ca506b3c5e949599937e82b12916bd2adf8f"
     },
     {
       "path": "src/ephi/ui/provider.py",
@@ -776,18 +776,18 @@
     },
     {
       "path": "tests/test_o2_artifacts.py",
-      "bytes": 11491,
-      "sha256": "27bd49d821aea3d0ed3fc25a384a7ec4cd8a339d05b8bdde230cbfd88660500e"
+      "bytes": 11701,
+      "sha256": "6d3d83da504050e208210c6294bf169b068f7394030a326ade99393f0dee0693"
     },
     {
       "path": "tests/test_o2_postgresql.py",
-      "bytes": 16343,
-      "sha256": "7b1f0dffa7554f426f8cf28fda54d2666ebdb1335b7337ec3609e5f447992bcf"
+      "bytes": 16891,
+      "sha256": "cd4724fc7a5eed9171ff8bd11594e494f0d96b00881e04f29438097377677cb2"
     },
     {
       "path": "tests/test_o2_postgresql_artifacts.py",
-      "bytes": 7313,
-      "sha256": "26282c695595245a83174b3c665627259f61dca253937b181d9ccca59f564cad"
+      "bytes": 7604,
+      "sha256": "6e74adaa3019a6ce416e4569beb2e8f8343edc8c31eaa48b477b1d9b45734871"
     },
     {
       "path": "tests/test_o2_postgresql_reads.py",
@@ -801,8 +801,8 @@
     },
     {
       "path": "tests/test_o2_transactions.py",
-      "bytes": 11990,
-      "sha256": "88a1b463ca5a5edc243a381dad7459bbc582ef5dc27891b1cc6288585ec4270d"
+      "bytes": 12375,
+      "sha256": "35d57ba5b7aa4ab62675ae0b036aa1bcda22f984768991c4e7e01e4ba4825c0d"
     },
     {
       "path": "tests/test_o2_worker_postgresql.py",
@@ -811,13 +811,13 @@
     },
     {
       "path": "tests/test_o3_application.py",
-      "bytes": 11590,
-      "sha256": "29bdaed1613bcdfa26ff58a08819754e0ffad9fd53fd42b17e76e777a798428a"
+      "bytes": 12051,
+      "sha256": "6f8fc8789d4b78772f32bbb1a7b0e17fd16b2ab7d74a81c0d3eaa57e80ccc2c9"
     },
     {
       "path": "tests/test_o3_postgresql.py",
-      "bytes": 8640,
-      "sha256": "1f416e2a2168e109704b07c320da7b1c62517bb046a0a09b7ec504437d883767"
+      "bytes": 9205,
+      "sha256": "6387ce7ebdfbe6aafd75f181c7962cb886060c27b049ac4abfa549f9e9668e46"
     },
     {
       "path": "tests/test_o3_provider.py",
@@ -831,8 +831,18 @@
     },
     {
       "path": "tests/test_o4_source_ingress_postgresql.py",
-      "bytes": 10749,
-      "sha256": "3e427543824021ee5f1e2df257a8f23ac856cf48e5f603bc15c017c3b4de3f2d"
+      "bytes": 11031,
+      "sha256": "129c767c2ab1b8a2f613fc52db6fd684d97f709d953f3ab4f965712446b9988a"
+    },
+    {
+      "path": "tests/test_o8_current_authorization.py",
+      "bytes": 16156,
+      "sha256": "20e029aa3b3badbfd607becd64f5fe2e3fb2157faa5adf0938789c2658d49cc4"
+    },
+    {
+      "path": "tests/test_o8_postgresql.py",
+      "bytes": 10158,
+      "sha256": "6f82d544a804025955d61a9e0f4f1b5c34985f4700b6395b394f3452f5c75f32"
     },
     {
       "path": "tests/test_o9_operations.py",
@@ -846,8 +856,8 @@
     },
     {
       "path": "tests/test_postgresql_adapter_lifecycle.py",
-      "bytes": 10495,
-      "sha256": "9294ab5ffcec0de76702ebb8f21c503eaafb150cca79673e8379604b25f8d739"
+      "bytes": 10911,
+      "sha256": "d6f6dad3794850a5f3748f5f5cd918dd1177a5c9fc9d7f1f9a99f23022b36372"
     },
     {
       "path": "tests/test_recovery_integrity.py",

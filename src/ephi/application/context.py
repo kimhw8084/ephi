@@ -3,8 +3,11 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from collections.abc import Callable
 import json
 from typing import Final
+
+from .errors import AuthorizationDeniedError, ValidationFailureError
 
 
 RevisionIdentity = int | str
@@ -118,6 +121,80 @@ class Principal:
         )
 
 
+class CurrentAuthorizationAuthority:
+    """Resolve and verify current authorization before protected disclosure.
+
+    The presented ``Principal`` remains the operation identity.  A resolver
+    only supplies the current server-side state for comparison; this class
+    never upgrades the presented principal or returns the resolved one.
+    """
+
+    def __init__(self, resolver: Callable[[str], Principal]):
+        if not callable(resolver):
+            raise TypeError("current authorization resolver must be callable")
+        self._resolver = resolver
+
+    @classmethod
+    def from_provider(cls, provider: Callable[[], Principal]) -> "CurrentAuthorizationAuthority":
+        """Bind an operation-time provider without retaining its Principal."""
+
+        if not callable(provider):
+            raise TypeError("current authorization provider must be callable")
+        return cls(lambda _subject: provider())
+
+    def authorize(
+        self,
+        presented: Principal,
+        scope: AccessScope,
+        required_capability: str,
+    ) -> None:
+        """Fail closed unless the presented state is still current and allowed."""
+
+        if not isinstance(presented, Principal):
+            raise AuthorizationDeniedError("current authorization does not permit this operation")
+        if not isinstance(scope, AccessScope):
+            raise ValidationFailureError("scope must be an AccessScope")
+        required_capability = _required_identity(required_capability, "required_capability")
+        try:
+            current = self._resolver(presented.subject)
+        except Exception as exc:
+            raise AuthorizationDeniedError("current authorization is unavailable") from exc
+        if not isinstance(current, Principal):
+            raise AuthorizationDeniedError("current authorization is unavailable")
+
+        # Revision equality is the freshness boundary.  Checking the
+        # presented grants too prevents this authority from silently
+        # upgrading an operation with grants that were not presented.
+        if (
+            current.subject != presented.subject
+            or current.auth_session_revision != presented.auth_session_revision
+            or current.security_revision != presented.security_revision
+            or not presented.grants_scope(scope)
+            or not presented.has_capability(required_capability)
+            or not current.grants_scope(scope)
+            or not current.has_capability(required_capability)
+        ):
+            raise AuthorizationDeniedError("current authorization does not permit this operation")
+
+
+class MutableCurrentAuthorizationAuthority(CurrentAuthorizationAuthority):
+    """Explicit mutable authority for deterministic unit/integration tests."""
+
+    def __init__(self, principal: Principal):
+        if not isinstance(principal, Principal):
+            raise TypeError("test current authorization requires a Principal")
+        self._current = principal
+        super().__init__(self._resolve)
+
+    def _resolve(self, _subject: str) -> Principal:
+        return self._current
+
+    def set_principal(self, principal: Principal) -> None:
+        if not isinstance(principal, Principal):
+            raise TypeError("test current authorization requires a Principal")
+        self._current = principal
+
+
 @dataclass(frozen=True, slots=True)
 class RevisionVector:
     """Opaque revision identities returned with decision-sensitive responses."""
@@ -183,4 +260,11 @@ class CommandContext:
         return self.expected_workflow_version
 
 
-_PUBLIC_CONTRACTS: Final = (AccessScope, Principal, RevisionVector, CommandContext)
+_PUBLIC_CONTRACTS: Final = (
+    AccessScope,
+    Principal,
+    CurrentAuthorizationAuthority,
+    MutableCurrentAuthorizationAuthority,
+    RevisionVector,
+    CommandContext,
+)

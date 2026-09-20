@@ -15,6 +15,7 @@ sys.path.insert(0, str(ROOT / "src"))
 from ephi.application import (  # noqa: E402
     AccessScope,
     ArtifactService,
+    MutableCurrentAuthorizationAuthority,
     MetrologyObservation,
     MetrologySourceBinding,
     Principal,
@@ -54,6 +55,7 @@ class PostgreSQLSourceIngressTests(unittest.TestCase):
             1,
             1,
         )
+        self.current_authorization = MutableCurrentAuthorizationAuthority(self.principal)
         self.binding = MetrologySourceBinding(
             self.scope,
             "real-source-contract-test",
@@ -67,7 +69,11 @@ class PostgreSQLSourceIngressTests(unittest.TestCase):
             "mm",
         )
         self.blob_store = FileArtifactBlobStore(Path(self.temp.name) / "blobs", max_artifact_size=4096)
-        self.artifact_service = ArtifactService(self.blob_store, PostgreSQLArtifactCatalog(self.adapter))
+        self.artifact_service = ArtifactService(
+            self.blob_store,
+            PostgreSQLArtifactCatalog(self.adapter),
+            self.current_authorization,
+        )
         self.store = PostgreSQLSourceSnapshotStore(self.adapter)
 
     def observation(self, *, age_seconds=60):
@@ -153,7 +159,11 @@ class PostgreSQLSourceIngressTests(unittest.TestCase):
         self.adapter = PostgreSQLReferenceTransactionAdapter(DSN)
         self.addCleanup(self.adapter.close)
         self.store = PostgreSQLSourceSnapshotStore(self.adapter)
-        self.artifact_service = ArtifactService(self.blob_store, PostgreSQLArtifactCatalog(self.adapter))
+        self.artifact_service = ArtifactService(
+            self.blob_store,
+            PostgreSQLArtifactCatalog(self.adapter),
+            self.current_authorization,
+        )
         replay, replay_capability = self.service().publish(self.principal, draft, freshness_age_seconds=3600)
         self.assertEqual(replay.snapshot_id, first.snapshot_id)
         self.assertEqual(replay.manifest_hash, first.manifest_hash)
