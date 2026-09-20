@@ -137,7 +137,10 @@ class BrowserTransportMiddlewareTests(unittest.TestCase):
             self.invoke(BrowserTransportMiddleware(protected, self.policy), _scope("http", method="POST", origin="http://127.0.0.1:8080"))
 
 
-@unittest.skipUnless(importlib.util.find_spec("nicegui_base"), "pinned Base runtime is installed only in integration qualification")
+_BASE_STACK_TEST_AVAILABLE = all(importlib.util.find_spec(name) for name in ("nicegui_base", "fastapi", "httpx"))
+
+
+@unittest.skipUnless(_BASE_STACK_TEST_AVAILABLE, "pinned Base runtime stack is installed only in integration qualification")
 class ComposedMiddlewareStackTests(unittest.TestCase):
     def setUp(self):
         from fastapi import FastAPI

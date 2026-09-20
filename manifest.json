@@ -841,8 +841,8 @@
     },
     {
       "path": "tests/test_o8_browser_transport.py",
-      "bytes": 18136,
-      "sha256": "957b54c6f972961a14d78cdb86c34e5b1cd64551806085db25d49c193089d499"
+      "bytes": 18244,
+      "sha256": "a242233dbc88a20ef054381d8d8218fcde285ac0d6c0be0f257e1f291bde7c72"
     },
     {
       "path": "tests/test_o8_current_authorization.py",
