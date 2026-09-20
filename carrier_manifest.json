@@ -1,0 +1,109 @@
+{
+  "artifact_ref": "refs/heads/project-os-artifacts/ephi/ephi-o8-browser-session-security-verify1",
+  "base": {
+    "sha": "c9a128a202095ffa5bb63f3c5ca7583908397f98",
+    "tree": "77ac006855533b9b8115c106a34eced0150f20c1"
+  },
+  "bundle": {
+    "byte_size": 4404,
+    "path": "ephi-o8-browser-session-security-verify1-bundle.tar.gz",
+    "scope": "secret-safe structured VERIFY evidence only; no credentials, DSNs, cookie values, authorization headers, identities, protected payloads or raw artifact bytes",
+    "sha256": "5be0d123a2e4e40946371170ac58b86fad236d7428b24961657de52cd2aee0f0"
+  },
+  "candidate": {
+    "parent": "2c6b3d380e502950245c5a3acedeb82df3c89ab7",
+    "sha": "ea25b397b19a361433c8a6aa3c072258143454ce",
+    "tree": "dcb1f18978a372075abb81dfd180dda0a216245d"
+  },
+  "claims": {
+    "candidate_bytes_changed": false,
+    "company_identity_qualification_claimed": false,
+    "historical_algorithm_equivalence_claimed": false,
+    "historical_source_identity_claimed": false,
+    "o8_whole_closed": false,
+    "project_os_go_self_declared": false,
+    "status": "VERIFY evidence for independent GO audit",
+    "target_tls_ingress_qualification_claimed": false
+  },
+  "evidence": [
+    "evidence/byte_preservation.json",
+    "evidence/changed_file_inventory.json",
+    "evidence/ci_results.json",
+    "evidence/forwarded_header_authority.json",
+    "evidence/r2_conclusions.json",
+    "evidence/surface_and_scope.json"
+  ],
+  "fabric_job": "CF-40024fcc0bcaa30fca96f676",
+  "file_count": 6,
+  "files": [
+    {
+      "byte_size": 1380,
+      "path": "evidence/byte_preservation.json",
+      "sha256": "33dc99eff49862d146aef984bdbe7ab5067c31d9e1fa29b05e808083ff73e1a2"
+    },
+    {
+      "byte_size": 2000,
+      "path": "evidence/changed_file_inventory.json",
+      "sha256": "be2f60d1f6d72731d99241034854356ccf1ad389ce235f67345997c035866015"
+    },
+    {
+      "byte_size": 2865,
+      "path": "evidence/ci_results.json",
+      "sha256": "7f153ada68ae5e93d1f4ab2b4b30a33987ff6462340506f8b0825fc5f040889b"
+    },
+    {
+      "byte_size": 4281,
+      "path": "evidence/forwarded_header_authority.json",
+      "sha256": "20bfe2791c3bae8f242a89106f6bd4c4c79d3569ce44c75bcdd803168ec8aaf2"
+    },
+    {
+      "byte_size": 3167,
+      "path": "evidence/r2_conclusions.json",
+      "sha256": "d9896dc0c0dc95c6b8662323527bdf5cfb5cf53fbc3a59678644ec817d684e96"
+    },
+    {
+      "byte_size": 1276,
+      "path": "evidence/surface_and_scope.json",
+      "sha256": "c1cbb27506a78c1b79f6196fd7fb65d7d2fb954210533cc5e45ddeeb49af5ff5"
+    }
+  ],
+  "mechanical_consistency": {
+    "bundle_member_paths_equal_evidence_paths": true,
+    "candidate_inventory_count_and_hashes_verified": true,
+    "candidate_tree_matches_manifest": true,
+    "evidence_array_count_matches_file_count": true,
+    "evidence_hashes_and_sizes_verified": true,
+    "evidence_paths_sorted": true
+  },
+  "operation": "VERIFY",
+  "predecessor_lineage": {
+    "r1_candidate": "ea6f12260b0e4954dd353062adf00e997fa0f784",
+    "r1_carrier": "project-os-artifacts/ephi/ephi-o8-browser-session-security-v1@fa386bf2a4210831b7c0391425b3991a692dd401",
+    "r1_direct_ancestor": true,
+    "r1_evidence_commit": "e735b8c9b38150b95cb5c510e298aa8fd6e2f01c",
+    "r1_fabric_job": "CF-148ce820de18f2ecc76e2684",
+    "r1_tree": "d08f656686e85f40a8a59483260c165281e9183c",
+    "r2_candidate": "ea25b397b19a361433c8a6aa3c072258143454ce",
+    "r2_carrier": "project-os-artifacts/ephi/ephi-o8-browser-session-security-fix1@b43b6e8df17d8a1e78dc8d9a2ff9aaf2f53a8443",
+    "r2_evidence_commit": "c132c0f436271033552f00e8a3bb9373c299b3d4",
+    "r2_fabric_job": "CF-2603159c5dc66034e6d64cea"
+  },
+  "project": "ephi",
+  "repository": "kimhw8084/ephi",
+  "request": "ephi-o8-browser-session-security-verify1",
+  "schema_version": "project-os.artifact-carrier.v1",
+  "scope_boundary": {
+    "CHG_144": "REMAINS_BLOCKED_REAL_SOURCE",
+    "integration_pr_created": false,
+    "later_O8_O10_O11_work": false,
+    "main_modified_or_merged": false,
+    "notion_mutated": false
+  },
+  "transport": {
+    "identity": "kimhw8084/ephi",
+    "readback_required": true,
+    "remote": "https://github.com/kimhw8084/ephi.git",
+    "secret_safe": true
+  },
+  "work_branch": "codex/ephi-o8-browser-session-security-verify1"
+}

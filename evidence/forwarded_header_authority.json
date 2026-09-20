@@ -1,0 +1,140 @@
+{
+  "conclusion": {
+    "configured_trusted_proxy_set": [
+      "127.0.0.1"
+    ],
+    "status": "PASS",
+    "trusted_forwarded_values_honored": true,
+    "untrusted_spoofed_forwarded_headers_ignored": true,
+    "wildcard_trust_forbidden": true
+  },
+  "identity": {
+    "base_sha": "c9a128a202095ffa5bb63f3c5ca7583908397f98",
+    "candidate_sha": "ea25b397b19a361433c8a6aa3c072258143454ce",
+    "candidate_tree": "dcb1f18978a372075abb81dfd180dda0a216245d",
+    "fabric_job": "CF-40024fcc0bcaa30fca96f676",
+    "operation": "VERIFY",
+    "project": "ephi",
+    "request": "ephi-o8-browser-session-security-verify1",
+    "work_branch": "codex/ephi-o8-browser-session-security-verify1"
+  },
+  "prefix_rewriting_proxy": {
+    "backend_http_status": 200,
+    "backend_observation": {
+      "client_host": "127.0.0.1",
+      "client_port": 0,
+      "root_path": "/ephi",
+      "scheme": "http",
+      "server_host": "127.0.0.1"
+    },
+    "backend_path_after_prefix_rewrite": "/healthz",
+    "browser_supplied_forwarded_values_replaced_by_proxy": true,
+    "configured_backend_connect_host": "127.0.0.1",
+    "configured_proxy_listen_host": "127.0.0.1",
+    "configured_trusted_proxy_set": [
+      "127.0.0.1"
+    ],
+    "request_path": "/ephi/healthz"
+  },
+  "runtime": {
+    "nicegui_run_kwargs_secret_safe": {
+      "endpoint_documentation": "none",
+      "fastapi_docs": false,
+      "forwarded_allow_ips": "127.0.0.1",
+      "host": "0.0.0.0",
+      "markdown": false,
+      "port": 8917,
+      "prod_js": true,
+      "proxy_headers": true,
+      "reload": false,
+      "root_path": "/ephi",
+      "server_header": false,
+      "session_middleware_kwargs": {
+        "https_only": true,
+        "same_site": "strict"
+      },
+      "show": false,
+      "show_welcome_message": false,
+      "title": "EPHI",
+      "uvicorn_logging_level": "info",
+      "workers": 1
+    },
+    "package_versions": {
+      "fastapi": "0.135.2",
+      "nicegui": "3.15.0",
+      "nicegui-base": "3.0.0a8",
+      "starlette": "1.6.0",
+      "uvicorn": "0.42.0"
+    },
+    "proxy_config": {
+      "enabled": true,
+      "root_path": "/ephi",
+      "trusted_proxies": [
+        "127.0.0.1"
+      ]
+    },
+    "runtime_config_type": "nicegui_base.runtime.config.RuntimeConfig",
+    "storage_secret_recorded": false
+  },
+  "schema": "ephi.o8.forwarded-header-authority.verify1.v1",
+  "secret_safety": {
+    "authorization_header_recorded": false,
+    "cookie_value_recorded": false,
+    "dsn_recorded": false,
+    "storage_secret_recorded": false,
+    "user_data_recorded": false
+  },
+  "uvicorn_proxy_headers_middleware": {
+    "attacker_style_values": {
+      "material_authority_change_if_trusted": true,
+      "untrusted_claim_adopted": false,
+      "x_forwarded_for_claim": "127.0.0.1",
+      "x_forwarded_proto_claim": "https"
+    },
+    "forwarded_values_supplied": {
+      "x-forwarded-for": "127.0.0.1",
+      "x-forwarded-proto": "https"
+    },
+    "implementation": "uvicorn.middleware.proxy_headers.ProxyHeadersMiddleware",
+    "trusted_client_case": {
+      "expected": "forwarded values honored because peer is in forwarded_allow_ips",
+      "observation": {
+        "client_host": "127.0.0.1",
+        "client_port": 0,
+        "root_path": "/ephi",
+        "scheme": "https",
+        "server_host": "127.0.0.1"
+      },
+      "underlying_peer": {
+        "host": "127.0.0.1",
+        "port": 49152
+      }
+    },
+    "trusted_hosts_argument": "127.0.0.1",
+    "untrusted_client_case": {
+      "expected": "underlying peer and scheme remain authoritative because peer is outside forwarded_allow_ips",
+      "observation": {
+        "client_host": "198.51.100.23",
+        "client_port": 49152,
+        "root_path": "/ephi",
+        "scheme": "http",
+        "server_host": "127.0.0.1"
+      },
+      "underlying_peer": {
+        "host": "198.51.100.23",
+        "port": 49152
+      }
+    }
+  },
+  "wildcard_trust_rejection": {
+    "attempted_value": "*",
+    "forwarded_allow_ips_is_wildcard": false,
+    "preflight_reason_codes": [
+      "WILDCARD_TRUSTED_PROXY_FORBIDDEN"
+    ],
+    "preflight_status": "BLOCKED",
+    "runtime_config_accepted": false,
+    "runtime_config_error_code": "WILDCARD_TRUSTED_PROXY_FORBIDDEN",
+    "runtime_config_error_type": "BrowserTransportPolicyError"
+  }
+}

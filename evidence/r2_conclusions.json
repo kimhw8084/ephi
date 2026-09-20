@@ -1,0 +1,88 @@
+{
+  "conclusions_carried_by_immutable_identity": {
+    "cookie_invariants": {
+      "http_only_and_strict_observed_in_direct_and_proxy_capture": true,
+      "production_and_samesite_none_fail_closed": true,
+      "qa_https_requires_secure_session_cookie": true,
+      "status": "PASS"
+    },
+    "direct_browser_postgresql": {
+      "attention_episode_and_real_nicegui_websocket": true,
+      "durable_claim_episode_receipt_and_current_authorization": true,
+      "headless_chromium": true,
+      "origin_negative_matrix_security_headers_and_clean_console_network": true,
+      "postgresql": "18.6",
+      "status": "PASS"
+    },
+    "middleware_registration_and_order": {
+      "actual_fastapi_user_middleware_order": [
+        "CorrelationIdMiddleware",
+        "SecurityHeadersMiddleware",
+        "BrowserTransportMiddleware"
+      ],
+      "denied_http_before_downstream_with_base_headers": true,
+      "denied_websocket_before_nicegui_route_or_client_creation": true,
+      "registration": [
+        "BrowserTransportMiddleware",
+        "runtime_adapter.install_middleware"
+      ],
+      "status": "PASS"
+    },
+    "preflight_startup_equivalence": {
+      "duplicate_origins_non_loopback_development_invalid_booleans_root_paths_multi_replica_and_secret_safe_failures": true,
+      "same_browser_transport_policy_and_runtime_parsing": true,
+      "status": "PASS",
+      "wildcard_trusted_proxy_blocked": true
+    },
+    "proxy_root_path": {
+      "browser_facing_prefix": "/ephi",
+      "durable_command_semantics_and_security_headers": true,
+      "page_static_websocket_routing_and_exact_origin": true,
+      "status": "PASS",
+      "trusted_proxy_count": 1,
+      "wildcard_trust": false
+    },
+    "regressions_and_restore": {
+      "postgresql_regression_tests": 82,
+      "real_restore_rehearsal": "REAL_RESTORE_REHEARSAL_PASS",
+      "regression_families": [
+        "O2",
+        "O3",
+        "O4",
+        "O8.1",
+        "O9"
+      ],
+      "status": "PASS"
+    },
+    "surface_absence": {
+      "ai_or_llm": false,
+      "csv_or_spreadsheet_export": false,
+      "markdown_or_raw_html": false,
+      "status": "PASS",
+      "user_upload": false
+    }
+  },
+  "identity": {
+    "candidate_sha": "ea25b397b19a361433c8a6aa3c072258143454ce",
+    "candidate_tree": "dcb1f18978a372075abb81dfd180dda0a216245d",
+    "carrier": "project-os-artifacts/ephi/ephi-o8-browser-session-security-fix1@b43b6e8df17d8a1e78dc8d9a2ff9aaf2f53a8443",
+    "deterministic_evidence_commit": "c132c0f436271033552f00e8a3bb9373c299b3d4",
+    "fabric_job": "CF-2603159c5dc66034e6d64cea",
+    "operation": "FIX",
+    "project": "ephi",
+    "request": "ephi-o8-browser-session-security-fix1"
+  },
+  "schema": "ephi.o8.r2-conclusions.verify1.v1",
+  "status": "PASS",
+  "target_boundary": {
+    "company_identity_established": false,
+    "o8_whole_closed": false,
+    "project_os_go_self_declared": false,
+    "target_tls_ingress_qualification_established": false
+  },
+  "verify_scope": {
+    "candidate_bytes_changed": false,
+    "closed_by": "forwarded_header_authority.json",
+    "sole_r2_gap": "untrusted forwarded-header authority was asserted but not directly observed"
+  }
+}

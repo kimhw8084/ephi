@@ -1,0 +1,62 @@
+{
+  "base": {
+    "sha": "c9a128a202095ffa5bb63f3c5ca7583908397f98",
+    "tree": "77ac006855533b9b8115c106a34eced0150f20c1"
+  },
+  "candidate": {
+    "sha": "ea25b397b19a361433c8a6aa3c072258143454ce",
+    "tree": "dcb1f18978a372075abb81dfd180dda0a216245d"
+  },
+  "file_count": 8,
+  "files": [
+    {
+      "byte_size": 11117,
+      "path": ".github/workflows/package.yml",
+      "sha256": "1249d074d4a78fb80df5a2b0badb4638fabc329d867b2ea859d541b5e5c72aa3"
+    },
+    {
+      "byte_size": 33109,
+      "path": "manifest.json",
+      "sha256": "8148186f7c119d6c45d191a97a61e3439f19a7658bb12d8d4f14e2560e66a46f"
+    },
+    {
+      "byte_size": 3497,
+      "path": "src/ephi/app.py",
+      "sha256": "0573269f76b962d0491892e43b5f8264067df0a7c1fd32e8d3130527feda63e9"
+    },
+    {
+      "byte_size": 25307,
+      "path": "src/ephi/transport.py",
+      "sha256": "bcae2e9b4259abe5e1f4eddade54ed7983c376d300a6d60fc6bfedd00fa957c1"
+    },
+    {
+      "byte_size": 20302,
+      "path": "src/ephi/ui/app.py",
+      "sha256": "1c71eedd73213667790b6e356135644921df9701e8ece3bd472559607768e7e5"
+    },
+    {
+      "byte_size": 18557,
+      "path": "tests/test_o8_browser_transport.py",
+      "sha256": "b4a7c23b06f105850eef8eb070db3cd4794e147f0ca72ed6997f208952a85d24"
+    },
+    {
+      "byte_size": 30066,
+      "path": "tools/o8_browser_qualification.py",
+      "sha256": "b4ba0cb28e503cf2a253c565dd2b1f26da56ff1305eca42c2121d0a31f9b9d64"
+    },
+    {
+      "byte_size": 5722,
+      "path": "tools/o8_surface_inventory.py",
+      "sha256": "be0d83cfa2f28e90abada270d3a49bd9ef86e782ee6813eaa6ed1f618ed14f64"
+    }
+  ],
+  "mechanical_consistency": {
+    "candidate_hashes_and_sizes_verified": true,
+    "count_matches_array_length": true,
+    "path_set_matches_git_diff": true
+  },
+  "paths_are_exact_and_sorted": true,
+  "schema": "ephi.o8.changed-file-inventory.verify1.v1",
+  "scope": "exact changed files from registered base through immutable R2 candidate; recomputed from Git objects",
+  "status": "PASS"
+}

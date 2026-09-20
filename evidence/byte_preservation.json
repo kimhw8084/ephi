@@ -1,0 +1,30 @@
+{
+  "checks": {
+    "candidate_changed_file_inventory_exact": true,
+    "candidate_changed_file_inventory_recomputed_count": 8,
+    "candidate_rebuilt_amended_squashed_rebased_or_replaced": false,
+    "git_diff_candidate_to_head_empty": true,
+    "origin_main_exact_registered_base": true,
+    "origin_main_sha": "c9a128a202095ffa5bb63f3c5ca7583908397f98",
+    "r1_candidate_in_first_parent_ancestry": true,
+    "r2_deterministic_evidence_parent_exact_candidate": true,
+    "source_config_test_workflow_document_mutation_in_verify": false,
+    "tracked_worktree_diff_empty": true,
+    "work_branch_head_exact_candidate": true,
+    "work_branch_tree_exact_candidate_tree": true
+  },
+  "identity": {
+    "base_sha": "c9a128a202095ffa5bb63f3c5ca7583908397f98",
+    "base_tree": "77ac006855533b9b8115c106a34eced0150f20c1",
+    "candidate_sha": "ea25b397b19a361433c8a6aa3c072258143454ce",
+    "candidate_tree": "dcb1f18978a372075abb81dfd180dda0a216245d",
+    "fabric_job": "CF-40024fcc0bcaa30fca96f676",
+    "operation": "VERIFY",
+    "project": "ephi",
+    "request": "ephi-o8-browser-session-security-verify1",
+    "work_branch": "codex/ephi-o8-browser-session-security-verify1"
+  },
+  "schema": "ephi.o8.byte-preservation.verify1.v1",
+  "statement": "VERIFY published without changing any candidate tracked byte; a separate FIX is not required by this proof.",
+  "status": "PASS"
+}

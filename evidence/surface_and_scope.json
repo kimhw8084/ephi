@@ -1,0 +1,37 @@
+{
+  "current_surface_absence": {
+    "ai_or_llm_product_surface": false,
+    "arbitrary_markdown_or_raw_html_input": false,
+    "csv_or_spreadsheet_export": false,
+    "status": "PASS",
+    "user_upload": false
+  },
+  "identity": {
+    "candidate_sha": "ea25b397b19a361433c8a6aa3c072258143454ce",
+    "candidate_tree": "dcb1f18978a372075abb81dfd180dda0a216245d",
+    "r2_carrier_commit": "b43b6e8df17d8a1e78dc8d9a2ff9aaf2f53a8443",
+    "r2_surface_evidence_commit": "c132c0f436271033552f00e8a3bb9373c299b3d4"
+  },
+  "o8_scope_boundary": {
+    "chg_144": "REMAINS_BLOCKED_REAL_SOURCE",
+    "company_identity_qualification": false,
+    "historical_source_or_algorithm_equivalence": false,
+    "integration_pr_created": false,
+    "later_o8_o10_o11_work": false,
+    "main_modified_or_merged": false,
+    "notion_mutated": false,
+    "o8_whole_closed": false,
+    "project_os_go_self_declared": false,
+    "target_tls_ingress_qualification": false
+  },
+  "schema": "ephi.o8.surface-and-scope.verify1.v1",
+  "secret_safety": {
+    "authorization_header_recorded": false,
+    "cookie_value_recorded": false,
+    "dsn_recorded": false,
+    "protected_payload_recorded": false,
+    "raw_artifact_bytes_recorded": false,
+    "storage_secret_recorded": false
+  },
+  "status": "PASS"
+}

@@ -1,0 +1,97 @@
+{
+  "all_runs_and_jobs_success": true,
+  "candidate_sha": "ea25b397b19a361433c8a6aa3c072258143454ce",
+  "candidate_tree": "dcb1f18978a372075abb81dfd180dda0a216245d",
+  "checks": [
+    {
+      "check_suite_id": 96153991829,
+      "conclusion": "success",
+      "head_sha": "ea25b397b19a361433c8a6aa3c072258143454ce",
+      "jobs": [
+        {
+          "name": "Canonical repository baseline",
+          "status": "success"
+        },
+        {
+          "name": "Package checks (Python 3.11)",
+          "status": "success"
+        },
+        {
+          "name": "Package checks (Python 3.12)",
+          "status": "success"
+        },
+        {
+          "name": "Package checks (Python 3.13)",
+          "status": "success"
+        },
+        {
+          "name": "Package checks (Python 3.14)",
+          "status": "success"
+        },
+        {
+          "job_id": 106080904807,
+          "name": "PostgreSQL command/worker/read/artifact/O9 integration (Python 3.13)",
+          "status": "success"
+        },
+        {
+          "job_id": 106080904855,
+          "name": "O8.2 browser/session security integration (Python 3.13)",
+          "status": "success"
+        }
+      ],
+      "run_id": 35511811949,
+      "status": "completed",
+      "trigger": "R2 candidate execution",
+      "url": "https://github.com/kimhw8084/ephi/actions/runs/35511811949"
+    },
+    {
+      "check_suite_id": 96157259635,
+      "conclusion": "success",
+      "head_sha": "ea25b397b19a361433c8a6aa3c072258143454ce",
+      "jobs": [
+        {
+          "job_id": 106084403214,
+          "name": "Canonical repository baseline",
+          "status": "success"
+        },
+        {
+          "job_id": 106084403215,
+          "name": "Package checks (Python 3.11)",
+          "status": "success"
+        },
+        {
+          "job_id": 106084403186,
+          "name": "Package checks (Python 3.12)",
+          "status": "success"
+        },
+        {
+          "job_id": 106084403195,
+          "name": "Package checks (Python 3.13)",
+          "status": "success"
+        },
+        {
+          "job_id": 106084403232,
+          "name": "Package checks (Python 3.14)",
+          "status": "success"
+        },
+        {
+          "job_id": 106084403134,
+          "name": "PostgreSQL command/worker/read/artifact/O9 integration (Python 3.13)",
+          "status": "success"
+        },
+        {
+          "job_id": 106084403031,
+          "name": "O8.2 browser/session security integration (Python 3.13)",
+          "status": "success"
+        }
+      ],
+      "run_id": 35513112197,
+      "status": "completed",
+      "trigger": "VERIFY work-branch push; same immutable candidate SHA",
+      "url": "https://github.com/kimhw8084/ephi/actions/runs/35513112197"
+    }
+  ],
+  "repository": "kimhw8084/ephi",
+  "schema": "ephi.o8.repository-native-ci.verify1.v1",
+  "status": "PASS"
+}
