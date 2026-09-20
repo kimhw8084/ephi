@@ -6,7 +6,7 @@ from collections.abc import Mapping
 from dataclasses import dataclass
 from typing import Any
 
-from .context import AccessScope, Principal, RevisionVector
+from .context import AccessScope, CurrentAuthorizationAuthority, Principal, RevisionVector
 from .errors import CoherentReadConflictError, ValidationFailureError
 from .read import CurrentReadBundle, HistoricalReadBundle, ReadSnapshotStore
 
@@ -103,10 +103,13 @@ def _bundle_brief(bundle: CurrentReadBundle | HistoricalReadBundle, *, historica
 class EpisodeBriefQueryService:
     """Use the existing coherent current/historical read contracts."""
 
-    def __init__(self, read_store: ReadSnapshotStore):
+    def __init__(self, read_store: ReadSnapshotStore, current_authorization: CurrentAuthorizationAuthority):
         if not isinstance(read_store, ReadSnapshotStore):
             raise TypeError("read_store must implement the durable coherent-read boundary")
+        if not isinstance(current_authorization, CurrentAuthorizationAuthority):
+            raise TypeError("current_authorization must be a CurrentAuthorizationAuthority")
         self.read_store = read_store
+        self.current_authorization = current_authorization
 
     def get_episode_brief(
         self,
@@ -117,6 +120,9 @@ class EpisodeBriefQueryService:
         revision_id: str | None = None,
     ) -> EpisodeBrief:
         episode_id = _identity(episode_id, "episode_id")
+        # Current authorization must precede both current-head and historical
+        # revision lookup so neither existence nor payload is disclosed.
+        self.current_authorization.authorize(principal, scope, EPISODE_READ_CAPABILITY)
         if revision_id is None:
             bundle = self.read_store.read_current_bundle(
                 principal,
@@ -134,4 +140,3 @@ class EpisodeBriefQueryService:
 
 
 GetEpisodeBrief = EpisodeBriefQueryService
-

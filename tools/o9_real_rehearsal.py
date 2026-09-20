@@ -19,6 +19,7 @@ from ephi.application import (  # noqa: E402
     ArtifactService,
     AttentionQueryService,
     CommandContext,
+    MutableCurrentAuthorizationAuthority,
     EpisodeBriefQueryService,
     EpisodeWorkflowCommandService,
     MetrologyObservation,
@@ -90,10 +91,11 @@ def seed_source(dsn: str, artifact_root: Path) -> dict[str, object]:
     artifact_store = FileArtifactBlobStore(artifact_root)
     scope = AccessScope("o9-rehearsal-scope", site_id="fixture-site", area_id="fixture-area", family_id="generic-fixture-family")
     principal = _principal(scope)
+    current_authorization = MutableCurrentAuthorizationAuthority(principal)
     # The rehearsal database is created solely for this run. Truncation keeps a
     # rerun deterministic without touching an active/company database.
     adapter.connection.execute("TRUNCATE source_capability, source_snapshot, artifact_catalog, query_snapshot_row, query_snapshot, read_head, read_revision, applied_effect, job, outbox_event, audit_event, command_receipt, o3_attention_projection, aggregate_state CASCADE")
-    artifacts = ArtifactService(artifact_store, PostgreSQLArtifactCatalog(adapter))
+    artifacts = ArtifactService(artifact_store, PostgreSQLArtifactCatalog(adapter), current_authorization)
     source_content = b"O9 generic source manifest fixture; not authentic metrology evidence."
     source_artifact = artifacts.write_and_register(
         principal,
@@ -130,9 +132,9 @@ def seed_source(dsn: str, artifact_root: Path) -> dict[str, object]:
         {"title": "O9 durable attention fixture", "analytical_revision": "o9-analysis-1", "capability_state": {"source": "READY"}},
         workflow,
     )
-    attention = AttentionQueryService(adapter.o3_store(), adapter.read_store())
+    attention = AttentionQueryService(adapter.o3_store(), adapter.read_store(), current_authorization)
     retained = attention.list_attention(principal, scope, page_size=1)
-    workflow_service = EpisodeWorkflowCommandService(adapter)
+    workflow_service = EpisodeWorkflowCommandService(adapter, current_authorization)
     claim = workflow_service.claim_episode(_workflow_context(scope, principal, "o9-claim-1", 0), "episode-o9-1")
     acknowledge = workflow_service.acknowledge_episode(_workflow_context(scope, principal, "o9-ack-1", 1), "episode-o9-1")
 
@@ -190,7 +192,7 @@ def seed_source(dsn: str, artifact_root: Path) -> dict[str, object]:
         clock=lambda: source_now,
     )
     source_record, capability = source_service.publish(principal, source_draft, freshness_age_seconds=3600)
-    fixture_executor = VersionedAggregateCommandExecutor(adapter)
+    fixture_executor = VersionedAggregateCommandExecutor(adapter, current_authorization)
     seed = {
         "scope_hash": safe_identity_hash(scope.canonical_key),
         "episode_hash": safe_identity_hash("episode-o9-1"),
@@ -221,7 +223,7 @@ def seed_source(dsn: str, artifact_root: Path) -> dict[str, object]:
 def accept_post_cutoff(dsn: str, scope: AccessScope, principal: Principal) -> None:
     adapter = PostgreSQLReferenceTransactionAdapter(dsn)
     try:
-        executor = VersionedAggregateCommandExecutor(adapter)
+        executor = VersionedAggregateCommandExecutor(adapter, MutableCurrentAuthorizationAuthority(principal))
         executor.execute(
             _workflow_context(scope, principal, "o9-post-cutoff-1", 0),
             command_type="O9PostCutoffLocalCommand",
@@ -237,12 +239,13 @@ def accept_post_cutoff(dsn: str, scope: AccessScope, principal: Principal) -> No
 def verify_application_restart(target_dsn: str, scope: AccessScope, principal: Principal, retained_snapshot_id: str, stale_lease: WorkerLease) -> dict[str, object]:
     adapter = PostgreSQLReferenceTransactionAdapter(target_dsn)
     try:
-        workflow = EpisodeWorkflowCommandService(adapter)
+        current_authorization = MutableCurrentAuthorizationAuthority(principal)
+        workflow = EpisodeWorkflowCommandService(adapter, current_authorization)
         claim_replay = workflow.claim_episode(_workflow_context(scope, principal, "o9-claim-1", 0), "episode-o9-1")
         ack_replay = workflow.acknowledge_episode(_workflow_context(scope, principal, "o9-ack-1", 1), "episode-o9-1")
-        attention = AttentionQueryService(adapter.o3_store(), adapter.read_store())
+        attention = AttentionQueryService(adapter.o3_store(), adapter.read_store(), current_authorization)
         page = attention.list_attention(principal, scope, page_size=1, snapshot_id=retained_snapshot_id)
-        brief = EpisodeBriefQueryService(adapter.read_store()).get_episode_brief(principal, scope, "episode-o9-1")
+        brief = EpisodeBriefQueryService(adapter.read_store(), current_authorization).get_episode_brief(principal, scope, "episode-o9-1")
         worker = adapter.worker_store(config=WorkerLeaseConfig(lease_duration=timedelta(seconds=1), heartbeat_interval=timedelta(milliseconds=100)))
         adapter.connection.execute("UPDATE job SET lease_expires_at = clock_timestamp() - interval '1 second' WHERE job_id = %s", (stale_lease.job_id,))
         takeover = worker.claim(scope, "o9-worker-recovered")

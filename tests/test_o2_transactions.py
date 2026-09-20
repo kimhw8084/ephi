@@ -15,9 +15,9 @@ from ephi.application import (  # noqa: E402
     AuthorizationDeniedError,
     CommandContext,
     IdempotencyConflictError,
+    MutableCurrentAuthorizationAuthority,
     Principal,
     RevisionVector,
-    ScopeDeniedError,
     StorageFailureError,
     ValidationFailureError,
     VersionConflictError,
@@ -46,7 +46,8 @@ class O2TransactionTests(unittest.TestCase):
         self.store = SQLiteReferenceTransactionAdapter(self.path)
         self.addCleanup(self.store.close)
         self.store.seed_aggregate(self.scope, "fixture", "aggregate-1", {"effect_count": 0, "seed": "canonical"})
-        self.executor = VersionedAggregateCommandExecutor(self.store)
+        self.current_authorization = MutableCurrentAuthorizationAuthority(self.principal)
+        self.executor = VersionedAggregateCommandExecutor(self.store, self.current_authorization)
 
     def context(self, command_id="command-1", *, expected=0, principal=None, reason=None, viewed=True):
         revisions = RevisionVector("analysis-1", "exposure-1", "priority-1", expected if expected is not None else 0, None, "manifest-1") if viewed else None
@@ -113,7 +114,7 @@ class O2TransactionTests(unittest.TestCase):
 
         reopened = SQLiteReferenceTransactionAdapter(self.path)
         self.addCleanup(reopened.close)
-        replay = VersionedAggregateCommandExecutor(reopened).execute(
+        replay = VersionedAggregateCommandExecutor(reopened, self.current_authorization).execute(
             self.context(),
             command_type="FixtureCommand",
             aggregate_type="fixture",
@@ -153,6 +154,7 @@ class O2TransactionTests(unittest.TestCase):
         committed = self.execute()
         before = self.store.count_rows()
         reconnected = Principal("subject-1", (self.capability,), (self.scope,), 8, 12)
+        self.current_authorization.set_principal(reconnected)
         replay = self.execute(context=self.context(principal=reconnected))
         self.assertEqual(replay, committed)
         self.assertEqual(self.store.count_rows(), before)
@@ -163,11 +165,13 @@ class O2TransactionTests(unittest.TestCase):
         self.assertEqual(receipt.security_revision_json, "11")
 
         revoked = Principal("subject-1", (), (self.scope,), 8, 12)
+        self.current_authorization.set_principal(revoked)
         with self.assertRaises(AuthorizationDeniedError) as raised:
             self.execute(context=self.context(principal=revoked))
         self.assertEqual(raised.exception.code, "FORBIDDEN_ACTION")
         out_of_scope = Principal("subject-1", (self.capability,), (AccessScope("different"),), 8, 12)
-        with self.assertRaises(ScopeDeniedError):
+        self.current_authorization.set_principal(out_of_scope)
+        with self.assertRaises(AuthorizationDeniedError):
             self.execute(context=self.context(principal=out_of_scope))
         self.assertEqual(self.store.count_rows(), before)
 
@@ -191,7 +195,7 @@ class O2TransactionTests(unittest.TestCase):
         def attempt(store):
             try:
                 barrier.wait(timeout=5)
-                result = VersionedAggregateCommandExecutor(store).execute(
+                result = VersionedAggregateCommandExecutor(store, self.current_authorization).execute(
                     self.context("concurrent-command"),
                     command_type="FixtureCommand",
                     aggregate_type="fixture",

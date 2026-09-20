@@ -6,7 +6,7 @@ from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 from typing import Any, Protocol
 
-from .context import AccessScope, Principal
+from .context import AccessScope, CurrentAuthorizationAuthority, Principal
 from .errors import (
     QueryCursorValidationError,
     QueryIdentityMismatchError,
@@ -183,17 +183,26 @@ def _row_from_retained(row: RetainedSnapshotRow) -> AttentionRow:
 class AttentionQueryService:
     """Bind the product query to the existing retained-snapshot authority."""
 
-    def __init__(self, row_source: AttentionRowSource, read_store: ReadSnapshotStore):
+    def __init__(
+        self,
+        row_source: AttentionRowSource,
+        read_store: ReadSnapshotStore,
+        current_authorization: CurrentAuthorizationAuthority,
+    ):
         if not hasattr(row_source, "fetch_attention_rows"):
             raise TypeError("row_source must provide the PostgreSQL Attention projection query")
         if not isinstance(read_store, ReadSnapshotStore):
             raise TypeError("read_store must implement the durable read snapshot boundary")
+        if not isinstance(current_authorization, CurrentAuthorizationAuthority):
+            raise TypeError("current_authorization must be a CurrentAuthorizationAuthority")
         self.row_source = row_source
         self.read_store = read_store
+        self.current_authorization = current_authorization
 
     def check_source(self, principal: Principal, scope: AccessScope) -> None:
         """Run the bounded, authorized health probe for the required source."""
 
+        self.current_authorization.authorize(principal, scope, ATTENTION_READ_CAPABILITY)
         checker = getattr(self.row_source, "check_attention_source", None)
         if not callable(checker):
             raise StorageFailureError("Attention source health authority is unavailable")
@@ -217,6 +226,9 @@ class AttentionQueryService:
             raise QueryTooBroadError("attention page_size exceeds the bounded page size", limit=MAX_PAGE_SIZE)
         normalized_filters = _normalize_filters(filters)
         normalized_order = _normalize_order(order)
+        # This is the application disclosure boundary.  It runs before the
+        # projection, count, snapshot lookup or cursor continuation.
+        self.current_authorization.authorize(principal, scope, ATTENTION_READ_CAPABILITY)
         query_identity = {
             "query": "attention",
             "filters": normalized_filters,
@@ -230,6 +242,7 @@ class AttentionQueryService:
             )
             if len(source_rows) > MAX_ATTENTION_ROWS:
                 raise QueryTooBroadError(limit=MAX_ATTENTION_ROWS)
+            self.current_authorization.authorize(principal, scope, ATTENTION_READ_CAPABILITY)
             snapshot = self.read_store.create_query_snapshot(
                 principal,
                 scope,
@@ -239,6 +252,7 @@ class AttentionQueryService:
                 ttl_seconds=snapshot_ttl_seconds,
             )
             snapshot_id = snapshot.snapshot_id
+        self.current_authorization.authorize(principal, scope, ATTENTION_READ_CAPABILITY)
         page: PageResult = self.read_store.read_query_snapshot_page(
             principal,
             scope,

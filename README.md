@@ -238,6 +238,27 @@ DSN-gated; the ordinary package/full-suite/W0 paths remain database-independent.
 
 ## Pinned framework authority
 
+## CHG-150 O8.1 current-authorization freshness boundary
+
+O8.1 adds one storage-neutral `CurrentAuthorizationAuthority` at the
+application boundary. Protected command/receipt replay, Attention source and
+query/count/snapshot operations, current and historical Episode reads, and
+artifact metadata/byte/publish-precondition disclosure re-resolve the current
+server-side Principal before protected lookup. Exact subject,
+`auth_session_revision`, `security_revision`, scope and capability checks fail
+closed with bounded permission errors; a newer Principal is never silently
+substituted for the presented one. Retained snapshots still expire across an
+effective security-revision change and remain subject/scope/cursor bound.
+
+The development/test UI binds this authority to the existing environment-backed
+identity provider at operation time. Non-development composition remains fail
+closed until a real company identity/current-authorization adapter is supplied.
+Focused unit/ordering evidence is `tests.test_o8_current_authorization`; real
+PostgreSQL 18.x evidence is DSN-gated in `tests.test_o8_postgresql` and is run
+in the PostgreSQL CI lane after the optional PostgreSQL dependency is installed.
+This slice does not qualify company identity/session transport, browser
+CSRF/WebSocket-origin controls, upload/export/sanitization or deployment.
+
 ## CHG-147 O9.1 operations and restore rehearsal
 
 The CLI-only O9.1 boundary is documented in [operations](operations/README.md).

@@ -1,6 +1,13 @@
 """Renderer-independent EPHI application contracts and command execution."""
 
-from .context import AccessScope, CommandContext, Principal, RevisionVector
+from .context import (
+    AccessScope,
+    CommandContext,
+    CurrentAuthorizationAuthority,
+    MutableCurrentAuthorizationAuthority,
+    Principal,
+    RevisionVector,
+)
 from .artifacts import (
     ARTIFACT_METADATA_MAX_BYTES,
     ArtifactBlobStore,
@@ -185,6 +192,7 @@ __all__ = [
     "CommandResult",
     "CommandStorage",
     "CommandUnitOfWork",
+    "CurrentAuthorizationAuthority",
     "ClaimEpisode",
     "CLAIM_EPISODE_CAPABILITY",
     "DurableStorageError",
@@ -231,6 +239,7 @@ __all__ = [
     "MAX_RETAINED_ROW_COUNT",
     "DEFAULT_SNAPSHOT_TTL_SECONDS",
     "MAX_SNAPSHOT_TTL_SECONDS",
+    "MutableCurrentAuthorizationAuthority",
     "canonical_query_identity",
     "ScopeDeniedError",
     "SourceBindingUnavailableError",

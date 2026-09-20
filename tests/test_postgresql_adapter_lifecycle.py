@@ -16,6 +16,7 @@ from ephi.application import (  # noqa: E402
     CommandContext,
     EpisodeBriefQueryService,
     EpisodeWorkflowCommandService,
+    MutableCurrentAuthorizationAuthority,
     Principal,
     QuerySnapshotExpiredError,
     RevisionVector,
@@ -47,6 +48,7 @@ class PostgreSQLAdapterLifecycleTests(unittest.TestCase):
             1,
             1,
         )
+        self.current_authorization = MutableCurrentAuthorizationAuthority(self.principal)
         self.adapter.seed_aggregate(self.scope, "fixture", "aggregate-1", {"effect_count": 0})
         self.adapter.seed_aggregate(
             self.scope,
@@ -81,7 +83,7 @@ class PostgreSQLAdapterLifecycleTests(unittest.TestCase):
         )
 
     def execute(self, command_id: str = "command-1", *, expected: int = 0):
-        return VersionedAggregateCommandExecutor(self.adapter).execute(
+        return VersionedAggregateCommandExecutor(self.adapter, self.current_authorization).execute(
             self.context(command_id, expected=expected),
             command_type="FixtureCommand",
             aggregate_type="fixture",
@@ -158,13 +160,13 @@ class PostgreSQLAdapterLifecycleTests(unittest.TestCase):
         self.assertIsNot(original, self.adapter.connection)
         from ephi.application.attention import AttentionQueryService
 
-        attention = AttentionQueryService(self.adapter.o3_store(), self.adapter.read_store())
+        attention = AttentionQueryService(self.adapter.o3_store(), self.adapter.read_store(), self.current_authorization)
         page = attention.list_attention(self.principal, self.scope, page_size=1)
         self.assertEqual([row.episode_id for row in page.rows], ["episode-1"])
-        workflow = EpisodeWorkflowCommandService(self.adapter)
+        workflow = EpisodeWorkflowCommandService(self.adapter, self.current_authorization)
         committed = workflow.claim_episode(self.context("claim-1"), "episode-1")
         self.assertEqual(committed.aggregate_version, 1)
-        brief = EpisodeBriefQueryService(self.adapter.read_store()).get_episode_brief(
+        brief = EpisodeBriefQueryService(self.adapter.read_store(), self.current_authorization).get_episode_brief(
             self.principal, self.scope, "episode-1"
         )
         self.assertEqual(brief.workflow["work_state"], "CLAIMED")
@@ -172,7 +174,7 @@ class PostgreSQLAdapterLifecycleTests(unittest.TestCase):
     def test_expired_retained_attention_snapshot_requires_authorized_refresh(self):
         from ephi.application.attention import AttentionQueryService
 
-        attention = AttentionQueryService(self.adapter.o3_store(), self.adapter.read_store())
+        attention = AttentionQueryService(self.adapter.o3_store(), self.adapter.read_store(), self.current_authorization)
         first = attention.list_attention(self.principal, self.scope, page_size=1)
         rotated = Principal(
             self.principal.subject,
@@ -181,6 +183,7 @@ class PostgreSQLAdapterLifecycleTests(unittest.TestCase):
             self.principal.auth_session_revision,
             self.principal.security_revision + 1,
         )
+        self.current_authorization.set_principal(rotated)
         with self.assertRaises(QuerySnapshotExpiredError):
             attention.list_attention(
                 rotated,
@@ -199,6 +202,7 @@ class PostgreSQLAdapterLifecycleTests(unittest.TestCase):
             rotated.auth_session_revision,
             rotated.security_revision,
         )
+        self.current_authorization.set_principal(revoked)
         with self.assertRaises(AuthorizationDeniedError):
             attention.list_attention(revoked, self.scope, page_size=1)
 
@@ -233,7 +237,7 @@ class PostgreSQLAdapterLifecycleTests(unittest.TestCase):
         self.assertEqual(self.adapter.count_rows(), before)
         revoked = Principal(self.principal.subject, (), (self.scope,), 2, 2)
         with self.assertRaises(AuthorizationDeniedError):
-            VersionedAggregateCommandExecutor(self.adapter).execute(
+            VersionedAggregateCommandExecutor(self.adapter, self.current_authorization).execute(
                 self.context("command-1", principal=revoked),
                 command_type="FixtureCommand",
                 aggregate_type="fixture",

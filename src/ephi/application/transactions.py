@@ -9,13 +9,11 @@ import hashlib
 import json
 from typing import Any
 
-from .context import CommandContext
+from .context import CommandContext, CurrentAuthorizationAuthority
 from .errors import (
     AggregateNotFoundError,
-    AuthorizationDeniedError,
     CommandError,
     IdempotencyConflictError,
-    ScopeDeniedError,
     StorageFailureError,
     ValidationFailureError,
     VersionConflictError,
@@ -113,10 +111,13 @@ def _default_effect(current: Mapping[str, Any], payload: Mapping[str, Any], comm
 class VersionedAggregateCommandExecutor:
     """Execute one local versioned effect with receipt/audit/outbox atomicity."""
 
-    def __init__(self, store: CommandStorage):
+    def __init__(self, store: CommandStorage, current_authorization: CurrentAuthorizationAuthority):
         if not isinstance(store, CommandStorage):
             raise TypeError("store must implement the durable command transaction boundary")
+        if not isinstance(current_authorization, CurrentAuthorizationAuthority):
+            raise TypeError("current_authorization must be a CurrentAuthorizationAuthority")
         self.store = store
+        self.current_authorization = current_authorization
 
     def execute(
         self,
@@ -286,13 +287,8 @@ class VersionedAggregateCommandExecutor:
             # transaction has already rolled back all of its local writes.
             return self._reconcile_committed_receipt(context, required_capability, payload_hash)
 
-    @staticmethod
-    def _authorize(context: CommandContext, required_capability: str) -> None:
-        principal = context.principal
-        if not principal.grants_scope(context.scope):
-            raise ScopeDeniedError("principal is not granted the requested product scope")
-        if not principal.has_capability(required_capability):
-            raise AuthorizationDeniedError("principal is not currently granted the required capability")
+    def _authorize(self, context: CommandContext, required_capability: str) -> None:
+        self.current_authorization.authorize(context.principal, context.scope, required_capability)
 
     def _replay_or_conflict(self, context: CommandContext, required_capability: str, receipt: StoredCommandReceipt, payload_hash: str) -> CommandResult:
         if receipt.payload_hash != payload_hash:
@@ -309,6 +305,9 @@ class VersionedAggregateCommandExecutor:
         required_capability: str,
         payload_hash: str,
     ) -> CommandResult:
+        # A race/reconciliation lookup is itself a protected receipt access;
+        # re-establish the same freshness boundary before opening it.
+        self._authorize(context, required_capability)
         scope_key = context.scope.canonical_key
         subject = context.principal.subject
         try:

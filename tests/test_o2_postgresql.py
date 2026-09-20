@@ -18,9 +18,9 @@ from ephi.application import (  # noqa: E402
     AuthorizationDeniedError,
     CommandContext,
     IdempotencyConflictError,
+    MutableCurrentAuthorizationAuthority,
     Principal,
     RevisionVector,
-    ScopeDeniedError,
     StorageFailureError,
     ValidationFailureError,
     VersionConflictError,
@@ -82,6 +82,7 @@ class PostgreSQLTransactionTests(unittest.TestCase):
             auth_session_revision=7,
             security_revision=11,
         )
+        self.current_authorization = MutableCurrentAuthorizationAuthority(self.principal)
         self.store.seed_aggregate(self.scope, "fixture", "aggregate-1", {"effect_count": 0, "seed": "canonical"})
 
     def context(self, command_id="command-1", *, expected=0, principal=None, reason=None, viewed=True):
@@ -100,7 +101,7 @@ class PostgreSQLTransactionTests(unittest.TestCase):
         command_type="FixtureCommand",
         effect=None,
     ):
-        return VersionedAggregateCommandExecutor(store or self.store).execute(
+        return VersionedAggregateCommandExecutor(store or self.store, self.current_authorization).execute(
             context or self.context(),
             command_type=command_type,
             aggregate_type="fixture",
@@ -126,7 +127,7 @@ class PostgreSQLTransactionTests(unittest.TestCase):
             sqlite = SQLiteReferenceTransactionAdapter(Path(directory) / "hash.sqlite3")
             self.addCleanup(sqlite.close)
             sqlite.seed_aggregate(self.scope, "fixture", "aggregate-1", {"effect_count": 0, "seed": "canonical"})
-            sqlite_result = VersionedAggregateCommandExecutor(sqlite).execute(
+            sqlite_result = VersionedAggregateCommandExecutor(sqlite, self.current_authorization).execute(
                 self.context(),
                 command_type="FixtureCommand",
                 aggregate_type="fixture",
@@ -134,7 +135,7 @@ class PostgreSQLTransactionTests(unittest.TestCase):
                 payload={"value": 1, "ordered": {"b": 2, "a": 1}},
                 required_capability=self.capability,
             )
-        postgres_result = VersionedAggregateCommandExecutor(self.store).execute(
+        postgres_result = VersionedAggregateCommandExecutor(self.store, self.current_authorization).execute(
             self.context(),
             command_type="FixtureCommand",
             aggregate_type="fixture",
@@ -170,6 +171,7 @@ class PostgreSQLTransactionTests(unittest.TestCase):
         committed = self.execute()
         before = self.store.count_rows()
         rotated = Principal("subject-1", (self.capability,), (self.scope,), 8, 12)
+        self.current_authorization.set_principal(rotated)
         self.assertEqual(self.execute(context=self.context(principal=rotated)), committed)
         receipt = self.store.get_command_receipt(self.scope.canonical_key, "subject-1", "command-1")
         self.assertEqual(receipt.auth_session_revision_json, "7")
@@ -177,12 +179,18 @@ class PostgreSQLTransactionTests(unittest.TestCase):
         audit = self.store.list_audit_events()[0]
         self.assertEqual(audit["auth_session_revision_json"], "7")
         self.assertEqual(audit["security_revision_json"], "11")
+        revoked = Principal("subject-1", (), (self.scope,), 8, 12)
+        self.current_authorization.set_principal(revoked)
         with self.assertRaises(AuthorizationDeniedError):
-            self.execute(context=self.context(principal=Principal("subject-1", (), (self.scope,), 8, 12)))
-        with self.assertRaises(ScopeDeniedError):
-            self.execute(context=self.context(principal=Principal("subject-1", (self.capability,), (AccessScope("other"),), 8, 12)))
+            self.execute(context=self.context(principal=revoked))
+        other_scope = Principal("subject-1", (self.capability,), (AccessScope("other"),), 8, 12)
+        self.current_authorization.set_principal(other_scope)
+        with self.assertRaises(AuthorizationDeniedError):
+            self.execute(context=self.context(principal=other_scope))
+        another_subject = Principal("another-subject", (self.capability,), (self.scope,), 8, 12)
+        self.current_authorization.set_principal(another_subject)
         with self.assertRaises(VersionConflictError):
-            self.execute(context=self.context(principal=Principal("another-subject", (self.capability,), (self.scope,), 8, 12)))
+            self.execute(context=self.context(principal=another_subject))
         self.assertEqual(self.store.count_rows(), before)
 
     def test_same_id_different_payload_is_typed_conflict_without_new_rows(self):

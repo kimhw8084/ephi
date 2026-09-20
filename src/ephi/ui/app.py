@@ -50,7 +50,7 @@ from nicegui_base import (
 )
 
 from ephi.application.attention import AttentionQueryService
-from ephi.application.context import AccessScope, CommandContext, Principal
+from ephi.application.context import AccessScope, CommandContext, CurrentAuthorizationAuthority, Principal
 from ephi.application.episodes import EpisodeBrief, EpisodeBriefQueryService
 from ephi.application.errors import (
     AuthorizationDeniedError,
@@ -134,6 +134,7 @@ class EphiUiComposition:
     adapter: PostgreSQLReferenceTransactionAdapter
     principal_provider: Callable[[], Principal]
     scope_provider: Callable[[], AccessScope]
+    current_authorization: CurrentAuthorizationAuthority
     attention: AttentionQueryService
     briefs: EpisodeBriefQueryService
     workflow: EpisodeWorkflowCommandService
@@ -173,15 +174,16 @@ def build_composition_from_environment() -> EphiUiComposition:
     identity = _DevelopmentIdentityProvider()
     principal_provider = identity.principal
     scope_provider = identity.scope
+    current_authorization = CurrentAuthorizationAuthority.from_provider(principal_provider)
     # Validate the current binding during composition, but never retain this
     # Principal as page authority.  Every protected operation calls the bound
     # provider again.
     principal_provider()
     adapter = PostgreSQLReferenceTransactionAdapter(dsn)
     o3_store = adapter.o3_store()
-    attention = AttentionQueryService(o3_store, adapter.read_store())
-    briefs = EpisodeBriefQueryService(adapter.read_store())
-    workflow = EpisodeWorkflowCommandService(adapter)
+    attention = AttentionQueryService(o3_store, adapter.read_store(), current_authorization)
+    briefs = EpisodeBriefQueryService(adapter.read_store(), current_authorization)
+    workflow = EpisodeWorkflowCommandService(adapter, current_authorization)
     source = EphiReadDataSource(attention, principal_provider, scope_provider)
     runtime = ApplicationRuntime()
     runtime.data.register_source(source)
@@ -191,6 +193,7 @@ def build_composition_from_environment() -> EphiUiComposition:
         adapter,
         principal_provider,
         scope_provider,
+        current_authorization,
         attention,
         briefs,
         workflow,
