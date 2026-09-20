@@ -1,0 +1,280 @@
+{
+  "accepted_at": "2026-09-20T14:07:13Z",
+  "changed_files": [
+    {
+      "additions": 81,
+      "deletions": 0,
+      "path": ".github/workflows/package.yml",
+      "status": "M"
+    },
+    {
+      "additions": 26,
+      "deletions": 6,
+      "path": "manifest.json",
+      "status": "M"
+    },
+    {
+      "additions": 6,
+      "deletions": 0,
+      "path": "src/ephi/app.py",
+      "status": "M"
+    },
+    {
+      "additions": 597,
+      "deletions": 0,
+      "path": "src/ephi/transport.py",
+      "status": "A"
+    },
+    {
+      "additions": 10,
+      "deletions": 22,
+      "path": "src/ephi/ui/app.py",
+      "status": "M"
+    },
+    {
+      "additions": 368,
+      "deletions": 0,
+      "path": "tests/test_o8_browser_transport.py",
+      "status": "A"
+    },
+    {
+      "additions": 616,
+      "deletions": 0,
+      "path": "tools/o8_browser_qualification.py",
+      "status": "A"
+    },
+    {
+      "additions": 141,
+      "deletions": 0,
+      "path": "tools/o8_surface_inventory.py",
+      "status": "A"
+    }
+  ],
+  "checks": [
+    {
+      "command": "/bin/zsh -lc \"pwd && printf '%s\\\\n' '--- linked instructions ---' && sed -n '1,240p' /Users/haewonkim/.codex/RTK.md && printf '%s\\\\n' '--- law ---' && sed -n '1,260p' /Users/haewonkim/.codex/law.md && printf '%s\\\\n' '--- top-level files ---' && rg --files -g 'README.md' -g '13_Package_Review.md' -g 'tools/**' -g '.codex-fabric/**' | sed -n '1,240p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,260p' README.md\nrtk sed -n '1,320p' 13_Package_Review.md\nrtk git status --short --branch\nrtk git log -1 --format='%H %T %D'\nrtk git remote -v\nrtk git branch --all --contains ea25b397b19a361433c8a6aa3c072258143454ce\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git fetch --no-tags origin main\nrtk git rev-parse refs/remotes/origin/main\nrtk git cat-file -t ea25b397b19a361433c8a6aa3c072258143454ce\nrtk git rev-parse ea25b397b19a361433c8a6aa3c072258143454ce''^{tree}\nrtk git merge-base --is-ancestor c9a128a202095ffa5bb63f3c5ca7583908397f98 ea25b397b19a361433c8a6aa3c072258143454ce && rtk git log -1 --oneline --decorate ea25b397b19a361433c8a6aa3c072258143454ce\nrtk git show-ref | rg '\"'ephi-o8-browser-session-security|ephi-o9-operations-restore-rehearsal-fix2|ephi-o8-current-authorization-verify1|project-os-artifacts|codex-fabric/evidence|readback'\nrg -n --hidden --glob '\"'!evidence/**'\"' --glob '\"'!evidence/import/**'\"' --glob '\"'!*.pyc'\"' 'codex-fabric-audit-evidence|EXECUTED_VERIFY|project_id|fabric_job|EVIDENCE_PROJECT_MISMATCH|evidence.*publisher|audit.json' . /Users/haewonkim/.codex 2>/dev/null | sed -n '1,320p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git show --format=fuller --no-patch ea25b397b19a361433c8a6aa3c072258143454ce\nrtk git diff --name-status c9a128a202095ffa5bb63f3c5ca7583908397f98 ea25b397b19a361433c8a6aa3c072258143454ce\nrtk git show refs/remotes/origin/codex-fabric/evidence/ephi/ephi-o8-browser-session-security-verify1:.codex-fabric/audit.json\nrtk git show refs/remotes/origin/codex-fabric/evidence/ephi/ephi-o8-current-authorization-verify1:.codex-fabric/audit.json\nrtk git show refs/remotes/origin/codex-fabric/evidence/ephi/ephi-o9-operations-restore-rehearsal-fix2:.codex-fabric/audit.json\nrtk git ls-tree -r --name-only refs/remotes/origin/project-os-artifacts/ephi/ephi-o8-browser-session-security-verify1 | sed -n '1,160p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk command -v rtk\nrtk command -v git\nrtk command -v gh\nrtk command -v fabric || true\nrtk command -v codex-fabric || true\nrtk command -v accepted-change || true\nrtk find /Users/haewonkim/.codex -maxdepth 4 -type f \\\\( -iname '*fabric*' -o -iname '*evidence*publisher*' -o -iname '*accepted*change*' \\\\) -print | sed -n '1,240p'\nenv | rtk rg '\"'^(CODEX|FABRIC|PROJECT|GITHUB|CI)_'\"' | sed 's/=.*\"'$/=<present>/'\"' | sed -n '1,160p'\nrtk git config --get-regexp '\"'^(branch|remote|user)'\"\\\\.' | sed -n '1,160p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy find /Users/haewonkim/.codex -maxdepth 5 -type f \\\\( -iname '*fabric*' -o -iname '*evidence*publisher*' -o -iname '*accepted*change*' \\\\) -print | sed -n '1,240p'\nrtk proxy find /Users/haewonkim -maxdepth 5 -type f -path '*/.codex-fabric/*' -print | sed -n '1,240p'\nrtk rg -n --hidden --glob '\"'!archived_sessions/**'\"' --glob '\"'!cache/**'\"' --glob '\"'!*.jsonl'\"' --glob '\"'!*.pyc'\"' 'codex-fabric-audit-evidence|EXECUTED_VERIFY|fabric_release|transport.*FABRIC/2' /Users/haewonkim/.codex /Users/haewonkim/.codex-fabric 2>/dev/null | sed -n '1,260p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,180p' /Users/haewonkim/.codex-fabric/fabric.py\nrtk rg -n 'ArgumentParser|add_subparsers|add_argument|def main|publish|audit|accept|VERIFY|verify|dispatch|resume' /Users/haewonkim/.codex-fabric/fabric.py | sed -n '1,320p'\nrtk python3 /Users/haewonkim/.codex-fabric/fabric.py --help 2>&1 | sed -n '1,240p'\nrtk python3 /Users/haewonkim/.codex-fabric/fabric.py status --help 2>&1 | sed -n '1,200p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy ls -la /Users/haewonkim/.codex-fabric | sed -n '1,240p'\nrtk proxy find /Users/haewonkim/.codex-fabric -maxdepth 2 -type f -print | rg '/(fabric|codex-fabric|.*\\\\.py)\"'$'\"' | sed -n '1,240p'\nrtk proxy find /Users/haewonkim/.codex-fabric -maxdepth 3 -type l -ls | sed -n '1,120p'\nrtk rg -n 'RELEASE_VERSION|def main|ArgumentParser|publish|codex-fabric-audit-evidence' /Users/haewonkim/.codex-fabric/backups /Users/haewonkim/.codex-fabric/current 2>/dev/null | sed -n '1,280p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,120p' /Users/haewonkim/.codex-fabric/current/README.md\nrtk sed -n '2450,2825p' /Users/haewonkim/.codex-fabric/current/fabric.py\nrtk sed -n '4300,4380p' /Users/haewonkim/.codex-fabric/current/fabric.py\nrtk sed -n '1,220p' /Users/haewonkim/.codex-fabric/libexec/projectos_integrate.py\nrtk sed -n '560,690p' /Users/haewonkim/.codex-fabric/libexec/projectos_integrate.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,120p' /Users/haewonkim/.codex-fabric/projects.yaml\nrtk ls -la /Users/haewonkim/.codex-fabric/jobs/CF-40024fcc0bcaa30fca96f676.executed /Users/haewonkim/.codex-fabric/results/CF-40024fcc0bcaa30fca96f676 2>/dev/null\nrtk sed -n '1,220p' /Users/haewonkim/.codex-fabric/jobs/CF-40024fcc0bcaa30fca96f676.executed/job.json 2>/dev/null\nrtk sed -n '1,260p' /Users/haewonkim/.codex-fabric/results/CF-40024fcc0bcaa30fca96f676/result.json 2>/dev/null\nrtk sed -n '1,220p' /Users/haewonkim/.codex-fabric/results/CF-40024fcc0bcaa30fca96f676/job-summary.json 2>/dev/null\nrtk rg -l 'ephi-o8-browser-session-security-verify1|CF-40024fcc0bcaa30fca96f676|EVIDENCE_PROJECT_MISMATCH' /Users/haewonkim/.codex-fabric/jobs /Users/haewonkim/.codex-fabric/results /Users/haewonkim/.codex-fabric/logs | sed -n '1,160p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,220p' /Users/haewonkim/.codex-fabric/jobs/CF-0521ffc38832d6564d68d1e3.running/job.json\nrtk sed -n '1,80p' /Users/haewonkim/.codex-fabric/jobs/CF-0521ffc38832d6564d68d1e3.running/prompt.md\nrtk git -C /Users/haewonkim/.codex-fabric/repos/ephi status --short --branch\nrtk git -C /Users/haewonkim/.codex-fabric/repos/ephi log -1 --format='%H %T %D'\nrtk git -C /Users/haewonkim/.codex-fabric/repos/ephi ls-remote origin refs/heads/main refs/heads/codex/ephi-o8-browser-session-security-verify2\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short --branch\nrtk git merge --ff-only ea25b397b19a361433c8a6aa3c072258143454ce\nrtk git push origin HEAD:refs/heads/codex/ephi-o8-browser-session-security-verify2\nrtk git status --short --branch\nrtk git rev-parse HEAD HEAD''^{tree}\nrtk git ls-remote origin refs/heads/main refs/heads/codex/ephi-o8-browser-session-security-verify2\nrtk git diff --quiet ea25b397b19a361433c8a6aa3c072258143454ce --\nrtk git diff --quiet --\nrtk git merge-base --is-ancestor c9a128a202095ffa5bb63f3c5ca7583908397f98 ea25b397b19a361433c8a6aa3c072258143454ce'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest\nrtk python3 -m unittest discover -s tests -v\nrtk git diff --check\nrtk git status --short --branch\nrtk git diff --quiet ea25b397b19a361433c8a6aa3c072258143454ce --\nrtk git diff --quiet --'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk gh run list --repo kimhw8084/ephi --limit 20 --json databaseId,headSha,status,conclusion,workflowName,headBranch,event,createdAt,updatedAt | rtk python3 -c 'import json,sys; rows=json.load(sys.stdin); print(json.dumps([r for r in rows if r.get(\\\"headSha\\\")==\\\"ea25b397b19a361433c8a6aa3c072258143454ce\\\" or r.get(\\\"headBranch\\\")==\\\"codex/ephi-o8-browser-session-security-verify2\\\"], indent=2, sort_keys=True))'\nrtk gh run view 35511811949 --repo kimhw8084/ephi --json databaseId,headSha,status,conclusion,workflowName,jobs\nrtk gh run view 35513112197 --repo kimhw8084/ephi --json databaseId,headSha,status,conclusion,workflowName,jobs\nrtk gh api repos/kimhw8084/ephi/commits/ea25b397b19a361433c8a6aa3c072258143454ce/check-runs?per_page=100 | rtk python3 -c 'import json,sys; d=json.load(sys.stdin); print(json.dumps({\\\"total_count\\\":d.get(\\\"total_count\\\"),\\\"checks\\\":[{\\\"name\\\":x.get(\\\"name\\\"),\\\"status\\\":x.get(\\\"status\\\"),\\\"conclusion\\\":x.get(\\\"conclusion\\\"),\\\"started_at\\\":x.get(\\\"started_at\\\"),\\\"completed_at\\\":x.get(\\\"completed_at\\\")} for x in d.get(\\\"check_runs\\\",[]) ]}, indent=2, sort_keys=True))'\nrtk git ls-remote origin refs/heads/main refs/heads/codex/ephi-o8-browser-session-security-verify2 refs/heads/codex/ephi-o8-browser-session-security-fix1 refs/heads/codex/ephi-o8-browser-session-security-verify1 refs/heads/codex-fabric/evidence/ephi/ephi-o8-browser-session-security-fix1 refs/heads/codex-fabric/evidence/ephi/ephi-o8-browser-session-security-verify1 refs/heads/project-os-artifacts/ephi/ephi-o8-browser-session-security-fix1 refs/heads/project-os-artifacts/ephi/ephi-o8-browser-session-security-verify1\nrtk git ls-tree -r --name-only .codex-fabric 2>/dev/null || true\nrtk ls -la .codex-fabric 2>/dev/null || true\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk gh api 'repos/kimhw8084/ephi/commits/ea25b397b19a361433c8a6aa3c072258143454ce/check-runs?per_page=100' | rtk python3 -c 'import json,sys; d=json.load(sys.stdin); print(json.dumps({\\\"total_count\\\":d.get(\\\"total_count\\\"),\\\"checks\\\":[{\\\"name\\\":x.get(\\\"name\\\"),\\\"status\\\":x.get(\\\"status\\\"),\\\"conclusion\\\":x.get(\\\"conclusion\\\"),\\\"started_at\\\":x.get(\\\"started_at\\\"),\\\"completed_at\\\":x.get(\\\"completed_at\\\")} for x in d.get(\\\"check_runs\\\",[]) ]}, indent=2, sort_keys=True))'\nrtk python3 - <<'PY'\nimport hashlib, json, subprocess\nBASE='c9a128a202095ffa5bb63f3c5ca7583908397f98'\nCAND='ea25b397b19a361433c8a6aa3c072258143454ce'\n\ndef git(*args):\n    return subprocess.check_output(['git', *args], text=True)\n\ndef show(ref, path):\n    return git('show', f'{ref}:{path}')\nrows=[]\nfor line in git('diff','--name-status',BASE,CAND).splitlines():\n    status,path=line.split('\\\\t',1)\n    data=subprocess.check_output(['git','show',f'{CAND}:{path}'])\n    rows.append({'path':path,'status':status,'bytes':len(data),'sha256':hashlib.sha256(data).hexdigest()})\nprint(json.dumps({'changed_file_count':len(rows),'changed_files':rows}, indent=2, sort_keys=True))\nfor ref in [\n    'refs/remotes/origin/codex-fabric/evidence/ephi/ephi-o8-current-authorization-verify1',\n    'refs/remotes/origin/codex-fabric/evidence/ephi/ephi-o9-operations-restore-rehearsal-fix2',\n]:\n    obj=json.loads(show(ref,'.codex-fabric/audit.json'))\n    identity={k:obj.get(k) for k in ('schema_version','kind','status','project_id','job_id','operation','request')}\n    git_block=obj.get('git') or {}\n    identity['git']={k:git_block.get(k) for k in ('base_sha','base_is_ancestor','work_branch','head_sha','head_tree','remote_exact_head','remote_head_sha','target_branch','target_head_observed_after_execution','target_drifted_since_acceptance','worktree_clean','tracked_diff_from_candidate')}\n    identity['locator']=obj.get('locator')\n    print(json.dumps({'ref':ref,'identity':identity}, indent=2, sort_keys=True))\nPY\nrtk git show-ref --verify refs/heads/codex-fabric/evidence/ephi/ephi-o8-browser-session-security-verify1 refs/heads/project-os-artifacts/ephi/ephi-o8-browser-session-security-verify1 2>/dev/null || true\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk ls -la .codex-fabric 2>/dev/null || true\nrtk proxy find .codex-fabric -maxdepth 2 -type f -print 2>/dev/null | sed -n '1,120p'\nrtk git check-ignore -v .codex-fabric/audit.json 2>/dev/null || true\nrtk git status --short --ignored .codex-fabric 2>/dev/null | sed -n '1,120p'\nrtk ls -la /Users/haewonkim/.codex-fabric/results/CF-0521ffc38832d6564d68d1e3 2>/dev/null || true\nrtk rg -n 'def worker\\\\(|publish_evidence_for_job\\\\(|evidence_publication' /Users/haewonkim/.codex-fabric/current/fabric.py | sed -n '1,140p'\nrtk sed -n '3580,3740p' /Users/haewonkim/.codex-fabric/current/fabric.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n 'head_tree|tracked_diff_from_candidate|target_head_observed_after_execution|public_audit_bundle' /Users/haewonkim/.codex-fabric/current/fabric.py | sed -n '1,220p'\nrtk sed -n '3000,3140p' /Users/haewonkim/.codex-fabric/current/fabric.py\nrtk sed -n '3350,3625p' /Users/haewonkim/.codex-fabric/current/fabric.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short --branch\nrtk git rev-parse HEAD HEAD''^{tree}\nrtk git diff --quiet ea25b397b19a361433c8a6aa3c072258143454ce --\nrtk git diff --quiet --\nrtk git ls-remote origin refs/heads/main refs/heads/codex/ephi-o8-browser-session-security-verify2 refs/heads/codex-fabric/evidence/ephi/ephi-o8-browser-session-security-verify2 refs/heads/project-os-artifacts/ephi/ephi-o8-browser-session-security-verify2\nrtk git merge-base --is-ancestor c9a128a202095ffa5bb63f3c5ca7583908397f98 ea25b397b19a361433c8a6aa3c072258143454ce\nrtk sed -n '\"'2488,2540p' /Users/haewonkim/.codex-fabric/current/fabric.py\nrtk sed -n '3594,3615p' /Users/haewonkim/.codex-fabric/current/fabric.py\nrtk python3 - <<'PY'\nimport json, subprocess\njob='/Users/haewonkim/.codex-fabric/jobs/CF-0521ffc38832d6564d68d1e3.running/job.json'\nmeta=json.load(open(job))\nprint(json.dumps({k:meta[k] for k in ('job_id','project_id','operation','request','fabric_release')}, sort_keys=True))\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    }
+  ],
+  "codex": {
+    "cli_version": "codex-cli 0.155.1",
+    "configured_model": "gpt-5.6-luna",
+    "event_count": 46,
+    "provider_reported_model": null,
+    "reasoning_effort": "xhigh",
+    "terminal_type": "turn.completed",
+    "usage": {
+      "cache_hit_percent": 91.55,
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 1701632,
+      "fresh_input_tokens": 157048,
+      "input_tokens": 1858680,
+      "non_reasoning_output_tokens": 6512,
+      "output_tokens": 21166,
+      "reasoning_output_tokens": 14654,
+      "total_processed_tokens": 1879846
+    },
+    "warnings": []
+  },
+  "commits": [
+    {
+      "sha": "ea25b397b19a361433c8a6aa3c072258143454ce",
+      "subject": "Keep O8.2 preflight dependency-safe"
+    },
+    {
+      "sha": "2c6b3d380e502950245c5a3acedeb82df3c89ab7",
+      "subject": "Keep Base stack test dependency-safe in package jobs"
+    },
+    {
+      "sha": "2258f690c21192aea4d9eb65f0b59277c188a1f9",
+      "subject": "Fix O8.2 middleware preflight and proxy qualification"
+    },
+    {
+      "sha": "ea6f12260b0e4954dd353062adf00e997fa0f784",
+      "subject": "Redact browser cookie evidence at capture"
+    },
+    {
+      "sha": "98ee0bb309667a127a5e3774fd2bcbdb0cfc4ef3",
+      "subject": "Implement O8.2 browser session security boundary"
+    }
+  ],
+  "diff": {
+    "additions": 1845,
+    "changed_files": 8,
+    "commit_count": 5,
+    "deletions": 28
+  },
+  "error_code": null,
+  "evidence_manifest": {
+    "count": 1,
+    "items": [
+      {
+        "bytes": 33109,
+        "path": "manifest.json",
+        "sha256": "8148186f7c119d6c45d191a97a61e3439f19a7658bb12d8d4f14e2560e66a46f"
+      }
+    ],
+    "version": 1
+  },
+  "evidence_publisher_release": "1.2.3-resume-candidate",
+  "fabric_capture": {
+    "applied": false,
+    "paths_before": 0,
+    "transient_untracked_removed": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "fabric_release": "1.2.3-resume-candidate",
+  "failure_class": null,
+  "finished_at": "2026-09-20T14:14:25Z",
+  "git": {
+    "base_is_ancestor": true,
+    "base_sha": "c9a128a202095ffa5bb63f3c5ca7583908397f98",
+    "branch": "codex/ephi-o8-browser-session-security-verify2",
+    "detached_verify": false,
+    "head_sha": "ea25b397b19a361433c8a6aa3c072258143454ce",
+    "remote_exact_head": true,
+    "remote_head_sha": "ea25b397b19a361433c8a6aa3c072258143454ce",
+    "target_branch": "main",
+    "target_drifted_since_acceptance": false,
+    "target_head_observed_after_execution": "c9a128a202095ffa5bb63f3c5ca7583908397f98",
+    "work_branch": "codex/ephi-o8-browser-session-security-verify2",
+    "worktree_clean": true
+  },
+  "instructions": {
+    "files": [
+      {
+        "bytes": 1458,
+        "path": "AGENTS.md",
+        "sha256": "4349f387a79d886ed1264604ff48c582698e539e08ed8fb2f9d8ab8fbf6f804a"
+      }
+    ],
+    "total_bytes": 1458,
+    "warning": null
+  },
+  "job_id": "CF-0521ffc38832d6564d68d1e3",
+  "kind": "codex-fabric-audit-evidence",
+  "locator": {
+    "branch": "codex-fabric/evidence/ephi/ephi-o8-browser-session-security-verify2",
+    "path": ".codex-fabric/audit.json",
+    "ref": "refs/heads/codex-fabric/evidence/ephi/ephi-o8-browser-session-security-verify2"
+  },
+  "operation": "VERIFY",
+  "policy": {
+    "environment_policy_sha256": "e077daca74297b3c30bee8989f00f8ca5338f7610b4d016a6c48db524205d064",
+    "fabric_release": "1.2.3-resume-candidate",
+    "policy_sha256": "a642c9f63bab2cb555704bdb0b9d1f28222591f133f934c1d0f93cc5a25ab8a1",
+    "registry_sha256": "cfc765f3211c37c7967a138f3b2d89a99341939b15b2623f92744d007f625d6f"
+  },
+  "project_id": "ephi",
+  "recovery": {
+    "model_rerun_safe": false,
+    "recovery_required": false,
+    "retry_safe": false,
+    "retry_scope": null,
+    "worktree_retained": true
+  },
+  "request": "ephi-o8-browser-session-security-verify2",
+  "schema_version": 1,
+  "started_at": "2026-09-20T14:07:14Z",
+  "status": "EXECUTED_CHANGE",
+  "timing": {
+    "execution_seconds": 431,
+    "queue_seconds": 1,
+    "total_seconds": 432
+  },
+  "transport": {
+    "bytes": 10822,
+    "envelope": "FABRIC/2",
+    "prompt_bytes": 10488,
+    "prompt_sha256": "c14b64453fb1f83ab67030100897fabc61004181e45e08371e6baa9275430a58",
+    "sha256": "0521ffc38832d6564d68d1e3cef9080d966b048fe49f68c6f17e03f709285543"
+  }
+}
