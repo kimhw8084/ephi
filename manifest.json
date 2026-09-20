@@ -51,8 +51,8 @@
     },
     {
       "path": ".github/workflows/package.yml",
-      "bytes": 11117,
-      "sha256": "1249d074d4a78fb80df5a2b0badb4638fabc329d867b2ea859d541b5e5c72aa3"
+      "bytes": 13675,
+      "sha256": "84b78ae6723829c4aa19ffeb571901e672027854f7566529114f8016773e9b1f"
     },
     {
       "path": ".gitignore",
@@ -630,6 +630,11 @@
       "sha256": "f607423b3b89eb8a3af5245ce9c4b3129d0890ebc4d8e3624d22689757bd671d"
     },
     {
+      "path": "src/ephi/application/o10.py",
+      "bytes": 14748,
+      "sha256": "9a47ddaaf1318807687829342e38afeb3e5ff289bdf495907c9132e493250f98"
+    },
+    {
       "path": "src/ephi/application/operations.py",
       "bytes": 11596,
       "sha256": "0b36b24017bc9bbbfe682f21f79dc68bc3dd4392f3d05a83bf38fa3eec16f22f"
@@ -696,8 +701,8 @@
     },
     {
       "path": "src/ephi/infrastructure/postgresql_o3.py",
-      "bytes": 9879,
-      "sha256": "7c8d99c45f10ba165c70e884b09097fa423ed04c9279aa23e505dd693df557c9"
+      "bytes": 9926,
+      "sha256": "814d1f5c3af5fcda9cede47f9e52d66073045845a4aa590be8bcbdf67e7fef51"
     },
     {
       "path": "src/ephi/infrastructure/postgresql_reads.py",
@@ -741,8 +746,8 @@
     },
     {
       "path": "src/ephi/ui/app.py",
-      "bytes": 20302,
-      "sha256": "1c71eedd73213667790b6e356135644921df9701e8ece3bd472559607768e7e5"
+      "bytes": 43863,
+      "sha256": "6a31fa847ef4e2f7dd0763bcfc1de6af79fcfdeb0ee74320c6b5c9f8f3d65171"
     },
     {
       "path": "src/ephi/ui/provider.py",
@@ -778,6 +783,11 @@
       "path": "tests/test_ephi_application.py",
       "bytes": 2681,
       "sha256": "6abc52107c7b5da7d1e63836beb25f48a137c669ef4d55300e41b6b22b7fc878"
+    },
+    {
+      "path": "tests/test_o10_rendered_accessibility.py",
+      "bytes": 4289,
+      "sha256": "9d8b0c55d1c6c703e059d2a837c887e774074e5a7ebd34a565612a65f2091dae"
     },
     {
       "path": "tests/test_o2_artifacts.py",
@@ -821,8 +831,8 @@
     },
     {
       "path": "tests/test_o3_postgresql.py",
-      "bytes": 9205,
-      "sha256": "6387ce7ebdfbe6aafd75f181c7962cb886060c27b049ac4abfa549f9e9668e46"
+      "bytes": 10343,
+      "sha256": "5685d49d94868b1b25c994e7a61924f095a7578b2193b885d2500308974e2607"
     },
     {
       "path": "tests/test_o3_provider.py",
@@ -910,9 +920,19 @@
       "sha256": "a353043571493380c81a93a56d1426cb4b9e2f3a78eb620bc75a24ace8d55da0"
     },
     {
+      "path": "tools/o10_rendered_accessibility.py",
+      "bytes": 47191,
+      "sha256": "ad56f95d731da535a42b8c878cd86417de676ec4d4cab1a99cf562b3ce5f5a5b"
+    },
+    {
+      "path": "tools/o10_state_harness.py",
+      "bytes": 5064,
+      "sha256": "8047759c834921ce4de7d6c5d9b933caaec2554917cc74c8368e7968dbebd922"
+    },
+    {
       "path": "tools/o8_browser_qualification.py",
-      "bytes": 30066,
-      "sha256": "b4ba0cb28e503cf2a253c565dd2b1f26da56ff1305eca42c2121d0a31f9b9d64"
+      "bytes": 30077,
+      "sha256": "fd1e5342582cc367b2fa96c3ae800de4933b9f0cd18443c121b55444f5adac4f"
     },
     {
       "path": "tools/o8_surface_inventory.py",
