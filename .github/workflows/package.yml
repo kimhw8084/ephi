@@ -48,7 +48,7 @@ jobs:
         run: python tools/w0_repo_baseline.py
 
   postgresql-integration:
-    name: PostgreSQL command/worker/read/artifact integration (Python 3.13)
+    name: PostgreSQL command/worker/read/artifact/O9 integration (Python 3.13)
     runs-on: ubuntu-latest
     timeout-minutes: 10
     env:
@@ -81,6 +81,10 @@ jobs:
           EPHI_TEST_POSTGRES_DSN: postgresql://ephi_ci:ephi_ci_password@127.0.0.1:5432/ephi_ci
         run: |
           python -c "import os; from ephi.infrastructure import PostgreSQLReferenceTransactionAdapter as A; s=A(os.environ['EPHI_TEST_POSTGRES_DSN']); s.apply_migrations(); assert s.server_version().startswith('18.'), s.server_version(); assert type(s).__name__ == 'PostgreSQLReferenceTransactionAdapter'; s.close()"
+      - name: Run PostgreSQL operations parser and worker-health tests
+        env:
+          EPHI_TEST_POSTGRES_DSN: postgresql://ephi_ci:ephi_ci_password@127.0.0.1:5432/ephi_ci
+        run: python -m unittest tests.test_o9_operations -v
       - name: Run PostgreSQL transaction integration tests
         env:
           EPHI_TEST_POSTGRES_DSN: postgresql://ephi_ci:ephi_ci_password@127.0.0.1:5432/ephi_ci

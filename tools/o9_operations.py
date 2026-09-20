@@ -191,16 +191,23 @@ def _native_tool_database(dsn: str) -> str:
 def _subprocess_env(dsn: str, *, database: str | None = None) -> dict[str, str]:
     """Build a private libpq environment; never put conninfo in native-tool argv."""
 
-    parameters = _libpq_parameters(dsn, database=database)
-    environment = os.environ.copy()
+    return _private_libpq_environment(_libpq_parameters(dsn, database=database))
+
+
+def _private_libpq_environment(
+    parameters: Mapping[str, object], *, base_environment: Mapping[str, str] | None = None
+) -> dict[str, str]:
+    """Transform parsed libpq parameters into a private native-tool environment."""
+
+    environment = dict(os.environ if base_environment is None else base_environment)
     for variable in _LIBPQ_ENVIRONMENT_NAMES.values():
         environment.pop(variable, None)
     for variable in ("DATABASE_URL", "EPHI_POSTGRES_DSN", "EPHI_TEST_POSTGRES_DSN"):
         environment.pop(variable, None)
     for name, value in parameters.items():
         variable = _LIBPQ_ENVIRONMENT_NAMES.get(name)
-        if variable is not None:
-            environment[variable] = value
+        if variable is not None and value is not None:
+            environment[variable] = str(value)
     return environment
 
 

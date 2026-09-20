@@ -51,8 +51,8 @@
     },
     {
       "path": ".github/workflows/package.yml",
-      "bytes": 3838,
-      "sha256": "4a746b22209dd813f68238e988da2f240fdd759a4f98a9732c34c267ff52f7f9"
+      "bytes": 4080,
+      "sha256": "a4f40bf8e813d9eddf41af6aa98df9f008dd171260d018a67997e248045e20c6"
     },
     {
       "path": ".gitignore",
@@ -836,8 +836,8 @@
     },
     {
       "path": "tests/test_o9_operations.py",
-      "bytes": 18285,
-      "sha256": "adc9e17d8ce0b06dcb33db9c664b1c07c87d4a49688fb8a3ff04d84590801038"
+      "bytes": 23415,
+      "sha256": "562ae02a401249d5641fb23b34c8a486351e4623226a826e6ddc7d4b40364b48"
     },
     {
       "path": "tests/test_package.py",
@@ -891,8 +891,8 @@
     },
     {
       "path": "tools/o9_operations.py",
-      "bytes": 39045,
-      "sha256": "67e41ae111b5246e5410ff251b3561f879b082737bce502cfb03eda50744c2e8"
+      "bytes": 39374,
+      "sha256": "354ffce9ff0643fda03667dff39c2f4307b8e87ea2084f6061d3df5f25a09794"
     },
     {
       "path": "tools/o9_real_rehearsal.py",

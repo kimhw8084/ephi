@@ -3,6 +3,7 @@
 from pathlib import Path
 import copy
 import hashlib
+import importlib.util
 import io
 import json
 import os
@@ -35,6 +36,7 @@ from tools.o9_operations import (  # noqa: E402
     ROOT,
     _dsn_with_database,
     _migration_identity,
+    _private_libpq_environment,
     _run_dump,
     _run_restore,
     operations_status,
@@ -228,21 +230,46 @@ class O9OperationsContractTests(unittest.TestCase):
             + keyword_password
             + "' dbname=ephi sslmode=require"
         )
+        prepared_parameters = {
+            uri: {
+                "host": "db.internal",
+                "port": "6543",
+                "user": "native-user",
+                "password": uri_password,
+                "dbname": "ephi",
+                "sslmode": "require",
+            },
+            keyword: {
+                "host": "db.internal",
+                "port": "6543",
+                "user": "native-user",
+                "password": keyword_password,
+                "dbname": "ephi",
+                "sslmode": "require",
+            },
+        }
         calls = []
 
         def fake_run(command, **kwargs):
             calls.append({"argv": list(command), "kwargs": kwargs})
             return SimpleNamespace(returncode=0, stdout=keyword_password.encode(), stderr=uri_password.encode())
 
+        def prepared_parser(dsn, *, database=None):
+            parameters = dict(prepared_parameters[dsn])
+            if database is not None:
+                parameters["dbname"] = database
+            return parameters
+
         with tempfile.TemporaryDirectory() as directory:
             dump_path = Path(directory) / "database.dump"
             dump_path.write_bytes(b"logical dump fixture")
             stdout = io.StringIO()
             stderr = io.StringIO()
-            with patch("tools.o9_operations.subprocess.run", side_effect=fake_run):
-                with redirect_stdout(stdout), redirect_stderr(stderr):
-                    _run_dump(["pg_dump"], dsn=uri, snapshot="00000003-1", output=Path(directory) / "new.dump")
-                    _run_restore(["pg_restore"], dsn=keyword, dump_path=dump_path)
+            with patch("tools.o9_operations._libpq_parameters", side_effect=prepared_parser):
+                with patch("tools.o9_operations.subprocess.run", side_effect=fake_run):
+                    with redirect_stdout(stdout), redirect_stderr(stderr):
+                        _run_dump(["pg_dump"], dsn=uri, snapshot="00000003-1", output=Path(directory) / "new.dump")
+                        _run_restore(["pg_restore"], dsn=keyword, dump_path=dump_path)
 
         self.assertEqual(len(calls), 2)
         self.assertNotIn(uri, repr(calls[0]["argv"]))
@@ -260,28 +287,110 @@ class O9OperationsContractTests(unittest.TestCase):
         self.assertNotIn("DATABASE_URL", calls[0]["kwargs"]["env"])
         self.assertNotIn("EPHI_POSTGRES_DSN", calls[0]["kwargs"]["env"])
 
-        target = _dsn_with_database(uri, "ephi_restore")
-        self.assertIn("ephi_restore", target)
-        self.assertIn(uri_password, target)
-        self.assertNotIn("/ephi?", target)
+    def test_private_libpq_environment_is_dependency_free_and_clears_ambient_settings(self):
+        secret = "prepared p@ss"
+        environment = _private_libpq_environment(
+            {"host": "db.internal", "password": secret, "dbname": "ephi"},
+            base_environment={
+                "PGPASSWORD": "ambient-secret",
+                "DATABASE_URL": "postgresql://ambient-secret",
+                "EPHI_POSTGRES_DSN": "host=db.internal password=ambient-secret",
+                "PATH": "/usr/bin",
+            },
+        )
+        self.assertEqual(environment["PGPASSWORD"], secret)
+        self.assertEqual(environment["PGHOST"], "db.internal")
+        self.assertEqual(environment["PGDATABASE"], "ephi")
+        self.assertNotIn("DATABASE_URL", environment)
+        self.assertNotIn("EPHI_POSTGRES_DSN", environment)
+        self.assertEqual(environment["PATH"], "/usr/bin")
 
     def test_native_tool_failure_text_does_not_include_secret_or_stderr(self):
         secret = "failure-only-secret"
+        calls = []
 
-        def fake_run(_command, **_kwargs):
+        def fake_run(command, **kwargs):
+            calls.append({"argv": list(command), "kwargs": kwargs})
             return SimpleNamespace(returncode=1, stdout=b"", stderr=secret.encode())
 
+        stdout = io.StringIO()
+        stderr = io.StringIO()
+        with tempfile.TemporaryDirectory() as directory:
+            dump_path = Path(directory) / "database.dump"
+            dump_path.write_bytes(b"logical dump fixture")
+            with patch(
+                "tools.o9_operations._libpq_parameters",
+                return_value={"host": "db.internal", "user": "native-user", "password": secret, "dbname": "ephi"},
+            ):
+                with patch("tools.o9_operations.subprocess.run", side_effect=fake_run):
+                    with redirect_stdout(stdout), redirect_stderr(stderr):
+                        with self.assertRaises(OperationsFailure) as raised:
+                            _run_restore(
+                                ["pg_restore"],
+                                dsn="host=db.internal user=native-user password='" + secret + "' dbname=ephi",
+                                dump_path=dump_path,
+                            )
+        self.assertEqual(len(calls), 1)
+        self.assertNotIn(secret, calls[0]["argv"])
+        self.assertNotIn(secret, str(raised.exception))
+        self.assertNotIn(secret, stdout.getvalue() + stderr.getvalue())
+
+
+try:
+    PSYCOPG_AVAILABLE = importlib.util.find_spec("psycopg") is not None
+except ModuleNotFoundError:
+    PSYCOPG_AVAILABLE = False
+
+
+@unittest.skipUnless(PSYCOPG_AVAILABLE, "psycopg[binary]==3.3.6 is unavailable; parser qualification is NOT_RUN")
+class O9RealLibpqParserQualificationTests(unittest.TestCase):
+    def test_real_psycopg_parser_is_secret_safe_for_uri_and_keyword_conninfo(self):
+        uri_password = "uri p@ss/%=:"
+        uri = "postgresql://native-user:" + quote(uri_password, safe="") + "@db.internal:6543/ephi?sslmode=require"
+        keyword_password = "keyword p@ss/%=:"
+        keyword = (
+            "host=db.internal port=6543 user=native-user password='"
+            + keyword_password
+            + "' dbname=ephi sslmode=require"
+        )
+        from tools.o9_operations import _libpq_parameters
+
+        uri_parameters = _libpq_parameters(uri)
+        keyword_parameters = _libpq_parameters(keyword)
+        self.assertEqual(uri_parameters["password"], uri_password)
+        self.assertEqual(keyword_parameters["password"], keyword_password)
+        self.assertEqual(uri_parameters["dbname"], "ephi")
+        self.assertEqual(keyword_parameters["dbname"], "ephi")
+
+        calls = []
+
+        def fake_run(command, **kwargs):
+            calls.append({"argv": list(command), "kwargs": kwargs})
+            return SimpleNamespace(returncode=0, stdout=keyword_password.encode(), stderr=uri_password.encode())
+
+        stdout = io.StringIO()
+        stderr = io.StringIO()
         with tempfile.TemporaryDirectory() as directory:
             dump_path = Path(directory) / "database.dump"
             dump_path.write_bytes(b"logical dump fixture")
             with patch("tools.o9_operations.subprocess.run", side_effect=fake_run):
-                with self.assertRaises(OperationsFailure) as raised:
-                    _run_restore(
-                        ["pg_restore"],
-                        dsn="host=db.internal user=native-user password='" + secret + "' dbname=ephi",
-                        dump_path=dump_path,
-                    )
-        self.assertNotIn(secret, str(raised.exception))
+                with redirect_stdout(stdout), redirect_stderr(stderr):
+                    _run_dump(["pg_dump"], dsn=uri, snapshot="00000003-1", output=Path(directory) / "new.dump")
+                    _run_restore(["pg_restore"], dsn=keyword, dump_path=dump_path)
+
+        target = _dsn_with_database(uri, "ephi_restore")
+        self.assertEqual(len(calls), 2)
+        self.assertNotIn(uri, repr(calls[0]["argv"]))
+        self.assertNotIn(keyword, repr(calls[1]["argv"]))
+        self.assertNotIn(uri_password, repr(calls[0]["argv"]))
+        self.assertNotIn(keyword_password, repr(calls[1]["argv"]))
+        self.assertNotIn(uri_password, stdout.getvalue() + stderr.getvalue())
+        self.assertNotIn(keyword_password, stdout.getvalue() + stderr.getvalue())
+        self.assertEqual(calls[0]["kwargs"]["env"]["PGPASSWORD"], uri_password)
+        self.assertEqual(calls[1]["kwargs"]["env"]["PGPASSWORD"], keyword_password)
+        self.assertIn("ephi_restore", target)
+        self.assertIn(uri_password, target)
+        self.assertNotIn("/ephi?", target)
 
 
 DSN = os.environ.get("EPHI_TEST_POSTGRES_DSN", "").strip()
