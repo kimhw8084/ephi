@@ -1,0 +1,108 @@
+{
+  "base": {
+    "sha": "c9a128a202095ffa5bb63f3c5ca7583908397f98",
+    "tree": "77ac006855533b9b8115c106a34eced0150f20c1"
+  },
+  "candidate": {
+    "branch": "codex/ephi-o8-browser-session-security-v1",
+    "sha": "ea6f12260b0e4954dd353062adf00e997fa0f784",
+    "tree": "d08f656686e85f40a8a59483260c165281e9183c"
+  },
+  "carrier": {
+    "bundle_byte_size": 5803,
+    "bundle_sha256": "dbe9be8253302cd518602caae478cd6c2a02b3b247bb71f8ba9c5addaf876698",
+    "commit": "fa386bf2a4210831b7c0391425b3991a692dd401",
+    "evidence_file_count": 7,
+    "manifest_candidate_tree": "d08f656686e85f40a8a59483260c165281e9183c",
+    "parent": "ea6f12260b0e4954dd353062adf00e997fa0f784",
+    "ref": "refs/heads/project-os-artifacts/ephi/ephi-o8-browser-session-security-v1"
+  },
+  "changed_file_inventory": {
+    "candidate_hashes_and_sizes_verified": true,
+    "file_count": 8,
+    "path_set_equal": true,
+    "paths": [
+      ".github/workflows/package.yml",
+      "manifest.json",
+      "src/ephi/app.py",
+      "src/ephi/transport.py",
+      "src/ephi/ui/app.py",
+      "tests/test_o8_browser_transport.py",
+      "tools/o8_browser_qualification.py",
+      "tools/o8_surface_inventory.py"
+    ]
+  },
+  "checks": {
+    "git_diff_check": "PASS",
+    "o8_transport_unit_contract": {
+      "status": "PASS",
+      "tests_run": 17
+    },
+    "package_manifest_refresh": "PASS: 184 package files; manifest, syntax, local links/fences, traceability and historical evidence",
+    "real_postgresql_browser_qualification": "PASS",
+    "real_postgresql_restore_rehearsal": "REAL_RESTORE_REHEARSAL_PASS",
+    "repository_native_ci": {
+      "conclusion": "success",
+      "head_sha": "ea6f12260b0e4954dd353062adf00e997fa0f784",
+      "run_id": 35492391411
+    },
+    "unit_discovery": {
+      "skipped": 73,
+      "status": "PASS",
+      "tests_run": 227
+    }
+  },
+  "fabric_job": "CF-148ce820de18f2ecc76e2684",
+  "final_remote_work_head": "ea6f12260b0e4954dd353062adf00e997fa0f784",
+  "operation": "BUILD",
+  "project": "ephi",
+  "remote_readback": {
+    "artifact_commit": "fa386bf2a4210831b7c0391425b3991a692dd401",
+    "artifact_parent": "ea6f12260b0e4954dd353062adf00e997fa0f784",
+    "artifact_ref": "refs/heads/project-os-artifacts/ephi/ephi-o8-browser-session-security-v1",
+    "base": "c9a128a202095ffa5bb63f3c5ca7583908397f98",
+    "base_tree": "77ac006855533b9b8115c106a34eced0150f20c1",
+    "bundle_bytes_verified": true,
+    "bundle_evidence_members_verified": true,
+    "candidate": "ea6f12260b0e4954dd353062adf00e997fa0f784",
+    "candidate_file_hashes_verified": true,
+    "candidate_tree": "d08f656686e85f40a8a59483260c165281e9183c",
+    "changed_file_count": 8,
+    "changed_path_array_equal": true,
+    "evidence_file_count": 7,
+    "evidence_file_hashes_verified": true,
+    "main_unchanged": true,
+    "secret_safe_patterns_verified": true,
+    "status": "PASS"
+  },
+  "repository": "kimhw8084/ephi",
+  "request": "ephi-o8-browser-session-security-v1",
+  "schema_version": "codex-fabric.evidence-audit.v1",
+  "scope_boundary": {
+    "CHG_144": "REMAINS_BLOCKED_REAL_SOURCE",
+    "authentic_family_G02_G06_claimed": false,
+    "integration_pr_created": false,
+    "main_modified_or_merged": false,
+    "notion_mutated": false,
+    "o8_whole_closed": false,
+    "project_os_go_self_declared": false,
+    "real_company_identity_established": false,
+    "target_tls_ingress_established": false
+  },
+  "secret_safety": {
+    "authorization_header_recorded": false,
+    "cookie_value_recorded": false,
+    "dsn_recorded": false,
+    "raw_artifact_bytes_recorded": false,
+    "storage_secret_recorded": false
+  },
+  "target": {
+    "main_mutated_by_change": false,
+    "main_remote_head": "c9a128a202095ffa5bb63f3c5ca7583908397f98",
+    "target_drift": false
+  },
+  "worktree": {
+    "clean": true,
+    "status": "clean on codex/ephi-o8-browser-session-security-v1"
+  }
+}
