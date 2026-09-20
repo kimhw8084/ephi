@@ -1,0 +1,418 @@
+{
+  "accepted_at": "2026-09-20T14:43:32Z",
+  "changed_files": [
+    {
+      "additions": 89,
+      "deletions": 0,
+      "path": ".github/workflows/package.yml",
+      "status": "M"
+    },
+    {
+      "additions": 21,
+      "deletions": 6,
+      "path": "manifest.json",
+      "status": "M"
+    },
+    {
+      "additions": 7,
+      "deletions": 6,
+      "path": "src/ephi/infrastructure/postgresql_o3.py",
+      "status": "M"
+    },
+    {
+      "additions": 611,
+      "deletions": 115,
+      "path": "src/ephi/ui/app.py",
+      "status": "M"
+    },
+    {
+      "additions": 66,
+      "deletions": 0,
+      "path": "tests/test_o10_rendered_accessibility.py",
+      "status": "A"
+    },
+    {
+      "additions": 674,
+      "deletions": 0,
+      "path": "tools/o10_rendered_accessibility.py",
+      "status": "A"
+    },
+    {
+      "additions": 103,
+      "deletions": 0,
+      "path": "tools/o10_state_harness.py",
+      "status": "A"
+    }
+  ],
+  "checks": [
+    {
+      "command": "/bin/zsh -lc 'rtk rm -rf /tmp/ephi-o10-screenshots25; rtk python3 tools/o10_rendered_accessibility.py --dsn postgresql://haewonkim@127.0.0.1:55432/ephi_o10_local --output /tmp/ephi-o10-report25.json --artifacts /tmp/ephi-o10-screenshots25'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nimport json\nc=json.load(open('/tmp/ephi-o10-report25.json'))['real_browser']['critical_path']\nprint(c['focus_after_claim_details'])\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk rm -rf /tmp/ephi-o10-screenshots26; rtk python3 tools/o10_rendered_accessibility.py --dsn postgresql://haewonkim@127.0.0.1:55432/ephi_o10_local --output /tmp/ephi-o10-report26.json --artifacts /tmp/ephi-o10-screenshots26'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nimport json\np=json.load(open('/tmp/ephi-o10-report26.json'))\nc=p['real_browser']['critical_path']\nprint(c['focus_after_claim_details'])\nprint(c['focus_continuity'])\nprint(p['real_browser']['events'])\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk rm -rf /tmp/ephi-o10-screenshots27; rtk python3 tools/o10_rendered_accessibility.py --dsn postgresql://haewonkim@127.0.0.1:55432/ephi_o10_local --output /tmp/ephi-o10-report27.json --artifacts /tmp/ephi-o10-screenshots27'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nimport json\np=json.load(open('/tmp/ephi-o10-report27.json'))\nc=p['real_browser']['critical_path']\nprint(c['focus_after_claim_details'])\nprint(c['focus_continuity'])\nprint(p['real_browser']['events'])\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '365,425p' src/ephi/ui/app.py\nrtk sed -n '825,875p' src/ephi/ui/app.py\nrtk sed -n '930,970p' src/ephi/ui/app.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m py_compile src/ephi/ui/app.py tools/o10_rendered_accessibility.py && rtk rm -rf /tmp/ephi-o10-screenshots28; rtk python3 tools/o10_rendered_accessibility.py --dsn postgresql://haewonkim@127.0.0.1:55432/ephi_o10_local --output /tmp/ephi-o10-report28.json --artifacts /tmp/ephi-o10-screenshots28'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nimport json\np=json.load(open('/tmp/ephi-o10-report28.json'))\nprint('status',p['status'])\nprint('observer',p['real_browser']['no_episode_selected'].get('focus_observer'))\nc=p['real_browser']['critical_path']\nprint('focus',c['focus_continuity'])\nprint('focus details',c['focus_after_claim_details'])\nprint('focus contrast',c['focus_indicator_contrast'])\nprint('responsive', {k:v['status'] for k,v in p['responsive'].items()})\nprint('degraded', {k:v['status'] for k,v in p['degraded_state_matrix'].items()})\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m compileall -q src tests tools && rtk python3 -m unittest tests.test_o10_rendered_accessibility -v && rtk rm -rf /tmp/ephi-o10-final-artifacts; rtk python3 tools/o10_rendered_accessibility.py --dsn postgresql://haewonkim@127.0.0.1:55432/ephi_o10_local --output /tmp/ephi-o10-final-report.json --artifacts /tmp/ephi-o10-final-artifacts'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nimport json\np=json.load(open('/tmp/ephi-o10-final-report.json'))\nprint(p['status'])\nprint(p['real_browser']['critical_path']['focus_continuity'])\nprint(p['real_browser']['critical_path']['focus_after_claim_details'])\nprint(p['real_browser']['critical_path']['focus_indicator_contrast'])\nprint(p['real_browser']['events'])\nprint('screenshots',len(p['screenshot_inventory']))\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short\nrtk git diff --stat\nrtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff -- src/ephi/infrastructure/postgresql_o3.py src/ephi/ui/app.py | head -260'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff -- .github/workflows/package.yml manifest.json\nrtk rg -n \"O10|browser\" README.md 13_Package_Review.md | head -30'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk rg -n \"upload-artifact\" .github/workflows'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git remote -v\nrtk git branch --show-current\nrtk git log -1 --oneline'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest discover -s tests -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/w0_repo_baseline.py && rtk python3 tools/check_package.py && rtk python3 -m compileall -q src tests tools && rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk rg -n \"REAL_RESTORE_REHEARSAL_PASS|restore rehearsal|real restore|REHEARSAL\" tests tools | head -100\nrtk rg -n \"EPHI_TEST_POSTGRES_DSN\" tests | cut -d: -f1 | sort -u'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'EPHI_TEST_POSTGRES_DSN=postgresql://haewonkim@127.0.0.1:55432/ephi_o10_local rtk python3 -m unittest tests.test_o2_postgresql tests.test_o2_postgresql_artifacts tests.test_o2_postgresql_reads tests.test_o2_worker_postgresql tests.test_o3_postgresql tests.test_o4_source_ingress_postgresql tests.test_o8_postgresql tests.test_postgresql_adapter_lifecycle tests.test_o9_operations -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/o9_real_rehearsal.py --help'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '240,345p' tools/o9_real_rehearsal.py\nrtk sed -n '1,110p' tools/o9_real_rehearsal.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk rm -rf /tmp/ephi-o10-o9-artifacts /tmp/ephi-o10-o9-backup /tmp/ephi-o10-o9-target /tmp/ephi-o10-o9-evidence && rtk mkdir -p /tmp/ephi-o10-o9-artifacts /tmp/ephi-o10-o9-backup /tmp/ephi-o10-o9-target /tmp/ephi-o10-o9-evidence && rtk python3 tools/o9_real_rehearsal.py --dsn postgresql://haewonkim@127.0.0.1:55432/ephi_o10_local --admin-dsn postgresql://haewonkim@127.0.0.1:55432/postgres --artifact-root /tmp/ephi-o10-o9-artifacts --backup-dir /tmp/ephi-o10-o9-backup --target-artifact-root /tmp/ephi-o10-o9-target --target-database ephi_o10_restore_156 --evidence-dir /tmp/ephi-o10-o9-evidence'",
+      "exit_code": 2,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk which pg_dump || true\nrtk pg_dump --version || true\nrtk find /opt /usr/local /Applications -path '*/bin/pg_dump' -type f 2>/dev/null | head -20\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk brew list --versions postgresql postgresql@18 postgresql@17 2>/dev/null || true\nrtk ls -1 /opt/homebrew/opt | rg 'postgres' || true\nrtk ls -1 /opt/homebrew/Cellar | rg 'postgres' || true\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk env PATH=/opt/homebrew/opt/postgresql@18/bin:/opt/anaconda3/bin:/opt/homebrew/bin:/usr/bin:/bin pg_dump --version\nrtk env PATH=/opt/homebrew/opt/postgresql@18/bin:/opt/anaconda3/bin:/opt/homebrew/bin:/usr/bin:/bin python3 --version'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk rm -rf /tmp/ephi-o10-o9-artifacts /tmp/ephi-o10-o9-backup /tmp/ephi-o10-o9-target /tmp/ephi-o10-o9-evidence && rtk mkdir -p /tmp/ephi-o10-o9-artifacts /tmp/ephi-o10-o9-backup /tmp/ephi-o10-o9-target /tmp/ephi-o10-o9-evidence && rtk env PATH=/opt/homebrew/opt/postgresql@18/bin:/opt/anaconda3/bin:/opt/homebrew/bin:/usr/bin:/bin python3 tools/o9_real_rehearsal.py --dsn postgresql://haewonkim@127.0.0.1:55432/ephi_o10_local --admin-dsn postgresql://haewonkim@127.0.0.1:55432/postgres --artifact-root /tmp/ephi-o10-o9-artifacts --backup-dir /tmp/ephi-o10-o9-backup --target-artifact-root /tmp/ephi-o10-o9-target --target-database ephi_o10_restore_156 --evidence-dir /tmp/ephi-o10-o9-evidence'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/o8_browser_qualification.py --help'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk env PATH=/opt/homebrew/opt/postgresql@18/bin:/opt/anaconda3/bin:/opt/homebrew/bin:/usr/bin:/bin python3 tools/o8_browser_qualification.py --dsn postgresql://haewonkim@127.0.0.1:55432/ephi_o10_local --port 8875 --root-path '' --output /tmp/ephi-o10-o8-direct.json && rtk env PATH=/opt/homebrew/opt/postgresql@18/bin:/opt/anaconda3/bin:/opt/homebrew/bin:/usr/bin:/bin python3 tools/o8_browser_qualification.py --dsn postgresql://haewonkim@127.0.0.1:55432/ephi_o10_local --port 8876 --proxy-port 8877 --proxy --root-path /ephi --output /tmp/ephi-o10-o8-proxy.json\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nimport json\nfor path in ('/tmp/ephi-o10-o8-direct.json','/tmp/ephi-o10-o8-proxy.json'):\n p=json.load(open(path))\n print(path,p['status'],p.get('postgres',{}).get('postgres_version'),p.get('browser',{}).get('console_errors'),p.get('browser',{}).get('failed_network_urls'),p.get('secret_safety'))\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git add .github/workflows/package.yml manifest.json src/ephi/infrastructure/postgresql_o3.py src/ephi/ui/app.py tests/test_o10_rendered_accessibility.py tools/o10_rendered_accessibility.py tools/o10_state_harness.py && rtk git commit -m \"Qualify O10 Attention and Episode rendered accessibility\"'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git rev-parse HEAD\nrtk git show -s --format='%T %P %s' HEAD\nrtk git status --short\nrtk git diff --check\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nfrom pathlib import Path\nfor p in [Path('/tmp/ephi-o10-o9-evidence/restore_reconciliation_report.json'),Path('/tmp/ephi-o10-o9-evidence/backup_manifest.json'),Path('/tmp/ephi-o10-o9-evidence/operations_health.json')]:\n print(p, p.stat().st_size)\n s=p.read_text(errors='ignore')\n print('dsn?', 'postgresql://' in s, 'password?', 'password' in s.lower(), 'rows?', 'raw_rows' in s)\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git ls-remote origin refs/heads/project-os-artifacts/ephi/ephi-o10-rendered-accessibility-v1 refs/heads/codex-fabric/evidence/ephi/ephi-o10-rendered-accessibility-v1'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nfrom __future__ import annotations\n\nimport gzip\nimport hashlib\nimport json\nfrom pathlib import Path\nimport shutil\nimport subprocess\nimport tarfile\n\nrepo = Path('/Users/haewonkim/.codex-fabric/worktrees/CF-fec431c5cf2d9f477672de0e')\nbase = '9262533404f13df52ef20a7a1245b120f4438b04'\ncandidate = 'e75872d974c4edeaf55356855e96b3b8ca275dab'\njob = 'CF-fec431c5cf2d9f477672de0e'\nbranch = 'codex/ephi-o10-rendered-accessibility-v1'\nrequest = 'ephi-o10-rendered-accessibility-v1'\ncarrier = Path('/tmp/ephi-o10-carrier-build-156')\nif carrier.exists():\n    shutil.rmtree(carrier)\n(carrier / 'evidence' / 'rendered' / 'screenshots').mkdir(parents=True)\n(carrier / 'evidence' / 'o8').mkdir(parents=True)\n(carrier / 'evidence' / 'o9').mkdir(parents=True)\n\ndef sha(value: bytes) -> str:\n    return hashlib.sha256(value).hexdigest()\n\ndef copy(src: Path, rel: str) -> Path:\n    dst = carrier / rel\n    dst.parent.mkdir(parents=True, exist_ok=True)\n    shutil.copyfile(src, dst)\n    return dst\n\ndef meta(path: Path, rel: str | None = None) -> dict[str, object]:\n    data = path.read_bytes()\n    return {'path': rel or str(path.relative_to(carrier)), 'bytes': len(data), 'sha256': sha(data)}\n\nreport_path = copy(Path('/tmp/ephi-o10-final-report.json'), 'evidence/rendered/report.json')\nreport = json.loads(report_path.read_text())\nfor item in report['screenshot_inventory']:\n    name = item['path']\n    copy(Path('/tmp/ephi-o10-final-artifacts') / name, f'evidence/rendered/screenshots/{name}')\nfor name, src in {\n    'direct.json': Path('/tmp/ephi-o10-o8-direct.json'),\n    'proxy.json': Path('/tmp/ephi-o10-o8-proxy.json'),\n}.items():\n    copy(src, f'evidence/o8/{name}')\nfor name in ('restore_reconciliation_report.json', 'backup_manifest.json', 'operations_health.json'):\n    copy(Path('/tmp/ephi-o10-o9-evidence') / name, f'evidence/o9/{name}')\n\nregression = {\n    'schema_version': 1,\n    'scope': 'local deterministic qualification; no production readiness claim',\n    'focused_o10_unit': {'status': 'PASS', 'tests': 5},\n    'full_dependency_free_unittest': {'status': 'PASS', 'tests': 237, 'passed': 237, 'skipped': 64, 'reason_for_skips': 'PostgreSQL DSN is not set in dependency-free lane'},\n    'real_postgresql_regression_subset': {'status': 'PASS', 'tests': 82, 'postgresql_version': '18.6', 'scope': 'O2/O3/O4/O8/O9 subsets'},\n    'o8_browser_session_transport': {\n        'status': 'PASS',\n        'postgresql_version': '18.6',\n        'direct': 'evidence/o8/direct.json',\n        'proxy_root_path': 'evidence/o8/proxy.json',\n        'secrets_recorded': False,\n    },\n    'o9_real_restore_rehearsal': {\n        'status': 'PASS',\n        'summary': 'evidence/o9/restore_reconciliation_report.json',\n        'restore_verification': 'VERIFIED',\n        'application_restart_and_semantics': 'VERIFIED',\n        'production_rpo_rto': 'NOT_ESTABLISHED',\n        'real_source_qualification': 'BLOCKED_REAL_SOURCE',\n    },\n    'canonical_w0_baseline': {'status': 'PASS', 'command': 'python3 tools/w0_repo_baseline.py'},\n    'package_manifest': {'status': 'PASS', 'command': 'python3 tools/check_package.py --refresh-manifest'},\n    'compileall': {'status': 'PASS', 'command': 'python3 -m compileall -q src tests tools'},\n    'git_diff_check': {'status': 'PASS', 'command': 'git diff --check'},\n    'repository_native_ci': {\n        'status': 'PENDING_GITHUB_ACTIONS',\n        'workflow': '.github/workflows/package.yml',\n        'job': 'rendered-accessibility-integration',\n        'candidate_sha': candidate,\n        'note': 'No GitHub Actions run was available in this local Fabric execution; no CI pass is asserted.',\n    },\n}\nreg_path = carrier / 'evidence' / 'regression-results.json'\nreg_path.write_text(json.dumps(regression, sort_keys=True, indent=2) + '\\\\n', encoding='utf-8')\n\nchanged = subprocess.check_output(['git', 'diff', '--name-only', base, candidate], cwd=repo, text=True).splitlines()\nchanged = sorted(changed)\nfile_inventory = []\nfor path in changed:\n    data = subprocess.check_output(['git', 'show', f'{candidate}:{path}'], cwd=repo)\n    file_inventory.append({'path': path, 'bytes': len(data), 'sha256': sha(data)})\nactual_changed = sorted(item['path'] for item in file_inventory)\n\n# Deterministic bundle of secret-safe evidence; no database dump or raw artifact bytes are included.\nbundle = carrier / 'evidence' / 'ephi-o10-rendered-accessibility-v1.tar.gz'\nfiles_for_bundle = sorted(p for p in (carrier / 'evidence').rglob('*') if p.is_file() and p \"'!= bundle)\nwith bundle.open('\"'wb') as raw:\n    with gzip.GzipFile(fileobj=raw, mode='wb', filename='', mtime=0) as gz:\n        with tarfile.open(fileobj=gz, mode='w') as archive:\n            for path in files_for_bundle:\n                rel = path.relative_to(carrier).as_posix()\n                info = archive.gettarinfo(str(path), arcname=rel)\n                info.mtime = 0\n                info.uid = info.gid = 0\n                info.uname = info.gname = ''\n                with path.open('rb') as f:\n                    archive.addfile(info, f)\n\nall_evidence = [meta(p) for p in sorted((carrier / 'evidence').rglob('*')) if p.is_file()]\nscreenshot_evidence = [item for item in all_evidence if item['path'].startswith('evidence/rendered/screenshots/')]\ncarrier_manifest = {\n    'schema_version': 1,\n    'kind': 'project-os-artifact-carrier',\n    'project': 'ephi',\n    'request': request,\n    'operation': 'BUILD',\n    'fabric_job_id': job,\n    'base': base,\n    'candidate_sha': candidate,\n    'candidate_tree': subprocess.check_output(['git', 'show', '-s', '--format=%T', candidate], cwd=repo, text=True).strip(),\n    'work_branch': branch,\n    'remote_ref': 'refs/heads/project-os-artifacts/ephi/ephi-o10-rendered-accessibility-v1',\n    'evidence': {\n        'o10_rendered_report': meta(report_path),\n        'aria_and_state_snapshots': 'embedded in evidence/rendered/report.json',\n        'screenshots': screenshot_evidence,\n        'o8_regressions': [meta(carrier / 'evidence/o8/direct.json'), meta(carrier / 'evidence/o8/proxy.json')],\n        'o9_restore': [meta(carrier / 'evidence/o9/restore_reconciliation_report.json'), meta(carrier / 'evidence/o9/backup_manifest.json'), meta(carrier / 'evidence/o9/operations_health.json')],\n        'regression_results': meta(reg_path),\n    },\n    'changed_files': {\n        'count': len(file_inventory),\n        'paths': actual_changed,\n        'path_equality_with_candidate_diff': actual_changed == changed,\n        'files': file_inventory,\n    },\n    'bundle': {},\n    'secret_safety': {\n        'cookies': False,\n        'storage_session_secrets': False,\n        'authorization_headers': False,\n        'dsns': False,\n        'protected_rows': False,\n        'raw_artifact_bytes': False,\n        'notion_credentials': False,\n        'synthetic_qualification_data_only': True,\n    },\n    'claim_boundaries': {\n        'human_ux_review': 'PENDING',\n        'production_performance_capacity': 'NOT_CLAIMED',\n        'real_source_qualification': 'BLOCKED_REAL_SOURCE',\n        'project_os_go': 'NOT_SELF_DECLARED',\n    },\n}\nbundle_meta = meta(bundle)\ncarrier_manifest['bundle'] = bundle_meta\nmanifest_path = carrier / 'carrier-manifest.json'\nmanifest_path.write_text(json.dumps(carrier_manifest, sort_keys=True, indent=2) + '\\\\n', encoding='utf-8')\nprint(json.dumps({'carrier': str(carrier), 'changed_files': len(file_inventory), 'evidence_files': len(all_evidence), 'bundle': bundle_meta}, sort_keys=True))\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nfrom pathlib import Path\nroot=Path('/tmp/ephi-o10-carrier-build-156')\nfor p in root.rglob('*'):\n if p.is_file():\n  data=p.read_bytes()\n  for token in (b'postgresql://', b'NICEGUI_BASE_STORAGE_SECRET', b'cookie_value', b'authorization_header'):\n   if token in data and p.name not in {'direct.json','proxy.json'}:\n    print('forbidden',p,token)\nprint((root/'carrier-manifest.json').read_text()[:1200])\nPY\nrtk git -C /tmp/ephi-o10-carrier-build-156 init -q\nrtk git -C /tmp/ephi-o10-carrier-build-156 config user.name 'Codex Fabric'\nrtk git -C /tmp/ephi-o10-carrier-build-156 config user.email 'codex-fabric@localhost'\nrtk git -C /tmp/ephi-o10-carrier-build-156 add carrier-manifest.json evidence\nrtk git -C /tmp/ephi-o10-carrier-build-156 commit -q -m 'ephi O10 rendered accessibility carrier'\nrtk git -C /tmp/ephi-o10-carrier-build-156 rev-parse HEAD\nrtk git -C /tmp/ephi-o10-carrier-build-156 ls-tree -r --name-only HEAD\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nimport hashlib, json, subprocess\nfrom pathlib import Path\ncarrier=Path('/tmp/ephi-o10-carrier-build-156')\nmanifest=json.loads((carrier/'carrier-manifest.json').read_text())\nassert manifest['project']=='ephi' and manifest['request']=='ephi-o10-rendered-accessibility-v1' and manifest['operation']=='BUILD'\nassert manifest['base']=='9262533404f13df52ef20a7a1245b120f4438b04'\nassert manifest['candidate_sha']=='e75872d974c4edeaf55356855e96b3b8ca275dab'\nassert manifest['candidate_tree']==subprocess.check_output(['git','show','-s','--format=%T',manifest['candidate_sha']],cwd='/Users/haewonkim/.codex-fabric/worktrees/CF-fec431c5cf2d9f477672de0e',text=True).strip()\npaths=sorted(subprocess.check_output(['git','diff','--name-only',manifest['base'],manifest['candidate_sha']],cwd='/Users/haewonkim/.codex-fabric/worktrees/CF-fec431c5cf2d9f477672de0e',text=True).splitlines())\nassert paths==manifest['changed_files']['paths'] and manifest['changed_files']['path_equality_with_candidate_diff']\nfor item in manifest['changed_files']['files']:\n data=subprocess.check_output(['git','show',f\\\"{manifest['candidate_sha']}:{item['path']}\\\"],cwd='/Users/haewonkim/.codex-fabric/worktrees/CF-fec431c5cf2d9f477672de0e')\n assert len(data)==item['bytes'] and hashlib.sha256(data).hexdigest()==item['sha256']\nfor item in manifest['evidence']['screenshots']:\n p=carrier/item['path']; data=p.read_bytes(); assert len(data)==item['bytes'] and hashlib.sha256(data).hexdigest()==item['sha256']\nb=carrier/manifest['bundle']['path']; data=b.read_bytes(); assert len(data)==manifest['bundle']['bytes'] and hashlib.sha256(data).hexdigest()==manifest['bundle']['sha256']\nassert json.loads((carrier/'evidence/rendered/report.json').read_text())['status']=='PASS'\nprint('CARRIER_LOCAL_MECHANICAL_VERIFY_PASS')\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git push origin HEAD:refs/heads/codex/ephi-o10-rendered-accessibility-v1 && rtk git -C /tmp/ephi-o10-carrier-build-156 remote add origin https://github.com/kimhw8084/ephi.git && rtk git -C /tmp/ephi-o10-carrier-build-156 push origin HEAD:refs/heads/project-os-artifacts/ephi/ephi-o10-rendered-accessibility-v1'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk /Users/haewonkim/.codex-fabric/bin/fabricctl --help\nrtk /Users/haewonkim/.codex-fabric/bin/fabricctl publish-evidence --help'",
+      "exit_code": 2,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk /Users/haewonkim/.codex-fabric/bin/fabricctl status CF-fec431c5cf2d9f477672de0e'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk /Users/haewonkim/.codex-fabric/bin/fabricctl publish-evidence CF-fec431c5cf2d9f477672de0e'",
+      "exit_code": 2,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n \\\"publish_evidence|JOB_NOT_TERMINAL|terminal job not found|job_state\\\" /Users/haewonkim/.codex-fabric/current/fabric.py /Users/haewonkim/.codex-fabric/bin/fabricctl | head -120\nrtk sed -n '1,220p' /Users/haewonkim/.codex-fabric/jobs/CF-fec431c5cf2d9f477672de0e.running/job.json\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '830,910p' /Users/haewonkim/.codex-fabric/current/fabric.py\nrtk sed -n '2720,2845p' /Users/haewonkim/.codex-fabric/current/fabric.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n \\\"move_job|\\\\.executed|mark.*execut|finish|complete|JOB_NOT_TERMINAL|state.*execut\\\" /Users/haewonkim/.codex-fabric/current/fabric.py | head -160\nrtk ls -la /Users/haewonkim/.codex-fabric/jobs/CF-fec431c5cf2d9f477672de0e.running /Users/haewonkim/.codex-fabric/results/CF-fec431c5cf2d9f477672de0e 2>/dev/null\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '3430,3790p' /Users/haewonkim/.codex-fabric/current/fabric.py | head -380\nrtk sed -n '4300,4375p' /Users/haewonkim/.codex-fabric/current/fabric.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git -C /tmp/ephi-o10-carrier-build-156 fetch origin refs/heads/project-os-artifacts/ephi/ephi-o10-rendered-accessibility-v1 && rtk git -C /tmp/ephi-o10-carrier-build-156 rev-parse FETCH_HEAD && rtk rm -rf /tmp/ephi-o10-carrier-readback-156 && rtk mkdir -p /tmp/ephi-o10-carrier-readback-156 && rtk git -C /tmp/ephi-o10-carrier-build-156 archive FETCH_HEAD | rtk tar -x -C /tmp/ephi-o10-carrier-readback-156 && rtk python3 - <<'PY'\nimport hashlib, json, subprocess\nfrom pathlib import Path\nroot=Path('/tmp/ephi-o10-carrier-readback-156')\nmanifest=json.loads((root/'carrier-manifest.json').read_text())\nassert manifest['candidate_sha']=='e75872d974c4edeaf55356855e96b3b8ca275dab'\nassert manifest['candidate_tree']=='349a9468dffdce2df73d0a542063d66e431ae578'\nfor item in manifest['changed_files']['files']:\n    assert hashlib.sha256(subprocess.check_output(['git','show',f\\\"{manifest['candidate_sha']}:{item['path']}\\\"] ,cwd='/Users/haewonkim/.codex-fabric/worktrees/CF-fec431c5cf2d9f477672de0e')).hexdigest()==item['sha256']\nfor item in manifest['evidence']['screenshots']:\n    data=(root/item['path']).read_bytes(); assert len(data)==item['bytes'] and hashlib.sha256(data).hexdigest()==item['sha256']\nb=root/manifest['bundle']['path']; data=b.read_bytes(); assert len(data)==manifest['bundle']['bytes'] and hashlib.sha256(data).hexdigest()==manifest['bundle']['sha256']\nprint('CARRIER_REMOTE_READBACK_PASS')\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git ls-remote origin refs/heads/codex/ephi-o10-rendered-accessibility-v1 refs/heads/project-os-artifacts/ephi/ephi-o10-rendered-accessibility-v1 refs/heads/main'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py && rtk python3 tools/w0_repo_baseline.py >/tmp/ephi-o10-final-w0.json && rtk python3 -m compileall -q src tests tools && rtk git diff --check && rtk git status --short && rtk git rev-parse HEAD'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nimport json\np=json.load(open('/tmp/ephi-o10-final-w0.json'))\nprint('status',p['status'],'commit',p['git']['commit'],'worktree_clean',p['git']['worktree_clean'],'tree',p['git']['tree'])\nPY\nrtk /Users/haewonkim/.codex-fabric/bin/fabricctl status CF-fec431c5cf2d9f477672de0e\nrtk git ls-remote origin refs/heads/project-os-artifacts/ephi/ephi-o10-rendered-accessibility-v1\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    }
+  ],
+  "codex": {
+    "cli_version": "codex-cli 0.155.1",
+    "configured_model": "gpt-5.6-luna",
+    "event_count": 793,
+    "provider_reported_model": null,
+    "reasoning_effort": "xhigh",
+    "terminal_type": "turn.completed",
+    "usage": {
+      "cache_hit_percent": 98.33,
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 68257792,
+      "fresh_input_tokens": 1158768,
+      "input_tokens": 69416560,
+      "non_reasoning_output_tokens": 97984,
+      "output_tokens": 175856,
+      "reasoning_output_tokens": 77872,
+      "total_processed_tokens": 69592416
+    },
+    "warnings": []
+  },
+  "commits": [
+    {
+      "sha": "e75872d974c4edeaf55356855e96b3b8ca275dab",
+      "subject": "Qualify O10 Attention and Episode rendered accessibility"
+    }
+  ],
+  "diff": {
+    "additions": 1571,
+    "changed_files": 7,
+    "commit_count": 1,
+    "deletions": 127
+  },
+  "error_code": null,
+  "evidence_manifest": {
+    "count": 1,
+    "items": [
+      {
+        "bytes": 33616,
+        "path": "manifest.json",
+        "sha256": "4edca5d1fb821fbf7a3e1447e67cc333f563a693cb20078fe01cc8e0115ad70a"
+      }
+    ],
+    "version": 1
+  },
+  "evidence_publisher_release": "1.2.3-resume-candidate",
+  "fabric_capture": {
+    "applied": false,
+    "paths_before": 0,
+    "transient_untracked_removed": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "fabric_release": "1.2.3-resume-candidate",
+  "failure_class": null,
+  "finished_at": "2026-09-20T16:40:03Z",
+  "git": {
+    "base_is_ancestor": true,
+    "base_sha": "9262533404f13df52ef20a7a1245b120f4438b04",
+    "branch": "codex/ephi-o10-rendered-accessibility-v1",
+    "detached_verify": false,
+    "head_sha": "e75872d974c4edeaf55356855e96b3b8ca275dab",
+    "remote_exact_head": true,
+    "remote_head_sha": "e75872d974c4edeaf55356855e96b3b8ca275dab",
+    "target_branch": "main",
+    "target_drifted_since_acceptance": false,
+    "target_head_observed_after_execution": "9262533404f13df52ef20a7a1245b120f4438b04",
+    "work_branch": "codex/ephi-o10-rendered-accessibility-v1",
+    "worktree_clean": true
+  },
+  "instructions": {
+    "files": [
+      {
+        "bytes": 1458,
+        "path": "AGENTS.md",
+        "sha256": "4349f387a79d886ed1264604ff48c582698e539e08ed8fb2f9d8ab8fbf6f804a"
+      }
+    ],
+    "total_bytes": 1458,
+    "warning": null
+  },
+  "job_id": "CF-fec431c5cf2d9f477672de0e",
+  "kind": "codex-fabric-audit-evidence",
+  "locator": {
+    "branch": "codex-fabric/evidence/ephi/ephi-o10-rendered-accessibility-v1",
+    "path": ".codex-fabric/audit.json",
+    "ref": "refs/heads/codex-fabric/evidence/ephi/ephi-o10-rendered-accessibility-v1"
+  },
+  "operation": "BUILD",
+  "policy": {
+    "environment_policy_sha256": "e077daca74297b3c30bee8989f00f8ca5338f7610b4d016a6c48db524205d064",
+    "fabric_release": "1.2.3-resume-candidate",
+    "policy_sha256": "a642c9f63bab2cb555704bdb0b9d1f28222591f133f934c1d0f93cc5a25ab8a1",
+    "registry_sha256": "cfc765f3211c37c7967a138f3b2d89a99341939b15b2623f92744d007f625d6f"
+  },
+  "project_id": "ephi",
+  "recovery": {
+    "model_rerun_safe": false,
+    "recovery_required": false,
+    "retry_safe": false,
+    "retry_scope": null,
+    "worktree_retained": true
+  },
+  "request": "ephi-o10-rendered-accessibility-v1",
+  "schema_version": 1,
+  "started_at": "2026-09-20T14:43:32Z",
+  "status": "EXECUTED_CHANGE",
+  "timing": {
+    "execution_seconds": 6991,
+    "queue_seconds": 0,
+    "total_seconds": 6991
+  },
+  "transport": {
+    "bytes": 18532,
+    "envelope": "FABRIC/2",
+    "prompt_bytes": 18211,
+    "prompt_sha256": "543cb0afa52ec1f4aa7e324bfcd950f975a25cbd4522840edb7caea904c37fbe",
+    "sha256": "fec431c5cf2d9f477672de0e4b67ab1e9a289b8c445ef87c7ccc41b274311ea3"
+  }
+}
