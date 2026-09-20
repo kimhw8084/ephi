@@ -128,6 +128,95 @@ jobs:
           print('O8_2_BROWSER_SESSION_SECURITY_PASS')
           PY
 
+  rendered-accessibility-integration:
+    name: O10.1 rendered accessibility integration (Python 3.13)
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      EPHI_TEST_POSTGRES_DSN: postgresql://ephi_ci:ephi_ci_password@127.0.0.1:5432/ephi_ci
+    services:
+      postgres:
+        image: postgres:18.6
+        env:
+          POSTGRES_USER: ephi_ci
+          POSTGRES_PASSWORD: ephi_ci_password
+          POSTGRES_DB: ephi_ci
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U ephi_ci -d ephi_ci"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 20
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.13'
+      - name: Install bounded O10 browser lane dependencies
+        run: python -m pip install '.[postgres]' 'playwright==1.62.0'
+      - name: Install isolated Chromium for O10 rendered qualification
+        run: python -m playwright install --with-deps chromium
+      - name: Run dependency-light O10 rendered contract tests
+        run: python -m unittest tests.test_o10_rendered_accessibility -v
+      - name: Run real PostgreSQL/Chromium keyboard and rendered-state qualification
+        run: |
+          mkdir -p "$RUNNER_TEMP/ephi-o10-rendered"
+          python tools/o10_rendered_accessibility.py \
+            --dsn "$EPHI_TEST_POSTGRES_DSN" \
+            --output "$RUNNER_TEMP/ephi-o10-rendered/report.json" \
+            --artifacts "$RUNNER_TEMP/ephi-o10-rendered/screenshots"
+      - name: Assert repository-native O10 rendered evidence
+        run: |
+          python - "$RUNNER_TEMP/ephi-o10-rendered/report.json" <<'PY'
+          import json
+          import sys
+
+          report = json.load(open(sys.argv[1], encoding='utf-8'))
+          assert report['status'] == 'PASS'
+          assert report['postgres']['real_postgresql_18']
+          real = report['real_browser']
+          assert not real['events']['console_errors']
+          assert not real['events']['page_errors']
+          assert not real['events']['request_failures']
+          assert real['critical_path']['selected_episode_identity_preserved']
+          assert real['critical_path']['return_restored_attention']
+          assert all(real['critical_path']['selected_row_preview']['fields_present'].values())
+          focus = real['critical_path']['focus_continuity']
+          assert focus['after_selection'] == 'Open episode'
+          assert focus['before_primary_action'] in ('Claim episode', 'Acknowledge episode')
+          assert focus['after_successful_claim'] in ('Claim episode', 'Acknowledge episode')
+          assert focus['after_return'] == 'Attention'
+          assert real['keyboard_walkthrough']['reached_search']
+          assert real['keyboard_walkthrough']['no_empty_focus']
+          assert real['no_episode_selected']['status']
+          assert real['reduced_motion']['match_media']
+          assert real['forced_colors']['status'] in ('PASS', 'NOT_SUPPORTED')
+          assert all(item['status'] != 'FAIL' for item in real['contrast'].values())
+          assert real['critical_path']['focus_indicator_contrast']['status'] != 'FAIL'
+          assert real['secret_safety']['cookies_recorded'] is False
+          for viewport, facts in report['responsive'].items():
+              assert facts['status'] == 'PASS', viewport
+              if viewport in ('390x844', '320x800'):
+                  assert facts['attention_overflow'] is False
+                  assert facts['episode_overflow'] is False
+                  for name, box in facts['critical_target_measurements'].items():
+                      if box['width'] is not None:
+                          assert box['width'] >= 44 and box['height'] >= 44, (viewport, name, box)
+          assert all(facts['status'] == 'PASS' and facts['bounded_text'] for facts in report['degraded_state_matrix'].values())
+          assert report['durable_command']['command_receipt_count'] >= 1
+          assert report['durable_command']['work_state_present']
+          print('O10_1_RENDERED_ACCESSIBILITY_PASS')
+          PY
+      - name: Upload secret-safe O10 rendered evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: ephi-o10-rendered-accessibility
+          path: ${{ runner.temp }}/ephi-o10-rendered
+          if-no-files-found: error
+
   postgresql-integration:
     name: PostgreSQL command/worker/read/artifact/O9 integration (Python 3.13)
     runs-on: ubuntu-latest

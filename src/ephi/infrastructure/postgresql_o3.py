@@ -111,13 +111,14 @@ class PostgreSQLO3ProductStore:
         self._authorize(principal, scope)
         if not isinstance(filters, Mapping):
             raise ValidationFailureError("Attention filters must be a mapping")
-        clauses = ["p.scope_key = %s", "a.scope_key = %s", "a.aggregate_type = 'episode_workflow'", "a.aggregate_id = p.episode_id"]
+        join_clauses = ["a.scope_key = %s", "a.aggregate_type = 'episode_workflow'", "a.aggregate_id = p.episode_id"]
+        where_clauses = ["p.scope_key = %s"]
         # PostgreSQL parameters follow the textual JOIN-before-WHERE order.
         parameters: list[Any] = [scope.canonical_key, scope.canonical_key]
         for field, value in filters.items():
             if field == "search":
                 search = _identity(value, "Attention search")
-                clauses.append("(p.episode_id ILIKE %s OR coalesce(p.payload_json->>'title', '') ILIKE %s OR coalesce(p.payload_json->>'asset_id', '') ILIKE %s)")
+                where_clauses.append("(p.episode_id ILIKE %s OR coalesce(p.payload_json->>'title', '') ILIKE %s OR coalesce(p.payload_json->>'asset_id', '') ILIKE %s)")
                 pattern = f"%{search}%"
                 parameters.extend((pattern, pattern, pattern))
             elif field in {"work_state", "owner", "priority", "technical_state", "source_state"}:
@@ -130,10 +131,10 @@ class PostgreSQLO3ProductStore:
                 }[field]
                 if isinstance(value, (tuple, list, frozenset)):
                     values = tuple(_identity(item, f"{field} value") for item in value)
-                    clauses.append(expression + " = ANY(%s)")
+                    where_clauses.append(expression + " = ANY(%s)")
                     parameters.append(list(values))
                 else:
-                    clauses.append(expression + " = %s")
+                    where_clauses.append(expression + " = %s")
                     parameters.append(_identity(value, field))
             else:
                 raise ValidationFailureError(f"unsupported Attention filter: {field}")
@@ -151,8 +152,8 @@ class PostgreSQLO3ProductStore:
                        ) AS payload_json
                 FROM o3_attention_projection AS p
                 JOIN aggregate_state AS a
-                  ON {clauses[1]} AND {clauses[2]} AND {clauses[3]}
-                WHERE {clauses[0]}
+                  ON {' AND '.join(join_clauses)}
+                WHERE {' AND '.join(where_clauses)}
                 ORDER BY {order_sql}
                 LIMIT %s
                 """,

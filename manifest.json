@@ -51,8 +51,8 @@
     },
     {
       "path": ".github/workflows/package.yml",
-      "bytes": 11117,
-      "sha256": "1249d074d4a78fb80df5a2b0badb4638fabc329d867b2ea859d541b5e5c72aa3"
+      "bytes": 15638,
+      "sha256": "7d9d957184bca492f2d8b31a132614ecda8f5e4e83b1b4952f7d5fe251de416e"
     },
     {
       "path": ".gitignore",
@@ -696,8 +696,8 @@
     },
     {
       "path": "src/ephi/infrastructure/postgresql_o3.py",
-      "bytes": 9879,
-      "sha256": "7c8d99c45f10ba165c70e884b09097fa423ed04c9279aa23e505dd693df557c9"
+      "bytes": 9926,
+      "sha256": "814d1f5c3af5fcda9cede47f9e52d66073045845a4aa590be8bcbdf67e7fef51"
     },
     {
       "path": "src/ephi/infrastructure/postgresql_reads.py",
@@ -741,8 +741,8 @@
     },
     {
       "path": "src/ephi/ui/app.py",
-      "bytes": 20302,
-      "sha256": "1c71eedd73213667790b6e356135644921df9701e8ece3bd472559607768e7e5"
+      "bytes": 43519,
+      "sha256": "17073490275251a3bef93c754e059b8fadc05548135e172e1fed4b3d6876d8f1"
     },
     {
       "path": "src/ephi/ui/provider.py",
@@ -778,6 +778,11 @@
       "path": "tests/test_ephi_application.py",
       "bytes": 2681,
       "sha256": "6abc52107c7b5da7d1e63836beb25f48a137c669ef4d55300e41b6b22b7fc878"
+    },
+    {
+      "path": "tests/test_o10_rendered_accessibility.py",
+      "bytes": 3590,
+      "sha256": "6918e86a89ae576f3b541227a9de1c9f556500aa1640d67cb56cfc9b86b72010"
     },
     {
       "path": "tests/test_o2_artifacts.py",
@@ -908,6 +913,16 @@
       "path": "tools/check_package.py",
       "bytes": 11490,
       "sha256": "a353043571493380c81a93a56d1426cb4b9e2f3a78eb620bc75a24ace8d55da0"
+    },
+    {
+      "path": "tools/o10_rendered_accessibility.py",
+      "bytes": 33352,
+      "sha256": "059a96b2c1f2aa329ee858d81742b784455b6f95bf53d0ff94275d67f9b82bd5"
+    },
+    {
+      "path": "tools/o10_state_harness.py",
+      "bytes": 5064,
+      "sha256": "8047759c834921ce4de7d6c5d9b933caaec2554917cc74c8368e7968dbebd922"
     },
     {
       "path": "tools/o8_browser_qualification.py",
