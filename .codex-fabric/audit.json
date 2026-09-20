@@ -1,0 +1,613 @@
+{
+  "schema_version": 1,
+  "kind": "codex-fabric-audit-evidence",
+  "job_id": "CF-ac183f8a389f6250c8f6abd3",
+  "operation": "VERIFY",
+  "project_id": "ephi",
+  "request": "ephi-o8-current-authorization-verify1",
+  "status": "EXECUTED_VERIFY",
+  "accepted_at": "2026-09-20T04:44:26Z",
+  "started_at": "2026-09-20T04:44:27Z",
+  "finished_at": "2026-09-20T04:54:19Z",
+  "changed_files": [
+    {
+      "additions": 4,
+      "deletions": 0,
+      "path": ".github/workflows/package.yml",
+      "status": "M"
+    },
+    {
+      "additions": 4,
+      "deletions": 0,
+      "path": "03_Application_Contracts.md",
+      "status": "M"
+    },
+    {
+      "additions": 2,
+      "deletions": 0,
+      "path": "08_Security_Notifications_AI_Operations.md",
+      "status": "M"
+    },
+    {
+      "additions": 21,
+      "deletions": 0,
+      "path": "README.md",
+      "status": "M"
+    },
+    {
+      "additions": 52,
+      "deletions": 42,
+      "path": "manifest.json",
+      "status": "M"
+    },
+    {
+      "additions": 10,
+      "deletions": 1,
+      "path": "src/ephi/application/__init__.py",
+      "status": "M"
+    },
+    {
+      "additions": 20,
+      "deletions": 13,
+      "path": "src/ephi/application/artifacts.py",
+      "status": "M"
+    },
+    {
+      "additions": 16,
+      "deletions": 2,
+      "path": "src/ephi/application/attention.py",
+      "status": "M"
+    },
+    {
+      "additions": 85,
+      "deletions": 1,
+      "path": "src/ephi/application/context.py",
+      "status": "M"
+    },
+    {
+      "additions": 8,
+      "deletions": 3,
+      "path": "src/ephi/application/episodes.py",
+      "status": "M"
+    },
+    {
+      "additions": 10,
+      "deletions": 11,
+      "path": "src/ephi/application/transactions.py",
+      "status": "M"
+    },
+    {
+      "additions": 3,
+      "deletions": 4,
+      "path": "src/ephi/application/workflow.py",
+      "status": "M"
+    },
+    {
+      "additions": 7,
+      "deletions": 4,
+      "path": "src/ephi/ui/app.py",
+      "status": "M"
+    },
+    {
+      "additions": 7,
+      "deletions": 6,
+      "path": "tests/test_o2_artifacts.py",
+      "status": "M"
+    },
+    {
+      "additions": 16,
+      "deletions": 8,
+      "path": "tests/test_o2_postgresql.py",
+      "status": "M"
+    },
+    {
+      "additions": 8,
+      "deletions": 5,
+      "path": "tests/test_o2_postgresql_artifacts.py",
+      "status": "M"
+    },
+    {
+      "additions": 9,
+      "deletions": 5,
+      "path": "tests/test_o2_transactions.py",
+      "status": "M"
+    },
+    {
+      "additions": 11,
+      "deletions": 7,
+      "path": "tests/test_o3_application.py",
+      "status": "M"
+    },
+    {
+      "additions": 15,
+      "deletions": 10,
+      "path": "tests/test_o3_postgresql.py",
+      "status": "M"
+    },
+    {
+      "additions": 12,
+      "deletions": 2,
+      "path": "tests/test_o4_source_ingress_postgresql.py",
+      "status": "M"
+    },
+    {
+      "additions": 390,
+      "deletions": 0,
+      "path": "tests/test_o8_current_authorization.py",
+      "status": "A"
+    },
+    {
+      "additions": 234,
+      "deletions": 0,
+      "path": "tests/test_o8_postgresql.py",
+      "status": "A"
+    },
+    {
+      "additions": 10,
+      "deletions": 6,
+      "path": "tests/test_postgresql_adapter_lifecycle.py",
+      "status": "M"
+    },
+    {
+      "additions": 11,
+      "deletions": 8,
+      "path": "tools/o9_real_rehearsal.py",
+      "status": "M"
+    }
+  ],
+  "checks": [
+    {
+      "command": "rtk git ls-remote origin refs/heads/main refs/heads/codex/ephi-o8-current-authorization-verify1",
+      "exit_code": 0,
+      "type": "identity_and_transport"
+    },
+    {
+      "command": "rtk git rev-parse HEAD HEAD^{tree}; rtk git diff --name-only c555792ff8b76e07ef9a43cd811677bcc35a5b09 HEAD",
+      "exit_code": 0,
+      "type": "candidate_byte_identity"
+    },
+    {
+      "command": "rtk python3 tools/check_package.py --refresh-manifest",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "rtk python3 -m unittest discover -s tests -v",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "rtk git diff --check",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "rtk gh run view 35488992471 --repo kimhw8084/ephi --json databaseId,headSha,status,conclusion,workflowName,jobs",
+      "exit_code": 0,
+      "type": "repository_native_ci"
+    },
+    {
+      "command": "rtk gh api repos/kimhw8084/ephi/check-suites/96097930288/check-runs --paginate",
+      "exit_code": 0,
+      "type": "repository_native_ci"
+    },
+    {
+      "command": "mechanical Git base-to-candidate inventory and per-file byte-size/SHA-256 assertion",
+      "exit_code": 0,
+      "type": "candidate_inventory"
+    },
+    {
+      "command": "remote carrier fetch, archive extraction, byte comparison and full readback assertion",
+      "exit_code": 0,
+      "type": "carrier_readback"
+    }
+  ],
+  "commits": [
+    {
+      "sha": "c555792ff8b76e07ef9a43cd811677bcc35a5b09",
+      "subject": "Refresh package manifest for O9 authority wiring"
+    },
+    {
+      "sha": "09e11bccb7a697f416dfa80af9dfbcfaccb5a3cf",
+      "subject": "Wire O9 rehearsal through current authorization"
+    },
+    {
+      "sha": "807c8c2694d783bd7b1d14cc9ccabbe0e506cee4",
+      "subject": "Implement O8 current authorization freshness boundary"
+    }
+  ],
+  "diff": {
+    "additions": 965,
+    "deletions": 138,
+    "changed_files": 24,
+    "commit_count": 3
+  },
+  "candidate_file_inventory": {
+    "base_sha": "2981ffaccc62e48b605ca498117c9caab5a058c2",
+    "candidate_sha": "c555792ff8b76e07ef9a43cd811677bcc35a5b09",
+    "candidate_tree": "77ac006855533b9b8115c106a34eced0150f20c1",
+    "file_count": 24,
+    "files": [
+      {
+        "bytes": 7095,
+        "path": ".github/workflows/package.yml",
+        "sha256": "d78a47e5b16e8af4dd4530dcc27b2f5faea975d55bc88ecb387571012c8f9cb3"
+      },
+      {
+        "bytes": 19271,
+        "path": "03_Application_Contracts.md",
+        "sha256": "634c89c24a24fff9f1e483e7edd30c37b1232351bbc953fafe403ac929e42be8"
+      },
+      {
+        "bytes": 11248,
+        "path": "08_Security_Notifications_AI_Operations.md",
+        "sha256": "02890d4891a422e59971a521084c67c09bb45325514f218f4e2153121b132f2b"
+      },
+      {
+        "bytes": 16551,
+        "path": "README.md",
+        "sha256": "4e8bae39734c5cde4be0578cb43ad8a4e7e5a2fb6f80679c971951a76b7b0ea8"
+      },
+      {
+        "bytes": 32448,
+        "path": "manifest.json",
+        "sha256": "0ff138e3ba6b14fb9f6074754202dbf7f27f709c055bb7006bec3a9ebaaf5561"
+      },
+      {
+        "bytes": 7914,
+        "path": "src/ephi/application/__init__.py",
+        "sha256": "1812f82f651775e8ea3812cee78091ee9161e97186e327d1634f6d9388008f1f"
+      },
+      {
+        "bytes": 15857,
+        "path": "src/ephi/application/artifacts.py",
+        "sha256": "b0f1a4c9c809e36c3dd90506c461b22753add81aaafcc3198e3eeac6b6c6514e"
+      },
+      {
+        "bytes": 11112,
+        "path": "src/ephi/application/attention.py",
+        "sha256": "6111e647c9e323833c2166885060a1cee43f90e526b6b177e54aeb75584b534b"
+      },
+      {
+        "bytes": 11418,
+        "path": "src/ephi/application/context.py",
+        "sha256": "c62d1b4210d37a44e072e9bad2eb5f9516550d951e1b1106a39fba046a1fb59d"
+      },
+      {
+        "bytes": 6130,
+        "path": "src/ephi/application/episodes.py",
+        "sha256": "a1d13485fe77f181b1861859f3a597f696a8fa6430bb39a1c1da1a4127b13a13"
+      },
+      {
+        "bytes": 15474,
+        "path": "src/ephi/application/transactions.py",
+        "sha256": "b030c63df05f6470b55a6a02e3f5c59da2f5491af581886c6d2ca27e2df553d8"
+      },
+      {
+        "bytes": 5011,
+        "path": "src/ephi/application/workflow.py",
+        "sha256": "6a776f1af4805d431014ccf71a4013fe07501381e9ee58568164ef361b8aa172"
+      },
+      {
+        "bytes": 20652,
+        "path": "src/ephi/ui/app.py",
+        "sha256": "b7370323051f425056a9584e2230ca506b3c5e949599937e82b12916bd2adf8f"
+      },
+      {
+        "bytes": 11701,
+        "path": "tests/test_o2_artifacts.py",
+        "sha256": "6d3d83da504050e208210c6294bf169b068f7394030a326ade99393f0dee0693"
+      },
+      {
+        "bytes": 16891,
+        "path": "tests/test_o2_postgresql.py",
+        "sha256": "cd4724fc7a5eed9171ff8bd11594e494f0d96b00881e04f29438097377677cb2"
+      },
+      {
+        "bytes": 7604,
+        "path": "tests/test_o2_postgresql_artifacts.py",
+        "sha256": "6e74adaa3019a6ce416e4569beb2e8f8343edc8c31eaa48b477b1d9b45734871"
+      },
+      {
+        "bytes": 12375,
+        "path": "tests/test_o2_transactions.py",
+        "sha256": "35d57ba5b7aa4ab62675ae0b036aa1bcda22f984768991c4e7e01e4ba4825c0d"
+      },
+      {
+        "bytes": 12051,
+        "path": "tests/test_o3_application.py",
+        "sha256": "6f8fc8789d4b78772f32bbb1a7b0e17fd16b2ab7d74a81c0d3eaa57e80ccc2c9"
+      },
+      {
+        "bytes": 9205,
+        "path": "tests/test_o3_postgresql.py",
+        "sha256": "6387ce7ebdfbe6aafd75f181c7962cb886060c27b049ac4abfa549f9e9668e46"
+      },
+      {
+        "bytes": 11031,
+        "path": "tests/test_o4_source_ingress_postgresql.py",
+        "sha256": "129c767c2ab1b8a2f613fc52db6fd684d97f709d953f3ab4f965712446b9988a"
+      },
+      {
+        "bytes": 16156,
+        "path": "tests/test_o8_current_authorization.py",
+        "sha256": "20e029aa3b3badbfd607becd64f5fe2e3fb2157faa5adf0938789c2658d49cc4"
+      },
+      {
+        "bytes": 10158,
+        "path": "tests/test_o8_postgresql.py",
+        "sha256": "6f82d544a804025955d61a9e0f4f1b5c34985f4700b6395b394f3452f5c75f32"
+      },
+      {
+        "bytes": 10911,
+        "path": "tests/test_postgresql_adapter_lifecycle.py",
+        "sha256": "d6f6dad3794850a5f3748f5f5cd918dd1177a5c9fc9d7f1f9a99f23022b36372"
+      },
+      {
+        "bytes": 16303,
+        "path": "tools/o9_real_rehearsal.py",
+        "sha256": "9023d32d694608d6272289a5b3cc65de49813c6eeb5dc9121e52a31ccf9e50d9"
+      }
+    ]
+  },
+  "evidence_manifest": {
+    "version": 1,
+    "count": 24,
+    "items": [
+      {
+        "bytes": 7095,
+        "path": ".github/workflows/package.yml",
+        "sha256": "d78a47e5b16e8af4dd4530dcc27b2f5faea975d55bc88ecb387571012c8f9cb3"
+      },
+      {
+        "bytes": 19271,
+        "path": "03_Application_Contracts.md",
+        "sha256": "634c89c24a24fff9f1e483e7edd30c37b1232351bbc953fafe403ac929e42be8"
+      },
+      {
+        "bytes": 11248,
+        "path": "08_Security_Notifications_AI_Operations.md",
+        "sha256": "02890d4891a422e59971a521084c67c09bb45325514f218f4e2153121b132f2b"
+      },
+      {
+        "bytes": 16551,
+        "path": "README.md",
+        "sha256": "4e8bae39734c5cde4be0578cb43ad8a4e7e5a2fb6f80679c971951a76b7b0ea8"
+      },
+      {
+        "bytes": 32448,
+        "path": "manifest.json",
+        "sha256": "0ff138e3ba6b14fb9f6074754202dbf7f27f709c055bb7006bec3a9ebaaf5561"
+      },
+      {
+        "bytes": 7914,
+        "path": "src/ephi/application/__init__.py",
+        "sha256": "1812f82f651775e8ea3812cee78091ee9161e97186e327d1634f6d9388008f1f"
+      },
+      {
+        "bytes": 15857,
+        "path": "src/ephi/application/artifacts.py",
+        "sha256": "b0f1a4c9c809e36c3dd90506c461b22753add81aaafcc3198e3eeac6b6c6514e"
+      },
+      {
+        "bytes": 11112,
+        "path": "src/ephi/application/attention.py",
+        "sha256": "6111e647c9e323833c2166885060a1cee43f90e526b6b177e54aeb75584b534b"
+      },
+      {
+        "bytes": 11418,
+        "path": "src/ephi/application/context.py",
+        "sha256": "c62d1b4210d37a44e072e9bad2eb5f9516550d951e1b1106a39fba046a1fb59d"
+      },
+      {
+        "bytes": 6130,
+        "path": "src/ephi/application/episodes.py",
+        "sha256": "a1d13485fe77f181b1861859f3a597f696a8fa6430bb39a1c1da1a4127b13a13"
+      },
+      {
+        "bytes": 15474,
+        "path": "src/ephi/application/transactions.py",
+        "sha256": "b030c63df05f6470b55a6a02e3f5c59da2f5491af581886c6d2ca27e2df553d8"
+      },
+      {
+        "bytes": 5011,
+        "path": "src/ephi/application/workflow.py",
+        "sha256": "6a776f1af4805d431014ccf71a4013fe07501381e9ee58568164ef361b8aa172"
+      },
+      {
+        "bytes": 20652,
+        "path": "src/ephi/ui/app.py",
+        "sha256": "b7370323051f425056a9584e2230ca506b3c5e949599937e82b12916bd2adf8f"
+      },
+      {
+        "bytes": 11701,
+        "path": "tests/test_o2_artifacts.py",
+        "sha256": "6d3d83da504050e208210c6294bf169b068f7394030a326ade99393f0dee0693"
+      },
+      {
+        "bytes": 16891,
+        "path": "tests/test_o2_postgresql.py",
+        "sha256": "cd4724fc7a5eed9171ff8bd11594e494f0d96b00881e04f29438097377677cb2"
+      },
+      {
+        "bytes": 7604,
+        "path": "tests/test_o2_postgresql_artifacts.py",
+        "sha256": "6e74adaa3019a6ce416e4569beb2e8f8343edc8c31eaa48b477b1d9b45734871"
+      },
+      {
+        "bytes": 12375,
+        "path": "tests/test_o2_transactions.py",
+        "sha256": "35d57ba5b7aa4ab62675ae0b036aa1bcda22f984768991c4e7e01e4ba4825c0d"
+      },
+      {
+        "bytes": 12051,
+        "path": "tests/test_o3_application.py",
+        "sha256": "6f8fc8789d4b78772f32bbb1a7b0e17fd16b2ab7d74a81c0d3eaa57e80ccc2c9"
+      },
+      {
+        "bytes": 9205,
+        "path": "tests/test_o3_postgresql.py",
+        "sha256": "6387ce7ebdfbe6aafd75f181c7962cb886060c27b049ac4abfa549f9e9668e46"
+      },
+      {
+        "bytes": 11031,
+        "path": "tests/test_o4_source_ingress_postgresql.py",
+        "sha256": "129c767c2ab1b8a2f613fc52db6fd684d97f709d953f3ab4f965712446b9988a"
+      },
+      {
+        "bytes": 16156,
+        "path": "tests/test_o8_current_authorization.py",
+        "sha256": "20e029aa3b3badbfd607becd64f5fe2e3fb2157faa5adf0938789c2658d49cc4"
+      },
+      {
+        "bytes": 10158,
+        "path": "tests/test_o8_postgresql.py",
+        "sha256": "6f82d544a804025955d61a9e0f4f1b5c34985f4700b6395b394f3452f5c75f32"
+      },
+      {
+        "bytes": 10911,
+        "path": "tests/test_postgresql_adapter_lifecycle.py",
+        "sha256": "d6f6dad3794850a5f3748f5f5cd918dd1177a5c9fc9d7f1f9a99f23022b36372"
+      },
+      {
+        "bytes": 16303,
+        "path": "tools/o9_real_rehearsal.py",
+        "sha256": "9023d32d694608d6272289a5b3cc65de49813c6eeb5dc9121e52a31ccf9e50d9"
+      }
+    ]
+  },
+  "git": {
+    "base_is_ancestor": true,
+    "base_sha": "2981ffaccc62e48b605ca498117c9caab5a058c2",
+    "branch": "codex/ephi-o8-current-authorization-verify1",
+    "detached_verify": false,
+    "head_sha": "c555792ff8b76e07ef9a43cd811677bcc35a5b09",
+    "head_tree": "77ac006855533b9b8115c106a34eced0150f20c1",
+    "remote_exact_head": true,
+    "remote_head_sha": "c555792ff8b76e07ef9a43cd811677bcc35a5b09",
+    "target_branch": "main",
+    "target_drifted_since_acceptance": false,
+    "target_head_observed_after_execution": "2981ffaccc62e48b605ca498117c9caab5a058c2",
+    "work_branch": "codex/ephi-o8-current-authorization-verify1",
+    "worktree_clean": true,
+    "tracked_diff_from_candidate": []
+  },
+  "instructions": {
+    "files": [
+      {
+        "bytes": 1458,
+        "path": "AGENTS.md",
+        "sha256": "4349f387a79d886ed1264604ff48c582698e539e08ed8fb2f9d8ab8fbf6f804a"
+      }
+    ],
+    "total_bytes": 1458,
+    "warning": null
+  },
+  "locator": {
+    "branch": "codex-fabric/evidence/ephi/ephi-o8-current-authorization-verify1",
+    "path": ".codex-fabric/audit.json",
+    "ref": "refs/heads/codex-fabric/evidence/ephi/ephi-o8-current-authorization-verify1"
+  },
+  "lineage": {
+    "prior_r1_job": "CF-4d7c2093b3946a4ad1b368a7",
+    "prior_r1_request": "ephi-o8-current-authorization-v1",
+    "prior_r1_evidence_commit": "957d861aa6dd2cc5eacf99f67a495d46651c0526",
+    "prior_r1_evidence_parent": "c555792ff8b76e07ef9a43cd811677bcc35a5b09",
+    "historical_carrier_commit": "9c6e2d1bbd6409d41fc0266b68d8f9b378b0c0ca",
+    "historical_carrier_count_flaw": "declared 23 while exact Git/path inventory is 24",
+    "current_carrier_commit": "7e026de5c4cc9d71fdb93a2a4daab1a6e10c9fd7",
+    "current_carrier_tree": "d018e8918baa471e17c8cbb0632da849ec854942",
+    "current_carrier_ref": "refs/heads/project-os-artifacts/ephi/ephi-o8-current-authorization-verify1",
+    "current_carrier_remote_readback_verified": true
+  },
+  "policy": {
+    "environment_policy_sha256": "e077daca74297b3c30bee8989f00f8ca5338f7610b4d016a6c48db524205d064",
+    "fabric_release": "1.2.3-resume-candidate",
+    "policy_sha256": "a642c9f63bab2cb555704bdb0b9d1f28222591f133f934c1d0f93cc5a25ab8a1",
+    "registry_sha256": "cfc765f3211c37c7967a138f3b2d89a99341939b15b2623f92744d007f625d6f"
+  },
+  "fabric_release": "1.2.3-resume-candidate",
+  "evidence_publisher_release": "1.2.3-resume-candidate",
+  "fabric_capture": {
+    "applied": false,
+    "paths_before": 0,
+    "transient_untracked_removed": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "recovery": {
+    "model_rerun_safe": false,
+    "recovery_required": false,
+    "retry_safe": false,
+    "retry_scope": null,
+    "worktree_retained": true
+  },
+  "transport": {
+    "bytes": 8577,
+    "envelope": "FABRIC/2",
+    "prompt_bytes": 8250,
+    "prompt_sha256": "cd86bcfa9132f66ee4f4bcfe7f41b42306e0e69c0282c83a2377bdeca7db7a18",
+    "sha256": "ac183f8a389f6250c8f6abd330e60a60b11f93defcb71d1babadc070d93e268"
+  },
+  "ci": {
+    "workflow": "Package integrity",
+    "run_id": 35488992471,
+    "check_suite_id": 96097930288,
+    "head_sha": "c555792ff8b76e07ef9a43cd811677bcc35a5b09",
+    "status": "completed",
+    "conclusion": "success",
+    "jobs": [
+      {
+        "name": "PostgreSQL command/worker/read/artifact/O9 integration (Python 3.13)",
+        "job_id": 106020491950,
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "Canonical repository baseline",
+        "job_id": 106020492057,
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "Package checks (Python 3.12)",
+        "job_id": 106020492091,
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "Package checks (Python 3.13)",
+        "job_id": 106020492097,
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "Package checks (Python 3.11)",
+        "job_id": 106020492109,
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "Package checks (Python 3.14)",
+        "job_id": 106020492117,
+        "status": "completed",
+        "conclusion": "success"
+      }
+    ]
+  },
+  "verification": {
+    "candidate_bytes_unchanged_during_verify": true,
+    "candidate_tree_unchanged": true,
+    "source_config_test_workflow_document_mutation": false,
+    "inventory_declared_count": 24,
+    "inventory_array_length": 24,
+    "inventory_git_changed_count": 24,
+    "inventory_path_set_equal": true,
+    "inventory_hash_size_checks": 24,
+    "carrier_bundle_byte_size": 4596,
+    "carrier_bundle_sha256": "c3964decd1b8bc17c4055c75953ffbeeb309dd00e6aaffaae29ba015715999a2",
+    "carrier_manifest_and_bundle_remote_readback_byte_equal": true,
+    "o8_whole_closed": false
+  }
+}
