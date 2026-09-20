@@ -55,7 +55,9 @@
   "qualification_state": "BLOCKED_BENCHMARK_ENVIRONMENT",
   "remote_readback": {
     "required_ref": "refs/heads/project-os-artifacts/ephi/ephi-o10-performance-capacity-v1",
-    "status": "PENDING"
+    "status": "VERIFIED",
+    "verification": "git ls-remote origin after final carrier push matched the published ref",
+    "verified_candidate_sha": "e6539fc9746434d9b16fa110836588a45a398296"
   },
   "request": "ephi-o10-performance-capacity-v1",
   "schema_version": "ephi-o10.2-project-os-carrier.v1",
