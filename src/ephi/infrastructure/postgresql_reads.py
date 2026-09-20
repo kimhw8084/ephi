@@ -645,15 +645,18 @@ class PostgreSQLReadSnapshotStore:
                 ).fetchone()
                 if row is None:  # pragma: no cover - PostgreSQL RETURNING contract
                     raise StorageFailureError("PostgreSQL query snapshot creation returned no metadata")
-                for ordinal, retained in enumerate(rows, start=1):
-                    connection.execute(
+                with connection.cursor() as cursor:
+                    cursor.executemany(
                         "INSERT INTO query_snapshot_row(snapshot_id, ordinal, row_id, row_version_json, payload_json) VALUES (%s, %s, %s, %s::jsonb, %s::jsonb)",
                         (
-                            snapshot_id,
-                            ordinal,
-                            retained.row_id,
-                            canonical_json(retained.row_version),
-                            canonical_json(retained.payload),
+                            (
+                                snapshot_id,
+                                ordinal,
+                                retained.row_id,
+                                canonical_json(retained.row_version),
+                                canonical_json(retained.payload),
+                            )
+                            for ordinal, retained in enumerate(rows, start=1)
                         ),
                     )
                 return self._snapshot_from_row(row, scope).public

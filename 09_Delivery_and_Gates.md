@@ -6,6 +6,34 @@ Initial engineering benchmark envelope: 100 concurrent authenticated browser ses
 
 Test on a recorded production-like deployment with documented CPU/memory/database/network characteristics. A proposed pilot test profile is one 4-vCPU/8-GB web node, a separate 4-vCPU/16-GB database service and independently budgeted workers, with <=50ms client round-trip. This is a benchmark assumption, not a capacity guarantee or infrastructure purchase recommendation.
 
+### O10.2 benchmark execution contract
+
+`tools/o10_performance_capacity.py` is the repository-owned CHG-161 harness
+for the current W1 Attention/Episode path. It preserves this N1 envelope and
+does not create budgets for absent product surfaces. Its percentile method is
+nearest-rank (`rank=max(1,ceil(q*n))` on sorted samples), warm-up samples are
+excluded, valid slow samples are retained, and expected typed conflicts are
+reported outside successful latency samples. PostgreSQL fixture construction
+is set-based and validates exactly 10,000 Attention/work rows, 1,000,000
+`read_revision` rows and 30 scope/family partitions before timing.
+
+The harness records real PostgreSQL plans, relation/index sizes, connection
+settings, per-operation query counts, scheduled-versus-start delay, raw
+secret-safe samples, browser useful-paint timings, application WebSocket frame
+bytes, command receipt replay/read-your-write facts and repeated G10 scenario
+results. It can only return `PASS_CURRENT_SURFACE_BUDGETS` when the measured
+executor proves the proposed 4-vCPU/8-GiB web node, separate 4-vCPU/16-GiB
+PostgreSQL service, independent workers and <=50 ms client round trip. A
+developer laptop or unmeasured hosted runner remains
+`BLOCKED_BENCHMARK_ENVIRONMENT`; that state is not a source defect.
+
+The only O10.2 source repair justified by the diagnostic profile is bounded to
+the existing retained-snapshot writer: snapshot members are sent through one
+PostgreSQL cursor batch instead of one `execute` call per member. No new index,
+cache, state authority, database product or eventual-consistency shortcut was
+introduced. Existing scope, ordering, snapshot expiry, authorization and
+coherence tests remain the governing regression boundary.
+
 | Metric | Proposed target at stated load | Mechanism / measurement |
 |---|---|---|
 | Warm attention query | p95 <=300ms; p99 <=750ms | indexed scoped projection, cursor, bounded result; service trace |

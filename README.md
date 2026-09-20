@@ -259,6 +259,30 @@ in the PostgreSQL CI lane after the optional PostgreSQL dependency is installed.
 This slice does not qualify company identity/session transport, browser
 CSRF/WebSocket-origin controls, upload/export/sanitization or deployment.
 
+## CHG-161 O10.2 performance/capacity harness
+
+The O10.2 benchmark harness is `tools/o10_performance_capacity.py`. It is
+benchmark-only: it creates an explicitly reset synthetic PostgreSQL fixture,
+uses the existing Attention/Episode services for timed work, runs EXPLAIN
+outside timed samples, and can exercise the real NiceGUI/Engine.IO path with
+isolated headless Chromium contexts. The fixture contract is exactly 30
+family partitions, 10,000 open Attention items and 1,000,000 archived
+`read_revision` rows. No production fallback or demo-data path was added.
+
+The dependency-light contract/math lane is:
+
+```bash
+python3 -m unittest tests.test_o10_performance_capacity -v
+python3 tools/o10_performance_capacity.py --contract-only --output /tmp/ephi-o10-contract
+```
+
+A real run requires an explicit benchmark-only PostgreSQL DSN and measured
+executor facts. It must use at least three repetitions. Results are
+`BLOCKED_BENCHMARK_ENVIRONMENT` unless the measured executor establishes the
+N1 4-vCPU/8-GiB web node, separate 4-vCPU/16-GiB PostgreSQL service,
+independent worker resources and <=50 ms client round trip. Local macOS or an
+ordinary hosted runner is diagnostic evidence only.
+
 ## CHG-147 O9.1 operations and restore rehearsal
 
 The CLI-only O9.1 boundary is documented in [operations](operations/README.md).

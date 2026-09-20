@@ -1,0 +1,80 @@
+{
+  "schema_version": "ephi-o10.2-performance-capacity.v1",
+  "evidence_kind": "newly_executed_o10_2_benchmark_contract_and_diagnostic",
+  "status": "BLOCKED_BENCHMARK_ENVIRONMENT",
+  "qualification_state": "BLOCKED_BENCHMARK_ENVIRONMENT",
+  "project": "ephi",
+  "request": "ephi-o10-performance-capacity-v1",
+  "operation": "BUILD",
+  "fabric_job_id": "CF-368950d1cbdb342586974252",
+  "base_sha": "8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e",
+  "work_branch": "codex/ephi-o10-performance-capacity-v1",
+  "envelope": {
+    "concurrent_browser_sessions": 100,
+    "family_partitions": 30,
+    "open_attention_items": 10000,
+    "archived_episode_read_records": 1000000,
+    "foreground_read_rate_per_second": 20,
+    "foreground_burst": {"requests": 40, "window_seconds": 2},
+    "workflow_commands_per_minute": 100,
+    "attention_page_size": 50
+  },
+  "budget_authority": "09_Delivery_and_Gates.md N1; all current-surface budgets remain proposed until a qualifying executor run.",
+  "dataset_diagnostic": {
+    "seed_config_id": "ephi-o10-161-v1",
+    "seed_config_identity": "05029b05ae875521f3748b9a2f7e1b7fbd2c218ca7d173b5e3a3674b5cc97f43",
+    "exact_counts": {
+      "o3_attention_projection": 10000,
+      "aggregate_state": 10000,
+      "read_revision": 1000000,
+      "read_head": 10000,
+      "family_partitions": 30
+    },
+    "postgres_version": "17.11 (Homebrew)",
+    "database_size_bytes": 1692210867,
+    "synthetic_only": true
+  },
+  "profiling_and_repair": {
+    "attention_plan_used_scoped_index": "idx_o3_attention_scope_priority",
+    "workflow_join_plan_used_primary_key": "aggregate_state_pkey",
+    "pre_repair_attention_snapshot_member_execute_calls": 334,
+    "post_repair_attention_operation_query_count": "7 on first snapshot; 5-7 on subsequent diagnostic samples",
+    "repair": "Use one PostgreSQL cursor.executemany batch for retained query-snapshot members.",
+    "index_or_config_change": "NONE",
+    "authorization_ordering_scope_order_and_retained_snapshot_semantics_preserved": true
+  },
+  "executed_checks": {
+        "o10_math_fixture_contract": "PASS_6_TESTS",
+        "o2_read_snapshot_regressions": "PASS_8_TESTS_PLUS_ONE_EXPECTED_POSTGRESQL_18_VERSION_BLOCK_ON_LOCAL_17_11",
+        "o3_attention_episode_postgresql": "PASS_5_TESTS",
+        "package_manifest_refresh": "PASS_191_PACKAGE_FILES",
+        "full_repository_unittest": "PASS_246_TESTS_65_SKIPPED",
+        "git_diff_check": "PASS",
+        "durability_receipt_replay_and_read_your_write": "PASS",
+    "typed_same_episode_version_conflict": "PASS",
+    "worker_lease_expiry_takeover": "PASS_3_REPETITIONS",
+    "headless_chromium_diagnostic_cohort": "PASS_2_ISOLATED_CONTEXTS_ONE_REPETITION",
+    "full_n1_100_session_three_repetition_capacity_run": "NOT_RUN_AS_QUALIFYING_EVIDENCE"
+  },
+  "g10": {
+    "source_degraded": "NOT_RUN; CHG-144 real source capability remains BLOCKED_REAL_SOURCE",
+    "worker_starvation": "PASS_3_REPETITIONS_DIAGNOSTIC",
+    "web_crash_restart": "DURABLE_ADAPTER_CLOSE_REOPEN_PROBE_PASS; FULL_BROWSER_RESTART_NOT_QUALIFIED",
+    "restore": "NOT_RUN",
+    "production_disaster_rpo_rto_claim": "NOT_ESTABLISHED"
+  },
+  "qualification_block": {
+    "executor": "foreground macOS developer host with no independently measured N1 web/PostgreSQL/worker isolation",
+    "required_profile": "4 vCPU / 8 GiB web; separate 4 vCPU / 16 GiB PostgreSQL; independently identified workers; client round-trip <=50 ms",
+    "decision": "Local timing is diagnostic only; no production-like capacity PASS or Project OS GO is claimed."
+  },
+  "secret_safety": {
+    "dsns_recorded": false,
+    "cookies_recorded": false,
+    "storage_values_recorded": false,
+    "authorization_headers_recorded": false,
+    "protected_payloads_recorded": false,
+    "raw_identity_values_recorded": false
+  },
+  "scope_boundary": "Current Attention/Episode W1 only; no Assets, Outcomes, Family Center, global search or evidence-panel features added."
+}

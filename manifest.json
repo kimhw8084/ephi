@@ -121,8 +121,8 @@
     },
     {
       "path": "09_Delivery_and_Gates.md",
-      "bytes": 19922,
-      "sha256": "973603d1f81b22e0494b66bf0e8b5a63436081bb610c7e10e23edd5cb822749d"
+      "bytes": 21663,
+      "sha256": "4b8c5b2e3c7232e155a6160cff0f69892d941d3e62175c13f72e008213667136"
     },
     {
       "path": "10_Traceability_and_Decisions.md",
@@ -156,8 +156,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 16551,
-      "sha256": "4e8bae39734c5cde4be0578cb43ad8a4e7e5a2fb6f80679c971951a76b7b0ea8"
+      "bytes": 17744,
+      "sha256": "c9eb1c317088cd8e731fe0469d97c7a9796b18618448d9a4aba0b8f93b30550e"
     },
     {
       "path": "app.py",
@@ -408,6 +408,11 @@
       "path": "evidence/review/chg_134_fix3_qualification.json",
       "bytes": 4934,
       "sha256": "74325a651776d5c638b7ed1df81f3ebfe001d0452f7e16647bfcdd9e57a75dad"
+    },
+    {
+      "path": "evidence/review/chg_161_o10_performance_capacity.json",
+      "bytes": 3948,
+      "sha256": "89eda48689631ae6ab6180daf5b2f62753ef2f63ceb72991b3f7511713620ee8"
     },
     {
       "path": "evidence/review/nicegui_base_binding_manifest.json",
@@ -706,8 +711,8 @@
     },
     {
       "path": "src/ephi/infrastructure/postgresql_reads.py",
-      "bytes": 35977,
-      "sha256": "1971d219a28ea56939e3c1bd34b50cffe99c318756f44f927ff2092290a01344"
+      "bytes": 36120,
+      "sha256": "7c9d4336605bc99b71915f96e811c2c1793033648457b42518ee56c87e79edd3"
     },
     {
       "path": "src/ephi/infrastructure/postgresql_source.py",
@@ -783,6 +788,11 @@
       "path": "tests/test_ephi_application.py",
       "bytes": 2681,
       "sha256": "6abc52107c7b5da7d1e63836beb25f48a137c669ef4d55300e41b6b22b7fc878"
+    },
+    {
+      "path": "tests/test_o10_performance_capacity.py",
+      "bytes": 3165,
+      "sha256": "17111e4637427eec1fd2e11ab17e3103aa751539d37ee508033e8e4fbf457fe8"
     },
     {
       "path": "tests/test_o10_rendered_accessibility.py",
@@ -918,6 +928,11 @@
       "path": "tools/check_package.py",
       "bytes": 11490,
       "sha256": "a353043571493380c81a93a56d1426cb4b9e2f3a78eb620bc75a24ace8d55da0"
+    },
+    {
+      "path": "tools/o10_performance_capacity.py",
+      "bytes": 82493,
+      "sha256": "44843f5aaa4ea32dc62b24e8901d0868ec77c2dceac64637d8cd1b2b41ed70d1"
     },
     {
       "path": "tools/o10_rendered_accessibility.py",
