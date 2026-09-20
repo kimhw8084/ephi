@@ -278,20 +278,28 @@ def _trusted_proxies(values: Mapping[str, str]) -> tuple[str, ...]:
     return result
 
 
-def build_runtime_config(settings: Any, environ: Mapping[str, str] | None = None) -> Any:
-    """Construct the pinned Base RuntimeConfig from the EPHI boundary."""
+@dataclass(frozen=True, slots=True)
+class _RuntimeConfigInputs:
+    environment: str
+    secure_session_cookie: bool | None
+    same_site: str
+    proxy_enabled: bool
+    trusted_proxies: tuple[str, ...]
+    root_path: str
+    expected_replicas: int
+    diagnostics_enabled: bool
+    debug: bool
 
-    values = os.environ if environ is None else environ
-    from nicegui_base import ProxyConfig, RuntimeConfig, RuntimeEnvironment
 
+def _runtime_config_inputs(settings: Any, values: Mapping[str, str]) -> _RuntimeConfigInputs:
     environment_map = {
-        "development": RuntimeEnvironment.DEV,
-        "test": RuntimeEnvironment.TEST,
-        "qa": RuntimeEnvironment.QA,
-        "production": RuntimeEnvironment.PROD,
+        "development",
+        "test",
+        "qa",
+        "production",
     }
-    environment = environment_map.get(str(settings.environment).lower())
-    if environment is None:
+    environment = str(settings.environment).lower()
+    if environment not in environment_map:
         raise BrowserTransportPolicyError("INVALID_ENVIRONMENT")
     trusted = _trusted_proxies(values)
     proxy_enabled = _parse_bool(values.get("NICEGUI_BASE_PROXY_ENABLED"), default=False)
@@ -308,17 +316,83 @@ def build_runtime_config(settings: Any, environ: Mapping[str, str] | None = None
     if same_site not in {"lax", "strict", "none"}:
         raise BrowserTransportPolicyError("INVALID_SAMESITE")
     secure_session_cookie = _parse_optional_bool(values.get("NICEGUI_BASE_SECURE_SESSION_COOKIE"))
-    if same_site == "none" and (secure_session_cookie is False or (secure_session_cookie is None and environment is not RuntimeEnvironment.PROD)):
+    if same_site == "none" and (secure_session_cookie is False or (secure_session_cookie is None and environment != "production")):
         raise BrowserTransportPolicyError("INSECURE_SAMESITE_NONE")
-    proxy = ProxyConfig(
-        enabled=proxy_enabled,
+    diagnostics_enabled = _parse_bool(values.get("NICEGUI_BASE_DIAGNOSTICS_ENABLED"), default=False)
+    debug = _parse_bool(values.get("NICEGUI_BASE_DEBUG"), default=False)
+    if environment == "production" and debug:
+        raise BrowserTransportPolicyError("PRODUCTION_DEBUG_FORBIDDEN")
+    return _RuntimeConfigInputs(
+        environment=environment,
+        secure_session_cookie=secure_session_cookie,
+        same_site=same_site,
+        proxy_enabled=proxy_enabled,
         trusted_proxies=trusted,
         root_path=normalize_root_path(values.get("NICEGUI_BASE_ROOT_PATH", "")),
+        expected_replicas=expected_replicas,
+        diagnostics_enabled=diagnostics_enabled,
+        debug=debug,
+    )
+
+
+def _runtime_environment_issues(inputs: _RuntimeConfigInputs, settings: Any, values: Mapping[str, str]) -> tuple[str, ...]:
+    issues: list[str] = []
+    if not values.get("NICEGUI_BASE_STORAGE_SECRET"):
+        issues.append("missing:NICEGUI_BASE_STORAGE_SECRET")
+    effective_secure_cookie = inputs.secure_session_cookie if inputs.secure_session_cookie is not None else inputs.environment == "production"
+    if inputs.environment == "production" and not effective_secure_cookie:
+        issues.append("production_cookie_not_secure")
+    if inputs.expected_replicas > 1 and not values.get("NICEGUI_REDIS_URL"):
+        issues.append("multi_replica_without_shared_storage")
+    if inputs.expected_replicas > 1 and values.get("NICEGUI_BASE_SESSION_AFFINITY_CONFIRMED", "").lower() not in {"1", "true", "yes"}:
+        issues.append("multi_replica_without_session_affinity_confirmation")
+    if inputs.proxy_enabled and settings.host in {"127.0.0.1", "localhost"}:
+        issues.append("proxy_mode_bound_to_loopback")
+    return tuple(issues)
+
+
+@dataclass(frozen=True, slots=True)
+class _RuntimeConfigProjection:
+    """Dependency-free projection used only by offline preflight."""
+
+    inputs: _RuntimeConfigInputs
+
+    @property
+    def effective_secure_cookie(self) -> bool:
+        return self.inputs.secure_session_cookie if self.inputs.secure_session_cookie is not None else self.inputs.environment == "production"
+
+    @property
+    def proxy(self) -> Any:
+        return self.inputs
+
+    def validate_environment(self, values: Mapping[str, str] | None = None, *, settings: Any = None) -> tuple[str, ...]:
+        if values is None or settings is None:
+            return ()
+        return _runtime_environment_issues(self.inputs, settings, values)
+
+
+def build_runtime_config(settings: Any, environ: Mapping[str, str] | None = None) -> Any:
+    """Construct the pinned Base RuntimeConfig from the EPHI boundary."""
+
+    values = os.environ if environ is None else environ
+    inputs = _runtime_config_inputs(settings, values)
+    from nicegui_base import ProxyConfig, RuntimeConfig, RuntimeEnvironment
+
+    environment_map = {
+        "development": RuntimeEnvironment.DEV,
+        "test": RuntimeEnvironment.TEST,
+        "qa": RuntimeEnvironment.QA,
+        "production": RuntimeEnvironment.PROD,
+    }
+    proxy = ProxyConfig(
+        enabled=inputs.proxy_enabled,
+        trusted_proxies=inputs.trusted_proxies,
+        root_path=inputs.root_path,
     )
     config = RuntimeConfig(
         app_name=settings.application_name,
         app_version="0.1.0",
-        environment=environment,
+        environment=environment_map[inputs.environment],
         host=settings.host,
         port=settings.port,
         title="EPHI",
@@ -326,12 +400,12 @@ def build_runtime_config(settings: Any, environ: Mapping[str, str] | None = None
         reload=False,
         storage_secret_env="NICEGUI_BASE_STORAGE_SECRET",
         require_storage_secret=True,
-        secure_session_cookie=secure_session_cookie,
-        same_site=same_site,
+        secure_session_cookie=inputs.secure_session_cookie,
+        same_site=inputs.same_site,
         proxy=proxy,
-        diagnostics_enabled=_parse_bool(values.get("NICEGUI_BASE_DIAGNOSTICS_ENABLED"), default=False),
-        debug=_parse_bool(values.get("NICEGUI_BASE_DEBUG"), default=False),
-        expected_replicas=expected_replicas,
+        diagnostics_enabled=inputs.diagnostics_enabled,
+        debug=inputs.debug,
+        expected_replicas=inputs.expected_replicas,
     )
     return config
 
@@ -401,15 +475,28 @@ def security_preflight(environ: Mapping[str, str] | None = None) -> dict[str, ob
         reasons.append("INVALID_RUNTIME_SETTINGS")
 
     config = None
+    runtime_dependency_available = True
     if settings is not None:
         try:
             config = build_runtime_config(settings, values)
         except BrowserTransportPolicyError as exc:
             reasons.append(str(exc))
+        except ModuleNotFoundError as exc:
+            if exc.name != "nicegui_base":
+                raise
+            runtime_dependency_available = False
+            try:
+                config = _RuntimeConfigProjection(_runtime_config_inputs(settings, values))
+            except BrowserTransportPolicyError as projection_error:
+                reasons.append(str(projection_error))
         except (TypeError, ValueError):
             reasons.append("INVALID_RUNTIME_CONFIGURATION")
     if config is not None:
-        reasons.extend(_base_issue_code(issue) for issue in config.validate_environment(values))
+        if isinstance(config, _RuntimeConfigProjection):
+            issues = config.validate_environment(values, settings=settings)
+        else:
+            issues = config.validate_environment(values)
+        reasons.extend(_base_issue_code(issue) for issue in issues)
     if policy is not None and config is not None:
         try:
             _validate_browser_cookie_policy(policy, config)
@@ -481,6 +568,7 @@ def security_preflight(environ: Mapping[str, str] | None = None) -> dict[str, ob
         },
         "company_identity_established": False,
         "target_tls_ingress_qualification_established": False,
+        "runtime_dependency_available": runtime_dependency_available,
         "qa_http_insecure_cookie_policy": "Only an explicitly HTTP QA origin may use an insecure cookie for isolated qualification; target TLS/ingress remains NOT_ESTABLISHED.",
         "qualification_boundary": "Real company identity and target TLS/ingress qualification are NOT established by CHG-152/O8.2.",
     }

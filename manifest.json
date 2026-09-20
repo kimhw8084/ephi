@@ -731,8 +731,8 @@
     },
     {
       "path": "src/ephi/transport.py",
-      "bytes": 21704,
-      "sha256": "8448b8bbccba7960d03c5a5fc34cf8d4b4eb698a1da65b2fdb52dc9df0f6c0f7"
+      "bytes": 25307,
+      "sha256": "bcae2e9b4259abe5e1f4eddade54ed7983c376d300a6d60fc6bfedd00fa957c1"
     },
     {
       "path": "src/ephi/ui/__init__.py",
@@ -841,8 +841,8 @@
     },
     {
       "path": "tests/test_o8_browser_transport.py",
-      "bytes": 18244,
-      "sha256": "a242233dbc88a20ef054381d8d8218fcde285ac0d6c0be0f257e1f291bde7c72"
+      "bytes": 18557,
+      "sha256": "b4a7c23b06f105850eef8eb070db3cd4794e147f0ca72ed6997f208952a85d24"
     },
     {
       "path": "tests/test_o8_current_authorization.py",
