@@ -22,7 +22,6 @@ import subprocess
 import sys
 import time
 from typing import Any, Iterator
-from urllib.parse import unquote, urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "src"
@@ -120,27 +119,88 @@ def _tool_version(prefix: Sequence[str]) -> tuple[str, int]:
     return output, int(match.group(1))
 
 
-def _password_from_dsn(dsn: str) -> str | None:
-    try:
-        parsed = urlsplit(dsn)
-        return unquote(parsed.password) if parsed.password is not None else None
-    except ValueError:
-        return None
-
-
 def _dsn_with_database(dsn: str, database: str) -> str:
-    """Replace only the database component without exposing it in evidence."""
+    """Replace only the database component using libpq's parser."""
 
-    if dsn.startswith(("postgresql://", "postgres://")):
-        return urlsplit(dsn)._replace(path="/" + database).geturl()
-    return dsn.rstrip() + " dbname=" + database
+    try:
+        from psycopg.conninfo import make_conninfo
+
+        return make_conninfo(dsn, dbname=database)
+    except ImportError:
+        raise OperationsFailure("PostgreSQL connection settings could not be prepared") from None
+    except Exception:
+        raise OperationsFailure("PostgreSQL connection settings could not be prepared") from None
 
 
-def _subprocess_env(dsn: str) -> dict[str, str]:
+_LIBPQ_ENVIRONMENT_NAMES = {
+    "host": "PGHOST",
+    "hostaddr": "PGHOSTADDR",
+    "port": "PGPORT",
+    "user": "PGUSER",
+    "dbname": "PGDATABASE",
+    "service": "PGSERVICE",
+    "password": "PGPASSWORD",
+    "passfile": "PGPASSFILE",
+    "application_name": "PGAPPNAME",
+    "connect_timeout": "PGCONNECT_TIMEOUT",
+    "client_encoding": "PGCLIENTENCODING",
+    "options": "PGOPTIONS",
+    "sslmode": "PGSSLMODE",
+    "sslcompression": "PGSSLCOMPRESSION",
+    "sslcert": "PGSSLCERT",
+    "sslkey": "PGSSLKEY",
+    "sslrootcert": "PGSSLROOTCERT",
+    "sslcrl": "PGSSLCRL",
+    "sslcrldir": "PGSSLCRLDIR",
+    "sslpassword": "PGSSLPASSWORD",
+    "gssencmode": "PGGSSENCMODE",
+    "krbsrvname": "PGKRBSRVNAME",
+    "gsslib": "PGGSSLIB",
+    "replication": "PGREPLICATION",
+    "target_session_attrs": "PGTARGETSESSIONATTRS",
+    "load_balance_hosts": "PGLOADBALANCEHOSTS",
+    "channel_binding": "PGCHANNELBINDING",
+    "keepalives": "PGKEEPALIVES",
+    "keepalives_idle": "PGKEEPALIVES_IDLE",
+    "keepalives_interval": "PGKEEPALIVES_INTERVAL",
+    "keepalives_count": "PGKEEPALIVES_COUNT",
+}
+
+
+def _libpq_parameters(dsn: str, *, database: str | None = None) -> dict[str, str]:
+    try:
+        from psycopg.conninfo import conninfo_to_dict
+
+        parameters = dict(conninfo_to_dict(dsn))
+    except ImportError:
+        raise OperationsFailure("PostgreSQL native-tool connection settings are unavailable") from None
+    except Exception:
+        raise OperationsFailure("PostgreSQL native-tool connection settings could not be parsed") from None
+    if database is not None:
+        parameters["dbname"] = database
+    return {str(key): str(value) for key, value in parameters.items() if value is not None}
+
+
+def _native_tool_database(dsn: str) -> str:
+    database = _libpq_parameters(dsn).get("dbname", "").strip()
+    if not database:
+        raise OperationsFailure("PostgreSQL native-tool database identity is missing")
+    return database
+
+
+def _subprocess_env(dsn: str, *, database: str | None = None) -> dict[str, str]:
+    """Build a private libpq environment; never put conninfo in native-tool argv."""
+
+    parameters = _libpq_parameters(dsn, database=database)
     environment = os.environ.copy()
-    password = _password_from_dsn(dsn)
-    if password is not None:
-        environment["PGPASSWORD"] = password
+    for variable in _LIBPQ_ENVIRONMENT_NAMES.values():
+        environment.pop(variable, None)
+    for variable in ("DATABASE_URL", "EPHI_POSTGRES_DSN", "EPHI_TEST_POSTGRES_DSN"):
+        environment.pop(variable, None)
+    for name, value in parameters.items():
+        variable = _LIBPQ_ENVIRONMENT_NAMES.get(name)
+        if variable is not None:
+            environment[variable] = value
     return environment
 
 
@@ -158,7 +218,6 @@ def _run_dump(prefix: Sequence[str], *, dsn: str, snapshot: str, output: Path) -
         "--no-owner",
         "--no-privileges",
         "--snapshot=" + snapshot,
-        "--dbname=" + dsn,
     ]
     try:
         with output.open("wb") as stream:
@@ -171,13 +230,19 @@ def _run_dump(prefix: Sequence[str], *, dsn: str, snapshot: str, output: Path) -
                 timeout=300,
             )
     except (OSError, subprocess.SubprocessError) as exc:
-        raise OperationsFailure("pg_dump execution failed") from exc
+        raise OperationsFailure("pg_dump execution failed") from None
     if completed.returncode != 0:
-        raise OperationsFailure("pg_dump failed; PostgreSQL backup is not verified")
+        raise OperationsFailure("pg_dump failed; PostgreSQL backup is not verified") from None
 
 
 def _run_restore(prefix: Sequence[str], *, dsn: str, dump_path: Path) -> None:
-    command = [*prefix, "--exit-on-error", "--no-owner", "--no-privileges", "--dbname=" + dsn]
+    command = [
+        *prefix,
+        "--exit-on-error",
+        "--no-owner",
+        "--no-privileges",
+        "--dbname=" + _native_tool_database(dsn),
+    ]
     try:
         with dump_path.open("rb") as stream:
             completed = subprocess.run(
@@ -190,9 +255,9 @@ def _run_restore(prefix: Sequence[str], *, dsn: str, dump_path: Path) -> None:
                 timeout=300,
             )
     except (OSError, subprocess.SubprocessError) as exc:
-        raise OperationsFailure("pg_restore execution failed") from exc
+        raise OperationsFailure("pg_restore execution failed") from None
     if completed.returncode != 0:
-        raise OperationsFailure("pg_restore failed; isolated restore is not verified")
+        raise OperationsFailure("pg_restore failed; isolated restore is not verified") from None
 
 
 def _connect(dsn: str, *, autocommit: bool = True):
@@ -347,6 +412,48 @@ def _artifact_inventory(connection: Any) -> list[dict[str, object]]:
             }
         )
     return sorted(inventory, key=lambda item: (str(item["scope_key_sha256"]), str(item["sha256"])))
+
+
+def _durable_worker_health(connection: Any) -> OperationsAxis:
+    """Classify the existing durable job table using PostgreSQL time."""
+
+    try:
+        row = connection.execute(
+            """
+            WITH authoritative_clock AS MATERIALIZED (
+                SELECT clock_timestamp() AS now
+            )
+            SELECT
+                COUNT(*)::int AS job_count,
+                COUNT(*) FILTER (WHERE status = 'FAILED')::int AS failed_count,
+                COUNT(*) FILTER (WHERE status = 'DEAD_LETTER')::int AS dead_letter_count,
+                COUNT(*) FILTER (WHERE status = 'RUNNING')::int AS running_count,
+                COUNT(*) FILTER (
+                    WHERE status = 'RUNNING'
+                      AND (lease_expires_at IS NULL OR lease_expires_at <= authoritative_clock.now)
+                )::int AS expired_running_count
+            FROM job
+            CROSS JOIN authoritative_clock
+            """
+        ).fetchone()
+    except Exception:
+        raise OperationsFailure("durable worker state could not be classified") from None
+    if row is None:
+        raise OperationsFailure("durable worker state classification returned no result")
+    facts = {
+        "job_count": int(row["job_count"]),
+        "failed_count": int(row["failed_count"]),
+        "dead_letter_count": int(row["dead_letter_count"]),
+        "running_count": int(row["running_count"]),
+        "expired_running_count": int(row["expired_running_count"]),
+        "authoritative_clock_used": True,
+    }
+    terminal_failure_count = facts["failed_count"] + facts["dead_letter_count"]
+    if terminal_failure_count:
+        return OperationsAxis.create("ERROR", "DURABLE_WORKER_TERMINAL_FAILURE", facts)
+    if facts["expired_running_count"]:
+        return OperationsAxis.create("STALE", "DURABLE_WORKER_EXPIRED_LEASE", facts)
+    return OperationsAxis.create("READY", "DURABLE_WORKER_STATE_REACHABLE", facts)
 
 
 def _copy_artifacts(source_root: Path, target_root: Path, inventory: Sequence[Mapping[str, object]]) -> None:
@@ -687,7 +794,6 @@ def operations_status(*, dsn: str | None, artifact_root: str | os.PathLike[str] 
                     workers = OperationsAxis.create("ERROR", "CRITICAL_SCHEMA_MISSING", {"missing_table_count": len(missing)})
                 else:
                     postgres = OperationsAxis.create("READY", "POSTGRES_REACHABLE_AND_SCHEMA_PRESENT", {"critical_table_count": len(CRITICAL_TABLES)})
-                    current = _table_inventory(connection)
                     if artifact_root is None:
                         artifacts = OperationsAxis.create("UNAVAILABLE", "IMMUTABLE_ARTIFACT_ROOT_NOT_CONFIGURED", {"configured": False})
                     else:
@@ -698,17 +804,13 @@ def operations_status(*, dsn: str | None, artifact_root: str | os.PathLike[str] 
                             "IMMUTABLE_ARTIFACT_BYTES_FAILED" if failures else "IMMUTABLE_ARTIFACT_INVENTORY_VERIFIED",
                             {"artifact_count": len(artifact_inventory), "inventory_known": True},
                         )
-                    workers = OperationsAxis.create(
-                        "READY",
-                        "DURABLE_WORKER_STATE_REACHABLE",
-                        {"job_count": current["job"]["row_count"], "state_inventory_known": True},
-                    )
+                    workers = _durable_worker_health(connection)
             finally:
                 connection.close()
-        except OperationsFailure:
+        except OperationsFailure as exc:
             postgres = OperationsAxis.create("UNAVAILABLE", "POSTGRES_UNAVAILABLE", {"configured": True})
             artifacts = OperationsAxis.create("UNAVAILABLE", "POSTGRES_UNAVAILABLE", {"configured": True})
-            workers = OperationsAxis.create("UNAVAILABLE", "POSTGRES_UNAVAILABLE", {"configured": True})
+            workers = OperationsAxis.create("UNAVAILABLE", str(exc), {"configured": True})
     evidence = OperationsAxis.create("NOT_QUALIFIED", "QUALIFICATION_AUTHORITY_NOT_BOUND", {"freshness_known": False})
     snapshot = operations_health_snapshot(
         process_transport=process,

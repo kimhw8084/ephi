@@ -836,8 +836,8 @@
     },
     {
       "path": "tests/test_o9_operations.py",
-      "bytes": 11058,
-      "sha256": "be25742513eca9987db6ef89da0a8fb0ff48cc3f46f225d4ac2907cd71f5f2c1"
+      "bytes": 18221,
+      "sha256": "2a06d807b85c3a1a2d55d934d5a75f964e0e96cc3fc0afa74339616bd62487cc"
     },
     {
       "path": "tests/test_package.py",
@@ -891,8 +891,8 @@
     },
     {
       "path": "tools/o9_operations.py",
-      "bytes": 35000,
-      "sha256": "15b7dd66dd98fd706eb8bc19e7693f3ac627637bd9cb73571541674c8623d158"
+      "bytes": 39045,
+      "sha256": "67e41ae111b5246e5410ff251b3561f879b082737bce502cfb03eda50744c2e8"
     },
     {
       "path": "tools/o9_real_rehearsal.py",
