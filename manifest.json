@@ -836,8 +836,8 @@
     },
     {
       "path": "tests/test_o9_operations.py",
-      "bytes": 18221,
-      "sha256": "2a06d807b85c3a1a2d55d934d5a75f964e0e96cc3fc0afa74339616bd62487cc"
+      "bytes": 18285,
+      "sha256": "adc9e17d8ce0b06dcb33db9c664b1c07c87d4a49688fb8a3ff04d84590801038"
     },
     {
       "path": "tests/test_package.py",

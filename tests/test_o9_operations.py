@@ -296,6 +296,7 @@ class O9WorkerHealthPostgreSQLTests(unittest.TestCase):
 
         self.adapter = PostgreSQLReferenceTransactionAdapter(DSN)
         self.addCleanup(self._cleanup)
+        self.adapter.connection.execute("TRUNCATE job CASCADE")
         self._delete_jobs()
 
     def _delete_jobs(self):
