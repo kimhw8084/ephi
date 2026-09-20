@@ -101,3 +101,15 @@ jobs:
         env:
           EPHI_TEST_POSTGRES_DSN: postgresql://ephi_ci:ephi_ci_password@127.0.0.1:5432/ephi_ci
         run: python -m unittest tests.test_o2_postgresql_artifacts -v
+      - name: Run PostgreSQL O3 attention and episode integration tests
+        env:
+          EPHI_TEST_POSTGRES_DSN: postgresql://ephi_ci:ephi_ci_password@127.0.0.1:5432/ephi_ci
+        run: python -m unittest tests.test_o3_postgresql -v
+      - name: Run PostgreSQL O4 source ingress integration tests
+        env:
+          EPHI_TEST_POSTGRES_DSN: postgresql://ephi_ci:ephi_ci_password@127.0.0.1:5432/ephi_ci
+        run: python -m unittest tests.test_o4_source_ingress_postgresql -v
+      - name: Run PostgreSQL adapter lifecycle regression tests
+        env:
+          EPHI_TEST_POSTGRES_DSN: postgresql://ephi_ci:ephi_ci_password@127.0.0.1:5432/ephi_ci
+        run: python -m unittest tests.test_postgresql_adapter_lifecycle -v
