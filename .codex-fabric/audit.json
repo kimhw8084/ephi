@@ -1,0 +1,444 @@
+{
+  "accepted_at": "2026-09-20T18:24:35Z",
+  "changed_files": [
+    {
+      "additions": 62,
+      "deletions": 0,
+      "path": ".github/workflows/package.yml",
+      "status": "M"
+    },
+    {
+      "additions": 30,
+      "deletions": 10,
+      "path": "manifest.json",
+      "status": "M"
+    },
+    {
+      "additions": 275,
+      "deletions": 0,
+      "path": "src/ephi/application/o10.py",
+      "status": "A"
+    },
+    {
+      "additions": 7,
+      "deletions": 6,
+      "path": "src/ephi/infrastructure/postgresql_o3.py",
+      "status": "M"
+    },
+    {
+      "additions": 644,
+      "deletions": 135,
+      "path": "src/ephi/ui/app.py",
+      "status": "M"
+    },
+    {
+      "additions": 80,
+      "deletions": 0,
+      "path": "tests/test_o10_rendered_accessibility.py",
+      "status": "A"
+    },
+    {
+      "additions": 29,
+      "deletions": 0,
+      "path": "tests/test_o3_postgresql.py",
+      "status": "M"
+    },
+    {
+      "additions": 903,
+      "deletions": 0,
+      "path": "tools/o10_rendered_accessibility.py",
+      "status": "A"
+    },
+    {
+      "additions": 103,
+      "deletions": 0,
+      "path": "tools/o10_state_harness.py",
+      "status": "A"
+    },
+    {
+      "additions": 1,
+      "deletions": 1,
+      "path": "tools/o8_browser_qualification.py",
+      "status": "M"
+    }
+  ],
+  "checks": [
+    {
+      "command": "/bin/zsh -lc 'rtk tar -czf /tmp/ephi-o10-fix1-carrier-stage/ephi-o10-rendered-accessibility-fix1-bundle.tar.gz -C /tmp/ephi-o10-fix1-carrier-stage structured && rtk shasum -a 256 /tmp/ephi-o10-fix1-carrier-stage/ephi-o10-rendered-accessibility-fix1-bundle.tar.gz && rtk tar -tzf /tmp/ephi-o10-fix1-carrier-stage/ephi-o10-rendered-accessibility-fix1-bundle.tar.gz | head -40'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk env PYTHONPATH=src /opt/anaconda3/bin/python3 - <<'PY'\nfrom pathlib import Path\nimport hashlib, json, subprocess\n\nroot = Path('/tmp/ephi-o10-fix1-carrier-stage')\nrepo = Path('/Users/haewonkim/.codex-fabric/worktrees/CF-7a62f348f005b4340f3fb3da')\nrun = lambda *args: subprocess.check_output(args, cwd=repo, text=True).strip()\nsha = lambda path: hashlib.sha256(path.read_bytes()).hexdigest()\nsize = lambda path: path.stat().st_size\ncandidate = run('git', 'rev-parse', 'HEAD')\ntree = run('git', 'rev-parse', 'HEAD\"'^{tree}'\"')\nparent = run('git', 'rev-parse', 'HEAD\"'^'\"')\nreport = json.loads((root / 'structured/o10-rendered/report.json').read_text(encoding='utf-8'))\nfiles = sorted(path for path in root.joinpath('structured').rglob('*') if path.is_file())\nstructured = {path.relative_to(root).as_posix(): {'bytes': size(path), 'sha256': sha(path)} for path in files}\nscreenshots = {path.relative_to(root).as_posix(): meta for path, meta in structured.items() if path.endswith('.png')}\nstructured_evidence = {path: meta for path, meta in structured.items() if not path.endswith('.png')}\nbundle = root / 'ephi-o10-rendered-accessibility-fix1-bundle.tar.gz'\nmanifest = {\n    'schema_version': 1,\n    'evidence_kind': 'project_os_artifact_carrier',\n    'status': 'PASS_BOUNDED_FIX_WITH_EXPLICIT_GO_AUDIT_BOUNDARY',\n    'project': 'ephi',\n    'request': 'ephi-o10-rendered-accessibility-fix1',\n    'operation': 'FIX',\n    'fabric_job': 'CF-7a62f348f005b4340f3fb3da',\n    'target_base_sha': '9262533404f13df52ef20a7a1245b120f4438b04',\n    'predecessor': {\n        'candidate_sha': parent,\n        'candidate_tree': '349a9468dffdce2df73d0a542063d66e431ae578',\n        'fabric_job': 'CF-fec431c5cf2d9f477672de0e',\n        'deterministic_evidence': '553c7f419c3887408560a8b06634410848e1868f',\n        'historical_carrier': 'project-os-artifacts/ephi/ephi-o10-rendered-accessibility-v1@98ffe377bf8de563f9ea1702ce51835c7de844c',\n    },\n    'repair_candidate_sha': candidate,\n    'repair_candidate_tree': tree,\n    'repair_candidate_parent': parent,\n    'work_branch': 'codex/ephi-o10-rendered-accessibility-fix1',\n    'carrier_ref': 'refs/heads/project-os-artifacts/ephi/ephi-o10-rendered-accessibility-fix1',\n    'bundle': {'path': bundle.name, 'bytes': size(bundle), 'sha256': sha(bundle)},\n    'structured_evidence': structured_evidence,\n    'screenshots': screenshots,\n    'qualification': {\n        'report_status': report.get('status'),\n        'acceptance_status': report.get('acceptance', {}).get('status'),\n        'acceptance_failed': report.get('acceptance', {}).get('failed'),\n        'responsive_viewports': {key: value.get('status') for key, value in report.get('responsive', {}).items()},\n        'screenshot_count': len(screenshots),\n        'changed_file_inventory_included': True,\n        'remote_readback_included': True,\n        'production_performance_claim': 'NOT_CLAIMED',\n        'human_ux_review': 'PENDING',\n    },\n    'scope_boundary': 'No main mutation, merge, integration PR, Notion mutation, production-like performance claim, human UX-review claim, or later O10/O11 work.',\n    'secret_safety': {\n        'cookies': False,\n        'storage_or_session_secrets': False,\n        'authorization_headers': False,\n        'dsns': False,\n        'real_identities': False,\n        'protected_rows': False,\n        'raw_artifact_bytes': False,\n        'notion_credentials': False,\n        'synthetic_ar2_sidecars': False,\n    },\n}\n(root / 'carrier-manifest.json').write_text(json.dumps(manifest, ensure_ascii=False, sort_keys=True, indent=2) + '\\\\n', encoding='utf-8')\nprint(json.dumps({'manifest': str(root / 'carrier-manifest.json'), 'manifest_sha256': sha(root / 'carrier-manifest.json'), 'bundle_sha256': sha(bundle), 'structured_count': len(structured_evidence), 'screenshot_count': len(screenshots)}, sort_keys=True))\nPY\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk env PYTHONPATH=src /opt/anaconda3/bin/python3 - <<'PY'\nfrom pathlib import Path\nimport hashlib, json, subprocess\n\nroot = Path('/tmp/ephi-o10-fix1-carrier-stage')\nrepo = Path('/Users/haewonkim/.codex-fabric/worktrees/CF-7a62f348f005b4340f3fb3da')\nrun = lambda *args: subprocess.check_output(args, cwd=repo, text=True).strip()\nsha = lambda path: hashlib.sha256(path.read_bytes()).hexdigest()\nsize = lambda path: path.stat().st_size\ncandidate = run('git', 'rev-parse', 'HEAD')\ntree = run('git', 'rev-parse', 'HEAD\"'^{tree}'\"')\nparent = run('git', 'rev-parse', 'HEAD\"'^'\"')\nreport = json.loads((root / 'structured/o10-rendered/report.json').read_text(encoding='utf-8'))\npaths = sorted(path for path in root.joinpath('structured').rglob('*') if path.is_file())\nstructured = {path.relative_to(root).as_posix(): {'bytes': size(path), 'sha256': sha(path)} for path in paths}\nscreenshots = {path: meta for path, meta in structured.items() if path.endswith('.png')}\nstructured_evidence = {path: meta for path, meta in structured.items() if not path.endswith('.png')}\nbundle = root / 'ephi-o10-rendered-accessibility-fix1-bundle.tar.gz'\nmanifest = {\n    'schema_version': 1,\n    'evidence_kind': 'project_os_artifact_carrier',\n    'status': 'PASS_BOUNDED_FIX_WITH_EXPLICIT_GO_AUDIT_BOUNDARY',\n    'project': 'ephi',\n    'request': 'ephi-o10-rendered-accessibility-fix1',\n    'operation': 'FIX',\n    'fabric_job': 'CF-7a62f348f005b4340f3fb3da',\n    'target_base_sha': '9262533404f13df52ef20a7a1245b120f4438b04',\n    'predecessor': {\n        'candidate_sha': parent,\n        'candidate_tree': '349a9468dffdce2df73d0a542063d66e431ae578',\n        'fabric_job': 'CF-fec431c5cf2d9f477672de0e',\n        'deterministic_evidence': '553c7f419c3887408560a8b06634410848e1868f',\n        'historical_carrier': 'project-os-artifacts/ephi/ephi-o10-rendered-accessibility-v1@98ffe377bf8de563f9ea1702ce51835c7de844c',\n    },\n    'repair_candidate_sha': candidate,\n    'repair_candidate_tree': tree,\n    'repair_candidate_parent': parent,\n    'work_branch': 'codex/ephi-o10-rendered-accessibility-fix1',\n    'carrier_ref': 'refs/heads/project-os-artifacts/ephi/ephi-o10-rendered-accessibility-fix1',\n    'bundle': {'path': bundle.name, 'bytes': size(bundle), 'sha256': sha(bundle)},\n    'structured_evidence': structured_evidence,\n    'screenshots': screenshots,\n    'qualification': {\n        'report_status': report.get('status'),\n        'acceptance_status': report.get('acceptance', {}).get('status'),\n        'acceptance_failed': report.get('acceptance', {}).get('failed'),\n        'responsive_viewports': {key: value.get('status') for key, value in report.get('responsive', {}).items()},\n        'screenshot_count': len(screenshots),\n        'changed_file_inventory_included': True,\n        'remote_readback_included': True,\n        'production_performance_claim': 'NOT_CLAIMED',\n        'human_ux_review': 'PENDING',\n    },\n    'scope_boundary': 'No main mutation, merge, integration PR, Notion mutation, production-like performance claim, human UX-review claim, or later O10/O11 work.',\n    'secret_safety': {\n        'cookies': False,\n        'storage_or_session_secrets': False,\n        'authorization_headers': False,\n        'dsns': False,\n        'real_identities': False,\n        'protected_rows': False,\n        'raw_artifact_bytes': False,\n        'notion_credentials': False,\n        'synthetic_ar2_sidecars': False,\n    },\n}\n(root / 'carrier-manifest.json').write_text(json.dumps(manifest, ensure_ascii=False, sort_keys=True, indent=2) + '\\\\n', encoding='utf-8')\nprint(json.dumps({'manifest': str(root / 'carrier-manifest.json'), 'manifest_sha256': sha(root / 'carrier-manifest.json'), 'bundle_sha256': sha(bundle), 'structured_count': len(structured_evidence), 'screenshot_count': len(screenshots)}, sort_keys=True))\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git ls-remote origin refs/heads/project-os-artifacts/ephi/ephi-o10-rendered-accessibility-fix1 && rtk git ls-remote origin refs/heads/codex-fabric/evidence/ephi/ephi-o10-rendered-accessibility-fix1'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk mktemp -d -t ephi-o10-fix1-carrier'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk cp /tmp/ephi-o10-fix1-carrier-stage/carrier-manifest.json /tmp/ephi-o10-fix1-carrier-stage/ephi-o10-rendered-accessibility-fix1-bundle.tar.gz /var/folders/nz/6q2p_ldx3txdbw_gttbpnwjr0000gn/T/ephi-o10-fix1-carrier.HENbyvRZXl/ && rtk git -C /var/folders/nz/6q2p_ldx3txdbw_gttbpnwjr0000gn/T/ephi-o10-fix1-carrier.HENbyvRZXl init -q --initial-branch=carrier && rtk git -C /var/folders/nz/6q2p_ldx3txdbw_gttbpnwjr0000gn/T/ephi-o10-fix1-carrier.HENbyvRZXl remote add origin https://github.com/kimhw8084/ephi.git && rtk git -C /var/folders/nz/6q2p_ldx3txdbw_gttbpnwjr0000gn/T/ephi-o10-fix1-carrier.HENbyvRZXl add carrier-manifest.json ephi-o10-rendered-accessibility-fix1-bundle.tar.gz && rtk git -C /var/folders/nz/6q2p_ldx3txdbw_gttbpnwjr0000gn/T/ephi-o10-fix1-carrier.HENbyvRZXl -c user.name='Project OS Artifact Publisher' -c user.email='project-os-artifacts@users.noreply.github.com' commit -q -m 'Publish CHG-156 O10 FIX1 evidence package' && rtk git -C /var/folders/nz/6q2p_ldx3txdbw_gttbpnwjr0000gn/T/ephi-o10-fix1-carrier.HENbyvRZXl rev-parse HEAD && rtk git -C /var/folders/nz/6q2p_ldx3txdbw_gttbpnwjr0000gn/T/ephi-o10-fix1-carrier.HENbyvRZXl rev-parse HEAD\"'^{tree}'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git -C /var/folders/nz/6q2p_ldx3txdbw_gttbpnwjr0000gn/T/ephi-o10-fix1-carrier.HENbyvRZXl push origin HEAD:refs/heads/project-os-artifacts/ephi/ephi-o10-rendered-accessibility-fix1'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git fetch --no-tags origin '+refs/heads/project-os-artifacts/ephi/ephi-o10-rendered-accessibility-fix1:refs/remotes/origin/project-os-artifacts/ephi/ephi-o10-rendered-accessibility-fix1' && rtk env PYTHONPATH=src /opt/anaconda3/bin/python3 - <<'PY'\nimport hashlib, io, json, subprocess, tarfile\n\nrepo = '/Users/haewonkim/.codex-fabric/worktrees/CF-7a62f348f005b4340f3fb3da'\nref = 'refs/remotes/origin/project-os-artifacts/ephi/ephi-o10-rendered-accessibility-fix1'\ngit = lambda *args: subprocess.check_output(['git', '-C', repo, *args])\ncommit = git('rev-parse', f'{ref}\"'^{{commit}}'\"').decode().strip()\ntree = git('rev-parse', f'{ref}\"'^{{tree}}'\"').decode().strip()\nparents = git('show', '-s', '--format=%P', commit).decode().strip().split()\nmanifest_bytes = git('show', f'{commit}:carrier-manifest.json')\nbundle_bytes = git('show', f'{commit}:ephi-o10-rendered-accessibility-fix1-bundle.tar.gz')\nmanifest = json.loads(manifest_bytes)\nsha = lambda value: hashlib.sha256(value).hexdigest()\nwith tarfile.open(fileobj=io.BytesIO(bundle_bytes), mode='r:gz') as archive:\n    names = sorted(member.name for member in archive.getmembers() if member.isfile())\n    member_hashes = {name: sha(archive.extractfile(name).read()) for name in names}\nexpected = {**manifest['structured_evidence'], **manifest['screenshots']}\nchecks = {\n    'remote_commit': commit,\n    'remote_tree': tree,\n    'parents': parents,\n    'candidate_binding': manifest['repair_candidate_sha'] == 'c479a1d5ec79dff59f65300f8d644411cac1bd56' and manifest['repair_candidate_tree'] == '0852829d78f0f9bd86e53208fe80e44cce7867c7',\n    'lineage_binding': manifest['predecessor']['candidate_sha'] == 'e75872d974c4edeaf55356855e96b3b8ca275dab' and manifest['predecessor']['candidate_tree'] == '349a9468dffdce2df73d0a542063d66e431ae578',\n    'identity_binding': manifest['project'] == 'ephi' and manifest['request'] == 'ephi-o10-rendered-accessibility-fix1' and manifest['operation'] == 'FIX' and manifest['fabric_job'] == 'CF-7a62f348f005b4340f3fb3da',\n    'bundle_sha256': sha(bundle_bytes),\n    'bundle_hash_matches_manifest': sha(bundle_bytes) == manifest['bundle']['sha256'],\n    'bundle_inventory_exact': names == sorted(expected),\n    'bundle_member_hashes_exact': all(member_hashes.get(name) == metadata['sha256'] for name, metadata in expected.items()),\n    'manifest_sha256': sha(manifest_bytes),\n    'secret_safety_all_false': all(value is False for value in manifest['secret_safety'].values()),\n}\nprint(json.dumps(checks, sort_keys=True, indent=2))\nassert parents == []\nassert all(checks[key] for key in ('candidate_binding', 'lineage_binding', 'identity_binding', 'bundle_hash_matches_manifest', 'bundle_inventory_exact', 'bundle_member_hashes_exact', 'secret_safety_all_false'))\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk /Users/haewonkim/.codex-fabric/bin/fabricctl status CF-7a62f348f005b4340f3fb3da && rtk ls -ld /Users/haewonkim/.codex-fabric/jobs/CF-7a62f348f005b4340f3fb3da* /Users/haewonkim/.codex-fabric/results/CF-7a62f348f005b4340f3fb3da 2>/dev/null || true'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk find /Users/haewonkim/.codex-fabric/results/CF-7a62f348f005b4340f3fb3da -maxdepth 1 -type f -print 2>/dev/null | sort && rtk sed -n '1,120p' /Users/haewonkim/.codex-fabric/results/CF-7a62f348f005b4340f3fb3da/result.json 2>/dev/null || true\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/o8_browser_qualification.py --help'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 tools/o8_browser_qualification.py --dsn 'postgresql://ephi_ci:ephi_ci_password@127.0.0.1:55432/ephi_ci' --output /tmp/ephi-o8-fix1-direct.json && rtk python3 tools/o8_browser_qualification.py --dsn 'postgresql://ephi_ci:ephi_ci_password@127.0.0.1:55432/ephi_ci' --proxy --root-path /ephi-proxy --output /tmp/ephi-o8-fix1-proxy.json\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '360,450p' tools/o8_browser_qualification.py && rtk sed -n '520,575p' tools/o8_browser_qualification.py && rtk ls -l /tmp/ephi-o8-fix1-direct.json /tmp/ephi-o8-fix1-proxy.json 2>/dev/null || true\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 tools/o8_browser_qualification.py --dsn 'postgresql://ephi_ci:ephi_ci_password@127.0.0.1:55432/ephi_ci' --output /tmp/ephi-o8-fix1-direct2.json && rtk python3 tools/o8_browser_qualification.py --dsn 'postgresql://ephi_ci:ephi_ci_password@127.0.0.1:55432/ephi_ci' --proxy --root-path /ephi-proxy --output /tmp/ephi-o8-fix1-proxy2.json\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '260,380p' tools/o8_browser_qualification.py && rtk sed -n '760,840p' tools/o10_rendered_accessibility.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk env PYTHONPATH=src /opt/anaconda3/bin/python3 - <<'PY'\nfrom pathlib import Path\nimport os, shutil\nimport tools.o8_browser_qualification as o8\n\nroot = Path('/tmp/ephi-o8-fix1-debug')\nshutil.rmtree(root, ignore_errors=True)\nroot.mkdir()\nclass KeepTemp:\n    def __init__(self, *args, **kwargs): pass\n    def __enter__(self): return str(root)\n    def __exit__(self, *args): return False\n\no8.tempfile.TemporaryDirectory = KeepTemp\ntry:\n    print(o8.qualify('postgresql://ephi_ci:ephi_ci_password@127.0.0.1:55432/ephi_ci', 18111, '', Path('/tmp/ephi-o8-fix1-debug-report.json')))\nexcept Exception as exc:\n    print(type(exc).__name__, str(exc))\n    print((root / 'server.log').read_text(encoding='utf-8', errors='replace')[-12000:])\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '580,620p' tools/o8_browser_qualification.py && rtk ls -l /tmp/ephi-o8-fix1-debug-report.json && rtk git status --short --branch\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 tools/o8_browser_qualification.py --dsn 'postgresql://ephi_ci:ephi_ci_password@127.0.0.1:55432/ephi_ci' --port 18112 --output /tmp/ephi-o8-fix1-direct3.json && rtk python3 tools/o8_browser_qualification.py --dsn 'postgresql://ephi_ci:ephi_ci_password@127.0.0.1:55432/ephi_ci' --port 18114 --proxy --proxy-port 18115 --root-path /ephi-proxy --output /tmp/ephi-o8-fix1-proxy3.json\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n -C 6 \\\"o8_browser_qualification|O8_2_BROWSER\\\" .github/workflows/package.yml && rtk git show HEAD:tools/o8_browser_qualification.py | rg -n \\\"Attention list|get_by_role\\\\(\\\\\\\"heading\\\\\\\"\\\" | head -20\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk /opt/anaconda3/bin/python3 -S tools/check_package.py --refresh-manifest && rtk python3 -m compileall -q src tools && rtk git diff --check && rtk git status --short'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git add manifest.json tools/o8_browser_qualification.py && rtk git commit -m 'Align O8 browser qualification with Attention heading' && rtk git rev-parse HEAD && rtk git rev-parse HEAD\"'^{tree} && rtk git rev-parse HEAD''^'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git push origin HEAD:refs/heads/codex/ephi-o10-rendered-accessibility-fix1'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git ls-remote origin refs/heads/main refs/heads/codex/ephi-o10-rendered-accessibility-fix1'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk mkdir -p /tmp/ephi-o10-fix1-carrier-stage/structured/o8 && rtk cp /tmp/ephi-o8-fix1-direct3.json /tmp/ephi-o8-fix1-proxy3.json /tmp/ephi-o10-fix1-carrier-stage/structured/o8/ && rtk find /tmp/ephi-o10-fix1-carrier-stage/structured -type f | sort | tail -15'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk env PYTHONPATH=src /opt/anaconda3/bin/python3 - <<'PY'\nfrom pathlib import Path\nimport hashlib, json, subprocess\n\nroot = Path('/Users/haewonkim/.codex-fabric/worktrees/CF-7a62f348f005b4340f3fb3da')\nout = Path('/tmp/ephi-o9-fix1-utf8-evidence/package-and-repository-checks.json')\nrun = lambda *args: subprocess.check_output(args, cwd=root, text=True).strip()\nsha = lambda path: hashlib.sha256(Path(path).read_bytes()).hexdigest()\nhead = run('git', 'rev-parse', 'HEAD')\ntree = run('git', 'rev-parse', 'HEAD\"'^{tree}'\"')\nparent = run('git', 'rev-parse', 'HEAD\"'^'\"')\nbase_candidate = 'e75872d974c4edeaf55356855e96b3b8ca275dab'\nchanged = run('git', 'diff', '--name-only', base_candidate, 'HEAD').splitlines()\nchanged_files = []\nfor path in changed:\n    raw = subprocess.check_output(['git', 'show', f'HEAD:{path}'], cwd=root)\n    changed_files.append({'path': path, 'bytes': len(raw), 'sha256': hashlib.sha256(raw).hexdigest()})\nreport_path = Path('/tmp/ephi-o10-fix1-report12.json')\nreport = json.loads(report_path.read_text(encoding='utf-8'))\no8_direct = json.loads(Path('/tmp/ephi-o8-fix1-direct3.json').read_text(encoding='utf-8'))\no8_proxy = json.loads(Path('/tmp/ephi-o8-fix1-proxy3.json').read_text(encoding='utf-8'))\no9_dir = Path('/tmp/ephi-o9-fix1-utf8-evidence')\nchecks = json.loads(out.read_text(encoding='utf-8'))\nchecks.update({\n    'predecessor_candidate_sha': base_candidate,\n    'repair_candidate_sha': head,\n    'repair_candidate_tree': tree,\n    'repair_candidate_parent': parent,\n    'changed_files': changed_files,\n    'rendered_qualification': {\n        **checks['rendered_qualification'],\n        'report_sha256': sha(report_path),\n        'acceptance': report.get('acceptance'),\n        'responsive_statuses': {key: value.get('status') for key, value in report.get('responsive', {}).items()},\n        'forced_colors': report.get('real_browser', {}).get('forced_colors', {}).get('status'),\n    },\n    'o8_browser_session_security': {\n        'direct_status': o8_direct.get('status'),\n        'proxy_status': o8_proxy.get('status'),\n        'direct_console_errors': len(o8_direct.get('browser', {}).get('console_errors', [])),\n        'proxy_console_errors': len(o8_proxy.get('browser', {}).get('console_errors', [])),\n        'direct_failed_network_urls': len(o8_direct.get('browser', {}).get('failed_network_urls', [])),\n        'proxy_failed_network_urls': len(o8_proxy.get('browser', {}).get('failed_network_urls', [])),\n        'direct_websocket_matrix': o8_direct.get('websocket_matrix'),\n        'proxy_websocket_matrix': o8_proxy.get('websocket_matrix'),\n        'secret_safe': o8_direct.get('browser', {}).get('secret_safety') is None and o8_proxy.get('browser', {}).get('secret_safety') is None,\n    },\n})\nout.write_text(json.dumps(checks, ensure_ascii=False, sort_keys=True, indent=2) + '\\\\n', encoding='utf-8')\nprint(json.dumps({'candidate': head, 'tree': tree, 'parent': parent, 'changed_file_count': len(changed_files), 'checks_sha256': sha(out), 'o8_direct': o8_direct.get('status'), 'o8_proxy': o8_proxy.get('status')}, sort_keys=True))\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk jq '{direct_keys:(keys),direct_secret:.browser.secret_safety,proxy_keys:(keys),proxy_secret:.browser.secret_safety}' /tmp/ephi-o8-fix1-direct3.json /tmp/ephi-o8-fix1-proxy3.json\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk env PYTHONPATH=src /opt/anaconda3/bin/python3 - <<'PY'\nfrom pathlib import Path\nimport hashlib, json\nout = Path('/tmp/ephi-o9-fix1-utf8-evidence/package-and-repository-checks.json')\ndata = json.loads(out.read_text(encoding='utf-8'))\ndirect = json.loads(Path('/tmp/ephi-o8-fix1-direct3.json').read_text(encoding='utf-8'))\nproxy = json.loads(Path('/tmp/ephi-o8-fix1-proxy3.json').read_text(encoding='utf-8'))\ndata['o8_browser_session_security']['secret_safe'] = all(value is False for value in direct.get('secret_safety', {}).values()) and all(value is False for value in proxy.get('secret_safety', {}).values())\nout.write_text(json.dumps(data, ensure_ascii=False, sort_keys=True, indent=2) + '\\\\n', encoding='utf-8')\nprint(hashlib.sha256(out.read_bytes()).hexdigest())\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk tar -czf /tmp/ephi-o10-fix1-carrier-stage/ephi-o10-rendered-accessibility-fix1-bundle.tar.gz -C /tmp/ephi-o10-fix1-carrier-stage structured && rtk env PYTHONPATH=src /opt/anaconda3/bin/python3 - <<'PY'\nfrom pathlib import Path\nimport hashlib, json, subprocess\n\nroot = Path('/tmp/ephi-o10-fix1-carrier-stage')\nrepo = Path('/Users/haewonkim/.codex-fabric/worktrees/CF-7a62f348f005b4340f3fb3da')\nrun = lambda *args: subprocess.check_output(args, cwd=repo, text=True).strip()\nsha = lambda path: hashlib.sha256(path.read_bytes()).hexdigest()\nsize = lambda path: path.stat().st_size\ncandidate = run('git', 'rev-parse', 'HEAD')\ntree = run('git', 'rev-parse', 'HEAD\"'^{tree}'\"')\nparent = run('git', 'rev-parse', 'HEAD\"'^'\"')\nreport = json.loads((root / 'structured/o10-rendered/report.json').read_text(encoding='utf-8'))\npaths = sorted(path for path in root.joinpath('structured').rglob('*') if path.is_file())\nstructured = {path.relative_to(root).as_posix(): {'bytes': size(path), 'sha256': sha(path)} for path in paths}\nscreenshots = {path: meta for path, meta in structured.items() if path.endswith('.png')}\nstructured_evidence = {path: meta for path, meta in structured.items() if not path.endswith('.png')}\nbundle = root / 'ephi-o10-rendered-accessibility-fix1-bundle.tar.gz'\nmanifest = {\n    'schema_version': 1,\n    'evidence_kind': 'project_os_artifact_carrier',\n    'status': 'PASS_BOUNDED_FIX_WITH_EXPLICIT_GO_AUDIT_BOUNDARY',\n    'project': 'ephi',\n    'request': 'ephi-o10-rendered-accessibility-fix1',\n    'operation': 'FIX',\n    'fabric_job': 'CF-7a62f348f005b4340f3fb3da',\n    'target_base_sha': '9262533404f13df52ef20a7a1245b120f4438b04',\n    'predecessor': {\n        'candidate_sha': 'e75872d974c4edeaf55356855e96b3b8ca275dab',\n        'candidate_tree': '349a9468dffdce2df73d0a542063d66e431ae578',\n        'fabric_job': 'CF-fec431c5cf2d9f477672de0e',\n        'deterministic_evidence': '553c7f419c3887408560a8b06634410848e1868f',\n        'historical_carrier': 'project-os-artifacts/ephi/ephi-o10-rendered-accessibility-v1@98ffe377bf8de563f9ea1702ce51835c7de844c',\n    },\n    'repair_candidate_sha': candidate,\n    'repair_candidate_tree': tree,\n    'repair_candidate_parent': parent,\n    'work_branch': 'codex/ephi-o10-rendered-accessibility-fix1',\n    'carrier_ref': 'refs/heads/project-os-artifacts/ephi/ephi-o10-rendered-accessibility-fix1',\n    'bundle': {'path': bundle.name, 'bytes': size(bundle), 'sha256': sha(bundle)},\n    'structured_evidence': structured_evidence,\n    'screenshots': screenshots,\n    'qualification': {\n        'report_status': report.get('status'),\n        'acceptance_status': report.get('acceptance', {}).get('status'),\n        'acceptance_failed': report.get('acceptance', {}).get('failed'),\n        'responsive_viewports': {key: value.get('status') for key, value in report.get('responsive', {}).items()},\n        'screenshot_count': len(screenshots),\n        'o8_direct': 'PASS',\n        'o8_proxy': 'PASS',\n        'changed_file_inventory_included': True,\n        'remote_readback_included': True,\n        'production_performance_claim': 'NOT_CLAIMED',\n        'human_ux_review': 'PENDING',\n    },\n    'scope_boundary': 'No main mutation, merge, integration PR, Notion mutation, production-like performance claim, human UX-review claim, or later O10/O11 work.',\n    'secret_safety': {\n        'cookies': False,\n        'storage_or_session_secrets': False,\n        'authorization_headers': False,\n        'dsns': False,\n        'real_identities': False,\n        'protected_rows': False,\n        'raw_artifact_bytes': False,\n        'notion_credentials': False,\n        'synthetic_ar2_sidecars': False,\n    },\n}\n(root / 'carrier-manifest.json').write_text(json.dumps(manifest, ensure_ascii=False, sort_keys=True, indent=2) + '\\\\n', encoding='utf-8')\nprint(json.dumps({'candidate': candidate, 'tree': tree, 'parent': parent, 'bundle_sha256': sha(bundle), 'manifest_sha256': sha(root / 'carrier-manifest.json'), 'structured_count': len(structured_evidence), 'screenshot_count': len(screenshots)}, sort_keys=True))\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk cp /tmp/ephi-o10-fix1-carrier-stage/carrier-manifest.json /tmp/ephi-o10-fix1-carrier-stage/ephi-o10-rendered-accessibility-fix1-bundle.tar.gz /var/folders/nz/6q2p_ldx3txdbw_gttbpnwjr0000gn/T/ephi-o10-fix1-carrier.HENbyvRZXl/ && rtk git -C /var/folders/nz/6q2p_ldx3txdbw_gttbpnwjr0000gn/T/ephi-o10-fix1-carrier.HENbyvRZXl add carrier-manifest.json ephi-o10-rendered-accessibility-fix1-bundle.tar.gz && rtk git -C /var/folders/nz/6q2p_ldx3txdbw_gttbpnwjr0000gn/T/ephi-o10-fix1-carrier.HENbyvRZXl -c user.name='Project OS Artifact Publisher' -c user.email='project-os-artifacts@users.noreply.github.com' commit -q -m 'Correct CHG-156 O10 FIX1 candidate binding' && rtk git -C /var/folders/nz/6q2p_ldx3txdbw_gttbpnwjr0000gn/T/ephi-o10-fix1-carrier.HENbyvRZXl rev-parse HEAD && rtk git -C /var/folders/nz/6q2p_ldx3txdbw_gttbpnwjr0000gn/T/ephi-o10-fix1-carrier.HENbyvRZXl rev-parse HEAD\"'^{tree}'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git -C /var/folders/nz/6q2p_ldx3txdbw_gttbpnwjr0000gn/T/ephi-o10-fix1-carrier.HENbyvRZXl push origin HEAD:refs/heads/project-os-artifacts/ephi/ephi-o10-rendered-accessibility-fix1'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git fetch --no-tags origin '+refs/heads/project-os-artifacts/ephi/ephi-o10-rendered-accessibility-fix1:refs/remotes/origin/project-os-artifacts/ephi/ephi-o10-rendered-accessibility-fix1' && rtk env PYTHONPATH=src /opt/anaconda3/bin/python3 - <<'PY'\nimport hashlib, io, json, subprocess, tarfile\n\nrepo = '/Users/haewonkim/.codex-fabric/worktrees/CF-7a62f348f005b4340f3fb3da'\nref = 'refs/remotes/origin/project-os-artifacts/ephi/ephi-o10-rendered-accessibility-fix1'\ngit = lambda *args: subprocess.check_output(['git', '-C', repo, *args])\ncommit = git('rev-parse', f'{ref}\"'^{{commit}}'\"').decode().strip()\ntree = git('rev-parse', f'{ref}\"'^{{tree}}'\"').decode().strip()\nparents = git('show', '-s', '--format=%P', commit).decode().strip().split()\nmanifest_bytes = git('show', f'{commit}:carrier-manifest.json')\nbundle_bytes = git('show', f'{commit}:ephi-o10-rendered-accessibility-fix1-bundle.tar.gz')\nmanifest = json.loads(manifest_bytes)\nsha = lambda value: hashlib.sha256(value).hexdigest()\nwith tarfile.open(fileobj=io.BytesIO(bundle_bytes), mode='r:gz') as archive:\n    names = sorted(member.name for member in archive.getmembers() if member.isfile())\n    member_hashes = {name: sha(archive.extractfile(name).read()) for name in names}\nexpected = {**manifest['structured_evidence'], **manifest['screenshots']}\nresult = {\n    'remote_commit': commit,\n    'remote_tree': tree,\n    'parents': parents,\n    'candidate_binding': manifest['repair_candidate_sha'] == '6837ad1f9d7a5f12e579c642c2f2669a72354ab7' and manifest['repair_candidate_tree'] == 'de2063907127a988844179e058e435d7b7666c96',\n    'lineage_binding': manifest['predecessor']['candidate_sha'] == 'e75872d974c4edeaf55356855e96b3b8ca275dab' and manifest['predecessor']['candidate_tree'] == '349a9468dffdce2df73d0a542063d66e431ae578',\n    'identity_binding': manifest['project'] == 'ephi' and manifest['request'] == 'ephi-o10-rendered-accessibility-fix1' and manifest['operation'] == 'FIX' and manifest['fabric_job'] == 'CF-7a62f348f005b4340f3fb3da',\n    'bundle_sha256': sha(bundle_bytes),\n    'bundle_hash_matches_manifest': sha(bundle_bytes) == manifest['bundle']['sha256'],\n    'bundle_inventory_exact': names == sorted(expected),\n    'bundle_member_hashes_exact': all(member_hashes.get(name) == metadata['sha256'] for name, metadata in expected.items()),\n    'manifest_sha256': sha(manifest_bytes),\n    'secret_safety_all_false': all(value is False for value in manifest['secret_safety'].values()),\n    'o8_direct': manifest['qualification']['o8_direct'],\n    'o8_proxy': manifest['qualification']['o8_proxy'],\n}\nprint(json.dumps(result, sort_keys=True, indent=2))\nassert parents == ['4c76ac4be14a3639bd92aaad0877f75f0c7939d5']\nassert all(result[key] for key in ('candidate_binding', 'lineage_binding', 'identity_binding', 'bundle_hash_matches_manifest', 'bundle_inventory_exact', 'bundle_member_hashes_exact', 'secret_safety_all_false'))\nassert result['o8_direct'] == result['o8_proxy'] == 'PASS'\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk /opt/anaconda3/bin/python3 -S tools/check_package.py --refresh-manifest && rtk python3 -m compileall -q src tools && rtk /opt/anaconda3/bin/python3 -S -m unittest discover -s tests -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --check && rtk git status --short --branch && rtk git rev-parse HEAD && rtk git rev-parse HEAD''^{tree} && rtk git rev-parse HEAD''^ && rtk git ls-remote origin refs/heads/main refs/heads/codex/ephi-o10-rendered-accessibility-fix1 refs/heads/project-os-artifacts/ephi/ephi-o10-rendered-accessibility-fix1 refs/heads/codex-fabric/evidence/ephi/ephi-o10-rendered-accessibility-fix1'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk /Users/haewonkim/.codex-fabric/bin/fabricctl status CF-7a62f348f005b4340f3fb3da && rtk /Users/haewonkim/.codex-fabric/bin/fabricctl publish-evidence CF-7a62f348f005b4340f3fb3da'",
+      "exit_code": 2,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk jq '.evidence_publication // empty, .status, .job_state' /Users/haewonkim/.codex-fabric/results/CF-a861f914802e7e8a4f617f68/result.json 2>/dev/null || true; rtk jq '.evidence_publication // empty' /Users/haewonkim/.codex-fabric/results/CF-a861f914802e7e8a4f617f68/job-summary.json 2>/dev/null || true; rtk rg -n \\\"evidence_publication|publish_evidence\\\" /Users/haewonkim/.codex-fabric/results/CF-a861f914802e7e8a4f617f68 -g '*.json' | tail -20\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk pg_ctl -D /var/folders/nz/6q2p_ldx3txdbw_gttbpnwjr0000gn/T/ephi-o10-pgfix1.E4Xd233OLO stop -m fast && rtk pg_ctl -D /var/folders/nz/6q2p_ldx3txdbw_gttbpnwjr0000gn/T/ephi-o10-pgfix1-utf8.wlMjZ4MKfS stop -m fast'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --name-status e75872d974c4edeaf55356855e96b3b8ca275dab..HEAD && rtk git diff --stat e75872d974c4edeaf55356855e96b3b8ca275dab..HEAD && rtk git status --short --branch'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk mkdir -p /tmp/ephi-o10-fix1-artifacts13 && rtk python3 tools/o10_rendered_accessibility.py --dsn 'postgresql://ephi_ci:ephi_ci_password@127.0.0.1:55432/ephi_ci' --output /tmp/ephi-o10-fix1-report13.json --artifacts /tmp/ephi-o10-fix1-artifacts13\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk cp /tmp/ephi-o10-fix1-report13.json /tmp/ephi-o10-fix1-carrier-stage/structured/o10-rendered/report.json && rtk cp /tmp/ephi-o10-fix1-artifacts13/*.png /tmp/ephi-o10-fix1-carrier-stage/structured/o10-rendered/screenshots/ && rtk find /tmp/ephi-o10-fix1-artifacts13 -maxdepth 1 -type f | wc -l && rtk jq '{status,acceptance,phone_targets:(.responsive|to_entries|map({viewport:.key,status:.value.status,overflow:.value.application_horizontal_overflow,targets:.value.critical_target_measurements})),o8_unrelated:.request}' /tmp/ephi-o10-fix1-report13.json\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk env PYTHONPATH=src /opt/anaconda3/bin/python3 - <<'PY'\nfrom pathlib import Path\nimport hashlib, json\nout = Path('/tmp/ephi-o9-fix1-utf8-evidence/package-and-repository-checks.json')\ndata = json.loads(out.read_text(encoding='utf-8'))\nreport_path = Path('/tmp/ephi-o10-fix1-report13.json')\nreport = json.loads(report_path.read_text(encoding='utf-8'))\ncanonical = json.dumps(report.get('screenshot_inventory', []), sort_keys=True, separators=(',', ':')).encode()\ndata['rendered_qualification']['report_sha256'] = hashlib.sha256(report_path.read_bytes()).hexdigest()\ndata['rendered_qualification']['screenshot_inventory_sha256'] = hashlib.sha256(canonical).hexdigest()\ndata['rendered_qualification']['acceptance'] = report.get('acceptance')\ndata['rendered_qualification']['responsive_statuses'] = {key: value.get('status') for key, value in report.get('responsive', {}).items()}\ndata['rendered_qualification']['forced_colors'] = report.get('real_browser', {}).get('forced_colors', {}).get('status')\nout.write_text(json.dumps(data, ensure_ascii=False, sort_keys=True, indent=2) + '\\\\n', encoding='utf-8')\nprint(json.dumps({'checks_sha256': hashlib.sha256(out.read_bytes()).hexdigest(), 'report_sha256': data['rendered_qualification']['report_sha256'], 'screenshot_count': len(report.get('screenshot_inventory', []))}, sort_keys=True))\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk tar -czf /tmp/ephi-o10-fix1-carrier-stage/ephi-o10-rendered-accessibility-fix1-bundle.tar.gz -C /tmp/ephi-o10-fix1-carrier-stage structured && rtk env PYTHONPATH=src /opt/anaconda3/bin/python3 - <<'PY'\nfrom pathlib import Path\nimport hashlib, json, subprocess\nroot = Path('/tmp/ephi-o10-fix1-carrier-stage')\nrepo = Path('/Users/haewonkim/.codex-fabric/worktrees/CF-7a62f348f005b4340f3fb3da')\nrun = lambda *args: subprocess.check_output(args, cwd=repo, text=True).strip()\nsha = lambda path: hashlib.sha256(path.read_bytes()).hexdigest()\nsize = lambda path: path.stat().st_size\ncandidate = run('git', 'rev-parse', 'HEAD')\ntree = run('git', 'rev-parse', 'HEAD\"'^{tree}'\"')\nparent = run('git', 'rev-parse', 'HEAD\"'^'\"')\nreport = json.loads((root / 'structured/o10-rendered/report.json').read_text(encoding='utf-8'))\npaths = sorted(path for path in root.joinpath('structured').rglob('*') if path.is_file())\nstructured = {path.relative_to(root).as_posix(): {'bytes': size(path), 'sha256': sha(path)} for path in paths}\nmanifest = {\n 'schema_version': 1,\n 'evidence_kind': 'project_os_artifact_carrier',\n 'status': 'PASS_BOUNDED_FIX_WITH_EXPLICIT_GO_AUDIT_BOUNDARY',\n 'project': 'ephi', 'request': 'ephi-o10-rendered-accessibility-fix1', 'operation': 'FIX',\n 'fabric_job': 'CF-7a62f348f005b4340f3fb3da',\n 'target_base_sha': '9262533404f13df52ef20a7a1245b120f4438b04',\n 'predecessor': {'candidate_sha': 'e75872d974c4edeaf55356855e96b3b8ca275dab', 'candidate_tree': '349a9468dffdce2df73d0a542063d66e431ae578', 'fabric_job': 'CF-fec431c5cf2d9f477672de0e', 'deterministic_evidence': '553c7f419c3887408560a8b06634410848e1868f', 'historical_carrier': 'project-os-artifacts/ephi/ephi-o10-rendered-accessibility-v1@98ffe377bf8de563f9ea1702ce51835c7de844c'},\n 'repair_candidate_sha': candidate, 'repair_candidate_tree': tree, 'repair_candidate_parent': parent,\n 'work_branch': 'codex/ephi-o10-rendered-accessibility-fix1',\n 'carrier_ref': 'refs/heads/project-os-artifacts/ephi/ephi-o10-rendered-accessibility-fix1',\n 'bundle': {'path': 'ephi-o10-rendered-accessibility-fix1-bundle.tar.gz', 'bytes': size(root / 'ephi-o10-rendered-accessibility-fix1-bundle.tar.gz'), 'sha256': sha(root / 'ephi-o10-rendered-accessibility-fix1-bundle.tar.gz')},\n 'structured_evidence': {path: meta for path, meta in structured.items() if not path.endswith('.png')},\n 'screenshots': {path: meta for path, meta in structured.items() if path.endswith('.png')},\n 'qualification': {'report_status': report.get('status'), 'acceptance_status': report.get('acceptance', {}).get('status'), 'acceptance_failed': report.get('acceptance', {}).get('failed'), 'responsive_viewports': {key: value.get('status') for key, value in report.get('responsive', {}).items()}, 'screenshot_count': sum(path.endswith('.png') for path in structured), 'o8_direct': 'PASS', 'o8_proxy': 'PASS', 'changed_file_inventory_included': True, 'remote_readback_included': True, 'production_performance_claim': 'NOT_CLAIMED', 'human_ux_review': 'PENDING'},\n 'scope_boundary': 'No main mutation, merge, integration PR, Notion mutation, production-like performance claim, human UX-review claim, or later O10/O11 work.',\n 'secret_safety': {'cookies': False, 'storage_or_session_secrets': False, 'authorization_headers': False, 'dsns': False, 'real_identities': False, 'protected_rows': False, 'raw_artifact_bytes': False, 'notion_credentials': False, 'synthetic_ar2_sidecars': False},\n}\n(root / 'carrier-manifest.json').write_text(json.dumps(manifest, ensure_ascii=False, sort_keys=True, indent=2) + '\\\\n', encoding='utf-8')\nprint(json.dumps({'candidate': candidate, 'tree': tree, 'bundle_sha256': sha(root / 'ephi-o10-rendered-accessibility-fix1-bundle.tar.gz'), 'manifest_sha256': sha(root / 'carrier-manifest.json'), 'screenshot_count': sum(path.endswith('.png') for path in structured), 'structured_count': sum(not path.endswith('.png') for path in structured)}, sort_keys=True))\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk cp /tmp/ephi-o10-fix1-carrier-stage/carrier-manifest.json /tmp/ephi-o10-fix1-carrier-stage/ephi-o10-rendered-accessibility-fix1-bundle.tar.gz /var/folders/nz/6q2p_ldx3txdbw_gttbpnwjr0000gn/T/ephi-o10-fix1-carrier.HENbyvRZXl/ && rtk git -C /var/folders/nz/6q2p_ldx3txdbw_gttbpnwjr0000gn/T/ephi-o10-fix1-carrier.HENbyvRZXl add carrier-manifest.json ephi-o10-rendered-accessibility-fix1-bundle.tar.gz && rtk git -C /var/folders/nz/6q2p_ldx3txdbw_gttbpnwjr0000gn/T/ephi-o10-fix1-carrier.HENbyvRZXl -c user.name='Project OS Artifact Publisher' -c user.email='project-os-artifacts@users.noreply.github.com' commit -q -m 'Refresh CHG-156 O10 FIX1 rendered evidence' && rtk git -C /var/folders/nz/6q2p_ldx3txdbw_gttbpnwjr0000gn/T/ephi-o10-fix1-carrier.HENbyvRZXl rev-parse HEAD && rtk git -C /var/folders/nz/6q2p_ldx3txdbw_gttbpnwjr0000gn/T/ephi-o10-fix1-carrier.HENbyvRZXl rev-parse HEAD\"'^{tree}'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git -C /var/folders/nz/6q2p_ldx3txdbw_gttbpnwjr0000gn/T/ephi-o10-fix1-carrier.HENbyvRZXl push origin HEAD:refs/heads/project-os-artifacts/ephi/ephi-o10-rendered-accessibility-fix1'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git fetch --no-tags origin '+refs/heads/project-os-artifacts/ephi/ephi-o10-rendered-accessibility-fix1:refs/remotes/origin/project-os-artifacts/ephi/ephi-o10-rendered-accessibility-fix1' && rtk env PYTHONPATH=src /opt/anaconda3/bin/python3 - <<'PY'\nimport hashlib, io, json, subprocess, tarfile\nrepo = '/Users/haewonkim/.codex-fabric/worktrees/CF-7a62f348f005b4340f3fb3da'\nref = 'refs/remotes/origin/project-os-artifacts/ephi/ephi-o10-rendered-accessibility-fix1'\ngit = lambda *args: subprocess.check_output(['git', '-C', repo, *args])\ncommit = git('rev-parse', f'{ref}\"'^{{commit}}'\"').decode().strip()\ntree = git('rev-parse', f'{ref}\"'^{{tree}}'\"').decode().strip()\nparents = git('show', '-s', '--format=%P', commit).decode().strip().split()\nmanifest_bytes = git('show', f'{commit}:carrier-manifest.json')\nbundle_bytes = git('show', f'{commit}:ephi-o10-rendered-accessibility-fix1-bundle.tar.gz')\nmanifest = json.loads(manifest_bytes)\nsha = lambda value: hashlib.sha256(value).hexdigest()\nwith tarfile.open(fileobj=io.BytesIO(bundle_bytes), mode='r:gz') as archive:\n    names = sorted(member.name for member in archive.getmembers() if member.isfile())\n    member_hashes = {name: sha(archive.extractfile(name).read()) for name in names}\nexpected = {**manifest['structured_evidence'], **manifest['screenshots']}\nresult = {\n 'remote_commit': commit, 'remote_tree': tree, 'parents': parents,\n 'candidate_binding': manifest['repair_candidate_sha'] == '6837ad1f9d7a5f12e579c642c2f2669a72354ab7' and manifest['repair_candidate_tree'] == 'de2063907127a988844179e058e435d7b7666c96',\n 'r1_lineage': manifest['predecessor']['candidate_sha'] == 'e75872d974c4edeaf55356855e96b3b8ca275dab' and manifest['predecessor']['candidate_tree'] == '349a9468dffdce2df73d0a542063d66e431ae578',\n 'identity': (manifest['project'], manifest['request'], manifest['operation'], manifest['fabric_job']) == ('ephi','ephi-o10-rendered-accessibility-fix1','FIX','CF-7a62f348f005b4340f3fb3da'),\n 'bundle_sha256': sha(bundle_bytes), 'bundle_hash_matches_manifest': sha(bundle_bytes) == manifest['bundle']['sha256'],\n 'bundle_inventory_exact': names == sorted(expected), 'bundle_member_hashes_exact': all(member_hashes.get(name) == meta['sha256'] for name, meta in expected.items()),\n 'manifest_sha256': sha(manifest_bytes), 'secret_safety_all_false': all(value is False for value in manifest['secret_safety'].values()),\n 'o10_report_pass': manifest['qualification']['report_status'] == 'PASS' and manifest['qualification']['acceptance_status'] == 'PASS',\n 'o8_direct': manifest['qualification']['o8_direct'], 'o8_proxy': manifest['qualification']['o8_proxy'], 'screenshot_count': manifest['qualification']['screenshot_count'],\n}\nprint(json.dumps(result, sort_keys=True, indent=2))\nassert parents == ['45af64e4490e889d3eda667e0d8f4d694f21f4dd']\nassert all(result[key] for key in ('candidate_binding','r1_lineage','identity','bundle_hash_matches_manifest','bundle_inventory_exact','bundle_member_hashes_exact','secret_safety_all_false','o10_report_pass'))\nassert result['o8_direct'] == result['o8_proxy'] == 'PASS' and result['screenshot_count'] == 26\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk /Users/haewonkim/.codex-fabric/bin/fabricctl status CF-7a62f348f005b4340f3fb3da'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git ls-remote origin refs/heads/main refs/heads/codex/ephi-o10-rendered-accessibility-fix1 refs/heads/project-os-artifacts/ephi/ephi-o10-rendered-accessibility-fix1 refs/heads/codex-fabric/evidence/ephi/ephi-o10-rendered-accessibility-fix1 && rtk git status --short --branch'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk gh run list -R kimhw8084/ephi --branch codex/ephi-o10-rendered-accessibility-fix1 --limit 20 --json databaseId,status,conclusion,name,headSha,workflowName,url'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk gh run view 35532367498 -R kimhw8084/ephi --json status,conclusion,headSha,jobs,url'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk /Users/haewonkim/.codex-fabric/bin/fabricctl status CF-7a62f348f005b4340f3fb3da && rtk git ls-remote origin refs/heads/codex-fabric/evidence/ephi/ephi-o10-rendered-accessibility-fix1'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk gh run view 35532367498 -R kimhw8084/ephi --job 106135114594 --log | rtk rg 'REAL_RESTORE_REHEARSAL_PASS|Run PostgreSQL logical dump'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    }
+  ],
+  "codex": {
+    "cli_version": "codex-cli 0.155.1",
+    "configured_model": "gpt-5.6-luna",
+    "event_count": 529,
+    "provider_reported_model": null,
+    "reasoning_effort": "xhigh",
+    "terminal_type": "turn.completed",
+    "usage": {
+      "cache_hit_percent": 98.8,
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 52530432,
+      "fresh_input_tokens": 637685,
+      "input_tokens": 53168117,
+      "non_reasoning_output_tokens": 78657,
+      "output_tokens": 122954,
+      "reasoning_output_tokens": 44297,
+      "total_processed_tokens": 53291071
+    },
+    "warnings": []
+  },
+  "commits": [
+    {
+      "sha": "6837ad1f9d7a5f12e579c642c2f2669a72354ab7",
+      "subject": "Align O8 browser qualification with Attention heading"
+    },
+    {
+      "sha": "c479a1d5ec79dff59f65300f8d644411cac1bd56",
+      "subject": "Fix O10 rendered accessibility qualification"
+    },
+    {
+      "sha": "e75872d974c4edeaf55356855e96b3b8ca275dab",
+      "subject": "Qualify O10 Attention and Episode rendered accessibility"
+    }
+  ],
+  "diff": {
+    "additions": 2134,
+    "changed_files": 10,
+    "commit_count": 3,
+    "deletions": 152
+  },
+  "error_code": null,
+  "evidence_manifest": {
+    "count": 1,
+    "items": [
+      {
+        "bytes": 33780,
+        "path": "manifest.json",
+        "sha256": "5ea3213a03e57ab4a48a815269beec10cdadddd397e9f500a47bcf996891ddb3"
+      }
+    ],
+    "version": 1
+  },
+  "evidence_publisher_release": "1.2.3-resume-candidate",
+  "fabric_capture": {
+    "applied": false,
+    "paths_before": 0,
+    "transient_untracked_removed": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "fabric_release": "1.2.3-resume-candidate",
+  "failure_class": null,
+  "finished_at": "2026-09-20T19:37:10Z",
+  "git": {
+    "base_is_ancestor": true,
+    "base_sha": "9262533404f13df52ef20a7a1245b120f4438b04",
+    "branch": "codex/ephi-o10-rendered-accessibility-fix1",
+    "detached_verify": false,
+    "head_sha": "6837ad1f9d7a5f12e579c642c2f2669a72354ab7",
+    "remote_exact_head": true,
+    "remote_head_sha": "6837ad1f9d7a5f12e579c642c2f2669a72354ab7",
+    "target_branch": "main",
+    "target_drifted_since_acceptance": false,
+    "target_head_observed_after_execution": "9262533404f13df52ef20a7a1245b120f4438b04",
+    "work_branch": "codex/ephi-o10-rendered-accessibility-fix1",
+    "worktree_clean": true
+  },
+  "instructions": {
+    "files": [
+      {
+        "bytes": 1458,
+        "path": "AGENTS.md",
+        "sha256": "4349f387a79d886ed1264604ff48c582698e539e08ed8fb2f9d8ab8fbf6f804a"
+      }
+    ],
+    "total_bytes": 1458,
+    "warning": null
+  },
+  "job_id": "CF-7a62f348f005b4340f3fb3da",
+  "kind": "codex-fabric-audit-evidence",
+  "locator": {
+    "branch": "codex-fabric/evidence/ephi/ephi-o10-rendered-accessibility-fix1",
+    "path": ".codex-fabric/audit.json",
+    "ref": "refs/heads/codex-fabric/evidence/ephi/ephi-o10-rendered-accessibility-fix1"
+  },
+  "operation": "FIX",
+  "policy": {
+    "environment_policy_sha256": "e077daca74297b3c30bee8989f00f8ca5338f7610b4d016a6c48db524205d064",
+    "fabric_release": "1.2.3-resume-candidate",
+    "policy_sha256": "a642c9f63bab2cb555704bdb0b9d1f28222591f133f934c1d0f93cc5a25ab8a1",
+    "registry_sha256": "cfc765f3211c37c7967a138f3b2d89a99341939b15b2623f92744d007f625d6f"
+  },
+  "project_id": "ephi",
+  "recovery": {
+    "model_rerun_safe": false,
+    "recovery_required": false,
+    "retry_safe": false,
+    "retry_scope": null,
+    "worktree_retained": true
+  },
+  "request": "ephi-o10-rendered-accessibility-fix1",
+  "schema_version": 1,
+  "started_at": "2026-09-20T18:24:35Z",
+  "status": "EXECUTED_CHANGE",
+  "timing": {
+    "execution_seconds": 4355,
+    "queue_seconds": 0,
+    "total_seconds": 4355
+  },
+  "transport": {
+    "bytes": 17756,
+    "envelope": "FABRIC/2",
+    "prompt_bytes": 17433,
+    "prompt_sha256": "022122fffc5283786b671cd805dd62c2f60e7cbc737e1b1d38583758d96b3b20",
+    "sha256": "7a62f348f005b4340f3fb3da167e815587e53ef207eaccd77ad1bd3370316000"
+  }
+}
