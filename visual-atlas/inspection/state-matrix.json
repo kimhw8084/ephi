@@ -1,0 +1,76 @@
+{
+  "candidate_head": "34d435e93ef0b948e758af5cf2d2655165fdb1da",
+  "candidate_tree": "676e282255fa3018a2068834b46aeeb8d8ef072c",
+  "production_claim_boundary": "Synthetic authorized fixture and degraded-state harness only; no production qualification claimed.",
+  "project": "ephi",
+  "request": "ephi-o10-ui-perfection-fix1",
+  "schema_version": 2,
+  "states": [
+    {
+      "key": "attention-populated",
+      "provenance": "REAL_PRODUCT",
+      "state": "authorized populated row",
+      "status": "PASS"
+    },
+    {
+      "key": "attention-selected-preview",
+      "provenance": "REAL_PRODUCT_INTERACTION",
+      "state": "selected authorized preview with Open episode",
+      "status": "PASS"
+    },
+    {
+      "key": "attention-search-empty",
+      "provenance": "REAL_PRODUCT",
+      "state": "no matching rows",
+      "status": "PASS"
+    },
+    {
+      "key": "attention-no-permitted-rows",
+      "provenance": "HARNESS_DEGRADED_STATE",
+      "state": "no permitted rows",
+      "status": "PASS"
+    },
+    {
+      "key": "episode-open-claim",
+      "provenance": "REAL_PRODUCT",
+      "state": "OPEN with Claim episode eligible",
+      "status": "PASS"
+    },
+    {
+      "key": "episode-post-claim",
+      "provenance": "REAL_PRODUCT_INTERACTION",
+      "state": "CLAIMED with Acknowledge and focus continuity",
+      "status": "PASS"
+    },
+    {
+      "key": "permission-denied",
+      "provenance": "HARNESS_DEGRADED_STATE",
+      "state": "permission denied",
+      "status": "PASS"
+    },
+    {
+      "key": "offline",
+      "provenance": "HARNESS_DEGRADED_STATE",
+      "state": "source unavailable/offline",
+      "status": "PASS"
+    },
+    {
+      "key": "stale",
+      "provenance": "HARNESS_DEGRADED_STATE",
+      "state": "attention snapshot expired",
+      "status": "PASS"
+    },
+    {
+      "key": "conflict",
+      "provenance": "HARNESS_DEGRADED_STATE",
+      "state": "coherent/version/owner conflict",
+      "status": "PASS"
+    },
+    {
+      "key": "capability",
+      "provenance": "HARNESS_DEGRADED_STATE",
+      "state": "capability unavailable/partial/stale",
+      "status": "PASS"
+    }
+  ]
+}

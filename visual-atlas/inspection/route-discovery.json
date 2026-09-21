@@ -1,0 +1,23 @@
+{
+  "candidate_head": "34d435e93ef0b948e758af5cf2d2655165fdb1da",
+  "candidate_tree": "676e282255fa3018a2068834b46aeeb8d8ef072c",
+  "manifest_frozen_before_capture": true,
+  "material_surfaces": [
+    {
+      "key": "attention",
+      "label": "Attention",
+      "route": "/"
+    },
+    {
+      "key": "episode",
+      "label": "Episode",
+      "route": "/episode"
+    }
+  ],
+  "registered_application_routes": [
+    "/",
+    "/episode"
+  ],
+  "schema_version": 1,
+  "source": "tools/o8_surface_inventory.py --json"
+}

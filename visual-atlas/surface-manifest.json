@@ -1,0 +1,53 @@
+{
+  "artifact_ref": "refs/heads/project-os-artifacts/ephi/ephi-o10-ui-perfection-fix1",
+  "base_pin": {
+    "nicegui_base_commit": "000298562d6bcbf6df304edbd41b98b30fe4bfcf",
+    "nicegui_base_version": "3.0.0a8",
+    "nicegui_version": "3.15.0"
+  },
+  "candidate": {
+    "head": "34d435e93ef0b948e758af5cf2d2655165fdb1da",
+    "tree": "676e282255fa3018a2068834b46aeeb8d8ef072c"
+  },
+  "capture_contract": {
+    "desktop": [
+      1440,
+      900
+    ],
+    "dpr": 1,
+    "fixture": "deterministic synthetic authorized fixture",
+    "format": "lossless PNG",
+    "full_page": false,
+    "mobile": [
+      390,
+      844
+    ],
+    "theme": "light",
+    "timezone": "America/Chicago"
+  },
+  "change": "CHG-162",
+  "evidence_ref": "refs/heads/codex-fabric/evidence/ephi/ephi-o10-ui-perfection-fix1",
+  "execution_base": {
+    "sha": "8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e",
+    "tree": "de2063907127a988844179e058e435d7b7666c96"
+  },
+  "fabric_job": "CF-f9f417890a5034ca12ec3de8",
+  "iteration": "R2",
+  "manifest_frozen_before_capture": true,
+  "material_surfaces": [
+    {
+      "h1": "Attention",
+      "key": "attention",
+      "route": "/"
+    },
+    {
+      "h1": "Episode decision brief",
+      "key": "episode",
+      "route": "/episode"
+    }
+  ],
+  "operation": "FIX",
+  "project": "ephi",
+  "request": "ephi-o10-ui-perfection-fix1",
+  "schema_version": 2
+}

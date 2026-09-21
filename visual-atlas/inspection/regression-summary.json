@@ -1,0 +1,37 @@
+{
+  "candidate_head": "34d435e93ef0b948e758af5cf2d2655165fdb1da",
+  "candidate_tree": "676e282255fa3018a2068834b46aeeb8d8ef072c",
+  "change": "CHG-162",
+  "dependency_changed": false,
+  "diff_check": {
+    "status": "PASS"
+  },
+  "nicegui_base_changed": false,
+  "o10_rendered_accessibility": {
+    "chromium": true,
+    "postgresql": "18.6",
+    "status": "PASS"
+  },
+  "o8_browser_session_security": {
+    "status": "PASS"
+  },
+  "o9_durable_claim_rehearsal": {
+    "production_rpo_rto": "NOT_ESTABLISHED",
+    "status": "PASS_LOCAL_REHEARSAL"
+  },
+  "package_check": {
+    "files": 188,
+    "status": "PASS"
+  },
+  "product_suite": {
+    "command": "python3 -m unittest discover -s tests -v with PostgreSQL 18",
+    "status": "PASS",
+    "tests": 245
+  },
+  "project": "ephi",
+  "remote_github_matrix": "NOT_RUN",
+  "request": "ephi-o10-ui-perfection-fix1",
+  "schema_changed": false,
+  "schema_version": 2,
+  "source_changed": true
+}

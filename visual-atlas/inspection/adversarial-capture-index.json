@@ -1,0 +1,50 @@
+{
+  "candidate_head": "34d435e93ef0b948e758af5cf2d2655165fdb1da",
+  "candidate_tree": "676e282255fa3018a2068834b46aeeb8d8ef072c",
+  "profiles": [
+    {
+      "profile": "desktop-1440x900",
+      "provenance": "REAL_PRODUCT",
+      "status": "CAPTURED"
+    },
+    {
+      "profile": "mobile-390x844",
+      "provenance": "REAL_PRODUCT",
+      "status": "CAPTURED"
+    },
+    {
+      "profile": "narrow-phone-320x800",
+      "provenance": "REAL_PRODUCT_O10",
+      "status": "CAPTURED"
+    },
+    {
+      "profile": "tablet-768x1024",
+      "provenance": "REAL_PRODUCT_O10",
+      "status": "CAPTURED"
+    },
+    {
+      "profile": "short-height-1024x768",
+      "provenance": "REAL_PRODUCT_O10",
+      "status": "CAPTURED"
+    },
+    {
+      "profile": "reduced-motion",
+      "provenance": "REAL_PRODUCT_O10",
+      "status": "PASS"
+    },
+    {
+      "profile": "forced-colors",
+      "provenance": "REAL_PRODUCT_O10",
+      "status": "PASS"
+    },
+    {
+      "profile": "authentic-browser-zoom-200-percent",
+      "provenance": "NOT_RUN",
+      "status": "NOT_RUN"
+    }
+  ],
+  "project": "ephi",
+  "request": "ephi-o10-ui-perfection-fix1",
+  "schema_version": 2,
+  "zoom_note": "Authentic browser zoom unavailable; viewport shrinking was not substituted."
+}

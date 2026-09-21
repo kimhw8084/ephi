@@ -1,0 +1,51 @@
+{
+  "audit_boundary": "Independent audit and perfection award remain pending.",
+  "candidate_head": "34d435e93ef0b948e758af5cf2d2655165fdb1da",
+  "candidate_tree": "676e282255fa3018a2068834b46aeeb8d8ef072c",
+  "canonical_pages": [
+    {
+      "page": 1,
+      "path": "screenshots/attention--desktop-1440x900.png",
+      "profile": "desktop",
+      "sha256": "c50d420db5721b909adaec84e795d5aaab0faca403bc0e3085fd458560724723",
+      "surface": "Attention"
+    },
+    {
+      "page": 2,
+      "path": "screenshots/episode--desktop-1440x900.png",
+      "profile": "desktop",
+      "sha256": "65006858ffd419f9b6cee76d22f71549fb7ce3493aa6d84c102f3adc4db342e4",
+      "surface": "Episode"
+    },
+    {
+      "page": 1,
+      "path": "screenshots/attention--mobile-390x844.png",
+      "profile": "mobile",
+      "sha256": "ab6d993dd4fb38cf13948abf505c5a17c30e367064c4b419a14a957eb2b26baf",
+      "surface": "Attention"
+    },
+    {
+      "page": 2,
+      "path": "screenshots/episode--mobile-390x844.png",
+      "profile": "mobile",
+      "sha256": "e75b3d2d215fe3e16bb9e384d9c1ee177cb990209c6bd271a0978110a271a061",
+      "surface": "Episode"
+    }
+  ],
+  "project": "ephi",
+  "request": "ephi-o10-ui-perfection-fix1",
+  "review_pdfs": [
+    {
+      "pages": 2,
+      "path": "review-desktop.pdf",
+      "sha256": "7fc2531195f10b09657943dea3f41a7e203b93b7e2c1610faac69bf5e5dce009"
+    },
+    {
+      "pages": 2,
+      "path": "review-mobile.pdf",
+      "sha256": "fbdf68def0ec3090917e7dad4df5b57260136b0af90fd8ec87df83262a8f81d8"
+    }
+  ],
+  "schema_version": 2,
+  "status": "CAPTURED_AWAITING_INDEPENDENT_AUDIT"
+}
