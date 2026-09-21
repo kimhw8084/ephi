@@ -1,0 +1,85 @@
+{
+  "change": "CHG-162",
+  "documents": [
+    {
+      "bytes": 136226,
+      "page_count": 2,
+      "path": "visual-atlas/review-desktop.pdf",
+      "profile": "desktop-1440x900",
+      "sha256": "d34c3dfd856566b51f2656241cde962b879617f517efdc95b380abe6000bd7ef"
+    },
+    {
+      "bytes": 80313,
+      "page_count": 2,
+      "path": "visual-atlas/review-mobile.pdf",
+      "profile": "mobile-390x844",
+      "sha256": "e8b23e9419810d0064d8564117a3a45296310bb688c34ef11afc8560066d6f9f"
+    }
+  ],
+  "fabric_job_id": "CF-bae7bf1859b3af7a219e4593",
+  "operation": "VERIFY",
+  "pages": [
+    {
+      "entire_screenshot_preserved": true,
+      "height": 900,
+      "page": 1,
+      "pdf_path": "visual-atlas/review-desktop.pdf",
+      "profile": "desktop-1440x900",
+      "screenshot_path": "visual-atlas/screenshots/attention--desktop-1440x900.png",
+      "screenshot_sha256": "a2825364b5f06138db8a72debf9f16d35587105dcf6ffa31974ded1045b4a3db",
+      "surface_identity": "attention:desktop-1440x900",
+      "surface_key": "attention",
+      "width": 1440
+    },
+    {
+      "entire_screenshot_preserved": true,
+      "height": 900,
+      "page": 2,
+      "pdf_path": "visual-atlas/review-desktop.pdf",
+      "profile": "desktop-1440x900",
+      "screenshot_path": "visual-atlas/screenshots/episode--desktop-1440x900.png",
+      "screenshot_sha256": "2127ed0073d8bca8381164b5fe28cd2c086908fe61805bca61ae76826c636bfc",
+      "surface_identity": "episode:desktop-1440x900",
+      "surface_key": "episode",
+      "width": 1440
+    },
+    {
+      "entire_screenshot_preserved": true,
+      "height": 844,
+      "page": 1,
+      "pdf_path": "visual-atlas/review-mobile.pdf",
+      "profile": "mobile-390x844",
+      "screenshot_path": "visual-atlas/screenshots/attention--mobile-390x844.png",
+      "screenshot_sha256": "d312bd37507e513522dd3a91f95f32dcd196a2144c174ce47a785310f5153f5a",
+      "surface_identity": "attention:mobile-390x844",
+      "surface_key": "attention",
+      "width": 390
+    },
+    {
+      "entire_screenshot_preserved": true,
+      "height": 844,
+      "page": 2,
+      "pdf_path": "visual-atlas/review-mobile.pdf",
+      "profile": "mobile-390x844",
+      "screenshot_path": "visual-atlas/screenshots/episode--mobile-390x844.png",
+      "screenshot_sha256": "6955237767f59a45bd2e901a1838b678c16a5e3cfd455b7acb75141d843eccfe",
+      "surface_identity": "episode:mobile-390x844",
+      "surface_key": "episode",
+      "width": 390
+    }
+  ],
+  "pdf_contract": {
+    "entire_screenshot_preserved_without_crop": true,
+    "identity_carried_by": [
+      "PDF metadata",
+      "this reader index"
+    ],
+    "one_screenshot_per_page": true
+  },
+  "project": "ephi",
+  "request": "ephi-o10-ui-perfection-inspection-v1",
+  "schema_version": 2,
+  "source_sha": "8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e",
+  "surface_manifest": "visual-atlas/surface-manifest.json",
+  "tree_sha": "de2063907127a988844179e058e435d7b7666c96"
+}

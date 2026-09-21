@@ -1,0 +1,164 @@
+{
+  "acceptance_boundary": "Not a visual perfection or GO certification. Project OS must independently inspect pixels and resolve GO/FIX/VERIFY.",
+  "change": "CHG-162",
+  "finding_count": 5,
+  "findings": [
+    {
+      "artifact_hashes": [
+        "2127ed0073d8bca8381164b5fe28cd2c086908fe61805bca61ae76826c636bfc"
+      ],
+      "artifact_paths": [
+        "visual-atlas/screenshots/episode--desktop-1440x900.png",
+        "visual-atlas/inspection/canonical-capture-facts.json"
+      ],
+      "category": "responsive/layout",
+      "contract_families": [
+        "intentional hierarchy",
+        "stable geometry",
+        "critical-task correctness",
+        "responsive/reflow",
+        "action clarity"
+      ],
+      "finding_id": "GUI-162-P1-001",
+      "fix_direction": "Later FIX: inspect the desktop Episode workspace/Card geometry at 1440px, establish a readable content max-width/min-width and verify the primary action remains visible and localized without changing truth or authorization behavior.",
+      "hard_blocker_for_inspected_scope": true,
+      "likely_owner": "EPHI Product or NiceGUI Base/shared component; not established from pixels alone",
+      "observed_evidence": "The real Episode card collapses to an approximately one-character-wide column on the canonical desktop capture; the episode title and status wrap vertically and the decision content/action are not human-readable in the viewport.",
+      "root_cause_hypothesis": "A desktop min-width/grid/flex interaction in the Episode workspace or governed Card/FullScreenWorkspace composition likely collapses the content column; source diagnosis requires bounded layout inspection.",
+      "severity": "P1",
+      "state": "authorized-open-eligible-claim",
+      "surface": "episode",
+      "task": "Understand Episode decision brief and execute eligible Claim",
+      "viewport_profile": "desktop-1440x900"
+    },
+    {
+      "artifact_hashes": [
+        "a2825364b5f06138db8a72debf9f16d35587105dcf6ffa31974ded1045b4a3db"
+      ],
+      "artifact_paths": [
+        "visual-atlas/screenshots/attention--desktop-1440x900.png"
+      ],
+      "category": "human-factor/cognitive ergonomics",
+      "contract_families": [
+        "information scent",
+        "recognition versus recall",
+        "typography/scanability",
+        "visual hierarchy"
+      ],
+      "finding_id": "GUI-162-P2-002",
+      "fix_direction": "Later FIX: preserve priority and action columns while giving Issue a readable allocation or an accessible disclosure affordance; verify at 1440px and narrow reflow.",
+      "hard_blocker_for_inspected_scope": false,
+      "likely_owner": "EPHI Product or NiceGUI Base/shared table component; not established from pixels alone",
+      "observed_evidence": "The Issue column visibly truncates the synthetic issue title to \"Browser transp...\" in the populated Attention table. The complete title is not available by recognition from that row without selecting/opening the Episode.",
+      "root_cause_hypothesis": "The governed table column allocation/ellipsis policy leaves insufficient width for the issue title at desktop; no visible tooltip or alternate first-paint treatment was observed.",
+      "severity": "P2",
+      "state": "authorized-populated-no-selection",
+      "surface": "attention",
+      "task": "Recognize what needs attention from the first useful paint",
+      "viewport_profile": "desktop-1440x900"
+    },
+    {
+      "artifact_hashes": [
+        "d312bd37507e513522dd3a91f95f32dcd196a2144c174ce47a785310f5153f5a"
+      ],
+      "artifact_paths": [
+        "visual-atlas/screenshots/attention--mobile-390x844.png",
+        "visual-atlas/inspection/task-oracles.json"
+      ],
+      "category": "human-factor/cognitive ergonomics",
+      "contract_families": [
+        "first useful paint",
+        "information scent",
+        "recognition versus recall",
+        "mobile reflow"
+      ],
+      "finding_id": "GUI-162-P2-003",
+      "fix_direction": "Later FIX: provide a compact mobile row summary or equivalent status scent while preserving the selected-detail path and truth semantics.",
+      "hard_blocker_for_inspected_scope": false,
+      "likely_owner": "EPHI Product or NiceGUI Base/shared responsive table policy; not established from pixels alone",
+      "observed_evidence": "The canonical mobile Attention table initially exposes only Episode and Actions columns; priority, issue title, source state and workflow state are not visible until row selection opens the preview below. The selected preview is truthful, but first-paint recognition requires an extra decision/interaction.",
+      "root_cause_hypothesis": "Responsive column priorities appear to favor the identifier/actions over a compact urgency/source summary; the current preview compensates only after selection.",
+      "severity": "P2",
+      "state": "authorized-populated-no-selection",
+      "surface": "attention",
+      "task": "Recognize urgency, source/work state and legitimate next action on mobile",
+      "viewport_profile": "mobile-390x844"
+    },
+    {
+      "artifact_hashes": [
+        "6955237767f59a45bd2e901a1838b678c16a5e3cfd455b7acb75141d843eccfe"
+      ],
+      "artifact_paths": [
+        "visual-atlas/screenshots/episode--mobile-390x844.png"
+      ],
+      "category": "visual craft",
+      "contract_families": [
+        "typography/scanability",
+        "knowledge age",
+        "human-centered context"
+      ],
+      "finding_id": "GUI-162-P2-004",
+      "fix_direction": "Later FIX: retain exact timestamp truth while adding a readable local/relative age treatment and verify timezone/locale semantics.",
+      "hard_blocker_for_inspected_scope": false,
+      "likely_owner": "EPHI Product",
+      "observed_evidence": "Known at is rendered as a raw ISO timestamp with offset (for example 2026-09-21T10:43:14...-05:00). The current W1 brief has this fact, but the presentation imposes parsing burden and does not provide a human-readable age/recency cue.",
+      "root_cause_hypothesis": "The DescriptionList is receiving an unformatted datetime value rather than a product-level humanized timestamp/age representation.",
+      "severity": "P2",
+      "state": "authorized-open-eligible-claim",
+      "surface": "episode",
+      "task": "Understand knowledge age and current decision context",
+      "viewport_profile": "mobile-390x844"
+    },
+    {
+      "artifact_hashes": [
+        "42aa9292fd57511d1fa242e486778385ece430c47d706829d9d866c8343a7f62"
+      ],
+      "artifact_paths": [
+        "visual-atlas/inspection/o10-rendered-accessibility-report.json",
+        "visual-atlas/capture-report.json"
+      ],
+      "category": "evidence",
+      "contract_families": [
+        "golden visual atlas capture/retrieval",
+        "evidence provenance"
+      ],
+      "finding_id": "EVID-162-P3-001",
+      "fix_direction": "No Product FIX in CHG-162; retain the exact-viewport recapture and keep O10 pixels indexed as supporting evidence only.",
+      "hard_blocker_for_inspected_scope": false,
+      "likely_owner": "environment/evidence tooling",
+      "observed_evidence": "The native O10 rendered helper records supporting screenshots with full_page=True and the integrated report explicitly marks human UX review as pending; those pixels are not canonical atlas anchors.",
+      "root_cause_hypothesis": "The existing O10 lane was designed for rendered/accessibility assertions and supporting full-page captures, not this run's exact viewport atlas contract.",
+      "severity": "P3",
+      "state": "supporting-O10-rendered-baseline",
+      "surface": "all",
+      "task": "Independent atlas retrieval and comparison",
+      "viewport_profile": "multiple"
+    }
+  ],
+  "hard_blocker_count": 1,
+  "operation": "VERIFY",
+  "out_of_current_product_scope": [
+    "confidence",
+    "onset",
+    "exposure",
+    "next-check",
+    "recovery",
+    "value",
+    "production-like capacity"
+  ],
+  "overall_numerical_perfection_score": null,
+  "positive_observations": [
+    "Truthful authorized-scope result messaging",
+    "source/capability and workflow states are semantically distinct",
+    "eligible Claim action is clearly named in the mobile brief",
+    "O10 hard accessibility/rendered gates passed",
+    "no console/page/request failures in canonical captures"
+  ],
+  "project": "ephi",
+  "request": "ephi-o10-ui-perfection-inspection-v1",
+  "schema_version": 2,
+  "source_sha": "8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e",
+  "status": "FINDINGS_RECORDED_AWAITING_AUDIT",
+  "surface_count": 2,
+  "tree_sha": "de2063907127a988844179e058e435d7b7666c96"
+}

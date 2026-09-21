@@ -1,0 +1,117 @@
+{
+  "capture_contract": {
+    "browser_chrome_excluded": true,
+    "device_scale_factor": 1,
+    "fixture": "o8-browser-scope / episode-browser-1 / browser transport qualification case",
+    "full_page": false,
+    "locale": "en-US",
+    "lossless_png": true,
+    "production_identity_or_data": false,
+    "role": "synthetic authorized engineer",
+    "theme": "light",
+    "timezone": "America/Chicago"
+  },
+  "change": "CHG-162",
+  "discovery": {
+    "authority": "source routing combined with fresh runtime navigation and rendered state",
+    "discovered_surface_keys": [
+      "attention",
+      "episode"
+    ],
+    "entrypoint": "src/ephi/ui/app.py:run_ephi",
+    "excluded_future_or_historical_surfaces": [
+      "assets",
+      "outcomes",
+      "family-center",
+      "operations",
+      "o5-action-recovery",
+      "o6-rca"
+    ],
+    "manifest_frozen": true,
+    "manifest_frozen_before_canonical_capture": true,
+    "runtime_navigated_routes": [
+      "/",
+      "/episode"
+    ],
+    "source_registered_routes": [
+      "/",
+      "/episode"
+    ]
+  },
+  "fabric_job_id": "CF-bae7bf1859b3af7a219e4593",
+  "operation": "VERIFY",
+  "pinned_ui_authority": {
+    "nicegui": "3.15.0",
+    "nicegui_base_commit": "000298562d6bcbf6df304edbd41b98b30fe4bfcf",
+    "nicegui_base_contract": "3.0.0a8"
+  },
+  "project": "ephi",
+  "request": "ephi-o10-ui-perfection-inspection-v1",
+  "schema_version": 2,
+  "scope_boundary": {
+    "acceptance_authority": "atlas capture only; not a GO/perfection certification",
+    "current_w1_information_oracles": [
+      "what needs attention",
+      "source/capability state",
+      "workflow state",
+      "known-at/revision context",
+      "current eligible action"
+    ],
+    "out_of_current_product_scope": [
+      "confidence",
+      "onset",
+      "exposure",
+      "next-check",
+      "recovery",
+      "value",
+      "production-like capacity"
+    ]
+  },
+  "source_sha": "8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e",
+  "surfaces": [
+    {
+      "canonical_screenshot_paths": [
+        "visual-atlas/screenshots/attention--desktop-1440x900.png",
+        "visual-atlas/screenshots/attention--mobile-390x844.png"
+      ],
+      "canonical_state": "authorized-populated-no-selection",
+      "reachable_states": [
+        "authorized-populated",
+        "selected-row-preview",
+        "no-search-match",
+        "no-permitted-rows",
+        "permission-denied",
+        "offline",
+        "stale-snapshot",
+        "request-failure"
+      ],
+      "route": "/",
+      "surface_key": "attention",
+      "workspace": "Attention list with authorized populated result and no selected row"
+    },
+    {
+      "canonical_screenshot_paths": [
+        "visual-atlas/screenshots/episode--desktop-1440x900.png",
+        "visual-atlas/screenshots/episode--mobile-390x844.png"
+      ],
+      "canonical_state": "authorized-open-eligible-claim",
+      "reachable_states": [
+        "no-selection",
+        "authorized-open-eligible-claim",
+        "authorized-claimed-eligible-acknowledge",
+        "permission-denied",
+        "offline",
+        "coherent-read-conflict",
+        "version-conflict",
+        "owner-or-authorization-changed",
+        "capability-state-matrix"
+      ],
+      "route": "/episode",
+      "surface_key": "episode",
+      "workspace": "Episode decision brief for selected authorized episode"
+    }
+  ],
+  "target_branch": "main",
+  "tree_sha": "de2063907127a988844179e058e435d7b7666c96",
+  "work_branch": "codex/ephi-o10-ui-perfection-inspection-v1"
+}

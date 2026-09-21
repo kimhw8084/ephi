@@ -1,0 +1,75 @@
+{
+  "artifact_hashes": [
+    {
+      "bytes": 3507,
+      "path": "visual-atlas/surface-manifest.json",
+      "sha256": "2d9d2601e369388e0e0e268dfd5c56522045f39d6f18517f4902e253b4e08f26"
+    },
+    {
+      "bytes": 4458,
+      "path": "visual-atlas/capture-report.json",
+      "sha256": "d504c8e5089a1ff43b5bc925b6fa96cf11a4e0ce1eb4ac7f42d1ee697a263900"
+    },
+    {
+      "bytes": 2933,
+      "path": "visual-atlas/reader-index.json",
+      "sha256": "2452c247cf1e715f80d46998548e31d30d4c514c148c512df8f4ab7fcb596f4c"
+    },
+    {
+      "bytes": 136226,
+      "path": "visual-atlas/review-desktop.pdf",
+      "sha256": "d34c3dfd856566b51f2656241cde962b879617f517efdc95b380abe6000bd7ef"
+    },
+    {
+      "bytes": 80313,
+      "path": "visual-atlas/review-mobile.pdf",
+      "sha256": "e8b23e9419810d0064d8564117a3a45296310bb688c34ef11afc8560066d6f9f"
+    },
+    {
+      "bytes": 1829619,
+      "path": "visual-atlas/artifact-bundle.zip",
+      "sha256": "763309001388c79251de7aaf696717129c428567e292bea379f2859f998f678f"
+    }
+  ],
+  "baseBranch": "main",
+  "baseSha": "fb9710e42b64f3a0ff58599011dd9fa8d06100d8",
+  "baseTree": "0c05c8ca8e809c2896e3583ea0b20bdc731dc5b8",
+  "change": "CHG-162",
+  "checks": {
+    "canonical_dimensions_verified": true,
+    "canonical_manifest_frozen_before_capture": true,
+    "exact_source_head": true,
+    "exact_source_tree": true,
+    "fresh_real_product_o10_pass": true,
+    "pdfs_render_verified": true,
+    "png_corpus_excluded_from_evidence_lane": true,
+    "remote_readback_required": true,
+    "secret_safety_verified": true,
+    "worktree_product_clean": true
+  },
+  "decisive_evidence": {
+    "capture_report": "visual-atlas/capture-report.json",
+    "inspection_summary": "visual-atlas/inspection/golden-ui-inspection.json",
+    "manifest": "visual-atlas/surface-manifest.json",
+    "reader_index": "visual-atlas/reader-index.json",
+    "review_desktop": "visual-atlas/review-desktop.pdf",
+    "review_mobile": "visual-atlas/review-mobile.pdf",
+    "stage_receipt": ".codex-fabric/stage-receipt.json"
+  },
+  "fabricJobId": "CF-bae7bf1859b3af7a219e4593",
+  "gitArtifactCommit": "e76bfb16fc744ef55f6f4d3ba7541e025b9ac863",
+  "gitArtifactRef": "refs/heads/project-os-artifacts/ephi/ephi-o10-ui-perfection-inspection-v1",
+  "gitEvidenceRef": "refs/heads/codex-fabric/evidence/ephi/ephi-o10-ui-perfection-inspection-v1",
+  "handoff": "This Fabric/Codex run records capture and Git publication only. It does not self-certify visual perfection, human usability or GO.",
+  "main_unchanged": true,
+  "operation": "VERIFY",
+  "product_commit_created": false,
+  "project": "ephi",
+  "request": "ephi-o10-ui-perfection-inspection-v1",
+  "schema_version": 2,
+  "sourceSha": "8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e",
+  "sourceTree": "de2063907127a988844179e058e435d7b7666c96",
+  "source_changed": false,
+  "status": "GIT_PUBLISHED_AWAITING_AUDIT",
+  "workBranch": "codex/ephi-o10-ui-perfection-inspection-v1"
+}
