@@ -1,0 +1,106 @@
+{
+  "artifact_commit": "ef94b68d78bb1d71a8764459c38c2780264a57f0",
+  "artifact_ref": "refs/heads/project-os-artifacts/ephi/ephi-o10-ui-perfection-fix1",
+  "baseSha": "8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e",
+  "baseTree": "de2063907127a988844179e058e435d7b7666c96",
+  "base_identity_correction": {
+    "r2_uses_requested_execution_base": true,
+    "stale_r1_base_identity_copied": false
+  },
+  "base_pin": {
+    "nicegui_base_commit": "000298562d6bcbf6df304edbd41b98b30fe4bfcf",
+    "nicegui_base_version": "3.0.0a8",
+    "nicegui_version": "3.15.0"
+  },
+  "before_after_disposition": [
+    {
+      "after": {
+        "audit": "INDEPENDENT_AUDIT_REQUIRED",
+        "evidence": "AnalysisWorkspacePage header/primary slots; O10 geometry PASS; governed primary 754.656px vs computed 754.667px, grid 1 / 9, card 730.656px, title one line, Claim visible y=356..400.",
+        "status": "FIXED_CANDIDATE"
+      },
+      "before": {
+        "authority": "R1 source 8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e; R1 evidence 546812022c6b136dc3904d35440fb8013a3d2b47",
+        "observation": "Episode desktop decision brief/card collapsed to approximately a one-character-wide column; title/status wrapped vertically and the primary action was not human-readable.",
+        "status": "R1_PROVEN"
+      },
+      "id": "GUI-162-P1-001",
+      "severity": "P1"
+    },
+    {
+      "after": {
+        "audit": "INDEPENDENT_AUDIT_REQUIRED",
+        "evidence": "Base DataSourceTable high-priority same-row cue plus supported Issue column allocation; exact candidate first-row text contains P1 READY/OPEN Browser transport qualification case.",
+        "status": "FIXED_CANDIDATE"
+      },
+      "before": {
+        "observation": "Desktop Attention issue title observed as Browser transp...",
+        "status": "R1_PROVEN"
+      },
+      "id": "GUI-162-P2-002",
+      "severity": "P2"
+    },
+    {
+      "after": {
+        "audit": "INDEPENDENT_AUDIT_REQUIRED",
+        "evidence": "Same governed Base DataSourceTable cell visible at 390x844 and 320x800 with P1 READY/OPEN Browser transport; no parallel mobile list; page overflow false.",
+        "status": "FIXED_CANDIDATE"
+      },
+      "before": {
+        "observation": "Mobile Attention first paint exposed primarily Episode and Actions; compact priority/issue/source/work scent unavailable until selection.",
+        "status": "R1_PROVEN"
+      },
+      "id": "GUI-162-P2-003",
+      "severity": "P2"
+    },
+    {
+      "after": {
+        "audit": "INDEPENDENT_AUDIT_REQUIRED",
+        "evidence": "Known at shows deterministic America/Chicago local time with CDT and retains exact offset-aware timestamp; focused tests cover offset-aware, missing and invalid values.",
+        "status": "FIXED_CANDIDATE"
+      },
+      "before": {
+        "observation": "Episode Known at displayed a raw ISO timestamp.",
+        "status": "R1_PROVEN"
+      },
+      "id": "GUI-162-P2-004",
+      "severity": "P2"
+    }
+  ],
+  "candidate_head": "34d435e93ef0b948e758af5cf2d2655165fdb1da",
+  "candidate_tree": "676e282255fa3018a2068834b46aeeb8d8ef072c",
+  "change": "CHG-162",
+  "evidence_commit": "SELF_COMMIT_REPORTED_BY_FINAL_RECEIPT",
+  "evidence_ref": "refs/heads/codex-fabric/evidence/ephi/ephi-o10-ui-perfection-fix1",
+  "fabric_job": "CF-f9f417890a5034ca12ec3de8",
+  "gitArtifactCommit": "ef94b68d78bb1d71a8764459c38c2780264a57f0",
+  "gitArtifactRef": "refs/heads/project-os-artifacts/ephi/ephi-o10-ui-perfection-fix1",
+  "gitEvidenceRef": "refs/heads/codex-fabric/evidence/ephi/ephi-o10-ui-perfection-fix1",
+  "golden_ui_status": "CAPTURED_AWAITING_INDEPENDENT_AUDIT",
+  "iteration": "R2",
+  "main_unchanged": true,
+  "operation": "FIX",
+  "perfection_awarded": false,
+  "project": "ephi",
+  "project_id": "ephi",
+  "remote_heads": {
+    "artifact": "ef94b68d78bb1d71a8764459c38c2780264a57f0",
+    "evidence": "SELF_COMMIT_REPORTED_BY_FINAL_RECEIPT"
+  },
+  "remote_readback": "PENDING_UNTIL_CARRIER_PUBLISH",
+  "request": "ephi-o10-ui-perfection-fix1",
+  "schema_version": 2,
+  "sourceSha": "34d435e93ef0b948e758af5cf2d2655165fdb1da",
+  "sourceTree": "676e282255fa3018a2068834b46aeeb8d8ef072c",
+  "source_changed": true,
+  "validation": {
+    "authentic_browser_zoom_200_percent": "NOT_RUN",
+    "o10_rendered_accessibility": "PASS",
+    "o8_browser_session_security": "PASS",
+    "o9_local_rehearsal": "PASS_LOCAL_REHEARSAL_ONLY",
+    "package_check": "PASS",
+    "remote_github_matrix": "NOT_RUN",
+    "unit_suite": "PASS_245"
+  },
+  "workBranch": "codex/ephi-o10-ui-perfection-fix1"
+}

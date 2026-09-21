@@ -1,0 +1,287 @@
+{
+  "authentic_browser_zoom_200_percent": "NOT_RUN",
+  "before_after_disposition": [
+    {
+      "after": {
+        "audit": "INDEPENDENT_AUDIT_REQUIRED",
+        "evidence": "AnalysisWorkspacePage header/primary slots; O10 geometry PASS; governed primary 754.656px vs computed 754.667px, grid 1 / 9, card 730.656px, title one line, Claim visible y=356..400.",
+        "status": "FIXED_CANDIDATE"
+      },
+      "before": {
+        "authority": "R1 source 8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e; R1 evidence 546812022c6b136dc3904d35440fb8013a3d2b47",
+        "observation": "Episode desktop decision brief/card collapsed to approximately a one-character-wide column; title/status wrapped vertically and the primary action was not human-readable.",
+        "status": "R1_PROVEN"
+      },
+      "id": "GUI-162-P1-001",
+      "severity": "P1"
+    },
+    {
+      "after": {
+        "audit": "INDEPENDENT_AUDIT_REQUIRED",
+        "evidence": "Base DataSourceTable high-priority same-row cue plus supported Issue column allocation; exact candidate first-row text contains P1 READY/OPEN Browser transport qualification case.",
+        "status": "FIXED_CANDIDATE"
+      },
+      "before": {
+        "observation": "Desktop Attention issue title observed as Browser transp...",
+        "status": "R1_PROVEN"
+      },
+      "id": "GUI-162-P2-002",
+      "severity": "P2"
+    },
+    {
+      "after": {
+        "audit": "INDEPENDENT_AUDIT_REQUIRED",
+        "evidence": "Same governed Base DataSourceTable cell visible at 390x844 and 320x800 with P1 READY/OPEN Browser transport; no parallel mobile list; page overflow false.",
+        "status": "FIXED_CANDIDATE"
+      },
+      "before": {
+        "observation": "Mobile Attention first paint exposed primarily Episode and Actions; compact priority/issue/source/work scent unavailable until selection.",
+        "status": "R1_PROVEN"
+      },
+      "id": "GUI-162-P2-003",
+      "severity": "P2"
+    },
+    {
+      "after": {
+        "audit": "INDEPENDENT_AUDIT_REQUIRED",
+        "evidence": "Known at shows deterministic America/Chicago local time with CDT and retains exact offset-aware timestamp; focused tests cover offset-aware, missing and invalid values.",
+        "status": "FIXED_CANDIDATE"
+      },
+      "before": {
+        "observation": "Episode Known at displayed a raw ISO timestamp.",
+        "status": "R1_PROVEN"
+      },
+      "id": "GUI-162-P2-004",
+      "severity": "P2"
+    }
+  ],
+  "browser_capture_launched": true,
+  "browser_engine": "Chromium headless via Playwright",
+  "candidate_head": "34d435e93ef0b948e758af5cf2d2655165fdb1da",
+  "candidate_tree": "676e282255fa3018a2068834b46aeeb8d8ef072c",
+  "canonical_captures": [
+    {
+      "bytes": 77137,
+      "dpr": 1,
+      "facts": {
+        "document_overflow": false,
+        "first_paint_cell": {
+          "bottom": 522,
+          "height": 37,
+          "left": 326,
+          "right": 546,
+          "top": 485,
+          "width": 220
+        },
+        "first_paint_text": "P1 READY/OPEN Browser transport qualification case",
+        "h1_text": [
+          "Attention"
+        ],
+        "issue_scent": true,
+        "priority_scent": true,
+        "source_work_scent": true,
+        "table_visible": true
+      },
+      "full_page": false,
+      "path": "screenshots/attention--desktop-1440x900.png",
+      "profile": "desktop-1440x900",
+      "sha256": "c50d420db5721b909adaec84e795d5aaab0faca403bc0e3085fd458560724723",
+      "surface": "attention",
+      "url": "/",
+      "viewport": [
+        1440,
+        900
+      ]
+    },
+    {
+      "bytes": 69003,
+      "dpr": 1,
+      "facts": {
+        "action_box": {
+          "bottom": 400,
+          "height": 44,
+          "left": 309,
+          "right": 418.203125,
+          "top": 356,
+          "width": 109.203125
+        },
+        "action_label": "Claim episode",
+        "action_visible": true,
+        "document_overflow": false,
+        "episode_id_visible": true,
+        "h1_text": [
+          "Episode decision brief"
+        ],
+        "key_facts": true,
+        "known_at": "Episode ID\nepisode-browser-1\nIssue / title\nBrowser transport qualification case\nKnown at\nSep 21, 2026 3:26:29 PM CDT (exact: 2026-09-21T15:26:29.125531-05:00)\nAnalytical revision\nbrowser-analysis-1\nWorkflow version\n0\nWorkflow state\nOPEN\nOwner\nUnassigned / unavailable\nSource / capability state\nsource: READY\nCurrent eligible action\nClaim episode",
+        "primary_grid": "1 / 9",
+        "title": "Browser transport qualification case"
+      },
+      "full_page": false,
+      "path": "screenshots/episode--desktop-1440x900.png",
+      "profile": "desktop-1440x900",
+      "sha256": "65006858ffd419f9b6cee76d22f71549fb7ce3493aa6d84c102f3adc4db342e4",
+      "surface": "episode",
+      "url": "/episode",
+      "viewport": [
+        1440,
+        900
+      ]
+    },
+    {
+      "bytes": 34096,
+      "dpr": 1,
+      "facts": {
+        "document_overflow": false,
+        "first_paint_cell": {
+          "bottom": 591,
+          "height": 37,
+          "left": 66,
+          "right": 286,
+          "top": 554,
+          "width": 220
+        },
+        "first_paint_text": "P1 READY/OPEN Browser transport qualification case",
+        "h1_text": [
+          "Attention"
+        ],
+        "issue_scent": true,
+        "priority_scent": true,
+        "source_work_scent": true,
+        "table_visible": true
+      },
+      "full_page": false,
+      "path": "screenshots/attention--mobile-390x844.png",
+      "profile": "mobile-390x844",
+      "sha256": "ab6d993dd4fb38cf13948abf505c5a17c30e367064c4b419a14a957eb2b26baf",
+      "surface": "attention",
+      "url": "/",
+      "viewport": [
+        390,
+        844
+      ]
+    },
+    {
+      "bytes": 47205,
+      "dpr": 1,
+      "facts": {
+        "action_box": {
+          "bottom": 432,
+          "height": 44,
+          "left": 41,
+          "right": 150.203125,
+          "top": 388,
+          "width": 109.203125
+        },
+        "action_label": "Claim episode",
+        "action_visible": true,
+        "document_overflow": false,
+        "episode_id_visible": true,
+        "h1_text": [
+          "Episode decision brief"
+        ],
+        "key_facts": true,
+        "known_at": "Episode ID\nepisode-browser-1\nIssue / title\nBrowser transport qualification case\nKnown at\nSep 21, 2026 3:26:29 PM CDT (exact: 2026-09-21T15:26:29.125531-05:00)\nAnalytical revision\nbrowser-analysis-1\nWorkflow version\n0\nWorkflow state\nOPEN\nOwner\nUnassigned / unavailable\nSource / capability state\nsource: READY\nCurrent eligible action\nClaim episode",
+        "primary_grid": "1 / -1",
+        "title": "Browser transport qualification case"
+      },
+      "full_page": false,
+      "path": "screenshots/episode--mobile-390x844.png",
+      "profile": "mobile-390x844",
+      "sha256": "e75b3d2d215fe3e16bb9e384d9c1ee177cb990209c6bd271a0978110a271a061",
+      "surface": "episode",
+      "url": "/episode",
+      "viewport": [
+        390,
+        844
+      ]
+    }
+  ],
+  "capture_contract": {
+    "dpr": 1,
+    "full_page": false,
+    "lossless": "PNG"
+  },
+  "change": "CHG-162",
+  "exact_candidate_bound": true,
+  "execution_base": {
+    "sha": "8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e",
+    "tree": "de2063907127a988844179e058e435d7b7666c96"
+  },
+  "fabric_job": "CF-f9f417890a5034ca12ec3de8",
+  "iteration": "R2",
+  "o10": {
+    "acceptance": {
+      "criteria": {
+        "browser_events_clean": true,
+        "contrast": true,
+        "degraded_states": true,
+        "durable_command": true,
+        "episode_geometry": true,
+        "focus_continuity_complete": true,
+        "forced_colors": true,
+        "keyboard_critical_path_complete": true,
+        "keyboard_walkthrough": true,
+        "normal_focus_indicator": true,
+        "postgresql_18": true,
+        "reduced_motion": true,
+        "responsive_viewports": true,
+        "secret_safety": true,
+        "semantic_assertions": true,
+        "truthful_populated_attention": true,
+        "truthful_search_empty": true
+      },
+      "failed": [],
+      "status": "PASS"
+    },
+    "path": "inspection/o10-rendered-accessibility-report.json",
+    "status": "PASS"
+  },
+  "o8": {
+    "path": "inspection/o8-browser-session-security-report.json",
+    "status": "PASS"
+  },
+  "o9": {
+    "path": "inspection/o9-real-rehearsal-report.json",
+    "production_rpo_rto": "NOT_ESTABLISHED",
+    "status": "VERIFIED_LOCAL_REHEARSAL_ONLY"
+  },
+  "operation": "FIX",
+  "pdfs": [
+    {
+      "path": "review-desktop.pdf",
+      "sha256": "7fc2531195f10b09657943dea3f41a7e203b93b7e2c1610faac69bf5e5dce009"
+    },
+    {
+      "path": "review-mobile.pdf",
+      "sha256": "fbdf68def0ec3090917e7dad4df5b57260136b0af90fd8ec87df83262a8f81d8"
+    }
+  ],
+  "perfection_claim": "NOT_AWARDED",
+  "project": "ephi",
+  "provenance": {
+    "harness_only": [
+      "permission denied",
+      "offline",
+      "stale",
+      "conflict",
+      "capability/degraded states"
+    ],
+    "real_product": [
+      "Attention populated/search-empty/selected preview interaction",
+      "Episode OPEN/Claim/post-Claim",
+      "responsive layout"
+    ]
+  },
+  "request": "ephi-o10-ui-perfection-fix1",
+  "schema_version": 2,
+  "status": "CAPTURED_AWAITING_INDEPENDENT_AUDIT",
+  "supporting_profiles": [
+    "1024x768",
+    "768x1024",
+    "320x800",
+    "short-height/laptop represented by 1024x768",
+    "reduced motion",
+    "forced colors"
+  ]
+}

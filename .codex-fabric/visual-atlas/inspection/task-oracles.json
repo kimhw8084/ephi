@@ -1,0 +1,61 @@
+{
+  "candidate_head": "34d435e93ef0b948e758af5cf2d2655165fdb1da",
+  "candidate_tree": "676e282255fa3018a2068834b46aeeb8d8ef072c",
+  "oracles": [
+    {
+      "id": "T1",
+      "name": "candidate identity/Base pin",
+      "status": "PASS"
+    },
+    {
+      "id": "T2",
+      "name": "one Episode H1 and landmarks",
+      "status": "PASS"
+    },
+    {
+      "basis": "Base 12-column grid PRIMARY 1/9; actual >=90% computed span; title >=50% span and <=3 lines",
+      "id": "T3",
+      "name": "governed AnalysisWorkspacePage geometry",
+      "status": "PASS"
+    },
+    {
+      "id": "T4",
+      "name": "desktop Attention recognition",
+      "status": "PASS"
+    },
+    {
+      "id": "T5",
+      "name": "mobile Attention first-paint scent",
+      "status": "PASS"
+    },
+    {
+      "id": "T6",
+      "name": "Known at local plus exact",
+      "status": "PASS"
+    },
+    {
+      "id": "T7",
+      "name": "keyboard selection/open/Claim/return",
+      "status": "PASS"
+    },
+    {
+      "id": "T8",
+      "name": "truthful state matrix",
+      "provenance_split": true,
+      "status": "PASS"
+    },
+    {
+      "id": "T9",
+      "name": "browser/page/request errors",
+      "status": "PASS"
+    },
+    {
+      "id": "T10",
+      "name": "independent Golden UI audit",
+      "status": "PENDING"
+    }
+  ],
+  "project": "ephi",
+  "request": "ephi-o10-ui-perfection-fix1",
+  "schema_version": 2
+}

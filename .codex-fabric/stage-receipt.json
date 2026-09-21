@@ -1,0 +1,19 @@
+{
+  "artifact_commit": "ef94b68d78bb1d71a8764459c38c2780264a57f0",
+  "artifact_ref": "refs/heads/project-os-artifacts/ephi/ephi-o10-ui-perfection-fix1",
+  "base_sha": "8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e",
+  "base_tree": "de2063907127a988844179e058e435d7b7666c96",
+  "candidate_sha": "34d435e93ef0b948e758af5cf2d2655165fdb1da",
+  "candidate_tree": "676e282255fa3018a2068834b46aeeb8d8ef072c",
+  "evidence_commit": "SELF_COMMIT_REPORTED_BY_FINAL_RECEIPT",
+  "evidence_ref": "refs/heads/codex-fabric/evidence/ephi/ephi-o10-ui-perfection-fix1",
+  "fabric_job": "CF-f9f417890a5034ca12ec3de8",
+  "operation": "FIX",
+  "project": "ephi",
+  "remote_readback": "PENDING_UNTIL_CARRIER_PUBLISH",
+  "request": "ephi-o10-ui-perfection-fix1",
+  "schema_version": 2,
+  "source_changed": true,
+  "status": "CAPTURED_AWAITING_INDEPENDENT_AUDIT",
+  "work_branch": "codex/ephi-o10-ui-perfection-fix1"
+}

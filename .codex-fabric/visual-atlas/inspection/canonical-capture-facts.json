@@ -1,0 +1,153 @@
+{
+  "browser": "Chromium headless via Playwright",
+  "candidate_head": "34d435e93ef0b948e758af5cf2d2655165fdb1da",
+  "candidate_tree": "676e282255fa3018a2068834b46aeeb8d8ef072c",
+  "capture_contract": {
+    "dpr": 1,
+    "full_page": false,
+    "lossless": "PNG"
+  },
+  "captures": [
+    {
+      "bytes": 77137,
+      "dpr": 1,
+      "facts": {
+        "document_overflow": false,
+        "first_paint_cell": {
+          "bottom": 522,
+          "height": 37,
+          "left": 326,
+          "right": 546,
+          "top": 485,
+          "width": 220
+        },
+        "first_paint_text": "P1 READY/OPEN Browser transport qualification case",
+        "h1_text": [
+          "Attention"
+        ],
+        "issue_scent": true,
+        "priority_scent": true,
+        "source_work_scent": true,
+        "table_visible": true
+      },
+      "full_page": false,
+      "path": "screenshots/attention--desktop-1440x900.png",
+      "profile": "desktop-1440x900",
+      "sha256": "c50d420db5721b909adaec84e795d5aaab0faca403bc0e3085fd458560724723",
+      "surface": "attention",
+      "url": "/",
+      "viewport": [
+        1440,
+        900
+      ]
+    },
+    {
+      "bytes": 69003,
+      "dpr": 1,
+      "facts": {
+        "action_box": {
+          "bottom": 400,
+          "height": 44,
+          "left": 309,
+          "right": 418.203125,
+          "top": 356,
+          "width": 109.203125
+        },
+        "action_label": "Claim episode",
+        "action_visible": true,
+        "document_overflow": false,
+        "episode_id_visible": true,
+        "h1_text": [
+          "Episode decision brief"
+        ],
+        "key_facts": true,
+        "known_at": "Episode ID\nepisode-browser-1\nIssue / title\nBrowser transport qualification case\nKnown at\nSep 21, 2026 3:26:29 PM CDT (exact: 2026-09-21T15:26:29.125531-05:00)\nAnalytical revision\nbrowser-analysis-1\nWorkflow version\n0\nWorkflow state\nOPEN\nOwner\nUnassigned / unavailable\nSource / capability state\nsource: READY\nCurrent eligible action\nClaim episode",
+        "primary_grid": "1 / 9",
+        "title": "Browser transport qualification case"
+      },
+      "full_page": false,
+      "path": "screenshots/episode--desktop-1440x900.png",
+      "profile": "desktop-1440x900",
+      "sha256": "65006858ffd419f9b6cee76d22f71549fb7ce3493aa6d84c102f3adc4db342e4",
+      "surface": "episode",
+      "url": "/episode",
+      "viewport": [
+        1440,
+        900
+      ]
+    },
+    {
+      "bytes": 34096,
+      "dpr": 1,
+      "facts": {
+        "document_overflow": false,
+        "first_paint_cell": {
+          "bottom": 591,
+          "height": 37,
+          "left": 66,
+          "right": 286,
+          "top": 554,
+          "width": 220
+        },
+        "first_paint_text": "P1 READY/OPEN Browser transport qualification case",
+        "h1_text": [
+          "Attention"
+        ],
+        "issue_scent": true,
+        "priority_scent": true,
+        "source_work_scent": true,
+        "table_visible": true
+      },
+      "full_page": false,
+      "path": "screenshots/attention--mobile-390x844.png",
+      "profile": "mobile-390x844",
+      "sha256": "ab6d993dd4fb38cf13948abf505c5a17c30e367064c4b419a14a957eb2b26baf",
+      "surface": "attention",
+      "url": "/",
+      "viewport": [
+        390,
+        844
+      ]
+    },
+    {
+      "bytes": 47205,
+      "dpr": 1,
+      "facts": {
+        "action_box": {
+          "bottom": 432,
+          "height": 44,
+          "left": 41,
+          "right": 150.203125,
+          "top": 388,
+          "width": 109.203125
+        },
+        "action_label": "Claim episode",
+        "action_visible": true,
+        "document_overflow": false,
+        "episode_id_visible": true,
+        "h1_text": [
+          "Episode decision brief"
+        ],
+        "key_facts": true,
+        "known_at": "Episode ID\nepisode-browser-1\nIssue / title\nBrowser transport qualification case\nKnown at\nSep 21, 2026 3:26:29 PM CDT (exact: 2026-09-21T15:26:29.125531-05:00)\nAnalytical revision\nbrowser-analysis-1\nWorkflow version\n0\nWorkflow state\nOPEN\nOwner\nUnassigned / unavailable\nSource / capability state\nsource: READY\nCurrent eligible action\nClaim episode",
+        "primary_grid": "1 / -1",
+        "title": "Browser transport qualification case"
+      },
+      "full_page": false,
+      "path": "screenshots/episode--mobile-390x844.png",
+      "profile": "mobile-390x844",
+      "sha256": "e75b3d2d215fe3e16bb9e384d9c1ee177cb990209c6bd271a0978110a271a061",
+      "surface": "episode",
+      "url": "/episode",
+      "viewport": [
+        390,
+        844
+      ]
+    }
+  ],
+  "fixture_episode_id": "episode-browser-1",
+  "postgresql": "18.6 (Homebrew)",
+  "schema_version": 1,
+  "theme": "light",
+  "timezone": "America/Chicago"
+}
