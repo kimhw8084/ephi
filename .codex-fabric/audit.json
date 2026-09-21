@@ -1,0 +1,437 @@
+{
+  "accepted_at": "2026-09-21T01:27:27Z",
+  "changed_files": [
+    {
+      "additions": 47,
+      "deletions": 0,
+      "path": "09_Delivery_and_Gates.md",
+      "status": "M"
+    },
+    {
+      "additions": 34,
+      "deletions": 0,
+      "path": "README.md",
+      "status": "M"
+    },
+    {
+      "additions": 80,
+      "deletions": 0,
+      "path": "evidence/review/chg_161_o10_performance_capacity.json",
+      "status": "A"
+    },
+    {
+      "additions": 21,
+      "deletions": 6,
+      "path": "manifest.json",
+      "status": "M"
+    },
+    {
+      "additions": 10,
+      "deletions": 7,
+      "path": "src/ephi/infrastructure/postgresql_reads.py",
+      "status": "M"
+    },
+    {
+      "additions": 302,
+      "deletions": 0,
+      "path": "tests/test_o10_performance_capacity.py",
+      "status": "A"
+    },
+    {
+      "additions": 2206,
+      "deletions": 0,
+      "path": "tools/o10_performance_capacity.py",
+      "status": "A"
+    }
+  ],
+  "checks": [
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '60,105p' src/ephi/application/source_ingress.py && rtk sed -n '260,455p' src/ephi/application/source_ingress.py && rtk sed -n '475,556p' src/ephi/application/source_ingress.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n \\\"restore|scale|representative|production_disaster\\\" tools/o9_real_rehearsal.py tools/o9_operations.py | head -n 200 && rtk sed -n '1,230p' tools/o9_real_rehearsal.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk rg -n -C 8 \"executemany|retained|query_snapshot_row\" tests/test_o10_performance_capacity.py tests/test_o2_postgresql_reads.py src/ephi/infrastructure/postgresql_reads.py | head -n 260 && rtk git diff --stat 8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e..HEAD'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk printenv | rg '\"'^CODEX_FABRIC_JOB_ID='\"' || true && rtk git status --short && rtk python3 -m py_compile tools/o10_performance_capacity.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1420,1505p' tools/o10_performance_capacity.py && rtk sed -n '1660,1715p' tools/o10_performance_capacity.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n -A 18 -B 3 '\"'^def resilience_scenarios|''^def restore_rehearsals|''^def source_degraded_probe'\"' tools/o10_performance_capacity.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '390,535p' tools/o10_performance_capacity.py && rtk python3 -m py_compile tools/o10_performance_capacity.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '535,650p' tools/o10_performance_capacity.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m py_compile tools/o10_performance_capacity.py && rtk python3 -m unittest tests.test_o10_performance_capacity -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest tests.test_o10_performance_capacity -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'tmpdir=$(mktemp -d) && rtk python3 tools/o10_performance_capacity.py --contract-only --output \"$tmpdir\"; code=$?; rtk python3 - <<'\"'PY' \\\"\"'$tmpdir\" \"$code\"\nimport json, pathlib, sys\npath = pathlib.Path(sys.argv[1]) / '\"'benchmark_report.json'\nreport = json.loads(path.read_text())\nprint('exit=', sys.argv[2], 'status=', report.get('status'), 'request=', report.get('request'), 'mode=', report.get('execution_mode'))\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n -C 4 \\\"CREATE TABLE (command_receipt|audit_event|outbox_event)|outbox_event\\\\(\\\" migrations/001_o2_command_core.sql src/ephi/infrastructure/postgresql.py | head -n 220 && rtk rg -n \\\"operation.*BUILD|o10-performance-capacity-v1|codex/ephi-o10-performance-capacity-v1|CF-368950\\\" README.md 09_Delivery_and_Gates.md evidence/review/chg_161_o10_performance_capacity.json tools/o10_performance_capacity.py tests/test_o10_performance_capacity.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,240p' evidence/review/chg_161_o10_performance_capacity.json && printf '\\\\n--- gate doc O10 ---\\\\n' && rtk rg -n -A 80 -B 30 \\\"O10.2|CHG-161|performance\\\" 09_Delivery_and_Gates.md && printf '\\\\n--- README O10 tail ---\\\\n' && rtk rg -n -A 50 -B 10 \\\"CHG-161|O10.2|capacity\\\" README.md\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest discover -s tests -v'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 tools/w0_repo_baseline.py --json || true && rtk sed -n '1,180p' environment/w0_repo_baseline.json && rtk sed -n '1,130p' tests/test_w0_repo_baseline.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 --version && rtk python3 - <<'PY'\nimport sys\nprint(sys.version_info[:3])\nfrom pathlib import Path\nfrom tools.w0_repo_baseline import run_baseline\nprint(run_baseline(Path('.'), execute_tests=False))\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '174,270p' src/ephi/infrastructure/postgresql_reads.py && rtk sed -n '600,667p' src/ephi/infrastructure/postgresql_reads.py && rtk sed -n '1,130p' tests/test_o2_postgresql_reads.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,65p' src/ephi/infrastructure/postgresql_reads.py && rtk sed -n '116,170p' src/ephi/application/read.py 2>/dev/null || true && rtk rg -n \\\"class VersionedReadRow\\\" src/ephi/application -g '*.py'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest tests.test_o10_performance_capacity -v'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest tests.test_o10_performance_capacity -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git diff --stat && rtk git diff -- tools/o10_performance_capacity.py | sed -n '1,260p' && rtk git diff -- tests/test_o10_performance_capacity.py | sed -n '1,260p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest discover -s tests -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short --branch && rtk git diff --check && rtk python3 tools/check_package.py && rtk python3 -m py_compile tools/o10_performance_capacity.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git show origin/project-os-artifacts/ephi/ephi-o10-performance-capacity-v1:README.md >/dev/null && rtk git ls-tree -r --name-only origin/project-os-artifacts/ephi/ephi-o10-performance-capacity-v1 | head -n 80 && printf '\\\\n--- R1 carrier commit ---\\\\n' && rtk git show -s --format=fuller origin/project-os-artifacts/ephi/ephi-o10-performance-capacity-v1 && printf '\\\\n--- R1 evidence ABI ---\\\\n' && rtk git show origin/codex-fabric/evidence/ephi/ephi-o10-performance-capacity-v1 --format=fuller --stat && rtk git ls-tree -r --name-only origin/codex-fabric/evidence/ephi/ephi-o10-performance-capacity-v1 | head -n 80 && printf '\\\\n--- R1 evidence files ---\\\\n' && rtk git ls-tree -r --name-only origin/codex-fabric/evidence/ephi/ephi-o10-performance-capacity-v1 | rg 'json|evidence|manifest|README'\"",
+      "exit_code": 128,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git ls-remote origin 'refs/heads/project-os-artifacts/ephi/ephi-o10-performance-capacity-v1' 'refs/heads/codex-fabric/evidence/ephi/ephi-o10-performance-capacity-v1' 'refs/heads/codex/ephi-o10-performance-capacity-v1' 'refs/heads/project-os-artifacts/ephi/ephi-o10-performance-capacity-fix1' 'refs/heads/codex-fabric/evidence/ephi/ephi-o10-performance-capacity-fix1'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git fetch origin refs/heads/project-os-artifacts/ephi/ephi-o10-performance-capacity-v1:refs/remotes/origin/project-os-artifacts/ephi/ephi-o10-performance-capacity-v1 refs/heads/codex-fabric/evidence/ephi/ephi-o10-performance-capacity-v1:refs/remotes/origin/codex-fabric/evidence/ephi/ephi-o10-performance-capacity-v1 && rg --files -g '*fabric*' -g '*publish*' -g '*carrier*' -g '*.md' /Users/haewonkim/.codex /Users/haewonkim/.codex-fabric/worktrees/CF-732138307c5bb82fafc5a928 | head -n 160\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git show -s --format=fuller refs/remotes/origin/project-os-artifacts/ephi/ephi-o10-performance-capacity-v1 && rtk git ls-tree -r --name-only refs/remotes/origin/project-os-artifacts/ephi/ephi-o10-performance-capacity-v1 | head -n 80 && printf '\\\\n--- evidence commit ---\\\\n' && rtk git show -s --format=fuller refs/remotes/origin/codex-fabric/evidence/ephi/ephi-o10-performance-capacity-v1 && rtk git ls-tree -r --name-only refs/remotes/origin/codex-fabric/evidence/ephi/ephi-o10-performance-capacity-v1 | head -n 100 && printf '\\\\n--- evidence payloads ---\\\\n' && for p in \"'$(rtk git ls-tree -r --name-only refs/remotes/origin/codex-fabric/evidence/ephi/ephi-o10-performance-capacity-v1 | rg '\"'\\\\.json\"'$'\"'); do echo \\\"--- \"'$p\"; rtk git show refs/remotes/origin/codex-fabric/evidence/ephi/ephi-o10-performance-capacity-v1:\"$p\" | sed -n '\"'1,260p'; done\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git show refs/remotes/origin/project-os-artifacts/ephi/ephi-o10-performance-capacity-v1:carrier-manifest.json && printf '\\\\n--- audit header/tail ---\\\\n' && rtk git show refs/remotes/origin/codex-fabric/evidence/ephi/ephi-o10-performance-capacity-v1:.codex-fabric/audit.json | sed -n '1,90p' && rtk git show refs/remotes/origin/codex-fabric/evidence/ephi/ephi-o10-performance-capacity-v1:.codex-fabric/audit.json | tail -n 90\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg --files /Users/haewonkim/.codex-fabric | rg '(\"'^|/)(publish|publisher|fabric|job|carrier|audit)'\"' | head -n 240 && printf '\\\\n--- job dirs ---\\\\n' && rtk find /Users/haewonkim/.codex-fabric -maxdepth 3 -type f -name 'job.json' -print 2>/dev/null | head -n 80 && printf '\\\\n--- runtime env/tools ---\\\\n' && rtk printenv | rg -i 'fabric|codex.*job|project.os|evidence' | sed -E 's/(TOKEN|KEY|SECRET|PASSWORD)=.*/\\\\1=<redacted>/' | head -n 120\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk find /Users/haewonkim/.codex-fabric/jobs -maxdepth 1 -type d -name 'CF-732138307c5bb82fafc5a928*' -print && rtk /Users/haewonkim/.codex-fabric/bin/fabricctl --help | head -n 160 && printf '\\\\n--- fabricctl publish help ---\\\\n' && rtk /Users/haewonkim/.codex-fabric/bin/fabricctl publish --help 2>&1 | head -n 220\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nimport json\nfrom pathlib import Path\np=Path('/Users/haewonkim/.codex-fabric/jobs/CF-732138307c5bb82fafc5a928.running/job.json')\nprint(json.dumps(json.loads(p.read_text()), sort_keys=True, indent=2))\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk /Users/haewonkim/.codex-fabric/bin/fabricctl status CF-732138307c5bb82fafc5a928 | head -n 240'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 tools/check_package.py --refresh-manifest && rtk git diff --check && rtk git add 09_Delivery_and_Gates.md README.md manifest.json tests/test_o10_performance_capacity.py tools/o10_performance_capacity.py && rtk git commit -m 'ephi: repair O10.2 qualification contract' && rtk git status --short --branch && rtk git show -s --format='commit=%H%nparent=%P%ntree=%T%nsubject=%s' HEAD\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git show refs/remotes/origin/project-os-artifacts/ephi/ephi-o10-performance-capacity-v1:ephi-o10-performance-capacity-v1.bundle.tar > /tmp/ephi-r1.bundle.tar && rtk tar -tvf /tmp/ephi-r1.bundle.tar | head -n 100 && printf '\\\\n--- carrier manifest size ---\\\\n' && rtk git show refs/remotes/origin/project-os-artifacts/ephi/ephi-o10-performance-capacity-v1:carrier-manifest.json | wc -c\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git show -s --format='commit=%H%nparent=%P%ntree=%T%nsubject=%s' acd938073e57a20fc058e2bae61bf9cde90c14dc && rtk git cat-file -p acd938073e57a20fc058e2bae61bf9cde90c14dc | head -n 20 && rtk git show refs/remotes/origin/project-os-artifacts/ephi/ephi-o10-performance-capacity-v1:carrier-manifest.json | rg -n 'predecessor|evidence|carrier|operation|request' || true\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/w0_repo_baseline.py && rtk python3 tools/check_package.py && rtk python3 -m unittest discover -s tests -v > /tmp/ephi-fix1-unittest.log && rtk git diff --check && rtk tail -n 8 /tmp/ephi-fix1-unittest.log && rtk git status --short --branch'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk rg -n \"Ran |OK|FAILED\" /tmp/ephi-fix1-unittest.log | tail -n 8 && rtk wc -l /tmp/ephi-fix1-unittest.log && rtk git status --short --branch'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --name-only 8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e..HEAD && rtk git diff --numstat 8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e..HEAD && rtk git ls-tree -r --name-only HEAD | wc -l && rtk git diff --name-only e6539fc9746434d9b16fa110836588a45a398296..HEAD'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nimport hashlib, subprocess\nbase='8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e'\ncandidate='f3e3344232e68ed5444c0de2fc3de7d19a80520a'\npaths=subprocess.check_output(['git','diff','--name-only',f'{base}..{candidate}'],text=True).decode().splitlines()\nfor path in paths:\n    data=subprocess.check_output(['git','show',f'{candidate}:{path}'])\n    print(f'{path}\\\\t{len(data)}\\\\t{hashlib.sha256(data).hexdigest()}')\nPY\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nimport hashlib, subprocess\nbase='8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e'\ncandidate='f3e3344232e68ed5444c0de2fc3de7d19a80520a'\npaths=subprocess.check_output(['git','diff','--name-only',f'{base}..{candidate}'],text=True).splitlines()\nfor path in paths:\n    data=subprocess.check_output(['git','show',f'{candidate}:{path}'])\n    print(f'{path}\\\\t{len(data)}\\\\t{hashlib.sha256(data).hexdigest()}')\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk mkdir -p /tmp/ephi-fix1-carrier/payload/evidence /tmp/ephi-fix1-carrier/payload/benchmark /tmp/ephi-fix1-carrier/payload/checks /tmp/ephi-fix1-carrier/payload/diagnostic'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git push origin HEAD:refs/heads/codex/ephi-o10-performance-capacity-fix1 && rtk git ls-remote origin refs/heads/codex/ephi-o10-performance-capacity-fix1'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk tar --sort=name --mtime='UTC 1970-01-01' --owner=0 --group=0 --numeric-owner -cf /tmp/ephi-fix1-carrier/ephi-o10-performance-capacity-fix1.bundle.tar -C /tmp/ephi-fix1-carrier/payload benchmark changed-files.json checks diagnostic evidence && rtk wc -c /tmp/ephi-fix1-carrier/ephi-o10-performance-capacity-fix1.bundle.tar && rtk shasum -a 256 /tmp/ephi-fix1-carrier/ephi-o10-performance-capacity-fix1.bundle.tar && rtk tar -tvf /tmp/ephi-fix1-carrier/ephi-o10-performance-capacity-fix1.bundle.tar\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk tar -cf /tmp/ephi-fix1-carrier/ephi-o10-performance-capacity-fix1.bundle.tar -C /tmp/ephi-fix1-carrier/payload benchmark changed-files.json checks diagnostic evidence && rtk wc -c /tmp/ephi-fix1-carrier/ephi-o10-performance-capacity-fix1.bundle.tar && rtk shasum -a 256 /tmp/ephi-fix1-carrier/ephi-o10-performance-capacity-fix1.bundle.tar && rtk tar -tvf /tmp/ephi-fix1-carrier/ephi-o10-performance-capacity-fix1.bundle.tar'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git -C /tmp/ephi-fix1-carrier init -q && rtk git -C /tmp/ephi-fix1-carrier add carrier-manifest.json ephi-o10-performance-capacity-fix1.bundle.tar && rtk git -C /tmp/ephi-fix1-carrier -c user.name='Codex Fabric' -c user.email='codex-fabric@local' commit -m 'chore(fabric): publish ephi O10.2 FIX1 carrier' && rtk git -C /tmp/ephi-fix1-carrier show -s --format='commit=%H%nparent=%P%ntree=%T%nsubject=%s' HEAD && rtk git -C /tmp/ephi-fix1-carrier status --short\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git -C /tmp/ephi-fix1-carrier push origin HEAD:refs/heads/project-os-artifacts/ephi/ephi-o10-performance-capacity-fix1 && rtk git ls-remote origin refs/heads/project-os-artifacts/ephi/ephi-o10-performance-capacity-fix1 refs/heads/codex/ephi-o10-performance-capacity-fix1 && rtk git -C /tmp/ephi-fix1-carrier status --short --branch'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk /Users/haewonkim/.codex-fabric/bin/fabricctl publish-evidence CF-732138307c5bb82fafc5a928'",
+      "exit_code": 2,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk /Users/haewonkim/.codex-fabric/bin/fabricctl refresh-evidence CF-732138307c5bb82fafc5a928 2>&1 || true && rtk /Users/haewonkim/.codex-fabric/bin/fabricctl publish-pending-evidence 2>&1 || true && rtk /Users/haewonkim/.codex-fabric/bin/fabricctl status CF-732138307c5bb82fafc5a928'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git ls-remote origin refs/heads/project-os-artifacts/ephi/ephi-o10-performance-capacity-fix1 refs/heads/codex-fabric/evidence/ephi/ephi-o10-performance-capacity-fix1 refs/heads/codex/ephi-o10-performance-capacity-fix1 && rtk git show origin/project-os-artifacts/ephi/ephi-o10-performance-capacity-fix1:carrier-manifest.json | sed -n '1,220p' && rtk git status --short --branch && rtk git log --oneline --decorate -4\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    }
+  ],
+  "codex": {
+    "cli_version": "codex-cli 0.155.1",
+    "configured_model": "gpt-5.6-luna",
+    "event_count": 176,
+    "provider_reported_model": null,
+    "reasoning_effort": "xhigh",
+    "terminal_type": "turn.completed",
+    "usage": {
+      "cache_hit_percent": 97.9,
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 13149184,
+      "fresh_input_tokens": 281563,
+      "input_tokens": 13430747,
+      "non_reasoning_output_tokens": 40890,
+      "output_tokens": 67181,
+      "reasoning_output_tokens": 26291,
+      "total_processed_tokens": 13497928
+    },
+    "warnings": []
+  },
+  "commits": [
+    {
+      "sha": "f3e3344232e68ed5444c0de2fc3de7d19a80520a",
+      "subject": "ephi: repair O10.2 qualification contract"
+    },
+    {
+      "sha": "e6539fc9746434d9b16fa110836588a45a398296",
+      "subject": "ephi: add O10.2 performance capacity harness"
+    }
+  ],
+  "diff": {
+    "additions": 2700,
+    "changed_files": 7,
+    "commit_count": 2,
+    "deletions": 13
+  },
+  "error_code": null,
+  "evidence_manifest": {
+    "count": 4,
+    "items": [
+      {
+        "bytes": 22921,
+        "path": "09_Delivery_and_Gates.md",
+        "sha256": "ca94362410aef177ba4fb2b51462d177f5e726b4d70d84c1ad42f17bf1592e9a"
+      },
+      {
+        "bytes": 18348,
+        "path": "README.md",
+        "sha256": "30e6fe14a86d082328781de3c4b582bea584759d280eaf4f1ceb65917ee9ab27"
+      },
+      {
+        "bytes": 3948,
+        "path": "evidence/review/chg_161_o10_performance_capacity.json",
+        "sha256": "89eda48689631ae6ab6180daf5b2f62753ef2f63ceb72991b3f7511713620ee8"
+      },
+      {
+        "bytes": 34312,
+        "path": "manifest.json",
+        "sha256": "dfb29b877a0d447c09a2d458d2609c2ca670f3b64bce7a32bbf77072fc8b16e5"
+      }
+    ],
+    "version": 1
+  },
+  "evidence_publisher_release": "1.2.3-resume-candidate",
+  "fabric_capture": {
+    "applied": false,
+    "paths_before": 0,
+    "transient_untracked_removed": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "fabric_release": "1.2.3-resume-candidate",
+  "failure_class": null,
+  "finished_at": "2026-09-21T01:50:52Z",
+  "git": {
+    "base_is_ancestor": true,
+    "base_sha": "8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e",
+    "branch": "codex/ephi-o10-performance-capacity-fix1",
+    "detached_verify": false,
+    "head_sha": "f3e3344232e68ed5444c0de2fc3de7d19a80520a",
+    "remote_exact_head": true,
+    "remote_head_sha": "f3e3344232e68ed5444c0de2fc3de7d19a80520a",
+    "target_branch": "main",
+    "target_drifted_since_acceptance": false,
+    "target_head_observed_after_execution": "8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e",
+    "work_branch": "codex/ephi-o10-performance-capacity-fix1",
+    "worktree_clean": true
+  },
+  "instructions": {
+    "files": [
+      {
+        "bytes": 1458,
+        "path": "AGENTS.md",
+        "sha256": "4349f387a79d886ed1264604ff48c582698e539e08ed8fb2f9d8ab8fbf6f804a"
+      }
+    ],
+    "total_bytes": 1458,
+    "warning": null
+  },
+  "job_id": "CF-732138307c5bb82fafc5a928",
+  "kind": "codex-fabric-audit-evidence",
+  "locator": {
+    "branch": "codex-fabric/evidence/ephi/ephi-o10-performance-capacity-fix1",
+    "path": ".codex-fabric/audit.json",
+    "ref": "refs/heads/codex-fabric/evidence/ephi/ephi-o10-performance-capacity-fix1"
+  },
+  "operation": "FIX",
+  "policy": {
+    "environment_policy_sha256": "e077daca74297b3c30bee8989f00f8ca5338f7610b4d016a6c48db524205d064",
+    "fabric_release": "1.2.3-resume-candidate",
+    "policy_sha256": "a642c9f63bab2cb555704bdb0b9d1f28222591f133f934c1d0f93cc5a25ab8a1",
+    "registry_sha256": "cfc765f3211c37c7967a138f3b2d89a99341939b15b2623f92744d007f625d6f"
+  },
+  "project_id": "ephi",
+  "recovery": {
+    "model_rerun_safe": false,
+    "recovery_required": false,
+    "retry_safe": false,
+    "retry_scope": null,
+    "worktree_retained": true
+  },
+  "request": "ephi-o10-performance-capacity-fix1",
+  "schema_version": 1,
+  "started_at": "2026-09-21T01:27:28Z",
+  "status": "EXECUTED_CHANGE",
+  "timing": {
+    "execution_seconds": 1404,
+    "queue_seconds": 1,
+    "total_seconds": 1405
+  },
+  "transport": {
+    "bytes": 18991,
+    "envelope": "FABRIC/2",
+    "prompt_bytes": 18672,
+    "prompt_sha256": "d09ced28c4a1d54751aa9fe5197bc40a466796a67336b6de9599f8dc9babe6a3",
+    "sha256": "732138307c5bb82fafc5a9288bb39369fb10d2fd14da606a9267590a0dc40ad6"
+  }
+}
