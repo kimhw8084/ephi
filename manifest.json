@@ -751,8 +751,8 @@
     },
     {
       "path": "src/ephi/ui/provider.py",
-      "bytes": 10717,
-      "sha256": "7cb36ed46c9daeb99213e61c6ef0d3e3cae3395e8ae97054d4ff73e1952326f6"
+      "bytes": 10739,
+      "sha256": "039db4abcb0f470706a1cc3a73f9f749f3883fb87ab9d70f4da894492356abc8"
     },
     {
       "path": "src/ephi/value/__init__.py",
@@ -836,8 +836,8 @@
     },
     {
       "path": "tests/test_o3_provider.py",
-      "bytes": 11777,
-      "sha256": "42b6a51a6070010d5d149db40cbfe9667f0c1b980204b0f38f6fadfbc3f229ce"
+      "bytes": 11787,
+      "sha256": "cbc53debac14d1f25da8cfe404b77d606d3154009ffd82fa57a2511527173321"
     },
     {
       "path": "tests/test_o4_source_ingress.py",
@@ -921,8 +921,8 @@
     },
     {
       "path": "tools/o10_rendered_accessibility.py",
-      "bytes": 53744,
-      "sha256": "d42c6c526073cd3025890f33a9cd993a4b8444121152261e83812d6de49a3ec4"
+      "bytes": 54278,
+      "sha256": "14a55ea9f7208f4b9c7239c551af1122540b8c8adc3b71b54f52e65af1aa0613"
     },
     {
       "path": "tools/o10_state_harness.py",
