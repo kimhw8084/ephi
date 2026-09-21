@@ -1,0 +1,1080 @@
+{
+  "acceptance": {
+    "criteria": {
+      "browser_events_clean": true,
+      "contrast": true,
+      "degraded_states": true,
+      "durable_command": true,
+      "focus_continuity_complete": true,
+      "forced_colors": true,
+      "keyboard_critical_path_complete": true,
+      "keyboard_walkthrough": true,
+      "normal_focus_indicator": true,
+      "postgresql_18": true,
+      "reduced_motion": true,
+      "responsive_viewports": true,
+      "secret_safety": true,
+      "semantic_assertions": true,
+      "truthful_populated_attention": true,
+      "truthful_search_empty": true
+    },
+    "failed": [],
+    "status": "PASS"
+  },
+  "base": "9262533404f13df52ef20a7a1245b120f4438b04",
+  "degraded_state_matrix": {
+    "attention-failure": {
+      "aria_snapshot": "- main:\n  - main \"O10 degraded-state harness\":\n    - heading \"Attention degraded-state qualification\" [level=1]\n    - text: Synthetic qualification identity; no protected row or secret is rendered.\n    - status:\n      - img \"error\"\n      - text: EPHI request failed The operation did not commit. Retry only after reviewing the current state.\n    - status: \"Scenario: attention-failure\"",
+      "body_digest": "0d19efe887d77f176211129f0dfcc47f1840d84f2a412aa9f9736fbdf87b5dd0",
+      "bounded_text": true,
+      "events": {
+        "console_errors": [],
+        "page_errors": [],
+        "request_failures": []
+      },
+      "screenshot": "attention-failure.png",
+      "status": "PASS"
+    },
+    "attention-no-permitted-rows": {
+      "aria_snapshot": "- main:\n  - main \"O10 degraded-state harness\":\n    - heading \"Attention degraded-state qualification\" [level=1]\n    - text: Synthetic qualification identity; no protected row or secret is rendered.\n    - status \"Attention result state\": No permitted Attention rows This is not a zero-risk result; unavailable data is not represented as an empty success.\n    - status: \"Scenario: attention-no-permitted-rows\"",
+      "body_digest": "d54f0346a18427e613bd8abbb778e614f20abdd29ca1a63948ad12531b299e84",
+      "bounded_text": true,
+      "events": {
+        "console_errors": [],
+        "page_errors": [],
+        "request_failures": []
+      },
+      "screenshot": "attention-no-permitted-rows.png",
+      "status": "PASS"
+    },
+    "attention-offline": {
+      "aria_snapshot": "- main:\n  - main \"O10 degraded-state harness\":\n    - heading \"Attention degraded-state qualification\" [level=1]\n    - text: Synthetic qualification identity; no protected row or secret is rendered.\n    - status:\n      - img \"offline\"\n      - text: Source unavailable PostgreSQL or the required EPHI source is unavailable. No healthy or empty state is inferred.\n      - button \"Retry\"\n    - status: \"Scenario: attention-offline\"",
+      "body_digest": "e9325cdf3e900f43a7d030504a12f701b60002c1f5ffa9c2081810950165415c",
+      "bounded_text": true,
+      "events": {
+        "console_errors": [],
+        "page_errors": [],
+        "request_failures": []
+      },
+      "screenshot": "attention-offline.png",
+      "status": "PASS"
+    },
+    "attention-permission": {
+      "aria_snapshot": "- main:\n  - main \"O10 degraded-state harness\":\n    - heading \"Attention degraded-state qualification\" [level=1]\n    - text: Synthetic qualification identity; no protected row or secret is rendered.\n    - status:\n      - img \"permission\"\n      - text: Permission denied Current authorization does not permit this data or action.\n    - status: \"Scenario: attention-permission\"",
+      "body_digest": "a94f2fa6287ca56109229524aecdd6dd529f147794ac4f7dcc7252b8374591e6",
+      "bounded_text": true,
+      "events": {
+        "console_errors": [],
+        "page_errors": [],
+        "request_failures": []
+      },
+      "screenshot": "attention-permission.png",
+      "status": "PASS"
+    },
+    "attention-stale": {
+      "aria_snapshot": "- main:\n  - main \"O10 degraded-state harness\":\n    - heading \"Attention degraded-state qualification\" [level=1]\n    - text: Synthetic qualification identity; no protected row or secret is rendered.\n    - status:\n      - img \"error\"\n      - text: Attention snapshot expired Refresh Attention to start a new retained query snapshot.\n      - button \"Refresh\"\n    - status: \"Scenario: attention-stale\"",
+      "body_digest": "da1741e6d76541e2d5684cee82647c5a3b8747c7eda57f4e23e61824f10218e5",
+      "bounded_text": true,
+      "events": {
+        "console_errors": [],
+        "page_errors": [],
+        "request_failures": []
+      },
+      "screenshot": "attention-stale.png",
+      "status": "PASS"
+    },
+    "episode-capability-states": {
+      "aria_snapshot": "- main:\n  - main \"O10 degraded-state harness\":\n    - heading \"Episode degraded-state qualification\" [level=1]\n    - text: Synthetic qualification identity; no protected row or secret is rendered.\n    - region \"Episode capability state matrix\":\n      - text: \"source capability: READY\"\n      - status: \"source capability READY: READY\"\n      - text: \"source capability: STALE\"\n      - status: \"source capability STALE: STALE\"\n      - text: \"source capability: PARTIAL\"\n      - status: \"source capability PARTIAL: PARTIAL\"\n      - text: \"source capability: INSUFFICIENT\"\n      - status: \"source capability INSUFFICIENT: INSUFFICIENT\"\n      - text: \"source capability: UNAVAILABLE\"\n      - status: \"source capability UNAVAILABLE: UNAVAILABLE\"\n    - status: \"Scenario: episode-capability-states\"",
+      "body_digest": "5bb9938cb9d8cf71fe5e33dd3c5ad5240303c2554505931068e9a437a268b618",
+      "bounded_text": true,
+      "events": {
+        "console_errors": [],
+        "page_errors": [],
+        "request_failures": []
+      },
+      "screenshot": "episode-capability-states.png",
+      "status": "PASS"
+    },
+    "episode-coherent-conflict": {
+      "aria_snapshot": "- main:\n  - main \"O10 degraded-state harness\":\n    - heading \"Episode degraded-state qualification\" [level=1]\n    - text: Synthetic qualification identity; no protected row or secret is rendered.\n    - region \"Episode degraded state\":\n      - status: Stale decision read\n      - text: The analytical revision and workflow state were not one coherent read.\n      - button \"Refresh\"\n      - button \"Return to Attention\"\n    - status: \"Scenario: episode-coherent-conflict\"",
+      "body_digest": "447cb90eecd019489945408539510ab598737096f263a01306282bd32f4005b2",
+      "bounded_text": true,
+      "events": {
+        "console_errors": [],
+        "page_errors": [],
+        "request_failures": []
+      },
+      "screenshot": "episode-coherent-conflict.png",
+      "status": "PASS"
+    },
+    "episode-offline": {
+      "aria_snapshot": "- main:\n  - main \"O10 degraded-state harness\":\n    - heading \"Episode degraded-state qualification\" [level=1]\n    - text: Synthetic qualification identity; no protected row or secret is rendered.\n    - region \"Episode degraded state\":\n      - status: Source unavailable\n      - text: PostgreSQL or the required EPHI source is unavailable. No healthy or empty state is inferred.\n      - button \"Retry\"\n      - button \"Return to Attention\"\n    - status: \"Scenario: episode-offline\"",
+      "body_digest": "35fbbc82a7d44b9b930d2a7810d272d0bfe71446d642f5802604ad5d1be96f00",
+      "bounded_text": true,
+      "events": {
+        "console_errors": [],
+        "page_errors": [],
+        "request_failures": []
+      },
+      "screenshot": "episode-offline.png",
+      "status": "PASS"
+    },
+    "episode-owner-changed": {
+      "aria_snapshot": "- main:\n  - main \"O10 degraded-state harness\":\n    - heading \"Episode degraded-state qualification\" [level=1]\n    - text: Synthetic qualification identity; no protected row or secret is rendered.\n    - status \"Episode action availability\": Current owner/authorization changed; action unavailable Workflow truth is authoritative and no Claim/Acknowledge action is offered.\n    - status: \"Scenario: episode-owner-changed\"",
+      "body_digest": "102e74bff2e5661fa3e1499e6640b49abf8084a37463c6dfbc2dc16eefd3444f",
+      "bounded_text": true,
+      "events": {
+        "console_errors": [],
+        "page_errors": [],
+        "request_failures": []
+      },
+      "screenshot": "episode-owner-changed.png",
+      "status": "PASS"
+    },
+    "episode-permission": {
+      "aria_snapshot": "- main:\n  - main \"O10 degraded-state harness\":\n    - heading \"Episode degraded-state qualification\" [level=1]\n    - text: Synthetic qualification identity; no protected row or secret is rendered.\n    - region \"Episode degraded state\":\n      - status: Permission denied\n      - text: Current authorization does not permit this data or action.\n      - button \"Return to Attention\"\n    - status: \"Scenario: episode-permission\"",
+      "body_digest": "2c4104cc943c09a642c62dbda4ca64c726fda113e47ce676d789d78a4f82cd66",
+      "bounded_text": true,
+      "events": {
+        "console_errors": [],
+        "page_errors": [],
+        "request_failures": []
+      },
+      "screenshot": "episode-permission.png",
+      "status": "PASS"
+    },
+    "episode-version-conflict": {
+      "aria_snapshot": "- main:\n  - main \"O10 degraded-state harness\":\n    - heading \"Episode degraded-state qualification\" [level=1]\n    - text: Synthetic qualification identity; no protected row or secret is rendered.\n    - region \"Episode degraded state\":\n      - status: Version conflict\n      - text: The workflow changed in another session. Refresh the Episode before retrying.\n      - button \"Refresh\"\n      - button \"Return to Attention\"\n    - status: \"Scenario: episode-version-conflict\"",
+      "body_digest": "ddc6d541c4e9fc375ca633e32dc48383fbd11502ec26abbcb9d065a164957751",
+      "bounded_text": true,
+      "events": {
+        "console_errors": [],
+        "page_errors": [],
+        "request_failures": []
+      },
+      "screenshot": "episode-version-conflict.png",
+      "status": "PASS"
+    }
+  },
+  "durable_command": {
+    "aggregate_version": 1,
+    "command_receipt_count": 1,
+    "work_state_present": true
+  },
+  "interaction_keyboard_matrix": [
+    {
+      "input": "keyboard row focus + Space",
+      "status": "PASS",
+      "step": "Attention single-row selection"
+    },
+    {
+      "input": "keyboard Tab + Enter on preview action",
+      "status": "PASS",
+      "step": "Open episode"
+    },
+    {
+      "input": "keyboard Tab + Enter on current eligible action",
+      "status": "PASS",
+      "step": "Episode Claim/Acknowledge"
+    },
+    {
+      "input": "PostgreSQL receipt/workflow read plus rendered refresh",
+      "status": "PASS",
+      "step": "Durable refresh"
+    },
+    {
+      "input": "keyboard Enter on return action",
+      "status": "PASS",
+      "step": "Return to Attention"
+    }
+  ],
+  "postgres": {
+    "real_postgresql_18": true,
+    "version": "18.6 (Homebrew)"
+  },
+  "project": "ephi",
+  "real_browser": {
+    "contrast": {
+      "primary_action": {
+        "background": "color(srgb 0 0.310196 0.623137)",
+        "foreground": "rgb(255, 255, 255)",
+        "ratio": 8.012,
+        "status": "PASS",
+        "threshold": 4.5
+      },
+      "primary_text": {
+        "background": "rgb(245, 245, 247)",
+        "foreground": "rgb(29, 29, 31)",
+        "ratio": 15.457,
+        "status": "PASS",
+        "threshold": 4.5
+      },
+      "secondary_text": {
+        "background": "rgb(245, 245, 247)",
+        "foreground": "rgb(82, 82, 86)",
+        "ratio": 7.143,
+        "status": "PASS",
+        "threshold": 4.5
+      },
+      "status_text": {
+        "background": "rgb(247, 247, 249)",
+        "foreground": "rgb(29, 29, 31)",
+        "ratio": 15.73,
+        "status": "PASS",
+        "threshold": 4.5
+      }
+    },
+    "critical_path": {
+      "attention_aria_snapshot": "- region \"EPHI application content\":\n  - link \"Skip to main content\":\n    - /url: \"#cui-main-content\"\n  - banner:\n    - text: EPHI Attention \u2192 Episode TEST o10-rendered-engineer\n    - button \"User profile\": U\n  - complementary \"Application navigation\":\n    - button \"Collapse or expand navigation\":\n      - img \"Collapse navigation\"\n    - navigation \"Primary navigation\":\n      - text: Work\n      - listitem \"Attention\"\n      - listitem \"Episode\"\n    - text: Version NiceGUI Base 3.0.0a8 NiceGUI 3.15.0 TEST\n  - main:\n    - heading \"Attention\" [level=1]\n    - text: Scoped engineering work with retained, coherent reads\n    - region \"Filters\":\n      - text: Authorized scope and source coverage\n      - status: 1 permitted Attention row; source coverage is limited to this authorized result.\n    - region \"Attention result state\":\n      - region \"Attention results table\":\n        - text: Attention list\n        - toolbar \"Table controls\":\n          - searchbox \"Search table\"\n          - button \"Choose columns\": Columns\n          - button \"Table density\": Compact\n          - button \"Export CSV\": Export\n          - button \"Refresh table\": Refresh\n        - grid:\n          - rowgroup:\n            - row \"Episode Priority Issue Asset\":\n              - columnheader\n              - columnheader \"Episode\"\n              - columnheader \"Priority\"\n              - columnheader \"Issue\"\n              - columnheader \"Asset\"\n          - rowgroup:\n            - row \"Actions\":\n              - columnheader \"Actions\"\n          - rowgroup:\n            - row \"Press Space to toggle row selection (unchecked) episode-browser-1 P1 Browser transport qualification case browser-asset-1\":\n              - gridcell \"Press Space to toggle row selection (unchecked)\":\n                - checkbox \"Press Space to toggle row selection (unchecked)\"\n              - gridcell \"episode-browser-1\"\n              - gridcell \"P1\"\n              - gridcell \"Browser transport qualification case\"\n              - gridcell \"browser-asset-1\"\n          - rowgroup:\n            - row:\n              - gridcell\n          - rowgroup\n          - rowgroup\n          - rowgroup\n          - rowgroup\n        - text: 1 records Compact \u00b7 38 px Page 1 of 1\n        - button \"Previous page\":\n          - img \"Previous page\"\n        - button \"Next page\":\n          - img \"Next page\"\n        - button \"Last page\":\n          - img \"Last page\"\n    - region \"Details\":\n      - complementary \"Selected episode preview\":\n        - heading \"Selected episode preview\" [level=2]\n        - status:\n          - img \"empty\"\n          - text: Select one permitted episode Single-row selection shows only returned Attention facts. Use the Open episode action to continue; no double-click is required.",
+      "attention_selected_aria_snapshot": "- region \"EPHI application content\":\n  - link \"Skip to main content\":\n    - /url: \"#cui-main-content\"\n  - banner:\n    - text: EPHI Attention \u2192 Episode TEST o10-rendered-engineer\n    - button \"User profile\": U\n  - complementary \"Application navigation\":\n    - button \"Collapse or expand navigation\":\n      - img \"Collapse navigation\"\n    - navigation \"Primary navigation\":\n      - text: Work\n      - listitem \"Attention\"\n      - listitem \"Episode\"\n    - text: Version NiceGUI Base 3.0.0a8 NiceGUI 3.15.0 TEST\n  - main:\n    - heading \"Attention\" [level=1]\n    - text: Scoped engineering work with retained, coherent reads\n    - region \"Filters\":\n      - text: Authorized scope and source coverage\n      - status: 1 permitted Attention row; source coverage is limited to this authorized result.\n    - region \"Attention result state\":\n      - region \"Attention results table\":\n        - text: Attention list\n        - toolbar \"Table controls\":\n          - searchbox \"Search table\"\n          - button \"Choose columns\": Columns\n          - button \"Table density\": Compact\n          - button \"Export CSV\": Export\n          - button \"Refresh table\": Refresh\n        - grid:\n          - rowgroup:\n            - row \"Episode Priority Issue Asset\":\n              - columnheader\n              - columnheader \"Episode\"\n              - columnheader \"Priority\"\n              - columnheader \"Issue\"\n              - columnheader \"Asset\"\n          - rowgroup:\n            - row \"Actions\":\n              - columnheader \"Actions\"\n          - rowgroup:\n            - row \"Press Space to toggle row selection (checked) episode-browser-1 P1 Browser transport qualification case browser-asset-1\" [selected]:\n              - gridcell \"Press Space to toggle row selection (checked)\":\n                - checkbox \"Press Space to toggle row selection (checked)\" [checked]\n              - gridcell \"episode-browser-1\"\n              - gridcell \"P1\"\n              - gridcell \"Browser transport qualification case\"\n              - gridcell \"browser-asset-1\"\n          - rowgroup:\n            - row [selected]:\n              - gridcell\n          - rowgroup\n          - rowgroup\n          - rowgroup\n          - rowgroup\n        - text: 1 records Compact \u00b7 38 px Page 1 of 1\n        - button \"Previous page\":\n          - img \"Previous page\"\n        - button \"Next page\":\n          - img \"Next page\"\n        - button \"Last page\":\n          - img \"Last page\"\n    - region \"Details\":\n      - complementary \"Selected episode preview\":\n        - heading \"Selected episode preview\" [level=2]\n        - text: Facts below are limited to the selected, authorized Attention row.\n        - term: Episode ID\n        - definition: episode-browser-1\n        - term: Issue / title\n        - definition: Browser transport qualification case\n        - term: Priority\n        - definition: P1\n        - term: Source state\n        - definition: READY\n        - term: Owner\n        - definition: Unavailable / not yet qualified\n        - term: Workflow state\n        - definition: OPEN\n        - term: Decision deadline\n        - definition: 2026-09-20T23:59:00Z\n        - button \"Open episode\"",
+      "attention_semantic_facts": {
+        "attention_results_region_count": 1,
+        "h1_count": 1,
+        "h1_text": [
+          "Attention"
+        ],
+        "main_count": 1,
+        "mobile_navigation_count": 0,
+        "open_episode_count": 1,
+        "populated_aria_contains_episode": true,
+        "populated_aria_not_empty_state": true,
+        "primary_navigation_count": 1,
+        "refresh_count": 1,
+        "search_table_count": 1,
+        "stable_names": true,
+        "status_count": 1,
+        "table_controls_count": 1
+      },
+      "claim_status": [
+        "Episode episode-browser-1 is rendered from the current authorized coherent read."
+      ],
+      "contrast": {
+        "primary_action": {
+          "background": "color(srgb 0 0.310196 0.623137)",
+          "foreground": "rgb(255, 255, 255)",
+          "ratio": 8.012,
+          "status": "PASS",
+          "threshold": 4.5
+        },
+        "primary_text": {
+          "background": "rgb(245, 245, 247)",
+          "foreground": "rgb(29, 29, 31)",
+          "ratio": 15.457,
+          "status": "PASS",
+          "threshold": 4.5
+        },
+        "secondary_text": {
+          "background": "rgb(245, 245, 247)",
+          "foreground": "rgb(82, 82, 86)",
+          "ratio": 7.143,
+          "status": "PASS",
+          "threshold": 4.5
+        },
+        "status_text": {
+          "background": "rgb(247, 247, 249)",
+          "foreground": "rgb(29, 29, 31)",
+          "ratio": 15.73,
+          "status": "PASS",
+          "threshold": 4.5
+        }
+      },
+      "episode_aria_snapshot": "- region \"EPHI application content\":\n  - link \"Skip to main content\":\n    - /url: \"#cui-main-content\"\n  - banner:\n    - text: EPHI Attention \u2192 Episode TEST o10-rendered-engineer\n    - button \"User profile\": U\n  - complementary \"Application navigation\":\n    - button \"Collapse or expand navigation\":\n      - img \"Collapse navigation\"\n    - navigation \"Primary navigation\":\n      - text: Work\n      - listitem \"Attention\"\n      - listitem \"Episode\"\n    - text: Version NiceGUI Base 3.0.0a8 NiceGUI 3.15.0 TEST\n  - main:\n    - heading \"Episode decision brief\" [level=1]\n    - text: One coherent analytical/read revision with live durable workflow\n    - region \"Episode rendered state\":\n      - text: \"episode-browser-1 OPEN Browser transport qualification case Episode Analytical revision: browser-analysis-1 Workflow version: 0 source: READY\"\n      - term: Episode ID\n      - definition: episode-browser-1\n      - term: Issue / title\n      - definition: Browser transport qualification case\n      - term: Known at\n      - definition: 2026-09-21 10:38:33.201453-05:00\n      - term: Analytical revision\n      - definition: browser-analysis-1\n      - term: Workflow version\n      - definition: \"0\"\n      - term: Workflow state\n      - definition: OPEN\n      - term: Owner\n      - definition: Unassigned / unavailable\n      - term: Source / capability state\n      - definition: \"source: READY\"\n      - term: Current eligible action\n      - definition: Claim episode\n      - text: Confidence, onset, exposure, next-check, recovery and value are unavailable/not yet qualified in this W1 brief.\n      - status: Episode episode-browser-1 is rendered from the current authorized coherent read.\n      - button \"Claim episode\"\n      - button \"Return to Attention\"",
+      "episode_semantic_facts": {
+        "eligible_primary_action": true,
+        "episode_aria_truthful": true,
+        "episode_region_count": 1,
+        "h1_count": 1,
+        "h1_text": [
+          "Episode decision brief"
+        ],
+        "main_count": 1,
+        "mobile_navigation_count": 0,
+        "primary_navigation_count": 1,
+        "return_count": 1,
+        "selected_episode_identity": true,
+        "stable_names": true,
+        "status_count": 1
+      },
+      "focus_after_claim_details": {
+        "ariaLabel": "Acknowledge episode",
+        "focusRequest": "",
+        "id": "c220",
+        "marker": "primary-action",
+        "primaryLabels": [
+          "Acknowledge episode"
+        ],
+        "primaryMarkers": 1,
+        "tabIndex": "0",
+        "tag": "BUTTON"
+      },
+      "focus_continuity": {
+        "after_return": "Attention",
+        "after_selection": "Open episode",
+        "after_successful_claim": "Acknowledge episode",
+        "before_primary_action": "Claim episode",
+        "expected_sequence": true
+      },
+      "focus_continuity_complete": true,
+      "focus_indicator_contrast": {
+        "background": "color(srgb 0 0.310196 0.623137)",
+        "foreground": "rgb(255, 255, 255)",
+        "ratio": 8.012,
+        "status": "PASS",
+        "threshold": 3.0
+      },
+      "initial_status": [
+        "1 permitted Attention row; source coverage is limited to this authorized result.",
+        "Select one permitted episode\nSingle-row selection shows only returned Attention facts. Use the Open episode action to continue; no double-click is required."
+      ],
+      "keyboard_path_complete": true,
+      "populated_attention": {
+        "aria_contains_episode": true,
+        "aria_not_empty_state": true,
+        "data_row_count": 1,
+        "expected_episode_id": "episode-browser-1",
+        "search_controls_present": true,
+        "table_controls_present": true
+      },
+      "populated_attention_truthful": true,
+      "preview_focus_style": {
+        "backgroundColor": "color(srgb 0 0.310196 0.623137)",
+        "boxShadow": "none",
+        "color": "rgb(255, 255, 255)",
+        "isConnected": true,
+        "matchesFocus": true,
+        "matchesFocusVisible": true,
+        "outlineColor": "rgb(255, 255, 255)",
+        "outlineStyle": "solid",
+        "outlineWidth": "3px",
+        "tag": "BUTTON"
+      },
+      "primary_action_focus_style": {
+        "backgroundColor": "color(srgb 0 0.310196 0.623137)",
+        "boxShadow": "none",
+        "color": "rgb(255, 255, 255)",
+        "isConnected": true,
+        "matchesFocus": true,
+        "matchesFocusVisible": true,
+        "outlineColor": "rgb(255, 255, 255)",
+        "outlineStyle": "solid",
+        "outlineWidth": "3px",
+        "tag": "BUTTON"
+      },
+      "return_restored_attention": true,
+      "selected_episode_identity_preserved": true,
+      "selected_row_preview": {
+        "fields_present": {
+          "Decision deadline": true,
+          "Episode ID": true,
+          "Issue / title": true,
+          "Owner": true,
+          "Priority": true,
+          "Source state": true,
+          "Workflow state": true
+        },
+        "open_action_name": "Open episode"
+      },
+      "selection": {
+        "reached_grid_by_tab": true,
+        "selected_episode_id": "episode-browser-1",
+        "selection_input": "keyboard"
+      }
+    },
+    "events": {
+      "console_errors": [],
+      "page_errors": [],
+      "request_failures": []
+    },
+    "forced_colors": {
+      "focus": {
+        "backgroundColor": "rgb(255, 255, 255)",
+        "boxShadow": "none",
+        "color": "rgb(0, 0, 0)",
+        "isConnected": true,
+        "matchesFocus": true,
+        "matchesFocusVisible": true,
+        "outlineColor": "rgba(5, 0, 73, 0.8)",
+        "outlineStyle": "solid",
+        "outlineWidth": "3px",
+        "tag": "BUTTON"
+      },
+      "focus_indicator": {
+        "background": "rgb(255, 255, 255)",
+        "contrast_status": "NOT_MEASURABLE",
+        "foreground": "rgba(5, 0, 73, 0.8)",
+        "measurement": "computed non-zero forced-colors focus treatment; system-representable outline",
+        "ratio": null,
+        "status": "PASS",
+        "threshold": 3.0
+      },
+      "focus_observable": true,
+      "status": "PASS"
+    },
+    "keyboard_walkthrough": {
+      "focus_names": [
+        "Skip to main content",
+        "User profile",
+        "Collapse or expand navigation",
+        "Attention",
+        "Episode",
+        "Search table",
+        "Choose columns",
+        "Table density",
+        "Export CSV",
+        "Refresh table",
+        "columnheader",
+        "Episode",
+        "Priority",
+        "Issue",
+        "Asset",
+        "Source",
+        "Owner",
+        "Work",
+        "Decision deadline",
+        "Actions",
+        "gridcell",
+        "episode-browser-1",
+        "P1",
+        "Browser transport qualification case",
+        "browser-asset-1",
+        "READY",
+        "o10-rendered-engineer",
+        "CLAIMED",
+        "2026-09-20T23:59:00Z",
+        "gridcell",
+        "Previous page",
+        "Next page",
+        "Last page",
+        "Open episode",
+        "Skip to main content EPHI Attention \u2192 Episode TEST o10-rendered-engineer U WORK Attention Episode VERSION NiceGUI Base 3",
+        "Skip to main content",
+        "User profile",
+        "Collapse or expand navigation",
+        "Attention",
+        "Episode",
+        "Search table"
+      ],
+      "no_empty_focus": true,
+      "reached_navigation": true,
+      "reached_search": true,
+      "reached_table": true
+    },
+    "no_episode_selected": {
+      "aria": "- region \"EPHI application content\":\n  - link \"Skip to main content\":\n    - /url: \"#cui-main-content\"\n  - banner:\n    - text: EPHI Attention \u2192 Episode TEST o10-rendered-engineer\n    - button \"User profile\": U\n  - complementary \"Application navigation\":\n    - button \"Collapse or expand navigation\":\n      - img \"Collapse navigation\"\n    - navigation \"Primary navigation\":\n      - text: Work\n      - listitem \"Attention\"\n      - listitem \"Episode\"\n    - text: Version NiceGUI Base 3.0.0a8 NiceGUI 3.15.0 TEST\n  - main:\n    - heading \"Episode decision brief\" [level=1]\n    - text: One coherent analytical/read revision with live durable workflow\n    - region \"Episode rendered state\":\n      - region \"Episode selection status\":\n        - status:\n          - img \"empty\"\n          - text: No episode selected Return to Attention and select one permitted episode. No Episode identity is inferred.\n          - button \"Return to Attention\"",
+      "focus_observer": true,
+      "status": [
+        "No episode selected\nReturn to Attention and select one permitted episode. No Episode identity is inferred.\nReturn to Attention"
+      ]
+    },
+    "reduced_motion": {
+      "match_media": true
+    },
+    "search_no_match": {
+      "neutral_empty_overlay": true,
+      "status_text": [
+        "No permitted Attention rows match this search. This is not a zero-risk result.",
+        "No rows in the current Attention view"
+      ],
+      "truthful_no_match": true,
+      "unfiltered_authorized_row_existed": true
+    },
+    "secret_safety": {
+      "authorization_headers_recorded": false,
+      "cookies_recorded": false,
+      "dsn_recorded": false,
+      "storage_recorded": false
+    },
+    "semantics_attention_after_return": {
+      "attention_results_region_count": 1,
+      "h1_count": 1,
+      "h1_text": [
+        "Attention"
+      ],
+      "main_count": 1,
+      "mobile_navigation_count": 0,
+      "open_episode_count": 1,
+      "populated_aria_contains_episode": true,
+      "populated_aria_not_empty_state": true,
+      "primary_navigation_count": 1,
+      "refresh_count": 1,
+      "search_table_count": 1,
+      "stable_names": true,
+      "status_count": 1,
+      "table_controls_count": 1
+    },
+    "semantics_episode": {
+      "eligible_primary_action": true,
+      "episode_aria_truthful": true,
+      "episode_region_count": 1,
+      "h1_count": 1,
+      "h1_text": [
+        "Episode decision brief"
+      ],
+      "main_count": 1,
+      "mobile_navigation_count": 0,
+      "primary_navigation_count": 1,
+      "return_count": 1,
+      "selected_episode_identity": true,
+      "stable_names": true,
+      "status_count": 1
+    }
+  },
+  "request": "ephi-o10-rendered-accessibility-fix1",
+  "responsive": {
+    "1024x768": {
+      "application_horizontal_overflow": false,
+      "attention_overflow": false,
+      "body_overflow": false,
+      "content_visibility": {
+        "attention_heading": true,
+        "attention_open_action": true,
+        "attention_preview": true,
+        "attention_status": true,
+        "episode_heading": true,
+        "episode_primary": true,
+        "episode_status": true
+      },
+      "controls": {
+        "Episode primary": {
+          "height": 44,
+          "width": 44,
+          "x": 309,
+          "y": 11405
+        },
+        "Export CSV": {
+          "height": 44,
+          "width": 85.34375,
+          "x": 725.96875,
+          "y": 392
+        },
+        "Open episode": {
+          "height": 44,
+          "width": 107.328125,
+          "x": 730.65625,
+          "y": 1103
+        },
+        "Open episode preview": {
+          "height": 44,
+          "width": 107.328125,
+          "x": 730.65625,
+          "y": 1103
+        },
+        "Refresh table": {
+          "height": 44,
+          "width": 92.984375,
+          "x": 815.3125,
+          "y": 392
+        }
+      },
+      "critical_target_measurements": {
+        "Episode primary": {
+          "height": 44,
+          "width": 44,
+          "x": 309,
+          "y": 11405
+        },
+        "Open episode preview": {
+          "height": 44,
+          "width": 107.328125,
+          "x": 730.65625,
+          "y": 1103
+        },
+        "Refresh table": {
+          "height": 44,
+          "width": 92.984375,
+          "x": 815.3125,
+          "y": 392
+        }
+      },
+      "critical_target_minimum_css_px": 44,
+      "critical_targets_visible": true,
+      "document_overflow": false,
+      "episode_overflow": false,
+      "status": "PASS",
+      "table_internal_overflow": {
+        "attention": false,
+        "episode": false
+      }
+    },
+    "1440x900": {
+      "application_horizontal_overflow": false,
+      "attention_overflow": false,
+      "body_overflow": false,
+      "content_visibility": {
+        "attention_heading": true,
+        "attention_open_action": true,
+        "attention_preview": true,
+        "attention_status": true,
+        "episode_heading": true,
+        "episode_primary": true,
+        "episode_status": true
+      },
+      "controls": {
+        "Episode primary": {
+          "height": 44,
+          "width": 44,
+          "x": 309,
+          "y": 11063
+        },
+        "Export CSV": {
+          "height": 44,
+          "width": 85.34375,
+          "x": 741,
+          "y": 392
+        },
+        "Open episode preview": {
+          "height": 44,
+          "width": 107.328125,
+          "x": 973.328125,
+          "y": 1084
+        },
+        "Refresh table": {
+          "height": 44,
+          "width": 92.984375,
+          "x": 830.34375,
+          "y": 392
+        }
+      },
+      "critical_target_measurements": {
+        "Episode primary": {
+          "height": 44,
+          "width": 44,
+          "x": 309,
+          "y": 11063
+        },
+        "Open episode preview": {
+          "height": 44,
+          "width": 107.328125,
+          "x": 973.328125,
+          "y": 1084
+        },
+        "Refresh table": {
+          "height": 44,
+          "width": 92.984375,
+          "x": 830.34375,
+          "y": 392
+        }
+      },
+      "critical_target_minimum_css_px": 44,
+      "critical_targets_visible": true,
+      "document_overflow": false,
+      "episode_overflow": false,
+      "status": "PASS",
+      "table_internal_overflow": {
+        "attention": false,
+        "episode": false
+      }
+    },
+    "320x800": {
+      "application_horizontal_overflow": false,
+      "attention_overflow": false,
+      "body_overflow": false,
+      "content_visibility": {
+        "attention_heading": true,
+        "attention_open_action": true,
+        "attention_preview": true,
+        "attention_status": true,
+        "episode_heading": true,
+        "episode_primary": true,
+        "episode_status": true
+      },
+      "controls": {
+        "Episode primary": {
+          "height": 44,
+          "width": 109.203125,
+          "x": 41,
+          "y": 1313
+        },
+        "Export CSV": {
+          "height": 44,
+          "width": 44,
+          "x": 202,
+          "y": 518
+        },
+        "Open episode": {
+          "height": 44,
+          "width": 107.328125,
+          "x": 32,
+          "y": 1534
+        },
+        "Open episode preview": {
+          "height": 44,
+          "width": 107.328125,
+          "x": 32,
+          "y": 1534
+        },
+        "Open navigation": {
+          "height": 44,
+          "width": 44,
+          "x": 227,
+          "y": 7.5
+        },
+        "Refresh table": {
+          "height": 44,
+          "width": 44,
+          "x": 250,
+          "y": 518
+        }
+      },
+      "critical_target_measurements": {
+        "Episode primary": {
+          "height": 44,
+          "width": 109.203125,
+          "x": 41,
+          "y": 1313
+        },
+        "Open episode preview": {
+          "height": 44,
+          "width": 107.328125,
+          "x": 32,
+          "y": 1534
+        },
+        "Open navigation": {
+          "height": 44,
+          "width": 44,
+          "x": 227,
+          "y": 7.5
+        },
+        "Refresh table": {
+          "height": 44,
+          "width": 44,
+          "x": 250,
+          "y": 518
+        }
+      },
+      "critical_target_minimum_css_px": 44,
+      "critical_targets_visible": true,
+      "document_overflow": false,
+      "episode_overflow": false,
+      "status": "PASS",
+      "table_internal_overflow": {
+        "attention": false,
+        "episode": false
+      }
+    },
+    "390x844": {
+      "application_horizontal_overflow": false,
+      "attention_overflow": false,
+      "body_overflow": false,
+      "content_visibility": {
+        "attention_heading": true,
+        "attention_open_action": true,
+        "attention_preview": true,
+        "attention_status": true,
+        "episode_heading": true,
+        "episode_primary": true,
+        "episode_status": true
+      },
+      "controls": {
+        "Episode primary": {
+          "height": 44,
+          "width": 109.203125,
+          "x": 41,
+          "y": 1250
+        },
+        "Export CSV": {
+          "height": 44,
+          "width": 44,
+          "x": 272,
+          "y": 461
+        },
+        "Open episode": {
+          "height": 44,
+          "width": 107.328125,
+          "x": 32,
+          "y": 1477
+        },
+        "Open episode preview": {
+          "height": 44,
+          "width": 107.328125,
+          "x": 32,
+          "y": 1477
+        },
+        "Open navigation": {
+          "height": 44,
+          "width": 44,
+          "x": 297,
+          "y": 7.5
+        },
+        "Refresh table": {
+          "height": 44,
+          "width": 44,
+          "x": 320,
+          "y": 461
+        }
+      },
+      "critical_target_measurements": {
+        "Episode primary": {
+          "height": 44,
+          "width": 109.203125,
+          "x": 41,
+          "y": 1250
+        },
+        "Open episode preview": {
+          "height": 44,
+          "width": 107.328125,
+          "x": 32,
+          "y": 1477
+        },
+        "Open navigation": {
+          "height": 44,
+          "width": 44,
+          "x": 297,
+          "y": 7.5
+        },
+        "Refresh table": {
+          "height": 44,
+          "width": 44,
+          "x": 320,
+          "y": 461
+        }
+      },
+      "critical_target_minimum_css_px": 44,
+      "critical_targets_visible": true,
+      "document_overflow": false,
+      "episode_overflow": false,
+      "status": "PASS",
+      "table_internal_overflow": {
+        "attention": false,
+        "episode": false
+      }
+    },
+    "768x1024": {
+      "application_horizontal_overflow": false,
+      "attention_overflow": false,
+      "body_overflow": false,
+      "content_visibility": {
+        "attention_heading": true,
+        "attention_open_action": true,
+        "attention_preview": true,
+        "attention_status": true,
+        "episode_heading": true,
+        "episode_primary": true,
+        "episode_status": true
+      },
+      "controls": {
+        "Episode primary": {
+          "height": 44,
+          "width": 109.203125,
+          "x": 49,
+          "y": 1176
+        },
+        "Export CSV": {
+          "height": 44,
+          "width": 85.34375,
+          "x": 559.671875,
+          "y": 442
+        },
+        "Open episode": {
+          "height": 44,
+          "width": 107.328125,
+          "x": 32,
+          "y": 1410
+        },
+        "Open episode preview": {
+          "height": 44,
+          "width": 107.328125,
+          "x": 32,
+          "y": 1410
+        },
+        "Open navigation": {
+          "height": 38,
+          "width": 44,
+          "x": 440.171875,
+          "y": 10.5
+        },
+        "Refresh table": {
+          "height": 44,
+          "width": 92.984375,
+          "x": 649.015625,
+          "y": 442
+        }
+      },
+      "critical_target_measurements": {
+        "Episode primary": {
+          "height": 44,
+          "width": 109.203125,
+          "x": 49,
+          "y": 1176
+        },
+        "Open episode preview": {
+          "height": 44,
+          "width": 107.328125,
+          "x": 32,
+          "y": 1410
+        },
+        "Open navigation": {
+          "height": 38,
+          "width": 44,
+          "x": 440.171875,
+          "y": 10.5
+        },
+        "Refresh table": {
+          "height": 44,
+          "width": 92.984375,
+          "x": 649.015625,
+          "y": 442
+        }
+      },
+      "critical_target_minimum_css_px": 44,
+      "critical_targets_visible": true,
+      "document_overflow": false,
+      "episode_overflow": false,
+      "status": "PASS",
+      "table_internal_overflow": {
+        "attention": false,
+        "episode": false
+      }
+    }
+  },
+  "schema_version": 1,
+  "scope": {
+    "human_ux_review": "PENDING",
+    "production_performance": "NOT_CLAIMED",
+    "routes": [
+      "/",
+      "/episode"
+    ],
+    "synthetic_identity": true
+  },
+  "screenshot_inventory": [
+    {
+      "bytes": 83227,
+      "path": "attention-1024x768.png",
+      "sha256": "e10d4d24ec9084ee715f1cf73bbd0e6e0940e9cd31edb41393ddcd2acb87b0fa"
+    },
+    {
+      "bytes": 75373,
+      "path": "attention-1440x900.png",
+      "sha256": "b8d7dec3175e64f164eeeed076054829a89251889cad041ff4122b85de4fb324"
+    },
+    {
+      "bytes": 63192,
+      "path": "attention-320x800.png",
+      "sha256": "0e43b7428cbfde03237ea910556fde1b4f1c45e5f5fd65a40ff88115fcd0259e"
+    },
+    {
+      "bytes": 63669,
+      "path": "attention-390x844.png",
+      "sha256": "0eaf9399b73af838a88e7f043d072547d9048b34e7d4018d51dfa683ff549110"
+    },
+    {
+      "bytes": 79090,
+      "path": "attention-768x1024.png",
+      "sha256": "b3b5bb5946f4ef32907ff01d3cd7ffe308cb392e7ec04944d04dfbee781734bc"
+    },
+    {
+      "bytes": 25371,
+      "path": "attention-failure.png",
+      "sha256": "275e09a9b9baf5dde6a7939756f90ac72f494ab1293388d944299a761c8a0180"
+    },
+    {
+      "bytes": 89885,
+      "path": "attention-no-matching-rows-1440x900.png",
+      "sha256": "a5ffad7bc70a030d4da2a7ecd383f4c6a4063b66d2d5b0ad4bc3f1766f26ae7f"
+    },
+    {
+      "bytes": 26541,
+      "path": "attention-no-permitted-rows.png",
+      "sha256": "6ce1e9074dbf53dad714b2455f8054a5c525fb881071ce30dd3fff0acb34ea0f"
+    },
+    {
+      "bytes": 27680,
+      "path": "attention-offline.png",
+      "sha256": "314678b7bde2ad56b19134ba5fc56709d8ec138228bf5651b29be88ecab168f0"
+    },
+    {
+      "bytes": 24829,
+      "path": "attention-permission.png",
+      "sha256": "dbfe5026fe50e94933fbfb87829761c090c458e927c08c68d1d3138ff7fe2887"
+    },
+    {
+      "bytes": 75373,
+      "path": "attention-populated-1440x900.png",
+      "sha256": "b8d7dec3175e64f164eeeed076054829a89251889cad041ff4122b85de4fb324"
+    },
+    {
+      "bytes": 27077,
+      "path": "attention-stale.png",
+      "sha256": "11325811fc04416c3849c174897a94119c5a9d20459b7898372917675808d4cc"
+    },
+    {
+      "bytes": 183757,
+      "path": "episode-1024x768.png",
+      "sha256": "9d710e39b815867dfc8b5782cee5c292dc33848e48b478c0a63be72dc4f35d39"
+    },
+    {
+      "bytes": 196764,
+      "path": "episode-1440x900.png",
+      "sha256": "0323431547e0fc4fac86969f955252a2e431352dfef6aa1744412adf3c334eea"
+    },
+    {
+      "bytes": 71416,
+      "path": "episode-320x800.png",
+      "sha256": "b2508fc2afa35d92dc31357c924039003d2eb24efdd0b481c824d5dc38196080"
+    },
+    {
+      "bytes": 72109,
+      "path": "episode-390x844.png",
+      "sha256": "7def7abc888bf4993cfd4a45ef0b4c70090738c7f8a4687e437f6086493ed680"
+    },
+    {
+      "bytes": 80482,
+      "path": "episode-768x1024.png",
+      "sha256": "5e3d7f13be4bf921a0575f2bc5cb66bc9adcc80e266e34265d28a287c4e15a60"
+    },
+    {
+      "bytes": 47653,
+      "path": "episode-capability-states.png",
+      "sha256": "8c99703f3b1a4dc9477dd6b98f04d60b721bfa03bb871fc3842879cd9aa4826d"
+    },
+    {
+      "bytes": 201763,
+      "path": "episode-claimed-1440x900.png",
+      "sha256": "dc16f3b9f226ecd8d37b8bd59f4aea49984905ddc8bab0e7c7f196541798a53e"
+    },
+    {
+      "bytes": 29049,
+      "path": "episode-coherent-conflict.png",
+      "sha256": "cba20fdc445f5dcbc460b9f80b4d21b6f84f0daffd181321b9a20c6657662035"
+    },
+    {
+      "bytes": 59909,
+      "path": "episode-no-selection-1440x900.png",
+      "sha256": "0d6f59058bc505069de3fd629b522989ae4d1f61cb2401716d89d6bc92821a00"
+    },
+    {
+      "bytes": 29274,
+      "path": "episode-offline.png",
+      "sha256": "bde8919c3f492b620356513b5d2867aed558dfe0c6c71d44c52679ecc6588e2b"
+    },
+    {
+      "bytes": 28275,
+      "path": "episode-owner-changed.png",
+      "sha256": "fe483369b2d36f7fd8d45eee82c272154c49872a62dd6bb590d844e41612a278"
+    },
+    {
+      "bytes": 27104,
+      "path": "episode-permission.png",
+      "sha256": "4e6d07e5f21f3eee62d620b1bd8e3dc0dd4efb5b7c2a9106833c8cd44fad3904"
+    },
+    {
+      "bytes": 196516,
+      "path": "episode-populated-1440x900.png",
+      "sha256": "4d0ee5ca7f08c0113d54bd12ce9e73ea1ba8e7ea2555de6b887bb3a528e4a6ca"
+    },
+    {
+      "bytes": 29246,
+      "path": "episode-version-conflict.png",
+      "sha256": "6605fc14b9ce614e148f9172829e5a263aa6a7728c0747e7e98707c00ee4bb53"
+    }
+  ],
+  "secret_safety": {
+    "authorization_headers_recorded": false,
+    "cookies_recorded": false,
+    "dsn_recorded": false,
+    "raw_protected_rows_recorded": false,
+    "storage_recorded": false
+  },
+  "status": "PASS"
+}

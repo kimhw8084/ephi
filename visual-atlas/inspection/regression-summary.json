@@ -1,0 +1,32 @@
+{
+  "focused_tests": [
+    {
+      "command": "python3 -m unittest tests.test_o10_rendered_accessibility -v",
+      "status": "PASS",
+      "tests": 7
+    }
+  ],
+  "product_source_diff_during_capture": {
+    "source_changed": false,
+    "worktree_product_changes": false
+  },
+  "required_checks_pending_at_package_build": [
+    "check_package --refresh-manifest is intentionally not run because VERIFY boundary forbids Product manifest mutation; read-only check_package and full unittest are run before publish"
+  ],
+  "schema_version": 1,
+  "source_sha": "8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e",
+  "supporting_o10": {
+    "criteria_failed": [],
+    "report": "visual-atlas/inspection/o10-rendered-accessibility-report.json",
+    "scope": "rendered accessibility/browser baseline; not visual perfection acceptance",
+    "status": "PASS"
+  },
+  "tree_sha": "de2063907127a988844179e058e435d7b7666c96",
+  "visual_regressions_or_improvements": {
+    "comparison_basis": "Fresh exact-source canonical capture compared with fresh O10 supporting pixels; no historical perfection baseline exists.",
+    "material_improvements": [],
+    "material_regressions": [
+      "Episode desktop geometry is visibly unusable in the current source and is recorded as GUI-162-P1-001"
+    ]
+  }
+}

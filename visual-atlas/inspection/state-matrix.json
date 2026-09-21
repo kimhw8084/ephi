@@ -1,0 +1,132 @@
+{
+  "schema_version": 1,
+  "source_sha": "8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e",
+  "states": [
+    {
+      "execution": "real-product",
+      "screenshot": "visual-atlas/inspection/o10-supporting-screenshots/attention-populated-1440x900.png",
+      "state": "attention-populated",
+      "status": "PASS",
+      "surface": "attention"
+    },
+    {
+      "execution": "real-product",
+      "screenshot": "visual-atlas/inspection/o10-supporting-screenshots/attention-populated-1440x900.png",
+      "state": "attention-selected-preview",
+      "status": "PASS",
+      "surface": "attention"
+    },
+    {
+      "execution": "real-product",
+      "screenshot": "visual-atlas/inspection/o10-supporting-screenshots/attention-no-matching-rows-1440x900.png",
+      "state": "attention-no-search-match",
+      "status": "PASS",
+      "surface": "attention"
+    },
+    {
+      "execution": "real-product",
+      "screenshot": "visual-atlas/inspection/o10-supporting-screenshots/episode-no-selection-1440x900.png",
+      "state": "episode-no-selection",
+      "status": "PASS",
+      "surface": "episode"
+    },
+    {
+      "execution": "real-product",
+      "screenshot": "visual-atlas/inspection/o10-supporting-screenshots/episode-populated-1440x900.png",
+      "state": "episode-open-claim-eligible",
+      "status": "PASS",
+      "surface": "episode"
+    },
+    {
+      "execution": "real-product",
+      "screenshot": "visual-atlas/inspection/o10-supporting-screenshots/episode-claimed-1440x900.png",
+      "state": "episode-claimed-acknowledge-eligible",
+      "status": "PASS",
+      "surface": "episode"
+    },
+    {
+      "execution": "repository-native-state-harness",
+      "screenshot": "visual-atlas/inspection/o10-supporting-screenshots/attention-no-permitted-rows.png",
+      "state": "attention-no-permitted-rows",
+      "status": "PASS_HARNESS_ONLY",
+      "surface": "attention"
+    },
+    {
+      "execution": "repository-native-state-harness",
+      "screenshots": [
+        "visual-atlas/inspection/o10-supporting-screenshots/attention-permission.png",
+        "visual-atlas/inspection/o10-supporting-screenshots/episode-permission.png"
+      ],
+      "state": "permission-denied",
+      "status": "PASS_HARNESS_ONLY",
+      "surface": "attention and episode"
+    },
+    {
+      "execution": "repository-native-state-harness",
+      "screenshot": "visual-atlas/inspection/o10-supporting-screenshots/attention-stale.png",
+      "state": "stale-snapshot",
+      "status": "PASS_HARNESS_ONLY",
+      "surface": "attention"
+    },
+    {
+      "execution": "repository-native-state-harness",
+      "screenshots": [
+        "visual-atlas/inspection/o10-supporting-screenshots/attention-offline.png",
+        "visual-atlas/inspection/o10-supporting-screenshots/episode-offline.png"
+      ],
+      "state": "offline-source-database-unavailable",
+      "status": "PASS_HARNESS_ONLY",
+      "surface": "attention and episode"
+    },
+    {
+      "execution": "repository-native-state-harness",
+      "screenshot": "visual-atlas/inspection/o10-supporting-screenshots/episode-coherent-conflict.png",
+      "state": "coherent-read-conflict",
+      "status": "PASS_HARNESS_ONLY",
+      "surface": "episode"
+    },
+    {
+      "execution": "repository-native-state-harness",
+      "screenshot": "visual-atlas/inspection/o10-supporting-screenshots/episode-version-conflict.png",
+      "state": "version-conflict",
+      "status": "PASS_HARNESS_ONLY",
+      "surface": "episode"
+    },
+    {
+      "execution": "repository-native-state-harness",
+      "screenshot": "visual-atlas/inspection/o10-supporting-screenshots/episode-owner-changed.png",
+      "state": "owner-or-authorization-changed",
+      "status": "PASS_HARNESS_ONLY",
+      "surface": "episode"
+    },
+    {
+      "execution": "repository-native-state-harness",
+      "screenshot": "visual-atlas/inspection/o10-supporting-screenshots/episode-capability-states.png",
+      "state": "capability-matrix-ready-stale-partial-insufficient-unavailable",
+      "status": "PASS_HARNESS_ONLY",
+      "surface": "episode"
+    },
+    {
+      "execution": "not-run-in-this-bounded-capture",
+      "reason": "No deterministic safe induction in the current real-product tooling without changing Product source",
+      "state": "loading-refresh-reconnect-restart",
+      "status": "NOT_RUN",
+      "surface": "attention and episode"
+    },
+    {
+      "execution": "real-product",
+      "source_report": "visual-atlas/inspection/o10-rendered-accessibility-report.json",
+      "state": "forced-colors",
+      "status": "PASS",
+      "surface": "attention and episode"
+    },
+    {
+      "execution": "real-product",
+      "source_report": "visual-atlas/inspection/o10-rendered-accessibility-report.json",
+      "state": "reduced-motion",
+      "status": "PASS",
+      "surface": "attention and episode"
+    }
+  ],
+  "truth_boundary": "Harness-only pixels are indexed for state-recovery review and are not canonical product surface anchors."
+}

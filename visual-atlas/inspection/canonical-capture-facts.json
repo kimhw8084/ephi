@@ -1,0 +1,106 @@
+{
+  "records": {
+    "desktop-1440x900": {
+      "attention": {
+        "auth_wall": false,
+        "body_overflow": false,
+        "crash_page": false,
+        "document_overflow": false,
+        "fonts_status": "loaded",
+        "h1": [
+          "Attention"
+        ],
+        "primary_context_visible": true,
+        "ready_state": "complete",
+        "status": [
+          "1 permitted Attention row; source coverage is limited to this authorized result.",
+          "Select one permitted episode\nSingle-row selection shows only returned Attention facts. Use the Open episode action to continue; no double-click is required."
+        ],
+        "url": "/",
+        "viewport": {
+          "device_scale_factor": 1,
+          "height": 900,
+          "width": 1440
+        }
+      },
+      "episode": {
+        "auth_wall": false,
+        "body_overflow": false,
+        "crash_page": false,
+        "document_overflow": false,
+        "episode_id_visible": true,
+        "fonts_status": "loaded",
+        "h1": [
+          "Episode decision brief"
+        ],
+        "primary_action_visible": true,
+        "ready_state": "complete",
+        "status": [
+          "Episode episode-browser-1 is rendered from the current authorized coherent read."
+        ],
+        "url": "/episode",
+        "viewport": {
+          "device_scale_factor": 1,
+          "height": 900,
+          "width": 1440
+        }
+      }
+    },
+    "events": {
+      "console_errors": [],
+      "page_errors": [],
+      "request_failures": []
+    },
+    "mobile-390x844": {
+      "attention": {
+        "auth_wall": false,
+        "body_overflow": false,
+        "crash_page": false,
+        "document_overflow": false,
+        "fonts_status": "loaded",
+        "h1": [
+          "Attention"
+        ],
+        "primary_context_visible": true,
+        "ready_state": "complete",
+        "status": [
+          "1 permitted Attention row; source coverage is limited to this authorized result."
+        ],
+        "url": "/",
+        "viewport": {
+          "device_scale_factor": 1,
+          "height": 844,
+          "width": 390
+        }
+      },
+      "episode": {
+        "auth_wall": false,
+        "body_overflow": false,
+        "crash_page": false,
+        "document_overflow": false,
+        "episode_id_visible": true,
+        "fonts_status": "loaded",
+        "h1": [
+          "Episode decision brief"
+        ],
+        "primary_action_visible": true,
+        "ready_state": "complete",
+        "status": [
+          "Episode episode-browser-1 is rendered from the current authorized coherent read."
+        ],
+        "url": "/episode",
+        "viewport": {
+          "device_scale_factor": 1,
+          "height": 844,
+          "width": 390
+        }
+      }
+    }
+  },
+  "schema_version": 1,
+  "seed": {
+    "episode_id": "episode-browser-1",
+    "postgres_version": "18.6 (Homebrew)",
+    "scope_id": "o8-browser-scope"
+  }
+}

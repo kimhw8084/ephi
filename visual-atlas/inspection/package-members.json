@@ -1,0 +1,230 @@
+{
+  "members": [
+    {
+      "bytes": 4458,
+      "path": "visual-atlas/capture-report.json",
+      "sha256": "d504c8e5089a1ff43b5bc925b6fa96cf11a4e0ce1eb4ac7f42d1ee697a263900"
+    },
+    {
+      "bytes": 12173,
+      "path": "visual-atlas/inspection/adversarial-capture-index.json",
+      "sha256": "55c2c08a22ddbc14fb70b42999d82c23cd7e922c006c5e8b2a64455630567e56"
+    },
+    {
+      "bytes": 2921,
+      "path": "visual-atlas/inspection/canonical-capture-facts.json",
+      "sha256": "d07878e4e52426d10f714e62f830f5121dc13c069b1d96393229ace21260d51d"
+    },
+    {
+      "bytes": 8586,
+      "path": "visual-atlas/inspection/golden-ui-inspection.json",
+      "sha256": "fa5cbb78bd3e743672da068182fd9ccd2d818cecd7f296a1074c6a5b32710a0c"
+    },
+    {
+      "bytes": 44386,
+      "path": "visual-atlas/inspection/o10-rendered-accessibility-report.json",
+      "sha256": "42aa9292fd57511d1fa242e486778385ece430c47d706829d9d866c8343a7f62"
+    },
+    {
+      "bytes": 83227,
+      "path": "visual-atlas/inspection/o10-supporting-screenshots/attention-1024x768.png",
+      "sha256": "e10d4d24ec9084ee715f1cf73bbd0e6e0940e9cd31edb41393ddcd2acb87b0fa"
+    },
+    {
+      "bytes": 75373,
+      "path": "visual-atlas/inspection/o10-supporting-screenshots/attention-1440x900.png",
+      "sha256": "b8d7dec3175e64f164eeeed076054829a89251889cad041ff4122b85de4fb324"
+    },
+    {
+      "bytes": 63192,
+      "path": "visual-atlas/inspection/o10-supporting-screenshots/attention-320x800.png",
+      "sha256": "0e43b7428cbfde03237ea910556fde1b4f1c45e5f5fd65a40ff88115fcd0259e"
+    },
+    {
+      "bytes": 63669,
+      "path": "visual-atlas/inspection/o10-supporting-screenshots/attention-390x844.png",
+      "sha256": "0eaf9399b73af838a88e7f043d072547d9048b34e7d4018d51dfa683ff549110"
+    },
+    {
+      "bytes": 79090,
+      "path": "visual-atlas/inspection/o10-supporting-screenshots/attention-768x1024.png",
+      "sha256": "b3b5bb5946f4ef32907ff01d3cd7ffe308cb392e7ec04944d04dfbee781734bc"
+    },
+    {
+      "bytes": 25371,
+      "path": "visual-atlas/inspection/o10-supporting-screenshots/attention-failure.png",
+      "sha256": "275e09a9b9baf5dde6a7939756f90ac72f494ab1293388d944299a761c8a0180"
+    },
+    {
+      "bytes": 89885,
+      "path": "visual-atlas/inspection/o10-supporting-screenshots/attention-no-matching-rows-1440x900.png",
+      "sha256": "a5ffad7bc70a030d4da2a7ecd383f4c6a4063b66d2d5b0ad4bc3f1766f26ae7f"
+    },
+    {
+      "bytes": 26541,
+      "path": "visual-atlas/inspection/o10-supporting-screenshots/attention-no-permitted-rows.png",
+      "sha256": "6ce1e9074dbf53dad714b2455f8054a5c525fb881071ce30dd3fff0acb34ea0f"
+    },
+    {
+      "bytes": 27680,
+      "path": "visual-atlas/inspection/o10-supporting-screenshots/attention-offline.png",
+      "sha256": "314678b7bde2ad56b19134ba5fc56709d8ec138228bf5651b29be88ecab168f0"
+    },
+    {
+      "bytes": 24829,
+      "path": "visual-atlas/inspection/o10-supporting-screenshots/attention-permission.png",
+      "sha256": "dbfe5026fe50e94933fbfb87829761c090c458e927c08c68d1d3138ff7fe2887"
+    },
+    {
+      "bytes": 75373,
+      "path": "visual-atlas/inspection/o10-supporting-screenshots/attention-populated-1440x900.png",
+      "sha256": "b8d7dec3175e64f164eeeed076054829a89251889cad041ff4122b85de4fb324"
+    },
+    {
+      "bytes": 27077,
+      "path": "visual-atlas/inspection/o10-supporting-screenshots/attention-stale.png",
+      "sha256": "11325811fc04416c3849c174897a94119c5a9d20459b7898372917675808d4cc"
+    },
+    {
+      "bytes": 183757,
+      "path": "visual-atlas/inspection/o10-supporting-screenshots/episode-1024x768.png",
+      "sha256": "9d710e39b815867dfc8b5782cee5c292dc33848e48b478c0a63be72dc4f35d39"
+    },
+    {
+      "bytes": 196764,
+      "path": "visual-atlas/inspection/o10-supporting-screenshots/episode-1440x900.png",
+      "sha256": "0323431547e0fc4fac86969f955252a2e431352dfef6aa1744412adf3c334eea"
+    },
+    {
+      "bytes": 71416,
+      "path": "visual-atlas/inspection/o10-supporting-screenshots/episode-320x800.png",
+      "sha256": "b2508fc2afa35d92dc31357c924039003d2eb24efdd0b481c824d5dc38196080"
+    },
+    {
+      "bytes": 72109,
+      "path": "visual-atlas/inspection/o10-supporting-screenshots/episode-390x844.png",
+      "sha256": "7def7abc888bf4993cfd4a45ef0b4c70090738c7f8a4687e437f6086493ed680"
+    },
+    {
+      "bytes": 80482,
+      "path": "visual-atlas/inspection/o10-supporting-screenshots/episode-768x1024.png",
+      "sha256": "5e3d7f13be4bf921a0575f2bc5cb66bc9adcc80e266e34265d28a287c4e15a60"
+    },
+    {
+      "bytes": 47653,
+      "path": "visual-atlas/inspection/o10-supporting-screenshots/episode-capability-states.png",
+      "sha256": "8c99703f3b1a4dc9477dd6b98f04d60b721bfa03bb871fc3842879cd9aa4826d"
+    },
+    {
+      "bytes": 201763,
+      "path": "visual-atlas/inspection/o10-supporting-screenshots/episode-claimed-1440x900.png",
+      "sha256": "dc16f3b9f226ecd8d37b8bd59f4aea49984905ddc8bab0e7c7f196541798a53e"
+    },
+    {
+      "bytes": 29049,
+      "path": "visual-atlas/inspection/o10-supporting-screenshots/episode-coherent-conflict.png",
+      "sha256": "cba20fdc445f5dcbc460b9f80b4d21b6f84f0daffd181321b9a20c6657662035"
+    },
+    {
+      "bytes": 59909,
+      "path": "visual-atlas/inspection/o10-supporting-screenshots/episode-no-selection-1440x900.png",
+      "sha256": "0d6f59058bc505069de3fd629b522989ae4d1f61cb2401716d89d6bc92821a00"
+    },
+    {
+      "bytes": 29274,
+      "path": "visual-atlas/inspection/o10-supporting-screenshots/episode-offline.png",
+      "sha256": "bde8919c3f492b620356513b5d2867aed558dfe0c6c71d44c52679ecc6588e2b"
+    },
+    {
+      "bytes": 28275,
+      "path": "visual-atlas/inspection/o10-supporting-screenshots/episode-owner-changed.png",
+      "sha256": "fe483369b2d36f7fd8d45eee82c272154c49872a62dd6bb590d844e41612a278"
+    },
+    {
+      "bytes": 27104,
+      "path": "visual-atlas/inspection/o10-supporting-screenshots/episode-permission.png",
+      "sha256": "4e6d07e5f21f3eee62d620b1bd8e3dc0dd4efb5b7c2a9106833c8cd44fad3904"
+    },
+    {
+      "bytes": 196516,
+      "path": "visual-atlas/inspection/o10-supporting-screenshots/episode-populated-1440x900.png",
+      "sha256": "4d0ee5ca7f08c0113d54bd12ce9e73ea1ba8e7ea2555de6b887bb3a528e4a6ca"
+    },
+    {
+      "bytes": 29246,
+      "path": "visual-atlas/inspection/o10-supporting-screenshots/episode-version-conflict.png",
+      "sha256": "6605fc14b9ce614e148f9172829e5a263aa6a7728c0747e7e98707c00ee4bb53"
+    },
+    {
+      "bytes": 1278,
+      "path": "visual-atlas/inspection/regression-summary.json",
+      "sha256": "59e2e221a502ef92f99638f2090e34d248c441ddbe24dedb75a35dd5c8b38306"
+    },
+    {
+      "bytes": 708,
+      "path": "visual-atlas/inspection/route-discovery.json",
+      "sha256": "62232e6459b8fd44f7e867898d23fc729dc9fc2b0dfdea500d5ad4d2821e405b"
+    },
+    {
+      "bytes": 1581,
+      "path": "visual-atlas/inspection/runtime-identities.json",
+      "sha256": "0b1eb36509537c4e0f61b6ee43ff3be768fe8afcc999b27f7780232810e8e329"
+    },
+    {
+      "bytes": 22516,
+      "path": "visual-atlas/inspection/source-surface-inventory.json",
+      "sha256": "b4542f6a2641bbb570e512e8aadd33edc13c1aeb59d4c4afd70928fe5d4ccc97"
+    },
+    {
+      "bytes": 4984,
+      "path": "visual-atlas/inspection/state-matrix.json",
+      "sha256": "c3a451a50bfa142fcc9050301a5dca86d49acbf23bf1cc5a57e0d90025044d4b"
+    },
+    {
+      "bytes": 5371,
+      "path": "visual-atlas/inspection/task-oracles.json",
+      "sha256": "446e13025c2c74c9996bc1e39d3ab1c64ff11e7518c5b33ec6ecd2ed456c53bb"
+    },
+    {
+      "bytes": 2933,
+      "path": "visual-atlas/reader-index.json",
+      "sha256": "2452c247cf1e715f80d46998548e31d30d4c514c148c512df8f4ab7fcb596f4c"
+    },
+    {
+      "bytes": 136226,
+      "path": "visual-atlas/review-desktop.pdf",
+      "sha256": "d34c3dfd856566b51f2656241cde962b879617f517efdc95b380abe6000bd7ef"
+    },
+    {
+      "bytes": 80313,
+      "path": "visual-atlas/review-mobile.pdf",
+      "sha256": "e8b23e9419810d0064d8564117a3a45296310bb688c34ef11afc8560066d6f9f"
+    },
+    {
+      "bytes": 76438,
+      "path": "visual-atlas/screenshots/attention--desktop-1440x900.png",
+      "sha256": "a2825364b5f06138db8a72debf9f16d35587105dcf6ffa31974ded1045b4a3db"
+    },
+    {
+      "bytes": 32999,
+      "path": "visual-atlas/screenshots/attention--mobile-390x844.png",
+      "sha256": "d312bd37507e513522dd3a91f95f32dcd196a2144c174ce47a785310f5153f5a"
+    },
+    {
+      "bytes": 40539,
+      "path": "visual-atlas/screenshots/episode--desktop-1440x900.png",
+      "sha256": "2127ed0073d8bca8381164b5fe28cd2c086908fe61805bca61ae76826c636bfc"
+    },
+    {
+      "bytes": 42634,
+      "path": "visual-atlas/screenshots/episode--mobile-390x844.png",
+      "sha256": "6955237767f59a45bd2e901a1838b678c16a5e3cfd455b7acb75141d843eccfe"
+    },
+    {
+      "bytes": 3507,
+      "path": "visual-atlas/surface-manifest.json",
+      "sha256": "2d9d2601e369388e0e0e268dfd5c56522045f39d6f18517f4902e253b4e08f26"
+    }
+  ],
+  "schema_version": 1
+}

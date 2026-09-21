@@ -1,0 +1,32 @@
+{
+  "decision": {
+    "future_surfaces_not_invented": true,
+    "historical_or_alias_routes_not_promoted": true,
+    "surface_keys": [
+      "attention",
+      "episode"
+    ]
+  },
+  "runtime": {
+    "auth_wall": false,
+    "crash_page": false,
+    "navigated_routes": [
+      "/",
+      "/episode"
+    ],
+    "rendered_headings": {
+      "/": "Attention",
+      "/episode": "Episode decision brief"
+    },
+    "unresolved_loading_state": false
+  },
+  "schema_version": 1,
+  "source": {
+    "entrypoint": "ephi.app:main --serve -> ephi.ui.app:run_ephi",
+    "registered_routes": [
+      "/",
+      "/episode"
+    ],
+    "surface_inventory_path": "visual-atlas/inspection/source-surface-inventory.json"
+  }
+}

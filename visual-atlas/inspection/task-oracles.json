@@ -1,0 +1,121 @@
+{
+  "evidence_basis": "Fresh O10 real browser for T1-T7; repository-native O10 state harness for T8; canonical atlas pixels separately captured.",
+  "oracles": [
+    {
+      "durable_effect": null,
+      "id": "T1",
+      "input": "Navigate to /",
+      "next_legitimate_action": "Select the permitted row",
+      "precondition": "Fresh synthetic authorized engineer session; seeded one permitted row",
+      "prohibited_effects": [
+        "No zero-risk claim from absence",
+        "No protected raw row disclosure"
+      ],
+      "recovery": "Refresh remains available",
+      "semantic_result": "PASS",
+      "task": "Open Attention and understand current authorized result/truth state",
+      "visible_result": "Attention heading and \"1 permitted Attention row; source coverage is limited to this authorized result.\""
+    },
+    {
+      "durable_effect": null,
+      "id": "T2",
+      "input": "Keyboard Tab to grid, ArrowDown, Space",
+      "next_legitimate_action": "Open episode",
+      "precondition": "Attention populated",
+      "prohibited_effects": [
+        "No double-click requirement"
+      ],
+      "recovery": "Selection remains in workspace",
+      "semantic_result": "PASS",
+      "task": "Find/select a relevant Attention row",
+      "visible_result": "Selected episode preview appears with returned row facts"
+    },
+    {
+      "durable_effect": null,
+      "id": "T3",
+      "input": "Keyboard focus Open episode, Enter",
+      "next_legitimate_action": "Review source/work state and current action",
+      "precondition": "Selected preview",
+      "prohibited_effects": [
+        "No inferred episode identity on no-selection route"
+      ],
+      "recovery": "Return to Attention preserves selection context",
+      "semantic_result": "PASS",
+      "task": "Understand selected context and open Episode",
+      "visible_result": "Episode decision brief route with episode identity"
+    },
+    {
+      "durable_effect": null,
+      "id": "T4",
+      "input": "Read rendered Episode brief",
+      "next_legitimate_action": "Claim episode",
+      "precondition": "Selected authorized OPEN episode",
+      "prohibited_effects": [
+        "Unavailable future fields are explicitly labeled unavailable/not yet qualified"
+      ],
+      "recovery": "Permission/stale/offline/conflict states keep bounded next actions",
+      "semantic_result": "PASS_WITH_GUI_162_P1_001_ON_DESKTOP",
+      "task": "Understand Episode brief, capability/work state and eligible action",
+      "visible_result": "Source READY, workflow OPEN, current eligible action Claim episode"
+    },
+    {
+      "durable_effect": "One PostgreSQL command receipt and CLAIMED workflow state in fresh O10 run",
+      "id": "T5",
+      "input": "Keyboard focus Claim episode, Enter",
+      "next_legitimate_action": "Acknowledge episode if authorized",
+      "precondition": "Episode OPEN and Claim permitted",
+      "prohibited_effects": [
+        "No manufacturing action executed"
+      ],
+      "recovery": "Version/authorization errors render bounded error and return path",
+      "semantic_result": "PASS",
+      "task": "Execute currently eligible Claim action",
+      "visible_result": "Workflow changes to CLAIMED; action changes to Acknowledge episode; focus handoff is localized"
+    },
+    {
+      "durable_effect": "Durable refresh confirmed by O10 command facts",
+      "id": "T6",
+      "input": "Wait for refreshed coherent Episode brief",
+      "next_legitimate_action": "Acknowledge or return to Attention",
+      "precondition": "Claim submitted",
+      "prohibited_effects": [
+        "No stale Claim button remains as authoritative state"
+      ],
+      "recovery": "Error maps to StateView",
+      "semantic_result": "PASS",
+      "task": "Observe localized truthful feedback and refreshed state",
+      "visible_result": "Live status and durable CLAIMED state; Acknowledge episode offered"
+    },
+    {
+      "durable_effect": null,
+      "id": "T7",
+      "input": "Keyboard focus Return to Attention, Enter",
+      "next_legitimate_action": "Continue review or reopen Episode",
+      "precondition": "Episode rendered after Claim",
+      "prohibited_effects": [
+        "No context corruption"
+      ],
+      "recovery": "Focus returns to Attention heading",
+      "semantic_result": "PASS",
+      "task": "Return to Attention without losing legitimate context",
+      "visible_result": "Attention returns; selected row/preview context restored"
+    },
+    {
+      "durable_effect": null,
+      "id": "T8",
+      "input": "Bounded harness scenarios: permission, stale snapshot, offline, coherent conflict, version conflict, owner changed",
+      "next_legitimate_action": "Use displayed retry/return or stop with the state truth",
+      "precondition": "Synthetic state harness scenarios plus real O10 mapping",
+      "prohibited_effects": [
+        "Harness pixels are not upgraded to real-product production claims"
+      ],
+      "recovery": "Retry/return actions remain explicit",
+      "semantic_result": "PASS_HARNESS_ONLY_FOR_INDUCED_STATES",
+      "task": "Exercise denied/stale/offline/conflict recovery",
+      "visible_result": "Distinct truthful states and bounded return/retry actions; no fake healthy/zero state"
+    }
+  ],
+  "schema_version": 1,
+  "source_sha": "8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e",
+  "status": "EXECUTED_WITH_FINDINGS"
+}

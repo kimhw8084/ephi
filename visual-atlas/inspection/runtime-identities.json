@@ -1,0 +1,51 @@
+{
+  "chromium": {
+    "mode": "isolated headless Chromium",
+    "version": "151.0.7922.34"
+  },
+  "evidence_tooling_note": "The native O10 helper initially rejected valid PostgreSQL 18.6 because its SQL_ASCII cluster returned SHOW server_version as bytes; the isolated cluster was recaptured with client_encoding=UTF8. No Product or qualification source file was modified.",
+  "fixture": {
+    "credentials_recorded": false,
+    "episode_id": "episode-browser-1",
+    "identity_subject": "chg162-synthetic-engineer",
+    "raw_protected_rows_recorded": false,
+    "role": "Engineer",
+    "scope_id": "o8-browser-scope"
+  },
+  "nicegui": {
+    "distribution": "nicegui",
+    "version": "3.15.0"
+  },
+  "nicegui_base": {
+    "contract_commit": "000298562d6bcbf6df304edbd41b98b30fe4bfcf",
+    "distribution": "nicegui-base",
+    "version": "3.0.0a8"
+  },
+  "playwright": {
+    "version": "1.62.0"
+  },
+  "postgresql": {
+    "mode": "isolated local synthetic qualification database",
+    "real_postgresql_18": true,
+    "version": "18.6 (Homebrew)"
+  },
+  "python": {
+    "executable": "/opt/anaconda3/bin/python3",
+    "version": "3.11.7"
+  },
+  "runtime_flags": {
+    "browser_chrome_excluded": true,
+    "device_scale_factor": 1,
+    "full_page": false,
+    "locale": "en-US",
+    "reduced_motion": "reduce",
+    "theme": "light",
+    "timezone": "America/Chicago"
+  },
+  "schema_version": 1,
+  "source": {
+    "branch": "codex/ephi-o10-ui-perfection-inspection-v1",
+    "sha": "8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e",
+    "tree": "de2063907127a988844179e058e435d7b7666c96"
+  }
+}
