@@ -631,8 +631,8 @@
     },
     {
       "path": "src/ephi/application/o10.py",
-      "bytes": 14748,
-      "sha256": "9a47ddaaf1318807687829342e38afeb3e5ff289bdf495907c9132e493250f98"
+      "bytes": 16312,
+      "sha256": "b8adf5389c5398793e343678ed65fd37dea727a4eecad86cab1d7feb8b19dc19"
     },
     {
       "path": "src/ephi/application/operations.py",
@@ -746,13 +746,13 @@
     },
     {
       "path": "src/ephi/ui/app.py",
-      "bytes": 43863,
-      "sha256": "6a31fa847ef4e2f7dd0763bcfc1de6af79fcfdeb0ee74320c6b5c9f8f3d65171"
+      "bytes": 44850,
+      "sha256": "7a9eb60cb5d0768ed2aa668249cd3aed12aae74f38e1ba1b328669826f32e4fa"
     },
     {
       "path": "src/ephi/ui/provider.py",
-      "bytes": 10290,
-      "sha256": "e295f162b3a3b1d2d8ed0440f42966cb7f84a057eba2d26e735c996e598fdba5"
+      "bytes": 10748,
+      "sha256": "00143fa80dfe71f5f4c004186e1b1b89807cb34712d0e56434ff1632200f0ffc"
     },
     {
       "path": "src/ephi/value/__init__.py",
@@ -786,8 +786,8 @@
     },
     {
       "path": "tests/test_o10_rendered_accessibility.py",
-      "bytes": 4289,
-      "sha256": "9d8b0c55d1c6c703e059d2a837c887e774074e5a7ebd34a565612a65f2091dae"
+      "bytes": 5619,
+      "sha256": "a0ceda1b10deecf45592a685b4d1e4c54a408325728dd7927aca93de3521aa98"
     },
     {
       "path": "tests/test_o2_artifacts.py",
@@ -836,8 +836,8 @@
     },
     {
       "path": "tests/test_o3_provider.py",
-      "bytes": 10895,
-      "sha256": "3d10b7c364908e7bbd66a53a7f64db378d8632e94f1283f886ccf0a032f74380"
+      "bytes": 11796,
+      "sha256": "d337c30028f11d363c150dc2f27cdb21fcf58e19892546089b254b783b0a5ae3"
     },
     {
       "path": "tests/test_o4_source_ingress.py",
@@ -921,8 +921,8 @@
     },
     {
       "path": "tools/o10_rendered_accessibility.py",
-      "bytes": 47191,
-      "sha256": "ad56f95d731da535a42b8c878cd86417de676ec4d4cab1a99cf562b3ce5f5a5b"
+      "bytes": 53744,
+      "sha256": "d42c6c526073cd3025890f33a9cd993a4b8444121152261e83812d6de49a3ec4"
     },
     {
       "path": "tools/o10_state_harness.py",

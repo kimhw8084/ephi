@@ -36,6 +36,7 @@ from ephi.application.errors import ValidationFailureError
 
 _FIELDS = (
     ("episode_id", "Episode", "identifier"),
+    ("attention_scent", "Issue / status", "attribute"),
     ("title", "Issue", "attribute"),
     ("asset_id", "Asset", "entity"),
     ("priority", "Priority", "attribute"),
@@ -67,6 +68,16 @@ def _schema() -> DataSchema:
         }[role]
         fields.append(SemanticField(name, label, field_type, field_role, nullable=True))
     return DataSchema(tuple(fields), key="episode_id", revision="o3-attention-w1")
+
+
+def _attention_scent(row: Mapping[str, Any]) -> str:
+    """Compose one compact, same-row first-paint cue for narrow tables."""
+
+    def value(key: str) -> str:
+        raw = row.get(key)
+        return str(raw) if raw not in (None, "") else "Unavailable"
+
+    return f"{value('priority')} · {value('source_state')}/{value('work_state')} · {value('title')} · {value('episode_id')}"
 
 
 def _merge_filter(target: dict[str, object], field: str, value: object) -> None:
@@ -202,15 +213,12 @@ class EphiReadDataSource(DataSource):
                 snapshot_id=page.snapshot_id,
                 cursor=page.next_cursor,
             )
-        rows = tuple(collected[:limit])
+        rows = tuple({**row, "attention_scent": _attention_scent(row)} for row in collected[:limit])
         if query.projection:
             unknown = set(query.projection) - _PROJECTION_FIELDS
             if unknown:
                 raise ValidationFailureError(f"unsupported EPHI Attention projection: {sorted(unknown)}")
-            rows = tuple(
-                {"episode_id": row["episode_id"], **{field: row.get(field) for field in query.projection if field != "episode_id"}}
-                for row in rows
-            )
+            rows = tuple({"episode_id": row["episode_id"], **{field: row.get(field) for field in query.projection if field != "episode_id"}} for row in rows)
         elapsed = (monotonic() - started) * 1000
         return QueryResult(
             rows,

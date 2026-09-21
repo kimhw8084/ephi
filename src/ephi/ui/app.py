@@ -56,6 +56,7 @@ from ephi.application.o10 import (
     attention_result_status as _attention_result_status,
     display_value as _display_value,
     episode_action as _episode_action,
+    format_known_at as _format_known_at,
     state_for_error as _state_for_error_facts,
 )
 from ephi.application.source_reality import require_runtime_source_binding
@@ -351,14 +352,19 @@ def _state_for_error(error: BaseException) -> StateViewSpec:
 
 def _attention_columns() -> tuple[TableColumn, ...]:
     return (
-        TableColumn("episode_id", "Episode", ColumnKind.LINK, priority="high"),
-        TableColumn("priority", "Priority", ColumnKind.STATUS, status_map={"P1": "danger", "P2": "warning", "P3": "info"}),
-        TableColumn("title", "Issue", ColumnKind.TEXT, priority="high"),
-        TableColumn("asset_id", "Asset", ColumnKind.TEXT),
-        TableColumn("source_state", "Source", ColumnKind.STATUS),
-        TableColumn("owner", "Owner", ColumnKind.TEXT),
-        TableColumn("work_state", "Work", ColumnKind.STATUS),
-        TableColumn("deadline", "Decision deadline", ColumnKind.DATETIME),
+        # The first Base column is a same-row compact cue so narrow mobile
+        # reads retain urgency, source/work state and issue meaning together.
+        # The underlying facts remain separately available on desktop, in the
+        # selected preview and in the Episode brief.
+        TableColumn("attention_scent", "Issue / status", ColumnKind.TEXT, min_width=220, max_width=380, priority="high", tooltip="Priority, source/work state and complete issue title"),
+        TableColumn("priority", "Priority", ColumnKind.STATUS, min_width=64, max_width=82, priority="low", status_map={"P1": "danger", "P2": "warning", "P3": "info"}),
+        TableColumn("title", "Issue", ColumnKind.TEXT, min_width=168, max_width=420, priority="low", tooltip="Complete issue title"),
+        TableColumn("source_state", "Source", ColumnKind.STATUS, min_width=72, max_width=112, priority="low"),
+        TableColumn("work_state", "Work", ColumnKind.STATUS, min_width=72, max_width=112, priority="low"),
+        TableColumn("episode_id", "Episode", ColumnKind.LINK, min_width=112, priority="normal"),
+        TableColumn("asset_id", "Asset", ColumnKind.TEXT, min_width=96, priority="low"),
+        TableColumn("owner", "Owner", ColumnKind.TEXT, min_width=96, priority="low"),
+        TableColumn("deadline", "Decision deadline", ColumnKind.DATETIME, min_width=150, priority="low"),
     )
 
 
@@ -874,24 +880,6 @@ class _EpisodeView:
                     )
                     for key, value in sorted(brief.capability_state.items()):
                         StatusBadge(f"{key}: {_display_value(value)}", intent=_intent_for_capability(value))
-                    DescriptionList(
-                        (
-                            KeyValueItem("episode_id", "Episode ID", brief.episode_id),
-                            KeyValueItem("title", "Issue / title", _display_value(brief.analytical.get("title"))),
-                            KeyValueItem("known_at", "Known at", _display_value(brief.known_at)),
-                            KeyValueItem("analysis_revision", "Analytical revision", _display_value(brief.revision_vector.analysis_revision)),
-                            KeyValueItem("workflow_version", "Workflow version", _display_value(brief.revision_vector.workflow_version)),
-                            KeyValueItem("work_state", "Workflow state", _display_value(brief.workflow.get("work_state"))),
-                            KeyValueItem("owner", "Owner", _display_value(brief.workflow.get("owner"), unavailable="Unassigned / unavailable")),
-                            KeyValueItem("source_state", "Source / capability state", _display_value(brief.capability_state)),
-                            KeyValueItem("eligible_action", "Current eligible action", action[0] if action else "Unavailable: current authorization or owner does not permit an action"),
-                        )
-                    )
-                    ui.label("Confidence, onset, exposure, next-check, recovery and value are unavailable/not yet qualified in this W1 brief.").classes("ephi-o10-truth-note")
-                    self.live_status = ui.label(
-                        f"Episode {brief.episode_id} is rendered from the current authorized coherent read."
-                    ).classes("ephi-o10-live-status")
-                    self.live_status.props('role="status" aria-live="polite" aria-atomic="true"')
                     with ui.element("div").classes("ephi-o10-action-row"):
                         if action is not None:
                             self.primary_action = ActionButton(action[0], intent=ButtonIntent.PRIMARY, on_click=lambda: commit(action[1]))
@@ -908,6 +896,24 @@ class _EpisodeView:
                             )
                         back = ActionButton("Return to Attention", intent=ButtonIntent.SECONDARY, on_click=return_to_attention)
                         _mark_focus_target(back.element, "return-attention")
+                    DescriptionList(
+                        (
+                            KeyValueItem("episode_id", "Episode ID", brief.episode_id),
+                            KeyValueItem("title", "Issue / title", _display_value(brief.analytical.get("title"))),
+                            KeyValueItem("known_at", "Known at", _format_known_at(brief.known_at)),
+                            KeyValueItem("analysis_revision", "Analytical revision", _display_value(brief.revision_vector.analysis_revision)),
+                            KeyValueItem("workflow_version", "Workflow version", _display_value(brief.revision_vector.workflow_version)),
+                            KeyValueItem("work_state", "Workflow state", _display_value(brief.workflow.get("work_state"))),
+                            KeyValueItem("owner", "Owner", _display_value(brief.workflow.get("owner"), unavailable="Unassigned / unavailable")),
+                            KeyValueItem("source_state", "Source / capability state", _display_value(brief.capability_state)),
+                            KeyValueItem("eligible_action", "Current eligible action", action[0] if action else "Unavailable: current authorization or owner does not permit an action"),
+                        )
+                    )
+                    ui.label("Confidence, onset, exposure, next-check, recovery and value are unavailable/not yet qualified in this W1 brief.").classes("ephi-o10-truth-note")
+                    self.live_status = ui.label(
+                        f"Episode {brief.episode_id} is rendered from the current authorized coherent read."
+                    ).classes("ephi-o10-live-status")
+                    self.live_status.props('role="status" aria-live="polite" aria-atomic="true"')
 
         self._mount(render)
         if focus_target == "primary" and self.primary_action is not None:
@@ -944,24 +950,26 @@ async def build_episode_page(composition: EphiUiComposition) -> None:
         from nicegui import ui
 
         ui.query("main").props('role="region" aria-label="EPHI application content"')
-        with AnalysisWorkspacePage("", None):
-            heading = _semantic_heading(
-                "Episode decision brief",
-                "One coherent analytical/read revision with live durable workflow",
-                autofocus=not episode_id or workspace.state.get(FOCUS_KEY) == "episode_heading",
-            )
-            episode_host = ui.element("div").classes("ephi-o10-episode-surface").props('tabindex="-1" role="region" aria-label="Episode rendered state"')
-            if not episode_id:
+        with AnalysisWorkspacePage("", None) as page:
+            with page.slot(LayoutSlot.HEADER):
+                heading = _semantic_heading(
+                    "Episode decision brief",
+                    "One coherent analytical/read revision with live durable workflow",
+                    autofocus=not episode_id or workspace.state.get(FOCUS_KEY) == "episode_heading",
+                )
+            with page.slot(LayoutSlot.PRIMARY):
+                episode_host = ui.element("div").classes("ephi-o10-episode-surface").props('tabindex="-1" role="region" aria-label="Episode rendered state"')
+                if not episode_id:
+                    focus_request = ui.element("div").props('data-ephi-focus-request="" aria-hidden="true"')
+                    view = _EpisodeView(composition, episode_host, heading, "", focus_request)
+                    view.render_no_selection()
+                    return
                 focus_request = ui.element("div").props('data-ephi-focus-request="" aria-hidden="true"')
-                view = _EpisodeView(composition, episode_host, heading, "", focus_request)
-                view.render_no_selection()
-                return
-            focus_request = ui.element("div").props('data-ephi-focus-request="" aria-hidden="true"')
-            view = _EpisodeView(composition, episode_host, heading, episode_id, focus_request)
-            focus_target = workspace.state.get(FOCUS_KEY)
-            await view.load(focus_target=focus_target if isinstance(focus_target, str) else None)
-            if focus_target == "episode_heading":
-                workspace.state.set(FOCUS_KEY, None, source="ephi.episode.focus")
+                view = _EpisodeView(composition, episode_host, heading, episode_id, focus_request)
+                focus_target = workspace.state.get(FOCUS_KEY)
+                await view.load(focus_target=focus_target if isinstance(focus_target, str) else None)
+                if focus_target == "episode_heading":
+                    workspace.state.set(FOCUS_KEY, None, source="ephi.episode.focus")
 
 
 def build_page() -> None:

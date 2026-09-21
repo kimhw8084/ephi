@@ -9,7 +9,9 @@ from __future__ import annotations
 
 from collections.abc import Mapping
 from dataclasses import dataclass
+from datetime import datetime
 from typing import Any
+from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
 from .context import Principal
 from .episodes import EpisodeBrief
@@ -41,6 +43,23 @@ def display_value(value: object, *, unavailable: str = "Unavailable / not yet qu
     if isinstance(value, Mapping):
         return ", ".join(f"{key}: {display_value(item)}" for key, item in sorted(value.items()))
     return str(value)
+
+
+def format_known_at(value: object, *, timezone_name: str = "America/Chicago") -> str:
+    """Present an exact knowledge instant with a deterministic local reading."""
+
+    if value is None or value == "":
+        return "Unavailable / missing known-at timestamp"
+    exact = value.isoformat() if isinstance(value, datetime) else str(value)
+    try:
+        timestamp = value if isinstance(value, datetime) else datetime.fromisoformat(str(value).replace("Z", "+00:00"))
+        if timestamp.tzinfo is None or timestamp.utcoffset() is None:
+            raise ValueError("known_at must be offset-aware")
+        local = timestamp.astimezone(ZoneInfo(timezone_name))
+    except (TypeError, ValueError, ZoneInfoNotFoundError):
+        return f"Unavailable / invalid known-at timestamp (exact: {exact})"
+    local_text = f"{local:%b} {local.day}, {local:%Y} {local:%I:%M:%S %p %Z}".replace(" 0", " ", 1)
+    return f"{local_text} (exact: {exact})"
 
 
 def attention_result_status(*, total_count: int | None, search: str = "", loading: bool = False) -> str:
@@ -174,6 +193,7 @@ def evaluate_o10_acceptance(report: Mapping[str, object]) -> dict[str, object]:
     walkthrough = real.get("keyboard_walkthrough") if isinstance(real.get("keyboard_walkthrough"), Mapping) else {}
     focus = critical.get("focus_continuity") if isinstance(critical.get("focus_continuity"), Mapping) else {}
     focus_indicator = critical.get("focus_indicator_contrast") if isinstance(critical.get("focus_indicator_contrast"), Mapping) else {}
+    episode_geometry = critical.get("episode_geometry") if isinstance(critical.get("episode_geometry"), Mapping) else {}
     forced = real.get("forced_colors") if isinstance(real.get("forced_colors"), Mapping) else {}
     reduced = real.get("reduced_motion") if isinstance(real.get("reduced_motion"), Mapping) else {}
     durable = report.get("durable_command") if isinstance(report.get("durable_command"), Mapping) else {}
@@ -207,6 +227,9 @@ def evaluate_o10_acceptance(report: Mapping[str, object]) -> dict[str, object]:
             return False
         measurements = facts.get("critical_target_measurements")
         if not isinstance(measurements, Mapping):
+            return False
+        scent = facts.get("attention_first_paint")
+        if not isinstance(scent, Mapping) or scent.get("status") != "PASS":
             return False
         phone_viewport = str(viewport).split("x", 1)[0] in {"320", "390"}
         applicable = {
@@ -247,6 +270,7 @@ def evaluate_o10_acceptance(report: Mapping[str, object]) -> dict[str, object]:
         "browser_events_clean": all(not events.get(key) for key in ("console_errors", "page_errors", "request_failures")),
         "normal_focus_indicator": focus_indicator.get("status") == "PASS",
         "semantic_assertions": semantic_attention_ok and semantic_episode_ok,
+        "episode_geometry": episode_geometry.get("status") == "PASS" and episode_geometry.get("governed_primary_slot") is True and episode_geometry.get("readable_content") is True and episode_geometry.get("decision_action_visible") is True,
         "truthful_populated_attention": _truthy(critical, "populated_attention_truthful"),
         "truthful_search_empty": _truthy(search, "truthful_no_match") and _truthy(search, "unfiltered_authorized_row_existed") and _truthy(search, "neutral_empty_overlay"),
         "responsive_viewports": responsive_ok,
@@ -269,6 +293,7 @@ __all__ = [
     "display_value",
     "episode_action",
     "evaluate_o10_acceptance",
+    "format_known_at",
     "focus_contrast",
     "parse_color",
     "state_for_error",

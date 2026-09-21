@@ -358,6 +358,7 @@ def _keyboard_open_and_claim(page: Any, base: str, episode_id: str, evidence_dir
     page.get_by_role("button", name="Claim episode").wait_for(timeout=30000)
     episode_aria = _aria_snapshot(page)
     episode_semantic_facts = _semantic_facts(page, surface="episode", episode_id=episode_id, aria_snapshot=episode_aria)
+    episode_geometry = _episode_geometry_facts(page)
     page.screenshot(path=str(evidence_dir / "episode-populated-1440x900.png"), full_page=True)
     primary = _keyboard_focus_target(page, "Claim episode")
     primary_focus = _focus_style(page, primary, already_keyboard_focused=True)
@@ -395,6 +396,7 @@ def _keyboard_open_and_claim(page: Any, base: str, episode_id: str, evidence_dir
         "selection": selection,
         "episode_aria_snapshot": episode_aria,
         "episode_semantic_facts": episode_semantic_facts,
+        "episode_geometry": episode_geometry,
         "attention_semantic_facts": attention_semantic_facts,
         "initial_status": initial_status,
         "selected_row_preview": {"fields_present": preview_facts, "open_action_name": "Open episode"},
@@ -433,6 +435,77 @@ def _keyboard_open_and_claim(page: Any, base: str, episode_id: str, evidence_dir
             and populated_attention["table_controls_present"]
         ),
     }
+
+
+def _episode_geometry_facts(page: Any) -> dict[str, object]:
+    """Assert the Episode uses the pinned Base pattern's governed geometry."""
+
+    return page.evaluate(
+        """() => {
+            const rect = node => {
+                const box = node?.getBoundingClientRect();
+                return box ? {left: box.left, top: box.top, right: box.right, bottom: box.bottom, width: box.width, height: box.height} : null;
+            };
+            const pattern = document.querySelector('.cui-pattern--analysis_workspace');
+            const header = pattern?.querySelector('[data-cui-slot="header"]');
+            const primary = pattern?.querySelector('[data-cui-slot="primary"]');
+            const card = primary?.querySelector('.cui-surface--card');
+            const title = card?.querySelector('.cui-entity-header__subtitle');
+            const action = card?.querySelector('button[aria-label="Claim episode"], button[aria-label="Acknowledge episode"]');
+            const pageStyle = pattern ? getComputedStyle(pattern) : null;
+            const tracks = pageStyle ? pageStyle.gridTemplateColumns.split(' ').map(value => Number.parseFloat(value)).filter(Number.isFinite) : [];
+            const gap = pageStyle ? Number.parseFloat(pageStyle.columnGap) || 0 : 0;
+            const headerBox = rect(header);
+            const governedGridWidth = headerBox?.width || 0;
+            const trackWidth = tracks.length === 12 ? (governedGridWidth - gap * 11) / 12 : 0;
+            const expectedPrimaryWidth = trackWidth > 0 ? trackWidth * 8 + gap * 7 : 0;
+            const titleStyle = title ? getComputedStyle(title) : null;
+            const titleBox = rect(title);
+            const cardBox = rect(card);
+            const primaryBox = rect(primary);
+            const actionBox = rect(action);
+            const viewport = {width: window.innerWidth, height: window.innerHeight};
+            const visibleInViewport = box => Boolean(box && box.width > 0 && box.height > 0 && box.left >= -1 && box.right <= viewport.width + 1 && box.top >= -1 && box.bottom <= viewport.height + 1);
+            const titleLineHeight = titleStyle ? Number.parseFloat(titleStyle.lineHeight) : 0;
+            const titleLineCount = titleBox && titleLineHeight > 0 ? Math.ceil(titleBox.height / titleLineHeight) : null;
+            const governedPrimarySlot = Boolean(
+                pattern && header && primary &&
+                getComputedStyle(primary).gridColumnStart === '1' &&
+                getComputedStyle(primary).gridColumnEnd === '9' &&
+                tracks.length === 12 &&
+                primaryBox && expectedPrimaryWidth > 0 && primaryBox.width >= expectedPrimaryWidth * 0.9
+            );
+            const readableContent = Boolean(
+                cardBox && primaryBox && cardBox.width >= primaryBox.width * 0.9 &&
+                titleBox && titleBox.width >= primaryBox.width * 0.5 &&
+                titleLineCount !== null && titleLineCount <= 3 &&
+                ['Episode ID', 'Workflow state', 'Current eligible action'].every(label => (card?.innerText || '').includes(label))
+            );
+            const pageLevelOverflow = document.documentElement.scrollWidth > document.documentElement.clientWidth || document.body.scrollWidth > document.body.clientWidth;
+            const decisionActionVisible = visibleInViewport(actionBox);
+            const status = governedPrimarySlot && readableContent && decisionActionVisible && !pageLevelOverflow ? 'PASS' : 'FAIL';
+            return {
+                status,
+                governed_primary_slot: governedPrimarySlot,
+                readable_content: readableContent,
+                decision_action_visible: decisionActionVisible,
+                page_level_horizontal_overflow: pageLevelOverflow,
+                pattern_box: rect(pattern),
+                header_slot_box: rect(header),
+                primary_slot_box: primaryBox,
+                expected_primary_width: expectedPrimaryWidth,
+                primary_grid_column: primary ? getComputedStyle(primary).gridColumn : '',
+                card_box: cardBox,
+                title_box: titleBox,
+                title_text: title?.innerText || '',
+                title_line_count: titleLineCount,
+                key_fact_labels_present: ['Episode ID', 'Workflow state', 'Current eligible action'].every(label => (card?.innerText || '').includes(label)),
+                decision_action_box: actionBox,
+                viewport,
+                threshold_basis: 'Pinned Base analysis_workspace 12-column grid: PRIMARY spans columns 1/9 and rendered content must retain at least 90% of its computed governed span; title retains at least half of that span and at most three readable lines.'
+            };
+        }"""
+    )
 
 
 def _focus_path_ok(path: dict[str, object]) -> bool:
@@ -635,6 +708,7 @@ def _responsive_browser(base: str, evidence_dir: Path, episode_id: str, events: 
             _wait_for_text(page, "Attention")
             stage = "attention_data"
             _wait_for_authorized_attention_row(page, episode_id)
+            attention_first_paint = _attention_first_paint_facts(page)
             screenshot_name = f"attention-{width}x{height}.png"
             page.screenshot(path=str(evidence_dir / screenshot_name), full_page=True)
             attention_overflow = _overflow_facts(page)
@@ -698,6 +772,7 @@ def _responsive_browser(base: str, evidence_dir: Path, episode_id: str, events: 
             results[f"{width}x{height}"] = {
                 "status": "PASS" if viewport_status else "FAIL",
                 "attention_overflow": attention_overflow.get("application_horizontal_overflow"),
+                "attention_first_paint": attention_first_paint,
                 "episode_overflow": episode_overflow.get("application_horizontal_overflow"),
                 "document_overflow": bool(attention_overflow.get("document_overflow") or episode_overflow.get("document_overflow")),
                 "body_overflow": bool(attention_overflow.get("body_overflow") or episode_overflow.get("body_overflow")),
@@ -712,6 +787,30 @@ def _responsive_browser(base: str, evidence_dir: Path, episode_id: str, events: 
             context.close()
         browser.close()
     return results
+
+
+def _attention_first_paint_facts(page: Any) -> dict[str, object]:
+    """Measure the compact same-row scent exposed before selection."""
+
+    return page.evaluate(
+        """() => {
+            const row = document.querySelector('.cui-data-table .ag-center-cols-container .ag-row');
+            const cell = [...(row?.querySelectorAll('.ag-cell') || [])].find(node => (node.innerText || node.textContent || '').replace(/\\s+/g, ' ').trim());
+            const box = cell?.getBoundingClientRect();
+            const text = (cell?.innerText || cell?.textContent || '').replace(/\\s+/g, ' ').trim();
+            const visible = Boolean(box && box.width > 0 && box.height > 0 && box.left >= -1 && box.right <= window.innerWidth + 1 && box.top >= -1 && box.bottom <= window.innerHeight + 1);
+            return {
+                status: visible && /\\bP[1-3]\\b/.test(text) && text.includes('READY/OPEN') && text.includes('Browser transport') ? 'PASS' : 'FAIL',
+                visible,
+                text,
+                priority_present: /\\bP[1-3]\\b/.test(text),
+                source_work_present: text.includes('READY/OPEN'),
+                issue_present: text.includes('Browser transport'),
+                box: box ? {left: box.left, top: box.top, right: box.right, bottom: box.bottom, width: box.width, height: box.height} : null,
+                basis: 'One Base DataSourceTable cell carries the same-row priority, source/work state and issue title before selection; no parallel mobile list is mounted.'
+            };
+        }"""
+    )
 
 
 def _harness_states(evidence_dir: Path) -> dict[str, object]:

@@ -25,6 +25,7 @@ from ephi.application.o10 import (
     parse_color,
     state_for_error,
     evaluate_o10_acceptance,
+    format_known_at,
 )
 
 
@@ -38,6 +39,18 @@ class O10RenderedAccessibilityTests(unittest.TestCase):
     def test_preview_values_do_not_turn_unknown_into_healthy_zero(self) -> None:
         self.assertIn("Unavailable", display_value(None))
         self.assertIn("source: READY", display_value({"source": "READY"}))
+
+    def test_known_at_keeps_exact_offset_and_adds_deterministic_local_reading(self) -> None:
+        formatted = format_known_at("2026-09-21T15:43:14+00:00")
+        self.assertIn("Sep 21, 2026", formatted)
+        self.assertIn("exact: 2026-09-21T15:43:14+00:00", formatted)
+        self.assertNotIn("ago", formatted)
+
+    def test_known_at_invalid_or_missing_values_remain_explicitly_unavailable(self) -> None:
+        self.assertIn("missing known-at timestamp", format_known_at(None))
+        invalid = format_known_at("2026-09-21T15:43:14")
+        self.assertIn("invalid known-at timestamp", invalid)
+        self.assertIn("exact: 2026-09-21T15:43:14", invalid)
 
     def test_episode_action_is_one_durable_primary_action(self) -> None:
         vector = RevisionVector("analysis-1", None, None, 0, None, "manifest-1")
@@ -74,6 +87,16 @@ class O10RenderedAccessibilityTests(unittest.TestCase):
         result = evaluate_o10_acceptance(report)
         self.assertEqual(result["status"], "FAIL")
         self.assertFalse(result["criteria"]["browser_events_clean"])
+
+    def test_acceptance_contract_requires_candidate_episode_geometry(self) -> None:
+        report = {"real_browser": {"critical_path": {"episode_geometry": {"status": "FAIL"}}}}
+        result = evaluate_o10_acceptance(report)
+        self.assertIn("episode_geometry", result["failed"])
+
+    def test_acceptance_contract_requires_mobile_attention_information_scent(self) -> None:
+        report = {"responsive": {"390x844": {"status": "PASS", "attention_first_paint": {"status": "FAIL"}, "critical_target_measurements": {}}}}
+        result = evaluate_o10_acceptance(report)
+        self.assertIn("responsive_viewports", result["failed"])
 
 
 if __name__ == "__main__":
