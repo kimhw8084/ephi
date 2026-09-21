@@ -1,0 +1,72 @@
+{
+  "schema_version": "ephi-o10.2-project-os-carrier.v1",
+  "carrier_kind": "project-os-artifact-carrier",
+  "project": "ephi",
+  "request": "ephi-o10-performance-capacity-fix2",
+  "operation": "FIX",
+  "actual_fabric_job_id": "CF-399f2688d930db7a1ddc5c9e",
+  "base_sha": "8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e",
+  "final_candidate_sha": "522c9ba1fc9ec4af649bf22d82577af0323cf195",
+  "final_candidate_tree_sha": "3597cd573a73bc45f9b636883a87480294221f77",
+  "work_branch": "codex/ephi-o10-performance-capacity-fix2",
+  "remote_work_head": {
+    "ref": "refs/heads/codex/ephi-o10-performance-capacity-fix2",
+    "sha": "522c9ba1fc9ec4af649bf22d82577af0323cf195",
+    "status": "VERIFIED"
+  },
+  "worktree_clean_at_candidate": true,
+  "predecessor_lineage": {
+    "r1": {
+      "candidate_sha": "e6539fc9746434d9b16fa110836588a45a398296",
+      "candidate_tree_sha": "a51d83f2f08f6cba7d628671889d23b469fc17a2",
+      "evidence_sha": "e54800b09e682361831901a57a4807d2056d45d1",
+      "carrier": "project-os-artifacts/ephi/ephi-o10-performance-capacity-v1@acd938073e57a20fc058e2bae61bf9cde90c14dc"
+    },
+    "r2": {
+      "candidate_sha": "f3e3344232e68ed5444c0de2fc3de7d19a80520a",
+      "candidate_tree_sha": "c59b9b94dc5f363faf65b8a6ca4f41510ca05f09",
+      "fabric_job_id": "CF-732138307c5bb82fafc5a928",
+      "evidence_sha": "a16d611854622d7babb220b8afb55bd7260ae0e9",
+      "carrier": "project-os-artifacts/ephi/ephi-o10-performance-capacity-fix1@e1491a29f1796f64bd9986cdda2d50f08dfa9bc5",
+      "direct_parent_of_fix2": true
+    },
+    "history_rule": "FIX2 preserves R2 direct ancestry; no rebuild, squash, rebase, replacement or discard of predecessor history."
+  },
+  "qualification_state": "BLOCKED_BENCHMARK_ENVIRONMENT",
+  "bundle": {
+    "path": "ephi-o10-performance-capacity-fix2.bundle.tar",
+    "bytes": 21504,
+    "sha256": "7a1fb31985eb430451a853b04e555016282f48587eb14125589ea690c62386c2"
+  },
+  "changed_files": {
+    "count": 7,
+    "inventory_path": "changed-files.json",
+    "base_to_candidate": true
+  },
+  "carrier_ref": "refs/heads/project-os-artifacts/ephi/ephi-o10-performance-capacity-fix2",
+  "evidence_ref": "refs/heads/codex-fabric/evidence/ephi/ephi-o10-performance-capacity-fix2",
+  "remote_readback": {
+    "status": "VERIFIED",
+    "verification": "git ls-remote readback after push must match both final_candidate_sha and this immutable carrier ref.",
+    "verified_candidate_sha": "522c9ba1fc9ec4af649bf22d82577af0323cf195"
+  },
+  "secret_safety": {
+    "auth_headers": false,
+    "cookies": false,
+    "session_values": false,
+    "dsns": false,
+    "credentials": false,
+    "protected_payloads": false,
+    "raw_benchmark_payloads": false,
+    "raw_identity_values": false,
+    "storage_values": false,
+    "synthetic_ar2_sidecars": false,
+    "private_ip_details": false
+  },
+  "target_drift": {
+    "target_ref": "refs/heads/main",
+    "target_sha_observed": "8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e",
+    "target_drifted": false
+  },
+  "verdict_boundary": "No Project OS GO claim; independent audit must issue a byte-preserving VERIFY continuation on a qualifying executor."
+}

@@ -1,0 +1,19 @@
+{
+  "schema": "ephi.o10.2.changed-file-inventory.fix2.v1",
+  "scope": "exact changed files from registered base through FIX2 candidate",
+  "base": {"sha": "8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e"},
+  "candidate": {"sha": "522c9ba1fc9ec4af649bf22d82577af0323cf195", "tree": "3597cd573a73bc45f9b636883a87480294221f77"},
+  "file_count": 7,
+  "paths_are_exact_and_sorted": true,
+  "files": [
+    {"path": "09_Delivery_and_Gates.md", "byte_size": 22921, "sha256": "ca94362410aef177ba4fb2b51462d177f5e726b4d70d84c1ad42f17bf1592e9a"},
+    {"path": "README.md", "byte_size": 18348, "sha256": "30e6fe14a86d082328781de3c4b582bea584759d280eaf4f1ceb65917ee9ab27"},
+    {"path": "evidence/review/chg_161_o10_performance_capacity.json", "byte_size": 3948, "sha256": "89eda48689631ae6ab6180daf5b2f62753ef2f63ceb72991b3f7511713620ee8"},
+    {"path": "manifest.json", "byte_size": 34312, "sha256": "58dc682e270ad619f1472b310e0e5d6834f83952b7dcde1259ce4db64214e71a"},
+    {"path": "src/ephi/infrastructure/postgresql_reads.py", "byte_size": 36120, "sha256": "7c9d4336605bc99b71915f96e811c2c1793033648457b42518ee56c87e79edd3"},
+    {"path": "tests/test_o10_performance_capacity.py", "byte_size": 21163, "sha256": "7fabd9977a56f1c0f90b93d9177a75494f3b58e52478fab13168fb6a54c9d1a9"},
+    {"path": "tools/o10_performance_capacity.py", "byte_size": 143700, "sha256": "de9948ffca9c241cfb7436e539c1692c16a6db5df3e9b8e97c8bba307ed9a600"}
+  ],
+  "mechanical_consistency": {"count_matches_array_length": true, "path_set_matches_git_diff": true, "candidate_hashes_and_sizes_verified": true},
+  "status": "PASS"
+}
