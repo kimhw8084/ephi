@@ -1,0 +1,55 @@
+{
+  "actual_fabric_job_id": "CF-c5c073e8aae3895f84529568",
+  "base_sha": "8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e",
+  "bundle": {
+    "bytes": 30720,
+    "path": "ephi-o10-performance-capacity-verify2.bundle.tar",
+    "sha256": "abab5d2e27d986b2c15710df6de9fe6199fdd51d8d1e10d02e94af5f5d3474e7"
+  },
+  "capacity_results": "NOT_RUN",
+  "carrier_kind": "project-os-artifact-carrier",
+  "carrier_ref": "refs/heads/project-os-artifacts/ephi/ephi-o10-performance-capacity-verify2",
+  "changed_files": {
+    "count": 7,
+    "path": "lineage/changed-files.json"
+  },
+  "contents": [
+    "benchmark/qualification-contract.json",
+    "canonical-evidence.json",
+    "environment/authority-decision.json",
+    "lineage/changed-files.json",
+    "lineage/identity.json",
+    "results/capacity-results.json",
+    "results/regression-summary.json"
+  ],
+  "evidence_ref": "refs/heads/codex-fabric/evidence/ephi/ephi-o10-performance-capacity-verify2",
+  "final_candidate_sha": "522c9ba1fc9ec4af649bf22d82577af0323cf195",
+  "final_candidate_tree_sha": "3597cd573a73bc45f9b636883a87480294221f77",
+  "operation": "VERIFY",
+  "project": "ephi",
+  "qualification_state": "BLOCKED_BENCHMARK_ENVIRONMENT",
+  "raw_samples": "NOT_COLLECTED",
+  "remote_readback": {
+    "carrier_ref": "refs/heads/project-os-artifacts/ephi/ephi-o10-performance-capacity-verify2",
+    "carrier_ref_prepublication": "ABSENT",
+    "post_publication_readback_required": true,
+    "target_ref": "refs/heads/main",
+    "target_sha": "8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e",
+    "work_ref": "refs/heads/codex/ephi-o10-performance-capacity-verify2",
+    "work_sha": "522c9ba1fc9ec4af649bf22d82577af0323cf195"
+  },
+  "request": "ephi-o10-performance-capacity-verify2",
+  "schema_version": "ephi-o10.2-project-os-carrier.v1",
+  "secret_safety": {
+    "auth_headers": false,
+    "cookies": false,
+    "credentials": false,
+    "dsns": false,
+    "private_topology_details": false,
+    "protected_payloads": false,
+    "raw_identity_values": false,
+    "session_storage_values": false
+  },
+  "verdict_boundary": "No GO claim; this VERIFY2 carrier records the exact environment blocker and preserves the candidate unchanged.",
+  "work_branch": "codex/ephi-o10-performance-capacity-verify2"
+}
