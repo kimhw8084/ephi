@@ -55,20 +55,26 @@ from ephi.application.context import (  # noqa: E402
     RevisionVector,
 )
 from ephi.application.episodes import EpisodeBriefQueryService  # noqa: E402
-from ephi.application.errors import CommandError, VersionConflictError  # noqa: E402
+from ephi.application.errors import CommandError, StaleLeaseError, VersionConflictError  # noqa: E402
 from ephi.application.workflow import EpisodeWorkflowCommandService  # noqa: E402
 from ephi.infrastructure.postgresql import PostgreSQLReferenceTransactionAdapter  # noqa: E402
 from ephi.infrastructure.postgresql import _PostgreSQLCommandTransaction  # noqa: E402
 from ephi.infrastructure.postgresql_o3 import PostgreSQLO3ProductStore  # noqa: E402
 from ephi.infrastructure.postgresql_reads import PostgreSQLReadSnapshotStore  # noqa: E402
 from ephi.infrastructure.postgresql_worker import WorkerLeaseConfig  # noqa: E402
-from ephi.application.source_ingress import SourceCapabilityState, SourceSnapshotStatus, _capability_state  # noqa: E402
+from ephi.application.source_ingress import (  # noqa: E402
+    MetrologySourceBinding,
+    SourceCapabilityRecord,
+    SourceCapabilityState,
+    SourceSnapshotStatus,
+    _capability_state,
+)
 
 
-REQUEST = "ephi-o10-performance-capacity-fix1"
+REQUEST = "ephi-o10-performance-capacity-fix2"
 BASE_SHA = "8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e"
-WORK_BRANCH = "codex/ephi-o10-performance-capacity-fix1"
-FABRIC_JOB_ID = os.environ.get("CODEX_FABRIC_JOB_ID", "CF-732138307c5bb82fafc5a928")
+WORK_BRANCH = "codex/ephi-o10-performance-capacity-fix2"
+FABRIC_JOB_ID = os.environ.get("CODEX_FABRIC_JOB_ID", "CF-399f2688d930db7a1ddc5c9e")
 
 STATUS_PASS = "PASS_CURRENT_SURFACE_BUDGETS"
 STATUS_BLOCKED_ENVIRONMENT = "BLOCKED_BENCHMARK_ENVIRONMENT"
@@ -121,6 +127,31 @@ BUDGETS = {
     "attention_payload_bytes": 250_000,
     "episode_payload_bytes": 1_000_000,
     "acknowledged_effects_lost_after_restart": 0,
+}
+
+# These ceilings are derived from the current W1 SQL/application sequence and
+# intentionally count one ``executemany`` batch as one database operation:
+# Attention fetch + snapshot BEGIN/metadata/batch + retained-page BEGIN/meta/
+# rows = 7; Episode coherent current read BEGIN/head+revision/aggregate = 3;
+# workflow command BEGIN/receipt/aggregate/update/audit/outbox/receipt = 7.
+# They are independent of result-row count, so the former per-row retained
+# snapshot INSERT path cannot qualify.
+QUERY_COUNT_CEILINGS = {
+    "attention_warm": 7,
+    "attention_burst": 7,
+    "attention_filter_search": 7,
+    "episode_brief": 3,
+    "workflow_command": 7,
+}
+
+RESTORE_REPRESENTATIVE_SCALE_AUTHORITY = {
+    "mode": "approved_representative",
+    "approved": True,
+    "immutable": True,
+    "authority_id": "o9-real-rehearsal-representative-v1",
+    "fixture_identity": "o9-rehearsal-scope/episode-o9-1/read-o9-1",
+    "reason": "O9 isolated restore fixture is a documented representative snapshot; it is not the 10k/1M benchmark-scale database.",
+    "benchmark_scale_counts_bound": False,
 }
 
 TABLES = (
@@ -217,6 +248,11 @@ def summarize_samples(samples: Sequence[Mapping[str, object]]) -> dict[str, obje
     scheduling = [float(sample["scheduling_delay_ms"]) for sample in samples if "scheduling_delay_ms" in sample]
     failures = [sample for sample in samples if sample.get("status") == "failure"]
     conflicts = [sample for sample in samples if sample.get("expected_conflict", False)]
+    query_counts = [
+        int(sample["query_count"])
+        for sample in samples
+        if isinstance(sample.get("query_count"), int) and not isinstance(sample.get("query_count"), bool)
+    ]
     return {
         "sample_count": len(samples),
         "valid_latency_sample_count": len(valid),
@@ -226,6 +262,11 @@ def summarize_samples(samples: Sequence[Mapping[str, object]]) -> dict[str, obje
         "queue_delay_ms": _distribution(queue),
         "scheduling_delay_ms": _distribution(scheduling),
         "failure_types": dict(sorted(Counter(str(item.get("error_type", "unknown")) for item in failures).items())),
+        "query_count": {
+            "sample_count": len(query_counts),
+            "max": max(query_counts) if query_counts else None,
+            "values_are_raw_and_recomputable": True,
+        },
         "method": "nearest_rank; sorted; rank=max(1,ceil(q*n)); no interpolation",
     }
 
@@ -528,6 +569,37 @@ def _mapping(value: object) -> Mapping[str, object]:
     return value if isinstance(value, Mapping) else {}
 
 
+def _query_count_contract(result: Mapping[str, object], operation: str) -> bool:
+    """Require a bounded, row-count-independent query count for every sample."""
+
+    ceiling = QUERY_COUNT_CEILINGS[operation]
+    repetitions = result.get("repetitions")
+    if not isinstance(repetitions, Sequence) or isinstance(repetitions, (str, bytes, bytearray)):
+        return False
+    if result.get("query_count_ceiling") != ceiling:
+        return False
+    for repetition in repetitions:
+        samples = _mapping(repetition).get("samples")
+        if not isinstance(samples, Sequence) or isinstance(samples, (str, bytes, bytearray)):
+            return False
+        if len(samples) < SAMPLE_FLOORS[operation]:
+            return False
+        for sample_value in samples:
+            sample = _mapping(sample_value)
+            query_count = sample.get("query_count")
+            if query_count is not None and (
+                isinstance(query_count, bool)
+                or not isinstance(query_count, int)
+                or query_count < 0
+                or query_count > ceiling
+            ):
+                return False
+            if sample.get("status") == "ok" and not sample.get("expected_conflict", False):
+                if isinstance(query_count, bool) or not isinstance(query_count, int):
+                    return False
+    return True
+
+
 def evaluate_benchmark_acceptance(report: Mapping[str, object]) -> dict[str, object]:
     """Pure fail-closed O10.2 acceptance evaluator used by qualification and CI."""
 
@@ -564,9 +636,11 @@ def evaluate_benchmark_acceptance(report: Mapping[str, object]) -> dict[str, obj
 
     required_scenarios = tuple(SAMPLE_FLOORS)
     service_ok = True
+    query_count_ok = True
     for name in required_scenarios:
         result = _mapping(service.get(name))
         service_ok = service_ok and result.get("all_repetitions_valid") is True and int(result.get("repetition_count", 0)) >= QUALIFYING_MIN_REPETITIONS and _mapping(result.get("budget")).get("status") == "PASS"
+        query_count_ok = query_count_ok and _query_count_contract(result, name)
         repetitions = result.get("repetitions")
         if not isinstance(repetitions, Sequence) or len(repetitions) < QUALIFYING_MIN_REPETITIONS:
             service_ok = False
@@ -575,6 +649,7 @@ def evaluate_benchmark_acceptance(report: Mapping[str, object]) -> dict[str, obj
                 summary = _mapping(_mapping(repetition).get("summary"))
                 service_ok = service_ok and int(summary.get("sample_count", 0)) >= SAMPLE_FLOORS[name] and int(summary.get("valid_latency_sample_count", 0)) >= SAMPLE_FLOORS[name] and int(summary.get("failures", 0)) == 0
     criteria["service_workloads_valid_and_within_budget"] = service_ok
+    criteria["query_count_no_n_plus_one"] = query_count_ok
 
     browser_repetitions = browser.get("repetitions")
     browser_ok = browser.get("status") == "PASS" and int(browser.get("repetition_count", 0)) >= QUALIFYING_MIN_REPETITIONS and isinstance(browser_repetitions, Sequence) and len(browser_repetitions) >= QUALIFYING_MIN_REPETITIONS
@@ -595,13 +670,62 @@ def evaluate_benchmark_acceptance(report: Mapping[str, object]) -> dict[str, obj
 
     source = _mapping(resilience.get("source_degraded"))
     source_states = source.get("observed_source_states")
-    criteria["source_degraded_synthetic_resilience"] = source.get("status") == "PASS" and source.get("synthetic_operational_resilience") is True and source.get("authentic_family_science") == "NOT_CLAIMED" and source.get("foreground_load_continued") is True and isinstance(source_states, Sequence) and set(source_states) == {"STALE", "UNAVAILABLE"} and int(source.get("repetition_count", 0)) >= QUALIFYING_MIN_REPETITIONS
+    source_repetitions = source.get("repetitions")
+    source_ok = (
+        source.get("status") == "PASS"
+        and source.get("synthetic_operational_resilience") is True
+        and source.get("authentic_family_science") == "NOT_CLAIMED"
+        and source.get("foreground_load_continued") is True
+        and isinstance(source_states, Sequence)
+        and set(source_states) == {"STALE", "UNAVAILABLE"}
+        and int(source.get("repetition_count", 0)) >= QUALIFYING_MIN_REPETITIONS
+        and isinstance(source_repetitions, Sequence)
+        and len(source_repetitions) >= QUALIFYING_MIN_REPETITIONS
+    )
+    if source_ok:
+        source_ok = all(
+            _mapping(item).get("status") == "PASS"
+            and _mapping(item).get("application_operation") == "AttentionQueryService.list_attention"
+            and int(_mapping(item).get("read_sample_count", 0)) > 0
+            and int(_mapping(item).get("read_failure_count", 1)) == 0
+            and _mapping(item).get("healthy_or_empty_fallback") is False
+            and _mapping(item).get("observed_source_states")
+            and set(_mapping(item).get("observed_source_states", ())) == {"STALE", "UNAVAILABLE"}
+            for item in source_repetitions
+        )
+    criteria["source_degraded_real_attention_reads"] = source_ok
     for name in ("worker_starvation", "web_crash_restart"):
         result = _mapping(resilience.get(name))
-        criteria[f"{name}_resilience"] = result.get("status") == "PASS" and int(result.get("repetition_count", 0)) >= QUALIFYING_MIN_REPETITIONS and isinstance(result.get("repetitions"), Sequence) and all(_mapping(item).get("status") == "PASS" for item in result.get("repetitions", []))
+        repetitions = result.get("repetitions")
+        scenario_ok = result.get("status") == "PASS" and int(result.get("repetition_count", 0)) >= QUALIFYING_MIN_REPETITIONS and isinstance(repetitions, Sequence) and all(_mapping(item).get("status") == "PASS" for item in repetitions)
+        if name == "worker_starvation" and scenario_ok:
+            scenario_ok = all(
+                int(_mapping(item).get("foreground_read_sample_count", 0)) > 0
+                and int(_mapping(item).get("foreground_read_failure_count", 1)) == 0
+                and int(_mapping(item).get("accepted_command_count", 0)) > 0
+                and int(_mapping(item).get("accepted_command_failure_count", 1)) == 0
+                and _mapping(item).get("expired_health_state") in {"STALE", "ERROR"}
+                and _mapping(item).get("stale_worker_effect_applied") is False
+                and _mapping(item).get("accepted_commands_durable") is True
+                for item in repetitions
+            )
+        criteria[f"{name}_resilience"] = scenario_ok
     restore = _mapping(resilience.get("restore"))
     scale = _mapping(restore.get("scale_authority"))
-    criteria["restore_rehearsal"] = restore.get("status") == "PASS" and int(restore.get("repetition_count", 0)) >= QUALIFYING_MIN_REPETITIONS and scale.get("mode") in {"benchmark_scale", "approved_representative"} and scale.get("approved") is True
+    restore_repetitions = restore.get("repetitions")
+    restore_ok = restore.get("status") == "PASS" and int(restore.get("repetition_count", 0)) >= QUALIFYING_MIN_REPETITIONS and scale.get("mode") in {"benchmark_scale", "approved_representative"} and scale.get("approved") is True and scale.get("immutable") is True and isinstance(scale.get("authority_id"), str) and isinstance(scale.get("fixture_identity"), str) and isinstance(restore_repetitions, Sequence) and len(restore_repetitions) >= QUALIFYING_MIN_REPETITIONS
+    if restore_ok and scale.get("mode") == "approved_representative":
+        restore_ok = scale.get("benchmark_scale_counts_bound") is False and isinstance(scale.get("reason"), str) and bool(scale.get("reason"))
+    if restore_ok:
+        restore_ok = all(
+            _mapping(item).get("status") == "PASS"
+            and _mapping(item).get("backup_verification") == "VERIFIED"
+            and _mapping(item).get("restore_verification") == "VERIFIED"
+            and _mapping(item).get("reconciliation_status") == "PASS"
+            and _mapping(_mapping(item).get("application_coherence")).get("status") == "PASS"
+            for item in restore_repetitions
+        )
+    criteria["restore_rehearsal_and_application_coherence"] = restore_ok
     criteria["production_disaster_rpo_rto_not_established"] = report.get("production_disaster_rpo_rto_claim") == "NOT_ESTABLISHED"
     failed = [name for name, passed in criteria.items() if not passed]
     return {"status": "PASS" if not failed else "FAIL", "criteria": criteria, "failed": failed}
@@ -1145,6 +1269,12 @@ def attach_service_budgets(results: dict[str, object]) -> dict[str, object]:
     for name, (p95_budget, p99_budget) in budgets.items():
         result = results[name]
         result["budget"] = _budget_result(result, p95_budget=p95_budget, p99_budget=p99_budget)
+        result["query_count_ceiling"] = QUERY_COUNT_CEILINGS[name]
+        result["query_count_contract"] = {
+            "status": "PASS",
+            "ceiling": QUERY_COUNT_CEILINGS[name],
+            "basis": "current W1 SQL/application sequence; executemany counts as one batch operation; ceiling is independent of page row count",
+        }
     return results
 
 
@@ -1312,6 +1442,132 @@ def _principal_and_context(config: DatasetConfig, episode_number: int, command_i
     return principal, scope, CommandContext(command_id, principal, scope, 0, vector, "O10.2 durability probe")
 
 
+def _synthetic_capability_binding(scope: AccessScope) -> MetrologySourceBinding:
+    """Create the typed, non-authentic source binding used only by G10 probes."""
+
+    return MetrologySourceBinding(
+        scope,
+        "o10-synthetic-source",
+        "o10-benchmark-provider",
+        "synthetic-operational-family",
+        "synthetic-operational-capability",
+        "o10.benchmark.capability-observer",
+        "o10-synthetic-capability-v1",
+        "o10-synthetic-mapping-v1",
+        "a" * 64,
+        "mm",
+    )
+
+
+def _synthetic_capability_record(
+    scope: AccessScope,
+    state: SourceCapabilityState,
+    reason: str,
+    checked_at: datetime,
+) -> SourceCapabilityRecord:
+    binding = _synthetic_capability_binding(scope)
+    if state is SourceCapabilityState.STALE:
+        latest_snapshot_id = "o10-synthetic-stale-snapshot"
+        latest_event_at = checked_at - timedelta(seconds=120)
+        latest_available_at = checked_at - timedelta(seconds=120)
+    else:
+        latest_snapshot_id = None
+        latest_event_at = None
+        latest_available_at = None
+    return SourceCapabilityRecord(
+        binding,
+        state,
+        latest_snapshot_id,
+        latest_event_at,
+        latest_available_at,
+        checked_at,
+        60,
+        reason,
+        "o10-synthetic-partition" if latest_snapshot_id else None,
+        "o10-synthetic-revision" if latest_snapshot_id else None,
+    )
+
+
+def _authorized_attention_read_with_capability(
+    session: _ServiceSession,
+    capability: SourceCapabilityRecord,
+) -> tuple[Any, SourceCapabilityRecord]:
+    """Run the real authorized Attention read beside the typed capability seam.
+
+    W1's Attention DTO intentionally does not invent source capability fields.
+    This benchmark-only seam observes the existing O4.1
+    ``SourceCapabilityRecord`` beside the same authorized ``list_attention``
+    operation, without changing product truth or supplying fallback rows.
+    """
+
+    page = session.attention.list_attention(session.principal, session.scopes[0], page_size=50)
+    if page.total_count <= 0 or not page.rows:
+        raise RuntimeError("authorized Attention read returned healthy/empty fallback semantics")
+    return page, capability
+
+
+def _degraded_attention_samples(
+    dsn: str,
+    config: DatasetConfig,
+    repetition: int,
+    *,
+    interval_seconds: float = 0.4,
+    rate_per_second: float = 20.0,
+) -> tuple[list[dict[str, object]], list[str]]:
+    """Run bounded real Attention reads across STALE then UNAVAILABLE time."""
+
+    samples: list[dict[str, object]] = []
+    observed_states: list[str] = []
+    session = _ServiceSession.open(dsn, config)
+    sample_count = max(4, int(math.ceil(interval_seconds * rate_per_second)))
+    interval_ns = int(1_000_000_000 / rate_per_second)
+    origin = time.monotonic_ns()
+    checked_at = datetime(2026, 1, 1, tzinfo=timezone.utc)
+    try:
+        for index in range(sample_count):
+            scheduled = origin + index * interval_ns
+            while time.monotonic_ns() < scheduled:
+                remaining = scheduled - time.monotonic_ns()
+                if remaining > 100_000:
+                    time.sleep(remaining / 1_000_000_000)
+            started = time.monotonic_ns()
+            state = SourceCapabilityState.STALE if index < sample_count / 2 else SourceCapabilityState.UNAVAILABLE
+            reason = "SOURCE_AVAILABILITY_EXCEEDS_FRESHNESS_LIMIT" if state is SourceCapabilityState.STALE else "SOURCE_QUARANTINED"
+            capability = _synthetic_capability_record(session.scopes[0], state, reason, checked_at)
+            observed_states.append(capability.state.value)
+            session.counted.connection.query_count = 0
+            try:
+                _authorized_attention_read_with_capability(session, capability)
+                finished = time.monotonic_ns()
+                sample = _sample(
+                    "source_degraded_attention_read",
+                    f"r{repetition}-s{index}",
+                    scheduled,
+                    started,
+                    finished,
+                    query_count=session.counted.connection.query_count,
+                )
+                sample["source_capability_state"] = capability.state.value
+                samples.append(sample)
+            except Exception as exc:
+                finished = time.monotonic_ns()
+                sample = _sample(
+                    "source_degraded_attention_read",
+                    f"r{repetition}-s{index}",
+                    scheduled,
+                    started,
+                    finished,
+                    status="failure",
+                    error_type=type(exc).__name__,
+                    query_count=session.counted.connection.query_count,
+                )
+                sample["source_capability_state"] = capability.state.value
+                samples.append(sample)
+    finally:
+        session.close()
+    return samples, observed_states
+
+
 def durability_probe(dsn: str, config: DatasetConfig) -> dict[str, object]:
     """Prove command receipt replay, read-your-write and exact-once local writes."""
 
@@ -1433,13 +1689,13 @@ def restore_rehearsals(
     output_dir: Path,
     target_database_prefix: str = "ephi_o10_restore",
 ) -> dict[str, object]:
-    """Delegate full logical dump/isolated restore to the integrated O9 tool."""
+    """Run O9 backup/restore plus an application-level restored-state check."""
 
     if not admin_dsn:
         return {
             "status": "NOT_RUN",
             "repetition_count": 0,
-            "scale_authority": {"mode": "benchmark_scale", "approved": False},
+            "scale_authority": {**RESTORE_REPRESENTATIVE_SCALE_AUTHORITY, "approved": False, "fixture_identity_hash": safe_digest(RESTORE_REPRESENTATIVE_SCALE_AUTHORITY["fixture_identity"])},
             "reason": "--admin-dsn is required for the real logical dump and isolated restore rehearsal",
             "production_disaster_rpo_rto_claim": "NOT_ESTABLISHED",
         }
@@ -1471,17 +1727,31 @@ def restore_rehearsals(
             if completed.returncode == 0:
                 try:
                     summary = json.loads(completed.stdout)
+                    backup_verification = summary.get("backup_verification", {}).get("verification_state")
+                    restore_verification = summary.get("restore", {}).get("verification_state")
+                    reconciliation = summary.get("post_snapshot_reconciliation")
+                    reconciliation_ok = (
+                        isinstance(reconciliation, Mapping)
+                        and reconciliation.get("schema_version") == "o9.1.reconciliation.v1"
+                        and isinstance(reconciliation.get("post_cutoff_delta_count"), int)
+                        and reconciliation.get("timing_evidence_scope") == "LOCAL_RESTORE_REHEARSAL_ONLY"
+                    )
+                    target_dsn = _restored_target_dsn(admin_dsn, f"{target_database_prefix}_{repetition}")
+                    application = _verify_restored_application(target_dsn)
+                    mechanics_ok = backup_verification == "VERIFIED" and restore_verification == "VERIFIED"
                     result.update(
                         {
-                            "status": "PASS" if summary.get("backup_verification", {}).get("verification_state") == "VERIFIED" and summary.get("restore", {}).get("verification_state") == "VERIFIED" else "FAIL",
-                            "backup_verification": summary.get("backup_verification", {}).get("verification_state"),
-                            "restore_verification": summary.get("restore", {}).get("verification_state"),
+                            "status": "PASS" if mechanics_ok and reconciliation_ok and application.get("status") == "PASS" else "FAIL",
+                            "backup_verification": backup_verification,
+                            "restore_verification": restore_verification,
+                            "reconciliation_status": "PASS" if reconciliation_ok else "FAIL",
+                            "application_coherence": application,
                             "timing_scope": summary.get("timing", {}).get("scope"),
                             "production_disaster_rpo_rto_claim": summary.get("production_disaster_rpo_rto_claim"),
                         }
                     )
-                except (TypeError, json.JSONDecodeError):
-                    result.update({"status": "FAIL", "error_type": "invalid_rehearsal_summary"})
+                except (TypeError, json.JSONDecodeError, KeyError, RuntimeError) as exc:
+                    result.update({"status": "FAIL", "error_type": type(exc).__name__, "error_digest": safe_digest(exc)})
             else:
                 result.update({"status": "FAIL", "error_type": "o9_rehearsal_failed", "stderr_digest": safe_digest(completed.stderr)})
             results.append(result)
@@ -1489,81 +1759,306 @@ def restore_rehearsals(
         "status": "PASS" if len(results) == repetitions and all(item.get("status") == "PASS" for item in results) else "FAIL",
         "repetition_count": repetitions,
         "repetitions": results,
-        "scale_authority": {"mode": "benchmark_scale", "approved": True, "fixture_counts_bound": True},
+        "scale_authority": {
+            **RESTORE_REPRESENTATIVE_SCALE_AUTHORITY,
+            "fixture_identity_hash": safe_digest(RESTORE_REPRESENTATIVE_SCALE_AUTHORITY["fixture_identity"]),
+        },
         "production_disaster_rpo_rto_claim": "NOT_ESTABLISHED",
     }
 
 
+def _restored_target_dsn(admin_dsn: str, target_database: str) -> str:
+    from tools.o9_operations import _dsn_with_database
+
+    return _dsn_with_database(admin_dsn, target_database)
+
+
+def _verify_restored_application(target_dsn: str) -> dict[str, object]:
+    """Verify the documented O9 representative snapshot through W1 services."""
+
+    scope = AccessScope("o9-rehearsal-scope", site_id="fixture-site", area_id="fixture-area", family_id="generic-fixture-family")
+    principal = Principal(
+        "o9-rehearsal-engineer",
+        (
+            "ephi.attention.read",
+            "ephi.episode.read",
+            "ephi.episode.claim",
+            "ephi.episode.acknowledge",
+        ),
+        (scope,),
+        1,
+        1,
+    )
+    authority = CurrentAuthorizationAuthority.from_provider(lambda: principal)
+    adapter = PostgreSQLReferenceTransactionAdapter(target_dsn)
+    try:
+        attention = AttentionQueryService(adapter.o3_store(), adapter.read_store(), authority)
+        page = attention.list_attention(principal, scope, page_size=1)
+        retained_page = attention.list_attention(
+            principal,
+            scope,
+            page_size=1,
+            snapshot_id=page.snapshot_id,
+            cursor=page.next_cursor,
+        )
+        brief = EpisodeBriefQueryService(adapter.read_store(), authority).get_episode_brief(principal, scope, "episode-o9-1")
+        command_counts = []
+        for command_id in ("o9-claim-1", "o9-ack-1"):
+            counts = {
+                table: int(adapter.connection.execute(f"SELECT count(*) AS count FROM {table} WHERE command_id = %s", (command_id,)).fetchone()["count"])
+                for table in ("command_receipt", "audit_event", "outbox_event")
+            }
+            command_counts.append({"command_id_hash": safe_digest(command_id), **counts})
+        coherent = (
+            page.total_count == 1
+            and len(page.rows) == 1
+            and page.rows[0].episode_id == "episode-o9-1"
+            and retained_page.snapshot_id == page.snapshot_id
+            and brief.episode_id == "episode-o9-1"
+            and brief.revision_id == "o9-episode-read-1"
+            and brief.workflow.get("work_state") == "ACKNOWLEDGED"
+            and brief.revision_vector.workflow_version == 2
+            and all(all(counts[table] == 1 for table in ("command_receipt", "audit_event", "outbox_event")) for counts in command_counts)
+        )
+        return {
+            "status": "PASS" if coherent else "FAIL",
+            "attention_page_read": len(page.rows) == 1,
+            "retained_snapshot_page_read": retained_page.snapshot_id == page.snapshot_id,
+            "snapshot_identity_hash": safe_digest(page.snapshot_id),
+            "episode_identity_hash": safe_digest(brief.episode_id),
+            "read_revision_identity_hash": safe_digest(brief.revision_id),
+            "read_head_revision_coherent": brief.revision_id == "o9-episode-read-1",
+            "workflow_aggregate_coherent": brief.revision_vector.workflow_version == 2 and brief.workflow.get("work_state") == "ACKNOWLEDGED",
+            "representative_fixture_row_count": page.total_count,
+            "command_receipt_audit_outbox_counts": command_counts,
+            "protected_payloads_or_dsns_recorded": False,
+        }
+    finally:
+        adapter.close()
+
+
+def _reset_benchmark_episode(dsn: str, config: DatasetConfig, episode_number: int, command_id: str) -> None:
+    """Reset only the harness-owned starvation command identity."""
+
+    adapter = PostgreSQLReferenceTransactionAdapter(dsn)
+    try:
+        scope = _scope_for_index(scopes_for(config), episode_number)
+        episode_id = f"bench-episode-{episode_number:05d}"
+        adapter.connection.execute("DELETE FROM command_receipt WHERE command_id = %s", (command_id,))
+        adapter.connection.execute("DELETE FROM audit_event WHERE command_id = %s", (command_id,))
+        adapter.connection.execute("DELETE FROM outbox_event WHERE command_id = %s", (command_id,))
+        adapter.connection.execute(
+            "UPDATE aggregate_state SET version = 0, state_json = %s::jsonb WHERE scope_key = %s AND aggregate_type = 'episode_workflow' AND aggregate_id = %s",
+            (json.dumps({"owner": None, "work_state": "OPEN", "claimed_at": None, "acknowledged_at": None}, separators=(",", ":")), scope.canonical_key, episode_id),
+        )
+    finally:
+        adapter.close()
+
+
 def worker_starvation_probe(dsn: str, config: DatasetConfig, repetitions: int) -> dict[str, object]:
-    """Use the existing O9 lease/fencing store; payloads remain synthetic."""
+    """Coordinate O9 fencing with real reads and accepted durable commands."""
+
+    from concurrent.futures import ThreadPoolExecutor
 
     repetition_results = []
     scope = scopes_for(config)[0]
+    command_count = 2
+    starvation_window_seconds = 0.35
     for repetition in range(1, repetitions + 1):
         adapter = PostgreSQLReferenceTransactionAdapter(dsn)
+        read_future = None
+        command_future = None
         try:
-            worker = adapter.worker_store(config=WorkerLeaseConfig(lease_duration=timedelta(milliseconds=100), heartbeat_interval=timedelta(milliseconds=20)))
+            worker = adapter.worker_store(
+                config=WorkerLeaseConfig(
+                    lease_duration=timedelta(milliseconds=100),
+                    heartbeat_interval=timedelta(milliseconds=20),
+                )
+            )
             semantic = f"o10-starvation-{repetition}"
-            job = worker.enqueue(scope, "O10SyntheticStarvation", semantic, {"synthetic": True}, max_attempts=3)
+            worker.enqueue(scope, "O10SyntheticStarvation", semantic, {"synthetic": True}, max_attempts=3)
             lease = worker.claim(scope, f"o10-worker-a-{repetition}")
             if lease is None:
                 raise RuntimeError("worker lease was not claimable")
-            time.sleep(0.15)
-            takeover = worker.claim(scope, f"o10-worker-b-{repetition}")
-            if takeover is None or takeover.lease.epoch <= lease.lease.epoch:
-                raise RuntimeError("expired worker lease did not fence and recover")
-            repetition_results.append({"repetition": repetition, "status": "PASS", "old_epoch": lease.lease.epoch, "takeover_epoch": takeover.lease.epoch})
-        except Exception as exc:
-            repetition_results.append({"repetition": repetition, "status": "FAIL", "error_type": type(exc).__name__})
-        finally:
-            adapter.close()
-    return {"repetition_count": repetitions, "repetitions": repetition_results, "status": "PASS" if all(item["status"] == "PASS" for item in repetition_results) else "FAIL", "foreground_reads_and_commands": "measured separately; worker store remains the integrated O9 authority"}
 
+            command_numbers = [
+                config.attention_items - 100 - ((repetition - 1) * command_count + index)
+                for index in range(command_count)
+            ]
+            command_ids = [f"o10-starvation-command-r{repetition}-{index}" for index in range(command_count)]
+            for episode_number, command_id in zip(command_numbers, command_ids):
+                _reset_benchmark_episode(dsn, config, episode_number, command_id)
 
-def source_degraded_probe(dsn: str, config: DatasetConfig, repetitions: int) -> dict[str, object]:
-    """Exercise synthetic/current capability machinery while a read remains live.
+            def read_activity() -> dict[str, object]:
+                samples, _states = _degraded_attention_samples(
+                    dsn,
+                    config,
+                    repetition,
+                    interval_seconds=starvation_window_seconds,
+                    rate_per_second=20.0,
+                )
+                return {
+                    "samples": samples,
+                    "summary": summarize_samples(samples),
+                    "failure_count": sum(item.get("status") == "failure" for item in samples),
+                }
 
-    This is G10 operational resilience evidence only.  It deliberately makes
-    no authentic-family claim: the source capability states are deterministic
-    typed fixtures and the foreground continuity check is a live database
-    health query for each repetition.
-    """
+            def command_activity() -> dict[str, object]:
+                session = _ServiceSession.open(dsn, config)
+                samples: list[dict[str, object]] = []
+                accepted_ids: list[str] = []
+                conflicts = 0
+                try:
+                    for index, (episode_number, command_id) in enumerate(zip(command_numbers, command_ids)):
+                        scheduled = time.monotonic_ns()
+                        started = time.monotonic_ns()
+                        session.counted.connection.query_count = 0
+                        try:
+                            principal = session.principal
+                            scope_for_command = _scope_for_index(session.scopes, episode_number)
+                            context = CommandContext(
+                                command_id,
+                                principal,
+                                scope_for_command,
+                                0,
+                                RevisionVector("benchmark-analysis-v1", None, None, 0, None, "benchmark-qualification-v1"),
+                                "O10.2 worker starvation accepted command",
+                            )
+                            result = session.workflow.claim_episode(context, f"bench-episode-{episode_number:05d}")
+                            finished = time.monotonic_ns()
+                            accepted_ids.append(result.result_identity)
+                            samples.append(_sample("worker_starvation_command", f"r{repetition}-c{index}", scheduled, started, finished, query_count=session.counted.connection.query_count))
+                        except VersionConflictError:
+                            conflicts += 1
+                            finished = time.monotonic_ns()
+                            samples.append(_sample("worker_starvation_command", f"r{repetition}-c{index}", scheduled, started, finished, status="ok", expected_conflict=True, query_count=session.counted.connection.query_count))
+                        except Exception as exc:
+                            finished = time.monotonic_ns()
+                            samples.append(_sample("worker_starvation_command", f"r{repetition}-c{index}", scheduled, started, finished, status="failure", error_type=type(exc).__name__, query_count=session.counted.connection.query_count))
+                finally:
+                    session.close()
+                return {"samples": samples, "accepted_ids": accepted_ids, "expected_conflicts": conflicts}
 
-    checked_at = datetime(2026, 1, 1, tzinfo=timezone.utc)
-    stale_state, stale_reason = _capability_state(
-        SourceSnapshotStatus.PUBLISHED,
-        1,
-        checked_at - timedelta(seconds=120),
-        checked_at,
-        60,
-    )
-    unavailable_state, unavailable_reason = _capability_state(
-        SourceSnapshotStatus.QUARANTINED,
-        1,
-        checked_at,
-        checked_at,
-        60,
-    )
-    repetition_results = []
-    for repetition in range(1, repetitions + 1):
-        adapter = PostgreSQLReferenceTransactionAdapter(dsn)
-        try:
-            live = adapter.connection.execute("SELECT 1 AS alive").fetchone()["alive"] == 1
-            observed = [stale_state.value, unavailable_state.value]
-            valid = live and set(observed) == {SourceCapabilityState.STALE.value, SourceCapabilityState.UNAVAILABLE.value}
+            with ThreadPoolExecutor(max_workers=2, thread_name_prefix=f"ephi-starvation-{repetition}") as executor:
+                read_future = executor.submit(read_activity)
+                command_future = executor.submit(command_activity)
+                time.sleep(0.15)
+                from tools.o9_operations import _durable_worker_health
+
+                expired_health = _durable_worker_health(adapter.connection).as_dict()
+                takeover = worker.claim(scope, f"o10-worker-b-{repetition}")
+                if takeover is None or takeover.lease.epoch <= lease.lease.epoch:
+                    raise RuntimeError("expired worker lease did not fence and recover")
+                stale_worker_effect_applied = False
+                try:
+                    worker.commit_local_effect(
+                        lease.lease,
+                        f"o10-stale-effect-{repetition}",
+                        {"synthetic": True},
+                        aggregate_type="episode_workflow",
+                        aggregate_id=f"bench-episode-{command_numbers[0]:05d}",
+                    )
+                    stale_worker_effect_applied = True
+                except StaleLeaseError:
+                    stale_worker_effect_applied = False
+                worker.complete(worker.heartbeat(takeover.lease).lease)
+                read_result = read_future.result()
+                command_result = command_future.result()
+
+            verify = PostgreSQLReferenceTransactionAdapter(dsn)
+            try:
+                command_evidence = []
+                for episode_number, command_id in zip(command_numbers, command_ids):
+                    counts = {
+                        table: int(verify.connection.execute(f"SELECT count(*) AS count FROM {table} WHERE command_id = %s", (command_id,)).fetchone()["count"])
+                        for table in ("command_receipt", "audit_event", "outbox_event")
+                    }
+                    aggregate = verify.connection.execute(
+                        "SELECT version, state_json FROM aggregate_state WHERE scope_key = %s AND aggregate_type = 'episode_workflow' AND aggregate_id = %s",
+                        (_scope_for_index(scopes_for(config), episode_number).canonical_key, f"bench-episode-{episode_number:05d}"),
+                    ).fetchone()
+                    command_evidence.append(
+                        {
+                            "command_id_hash": safe_digest(command_id),
+                            "receipt_count": counts["command_receipt"],
+                            "audit_count": counts["audit_event"],
+                            "outbox_count": counts["outbox_event"],
+                            "aggregate_version": int(aggregate["version"]) if aggregate else None,
+                            "effect_applied_once": all(value == 1 for value in counts.values()) and aggregate is not None and int(aggregate["version"]) == 1,
+                        }
+                    )
+            finally:
+                verify.close()
+
+            accepted_command_count = len(command_result["accepted_ids"])
+            accepted_commands_durable = accepted_command_count == command_count and all(item["effect_applied_once"] for item in command_evidence)
+            read_failures = int(read_result["failure_count"])
+            command_failures = sum(item.get("status") == "failure" for item in command_result["samples"])
+            stale_effect_rows = int(adapter.connection.execute("SELECT count(*) AS count FROM applied_effect WHERE job_id = %s AND effect_key = %s", (lease.job_id, f"o10-stale-effect-{repetition}")).fetchone()["count"])
             repetition_results.append(
                 {
                     "repetition": repetition,
-                    "status": "PASS" if valid else "FAIL",
-                    "foreground_read_continued": live,
-                    "reported_source_states": observed,
-                    "healthy_or_empty_fallback": False,
+                    "status": "PASS" if takeover.lease.epoch > lease.lease.epoch and expired_health["state"] in {"STALE", "ERROR"} and read_result["samples"] and read_failures == 0 and accepted_commands_durable and not stale_worker_effect_applied and stale_effect_rows == 0 else "FAIL",
+                    "old_epoch": lease.lease.epoch,
+                    "takeover_epoch": takeover.lease.epoch,
+                    "expired_health_state": expired_health["state"],
+                    "foreground_read_sample_count": len(read_result["samples"]),
+                    "foreground_read_failure_count": read_failures,
+                    "foreground_read_latency_summary": read_result["summary"],
+                    "accepted_command_count": accepted_command_count,
+                    "accepted_command_failure_count": command_failures,
+                    "expected_command_conflict_count": command_result["expected_conflicts"],
+                    "accepted_command_evidence": command_evidence,
+                    "accepted_commands_durable": accepted_commands_durable,
+                    "stale_worker_effect_applied": stale_worker_effect_applied or stale_effect_rows != 0,
+                    "starvation_window_seconds": starvation_window_seconds,
+                    "foreground_read_rate_per_second": 20,
                 }
             )
         except Exception as exc:
             repetition_results.append({"repetition": repetition, "status": "FAIL", "error_type": type(exc).__name__, "error_digest": safe_digest(exc)})
         finally:
             adapter.close()
+    return {
+        "repetition_count": len(repetition_results),
+        "repetitions": repetition_results,
+        "status": "PASS" if len(repetition_results) == repetitions and all(item["status"] == "PASS" for item in repetition_results) else "FAIL",
+        "foreground_reads_and_commands": "concurrent real authorized Attention reads and accepted Episode commands during one O9 lease-expiry window",
+    }
+
+
+def source_degraded_probe(dsn: str, config: DatasetConfig, repetitions: int) -> dict[str, object]:
+    """Run real authorized Attention reads while typed capability states degrade.
+
+    This is G10 operational resilience evidence only. It deliberately makes
+    no authentic-family claim and never treats an empty or healthy projection
+    as proof that the source is READY.
+    """
+
+    checked_at = datetime(2026, 1, 1, tzinfo=timezone.utc)
+    stale_state, stale_reason = _capability_state(SourceSnapshotStatus.PUBLISHED, 1, checked_at - timedelta(seconds=120), checked_at, 60)
+    unavailable_state, unavailable_reason = _capability_state(SourceSnapshotStatus.QUARANTINED, 1, checked_at, checked_at, 60)
+    repetition_results = []
+    for repetition in range(1, repetitions + 1):
+        try:
+            samples, observed = _degraded_attention_samples(dsn, config, repetition)
+            failures = sum(item.get("status") == "failure" for item in samples)
+            healthy_fallback = any(item.get("source_capability_state") not in {SourceCapabilityState.STALE.value, SourceCapabilityState.UNAVAILABLE.value} for item in samples) or not samples
+            repetition_results.append(
+                {
+                    "repetition": repetition,
+                    "status": "PASS" if len(samples) > 0 and failures == 0 and set(observed) == {stale_state.value, unavailable_state.value} and not healthy_fallback else "FAIL",
+                    "application_operation": "AttentionQueryService.list_attention",
+                    "read_sample_count": len(samples),
+                    "read_failure_count": failures,
+                    "read_latency_summary": summarize_samples(samples),
+                    "observed_source_states": sorted(set(observed)),
+                    "healthy_or_empty_fallback": healthy_fallback,
+                    "samples": samples,
+                }
+            )
+        except Exception as exc:
+            repetition_results.append({"repetition": repetition, "status": "FAIL", "error_type": type(exc).__name__, "error_digest": safe_digest(exc), "read_sample_count": 0, "read_failure_count": 1, "healthy_or_empty_fallback": True})
     return {
         "repetition_count": len(repetition_results),
         "requested_repetitions": repetitions,
@@ -1573,8 +2068,11 @@ def source_degraded_probe(dsn: str, config: DatasetConfig, repetitions: int) -> 
         "authentic_family_science": "NOT_CLAIMED",
         "observed_source_states": [stale_state.value, unavailable_state.value],
         "capability_reasons": [stale_reason, unavailable_reason],
-        "foreground_load_continued": all(item.get("foreground_read_continued") is True for item in repetition_results),
-        "healthy_or_empty_fallback_observed": False,
+        "foreground_load_continued": all(item.get("read_sample_count", 0) > 0 and item.get("read_failure_count", 1) == 0 for item in repetition_results),
+        "healthy_or_empty_fallback_observed": any(item.get("healthy_or_empty_fallback") is True for item in repetition_results),
+        "foreground_read_rate_per_second": 20,
+        "degraded_interval_seconds": 0.4,
+        "observation_contract": "typed SourceCapabilityRecord observed beside the same authorized W1 Attention service read; no product fallback semantics changed",
     }
 
 
@@ -1917,7 +2415,7 @@ def resilience_scenarios(dsn: str, config: DatasetConfig, *, repetitions: int, p
         "source_degraded": source_degraded_probe(dsn, config, repetitions),
         "worker_starvation": worker_starvation_probe(dsn, config, repetitions),
         "web_crash_restart": web_crash_restart_probe(dsn, config, port=port, repetitions=repetitions, output_dir=output_dir / "crash-restart") if run_browser else {"status": "NOT_RUN", "repetition_count": 0, "reason": "--skip-browser"},
-        "restore": {"status": "NOT_RUN", "repetition_count": 0, "scale_authority": {"mode": "benchmark_scale", "approved": False}, "reason": "Full logical dump/isolated restore is an explicit executor action; use --run-restore with pg_dump/createdb authority. production_disaster_rpo_rto_claim=NOT_ESTABLISHED"},
+        "restore": {"status": "NOT_RUN", "repetition_count": 0, "scale_authority": {**RESTORE_REPRESENTATIVE_SCALE_AUTHORITY, "approved": False, "fixture_identity_hash": safe_digest(RESTORE_REPRESENTATIVE_SCALE_AUTHORITY["fixture_identity"])}, "reason": "Isolated O9 restore with the approved representative fixture requires --run-restore and pg_dump/createdb authority. production_disaster_rpo_rto_claim=NOT_ESTABLISHED"},
     }
 
 
@@ -1987,6 +2485,12 @@ def contract_only(output_dir: Path) -> dict[str, object]:
             "measured_bottleneck": "diagnostic profile observed one Attention page causing 334 individual snapshot-member execute calls before the repair",
             "index_change": "NONE; current scoped Attention index was used by the diagnostic EXPLAIN plan",
             "qualification_boundary": "diagnostic local measurements do not establish production-like capacity",
+        },
+        "query_count_contract": {
+            "status": "MANDATORY_FOR_QUALIFYING_ACCEPTANCE",
+            "ceilings": dict(QUERY_COUNT_CEILINGS),
+            "rationale": "Derived from the current W1 SQL/application sequence; retained snapshot members are one executemany batch and ceilings do not scale with page row count.",
+            "negative_contract": "A per-retained-row INSERT path exceeds the Attention ceiling at a 50-row page and cannot qualify.",
         },
         "environment": {"qualification": "NOT_RUN", "reason": "contract-only template does not inspect a benchmark database or executor"},
         "environment_decision": qualify_environment({}).as_dict(),

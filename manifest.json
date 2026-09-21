@@ -791,8 +791,8 @@
     },
     {
       "path": "tests/test_o10_performance_capacity.py",
-      "bytes": 16933,
-      "sha256": "3017a6c3a0c8a1a7f1a34baefe7a754cb739c39a41896f9345cfb9efa2623364"
+      "bytes": 21163,
+      "sha256": "7fabd9977a56f1c0f90b93d9177a75494f3b58e52478fab13168fb6a54c9d1a9"
     },
     {
       "path": "tests/test_o10_rendered_accessibility.py",
@@ -931,8 +931,8 @@
     },
     {
       "path": "tools/o10_performance_capacity.py",
-      "bytes": 117110,
-      "sha256": "c4e2e875162206e6a8564e2a908dbfbf38b6b2597f189edb317a5e41c87a8179"
+      "bytes": 143700,
+      "sha256": "de9948ffca9c241cfb7436e539c1692c16a6db5df3e9b8e97c8bba307ed9a600"
     },
     {
       "path": "tools/o10_rendered_accessibility.py",

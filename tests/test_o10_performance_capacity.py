@@ -76,8 +76,16 @@ def _full_acceptance_report() -> dict[str, object]:
     )
     service = {}
     for name, floor in SAMPLE_FLOORS.items():
-        summary = summarize_samples([{"elapsed_ms": 1, "status": "ok"} for _ in range(floor)])
-        service[name] = {"repetition_count": 3, "all_repetitions_valid": True, "repetitions": [{"repetition": index, "summary": summary} for index in range(1, 4)], "budget": {"status": "PASS"}}
+        query_count = capacity.QUERY_COUNT_CEILINGS[name]
+        samples = [{"elapsed_ms": 1, "status": "ok", "query_count": query_count} for _ in range(floor)]
+        summary = summarize_samples(samples)
+        service[name] = {
+            "repetition_count": 3,
+            "all_repetitions_valid": True,
+            "repetitions": [{"repetition": index, "summary": summary, "samples": samples} for index in range(1, 4)],
+            "budget": {"status": "PASS"},
+            "query_count_ceiling": query_count,
+        }
     browser_repetitions = []
     for repetition in range(1, 4):
         samples = [{"session": index, "status": "ok", "session_identity_fingerprint": f"{index:064x}", "console_errors": [], "page_errors": [], "failed_network_count": 0} for index in range(100)]
@@ -93,7 +101,45 @@ def _full_acceptance_report() -> dict[str, object]:
             "console_or_network_failures": 0,
             "page_errors": [],
         })
+    source_repetitions = [
+        {
+            "repetition": index,
+            "status": "PASS",
+            "application_operation": "AttentionQueryService.list_attention",
+            "read_sample_count": 4,
+            "read_failure_count": 0,
+            "read_latency_summary": {"sample_count": 4},
+            "observed_source_states": ["STALE", "UNAVAILABLE"],
+            "healthy_or_empty_fallback": False,
+        }
+        for index in range(1, 4)
+    ]
+    worker_repetitions = [
+        {
+            "repetition": index,
+            "status": "PASS",
+            "foreground_read_sample_count": 4,
+            "foreground_read_failure_count": 0,
+            "accepted_command_count": 2,
+            "accepted_command_failure_count": 0,
+            "expired_health_state": "STALE",
+            "stale_worker_effect_applied": False,
+            "accepted_commands_durable": True,
+        }
+        for index in range(1, 4)
+    ]
     resilience_repetitions = [{"repetition": index, "status": "PASS"} for index in range(1, 4)]
+    restore_repetitions = [
+        {
+            "repetition": index,
+            "status": "PASS",
+            "backup_verification": "VERIFIED",
+            "restore_verification": "VERIFIED",
+            "reconciliation_status": "PASS",
+            "application_coherence": {"status": "PASS"},
+        }
+        for index in range(1, 4)
+    ]
     return {
         "execution_mode": "QUALIFYING_BENCHMARK",
         "environment": environment,
@@ -105,10 +151,10 @@ def _full_acceptance_report() -> dict[str, object]:
         "workflow_conflicts": {"status": "PASS", "typed_conflict_observed": True, "unintended_mutation_count": 0, "committed_count": 1, "expected_conflict_count": 1},
         "durability": {"exactly_once": True, "acknowledged_effects_lost_after_restart": 0, "before_restart": {"read_your_write": True}, "after_restart": {"same_result_identity": True, "read_your_write": True}},
         "resilience": {
-            "source_degraded": {"status": "PASS", "synthetic_operational_resilience": True, "authentic_family_science": "NOT_CLAIMED", "foreground_load_continued": True, "observed_source_states": ["STALE", "UNAVAILABLE"], "repetition_count": 3, "repetitions": resilience_repetitions},
-            "worker_starvation": {"status": "PASS", "repetition_count": 3, "repetitions": resilience_repetitions},
+            "source_degraded": {"status": "PASS", "synthetic_operational_resilience": True, "authentic_family_science": "NOT_CLAIMED", "foreground_load_continued": True, "observed_source_states": ["STALE", "UNAVAILABLE"], "repetition_count": 3, "repetitions": source_repetitions},
+            "worker_starvation": {"status": "PASS", "repetition_count": 3, "repetitions": worker_repetitions},
             "web_crash_restart": {"status": "PASS", "repetition_count": 3, "repetitions": resilience_repetitions},
-            "restore": {"status": "PASS", "repetition_count": 3, "scale_authority": {"mode": "benchmark_scale", "approved": True}},
+            "restore": {"status": "PASS", "repetition_count": 3, "repetitions": restore_repetitions, "scale_authority": {"mode": "approved_representative", "approved": True, "immutable": True, "authority_id": "o9-real-rehearsal-representative-v1", "fixture_identity": "o9-rehearsal-scope/episode-o9-1/read-o9-1", "benchmark_scale_counts_bound": False, "reason": "The O9 restore fixture is representative and does not bind the 10k/1M benchmark scale."}},
         },
         "production_disaster_rpo_rto_claim": "NOT_ESTABLISHED",
     }
@@ -215,6 +261,39 @@ class O10PerformanceCapacityMathTests(unittest.TestCase):
         self.assertIn("workflow_controlled_conflict", decision["failed"])
         self.assertEqual(evaluate_benchmark_acceptance({})["status"], "FAIL")
 
+    def test_source_degraded_acceptance_requires_real_attention_reads_and_typed_states(self) -> None:
+        report = _full_acceptance_report()
+        report["resilience"]["source_degraded"]["repetitions"][0]["application_operation"] = "SELECT 1"
+        decision = evaluate_benchmark_acceptance(report)
+        self.assertEqual(decision["status"], "FAIL")
+        self.assertIn("source_degraded_real_attention_reads", decision["failed"])
+
+    def test_worker_starvation_acceptance_requires_concurrent_reads_commands_and_fencing(self) -> None:
+        report = _full_acceptance_report()
+        report["resilience"]["worker_starvation"]["repetitions"][0]["accepted_commands_durable"] = False
+        decision = evaluate_benchmark_acceptance(report)
+        self.assertEqual(decision["status"], "FAIL")
+        self.assertIn("worker_starvation_resilience", decision["failed"])
+
+    def test_restore_acceptance_requires_post_restore_application_coherence(self) -> None:
+        report = _full_acceptance_report()
+        report["resilience"]["restore"]["repetitions"][0]["application_coherence"] = {"status": "NOT_RUN"}
+        decision = evaluate_benchmark_acceptance(report)
+        self.assertEqual(decision["status"], "FAIL")
+        self.assertIn("restore_rehearsal_and_application_coherence", decision["failed"])
+
+    def test_query_count_acceptance_blocks_per_row_retained_snapshot_behavior(self) -> None:
+        report = _full_acceptance_report()
+        report["service_workloads"]["attention_warm"]["repetitions"][0]["samples"][0]["query_count"] = 55
+        decision = evaluate_benchmark_acceptance(report)
+        self.assertEqual(decision["status"], "FAIL")
+        self.assertIn("query_count_no_n_plus_one", decision["failed"])
+        report = _full_acceptance_report()
+        del report["service_workloads"]["episode_brief"]["repetitions"][0]["samples"][0]["query_count"]
+        decision = evaluate_benchmark_acceptance(report)
+        self.assertEqual(decision["status"], "FAIL")
+        self.assertIn("query_count_no_n_plus_one", decision["failed"])
+
     def test_unexpected_exception_is_execution_failure_and_environment_block_is_distinct(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
             output = Path(temp) / "failure"
@@ -252,10 +331,12 @@ class O10PerformanceCapacityMathTests(unittest.TestCase):
             def __init__(self, fail_batch=False):
                 self.fail_batch = fail_batch
                 self.batches = []
+                self.executed_sql = []
                 self.rollback_count = 0
                 self.commit_count = 0
 
             def execute(self, sql, _params=None):
+                self.executed_sql.append(sql)
                 if sql == "BEGIN":
                     return Result()
                 return Result()
@@ -275,20 +356,19 @@ class O10PerformanceCapacityMathTests(unittest.TestCase):
 
         scope = AccessScope("batch-scope")
         principal = Principal("batch-subject", ("read",), (scope,), 1, 1)
-        rows = (
-            VersionedReadRow("row-a", 1, {"value": "a"}),
-            VersionedReadRow("row-b", 1, {"value": "b"}),
-            VersionedReadRow("row-c", 2, {"value": "c"}),
-        )
-        connection = Connection()
-        store = PostgreSQLReadSnapshotStore(Adapter(connection))
         stored = type("Stored", (), {"public": "snapshot"})()
-        with mock.patch.object(store, "_snapshot_from_row", return_value=stored):
-            self.assertEqual(store.create_query_snapshot(principal, scope, {"query": "batch"}, "read", rows), "snapshot")
-        self.assertEqual(len(connection.batches), 1)
-        self.assertEqual([item[1] for item in connection.batches[0]], [1, 2, 3])
-        self.assertEqual([item[2] for item in connection.batches[0]], ["row-a", "row-b", "row-c"])
-        self.assertEqual(connection.commit_count, 1)
+        for row_count in (3, 50):
+            rows = tuple(VersionedReadRow(f"row-{index:02d}", index % 3, {"value": index}) for index in range(row_count))
+            connection = Connection()
+            store = PostgreSQLReadSnapshotStore(Adapter(connection))
+            with mock.patch.object(store, "_snapshot_from_row", return_value=stored):
+                self.assertEqual(store.create_query_snapshot(principal, scope, {"query": f"batch-{row_count}"}, "read", rows), "snapshot")
+            self.assertEqual(len(connection.batches), 1)
+            self.assertEqual(len(connection.batches[0]), row_count)
+            self.assertEqual([sql for sql in connection.executed_sql if "INSERT INTO query_snapshot_row" in sql], [])
+            self.assertEqual([item[1] for item in connection.batches[0]], list(range(1, row_count + 1)))
+            self.assertEqual([item[2] for item in connection.batches[0]], [f"row-{index:02d}" for index in range(row_count)])
+            self.assertEqual(connection.commit_count, 1)
 
         failing_connection = Connection(fail_batch=True)
         failing_store = PostgreSQLReadSnapshotStore(Adapter(failing_connection))
