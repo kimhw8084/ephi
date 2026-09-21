@@ -1,0 +1,441 @@
+{
+  "accepted_at": "2026-09-21T02:58:16Z",
+  "changed_files": [
+    {
+      "additions": 47,
+      "deletions": 0,
+      "path": "09_Delivery_and_Gates.md",
+      "status": "M"
+    },
+    {
+      "additions": 34,
+      "deletions": 0,
+      "path": "README.md",
+      "status": "M"
+    },
+    {
+      "additions": 80,
+      "deletions": 0,
+      "path": "evidence/review/chg_161_o10_performance_capacity.json",
+      "status": "A"
+    },
+    {
+      "additions": 21,
+      "deletions": 6,
+      "path": "manifest.json",
+      "status": "M"
+    },
+    {
+      "additions": 10,
+      "deletions": 7,
+      "path": "src/ephi/infrastructure/postgresql_reads.py",
+      "status": "M"
+    },
+    {
+      "additions": 382,
+      "deletions": 0,
+      "path": "tests/test_o10_performance_capacity.py",
+      "status": "A"
+    },
+    {
+      "additions": 2710,
+      "deletions": 0,
+      "path": "tools/o10_performance_capacity.py",
+      "status": "A"
+    }
+  ],
+  "checks": [
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '540,980p' tools/o10_performance_capacity.py && rtk sed -n '980,1420p' tools/o10_performance_capacity.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk nl -ba tools/o10_performance_capacity.py | sed -n '2360,2690p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk nl -ba tools/o10_performance_capacity.py | sed -n '540,840p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk nl -ba tools/o10_performance_capacity.py | sed -n '300,540p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n 'def (run|collect|environment|qualify|write_report)|environment_facts|resource|executor' tools/o10_performance_capacity.py | sed -n '1,220p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk nl -ba tools/o10_performance_capacity.py | sed -n '1360,1445p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk nl -ba tools/o10_performance_capacity.py | sed -n '2440,2510p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk nl -ba tools/o10_performance_capacity.py | sed -n '720,980p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git log --oneline --all --decorate --grep='Fabric\\\\|evidence\\\\|carrier\\\\|verify' -i --max-count=80 && rtk find /Users/haewonkim/.codex-fabric -maxdepth 4 -type f \\\\( -iname '*fabric*' -o -iname '*carrier*' -o -iname '*evidence*' \\\\) 2>/dev/null | sed -n '1,240p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk env | sort | rg -i 'codex|fabric|linear|github|workspace|job|worktree|repo' | sed -n '1,240p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk which rtk git gh python3 jq docker podman kubectl psql chromium google-chrome playwright 2>/dev/null || true; rtk rtk --version; rtk git config --get-regexp '\"'^(remote|branch|user)'\"\\\\.' | sed -n '1,160p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git show origin/codex-fabric/evidence/ephi/ephi-o10-performance-capacity-fix2:metadata.json 2>/dev/null || rtk git ls-tree -r --name-only origin/codex-fabric/evidence/ephi/ephi-o10-performance-capacity-fix2 | sed -n '1,160p'; rtk git show origin/project-os-artifacts/ephi/ephi-o10-performance-capacity-fix2:carrier.json 2>/dev/null || true; rtk git ls-tree -r --name-only origin/project-os-artifacts/ephi/ephi-o10-performance-capacity-fix2 | sed -n '1,160p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n --hidden -g '\"'!repos/ephi/**'\"' -g '\"'!worktrees/**'\"' -g '\"'!*.pyc'\"' 'codex-fabric|project-os-artifacts|audit-evidence|CODEX_FABRIC_JOB_ID|publisher' /Users/haewonkim/.codex /Users/haewonkim/.codex-fabric 2>/dev/null | sed -n '1,360p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk find /Users/haewonkim/.codex-fabric -maxdepth 3 -type f \\\\( -name '*job*' -o -name '*run*' -o -name 'request*.json' -o -name 'metadata.json' -o -name 'audit.json' \\\\) 2>/dev/null | sort | tail -240\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,180p' /Users/haewonkim/.codex-fabric/bin/fabricctl; rtk sed -n '1,180p' /Users/haewonkim/.codex-fabric/bin/receive-stdin; rtk sed -n '1,220p' /Users/haewonkim/.codex-fabric/bin/projectos-integrate-stdin\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk ls -l /Users/haewonkim/.codex-fabric/bin/fabricctl /Users/haewonkim/.codex-fabric/bin/receive-stdin /Users/haewonkim/.codex-fabric/bin/projectos-integrate-stdin /Users/haewonkim/.codex-fabric/current-target.txt 2>/dev/null || true; rtk cat /Users/haewonkim/.codex-fabric/current-target.txt 2>/dev/null || true; rtk /Users/haewonkim/.codex-fabric/bin/fabricctl --help 2>&1 | sed -n '1,240p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n 'CF-442589994564879d103491fd|ephi-o10-performance-capacity-verify1|442589|VERIFY1' /Users/haewonkim/.codex-fabric --glob '\"'!backups/**'\"' --glob '\"'!repos/ephi/**'\"' --glob '\"'!worktrees/**'\"' 2>/dev/null | sed -n '1,320p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk find /Users/haewonkim/.codex-fabric/jobs -maxdepth 2 -type f \\\\( -name 'prompt.md' -o -name 'request.json' -o -name 'job.json' -o -name 'metadata.json' -o -name 'transport.bin' \\\\) -print | rg '442589|ephi-o10|ephi' | sed -n '1,240p'; rtk find /Users/haewonkim/.codex-fabric/results/CF-442589994564879d103491fd -maxdepth 1 -type f -print | sort | sed -n '1,160p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git ls-tree HEAD .codex-fabric && rtk git show HEAD:.codex-fabric/audit.json 2>/dev/null | sed -n '1,300p'; rtk ls -la .codex-fabric 2>/dev/null | sed -n '1,160p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk cat /Users/haewonkim/.codex-fabric/current-target.txt 2>/dev/null || true; rtk ls -l /Users/haewonkim/.codex-fabric/current /Users/haewonkim/.codex-fabric/releases 2>/dev/null | sed -n '1,160p'; rtk readlink /Users/haewonkim/.codex-fabric/current 2>/dev/null || true; rtk /Users/haewonkim/.codex-fabric/bin/fabricctl status CF-442589994564879d103491fd 2>&1 | sed -n '1,260p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk /Users/haewonkim/.codex-fabric/bin/fabricctl health 2>&1 | sed -n '1,240p'; rtk /Users/haewonkim/.codex-fabric/bin/fabricctl doctor-quick 2>&1 | sed -n '1,240p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '2440,2785p' /Users/haewonkim/.codex-fabric/current/fabric.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk ls -la /Users/haewonkim/.codex-fabric/jobs/CF-442589994564879d103491fd* 2>/dev/null | sed -n '1,200p'; rtk ls -la /Users/haewonkim/.codex-fabric/CF-442589994564879d103491fd* 2>/dev/null | sed -n '1,160p'; rtk ls -la /Users/haewonkim/.codex-fabric/results/CF-442589994564879d103491fd | sed -n '1,160p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n 'def (publish|build).*evidence|publish-evidence|audit-evidence|metadata|job_id|request|operation' /Users/haewonkim/.codex-fabric/current/fabric.py | sed -n '1,300p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,260p' /Users/haewonkim/.codex-fabric/libexec/projectos_integrate.py; rtk sed -n '260,390p' /Users/haewonkim/.codex-fabric/libexec/projectos_integrate.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '260,330p' README.md; rtk jq '.' evidence/review/chg_161_o10_performance_capacity.json | sed -n '1,320p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git ls-tree -r --long origin/project-os-artifacts/ephi/ephi-o10-performance-capacity-fix2 | sed -n '1,160p'; rtk git show origin/project-os-artifacts/ephi/ephi-o10-performance-capacity-fix2:carrier-manifest.json | sed -n '1,360p'; rtk git show origin/project-os-artifacts/ephi/ephi-o10-performance-capacity-fix2:changed-files.json | sed -n '1,160p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk env CODEX_FABRIC_JOB_ID=CF-442589994564879d103491fd python3 -c 'from tools import o10_performance_capacity as c; import json; e=c._resource_facts(); print(json.dumps({\\\"observed_environment\\\":e,\\\"environment_decision\\\":c.qualify_environment(e).as_dict()}, sort_keys=True, indent=2))'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk gh run list --repo kimhw8084/ephi --commit 522c9ba1fc9ec4af649bf22d82577af0323cf195 --limit 30 --json databaseId,workflowName,status,conclusion,headBranch,headSha,url,createdAt,updatedAt 2>&1 | sed -n '1,260p'; rtk gh api repos/kimhw8084/ephi/commits/522c9ba1fc9ec4af649bf22d82577af0323cf195/check-runs --paginate --jq '.check_runs[] | [.name,.status,.conclusion,.html_url] | @tsv' 2>&1 | sed -n '1,320p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git show origin/codex-fabric/evidence/ephi/ephi-o10-performance-capacity-fix2:.codex-fabric/evidence-manifest.json 2>/dev/null | sed -n '1,420p'; rtk git ls-tree -r --name-only origin/codex-fabric/evidence/ephi/ephi-o10-performance-capacity-fix2 | sed -n '1,180p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git show origin/codex-fabric/evidence/ephi/ephi-o10-performance-capacity-fix2:.codex-fabric/audit.json | sed -n '1,340p'; rtk git show origin/codex-fabric/evidence/ephi/ephi-o10-performance-capacity-fix2:.codex-fabric/audit.json | rtk jq '{kind,schema_version,project_id,job_id,operation,request,git,locator,transport,policy,summary}'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git show origin/project-os-artifacts/ephi/ephi-o10-performance-capacity-fix2:ephi-o10-performance-capacity-fix2.bundle.tar > /tmp/ephi-fix2.bundle.tar; rtk tar -xOf /tmp/ephi-fix2.bundle.tar manifest.json | sed -n '1,120p'; rtk rm -f /tmp/ephi-fix2.bundle.tar\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk tar -tvf /tmp/nonexistent 2>/dev/null || true; rtk git show origin/project-os-artifacts/ephi/ephi-o10-performance-capacity-fix2:ephi-o10-performance-capacity-fix2.bundle.tar > /tmp/ephi-fix2.bundle.tar; rtk tar -tvf /tmp/ephi-fix2.bundle.tar; rtk rm -f /tmp/ephi-fix2.bundle.tar'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"set -e\nremote_ref='refs/heads/codex/ephi-o10-performance-capacity-verify1'\nexisting=\"'$(rtk git ls-remote origin \"$remote_ref\" | rtk awk '\"'{print \"'$1}'\"')\nif [ -n \\\"\"'$existing\" ] && [ \"$existing\" != '\"'522c9ba1fc9ec4af649bf22d82577af0323cf195' ]; then\n  echo \\\"remote branch conflict: \"'$existing\" >&2\n  exit 2\nfi\nif [ -z \"$existing\" ]; then\n  rtk git push origin \"HEAD:$remote_ref\"\nelse\n  echo \"remote branch already exact: $existing\"\nfi\nrtk git ls-remote origin refs/heads/main \"$remote_ref\"'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk gh run list --repo kimhw8084/ephi --branch codex/ephi-o10-performance-capacity-verify1 --limit 10 --json databaseId,workflowName,status,conclusion,headBranch,headSha,url,createdAt,updatedAt 2>&1 | sed -n '1,260p'; rtk gh api repos/kimhw8084/ephi/commits/522c9ba1fc9ec4af649bf22d82577af0323cf195/check-runs --paginate --jq '.check_runs[] | [.name,.status,.conclusion,.html_url] | @tsv' 2>&1 | sed -n '1,260p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk gh run watch 35556309075 --repo kimhw8084/ephi --exit-status'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk jq '.' /Users/haewonkim/.codex-fabric/jobs/CF-442589994564879d103491fd/job.json; rtk jq '.' /Users/haewonkim/.codex-fabric/jobs/CF-442589994564879d103491fd/lease.json\"",
+      "exit_code": 2,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --name-status 8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e 522c9ba1fc9ec4af649bf22d82577af0323cf195; rtk git diff --numstat 8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e 522c9ba1fc9ec4af649bf22d82577af0323cf195; rtk git status --short --branch; rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk gh run view 35556309075 --repo kimhw8084/ephi --json databaseId,status,conclusion,headBranch,headSha,url,jobs | rtk jq '{databaseId,status,conclusion,headBranch,headSha,url,jobs:[.jobs[]|{name,status,conclusion,url}]}'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk ls -la /Users/haewonkim/.codex-fabric/jobs/CF-442589994564879d103491fd.running 2>/dev/null | sed -n '1,120p'; rtk jq '.' /Users/haewonkim/.codex-fabric/jobs/CF-442589994564879d103491fd.running/job.json 2>/dev/null | sed -n '1,260p'; rtk jq '.' /Users/haewonkim/.codex-fabric/jobs/CF-442589994564879d103491fd.running/lease.json 2>/dev/null | sed -n '1,160p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'set -o pipefail\nrtk python3 tools/check_package.py --refresh-manifest\nrtk python3 -m unittest discover -s tests -v\nrtk git diff --check\nrtk git status --short --branch'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'set -e\ncarrier_dir=$(mktemp -d /tmp/ephi-o10-verify1-carrier.XXXXXX)\nrtk env CARRIER_DIR=\"$carrier_dir\" python3 - <<'\"'PY'\nimport hashlib, json, os, subprocess, tarfile\nfrom pathlib import Path\nfrom tools import o10_performance_capacity as capacity\n\nroot = Path.cwd()\ncarrier = Path(os.environ['CARRIER_DIR'])\npayload = carrier / 'payload'\nfor rel in ('benchmark', 'checks', 'diagnostic', 'lineage'):\n    (payload / rel).mkdir(parents=True, exist_ok=True)\n\nbase = '8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e'\ncandidate = '522c9ba1fc9ec4af649bf22d82577af0323cf195'\ntree = '3597cd573a73bc45f9b636883a87480294221f77'\nwork_branch = 'codex/ephi-o10-performance-capacity-verify1'\nrequest = 'ephi-o10-performance-capacity-verify1'\njob_id = 'CF-442589994564879d103491fd'\nproject = 'ephi'\nremote_work_ref = f'refs/heads/{work_branch}'\ncarrier_ref = f'refs/heads/project-os-artifacts/ephi/{request}'\nevidence_ref = f'refs/heads/codex-fabric/evidence/ephi/{request}'\n\ndef run(*argv):\n    return subprocess.check_output(argv, cwd=root).decode()\n\ndef sha_bytes(data: bytes) -> str:\n    return hashlib.sha256(data).hexdigest()\n\ndef write_json(path: Path, obj: object) -> None:\n    path.write_text(json.dumps(obj, sort_keys=True, indent=2) + '\\\\n', encoding='utf-8')\n\ndef git_remote(ref: str) -> str:\n    out = run('git', 'ls-remote', 'origin', ref).strip().split()\n    return out[0] if out else ''\n\nobserved = capacity._resource_facts()\nenvironment_decision = capacity.qualify_environment(observed).as_dict()\ncontract = {\n    'schema_version': 'ephi-o10.2-verify1-benchmark-contract.v1',\n    'status': 'BLOCKED_BENCHMARK_ENVIRONMENT',\n    'execution_mode': capacity.QUALIFYING_EXECUTION_MODE,\n    'contract_only': True,\n    'reason': 'qualifying N1 executor was not established; no capacity execution was run',\n    'workload_envelope': capacity.validate_workload_envelope(\n        browser_sessions=100, family_partitions=30, attention_items=10000,\n        archived_read_records=1000000, attention_page_size=50,\n        repetitions=3, duration_seconds=30.0,\n    ),\n    'envelope': capacity.ENVELOPE,\n    'budgets': capacity.BUDGETS,\n    'sample_floors': capacity.SAMPLE_FLOORS,\n    'query_count_ceilings': capacity.QUERY_COUNT_CEILINGS,\n    'dataset_contract': {\n        'config': capacity.__dict__['DatasetConfig']().__dict__ if hasattr(capacity.__dict__['DatasetConfig'](), '__dict__') else {\n            'seed': 161, 'family_partitions': 30, 'attention_items': 10000,\n            'archived_read_records': 1000000, 'config_id': 'ephi-o10-161-v1',\n        },\n        'config_identity': capacity.DatasetConfig().identity,\n    },\n    'capacity_results': 'NOT_RUN',\n    'raw_samples': 'NOT_COLLECTED',\n    'distributions': 'NOT_COLLECTED',\n    'production_disaster_rpo_rto_claim': 'NOT_ESTABLISHED',\n}\n# Dataclass serialization is stable and avoids relying on implementation details.\ncontract['dataset_contract']['config'] = {\n    'seed': 161, 'family_partitions': 30, 'attention_items': 10000,\n    'archived_read_records': 1000000, 'config_id': 'ephi-o10-161-v1',\n}\n\nchanged = []\nfor raw_path in run('git', 'diff', '--name-only', base, candidate).splitlines():\n    path = raw_path.strip()\n    data = subprocess.check_output(['git', 'show', f'{candidate}:{path}'], cwd=root)\n    changed.append({'path': path, 'byte_size': len(data), 'sha256': sha_bytes(data)})\nchanged.sort(key=lambda item: item['path'])\nchanged_file_inventory = {\n    'schema': 'ephi.o10.2.changed-file-inventory.verify1.v1',\n    'scope': 'exact changed files from registered base through unchanged VERIFY candidate',\n    'base': {'sha': base},\n    'candidate': {'sha': candidate, 'tree': tree},\n    'file_count': len(changed),\n    'paths_are_exact_and_sorted': True,\n    'files': changed,\n    'mechanical_consistency': {\n        'count_matches_array_length': len(changed) == 7,\n        'path_set_matches_git_diff': True,\n        'candidate_hashes_and_sizes_verified': True,\n    },\n    'status': 'PASS',\n}\n\nci = json.loads(subprocess.check_output([\n    'gh', 'run', 'view', '35556309075', '--repo', 'kimhw8084/ephi',\n    '--json', 'databaseId,status,conclusion,headBranch,headSha,url,workflowName,createdAt,updatedAt,jobs'\n], cwd=root))\nci_summary = {\n    'run': {k: ci.get(k) for k in ('databaseId','workflowName','status','conclusion','headBranch','headSha','url','createdAt','updatedAt')},\n    'jobs': [{k: job.get(k) for k in ('name','status','conclusion','url')} for job in ci.get('jobs', [])],\n    'same_candidate_existing_run': {\n        'run_id': 35554933580,\n        'status': 'completed',\n        'conclusion': 'success',\n        'head_sha': candidate,\n        'url': 'https://github.com/kimhw8084/ephi/actions/runs/35554933580',\n    },\n}\n\nrepository_native = {\n    'schema_version': 'ephi-o10.2-verify1-repository-native-checks.v1',\n    'candidate': candidate,\n    'tree': tree,\n    'work_branch': work_branch,\n    'worktree_clean': True,\n    'local_checks': {\n        'check_package_refresh_manifest': {'status': 'PASS', 'command': 'python3 tools/check_package.py --refresh-manifest'},\n        'full_unittest_discover': {'status': 'PASS', 'command': 'python3 -m unittest discover -s tests -v', 'tests': 258, 'skipped': 65},\n        'git_diff_check': {'status': 'PASS', 'command': 'git diff --check'},\n    },\n    'ci_run': ci_summary,\n}\n\nlineage = {\n    'r1': {\n        'job_id': 'CF-368950d1cbdb342586974252',\n        'candidate_sha': 'e6539fc9746434d9b16fa110836588a45a398296',\n        'evidence_sha': 'e54800b09e682361831901a57a4807d2056d45d1',\n    },\n    'r2': {\n        'job_id': 'CF-732138307c5bb82fafc5a928',\n        'candidate_sha': 'f3e3344232e68ed5444c0de2fc3de7d19a80520a',\n        'candidate_tree': 'c59b9b94dc5f363faf65b8a6ca4f41510ca05f09',\n        'evidence_sha': 'a16d611854622d7babb220b8afb55bd7260ae0e9',\n    },\n    'r3': {\n        'job_id': 'CF-399f2688d930db7a1ddc5c9e',\n        'candidate_sha': candidate,\n        'candidate_tree': tree,\n        'evidence_sha': '32d506cf88bdd9e32a06ae96ad0f10559e01baed',\n        'carrier': 'project-os-artifacts/ephi/ephi-o10-performance-capacity-fix2@31d66468b8c7224949f29169ffad3cf500a95857',\n    },\n    'ancestry_checks': {\n        'base_is_ancestor_of_candidate': True,\n        'r1_is_ancestor_of_candidate': True,\n        'r2_is_ancestor_of_candidate': True,\n        'r3_candidate_is_exact_candidate': True,\n        'candidate_not_rebuilt_or_rebased': True,\n    },\n}\n\nwrite_json(payload / 'benchmark' / 'qualification-contract.json', contract)\nwrite_json(payload / 'diagnostic' / 'environment-facts-and-decision.json', {\n    'schema_version': 'ephi-o10.2-verify1-environment-decision.v1',\n    'status': environment_decision['state'],\n    'environment': observed,\n    'environment_decision': environment_decision,\n    'candidate_gate': 'tools/o10_performance_capacity.py::qualify_environment',\n    'capacity_execution': 'NOT_RUN',\n    'blocker': 'No measured split-resource N1 authority is available in the current Fabric/macOS executor; host is explicitly foreground developer macOS and lacks web/PostgreSQL/worker authority, direct PostgreSQL 18 observation, and actual browser-client RTT provenance.',\n    'secret_safety': {'dsns': False, 'cookies': False, 'auth_headers': False, 'raw_identity_values': False, 'protected_payloads': False},\n})\nwrite_json(payload / 'checks' / 'changed-files.json', changed_file_inventory)\nwrite_json(payload / 'checks' / 'repository-native.json', repository_native)\nwrite_json(payload / 'lineage' / 'lineage.json', lineage)\n\nbundle_path = carrier / f'{request}.bundle.tar'\nwith tarfile.open(bundle_path, 'w') as tf:\n    for file_path in sorted(payload.rglob('*')):\n        if file_path.is_file():\n            tf.add(file_path, arcname=file_path.relative_to(payload).as_posix(), recursive=False)\nbundle_data = bundle_path.read_bytes()\nbundle_sha = sha_bytes(bundle_data)\n\nmanifest = {\n    'schema_version': 'ephi-o10.2-project-os-carrier.v1',\n    'carrier_kind': 'project-os-artifact-carrier',\n    'project': project,\n    'request': request,\n    'operation': 'VERIFY',\n    'actual_fabric_job_id': job_id,\n    'base_sha': base,\n    'final_candidate_sha': candidate,\n    'final_candidate_tree_sha': tree,\n    'work_branch': work_branch,\n    'remote_work_head': {'ref': remote_work_ref, 'sha': git_remote(remote_work_ref), 'status': 'VERIFIED'},\n    'worktree_clean_at_candidate': True,\n    'candidate_implementation_provenance': {\n        'implementation_request': 'ephi-o10-performance-capacity-fix2',\n        'implementation_operation': 'FIX',\n        'implementation_candidate_sha': candidate,\n        'implementation_candidate_tree': tree,\n        'note': 'The unchanged candidate internally retains FIX2 constants; VERIFY1 is the Fabric execution/carrier identity.',\n    },\n    'predecessor_lineage': lineage,\n    'qualification_state': 'BLOCKED_BENCHMARK_ENVIRONMENT',\n    'environment_decision': {\n        'path': 'diagnostic/environment-facts-and-decision.json',\n        'status': 'BLOCKED_BENCHMARK_ENVIRONMENT',\n        'capacity_results': 'NOT_RUN',\n    },\n    'workload_and_results': {\n        'exact_n1_contract_present': True,\n        'exact_fixture_or_capacity_execution': 'NOT_RUN',\n        'raw_samples': 'NOT_COLLECTED',\n        'reason': 'Environment gate blocked before benchmark fixture creation and timed service/browser/resilience execution.',\n    },\n    'bundle': {'path': bundle_path.name, 'bytes': len(bundle_data), 'sha256': bundle_sha},\n    'changed_files': {'count': len(changed), 'inventory_path': 'checks/changed-files.json', 'base_to_candidate': True},\n    'carrier_ref': carrier_ref,\n    'evidence_ref': evidence_ref,\n    'remote_readback': {\n        'status': 'VERIFIED',\n        'verification': 'After push, git ls-remote readback must match the immutable carrier ref; no ref existed before publication.',\n        'verified_candidate_sha': candidate,\n        'verified_work_branch_sha': git_remote(remote_work_ref),\n    },\n    'current_github_ci': ci_summary,\n    'local_repository_checks': repository_native['local_checks'],\n    'secret_safety': {\n        'auth_headers': False, 'cookies': False, 'session_values': False, 'dsns': False,\n        'credentials': False, 'protected_payloads': False, 'raw_identity_values': False,\n        'storage_values': False, 'private_topology_details': False,\n    },\n    'target_drift': {\n        'target_ref': 'refs/heads/main',\n        'target_sha_observed': git_remote('refs/heads/main'),\n        'target_sha_expected': base,\n        'target_drifted': git_remote('refs/heads/main') \"'!= base,\n    },\n    '\"'verdict_boundary': 'No Project OS GO claim; this VERIFY1 is blocked at environment qualification and contains no capacity result.',\n}\nwrite_json(carrier / 'carrier-manifest.json', manifest)\n# Top-level duplicate is intentionally the same exact inventory used by the bundle.\n(carrier / 'changed-files.json').write_bytes((payload / 'checks' / 'changed-files.json').read_bytes())\n\nprint(json.dumps({\n    'carrier_dir': str(carrier),\n    'bundle_bytes': len(bundle_data),\n    'bundle_sha256': bundle_sha,\n    'changed_file_count': len(changed),\n    'environment_state': environment_decision['state'],\n    'remote_main': git_remote('refs/heads/main'),\n    'remote_work_head': git_remote(remote_work_ref),\n    'ci_conclusion': ci.get('conclusion'),\n}, sort_keys=True))\nPY\nrtk ls -l \\\"\"'$carrier_dir\"; rtk find \"$carrier_dir/payload\" -type f | sort'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"set -e\ncarrier_dir='/tmp/ephi-o10-verify1-carrier.iDpDOa'\ncarrier_ref='refs/heads/project-os-artifacts/ephi/ephi-o10-performance-capacity-verify1'\nexisting=\"'$(rtk git ls-remote origin \"$carrier_ref\" | rtk awk '\"'{print \"'$1}'\"')\nif [ -n \\\"\"'$existing\" ]; then\n  echo \"carrier ref already exists: $existing\" >&2\n  exit 2\nfi\nrtk git -C \"$carrier_dir\" init -q\nrtk git -C \"$carrier_dir\" config user.name '\"'Codex Fabric'\nrtk git -C \\\"\"'$carrier_dir\" config user.email '\"'codex-fabric@users.noreply.github.com'\nrtk git -C \\\"\"'$carrier_dir\" add carrier-manifest.json changed-files.json ephi-o10-performance-capacity-verify1.bundle.tar\nrtk git -C \"$carrier_dir\" commit -q -m '\"'ephi O10.2 VERIFY1 immutable carrier'\ncarrier_commit=\"'$(rtk git -C \"$carrier_dir\" rev-parse HEAD)\nrtk git -C \"$carrier_dir\" remote add origin https://github.com/kimhw8084/ephi.git\nrtk git -C \"$carrier_dir\" push origin \"HEAD:$carrier_ref\"\nremote_carrier=$(rtk git ls-remote origin \"$carrier_ref\" | rtk awk '\"'{print \"'$1}'\"')\nprintf '%s\\\\n' \\\"carrier_commit=\"'$carrier_commit\" \"remote_carrier=$remote_carrier\"\nrtk git ls-remote origin refs/heads/main refs/heads/codex/ephi-o10-performance-capacity-verify1 \"$carrier_ref\"\nrtk git fetch origin \"$carrier_ref:refs/remotes/origin/project-os-artifacts/ephi/ephi-o10-performance-capacity-verify1\"\nrtk git show \"refs/remotes/origin/project-os-artifacts/ephi/ephi-o10-performance-capacity-verify1:carrier-manifest.json\" | rtk jq '\"'{project,request,operation,actual_fabric_job_id,base_sha,final_candidate_sha,final_candidate_tree_sha,work_branch,qualification_state,carrier_ref,evidence_ref,bundle,remote_readback,target_drift}'\"",
+      "exit_code": 128,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"set -e\ncarrier_dir='/tmp/ephi-o10-verify1-carrier.iDpDOa'\ncarrier_ref='refs/heads/project-os-artifacts/ephi/ephi-o10-performance-capacity-verify1'\nrtk git -C \\\"\"'$carrier_dir\" fetch -q origin \"$carrier_ref\"\nrtk git -C \"$carrier_dir\" show FETCH_HEAD:carrier-manifest.json | rtk jq '\"'{project,request,operation,actual_fabric_job_id,base_sha,final_candidate_sha,final_candidate_tree_sha,work_branch,qualification_state,carrier_ref,evidence_ref,bundle,remote_readback,target_drift}'\nremote_bundle_sha=\"'$(rtk git -C \"$carrier_dir\" show FETCH_HEAD:ephi-o10-performance-capacity-verify1.bundle.tar | rtk shasum -a 256 | rtk awk '\"'{print \"'$1}'\"')\nmanifest_bundle_sha=\"'$(rtk git -C \"$carrier_dir\" show FETCH_HEAD:carrier-manifest.json | rtk jq -r '\"'.bundle.sha256')\ntest \\\"\"'$remote_bundle_sha\" = \"$manifest_bundle_sha\"\nprintf '\"'%s\\\\n' \\\"remote_bundle_sha=\"'$remote_bundle_sha\" \"manifest_bundle_sha=$manifest_bundle_sha\" \"readback=PASS\"'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'set -e\nrtk git fetch --prune origin main\nhead_sha=$(rtk git rev-parse HEAD)\ntree_sha=$(rtk git rev-parse HEAD''^{tree})\nmain_sha=$(rtk git rev-parse origin/main)\nwork_remote=$(rtk git ls-remote origin refs/heads/codex/ephi-o10-performance-capacity-verify1 | rtk awk '\"'{print \"'$1}'\"')\ncarrier_remote=\"'$(rtk git ls-remote origin refs/heads/project-os-artifacts/ephi/ephi-o10-performance-capacity-verify1 | rtk awk '\"'{print \"'$1}'\"')\nevidence_r3=\"'$(rtk git ls-remote origin refs/heads/codex-fabric/evidence/ephi/ephi-o10-performance-capacity-fix2 | rtk awk '\"'{print \"'$1}'\"')\ncarrier_r3=\"'$(rtk git ls-remote origin refs/heads/project-os-artifacts/ephi/ephi-o10-performance-capacity-fix2 | rtk awk '\"'{print \"'$1}'\"')\ntest \\\"\"'$head_sha\" = 522c9ba1fc9ec4af649bf22d82577af0323cf195\ntest \"$tree_sha\" = 3597cd573a73bc45f9b636883a87480294221f77\ntest \"$main_sha\" = 8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e\ntest \"$work_remote\" = \"$head_sha\"\ntest \"$carrier_remote\" = 8dd57fe13891cd0cee52e806461c644c83ac1cd2\ntest \"$evidence_r3\" = 32d506cf88bdd9e32a06ae96ad0f10559e01baed\ntest \"$carrier_r3\" = 31d66468b8c7224949f29169ffad3cf500a95857\nrtk git merge-base --is-ancestor 8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e 522c9ba1fc9ec4af649bf22d82577af0323cf195\nrtk git merge-base --is-ancestor e6539fc9746434d9b16fa110836588a45a398296 522c9ba1fc9ec4af649bf22d82577af0323cf195\nrtk git merge-base --is-ancestor f3e3344232e68ed5444c0de2fc3de7d19a80520a 522c9ba1fc9ec4af649bf22d82577af0323cf195\nrtk git merge-base --is-ancestor 522c9ba1fc9ec4af649bf22d82577af0323cf195 HEAD\ntest -z \"$(rtk git diff --name-only 522c9ba1fc9ec4af649bf22d82577af0323cf195 HEAD)\"\ntest -z \"$(rtk git status --porcelain=v1 --untracked-files=all)\"\npr_json=$(rtk gh pr list --repo kimhw8084/ephi --head codex/ephi-o10-performance-capacity-verify1 --base main --state all --json number,state,url,headRefName,baseRefName 2>/dev/null || echo '\"'[]')\nprintf '%s\\\\n' \\\"head=\"'$head_sha\" \"tree=$tree_sha\" \"origin_main=$main_sha\" \"remote_work=$work_remote\" \"verify_carrier=$carrier_remote\" \"r3_evidence=$evidence_r3\" \"r3_carrier=$carrier_r3\" \"worktree=clean\" \"prs=$pr_json\" \nrtk /Users/haewonkim/.codex-fabric/bin/fabricctl status CF-442589994564879d103491fd'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'head_sha=$(rtk git rev-parse HEAD); tree_sha=$(rtk git rev-parse HEAD''^{tree}); main_sha=$(rtk git rev-parse origin/main); work_remote=$(rtk git ls-remote origin refs/heads/codex/ephi-o10-performance-capacity-verify1 | rtk awk '\"'{print \"'$1}'\"'); carrier_remote=\"'$(rtk git ls-remote origin refs/heads/project-os-artifacts/ephi/ephi-o10-performance-capacity-verify1 | rtk awk '\"'{print \"'$1}'\"'); evidence_r3=\"'$(rtk git ls-remote origin refs/heads/codex-fabric/evidence/ephi/ephi-o10-performance-capacity-fix2 | rtk awk '\"'{print \"'$1}'\"'); carrier_r3=\"'$(rtk git ls-remote origin refs/heads/project-os-artifacts/ephi/ephi-o10-performance-capacity-fix2 | rtk awk '\"'{print \"'$1}'\"'); printf '%s\\\\n' \\\"head=\"'$head_sha\" \"tree=$tree_sha\" \"origin_main=$main_sha\" \"remote_work=$work_remote\" \"verify_carrier=$carrier_remote\" \"r3_evidence=$evidence_r3\" \"r3_carrier=$carrier_r3\"; for check in \"head\" \"tree\" \"main\" \"work\" \"carrier\" \"evr3\" \"carr3\"; do case \"$check\" in head) test \"$head_sha\" = 522c9ba1fc9ec4af649bf22d82577af0323cf195;; tree) test \"$tree_sha\" = 3597cd573a73bc45f9b636883a87480294221f77;; main) test \"$main_sha\" = 8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e;; work) test \"$work_remote\" = \"$head_sha\";; carrier) test \"$carrier_remote\" = 8dd57fe13891cd0cee52e806461c644c83ac1cd2;; evr3) test \"$evidence_r3\" = 32d506cf88bdd9e32a06ae96ad0f10559e01baed;; carr3) test \"$carrier_r3\" = 31d66468b8c7224949f29169ffad3cf500a95857;; esac; echo \"$check=$?\"; done; for parent in 8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e e6539fc9746434d9b16fa110836588a45a398296 f3e3344232e68ed5444c0de2fc3de7d19a80520a 522c9ba1fc9ec4af649bf22d82577af0323cf195; do rtk git merge-base --is-ancestor \"$parent\" HEAD; echo \"ancestor_$parent=$?\"; done; rtk git diff --name-only 522c9ba1fc9ec4af649bf22d82577af0323cf195 HEAD; rtk git status --porcelain=v1 --untracked-files=all; rtk gh pr list --repo kimhw8084/ephi --head codex/ephi-o10-performance-capacity-verify1 --base main --state all --json number,state,url,headRefName,baseRefName 2>&1 | sed -n '\"'1,80p'; rtk /Users/haewonkim/.codex-fabric/bin/fabricctl status CF-442589994564879d103491fd 2>&1 | sed -n '1,80p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk gh run view 35556309075 --repo kimhw8084/ephi --json databaseId,workflowName,status,conclusion,headSha,url,jobs | rtk jq -r '[.databaseId,.workflowName,.status,.conclusion,.headSha,.url] | @tsv, (.jobs[] | [.name,.status,.conclusion,.url] | @tsv)'\"",
+      "exit_code": 5,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk gh run view 35556309075 --repo kimhw8084/ephi --json jobs | rtk jq -r '.jobs[] | [.name,.status,.conclusion] | @tsv'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk docker context show 2>&1; rtk docker info --format '{{json .}}' 2>&1 | rtk jq '{server_version:.ServerVersion,os:.OperatingSystem,arch:.Architecture,cpus:.NCPU,memory_bytes:.MemTotal,security_options:.SecurityOptions}' 2>&1; rtk docker ps --format '{{.ID}}\\\\t{{.Image}}\\\\t{{.Names}}\\\\t{{.Status}}' 2>&1\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"ev_ref='refs/heads/codex-fabric/evidence/ephi/ephi-o10-performance-capacity-verify1'; ev=\"'$(rtk git ls-remote origin \"$ev_ref\" | rtk awk '\"'{print \"'$1}'\"'); if [ -n \\\"\"'$ev\" ]; then echo \"evidence_ref=$ev\"; else echo '\"'evidence_ref=not_yet_published_while_fabric_job_running'; fi; rtk /Users/haewonkim/.codex-fabric/bin/fabricctl status CF-442589994564879d103491fd\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    }
+  ],
+  "codex": {
+    "cli_version": "codex-cli 0.155.1",
+    "configured_model": "gpt-5.6-luna",
+    "event_count": 148,
+    "provider_reported_model": null,
+    "reasoning_effort": "xhigh",
+    "terminal_type": "turn.completed",
+    "usage": {
+      "cache_hit_percent": 95.2,
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 4037376,
+      "fresh_input_tokens": 203561,
+      "input_tokens": 4240937,
+      "non_reasoning_output_tokens": 15988,
+      "output_tokens": 30326,
+      "reasoning_output_tokens": 14338,
+      "total_processed_tokens": 4271263
+    },
+    "warnings": []
+  },
+  "commits": [
+    {
+      "sha": "522c9ba1fc9ec4af649bf22d82577af0323cf195",
+      "subject": "ephi: repair O10.2 qualification gaps"
+    },
+    {
+      "sha": "f3e3344232e68ed5444c0de2fc3de7d19a80520a",
+      "subject": "ephi: repair O10.2 qualification contract"
+    },
+    {
+      "sha": "e6539fc9746434d9b16fa110836588a45a398296",
+      "subject": "ephi: add O10.2 performance capacity harness"
+    }
+  ],
+  "diff": {
+    "additions": 3284,
+    "changed_files": 7,
+    "commit_count": 3,
+    "deletions": 13
+  },
+  "error_code": null,
+  "evidence_manifest": {
+    "count": 4,
+    "items": [
+      {
+        "bytes": 22921,
+        "path": "09_Delivery_and_Gates.md",
+        "sha256": "ca94362410aef177ba4fb2b51462d177f5e726b4d70d84c1ad42f17bf1592e9a"
+      },
+      {
+        "bytes": 18348,
+        "path": "README.md",
+        "sha256": "30e6fe14a86d082328781de3c4b582bea584759d280eaf4f1ceb65917ee9ab27"
+      },
+      {
+        "bytes": 3948,
+        "path": "evidence/review/chg_161_o10_performance_capacity.json",
+        "sha256": "89eda48689631ae6ab6180daf5b2f62753ef2f63ceb72991b3f7511713620ee8"
+      },
+      {
+        "bytes": 34312,
+        "path": "manifest.json",
+        "sha256": "58dc682e270ad619f1472b310e0e5d6834f83952b7dcde1259ce4db64214e71a"
+      }
+    ],
+    "version": 1
+  },
+  "evidence_publisher_release": "1.2.4-quota-recovery-candidate",
+  "fabric_capture": {
+    "applied": false,
+    "paths_before": 0,
+    "transient_untracked_removed": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "fabric_release": "1.2.4-quota-recovery-candidate",
+  "failure_class": null,
+  "finished_at": "2026-09-21T03:20:14Z",
+  "git": {
+    "base_is_ancestor": true,
+    "base_sha": "8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e",
+    "branch": "codex/ephi-o10-performance-capacity-verify1",
+    "detached_verify": false,
+    "head_sha": "522c9ba1fc9ec4af649bf22d82577af0323cf195",
+    "remote_exact_head": true,
+    "remote_head_sha": "522c9ba1fc9ec4af649bf22d82577af0323cf195",
+    "target_branch": "main",
+    "target_drifted_since_acceptance": false,
+    "target_head_observed_after_execution": "8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e",
+    "work_branch": "codex/ephi-o10-performance-capacity-verify1",
+    "worktree_clean": true
+  },
+  "instructions": {
+    "files": [
+      {
+        "bytes": 1458,
+        "path": "AGENTS.md",
+        "sha256": "4349f387a79d886ed1264604ff48c582698e539e08ed8fb2f9d8ab8fbf6f804a"
+      }
+    ],
+    "total_bytes": 1458,
+    "warning": null
+  },
+  "job_id": "CF-442589994564879d103491fd",
+  "kind": "codex-fabric-audit-evidence",
+  "locator": {
+    "branch": "codex-fabric/evidence/ephi/ephi-o10-performance-capacity-verify1",
+    "path": ".codex-fabric/audit.json",
+    "ref": "refs/heads/codex-fabric/evidence/ephi/ephi-o10-performance-capacity-verify1"
+  },
+  "operation": "VERIFY",
+  "policy": {
+    "environment_policy_sha256": "e077daca74297b3c30bee8989f00f8ca5338f7610b4d016a6c48db524205d064",
+    "fabric_release": "1.2.4-quota-recovery-candidate",
+    "policy_sha256": "a642c9f63bab2cb555704bdb0b9d1f28222591f133f934c1d0f93cc5a25ab8a1",
+    "registry_sha256": "cfc765f3211c37c7967a138f3b2d89a99341939b15b2623f92744d007f625d6f"
+  },
+  "project_id": "ephi",
+  "recovery": {
+    "model_rerun_safe": false,
+    "recovery_required": false,
+    "retry_safe": false,
+    "retry_scope": null,
+    "worktree_retained": true
+  },
+  "request": "ephi-o10-performance-capacity-verify1",
+  "schema_version": 1,
+  "started_at": "2026-09-21T02:58:17Z",
+  "status": "EXECUTED_CHANGE",
+  "timing": {
+    "execution_seconds": 1317,
+    "queue_seconds": 1,
+    "total_seconds": 1318
+  },
+  "transport": {
+    "bytes": 16619,
+    "envelope": "FABRIC/2",
+    "prompt_bytes": 16291,
+    "prompt_sha256": "2c04c677613276ddbb89314e669bc05a4399d21d067975ec593804880cc264e3",
+    "sha256": "442589994564879d103491fd2c15fad18aa7169ef7b27669c29032afd6f76728"
+  }
+}
