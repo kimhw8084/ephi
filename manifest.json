@@ -751,8 +751,8 @@
     },
     {
       "path": "src/ephi/ui/provider.py",
-      "bytes": 10748,
-      "sha256": "00143fa80dfe71f5f4c004186e1b1b89807cb34712d0e56434ff1632200f0ffc"
+      "bytes": 10717,
+      "sha256": "7cb36ed46c9daeb99213e61c6ef0d3e3cae3395e8ae97054d4ff73e1952326f6"
     },
     {
       "path": "src/ephi/value/__init__.py",
@@ -836,8 +836,8 @@
     },
     {
       "path": "tests/test_o3_provider.py",
-      "bytes": 11796,
-      "sha256": "d337c30028f11d363c150dc2f27cdb21fcf58e19892546089b254b783b0a5ae3"
+      "bytes": 11777,
+      "sha256": "42b6a51a6070010d5d149db40cbfe9667f0c1b980204b0f38f6fadfbc3f229ce"
     },
     {
       "path": "tests/test_o4_source_ingress.py",
