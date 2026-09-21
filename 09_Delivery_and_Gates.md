@@ -18,14 +18,33 @@ is set-based and validates exactly 10,000 Attention/work rows, 1,000,000
 `read_revision` rows and 30 scope/family partitions before timing.
 
 The harness records real PostgreSQL plans, relation/index sizes, connection
-settings, per-operation query counts, scheduled-versus-start delay, raw
+settings, per-operation query counts, scheduled-versus-start delay, retained
 secret-safe samples, browser useful-paint timings, application WebSocket frame
 bytes, command receipt replay/read-your-write facts and repeated G10 scenario
-results. It can only return `PASS_CURRENT_SURFACE_BUDGETS` when the measured
-executor proves the proposed 4-vCPU/8-GiB web node, separate 4-vCPU/16-GiB
-PostgreSQL service, independent workers and <=50 ms client round trip. A
-developer laptop or unmeasured hosted runner remains
+results. A pure fail-closed evaluator consumes every acceptance fact before it
+can return `PASS_CURRENT_SURFACE_BUDGETS`: direct PostgreSQL major 18,
+10,000/1,000,000/30 fixture counts, the exact 100-session/30-second minimum
+sample envelope, 100 distinct successful runtime session identities per
+repetition, conflict/durability/resilience/restore gates, payload and browser
+failure gates, and `production_disaster_rpo_rto_claim=NOT_ESTABLISHED`.
+
+The executor authority must bind provenance, a measurement window, stable
+non-secret web/PostgreSQL/worker resource identities, distinct resource
+authorities/process-isolation domains, web/PostgreSQL limits, worker limits,
+and <=50 ms RTT measured on the actual browser-client-to-web path. Exact
+limits or limits within the documented lower bound and no-more-favorable upper
+bound qualify; larger resources are more favorable and absurdly undersized
+resources are unrepresentative. PostgreSQL 18 must be observed directly from
+the benchmark database, not supplied only by an environment file. A developer
+laptop, PostgreSQL 17, or an unvalidated hosted runner remains
 `BLOCKED_BENCHMARK_ENVIRONMENT`; that state is not a source defect.
+
+Unexpected fixture, SQL, browser, restore, serialization or harness failures
+are `FAIL_BENCHMARK_EXECUTION`, and hard budget/acceptance failures in a
+qualifying executor are `FAIL_CURRENT_SURFACE_BUDGETS`. Normal execution
+returns exit 0 only for PASS, exit 2 for a blocked environment, and exit 1 for
+either failure state. The explicit contract-only template is the only blocked
+mode permitted to return exit 0.
 
 The only O10.2 source repair justified by the diagnostic profile is bounded to
 the existing retained-snapshot writer: snapshot members are sent through one

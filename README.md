@@ -276,12 +276,22 @@ python3 -m unittest tests.test_o10_performance_capacity -v
 python3 tools/o10_performance_capacity.py --contract-only --output /tmp/ephi-o10-contract
 ```
 
-A real run requires an explicit benchmark-only PostgreSQL DSN and measured
-executor facts. It must use at least three repetitions. Results are
-`BLOCKED_BENCHMARK_ENVIRONMENT` unless the measured executor establishes the
-N1 4-vCPU/8-GiB web node, separate 4-vCPU/16-GiB PostgreSQL service,
-independent worker resources and <=50 ms client round trip. Local macOS or an
-ordinary hosted runner is diagnostic evidence only.
+A real run requires an explicit benchmark-only PostgreSQL DSN and a
+provenance-bound split-resource authority file. Qualification requires direct
+PostgreSQL 18 observation, exact 30/10,000/1,000,000 fixture counts, 100
+successful isolated browser contexts with distinct secret-safe runtime session
+fingerprints, at least three repetitions of the 30-second minimum envelope,
+and passing service, conflict, durability, G10 and restore predicates. The
+resource comparison accepts exact or demonstrably no-more-favorable limits
+within the documented lower bounds; it does not accept bare user-supplied
+numbers. Local macOS, PostgreSQL 17, or an ordinary hosted runner is
+diagnostic evidence only and remains `BLOCKED_BENCHMARK_ENVIRONMENT`.
+
+The status/exit contract is fail-closed: PASS returns 0, a normal blocked
+environment returns 2, and execution or current-surface acceptance failures
+return 1. `--contract-only` produces a clearly marked
+`NOT_QUALIFYING_DIAGNOSTIC` template and may return 0 without claiming
+capacity.
 
 ## CHG-147 O9.1 operations and restore rehearsal
 

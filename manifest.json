@@ -121,8 +121,8 @@
     },
     {
       "path": "09_Delivery_and_Gates.md",
-      "bytes": 21663,
-      "sha256": "4b8c5b2e3c7232e155a6160cff0f69892d941d3e62175c13f72e008213667136"
+      "bytes": 22921,
+      "sha256": "ca94362410aef177ba4fb2b51462d177f5e726b4d70d84c1ad42f17bf1592e9a"
     },
     {
       "path": "10_Traceability_and_Decisions.md",
@@ -156,8 +156,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 17744,
-      "sha256": "c9eb1c317088cd8e731fe0469d97c7a9796b18618448d9a4aba0b8f93b30550e"
+      "bytes": 18348,
+      "sha256": "30e6fe14a86d082328781de3c4b582bea584759d280eaf4f1ceb65917ee9ab27"
     },
     {
       "path": "app.py",
@@ -791,8 +791,8 @@
     },
     {
       "path": "tests/test_o10_performance_capacity.py",
-      "bytes": 3165,
-      "sha256": "17111e4637427eec1fd2e11ab17e3103aa751539d37ee508033e8e4fbf457fe8"
+      "bytes": 16933,
+      "sha256": "3017a6c3a0c8a1a7f1a34baefe7a754cb739c39a41896f9345cfb9efa2623364"
     },
     {
       "path": "tests/test_o10_rendered_accessibility.py",
@@ -931,8 +931,8 @@
     },
     {
       "path": "tools/o10_performance_capacity.py",
-      "bytes": 82493,
-      "sha256": "44843f5aaa4ea32dc62b24e8901d0868ec77c2dceac64637d8cd1b2b41ed70d1"
+      "bytes": 117110,
+      "sha256": "c4e2e875162206e6a8564e2a908dbfbf38b6b2597f189edb317a5e41c87a8179"
     },
     {
       "path": "tools/o10_rendered_accessibility.py",
