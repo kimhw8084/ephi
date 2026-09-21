@@ -204,20 +204,19 @@ def _semantic_facts(page: Any, *, surface: str, episode_id: str | None = None, a
 
 
 def _wait_for_authorized_attention_row(page: Any, episode_id: str, timeout: int = 30000) -> None:
+    del episode_id
     page.wait_for_function(
-        """(expected) => {
-            const bodyText = document.body?.innerText || '';
+        """() => {
             const statusReady = [...document.querySelectorAll('[role=status]')].some(node => {
                 const text = (node.innerText || node.textContent || '').replace(/\\s+/g, ' ').trim();
                 return text.includes('permitted Attention row') && !text.startsWith('Loading');
             });
             const rowReady = Boolean(document.querySelector('.cui-data-table .ag-center-cols-container .ag-row'));
             // The governed responsive table may move the identity column out of
-            // the visible first paint. Selection and the Episode semantic gate
-            // still require the exact episode identity before this path passes.
-            return statusReady && rowReady && (bodyText.includes(expected) || rowReady);
+            // the visible first paint. Keyboard selection verifies the exact
+            // episode identity in the authorized selected preview below.
+            return statusReady && rowReady;
         }""",
-        arg=episode_id,
         timeout=timeout,
     )
 
@@ -355,6 +354,9 @@ def _keyboard_open_and_claim(page: Any, base: str, episode_id: str, evidence_dir
     preview_text = page.locator('[aria-label="Selected episode preview"]').inner_text()
     preview_fields = ("Episode ID", "Issue / title", "Priority", "Source state", "Owner", "Workflow state", "Decision deadline")
     preview_facts = {field: field in preview_text for field in preview_fields}
+    populated_attention["identity_verified_by_selected_preview"] = bool(
+        selection.get("selected_episode_id") == episode_id and preview_facts["Episode ID"]
+    )
     preview_button = _keyboard_focus_target(page, "Open episode")
     preview_focus = _focus_style(page, preview_button, already_keyboard_focused=True)
     focus_after_selection = _focused_name(page)
@@ -436,11 +438,11 @@ def _keyboard_open_and_claim(page: Any, base: str, episode_id: str, evidence_dir
             "after_return": focus_after_return,
         }),
         "populated_attention_truthful": bool(
-            populated_attention["aria_contains_episode"]
-            and populated_attention["aria_not_empty_state"]
+            populated_attention["aria_not_empty_state"]
             and populated_attention["data_row_count"] >= 1
             and populated_attention["search_controls_present"]
             and populated_attention["table_controls_present"]
+            and populated_attention["identity_verified_by_selected_preview"]
         ),
     }
 

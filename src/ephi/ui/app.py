@@ -361,7 +361,7 @@ def _attention_columns() -> tuple[TableColumn, ...]:
         TableColumn("title", "Issue", ColumnKind.TEXT, min_width=168, max_width=420, priority="low", tooltip="Complete issue title"),
         TableColumn("source_state", "Source", ColumnKind.STATUS, min_width=72, max_width=112, priority="low"),
         TableColumn("work_state", "Work", ColumnKind.STATUS, min_width=72, max_width=112, priority="low"),
-        TableColumn("episode_id", "Episode", ColumnKind.LINK, min_width=112, priority="normal"),
+        TableColumn("episode_id", "Episode", ColumnKind.LINK, min_width=112, priority="high"),
         TableColumn("asset_id", "Asset", ColumnKind.TEXT, min_width=96, priority="low"),
         TableColumn("owner", "Owner", ColumnKind.TEXT, min_width=96, priority="low"),
         TableColumn("deadline", "Decision deadline", ColumnKind.DATETIME, min_width=150, priority="low"),
