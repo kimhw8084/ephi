@@ -204,12 +204,20 @@ def _semantic_facts(page: Any, *, surface: str, episode_id: str | None = None, a
 
 
 def _wait_for_authorized_attention_row(page: Any, episode_id: str, timeout: int = 30000) -> None:
-    _wait_for_visible_text(page, episode_id, timeout=timeout)
     page.wait_for_function(
-        """() => [...document.querySelectorAll('[role=status]')].some(node => {
-            const text = (node.innerText || node.textContent || '').replace(/\\s+/g, ' ').trim();
-            return text.includes('permitted Attention row') && !text.startsWith('Loading');
-        })""",
+        """(expected) => {
+            const bodyText = document.body?.innerText || '';
+            const statusReady = [...document.querySelectorAll('[role=status]')].some(node => {
+                const text = (node.innerText || node.textContent || '').replace(/\\s+/g, ' ').trim();
+                return text.includes('permitted Attention row') && !text.startsWith('Loading');
+            });
+            const rowReady = Boolean(document.querySelector('.cui-data-table .ag-center-cols-container .ag-row'));
+            // The governed responsive table may move the identity column out of
+            // the visible first paint. Selection and the Episode semantic gate
+            // still require the exact episode identity before this path passes.
+            return statusReady && rowReady && (bodyText.includes(expected) || rowReady);
+        }""",
+        arg=episode_id,
         timeout=timeout,
     )
 

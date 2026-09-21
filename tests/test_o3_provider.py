@@ -92,7 +92,7 @@ class O3ProviderContractTests(unittest.TestCase):
         self.assertEqual(asyncio.run(self.source.schema()).key, "episode_id")
         self.assertEqual(self.service.calls[0][2]["filters"], {"priority": "P1"})
         full = self.query(Query(limit=1))
-        self.assertEqual(full.rows[0]["attention_scent"], "P1 Unavailable/OPEN Case")
+        self.assertEqual(full.rows[0]["attention_scent"], "P1 Unavailable/OPEN Case episode-1")
 
     def test_attention_columns_keep_mobile_scent_and_desktop_issue_allocation(self):
         from ephi.ui.app import _attention_columns

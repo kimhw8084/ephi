@@ -77,7 +77,7 @@ def _attention_scent(row: Mapping[str, Any]) -> str:
         raw = row.get(key)
         return str(raw) if raw not in (None, "") else "Unavailable"
 
-    return f"{value('priority')} {value('source_state')}/{value('work_state')} {value('title')}"
+    return f"{value('priority')} {value('source_state')}/{value('work_state')} {value('title')} {value('episode_id')}"
 
 
 def _merge_filter(target: dict[str, object], field: str, value: object) -> None:
