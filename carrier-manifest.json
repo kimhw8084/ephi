@@ -1,0 +1,186 @@
+{
+  "actual_fabric_job_id": "CF-442589994564879d103491fd",
+  "base_sha": "8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e",
+  "bundle": {
+    "bytes": 30720,
+    "path": "ephi-o10-performance-capacity-verify1.bundle.tar",
+    "sha256": "597ef0190a4152898ff76357d8e40915735a74e8c045607ca72efdca149e5903"
+  },
+  "candidate_implementation_provenance": {
+    "implementation_candidate_sha": "522c9ba1fc9ec4af649bf22d82577af0323cf195",
+    "implementation_candidate_tree": "3597cd573a73bc45f9b636883a87480294221f77",
+    "implementation_operation": "FIX",
+    "implementation_request": "ephi-o10-performance-capacity-fix2",
+    "note": "The unchanged candidate internally retains FIX2 constants; VERIFY1 is the Fabric execution/carrier identity."
+  },
+  "carrier_kind": "project-os-artifact-carrier",
+  "carrier_ref": "refs/heads/project-os-artifacts/ephi/ephi-o10-performance-capacity-verify1",
+  "changed_files": {
+    "base_to_candidate": true,
+    "count": 7,
+    "inventory_path": "checks/changed-files.json"
+  },
+  "current_github_ci": {
+    "jobs": [
+      {
+        "conclusion": "success",
+        "name": "PostgreSQL command/worker/read/artifact/O9 integration (Python 3.13)",
+        "status": "completed",
+        "url": "https://github.com/kimhw8084/ephi/actions/runs/35556309075/job/106200502590"
+      },
+      {
+        "conclusion": "success",
+        "name": "O10.1 rendered accessibility integration (Python 3.13)",
+        "status": "completed",
+        "url": "https://github.com/kimhw8084/ephi/actions/runs/35556309075/job/106200502698"
+      },
+      {
+        "conclusion": "success",
+        "name": "Package checks (Python 3.12)",
+        "status": "completed",
+        "url": "https://github.com/kimhw8084/ephi/actions/runs/35556309075/job/106200502749"
+      },
+      {
+        "conclusion": "success",
+        "name": "O8.2 browser/session security integration (Python 3.13)",
+        "status": "completed",
+        "url": "https://github.com/kimhw8084/ephi/actions/runs/35556309075/job/106200502765"
+      },
+      {
+        "conclusion": "success",
+        "name": "Package checks (Python 3.13)",
+        "status": "completed",
+        "url": "https://github.com/kimhw8084/ephi/actions/runs/35556309075/job/106200502775"
+      },
+      {
+        "conclusion": "success",
+        "name": "Canonical repository baseline",
+        "status": "completed",
+        "url": "https://github.com/kimhw8084/ephi/actions/runs/35556309075/job/106200502781"
+      },
+      {
+        "conclusion": "success",
+        "name": "Package checks (Python 3.11)",
+        "status": "completed",
+        "url": "https://github.com/kimhw8084/ephi/actions/runs/35556309075/job/106200502785"
+      },
+      {
+        "conclusion": "success",
+        "name": "Package checks (Python 3.14)",
+        "status": "completed",
+        "url": "https://github.com/kimhw8084/ephi/actions/runs/35556309075/job/106200502796"
+      }
+    ],
+    "run": {
+      "conclusion": "success",
+      "createdAt": "2026-09-21T03:05:30Z",
+      "databaseId": 35556309075,
+      "headBranch": "codex/ephi-o10-performance-capacity-verify1",
+      "headSha": "522c9ba1fc9ec4af649bf22d82577af0323cf195",
+      "status": "completed",
+      "updatedAt": "2026-09-21T03:07:28Z",
+      "url": "https://github.com/kimhw8084/ephi/actions/runs/35556309075",
+      "workflowName": "Package integrity"
+    },
+    "same_candidate_existing_run": {
+      "conclusion": "success",
+      "head_sha": "522c9ba1fc9ec4af649bf22d82577af0323cf195",
+      "run_id": 35554933580,
+      "status": "completed",
+      "url": "https://github.com/kimhw8084/ephi/actions/runs/35554933580"
+    }
+  },
+  "environment_decision": {
+    "capacity_results": "NOT_RUN",
+    "path": "diagnostic/environment-facts-and-decision.json",
+    "status": "BLOCKED_BENCHMARK_ENVIRONMENT"
+  },
+  "evidence_ref": "refs/heads/codex-fabric/evidence/ephi/ephi-o10-performance-capacity-verify1",
+  "final_candidate_sha": "522c9ba1fc9ec4af649bf22d82577af0323cf195",
+  "final_candidate_tree_sha": "3597cd573a73bc45f9b636883a87480294221f77",
+  "local_repository_checks": {
+    "check_package_refresh_manifest": {
+      "command": "python3 tools/check_package.py --refresh-manifest",
+      "status": "PASS"
+    },
+    "full_unittest_discover": {
+      "command": "python3 -m unittest discover -s tests -v",
+      "skipped": 65,
+      "status": "PASS",
+      "tests": 258
+    },
+    "git_diff_check": {
+      "command": "git diff --check",
+      "status": "PASS"
+    }
+  },
+  "operation": "VERIFY",
+  "predecessor_lineage": {
+    "ancestry_checks": {
+      "base_is_ancestor_of_candidate": true,
+      "candidate_not_rebuilt_or_rebased": true,
+      "r1_is_ancestor_of_candidate": true,
+      "r2_is_ancestor_of_candidate": true,
+      "r3_candidate_is_exact_candidate": true
+    },
+    "r1": {
+      "candidate_sha": "e6539fc9746434d9b16fa110836588a45a398296",
+      "evidence_sha": "e54800b09e682361831901a57a4807d2056d45d1",
+      "job_id": "CF-368950d1cbdb342586974252"
+    },
+    "r2": {
+      "candidate_sha": "f3e3344232e68ed5444c0de2fc3de7d19a80520a",
+      "candidate_tree": "c59b9b94dc5f363faf65b8a6ca4f41510ca05f09",
+      "evidence_sha": "a16d611854622d7babb220b8afb55bd7260ae0e9",
+      "job_id": "CF-732138307c5bb82fafc5a928"
+    },
+    "r3": {
+      "candidate_sha": "522c9ba1fc9ec4af649bf22d82577af0323cf195",
+      "candidate_tree": "3597cd573a73bc45f9b636883a87480294221f77",
+      "carrier": "project-os-artifacts/ephi/ephi-o10-performance-capacity-fix2@31d66468b8c7224949f29169ffad3cf500a95857",
+      "evidence_sha": "32d506cf88bdd9e32a06ae96ad0f10559e01baed",
+      "job_id": "CF-399f2688d930db7a1ddc5c9e"
+    }
+  },
+  "project": "ephi",
+  "qualification_state": "BLOCKED_BENCHMARK_ENVIRONMENT",
+  "remote_readback": {
+    "status": "VERIFIED",
+    "verification": "After push, git ls-remote readback must match the immutable carrier ref; no ref existed before publication.",
+    "verified_candidate_sha": "522c9ba1fc9ec4af649bf22d82577af0323cf195",
+    "verified_work_branch_sha": "522c9ba1fc9ec4af649bf22d82577af0323cf195"
+  },
+  "remote_work_head": {
+    "ref": "refs/heads/codex/ephi-o10-performance-capacity-verify1",
+    "sha": "522c9ba1fc9ec4af649bf22d82577af0323cf195",
+    "status": "VERIFIED"
+  },
+  "request": "ephi-o10-performance-capacity-verify1",
+  "schema_version": "ephi-o10.2-project-os-carrier.v1",
+  "secret_safety": {
+    "auth_headers": false,
+    "cookies": false,
+    "credentials": false,
+    "dsns": false,
+    "private_topology_details": false,
+    "protected_payloads": false,
+    "raw_identity_values": false,
+    "session_values": false,
+    "storage_values": false
+  },
+  "target_drift": {
+    "target_drifted": false,
+    "target_ref": "refs/heads/main",
+    "target_sha_expected": "8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e",
+    "target_sha_observed": "8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e"
+  },
+  "verdict_boundary": "No Project OS GO claim; this VERIFY1 is blocked at environment qualification and contains no capacity result.",
+  "work_branch": "codex/ephi-o10-performance-capacity-verify1",
+  "workload_and_results": {
+    "exact_fixture_or_capacity_execution": "NOT_RUN",
+    "exact_n1_contract_present": true,
+    "raw_samples": "NOT_COLLECTED",
+    "reason": "Environment gate blocked before benchmark fixture creation and timed service/browser/resilience execution."
+  },
+  "worktree_clean_at_candidate": true
+}
