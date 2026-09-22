@@ -259,6 +259,26 @@ in the PostgreSQL CI lane after the optional PostgreSQL dependency is installed.
 This slice does not qualify company identity/session transport, browser
 CSRF/WebSocket-origin controls, upload/export/sanitization or deployment.
 
+## CHG-167 O5.1 unified decision-loop core
+
+O5.1 extends the existing O3 `episode_workflow` aggregate with a bounded
+`decision_loop` payload containing work cycles, checks, external action
+records, locked recovery plans/observations, closure records and reopen
+history. It does not create an `ephi_decision_loop` aggregate or a second
+human-work state. O3 and O5 commands share the existing versioned command
+executor, receipt, audit, outbox and authorization boundaries; every
+decision-sensitive command uses the same expected/viewed workflow version.
+
+Confirmed-issue closure names one locked PASS recovery plan bound to a
+current-cycle action with an explicit successful reconciliation and post-action
+evidence. Technical recovery PASS never closes human work. Reopen preserves
+the prior cycle and resets ownership deterministically for the new open cycle.
+The focused offline evidence is `tests.test_o5_decision_loop`; real PostgreSQL
+18.x evidence is DSN-gated in `tests.test_o5_postgresql` and is run in the
+existing PostgreSQL CI lane. This remains reference/integration evidence and
+does not establish family qualification, human pilot, UI qualification or
+production readiness.
+
 ## CHG-147 O9.1 operations and restore rehearsal
 
 The CLI-only O9.1 boundary is documented in [operations](operations/README.md).

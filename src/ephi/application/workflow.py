@@ -33,7 +33,7 @@ def _decision_payload(context: CommandContext) -> dict[str, Any]:
 def _workflow_state(current: Mapping[str, Any]) -> dict[str, Any]:
     state = dict(current)
     work_state = state.get("work_state")
-    if work_state not in {"OPEN", "CLAIMED", "ACKNOWLEDGED"}:
+    if work_state not in {"OPEN", "CLAIMED", "ACKNOWLEDGED", "CLOSED"}:
         raise ValidationFailureError("Episode workflow state is not a supported W1 state")
     if "owner" not in state:
         raise ValidationFailureError("Episode workflow state has no owner field")

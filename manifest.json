@@ -51,8 +51,8 @@
     },
     {
       "path": ".github/workflows/package.yml",
-      "bytes": 13675,
-      "sha256": "84b78ae6723829c4aa19ffeb571901e672027854f7566529114f8016773e9b1f"
+      "bytes": 13924,
+      "sha256": "349b510787ac0c26f4ad5fa75de2f79c509ad4aceae954642f3eec6f3b106b03"
     },
     {
       "path": ".gitignore",
@@ -141,8 +141,8 @@
     },
     {
       "path": "13_Package_Review.md",
-      "bytes": 13666,
-      "sha256": "3c7b1c7ab6c131807a812774bf8c15af57c3aa3d18c7e3e5dada0fa54d4fccc5"
+      "bytes": 14609,
+      "sha256": "2a63111e109d6eb692084af7787cfac75e2ab9173d6000d9d94dbac91431eefb"
     },
     {
       "path": "AGENTS.md",
@@ -156,8 +156,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 16551,
-      "sha256": "4e8bae39734c5cde4be0578cb43ad8a4e7e5a2fb6f80679c971951a76b7b0ea8"
+      "bytes": 17739,
+      "sha256": "f5ea8a5df6ba9311f92debc0a983d64739cbd7fa94901acf9b7b7d8ca9ef2068"
     },
     {
       "path": "app.py",
@@ -596,8 +596,8 @@
     },
     {
       "path": "src/ephi/application/__init__.py",
-      "bytes": 7914,
-      "sha256": "1812f82f651775e8ea3812cee78091ee9161e97186e327d1634f6d9388008f1f"
+      "bytes": 9117,
+      "sha256": "ab44eeaad80ff6562ecbbf2cd90fef77f480e80f5bcdff9e05e2f8135f459231"
     },
     {
       "path": "src/ephi/application/artifacts.py",
@@ -613,6 +613,11 @@
       "path": "src/ephi/application/context.py",
       "bytes": 11418,
       "sha256": "c62d1b4210d37a44e072e9bad2eb5f9516550d951e1b1106a39fba046a1fb59d"
+    },
+    {
+      "path": "src/ephi/application/decision_loop.py",
+      "bytes": 69499,
+      "sha256": "92825c35ba0446b7a4087696cac16b639526ae4970fcf4f83f9adcc52b10adc1"
     },
     {
       "path": "src/ephi/application/episodes.py",
@@ -671,8 +676,8 @@
     },
     {
       "path": "src/ephi/application/workflow.py",
-      "bytes": 5011,
-      "sha256": "6a776f1af4805d431014ccf71a4013fe07501381e9ee58568164ef361b8aa172"
+      "bytes": 5021,
+      "sha256": "e65862bf8e3ac49c6375363c460a6053101df66bf4abc97a4fbff1d30855479a"
     },
     {
       "path": "src/ephi/config.py",
@@ -848,6 +853,16 @@
       "path": "tests/test_o4_source_ingress_postgresql.py",
       "bytes": 11031,
       "sha256": "129c767c2ab1b8a2f613fc52db6fd684d97f709d953f3ab4f965712446b9988a"
+    },
+    {
+      "path": "tests/test_o5_decision_loop.py",
+      "bytes": 21849,
+      "sha256": "94964ffb74bb91169743e4966257dca31e269475d94eefe322269129555c6b89"
+    },
+    {
+      "path": "tests/test_o5_postgresql.py",
+      "bytes": 9324,
+      "sha256": "4b0324e59a6aebb08eca9fac0e8f000546798d25932fed582217d6770b00331c"
     },
     {
       "path": "tests/test_o8_browser_transport.py",
