@@ -1,0 +1,428 @@
+{
+  "accepted_at": "2026-09-22T21:42:41Z",
+  "changed_files": [
+    {
+      "additions": 18,
+      "deletions": 0,
+      "path": "13_Package_Review.md",
+      "status": "M"
+    },
+    {
+      "additions": 27,
+      "deletions": 0,
+      "path": "README.md",
+      "status": "M"
+    },
+    {
+      "additions": 21,
+      "deletions": 6,
+      "path": "manifest.json",
+      "status": "M"
+    },
+    {
+      "additions": 76,
+      "deletions": 0,
+      "path": "src/ephi/application/__init__.py",
+      "status": "M"
+    },
+    {
+      "additions": 1640,
+      "deletions": 0,
+      "path": "src/ephi/application/planner.py",
+      "status": "A"
+    },
+    {
+      "additions": 521,
+      "deletions": 0,
+      "path": "tests/test_o6_planner.py",
+      "status": "A"
+    },
+    {
+      "additions": 229,
+      "deletions": 0,
+      "path": "tests/test_o6_planner_postgresql.py",
+      "status": "A"
+    }
+  ],
+  "checks": [
+    {
+      "command": "/bin/zsh -lc \"rtk /opt/homebrew/opt/postgresql@18/bin/psql -Atc 'select version()' && rtk /opt/homebrew/opt/postgresql@18/bin/psql -Atc 'select current_user, current_database()' && rtk /opt/homebrew/opt/postgresql@18/bin/psql -lqt\"",
+      "exit_code": 2,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk /opt/homebrew/opt/postgresql@18/bin/psql -d postgres -Atc 'select version()' && rtk /opt/homebrew/opt/postgresql@18/bin/psql -d postgres -Atc 'select current_user, current_database()' && rtk /opt/homebrew/opt/postgresql@18/bin/psql -d postgres -lqt\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk createdb ephi_chg171_o6_local && rtk env EPHI_TEST_POSTGRES_DSN=dbname=ephi_chg171_o6_local python3 -m unittest tests.test_o6_planner_postgresql -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n 'CHG-167|CHG-169|CHG-171' README.md 13_Package_Review.md && rtk tail -n 55 README.md && rtk tail -n 60 13_Package_Review.md\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '250,335p' README.md && rtk tail -n 30 13_Package_Review.md\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '282,325p' README.md && rtk sed -n '188,218p' 13_Package_Review.md\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1480,1550p' src/ephi/application/planner.py && rtk sed -n '445,500p' tests/test_o6_planner.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m py_compile src/ephi/application/planner.py src/ephi/application/__init__.py tests/test_o6_planner.py tests/test_o6_planner_postgresql.py && rtk python3 -m unittest tests.test_o6_planner -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk env EPHI_TEST_POSTGRES_DSN=dbname=ephi_chg171_o6_local python3 -m unittest tests.test_o2_postgresql tests.test_o2_worker_postgresql tests.test_o2_postgresql_reads tests.test_o2_postgresql_artifacts tests.test_o3_postgresql tests.test_o5_postgresql tests.test_o5_handoff_postgresql tests.test_o8_postgresql tests.test_o9_operations tests.test_o6_planner_postgresql -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk dropdb ephi_chg171_o6_local && rtk git status --short --branch && rtk git diff --stat'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest discover -s tests -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/w0_repo_baseline.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m compileall -q src/ephi tests'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git status --short --branch && rtk git diff -- README.md 13_Package_Review.md manifest.json src/ephi/application/__init__.py && rtk rg -n 'ephi.ui|ephi/ui|posterior|probability|causal|confidence' src/ephi/application/planner.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg --files | rtk rg -i 'fabric|candidate|audit|evidence' && rtk rg -n -i 'fabric|candidate-bound|candidate bound|audit evidence|request ephi' --glob '\"'!evidence/import/**'\"' .\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk cat evidence/review/chg_134_fix3_qualification.json && rtk cat evidence/review/chg_134_fix2_qualification.json'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git remote -v && rtk git branch -vv && rtk git branch -r'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git ls-tree --name-only origin/project-os-artifacts/ephi/ephi-o5-decision-loop-core-v1 && rtk git ls-tree --name-only origin/codex-fabric/evidence/ephi/ephi-o5-decision-loop-core-v1 && rtk git show origin/project-os-artifacts/ephi/ephi-o5-decision-loop-core-v1:carrier-manifest.json'",
+      "exit_code": 128,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git show-ref | rtk rg 'project-os-artifacts/ephi/ephi-o5-decision-loop-core-v1|codex-fabric/evidence/ephi/ephi-o5-decision-loop-core-v1' && rtk git status -sb\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git ls-tree --name-only refs/heads/project-os-artifacts/ephi/ephi-o5-decision-loop-core-v1 && rtk git ls-tree --name-only refs/heads/codex-fabric/evidence/ephi/ephi-o5-decision-loop-core-v1 && rtk git show refs/heads/project-os-artifacts/ephi/ephi-o5-decision-loop-core-v1:carrier-manifest.json'",
+      "exit_code": 128,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git show refs/heads/project-os-artifacts/ephi/ephi-o5-decision-loop-core-v1:candidate_manifest.json && rtk git show refs/heads/project-os-artifacts/ephi/ephi-o5-decision-loop-core-v1:decision_loop_evidence.json && rtk git show-ref | rtk rg 'project-os-artifacts/ephi/ephi-o3-attention-episode-w1-fix3'\"",
+      "exit_code": 128,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git ls-tree --name-only refs/heads/codex-fabric/evidence/ephi/ephi-o5-decision-loop-core-v1 && rtk git show refs/heads/codex-fabric/evidence/ephi/ephi-o5-decision-loop-core-v1:decision_loop_evidence.json && rtk git log -2 --oneline refs/heads/project-os-artifacts/ephi/ephi-o5-decision-loop-core-v1 && rtk git log -2 --oneline refs/heads/codex-fabric/evidence/ephi/ephi-o5-decision-loop-core-v1'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg --files -g '.github/**' -g '*workflow*' -g '*artifact*' -g '*audit*' tools docs evidence/review | rtk rg -i 'github|candidate|fabric|artifact|audit' && rtk python3 -c 'import os; print(sorted(k for k in os.environ if any(word in k.lower() for word in (\\\"fabric\\\", \\\"artifact_bridge\\\", \\\"project_os\\\"))))'\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git add 13_Package_Review.md README.md manifest.json src/ephi/application/__init__.py src/ephi/application/planner.py tests/test_o6_planner.py tests/test_o6_planner_postgresql.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git commit -m 'CHG-171 O6.1 deterministic next-check planner core'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --check HEAD''^ HEAD'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/w0_repo_baseline.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git push -u origin codex/ephi-o6-next-check-planner-core-v1'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short --branch && rtk git rev-parse HEAD HEAD''^ origin/codex/ephi-o6-next-check-planner-core-v1 main origin/main && rtk git show -s --format='\"'%H%n%T%n%P%n%s' HEAD\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git status --short --branch && rtk git branch -a --list '*ephi*o5*' && rtk git remote -v && rtk rg --files evidence/review | rtk rg 'chg_134|chg_171|decision_loop|o6'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git ls-tree -r --name-only project-os-artifacts/ephi/ephi-o5-decision-loop-core-v1 && rtk git ls-tree -r --name-only codex-fabric/evidence/ephi/ephi-o5-decision-loop-core-v1 && rtk git show project-os-artifacts/ephi/ephi-o5-decision-loop-core-v1:candidate_manifest.json && rtk git show codex-fabric/evidence/ephi/ephi-o5-decision-loop-core-v1:decision_loop_evidence.json'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n \\\"candidate_manifest|candidate-bound-review-evidence|project-os-artifacts|codex-fabric/evidence|fabric_job\\\" . --glob '\"'!evidence/**'\"' --glob '\"'!*.lock'\"' && rtk git show --stat --oneline project-os-artifacts/ephi/ephi-o5-decision-loop-core-v1 && rtk git ls-remote origin 'refs/heads/project-os-artifacts/ephi/ephi-o5-decision-loop-core-v1' 'refs/heads/codex-fabric/evidence/ephi/ephi-o5-decision-loop-core-v1'\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n candidate_manifest . --glob '\"'!evidence/**'\"' --glob '\"'!*.lock'\"'\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git ls-remote origin refs/heads/project-os-artifacts/ephi/ephi-o5-decision-loop-core-v1 refs/heads/codex-fabric/evidence/ephi/ephi-o5-decision-loop-core-v1 refs/heads/codex/ephi-o6-next-check-planner-core-v1'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git show -s --format='%H%n%P%n%T%n%s' project-os-artifacts/ephi/ephi-o5-decision-loop-core-v1 && rtk git show -s --format='%H%n%P%n%T%n%s' codex-fabric/evidence/ephi/ephi-o5-decision-loop-core-v1 && rtk git show -s --format='%H%n%P%n%T%n%s' refs/remotes/origin/codex-fabric/evidence/ephi/ephi-o5-decision-loop-core-v1\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git diff --name-only 159c71af1e6a9e36d87da298917f78a491f4546c 8e17d87b300aaf89b2c8c06023ae828d0b57cf1d && rtk git show -s --format='%T' 159c71af1e6a9e36d87da298917f78a491f4546c && rtk git show -s --format='%T' 8e17d87b300aaf89b2c8c06023ae828d0b57cf1d && rtk git config user.name && rtk git config user.email\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk ls -ld /tmp/ephi-chg171-artifact'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git worktree add --detach /tmp/ephi-chg171-artifact 8e17d87b300aaf89b2c8c06023ae828d0b57cf1d'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nimport json\nfrom pathlib import Path\n\nmanifest = {\n    \\\"schema_version\\\": 1,\n    \\\"project\\\": \\\"ephi\\\",\n    \\\"repository\\\": \\\"kimhw8084/ephi\\\",\n    \\\"change\\\": \\\"CHG-171\\\",\n    \\\"parent_objective\\\": \\\"O6 / W4\\\",\n    \\\"request\\\": \\\"ephi-o6-next-check-planner-core-v1\\\",\n    \\\"operation\\\": \\\"BUILD\\\",\n    \\\"fabric_job\\\": None,\n    \\\"publication_state\\\": \\\"AWAITING_FABRIC_PUBLICATION\\\",\n    \\\"base\\\": \\\"159c71af1e6a9e36d87da298917f78a491f4546c\\\",\n    \\\"base_ref\\\": \\\"main\\\",\n    \\\"base_tree\\\": \\\"818a42f1beb38e25940e11823b1d8c4dd573a019\\\",\n    \\\"candidate_head\\\": \\\"8e17d87b300aaf89b2c8c06023ae828d0b57cf1d\\\",\n    \\\"candidate_tree\\\": \\\"93ac060634ef7adf119b7e5cef89bce81bba6adf\\\",\n    \\\"work_branch\\\": \\\"codex/ephi-o6-next-check-planner-core-v1\\\",\n    \\\"source_changed\\\": True,\n    \\\"ui_changed\\\": False,\n    \\\"nicegui_base_changed\\\": False,\n    \\\"migration\\\": None,\n    \\\"changed_files\\\": [\n        \\\"13_Package_Review.md\\\",\n        \\\"README.md\\\",\n        \\\"manifest.json\\\",\n        \\\"src/ephi/application/__init__.py\\\",\n        \\\"src/ephi/application/planner.py\\\",\n        \\\"tests/test_o6_planner.py\\\",\n        \\\"tests/test_o6_planner_postgresql.py\\\",\n    ],\n    \\\"tests\\\": {\n        \\\"package\\\": \\\"PASS\\\",\n        \\\"w0_repo_baseline\\\": \\\"PASS\\\",\n        \\\"offline_full_suite\\\": {\n            \\\"command\\\": \\\"python3 -m unittest discover -s tests -v\\\",\n            \\\"passed\\\": 207,\n            \\\"failed\\\": 0,\n            \\\"skipped\\\": 77,\n            \\\"result\\\": \\\"PASS\\\",\n        },\n        \\\"postgresql_18_regressions\\\": {\n            \\\"server\\\": \\\"PostgreSQL 18.6\\\",\n            \\\"passed\\\": 82,\n            \\\"failed\\\": 0,\n            \\\"skipped\\\": 0,\n            \\\"result\\\": \\\"PASS\\\",\n            \\\"suites\\\": [\n                \\\"tests.test_o2_postgresql\\\",\n                \\\"tests.test_o2_worker_postgresql\\\",\n                \\\"tests.test_o2_postgresql_reads\\\",\n                \\\"tests.test_o2_postgresql_artifacts\\\",\n                \\\"tests.test_o3_postgresql\\\",\n                \\\"tests.test_o5_postgresql\\\",\n                \\\"tests.test_o5_handoff_postgresql\\\",\n                \\\"tests.test_o8_postgresql\\\",\n                \\\"tests.test_o9_operations\\\",\n                \\\"tests.test_o6_planner_postgresql\\\",\n            ],\n        },\n        \\\"focused_planner_unit\\\": {\\\"suite\\\": \\\"tests.test_o6_planner\\\", \\\"passed\\\": 15, \\\"failed\\\": 0, \\\"result\\\": \\\"PASS\\\"},\n        \\\"compileall\\\": \\\"PASS\\\",\n        \\\"git_diff_check\\\": \\\"PASS\\\",\n    },\n    \\\"non_claims\\\": {\n        \\\"HISTORICAL_SOURCE_IDENTITY\\\": \\\"NOT_CLAIMED\\\",\n        \\\"HISTORICAL_ALGORITHM_OR_TEST_EQUIVALENCE\\\": \\\"NOT_CLAIMED\\\",\n        \\\"REAL_FAMILY_QUALIFICATION\\\": \\\"NOT_RUN\\\",\n        \\\"SOURCE_QUALIFICATION\\\": \\\"NOT_RUN\\\",\n        \\\"G02_G06_QUALIFICATION\\\": \\\"NOT_CLAIMED\\\",\n        \\\"SCIENTIFIC_VALIDATION_OF_INITIAL_UTILITY_WEIGHTS\\\": \\\"NOT_ESTABLISHED\\\",\n        \\\"HISTORICAL_COMPARABLE_CASE_RETRIEVAL\\\": \\\"NOT_IMPLEMENTED\\\",\n        \\\"RCA_OR_COHORT_RANKING\\\": \\\"NOT_IMPLEMENTED\\\",\n        \\\"MANUFACTURING_CONTROL_OR_SETPOINTS\\\": \\\"NOT_IMPLEMENTED\\\",\n        \\\"O5_W3_HUMAN_PILOT\\\": \\\"NOT_RUN\\\",\n        \\\"PRODUCTION_READINESS\\\": \\\"NOT_ESTABLISHED\\\",\n        \\\"CHG_144\\\": \\\"BLOCKED_REAL_SOURCE\\\",\n        \\\"CHG_162\\\": \\\"EXTERNAL_FRAMEWORK_DEPENDENCY\\\",\n        \\\"CHG_161\\\": \\\"BLOCKED_BENCHMARK_ENVIRONMENT\\\",\n    },\n}\nPath(\\\"candidate_manifest.json\\\").write_text(\n    json.dumps(manifest, indent=2, sort_keys=True) + \\\"\\\\n\\\",\n    encoding=\\\"utf-8\\\",\n)\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short --branch && rtk python3 -m json.tool candidate_manifest.json'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git switch -c project-os-artifacts/ephi/ephi-o6-next-check-planner-core-v1'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git add candidate_manifest.json && rtk git commit -m 'CHG-171 candidate artifact carrier'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git push -u origin project-os-artifacts/ephi/ephi-o6-next-check-planner-core-v1'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git show project-os-artifacts/ephi/ephi-o6-next-check-planner-core-v1:candidate_manifest.json'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git status --short --branch && rtk git show -s --format='%H%n%P%n%T%n%s' HEAD\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git ls-remote origin refs/heads/main refs/heads/codex/ephi-o6-next-check-planner-core-v1 refs/heads/project-os-artifacts/ephi/ephi-o6-next-check-planner-core-v1 refs/heads/codex-fabric/evidence/ephi/ephi-o6-next-check-planner-core-v1'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git worktree remove /tmp/ephi-chg171-artifact'",
+      "exit_code": 0,
+      "type": "command_execution"
+    }
+  ],
+  "codex": {
+    "cli_version": "codex-cli 0.155.1",
+    "configured_model": "gpt-6-luna",
+    "event_count": 219,
+    "provider_reported_model": null,
+    "reasoning_effort": "xhigh",
+    "terminal_type": "turn.completed",
+    "usage": {
+      "cache_hit_percent": 97.66,
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 14033920,
+      "fresh_input_tokens": 336649,
+      "input_tokens": 14370569,
+      "non_reasoning_output_tokens": 55003,
+      "output_tokens": 125059,
+      "reasoning_output_tokens": 70056,
+      "total_processed_tokens": 14495628
+    },
+    "warnings": []
+  },
+  "commits": [
+    {
+      "sha": "8e17d87b300aaf89b2c8c06023ae828d0b57cf1d",
+      "subject": "CHG-171 O6.1 deterministic next-check planner core"
+    }
+  ],
+  "diff": {
+    "additions": 2532,
+    "changed_files": 7,
+    "commit_count": 1,
+    "deletions": 6
+  },
+  "error_code": null,
+  "evidence_manifest": {
+    "count": 3,
+    "items": [
+      {
+        "bytes": 17604,
+        "path": "13_Package_Review.md",
+        "sha256": "cfe8a09211e13740a75cee444437659739275dd910966d888a72407c24d9bfff"
+      },
+      {
+        "bytes": 20901,
+        "path": "README.md",
+        "sha256": "db73aeaa29fa41471c0aa7460c5e5b1f0b58acd1b9e7c22bfc63f9d99a7a7f6c"
+      },
+      {
+        "bytes": 35629,
+        "path": "manifest.json",
+        "sha256": "dbdadc8dab9bbbac96ba2b6c26b3044190ae76e60a40db4b2904b80d6dc91928"
+      }
+    ],
+    "version": 1
+  },
+  "evidence_publisher_release": "1.2.4-quota-recovery-candidate",
+  "fabric_capture": {
+    "applied": false,
+    "paths_before": 0,
+    "transient_untracked_removed": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "fabric_release": "1.2.4-quota-recovery-candidate",
+  "failure_class": null,
+  "finished_at": "2026-09-22T22:23:35Z",
+  "git": {
+    "base_is_ancestor": true,
+    "base_sha": "159c71af1e6a9e36d87da298917f78a491f4546c",
+    "branch": "codex/ephi-o6-next-check-planner-core-v1",
+    "detached_verify": false,
+    "head_sha": "8e17d87b300aaf89b2c8c06023ae828d0b57cf1d",
+    "remote_exact_head": true,
+    "remote_head_sha": "8e17d87b300aaf89b2c8c06023ae828d0b57cf1d",
+    "target_branch": "main",
+    "target_drifted_since_acceptance": false,
+    "target_head_observed_after_execution": "159c71af1e6a9e36d87da298917f78a491f4546c",
+    "work_branch": "codex/ephi-o6-next-check-planner-core-v1",
+    "worktree_clean": true
+  },
+  "instructions": {
+    "files": [
+      {
+        "bytes": 1458,
+        "path": "AGENTS.md",
+        "sha256": "4349f387a79d886ed1264604ff48c582698e539e08ed8fb2f9d8ab8fbf6f804a"
+      }
+    ],
+    "total_bytes": 1458,
+    "warning": null
+  },
+  "job_id": "CF-ea2ecac15d8e2a43f07e3570",
+  "kind": "codex-fabric-audit-evidence",
+  "locator": {
+    "branch": "codex-fabric/evidence/ephi/ephi-o6-next-check-planner-core-v1",
+    "path": ".codex-fabric/audit.json",
+    "ref": "refs/heads/codex-fabric/evidence/ephi/ephi-o6-next-check-planner-core-v1"
+  },
+  "operation": "BUILD",
+  "policy": {
+    "environment_policy_sha256": "e077daca74297b3c30bee8989f00f8ca5338f7610b4d016a6c48db524205d064",
+    "fabric_release": "1.2.4-quota-recovery-candidate",
+    "policy_sha256": "123615bf2f6e57dcac197e49ca98ceac59ada86a55e2c84445ea5d00812c0833",
+    "registry_sha256": "cfc765f3211c37c7967a138f3b2d89a99341939b15b2623f92744d007f625d6f"
+  },
+  "project_id": "ephi",
+  "recovery": {
+    "model_rerun_safe": false,
+    "recovery_required": false,
+    "retry_safe": false,
+    "retry_scope": null,
+    "worktree_retained": true
+  },
+  "request": "ephi-o6-next-check-planner-core-v1",
+  "schema_version": 1,
+  "started_at": "2026-09-22T21:42:41Z",
+  "status": "EXECUTED_CHANGE",
+  "timing": {
+    "execution_seconds": 2454,
+    "queue_seconds": 0,
+    "total_seconds": 2454
+  },
+  "transport": {
+    "bytes": 8077,
+    "envelope": "FABRIC/2",
+    "prompt_bytes": 7757,
+    "prompt_sha256": "b8a3944da1b5a9d7e00dd1db93383f6228aca9ae1c6b7ae78c6e67a443538644",
+    "sha256": "ea2ecac15d8e2a43f07e3570b6009d22b3a1b0ef270483fb6d740f7edf18a1e9"
+  }
+}
