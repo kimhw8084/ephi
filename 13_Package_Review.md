@@ -148,6 +148,22 @@ PostgreSQL, identity, source and browser evidence. `tests/test_o3_postgresql.py`
 is the real-PostgreSQL restart/concurrency/atomicity evidence and is
 `NOT_RUN` when `EPHI_TEST_POSTGRES_DSN` is absent.
 
+## CHG-167 O5.1 unified decision-loop core
+
+The O5.1 candidate keeps `episode_workflow` as the sole durable Episode
+workflow/work-state aggregate. Its nested `decision_loop` extension stores
+checks, action/reconciliation facts, locked recovery evidence, closure and
+reopen history under the same version and CAS. O5 has no create-if-missing
+aggregate path, parallel work-state field, second receipt/audit/outbox path or
+new authorization authority. The closure contract requires an exact locked
+PASS plan bound to a qualifying current-cycle action and post-action evidence;
+technical PASS leaves O3 work open until `CloseEpisode` commits.
+
+Offline unified-authority evidence is in `tests.test_o5_decision_loop`.
+`tests.test_o5_postgresql` is the additive DSN-gated PostgreSQL 18.x evidence
+and is explicitly executed by the existing PostgreSQL CI lane. No migration is
+needed because the repair extends the existing aggregate JSON authority.
+
 ## CHG-105 W0 runtime delta
 
 The independent framework/dependency qualification slice is recorded separately in [the runtime evidence](evidence/review/nicegui_base_runtime_evidence.json) and linked from [the NiceGUI Base binding manifest](evidence/review/nicegui_base_binding_manifest.json). It verified an isolated Python 3.11.7 environment, the exact NiceGUI Base VCS commit/version, exact `nicegui==3.15.0`, and 21/21 CHG-104 public-root authority imports. All six requested installed discovery commands returned machine-readable output. `runtime-contract` and browserless framework `runtime-smoke --port 0` PASS; application/browser/production qualification remain NOT_RUN. The canonical package self-check and Git-native baseline are the current W0 execution targets.

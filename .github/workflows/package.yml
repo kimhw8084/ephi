@@ -191,7 +191,7 @@ jobs:
           if-no-files-found: error
 
   postgresql-integration:
-    name: PostgreSQL command/worker/read/artifact/O9 integration (Python 3.13)
+    name: PostgreSQL command/worker/read/artifact/O3/O5/O9 integration (Python 3.13)
     runs-on: ubuntu-latest
     timeout-minutes: 10
     env:
@@ -283,6 +283,10 @@ jobs:
         env:
           EPHI_TEST_POSTGRES_DSN: postgresql://ephi_ci:ephi_ci_password@127.0.0.1:5432/ephi_ci
         run: python -m unittest tests.test_o3_postgresql -v
+      - name: Run PostgreSQL O5 unified Episode workflow integration tests
+        env:
+          EPHI_TEST_POSTGRES_DSN: postgresql://ephi_ci:ephi_ci_password@127.0.0.1:5432/ephi_ci
+        run: python -m unittest tests.test_o5_postgresql -v
       - name: Run PostgreSQL O8 current-authorization security tests
         env:
           EPHI_TEST_POSTGRES_DSN: postgresql://ephi_ci:ephi_ci_password@127.0.0.1:5432/ephi_ci
