@@ -51,8 +51,8 @@
     },
     {
       "path": ".github/workflows/package.yml",
-      "bytes": 13924,
-      "sha256": "349b510787ac0c26f4ad5fa75de2f79c509ad4aceae954642f3eec6f3b106b03"
+      "bytes": 14187,
+      "sha256": "8c55046fd368d9995528c61e1cc493aa4e0730208d07e65e3b3c8fe4af1061b4"
     },
     {
       "path": ".gitignore",
@@ -141,8 +141,8 @@
     },
     {
       "path": "13_Package_Review.md",
-      "bytes": 14609,
-      "sha256": "2a63111e109d6eb692084af7787cfac75e2ab9173d6000d9d94dbac91431eefb"
+      "bytes": 16520,
+      "sha256": "2b3d7826b25dba89ef84a4fec1ac5b397624bb7d19d8baf711cf1f36e2f855c7"
     },
     {
       "path": "AGENTS.md",
@@ -156,8 +156,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 17739,
-      "sha256": "f5ea8a5df6ba9311f92debc0a983d64739cbd7fa94901acf9b7b7d8ca9ef2068"
+      "bytes": 19304,
+      "sha256": "66522c94f82292c13eecf4e88d904a0103170dd44352e0e071603d1292cdc59e"
     },
     {
       "path": "app.py",
@@ -495,6 +495,11 @@
       "sha256": "0fb09ed09f3f9a86d66f44dd76316f30a581cec8b4d712cad4403f7971d70259"
     },
     {
+      "path": "migrations/007_o5_decision_snapshot_handoff.sql",
+      "bytes": 4742,
+      "sha256": "68c46a76a345a316288d724937fd330cca65301e432811f9086440be20f3623c"
+    },
+    {
       "path": "nicegui_base.toml",
       "bytes": 358,
       "sha256": "c15ff7d2962a98badac22def617368b6e3dc03fb77c3d54f03d2e8b6d9d6087c"
@@ -596,8 +601,8 @@
     },
     {
       "path": "src/ephi/application/__init__.py",
-      "bytes": 9117,
-      "sha256": "ab44eeaad80ff6562ecbbf2cd90fef77f480e80f5bcdff9e05e2f8135f459231"
+      "bytes": 10884,
+      "sha256": "f0214e84fb1d8c57c71f2585ac029c45731179cfbea66ddb89d0ad3eba20c4df"
     },
     {
       "path": "src/ephi/application/artifacts.py",
@@ -628,6 +633,11 @@
       "path": "src/ephi/application/errors.py",
       "bytes": 7681,
       "sha256": "627b90adc9807c42940796384a0446c0742a82572936c2f832856d9a05e25433"
+    },
+    {
+      "path": "src/ephi/application/handoff.py",
+      "bytes": 37209,
+      "sha256": "8a4ad8b9199c084ba813f4dd7d96c2586a938a0c9b6c79ed52508cc7a0f09430"
     },
     {
       "path": "src/ephi/application/hashing.py",
@@ -671,8 +681,8 @@
     },
     {
       "path": "src/ephi/application/worker.py",
-      "bytes": 3801,
-      "sha256": "4ce4c5b0fef2c6ebae33594867b977454bc0a8eaf15d12ba96295c4cdc5feb55"
+      "bytes": 3830,
+      "sha256": "824eb109fe78714f1503435caa18c64e81ccf34a12af9219ef6ee1427e2f5230"
     },
     {
       "path": "src/ephi/application/workflow.py",
@@ -696,13 +706,18 @@
     },
     {
       "path": "src/ephi/infrastructure/__init__.py",
-      "bytes": 1230,
-      "sha256": "ef560671e03e7eb6ec09f3ceae269af61f1ffd716d318eafebcf9c5929988381"
+      "bytes": 1302,
+      "sha256": "49fd7c93d8026233f84230cd4c4aa912508a33fa6c117020b4ed48cec81d1098"
+    },
+    {
+      "path": "src/ephi/infrastructure/handoff.py",
+      "bytes": 27507,
+      "sha256": "696bc1298c98827cf5a74c70bb7d0d8f4106d7ec400f3423ca8d855388dcd1c1"
     },
     {
       "path": "src/ephi/infrastructure/postgresql.py",
-      "bytes": 28257,
-      "sha256": "d47a78ab6e3011a5d95e49415c937170946031803859f795c16ef409358362f2"
+      "bytes": 28571,
+      "sha256": "c22891a48f0a2e2b926dd41ed889b96dc2bfab83b3eab440e43b7e505e1a46fb"
     },
     {
       "path": "src/ephi/infrastructure/postgresql_o3.py",
@@ -721,13 +736,13 @@
     },
     {
       "path": "src/ephi/infrastructure/postgresql_worker.py",
-      "bytes": 32159,
-      "sha256": "05d5b7952f2c47f5cd118539103aa87de21ee84dd4d0fe512bbd704ac704adc5"
+      "bytes": 32494,
+      "sha256": "d18f91eb8bcb75878145cff4cf935f3f2481e5f312fb6d50e2aae885ba519ffd"
     },
     {
       "path": "src/ephi/infrastructure/sqlite.py",
-      "bytes": 20744,
-      "sha256": "d9249f82ed07eabfe668fd85d1ad46de67837f7160f91dedbc7069dadfa9c30d"
+      "bytes": 24237,
+      "sha256": "602d6ae89aae10246f69721a59f99a0d1acc451738284f835305a013b8b8d464"
     },
     {
       "path": "src/ephi/py.typed",
@@ -860,6 +875,16 @@
       "sha256": "94964ffb74bb91169743e4966257dca31e269475d94eefe322269129555c6b89"
     },
     {
+      "path": "tests/test_o5_handoff.py",
+      "bytes": 16816,
+      "sha256": "e5ffadd9656e67afa288ff5ccafd4dc648812c89931b3a29c83cad2499dc6b63"
+    },
+    {
+      "path": "tests/test_o5_handoff_postgresql.py",
+      "bytes": 21525,
+      "sha256": "ec8a76efe21aa5071fc1af6107f74510e3e7619f0bdce9b6db21ed3f9c09ad44"
+    },
+    {
       "path": "tests/test_o5_postgresql.py",
       "bytes": 9324,
       "sha256": "4b0324e59a6aebb08eca9fac0e8f000546798d25932fed582217d6770b00331c"
@@ -882,7 +907,7 @@
     {
       "path": "tests/test_o9_operations.py",
       "bytes": 23415,
-      "sha256": "562ae02a401249d5641fb23b34c8a486351e4623226a826e6ddc7d4b40364b48"
+      "sha256": "c77bf8990acb0dae7b657a9ff03f9ba936f477dee9f54f573c5c624899e3bf31"
     },
     {
       "path": "tests/test_package.py",

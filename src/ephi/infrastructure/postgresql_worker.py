@@ -252,10 +252,12 @@ class PostgreSQLWorkerStore:
             and getattr(getattr(exc, "diag", None), "constraint_name", None) == "job_scope_semantic_unique"
         )
 
-    def claim(self, scope: AccessScope, owner: str, *, raise_if_none: bool = False) -> JobRecord | None:
+    def claim(self, scope: AccessScope, owner: str, *, raise_if_none: bool = False, job_type: str | None = None) -> JobRecord | None:
         if not isinstance(scope, AccessScope):
             raise ValidationFailureError("scope must be an AccessScope")
         owner = _validated_identity(owner, "owner")
+        if job_type is not None:
+            job_type = _validated_identity(job_type, "job_type")
         seconds = self._lease_duration.total_seconds()
         with self._transaction() as connection:
             row = connection.execute(
@@ -267,6 +269,7 @@ class PostgreSQLWorkerStore:
                     FROM job AS j
                     CROSS JOIN db_now
                     WHERE j.scope_key = %s
+                      AND (%s::text IS NULL OR j.job_type = %s)
                       AND j.attempts >= j.max_attempts
                       AND (
                           (j.status = 'RUNNING' AND j.lease_expires_at <= db_now.now)
@@ -291,6 +294,7 @@ class PostgreSQLWorkerStore:
                     FROM job AS j
                     CROSS JOIN db_now
                     WHERE j.scope_key = %s
+                      AND (%s::text IS NULL OR j.job_type = %s)
                       AND j.status IN ('QUEUED', 'DEFERRED', 'RUNNING')
                       AND j.attempts < j.max_attempts
                       AND j.available_at <= db_now.now
@@ -312,9 +316,11 @@ class PostgreSQLWorkerStore:
                 """,
                 (
                     scope.canonical_key,
+                    job_type, job_type,
                     _ATTEMPT_EXHAUSTED_CODE,
                     _ATTEMPT_EXHAUSTED_MESSAGE,
                     scope.canonical_key,
+                    job_type, job_type,
                     owner,
                     seconds,
                 ),

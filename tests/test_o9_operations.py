@@ -98,7 +98,7 @@ class O9OperationsContractTests(unittest.TestCase):
         first = _migration_identity(ROOT)
         second = _migration_identity(ROOT)
         self.assertEqual(first, second)
-        self.assertEqual(first["migration_count"], 6)
+        self.assertEqual(first["migration_count"], 7)
         self.assertEqual(len(first["identity_sha256"]), 64)
         self.assertEqual([item["path"] for item in first["files"]], sorted(item["path"] for item in first["files"]))
 

@@ -48,6 +48,10 @@ _REQUIRED_SCHEMA_TABLES = (
     "o3_attention_projection",
     "source_snapshot",
     "source_capability",
+    "decision_snapshot",
+    "handoff_intent",
+    "handoff_delivery_status",
+    "handoff_delivery_attempt",
 )
 
 
@@ -465,6 +469,13 @@ class PostgreSQLReferenceTransactionAdapter:
         from .postgresql_worker import PostgreSQLWorkerStore
 
         return PostgreSQLWorkerStore(self, config=config)
+
+    def handoff_store(self):
+        """Return the O5.2 snapshot/handoff adapter on this durable store."""
+
+        from .handoff import ReferenceHandoffStore
+
+        return ReferenceHandoffStore(self)
 
     def read_store(self):
         """Return the generic CHG-129 read adapter on this same connection."""

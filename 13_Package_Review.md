@@ -164,6 +164,37 @@ Offline unified-authority evidence is in `tests.test_o5_decision_loop`.
 and is explicitly executed by the existing PostgreSQL CI lane. No migration is
 needed because the repair extends the existing aggregate JSON authority.
 
+## CHG-169 O5.2 decision snapshot and handoff candidate
+
+The O5.2 candidate adds migration 007 for immutable bounded decision snapshots,
+deduplicated handoff intents, delivery status/attempt records and the narrow
+indexes required to query them. It does not add a workflow, outbox, queue or
+authorization authority: snapshots bind the existing `episode_workflow` row
+and viewed revisions, projection reads only committed `outbox_event`, and
+delivery uses the existing `job`/lease/fencing/`applied_effect` substrate.
+Recipient and channel resolution is represented by qualification-only generic
+ports and deterministic in-app adapters; real company email/Slack/Teams/SMS/
+PagerDuty bindings are not implemented. Current authorization is checked before
+snapshot/status/deep-link reads and recipient authorization is re-resolved at
+dispatch. External delivery is at-least-once and ambiguous outcomes remain
+UNKNOWN until explicit reconciliation; exactly-once external delivery is not
+claimed.
+
+Focused offline evidence is in `tests.test_o5_handoff`. Real PostgreSQL 18.6
+evidence covers immutable snapshots, stale revision rejection, outbox
+projection races, deduplication, recipient revocation, fencing, bounded retry
+failure, restart durability and UNKNOWN reconciliation in
+`tests.test_o5_handoff_postgresql`. No UI or NiceGUI Base file is changed.
+
+The O5.2 FIX continuation keeps O2 as the event authority. The projector
+validates the typed outbox envelope and derives classification/material-change
+identity from committed event facts using only the explicit `ClaimEpisode`,
+`RecordExternalAction`, `CloseEpisode` and `ReopenEpisode` mappings. Unsupported
+events and caller relabel/signature mismatches fail before intent/job writes;
+the focused regressions cover initialization misuse, distinct committed
+material events, exact replay, concurrent projection and binding/authorization
+fail-closed behavior.
+
 ## CHG-105 W0 runtime delta
 
 The independent framework/dependency qualification slice is recorded separately in [the runtime evidence](evidence/review/nicegui_base_runtime_evidence.json) and linked from [the NiceGUI Base binding manifest](evidence/review/nicegui_base_binding_manifest.json). It verified an isolated Python 3.11.7 environment, the exact NiceGUI Base VCS commit/version, exact `nicegui==3.15.0`, and 21/21 CHG-104 public-root authority imports. All six requested installed discovery commands returned machine-readable output. `runtime-contract` and browserless framework `runtime-smoke --port 0` PASS; application/browser/production qualification remain NOT_RUN. The canonical package self-check and Git-native baseline are the current W0 execution targets.
