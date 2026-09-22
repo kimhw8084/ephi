@@ -195,6 +195,24 @@ the focused regressions cover initialization misuse, distinct committed
 material events, exact replay, concurrent projection and binding/authorization
 fail-closed behavior.
 
+## CHG-171 O6.1 deterministic planner core
+
+The O6.1 planner is an authorized read over the existing O5 `episode_workflow`
+aggregate. Typed current facts, exact viewed revisions, the versioned ordinal
+policy and curated template-catalog content all contribute to deterministic
+plan identity. It returns at most three eligible recommendations with stable
+exclusion codes and bounded reason traces. It does not create planner state,
+change O5 check outcomes, generate operating instructions or add persistence.
+
+`tests.test_o6_planner` covers deterministic identity/ranking, stale revisions,
+current authorization, capability and prerequisite gates, reuse/expiry,
+unknown costs, deadlines, redundancy and nonmutation of started work. The
+DSN-gated `tests.test_o6_planner_postgresql` reads durable O5 state from real
+PostgreSQL 18, reproduces the plan after restart and compares workflow truth
+before and after. This reference/integration evidence does not qualify a real
+family, supply a production catalog, complete W4, or validate the initial
+ordinal utility weights scientifically.
+
 ## CHG-105 W0 runtime delta
 
 The independent framework/dependency qualification slice is recorded separately in [the runtime evidence](evidence/review/nicegui_base_runtime_evidence.json) and linked from [the NiceGUI Base binding manifest](evidence/review/nicegui_base_binding_manifest.json). It verified an isolated Python 3.11.7 environment, the exact NiceGUI Base VCS commit/version, exact `nicegui==3.15.0`, and 21/21 CHG-104 public-root authority imports. All six requested installed discovery commands returned machine-readable output. `runtime-contract` and browserless framework `runtime-smoke --port 0` PASS; application/browser/production qualification remain NOT_RUN. The canonical package self-check and Git-native baseline are the current W0 execution targets.

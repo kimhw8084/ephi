@@ -305,6 +305,33 @@ malformed events fail closed. Retained caller classification/signature
 arguments are checked against the derived facts and cannot create another
 logical intent.
 
+## CHG-171 O6.1 deterministic next-check planner core
+
+`ephi.application.planner` adds a typed, versioned curated `CheckTemplate`,
+planner-policy and bounded current-facts contract. `NextCheckPlannerService`
+reads through the existing O5 `DecisionLoopCommandService` and
+`CurrentAuthorizationAuthority`, requires one exact active Episode cycle,
+workflow version and viewed `RevisionVector`, and rechecks that view before
+disclosure. It hashes the canonical facts, durable O5 workflow state, policy
+and catalog into immutable plan/input identities; planning does not persist or
+mutate workflow/check state.
+
+V1 uses the versioned ordinal utility
+`U = 0.45*D + 0.20*N + 0.20*F - 0.10*E - 0.15*R`, stable typed exclusion
+reasons and structured explanation traces. Scores are ordinal ranking values,
+not posterior probabilities, causal probabilities or scientific confidence.
+Unknown effort and turnaround receive conservative ranking treatment; a
+supported deadline excludes work that cannot be shown timely. Existing
+completed evidence is reused only for the same target/context while its
+validity and reuse window hold. Human or external work remains under O5's
+separate commands and is never changed by replanning.
+
+Focused evidence is `tests.test_o6_planner`; the PostgreSQL 18 restart and
+nonmutation regression is `tests.test_o6_planner_postgresql` and requires an
+explicit `EPHI_TEST_POSTGRES_DSN`. Templates are supplied as curated catalog
+configuration; this slice adds no production-family catalog, capability
+qualification, source binding, UI, plan persistence or W4 qualification claim.
+
 ## CHG-147 O9.1 operations and restore rehearsal
 
 The CLI-only O9.1 boundary is documented in [operations](operations/README.md).
