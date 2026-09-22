@@ -1,0 +1,284 @@
+{
+  "accepted_at": "2026-09-22T03:40:44Z",
+  "changed_files": [],
+  "checks": [
+    {
+      "command": "/bin/zsh -lc \"pwd && sed -n '1,240p' /Users/haewonkim/.codex/RTK.md && sed -n '1,240p' /Users/haewonkim/.codex/law.md && printf '\\\\n--- README ---\\\\n' && sed -n '1,240p' README.md && printf '\\\\n--- PACKAGE REVIEW ---\\\\n' && sed -n '1,260p' 13_Package_Review.md && printf '\\\\n--- STATUS ---\\\\n' && git status --short --branch && git remote -v && printf '\\\\n--- TOP LEVEL ---\\\\n' && rg --files -g '\"'!evidence/**'\"' -g '\"'!evidence/import/**'\"' | sed -n '1,160p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk find /Users/haewonkim/.codex-fabric -maxdepth 4 -type f -iname '*fabric*' -o -iname '*dispatch*' 2>/dev/null | sed -n '1,240p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk --version && rtk git status --short --branch && rtk git rev-parse HEAD && rtk git rev-parse HEAD''^{tree} && rtk git show -s --format='\"'%H%n%T%n%P%n%s' HEAD && rtk git ls-remote origin 'refs/heads/main' 'refs/heads/codex/ephi-o5-decision-loop-core-verify2' 'refs/heads/project-os-artifacts/ephi/ephi-o5-decision-loop-core-verify2' 'refs/heads/codex-fabric/evidence/ephi/ephi-o5-decision-loop-core-verify2' 'refs/heads/codex-fabric/evidence/ephi/ephi-o5-decision-loop-core-fix1' 'refs/heads/project-os-artifacts/ephi/ephi-o5-decision-loop-core-fix1'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n --hidden --glob '\"'!evidence/**'\"' --glob '\"'!evidence/import/**'\"' --glob '\"'!.git/**'\"' 'Fabric|project-os-artifacts|codex-fabric|CHG-167|ephi-o5-decision-loop|35681203213|96604797122' . /Users/haewonkim/.codex 2>/dev/null\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git show-ref | rg 'ephi-o5|main|codex/ephi-o5' && printf '\\\\n--- object checks ---\\\\n' && for ref in 8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e de2063907127a988844179e058e435d7b7666c96 cfb6444e7bc9e4780c01163bc844c222d876cd90 4d1de0ad585f898fd55e39aac5110e9ccdc8aa6d 3eef086db9dcee0650deb36fd3eb5ae999966872 6a880a5a9d165603cfac55df64d00651310f7e24; do printf '%s ' \\\"\"'$ref\"; rtk git cat-file -t \"$ref\" 2>/dev/null || true; done && printf '\"'\\\\n--- candidate ---\\\\n' && rtk git show -s --format='%H%n%T%n%P%n%s' cfb6444e7bc9e4780c01163bc844c222d876cd90 && printf '\\\\n--- candidate tree/base diff stat ---\\\\n' && rtk git diff --stat 8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e cfb6444e7bc9e4780c01163bc844c222d876cd90 && printf '\\\\n--- local fabric-looking paths ---\\\\n' && (rtk rg --files /Users/haewonkim/.codex 2>/dev/null | rg -i 'fabric|dispatch|audit' | sed -n '1,240p') && printf '\\\\n--- commands ---\\\\n' && (command -v codex-fabric || true; command -v fabric || true; command -v codex || true; command -v gh || true)\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"printf '%s\\\\n' '--- R2 carrier tree ---' && rtk git ls-tree -r --name-only refs/remotes/origin/project-os-artifacts/ephi/ephi-o5-decision-loop-core-fix1 && printf '%s\\\\n' '--- R2 candidate manifest ---' && rtk git show refs/remotes/origin/project-os-artifacts/ephi/ephi-o5-decision-loop-core-fix1:candidate_manifest.json && printf '%s\\\\n' '--- R2 decision evidence ---' && rtk git show refs/remotes/origin/project-os-artifacts/ephi/ephi-o5-decision-loop-core-fix1:decision_loop_evidence.json && printf '%s\\\\n' '--- R2 carrier manifest ---' && rtk git show refs/remotes/origin/project-os-artifacts/ephi/ephi-o5-decision-loop-core-fix1:carrier-manifest.json && printf '%s\\\\n' '--- R1 carrier files ---' && rtk git ls-tree -r --name-only refs/remotes/origin/project-os-artifacts/ephi/ephi-o5-decision-loop-core-v1 && printf '%s\\\\n' '--- R2 artifact commit ---' && rtk git show -s --format='%H%n%T%n%P%n%an%n%ae%n%ad%n%s' --date=iso-strict refs/remotes/origin/project-os-artifacts/ephi/ephi-o5-decision-loop-core-fix1 && printf '%s\\\\n' '--- R2 native evidence files ---' && rtk git ls-tree -r --name-only refs/remotes/origin/codex-fabric/evidence/ephi/ephi-o5-decision-loop-core-fix1 && printf '%s\\\\n' '--- R2 native audit metadata ---' && rtk git show refs/remotes/origin/codex-fabric/evidence/ephi/ephi-o5-decision-loop-core-fix1:.codex-fabric/audit.json 2>/dev/null || true\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"printf '%s\\\\n' '--- fabric dirs ---' && (rtk find /Users/haewonkim/.codex-fabric -maxdepth 3 -type d -print 2>/dev/null | sed -n '1,160p') && printf '%s\\\\n' '--- git config ---' && rtk git config --local --list && printf '%s\\\\n' '--- native evidence commit ---' && rtk git show -s --format='%H%n%T%n%P%n%an%n%ae%n%ad%n%s' --date=iso-strict refs/remotes/origin/codex-fabric/evidence/ephi/ephi-o5-decision-loop-core-fix1 && printf '%s\\\\n' '--- native evidence tree ---' && rtk git ls-tree -r --name-only refs/remotes/origin/codex-fabric/evidence/ephi/ephi-o5-decision-loop-core-fix1 | sed -n '1,220p' && printf '%s\\\\n' '--- native evidence commits ---' && rtk git log --all --oneline --decorate --graph --max-count=30 -- refs/remotes/origin/codex-fabric/evidence/ephi/ephi-o5-decision-loop-core-fix1 && printf '%s\\\\n' '--- branch logs ---' && rtk git log --all --oneline --decorate --graph --max-count=45 --grep='ephi-o5-decision-loop' && printf '%s\\\\n' '--- env names ---' && rtk env | cut -d= -f1 | rg -i 'fabric|codex|project|linear|github|git' | sed -n '1,160p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"printf '%s\\\\n' '--- R2 audit ---' && rtk git show refs/remotes/origin/codex-fabric/evidence/ephi/ephi-o5-decision-loop-core-fix1:.codex-fabric/audit.json && printf '%s\\\\n' '--- fabric root ---' && (rtk ls -la /Users/haewonkim/.codex-fabric | sed -n '1,220p') && printf '%s\\\\n' '--- bin ---' && (rtk find /Users/haewonkim/.codex-fabric/bin -maxdepth 2 -type f -print 2>/dev/null | sed -n '1,220p') && printf '%s\\\\n' '--- jobs ---' && (rtk find /Users/haewonkim/.codex-fabric/jobs -maxdepth 2 -type f -print 2>/dev/null | sed -n '1,220p') && printf '%s\\\\n' '--- state ---' && (rtk find /Users/haewonkim/.codex-fabric/state -maxdepth 2 -type f -print 2>/dev/null | sed -n '1,220p') && printf '%s\\\\n' '--- config ---' && (rtk find /Users/haewonkim/.codex-fabric/config -maxdepth 2 -type f -print 2>/dev/null | sed -n '1,220p')\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk /Users/haewonkim/.codex-fabric/bin/fabricctl --help || true && printf '%s\\\\n' '--- projectos help ---' && rtk /Users/haewonkim/.codex-fabric/bin/fabricctl projectos-integrate-stdin --help || true && printf '%s\\\\n' '--- receive help ---' && rtk /Users/haewonkim/.codex-fabric/bin/fabricctl receive-stdin --help || true && printf '%s\\\\n' '--- projects config ---' && rtk sed -n '1,240p' /Users/haewonkim/.codex-fabric/projects.yaml && printf '%s\\\\n' '--- current audit local ---' && rtk sed -n '1,220p' /Users/haewonkim/.codex-fabric/audit.json && printf '%s\\\\n' '--- fabricctl metadata ---' && rtk file /Users/haewonkim/.codex-fabric/bin/fabricctl && rtk head -40 /Users/haewonkim/.codex-fabric/bin/fabricctl\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"printf '%s\\\\n' '--- fabric.py entrypoints ---' && rtk rg -n '\"'^(def |class )|receive|dispatch|FABRIC/2|projectos|job_id|argparse|stdin'\"' /Users/haewonkim/.codex-fabric/releases/1.2.4-quota-recovery-candidate/fabric.py | sed -n '1,260p' && printf '%s\\\\n' '--- R2 job files ---' && (rtk find /Users/haewonkim/.codex-fabric/jobs -maxdepth 2 -type f -path '*CF-a25c562ae0fbbe4b807f2794*' -print 2>/dev/null | sort) && printf '%s\\\\n' '--- R2 job json ---' && rtk sed -n '1,260p' /Users/haewonkim/.codex-fabric/jobs/CF-a25c562ae0fbbe4b807f2794.executed/job.json && printf '%s\\\\n' '--- R2 prompt ---' && rtk sed -n '1,260p' /Users/haewonkim/.codex-fabric/jobs/CF-a25c562ae0fbbe4b807f2794.executed/prompt.md && printf '%s\\\\n' '--- R2 lease ---' && rtk sed -n '1,160p' /Users/haewonkim/.codex-fabric/jobs/CF-a25c562ae0fbbe4b807f2794.executed/lease.json\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '621,760p' /Users/haewonkim/.codex-fabric/releases/1.2.4-quota-recovery-candidate/fabric.py && printf '%s\\\\n' '--- receive main ---' && rtk sed -n '3790,3985p' /Users/haewonkim/.codex-fabric/releases/1.2.4-quota-recovery-candidate/fabric.py && printf '%s\\\\n' '--- dispatch helper ---' && rtk sed -n '3985,4115p' /Users/haewonkim/.codex-fabric/releases/1.2.4-quota-recovery-candidate/fabric.py && printf '%s\\\\n' '--- route syntax examples in prior prompts ---' && for d in /Users/haewonkim/.codex-fabric/jobs/CF-*.executed/prompt.md; do if rtk rg -q 'ephi-o5-decision-loop-core' \\\"\"'$d\" 2>/dev/null; then printf '\"'%s\\\\n' \\\"\"'$d\"; rtk sed -n '\"'1,24p' \\\"\"'$d\"; fi; done'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n 'def receive|response_base\\\\(|publish_job\\\\(|dispatch_once\\\\(\\\\)|if __name__|sys.argv' /Users/haewonkim/.codex-fabric/releases/1.2.4-quota-recovery-candidate/fabric.py | tail -80 && rtk sed -n '4115,4310p' /Users/haewonkim/.codex-fabric/releases/1.2.4-quota-recovery-candidate/fabric.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '747,835p' /Users/haewonkim/.codex-fabric/releases/1.2.4-quota-recovery-candidate/fabric.py && printf '%s\\\\n' '--- status ephi ---' && rtk /Users/haewonkim/.codex-fabric/bin/fabricctl status ephi | sed -n '1,260p' && printf '%s\\\\n' '--- remote refs authoritative ---' && rtk git ls-remote origin refs/heads/main refs/heads/codex/ephi-o5-decision-loop-core-verify2 refs/heads/codex/ephi-o5-decision-loop-core-fix1 refs/heads/project-os-artifacts/ephi/ephi-o5-decision-loop-core-fix1 refs/heads/codex-fabric/evidence/ephi/ephi-o5-decision-loop-core-fix1\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import base64,hashlib,sys\np=base64.b64decode(\\\"RXhlY3V0ZSBQcm9qZWN0IE9TIENIRy0xNjcgUjMgZXZpZGVuY2Utb25seSBWRVJJRlkyIGZvciBFUEhJIE81LjEuCgpESVNQQVRDSCBJREVOVElUWQotIFJlcG9zaXRvcnk6IGtpbWh3ODA4NC9lcGhpLgotIFByb2plY3Q6IGVwaGkuCi0gT3BlcmF0aW9uOiBWRVJJRlkuCi0gUmVxdWVzdDogZXBoaS1vNS1kZWNpc2lvbi1sb29wLWNvcmUtdmVyaWZ5Mi4KLSBGYWJyaWMgZGlzcGF0Y2ggYmFzZSBpcyBhdXRob3JpdGF0aXZlIHJlbW90ZSBtYWluQDhmZDQxYTJmZDlmNjQyMGNjNjNiZjhhMGJlYWE3M2E0NzJkMjVmMGUuCi0gQmFzZSB0cmVlOiBkZTIwNjM5MDcxMjdhOTg4ODQ0MTc5ZTA1OGU0MzVkN2I3NjY2Yzk2LgotIFdvcmsgYnJhbmNoOiBjb2RleC9lcGhpLW81LWRlY2lzaW9uLWxvb3AtY29yZS12ZXJpZnkyLgotIEV4aXN0aW5nIFByb2R1Y3QgY2FuZGlkYXRlIHRvIFZFUklGWSwgbm90IHJlYnVpbGQ6IGNmYjY0NDRlN2JjOWU0NzgwYzAxMTYzYmM4NDRjMjIyZDg3NmNkOTAuCi0gQ2FuZGlkYXRlIHRyZWU6IDRkMWRlMGFkNTg1Zjg5OGZkNTVlMzlhYWM1MTEwZTljY2RjOGFhNmQuCi0gQ2FuZGlkYXRlIHBhcmVudDogOGZkNDFhMmZkOWY2NDIwY2M2M2JmOGEwYmVhYTczYTQ3MmQyNWYwZS4KLSBFeGlzdGluZyBleGFjdC1oZWFkIENJOiBydW4gMzU2ODEyMDMyMTMgLyBzdWl0ZSA5NjYwNDc5NzEyMiwgYWxsIDggam9icyBQQVNTLgoKVFJBTlNQT1JUIENPUlJFQ1RJT04KVGhpcyBpcyBldmlkZW5jZS1vbmx5IFZFUklGWTIuIFRoZSBhdXRob3JpdGF0aXZlIEZhYnJpYyBiYXNlIGlzIG1haW5AOGZkNDFhMmZkOWY2NDIwY2M2M2JmOGEwYmVhYTczYTQ3MmQyNWYwZS4gVGhlIGNhbmRpZGF0ZSBpcyBhIHNlcGFyYXRlIHJlYWQtb25seSB2ZXJpZmljYXRpb24gdGFyZ2V0LiBEbyBub3QgdXNlIHRoZSBjYW5kaWRhdGUgU0hBIGFzIEZhYnJpYyBiYXNlLgoKTk8gUFJPRFVDVCBNVVRBVElPTgotIERvIG5vdCBtb2RpZnkgUHJvZHVjdCBzb3VyY2UsIHRlc3RzLCBDSSwgUkVBRE1FLCBtYW5pZmVzdCwgZGVwZW5kZW5jaWVzLCBtaWdyYXRpb25zLCBvciBhcHBsaWNhdGlvbiBjb2RlLgotIERvIG5vdCBjcmVhdGUgYSBQcm9kdWN0IGNvbW1pdC4KLSBEbyBub3QgY2hlcnJ5LXBpY2sgdGhlIGNhbmRpZGF0ZS4KLSBEbyBub3QgcmVzZXQgb3IgcmVwb2ludCB0aGUgVkVSSUZZIHdvcmsgYnJhbmNoIHRvIHRoZSBjYW5kaWRhdGUuCi0gRG8gbm90IG1vZGlmeSBzcmMvZXBoaS91aS8qKiBvciBOaWNlR1VJIEJhc2UuCi0gTGVhdmUgdGhlIEZhYnJpYyB3b3JrIGJyYW5jaCBhdCBpdHMgZGlzcGF0Y2gtYmFzZSBIRUFEL3RyZWU7IEZhYnJpYyBtYXkgcHVibGlzaCBvbmx5IGl0cyBub3JtYWwgYXVkaXQgbWV0YWRhdGEgb3V0c2lkZSBQcm9kdWN0IGhpc3RvcnkuCi0gRG8gbm90IG1hbnVhbGx5IGNyZWF0ZS9lZGl0IC5jb2RleC1mYWJyaWMvYXVkaXQuanNvbiBhbmQgZG8gbm90IG1hbnVhbGx5IGNyZWF0ZSwgcHVzaCwgb3IgcmVwb2ludCB0aGUgY2Fub25pY2FsIEZhYnJpYyBldmlkZW5jZSByZWYuCgpWRVJJRlkgVEFSR0VUCkluc3BlY3QgY2FuZGlkYXRlIGNmYjY0NDRlN2JjOWU0NzgwYzAxMTYzYmM4NDRjMjIyZDg3NmNkOTAgZGlyZWN0bHkgdXNpbmcgZ2l0IHNob3cvZGlmZiBhbmQsIGlmIHVzZWZ1bCwgYSBkZXRhY2hlZCB0ZW1wb3Jhcnkgd29ya3RyZWUgdGhhdCBpcyByZW1vdmVkIGFmdGVyd2FyZC4gVmVyaWZ5IGl0cyB0cmVlIGlzIGV4YWN0bHkgNGQxZGUwYWQ1ODVmODk4ZmQ1NWUzOWFhYzUxMTBlOWNjZGM4YWE2ZCBhbmQgaXRzIHNvbGUgcGFyZW50IGlzIDhmZDQxYTJmZDlmNjQyMGNjNjNiZjhhMGJlYWE3M2E0NzJkMjVmMGUuIENvbmZpcm0gdGhlIEZhYnJpYyB3b3JrIGJyYW5jaCByZW1haW5zIGF0IHRoZSBkaXNwYXRjaCBiYXNlIGFuZCBzb3VyY2UtY2xlYW4uCgpUaGUgc3Vic3RhbnRpdmUgUHJvZHVjdCBhdWRpdCBpcyBlc3RhYmxpc2hlZCBhbmQgbXVzdCBvbmx5IGJlIHJlLXJlYWQvY29uZmlybWVkLCBub3QgcmVidWlsdDoKLSBPNSB1c2VzIHRoZSBleGlzdGluZyBPMyBlcGlzb2RlX3dvcmtmbG93IGFnZ3JlZ2F0ZSBhcyB0aGUgc2luZ2xlIHdvcmstc3RhdGUgYXV0aG9yaXR5LgotIERFQ0lTSU9OX0xPT1BfQUdHUkVHQVRFX1RZUEUgYWxpYXNlcyBFUElTT0RFX1dPUktGTE9XX0FHR1JFR0FURV9UWVBFLgotIE5vIGVwaGlfZGVjaXNpb25fbG9vcCBhZ2dyZWdhdGUgcm93L3R5cGUgaXMgY3JlYXRlZC4KLSBObyBkdXBsaWNhdGUgZW5naW5lZXJpbmdfd29ya19zdGF0ZSBleGlzdHMuCi0gTzMgYW5kIE81IGNvbW1hbmRzIHNlcmlhbGl6ZSB0aHJvdWdoIHRoZSBzYW1lIGFnZ3JlZ2F0ZS92ZXJzaW9uIGFuZCBWZXJzaW9uZWRBZ2dyZWdhdGVDb21tYW5kRXhlY3V0b3IuCi0gUmV2aXNpb25WZWN0b3Iud29ya2Zsb3dfdmVyc2lvbiBpcyB0aGUgYWN0dWFsIGVwaXNvZGVfd29ya2Zsb3cgYWdncmVnYXRlIHZlcnNpb24uCi0gYWN0aW9uIC0+IHJlY292ZXJ5IC0+IGNvbmZpcm1lZC1pc3N1ZSBjbG9zdXJlIGJpbmRpbmcgaXMgZW5mb3JjZWQuCi0gc3VwcGxpZWQgcHJpb3JfYWN0aW9uX2lkIG11c3QgcmVzb2x2ZSBpbiB0aGUgY3VycmVudCBjeWNsZS4KLSBxdWFsaWZ5aW5nIHBvc3QtYWN0aW9uIHJlY292ZXJ5IHJlcXVpcmVzIGEgU1VDQ0VFREVEL29ic2VydmVkIGFjdGlvbiBib3VuZGFyeS4KLSBwcmUtYWN0aW9uIG9ic2VydmF0aW9ucyByZW1haW4gaGlzdG9yeSBidXQgY2Fubm90IGVzdGFibGlzaCBwb3N0LWFjdGlvbiBQQVNTLgotIGFuIHVuYm91bmQgdGVjaG5pY2FsIFBBU1MgY2Fubm90IGF1dGhvcml6ZSBDT05GSVJNRURfSVNTVUUgY2xvc3VyZS4KLSB0ZWNobmljYWwgUEFTUyBkb2VzIG5vdCBjbG9zZSBodW1hbiB3b3JrLgotIENsb3NlRXBpc29kZSBjaGFuZ2VzIGF1dGhvcml0YXRpdmUgTzMgd29ya19zdGF0ZSB0byBDTE9TRUQuCi0gUmVvcGVuRXBpc29kZSBwcmVzZXJ2ZXMgcHJpb3IgY3ljbGUgaGlzdG9yeSwgY3JlYXRlcyBhIG5ldyBjeWNsZSwgcmVzZXRzIG93bmVyIGV4cGxpY2l0bHksIGFuZCByZXN0b3JlcyBhdXRob3JpdGF0aXZlIHdvcmtfc3RhdGUgT1BFTi4KLSBVSS9OaWNlR1VJIEJhc2UvZGVwZW5kZW5jeSBwaW5zIGFyZSB1bmNoYW5nZWQuCgpDb25maXJtIHRoZSBleGlzdGluZyBjYW5kaWRhdGUgZXZpZGVuY2UgZmFjdHM6CnNpbmdsZV9lcGlzb2RlX3dvcmtmbG93X2F1dGhvcml0eT10cnVlLApvM19vNV92ZXJzaW9uX2NvaGVyZW50PXRydWUsCmFjdGlvbl9yZWNvdmVyeV9jbG9zdXJlX2JvdW5kPXRydWUsCnByZV9hY3Rpb25fcmVjb3ZlcnlfYmxvY2tlZD10cnVlLAp0ZWNobmljYWxfcGFzc19kb2VzX25vdF9jbG9zZV93b3JrPXRydWUsCnJlb3Blbl9oaXN0b3J5X3ByZXNlcnZlZD10cnVlLApwb3N0Z3Jlc19pbnRlZ3JhdGlvbj1QQVNTLApleGFjdF9oZWFkX2NpPVBBU1MsCnVpX2NoYW5nZWQ9ZmFsc2UsCm5pY2VndWlfYmFzZV9jaGFuZ2VkPWZhbHNlLApkZXBlbmRlbmN5X3BpbnNfY2hhbmdlZD1mYWxzZS4KClByZXNlcnZlIG5vbi1jbGFpbXM6ClJFQUxfRkFNSUxZX1FVQUxJRklDQVRJT049Tk9UX1JVTiwKSFVNQU5fUElMT1Q9Tk9UX1JVTiwKVUlfUVVBTElGSUNBVElPTj1OT1RfUlVOLApQUk9EVUNUSU9OX0FDVElPTl9FWEVDVVRJT049Tk9UX0lNUExFTUVOVEVELApQUk9EVUNUSU9OX1JFQ09WRVJZX1RIUkVTSE9MRFM9Tk9UX0VTVEFCTElTSEVELApQUk9EVUNUSU9OX1JFQURZPWZhbHNlLgoKTkFUSVZFIEZBQlJJQyBFVklERU5DRQpQdWJsaXNoIG5vcm1hbCBjYW5vbmljYWwgRmFicmljIGV2aWRlbmNlIGZvciB0aGlzIFZFUklGWSByZXF1ZXN0IGF0OgpyZWZzL2hlYWRzL2NvZGV4LWZhYnJpYy9ldmlkZW5jZS9lcGhpL2VwaGktbzUtZGVjaXNpb24tbG9vcC1jb3JlLXZlcmlmeTIKVGhlIGV2aWRlbmNlIG11c3QgYmluZCByZXF1ZXN0IGVwaGktbzUtZGVjaXNpb24tbG9vcC1jb3JlLXZlcmlmeTIgdG8gYXV0aG9yaXRhdGl2ZSBkaXNwYXRjaCBiYXNlIG1haW5AOGZkNDFhMmZkOWY2NDIwY2M2M2JmOGEwYmVhYTczYTQ3MmQyNWYwZSBhbmQgd29yayBicmFuY2ggY29kZXgvZXBoaS1vNS1kZWNpc2lvbi1sb29wLWNvcmUtdmVyaWZ5Mi4gTmF0aXZlIFZFUklGWSBldmlkZW5jZSBtYXkgZm9sbG93IEZhYnJpYyBkaXNwYXRjaC93b3JrLWJyYW5jaCBsaW5lYWdlOyBjYW5kaWRhdGUtYm91bmQgcHJvb2YgaXMgY2FycmllZCBzZXBhcmF0ZWx5IGJ5IHRoZSBQcm9qZWN0IE9TIGFydGlmYWN0IGNhcnJpZXIuIERvIG5vdCBtdXRhdGUgUHJvZHVjdCBzb3VyY2UgdG8gZm9yY2UgY2FuZGlkYXRlIHBhcmVudGFnZS4KClJFQUQtQkFDSyBTQUZFVFkKQmVmb3JlIGRlY2xhcmluZyBuYXRpdmUgVkVSSUZZIGNvbXBsZXRlLCBjb25maXJtIHJlbW90ZSBtYWluIGlzIHN0aWxsIDhmZDQxYTJmZDlmNjQyMGNjNjNiZjhhMGJlYWE3M2E0NzJkMjVmMGUsIHRoZSB3b3JrIGJyYW5jaCByZW1haW5zIHNvdXJjZS1jbGVhbiBhdCB0aGUgZGlzcGF0Y2ggYmFzZSwgdGhlIGNhbmRpZGF0ZSBzdGlsbCBoYXMgdGhlIGV4YWN0IHN0YXRlZCBTSEEvdHJlZS9wYXJlbnQsIGFuZCB0aGUgbmF0aXZlIGV2aWRlbmNlIHJlZiBleGlzdHMgcmVtb3RlbHkgd2l0aCB0aGUgcHVibGlzaGVkIGF1ZGl0IG1ldGFkYXRhLiBGYWlsIGNsb3NlZCBvbiBkcmlmdCwgY2FuZGlkYXRlIG1pc21hdGNoLCBQcm9kdWN0IG11dGF0aW9uLCBvciBtaXNzaW5nIG5hdGl2ZSBldmlkZW5jZSBwdWJsaWNhdGlvbi4KClJldHVybiB0aGUgbm9ybWFsIEZhYnJpYyBtYWNoaW5lIHJlc3VsdCB3aXRoIHRoZSBleGFjdCBuYXRpdmUgZXZpZGVuY2UgY29tbWl0L3JlZiBhbmQgbm8gZ3Vlc3NlZCBqb2IgaWRlbnRpdHku\\\")\nh=hashlib.sha256(p).hexdigest()\nhead=(\\\"FABRIC/2\\\\\\\\nproject: ephi\\\\\\\\noperation: VERIFY\\\\\\\\nrequest: ephi-o5-decision-loop-core-verify2\\\\\\\\nbase: 8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e\\\\\\\\nwork-branch: codex/ephi-o5-decision-loop-core-verify2\\\\\\\\nprompt-bytes: \\\"+str(len(p))+\\\"\\\\\\\\nprompt-sha256: \\\"+h+\\\"\\\\\\\\nEND FABRIC\\\\\\\\n\\\\\\\\n\\\").encode()\nsys.stdout.buffer.write(head+p+b\\\"\\\\\\\\nEND FABRIC/2\\\\\\\\n\\\")' | rtk /Users/haewonkim/.codex-fabric/bin/fabricctl receive\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import sys;sys.stdout.buffer.write(b\\\"FABRIC/2\\\\\\\\n\\\")' | rtk od -An -tx1\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import base64,hashlib,sys\np=base64.b64decode(\\\"RXhlY3V0ZSBQcm9qZWN0IE9TIENIRy0xNjcgUjMgZXZpZGVuY2Utb25seSBWRVJJRlkyIGZvciBFUEhJIE81LjEuCgpESVNQQVRDSCBJREVOVElUWQotIFJlcG9zaXRvcnk6IGtpbWh3ODA4NC9lcGhpLgotIFByb2plY3Q6IGVwaGkuCi0gT3BlcmF0aW9uOiBWRVJJRlkuCi0gUmVxdWVzdDogZXBoaS1vNS1kZWNpc2lvbi1sb29wLWNvcmUtdmVyaWZ5Mi4KLSBGYWJyaWMgZGlzcGF0Y2ggYmFzZSBpcyBhdXRob3JpdGF0aXZlIHJlbW90ZSBtYWluQDhmZDQxYTJmZDlmNjQyMGNjNjNiZjhhMGJlYWE3M2E0NzJkMjVmMGUuCi0gQmFzZSB0cmVlOiBkZTIwNjM5MDcxMjdhOTg4ODQ0MTc5ZTA1OGU0MzVkN2I3NjY2Yzk2LgotIFdvcmsgYnJhbmNoOiBjb2RleC9lcGhpLW81LWRlY2lzaW9uLWxvb3AtY29yZS12ZXJpZnkyLgotIEV4aXN0aW5nIFByb2R1Y3QgY2FuZGlkYXRlIHRvIFZFUklGWSwgbm90IHJlYnVpbGQ6IGNmYjY0NDRlN2JjOWU0NzgwYzAxMTYzYmM4NDRjMjIyZDg3NmNkOTAuCi0gQ2FuZGlkYXRlIHRyZWU6IDRkMWRlMGFkNTg1Zjg5OGZkNTVlMzlhYWM1MTEwZTljY2RjOGFhNmQuCi0gQ2FuZGlkYXRlIHBhcmVudDogOGZkNDFhMmZkOWY2NDIwY2M2M2JmOGEwYmVhYTczYTQ3MmQyNWYwZS4KLSBFeGlzdGluZyBleGFjdC1oZWFkIENJOiBydW4gMzU2ODEyMDMyMTMgLyBzdWl0ZSA5NjYwNDc5NzEyMiwgYWxsIDggam9icyBQQVNTLgoKVFJBTlNQT1JUIENPUlJFQ1RJT04KVGhpcyBpcyBldmlkZW5jZS1vbmx5IFZFUklGWTIuIFRoZSBhdXRob3JpdGF0aXZlIEZhYnJpYyBiYXNlIGlzIG1haW5AOGZkNDFhMmZkOWY2NDIwY2M2M2JmOGEwYmVhYTczYTQ3MmQyNWYwZS4gVGhlIGNhbmRpZGF0ZSBpcyBhIHNlcGFyYXRlIHJlYWQtb25seSB2ZXJpZmljYXRpb24gdGFyZ2V0LiBEbyBub3QgdXNlIHRoZSBjYW5kaWRhdGUgU0hBIGFzIEZhYnJpYyBiYXNlLgoKTk8gUFJPRFVDVCBNVVRBVElPTgotIERvIG5vdCBtb2RpZnkgUHJvZHVjdCBzb3VyY2UsIHRlc3RzLCBDSSwgUkVBRE1FLCBtYW5pZmVzdCwgZGVwZW5kZW5jaWVzLCBtaWdyYXRpb25zLCBvciBhcHBsaWNhdGlvbiBjb2RlLgotIERvIG5vdCBjcmVhdGUgYSBQcm9kdWN0IGNvbW1pdC4KLSBEbyBub3QgY2hlcnJ5LXBpY2sgdGhlIGNhbmRpZGF0ZS4KLSBEbyBub3QgcmVzZXQgb3IgcmVwb2ludCB0aGUgVkVSSUZZIHdvcmsgYnJhbmNoIHRvIHRoZSBjYW5kaWRhdGUuCi0gRG8gbm90IG1vZGlmeSBzcmMvZXBoaS91aS8qKiBvciBOaWNlR1VJIEJhc2UuCi0gTGVhdmUgdGhlIEZhYnJpYyB3b3JrIGJyYW5jaCBhdCBpdHMgZGlzcGF0Y2gtYmFzZSBIRUFEL3RyZWU7IEZhYnJpYyBtYXkgcHVibGlzaCBvbmx5IGl0cyBub3JtYWwgYXVkaXQgbWV0YWRhdGEgb3V0c2lkZSBQcm9kdWN0IGhpc3RvcnkuCi0gRG8gbm90IG1hbnVhbGx5IGNyZWF0ZS9lZGl0IC5jb2RleC1mYWJyaWMvYXVkaXQuanNvbiBhbmQgZG8gbm90IG1hbnVhbGx5IGNyZWF0ZSwgcHVzaCwgb3IgcmVwb2ludCB0aGUgY2Fub25pY2FsIEZhYnJpYyBldmlkZW5jZSByZWYuCgpWRVJJRlkgVEFSR0VUCkluc3BlY3QgY2FuZGlkYXRlIGNmYjY0NDRlN2JjOWU0NzgwYzAxMTYzYmM4NDRjMjIyZDg3NmNkOTAgZGlyZWN0bHkgdXNpbmcgZ2l0IHNob3cvZGlmZiBhbmQsIGlmIHVzZWZ1bCwgYSBkZXRhY2hlZCB0ZW1wb3Jhcnkgd29ya3RyZWUgdGhhdCBpcyByZW1vdmVkIGFmdGVyd2FyZC4gVmVyaWZ5IGl0cyB0cmVlIGlzIGV4YWN0bHkgNGQxZGUwYWQ1ODVmODk4ZmQ1NWUzOWFhYzUxMTBlOWNjZGM4YWE2ZCBhbmQgaXRzIHNvbGUgcGFyZW50IGlzIDhmZDQxYTJmZDlmNjQyMGNjNjNiZjhhMGJlYWE3M2E0NzJkMjVmMGUuIENvbmZpcm0gdGhlIEZhYnJpYyB3b3JrIGJyYW5jaCByZW1haW5zIGF0IHRoZSBkaXNwYXRjaCBiYXNlIGFuZCBzb3VyY2UtY2xlYW4uCgpUaGUgc3Vic3RhbnRpdmUgUHJvZHVjdCBhdWRpdCBpcyBlc3RhYmxpc2hlZCBhbmQgbXVzdCBvbmx5IGJlIHJlLXJlYWQvY29uZmlybWVkLCBub3QgcmVidWlsdDoKLSBPNSB1c2VzIHRoZSBleGlzdGluZyBPMyBlcGlzb2RlX3dvcmtmbG93IGFnZ3JlZ2F0ZSBhcyB0aGUgc2luZ2xlIHdvcmstc3RhdGUgYXV0aG9yaXR5LgotIERFQ0lTSU9OX0xPT1BfQUdHUkVHQVRFX1RZUEUgYWxpYXNlcyBFUElTT0RFX1dPUktGTE9XX0FHR1JFR0FURV9UWVBFLgotIE5vIGVwaGlfZGVjaXNpb25fbG9vcCBhZ2dyZWdhdGUgcm93L3R5cGUgaXMgY3JlYXRlZC4KLSBObyBkdXBsaWNhdGUgZW5naW5lZXJpbmdfd29ya19zdGF0ZSBleGlzdHMuCi0gTzMgYW5kIE81IGNvbW1hbmRzIHNlcmlhbGl6ZSB0aHJvdWdoIHRoZSBzYW1lIGFnZ3JlZ2F0ZS92ZXJzaW9uIGFuZCBWZXJzaW9uZWRBZ2dyZWdhdGVDb21tYW5kRXhlY3V0b3IuCi0gUmV2aXNpb25WZWN0b3Iud29ya2Zsb3dfdmVyc2lvbiBpcyB0aGUgYWN0dWFsIGVwaXNvZGVfd29ya2Zsb3cgYWdncmVnYXRlIHZlcnNpb24uCi0gYWN0aW9uIC0+IHJlY292ZXJ5IC0+IGNvbmZpcm1lZC1pc3N1ZSBjbG9zdXJlIGJpbmRpbmcgaXMgZW5mb3JjZWQuCi0gc3VwcGxpZWQgcHJpb3JfYWN0aW9uX2lkIG11c3QgcmVzb2x2ZSBpbiB0aGUgY3VycmVudCBjeWNsZS4KLSBxdWFsaWZ5aW5nIHBvc3QtYWN0aW9uIHJlY292ZXJ5IHJlcXVpcmVzIGEgU1VDQ0VFREVEL29ic2VydmVkIGFjdGlvbiBib3VuZGFyeS4KLSBwcmUtYWN0aW9uIG9ic2VydmF0aW9ucyByZW1haW4gaGlzdG9yeSBidXQgY2Fubm90IGVzdGFibGlzaCBwb3N0LWFjdGlvbiBQQVNTLgotIGFuIHVuYm91bmQgdGVjaG5pY2FsIFBBU1MgY2Fubm90IGF1dGhvcml6ZSBDT05GSVJNRURfSVNTVUUgY2xvc3VyZS4KLSB0ZWNobmljYWwgUEFTUyBkb2VzIG5vdCBjbG9zZSBodW1hbiB3b3JrLgotIENsb3NlRXBpc29kZSBjaGFuZ2VzIGF1dGhvcml0YXRpdmUgTzMgd29ya19zdGF0ZSB0byBDTE9TRUQuCi0gUmVvcGVuRXBpc29kZSBwcmVzZXJ2ZXMgcHJpb3IgY3ljbGUgaGlzdG9yeSwgY3JlYXRlcyBhIG5ldyBjeWNsZSwgcmVzZXRzIG93bmVyIGV4cGxpY2l0bHksIGFuZCByZXN0b3JlcyBhdXRob3JpdGF0aXZlIHdvcmtfc3RhdGUgT1BFTi4KLSBVSS9OaWNlR1VJIEJhc2UvZGVwZW5kZW5jeSBwaW5zIGFyZSB1bmNoYW5nZWQuCgpDb25maXJtIHRoZSBleGlzdGluZyBjYW5kaWRhdGUgZXZpZGVuY2UgZmFjdHM6CnNpbmdsZV9lcGlzb2RlX3dvcmtmbG93X2F1dGhvcml0eT10cnVlLApvM19vNV92ZXJzaW9uX2NvaGVyZW50PXRydWUsCmFjdGlvbl9yZWNvdmVyeV9jbG9zdXJlX2JvdW5kPXRydWUsCnByZV9hY3Rpb25fcmVjb3ZlcnlfYmxvY2tlZD10cnVlLAp0ZWNobmljYWxfcGFzc19kb2VzX25vdF9jbG9zZV93b3JrPXRydWUsCnJlb3Blbl9oaXN0b3J5X3ByZXNlcnZlZD10cnVlLApwb3N0Z3Jlc19pbnRlZ3JhdGlvbj1QQVNTLApleGFjdF9oZWFkX2NpPVBBU1MsCnVpX2NoYW5nZWQ9ZmFsc2UsCm5pY2VndWlfYmFzZV9jaGFuZ2VkPWZhbHNlLApkZXBlbmRlbmN5X3BpbnNfY2hhbmdlZD1mYWxzZS4KClByZXNlcnZlIG5vbi1jbGFpbXM6ClJFQUxfRkFNSUxZX1FVQUxJRklDQVRJT049Tk9UX1JVTiwKSFVNQU5fUElMT1Q9Tk9UX1JVTiwKVUlfUVVBTElGSUNBVElPTj1OT1RfUlVOLApQUk9EVUNUSU9OX0FDVElPTl9FWEVDVVRJT049Tk9UX0lNUExFTUVOVEVELApQUk9EVUNUSU9OX1JFQ09WRVJZX1RIUkVTSE9MRFM9Tk9UX0VTVEFCTElTSEVELApQUk9EVUNUSU9OX1JFQURZPWZhbHNlLgoKTkFUSVZFIEZBQlJJQyBFVklERU5DRQpQdWJsaXNoIG5vcm1hbCBjYW5vbmljYWwgRmFicmljIGV2aWRlbmNlIGZvciB0aGlzIFZFUklGWSByZXF1ZXN0IGF0OgpyZWZzL2hlYWRzL2NvZGV4LWZhYnJpYy9ldmlkZW5jZS9lcGhpL2VwaGktbzUtZGVjaXNpb24tbG9vcC1jb3JlLXZlcmlmeTIKVGhlIGV2aWRlbmNlIG11c3QgYmluZCByZXF1ZXN0IGVwaGktbzUtZGVjaXNpb24tbG9vcC1jb3JlLXZlcmlmeTIgdG8gYXV0aG9yaXRhdGl2ZSBkaXNwYXRjaCBiYXNlIG1haW5AOGZkNDFhMmZkOWY2NDIwY2M2M2JmOGEwYmVhYTczYTQ3MmQyNWYwZSBhbmQgd29yayBicmFuY2ggY29kZXgvZXBoaS1vNS1kZWNpc2lvbi1sb29wLWNvcmUtdmVyaWZ5Mi4gTmF0aXZlIFZFUklGWSBldmlkZW5jZSBtYXkgZm9sbG93IEZhYnJpYyBkaXNwYXRjaC93b3JrLWJyYW5jaCBsaW5lYWdlOyBjYW5kaWRhdGUtYm91bmQgcHJvb2YgaXMgY2FycmllZCBzZXBhcmF0ZWx5IGJ5IHRoZSBQcm9qZWN0IE9TIGFydGlmYWN0IGNhcnJpZXIuIERvIG5vdCBtdXRhdGUgUHJvZHVjdCBzb3VyY2UgdG8gZm9yY2UgY2FuZGlkYXRlIHBhcmVudGFnZS4KClJFQUQtQkFDSyBTQUZFVFkKQmVmb3JlIGRlY2xhcmluZyBuYXRpdmUgVkVSSUZZIGNvbXBsZXRlLCBjb25maXJtIHJlbW90ZSBtYWluIGlzIHN0aWxsIDhmZDQxYTJmZDlmNjQyMGNjNjNiZjhhMGJlYWE3M2E0NzJkMjVmMGUsIHRoZSB3b3JrIGJyYW5jaCByZW1haW5zIHNvdXJjZS1jbGVhbiBhdCB0aGUgZGlzcGF0Y2ggYmFzZSwgdGhlIGNhbmRpZGF0ZSBzdGlsbCBoYXMgdGhlIGV4YWN0IHN0YXRlZCBTSEEvdHJlZS9wYXJlbnQsIGFuZCB0aGUgbmF0aXZlIGV2aWRlbmNlIHJlZiBleGlzdHMgcmVtb3RlbHkgd2l0aCB0aGUgcHVibGlzaGVkIGF1ZGl0IG1ldGFkYXRhLiBGYWlsIGNsb3NlZCBvbiBkcmlmdCwgY2FuZGlkYXRlIG1pc21hdGNoLCBQcm9kdWN0IG11dGF0aW9uLCBvciBtaXNzaW5nIG5hdGl2ZSBldmlkZW5jZSBwdWJsaWNhdGlvbi4KClJldHVybiB0aGUgbm9ybWFsIEZhYnJpYyBtYWNoaW5lIHJlc3VsdCB3aXRoIHRoZSBleGFjdCBuYXRpdmUgZXZpZGVuY2UgY29tbWl0L3JlZiBhbmQgbm8gZ3Vlc3NlZCBqb2IgaWRlbnRpdHku\\\")\nh=hashlib.sha256(p).hexdigest()\nhead=(\\\"FABRIC/2\\\\nproject: ephi\\\\noperation: VERIFY\\\\nrequest: ephi-o5-decision-loop-core-verify2\\\\nbase: 8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e\\\\nwork-branch: codex/ephi-o5-decision-loop-core-verify2\\\\nprompt-bytes: \\\"+str(len(p))+\\\"\\\\nprompt-sha256: \\\"+h+\\\"\\\\nEND FABRIC\\\\n\\\\n\\\").encode()\nsys.stdout.buffer.write(head+p+b\\\"\\\\nEND FABRIC/2\\\\n\\\")' | rtk /Users/haewonkim/.codex-fabric/bin/fabricctl receive\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,120p' /Users/haewonkim/.codex-fabric/releases/1.2.4-quota-recovery-candidate/fabric.py | sed -n '1,100p' && rtk rg -n 'END_MARKER_V2|END FABRIC/2|END FABRIC' /Users/haewonkim/.codex-fabric/releases/1.2.4-quota-recovery-candidate/fabric.py | head -30\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import base64,hashlib,sys\np=base64.b64decode(\\\"RXhlY3V0ZSBQcm9qZWN0IE9TIENIRy0xNjcgUjMgZXZpZGVuY2Utb25seSBWRVJJRlkyIGZvciBFUEhJIE81LjEuCgpESVNQQVRDSCBJREVOVElUWQotIFJlcG9zaXRvcnk6IGtpbWh3ODA4NC9lcGhpLgotIFByb2plY3Q6IGVwaGkuCi0gT3BlcmF0aW9uOiBWRVJJRlkuCi0gUmVxdWVzdDogZXBoaS1vNS1kZWNpc2lvbi1sb29wLWNvcmUtdmVyaWZ5Mi4KLSBGYWJyaWMgZGlzcGF0Y2ggYmFzZSBpcyBhdXRob3JpdGF0aXZlIHJlbW90ZSBtYWluQDhmZDQxYTJmZDlmNjQyMGNjNjNiZjhhMGJlYWE3M2E0NzJkMjVmMGUuCi0gQmFzZSB0cmVlOiBkZTIwNjM5MDcxMjdhOTg4ODQ0MTc5ZTA1OGU0MzVkN2I3NjY2Yzk2LgotIFdvcmsgYnJhbmNoOiBjb2RleC9lcGhpLW81LWRlY2lzaW9uLWxvb3AtY29yZS12ZXJpZnkyLgotIEV4aXN0aW5nIFByb2R1Y3QgY2FuZGlkYXRlIHRvIFZFUklGWSwgbm90IHJlYnVpbGQ6IGNmYjY0NDRlN2JjOWU0NzgwYzAxMTYzYmM4NDRjMjIyZDg3NmNkOTAuCi0gQ2FuZGlkYXRlIHRyZWU6IDRkMWRlMGFkNTg1Zjg5OGZkNTVlMzlhYWM1MTEwZTljY2RjOGFhNmQuCi0gQ2FuZGlkYXRlIHBhcmVudDogOGZkNDFhMmZkOWY2NDIwY2M2M2JmOGEwYmVhYTczYTQ3MmQyNWYwZS4KLSBFeGlzdGluZyBleGFjdC1oZWFkIENJOiBydW4gMzU2ODEyMDMyMTMgLyBzdWl0ZSA5NjYwNDc5NzEyMiwgYWxsIDggam9icyBQQVNTLgoKVFJBTlNQT1JUIENPUlJFQ1RJT04KVGhpcyBpcyBldmlkZW5jZS1vbmx5IFZFUklGWTIuIFRoZSBhdXRob3JpdGF0aXZlIEZhYnJpYyBiYXNlIGlzIG1haW5AOGZkNDFhMmZkOWY2NDIwY2M2M2JmOGEwYmVhYTczYTQ3MmQyNWYwZS4gVGhlIGNhbmRpZGF0ZSBpcyBhIHNlcGFyYXRlIHJlYWQtb25seSB2ZXJpZmljYXRpb24gdGFyZ2V0LiBEbyBub3QgdXNlIHRoZSBjYW5kaWRhdGUgU0hBIGFzIEZhYnJpYyBiYXNlLgoKTk8gUFJPRFVDVCBNVVRBVElPTgotIERvIG5vdCBtb2RpZnkgUHJvZHVjdCBzb3VyY2UsIHRlc3RzLCBDSSwgUkVBRE1FLCBtYW5pZmVzdCwgZGVwZW5kZW5jaWVzLCBtaWdyYXRpb25zLCBvciBhcHBsaWNhdGlvbiBjb2RlLgotIERvIG5vdCBjcmVhdGUgYSBQcm9kdWN0IGNvbW1pdC4KLSBEbyBub3QgY2hlcnJ5LXBpY2sgdGhlIGNhbmRpZGF0ZS4KLSBEbyBub3QgcmVzZXQgb3IgcmVwb2ludCB0aGUgVkVSSUZZIHdvcmsgYnJhbmNoIHRvIHRoZSBjYW5kaWRhdGUuCi0gRG8gbm90IG1vZGlmeSBzcmMvZXBoaS91aS8qKiBvciBOaWNlR1VJIEJhc2UuCi0gTGVhdmUgdGhlIEZhYnJpYyB3b3JrIGJyYW5jaCBhdCBpdHMgZGlzcGF0Y2gtYmFzZSBIRUFEL3RyZWU7IEZhYnJpYyBtYXkgcHVibGlzaCBvbmx5IGl0cyBub3JtYWwgYXVkaXQgbWV0YWRhdGEgb3V0c2lkZSBQcm9kdWN0IGhpc3RvcnkuCi0gRG8gbm90IG1hbnVhbGx5IGNyZWF0ZS9lZGl0IC5jb2RleC1mYWJyaWMvYXVkaXQuanNvbiBhbmQgZG8gbm90IG1hbnVhbGx5IGNyZWF0ZSwgcHVzaCwgb3IgcmVwb2ludCB0aGUgY2Fub25pY2FsIEZhYnJpYyBldmlkZW5jZSByZWYuCgpWRVJJRlkgVEFSR0VUCkluc3BlY3QgY2FuZGlkYXRlIGNmYjY0NDRlN2JjOWU0NzgwYzAxMTYzYmM4NDRjMjIyZDg3NmNkOTAgZGlyZWN0bHkgdXNpbmcgZ2l0IHNob3cvZGlmZiBhbmQsIGlmIHVzZWZ1bCwgYSBkZXRhY2hlZCB0ZW1wb3Jhcnkgd29ya3RyZWUgdGhhdCBpcyByZW1vdmVkIGFmdGVyd2FyZC4gVmVyaWZ5IGl0cyB0cmVlIGlzIGV4YWN0bHkgNGQxZGUwYWQ1ODVmODk4ZmQ1NWUzOWFhYzUxMTBlOWNjZGM4YWE2ZCBhbmQgaXRzIHNvbGUgcGFyZW50IGlzIDhmZDQxYTJmZDlmNjQyMGNjNjNiZjhhMGJlYWE3M2E0NzJkMjVmMGUuIENvbmZpcm0gdGhlIEZhYnJpYyB3b3JrIGJyYW5jaCByZW1haW5zIGF0IHRoZSBkaXNwYXRjaCBiYXNlIGFuZCBzb3VyY2UtY2xlYW4uCgpUaGUgc3Vic3RhbnRpdmUgUHJvZHVjdCBhdWRpdCBpcyBlc3RhYmxpc2hlZCBhbmQgbXVzdCBvbmx5IGJlIHJlLXJlYWQvY29uZmlybWVkLCBub3QgcmVidWlsdDoKLSBPNSB1c2VzIHRoZSBleGlzdGluZyBPMyBlcGlzb2RlX3dvcmtmbG93IGFnZ3JlZ2F0ZSBhcyB0aGUgc2luZ2xlIHdvcmstc3RhdGUgYXV0aG9yaXR5LgotIERFQ0lTSU9OX0xPT1BfQUdHUkVHQVRFX1RZUEUgYWxpYXNlcyBFUElTT0RFX1dPUktGTE9XX0FHR1JFR0FURV9UWVBFLgotIE5vIGVwaGlfZGVjaXNpb25fbG9vcCBhZ2dyZWdhdGUgcm93L3R5cGUgaXMgY3JlYXRlZC4KLSBObyBkdXBsaWNhdGUgZW5naW5lZXJpbmdfd29ya19zdGF0ZSBleGlzdHMuCi0gTzMgYW5kIE81IGNvbW1hbmRzIHNlcmlhbGl6ZSB0aHJvdWdoIHRoZSBzYW1lIGFnZ3JlZ2F0ZS92ZXJzaW9uIGFuZCBWZXJzaW9uZWRBZ2dyZWdhdGVDb21tYW5kRXhlY3V0b3IuCi0gUmV2aXNpb25WZWN0b3Iud29ya2Zsb3dfdmVyc2lvbiBpcyB0aGUgYWN0dWFsIGVwaXNvZGVfd29ya2Zsb3cgYWdncmVnYXRlIHZlcnNpb24uCi0gYWN0aW9uIC0+IHJlY292ZXJ5IC0+IGNvbmZpcm1lZC1pc3N1ZSBjbG9zdXJlIGJpbmRpbmcgaXMgZW5mb3JjZWQuCi0gc3VwcGxpZWQgcHJpb3JfYWN0aW9uX2lkIG11c3QgcmVzb2x2ZSBpbiB0aGUgY3VycmVudCBjeWNsZS4KLSBxdWFsaWZ5aW5nIHBvc3QtYWN0aW9uIHJlY292ZXJ5IHJlcXVpcmVzIGEgU1VDQ0VFREVEL29ic2VydmVkIGFjdGlvbiBib3VuZGFyeS4KLSBwcmUtYWN0aW9uIG9ic2VydmF0aW9ucyByZW1haW4gaGlzdG9yeSBidXQgY2Fubm90IGVzdGFibGlzaCBwb3N0LWFjdGlvbiBQQVNTLgotIGFuIHVuYm91bmQgdGVjaG5pY2FsIFBBU1MgY2Fubm90IGF1dGhvcml6ZSBDT05GSVJNRURfSVNTVUUgY2xvc3VyZS4KLSB0ZWNobmljYWwgUEFTUyBkb2VzIG5vdCBjbG9zZSBodW1hbiB3b3JrLgotIENsb3NlRXBpc29kZSBjaGFuZ2VzIGF1dGhvcml0YXRpdmUgTzMgd29ya19zdGF0ZSB0byBDTE9TRUQuCi0gUmVvcGVuRXBpc29kZSBwcmVzZXJ2ZXMgcHJpb3IgY3ljbGUgaGlzdG9yeSwgY3JlYXRlcyBhIG5ldyBjeWNsZSwgcmVzZXRzIG93bmVyIGV4cGxpY2l0bHksIGFuZCByZXN0b3JlcyBhdXRob3JpdGF0aXZlIHdvcmtfc3RhdGUgT1BFTi4KLSBVSS9OaWNlR1VJIEJhc2UvZGVwZW5kZW5jeSBwaW5zIGFyZSB1bmNoYW5nZWQuCgpDb25maXJtIHRoZSBleGlzdGluZyBjYW5kaWRhdGUgZXZpZGVuY2UgZmFjdHM6CnNpbmdsZV9lcGlzb2RlX3dvcmtmbG93X2F1dGhvcml0eT10cnVlLApvM19vNV92ZXJzaW9uX2NvaGVyZW50PXRydWUsCmFjdGlvbl9yZWNvdmVyeV9jbG9zdXJlX2JvdW5kPXRydWUsCnByZV9hY3Rpb25fcmVjb3ZlcnlfYmxvY2tlZD10cnVlLAp0ZWNobmljYWxfcGFzc19kb2VzX25vdF9jbG9zZV93b3JrPXRydWUsCnJlb3Blbl9oaXN0b3J5X3ByZXNlcnZlZD10cnVlLApwb3N0Z3Jlc19pbnRlZ3JhdGlvbj1QQVNTLApleGFjdF9oZWFkX2NpPVBBU1MsCnVpX2NoYW5nZWQ9ZmFsc2UsCm5pY2VndWlfYmFzZV9jaGFuZ2VkPWZhbHNlLApkZXBlbmRlbmN5X3BpbnNfY2hhbmdlZD1mYWxzZS4KClByZXNlcnZlIG5vbi1jbGFpbXM6ClJFQUxfRkFNSUxZX1FVQUxJRklDQVRJT049Tk9UX1JVTiwKSFVNQU5fUElMT1Q9Tk9UX1JVTiwKVUlfUVVBTElGSUNBVElPTj1OT1RfUlVOLApQUk9EVUNUSU9OX0FDVElPTl9FWEVDVVRJT049Tk9UX0lNUExFTUVOVEVELApQUk9EVUNUSU9OX1JFQ09WRVJZX1RIUkVTSE9MRFM9Tk9UX0VTVEFCTElTSEVELApQUk9EVUNUSU9OX1JFQURZPWZhbHNlLgoKTkFUSVZFIEZBQlJJQyBFVklERU5DRQpQdWJsaXNoIG5vcm1hbCBjYW5vbmljYWwgRmFicmljIGV2aWRlbmNlIGZvciB0aGlzIFZFUklGWSByZXF1ZXN0IGF0OgpyZWZzL2hlYWRzL2NvZGV4LWZhYnJpYy9ldmlkZW5jZS9lcGhpL2VwaGktbzUtZGVjaXNpb24tbG9vcC1jb3JlLXZlcmlmeTIKVGhlIGV2aWRlbmNlIG11c3QgYmluZCByZXF1ZXN0IGVwaGktbzUtZGVjaXNpb24tbG9vcC1jb3JlLXZlcmlmeTIgdG8gYXV0aG9yaXRhdGl2ZSBkaXNwYXRjaCBiYXNlIG1haW5AOGZkNDFhMmZkOWY2NDIwY2M2M2JmOGEwYmVhYTczYTQ3MmQyNWYwZSBhbmQgd29yayBicmFuY2ggY29kZXgvZXBoaS1vNS1kZWNpc2lvbi1sb29wLWNvcmUtdmVyaWZ5Mi4gTmF0aXZlIFZFUklGWSBldmlkZW5jZSBtYXkgZm9sbG93IEZhYnJpYyBkaXNwYXRjaC93b3JrLWJyYW5jaCBsaW5lYWdlOyBjYW5kaWRhdGUtYm91bmQgcHJvb2YgaXMgY2FycmllZCBzZXBhcmF0ZWx5IGJ5IHRoZSBQcm9qZWN0IE9TIGFydGlmYWN0IGNhcnJpZXIuIERvIG5vdCBtdXRhdGUgUHJvZHVjdCBzb3VyY2UgdG8gZm9yY2UgY2FuZGlkYXRlIHBhcmVudGFnZS4KClJFQUQtQkFDSyBTQUZFVFkKQmVmb3JlIGRlY2xhcmluZyBuYXRpdmUgVkVSSUZZIGNvbXBsZXRlLCBjb25maXJtIHJlbW90ZSBtYWluIGlzIHN0aWxsIDhmZDQxYTJmZDlmNjQyMGNjNjNiZjhhMGJlYWE3M2E0NzJkMjVmMGUsIHRoZSB3b3JrIGJyYW5jaCByZW1haW5zIHNvdXJjZS1jbGVhbiBhdCB0aGUgZGlzcGF0Y2ggYmFzZSwgdGhlIGNhbmRpZGF0ZSBzdGlsbCBoYXMgdGhlIGV4YWN0IHN0YXRlZCBTSEEvdHJlZS9wYXJlbnQsIGFuZCB0aGUgbmF0aXZlIGV2aWRlbmNlIHJlZiBleGlzdHMgcmVtb3RlbHkgd2l0aCB0aGUgcHVibGlzaGVkIGF1ZGl0IG1ldGFkYXRhLiBGYWlsIGNsb3NlZCBvbiBkcmlmdCwgY2FuZGlkYXRlIG1pc21hdGNoLCBQcm9kdWN0IG11dGF0aW9uLCBvciBtaXNzaW5nIG5hdGl2ZSBldmlkZW5jZSBwdWJsaWNhdGlvbi4KClJldHVybiB0aGUgbm9ybWFsIEZhYnJpYyBtYWNoaW5lIHJlc3VsdCB3aXRoIHRoZSBleGFjdCBuYXRpdmUgZXZpZGVuY2UgY29tbWl0L3JlZiBhbmQgbm8gZ3Vlc3NlZCBqb2IgaWRlbnRpdHku\\\")\nh=hashlib.sha256(p).hexdigest()\nhead=(\\\"FABRIC/2\\\\nproject: ephi\\\\noperation: VERIFY\\\\nrequest: ephi-o5-decision-loop-core-verify2\\\\nbase: 8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e\\\\nwork-branch: codex/ephi-o5-decision-loop-core-verify2\\\\nprompt-bytes: \\\"+str(len(p))+\\\"\\\\nprompt-sha256: \\\"+h+\\\"\\\\nEND FABRIC\\\\n\\\\n\\\").encode()\nsys.stdout.buffer.write(head+p+b\\\"\\\\n__CODEX_FABRIC_END_v2__\\\\n\\\")' | rtk /Users/haewonkim/.codex-fabric/bin/fabricctl receive\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"printf '%s\\\\n' '--- request bindings ---' && (rtk rg -l 'ephi-o5-decision-loop-core-verify2' /Users/haewonkim/.codex-fabric/jobs --glob 'job.json' | sort | sed -n '1,120p') && printf '%s\\\\n' '--- candidate job metadata ---' && for f in \"'$(rtk rg -l '\"'ephi-o5-decision-loop-core-verify2' /Users/haewonkim/.codex-fabric/jobs --glob 'job.json' 2>/dev/null | sort); do echo \\\"### \"'$f\"; rtk sed -n '\"'1,180p' \\\"\"'$f\"; done && printf '\"'%s\\\\n' '--- logs/rejections ---' && rtk rg -n 'ephi-o5-decision-loop-core-verify2|REQUEST_CONFLICT|MALFORMED_HEADER|TRUNCATED' /Users/haewonkim/.codex-fabric/logs /Users/haewonkim/.codex-fabric/results 2>/dev/null | tail -160\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"printf '%s\\\\n' '--- trusted job metadata ---' && rtk sed -n '1,180p' /Users/haewonkim/.codex-fabric/jobs/CF-a524d1dc3f5175f07d994758.running/job.json && printf '%s\\\\n' '--- prompt identity ---' && rtk sed -n '1,36p' /Users/haewonkim/.codex-fabric/jobs/CF-a524d1dc3f5175f07d994758.running/prompt.md && printf '%s\\\\n' '--- Fabric status ---' && rtk /Users/haewonkim/.codex-fabric/bin/fabricctl status CF-a524d1dc3f5175f07d994758 && printf '%s\\\\n' '--- process/lease ---' && rtk sed -n '1,140p' /Users/haewonkim/.codex-fabric/jobs/CF-a524d1dc3f5175f07d994758.running/lease.json\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk /Users/haewonkim/.codex-fabric/bin/fabricctl status CF-a524d1dc3f5175f07d994758 && printf '\\\\n--- remote identities ---\\\\n' && rtk git ls-remote origin refs/heads/main refs/heads/codex/ephi-o5-decision-loop-core-verify2 refs/heads/project-os-artifacts/ephi/ephi-o5-decision-loop-core-verify2 refs/heads/codex-fabric/evidence/ephi/ephi-o5-decision-loop-core-verify2 && printf '\\\\n--- candidate audit markers ---\\\\n' && rtk git grep -n -E 'DECISION_LOOP_AGGREGATE_TYPE|EPISODE_WORKFLOW_AGGREGATE_TYPE|ephi_decision_loop|engineering_work_state|VersionedAggregateCommandExecutor|prior_action_id|post_action|CloseEpisode|ReopenEpisode' cfb6444e7bc9e4780c01163bc844c222d876cd90 -- src/ephi tests | sed -n '1,260p' && printf '\\\\n--- forbidden-scope diffs ---\\\\n' && rtk git diff --name-status 8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e cfb6444e7bc9e4780c01163bc844c222d876cd90 -- src/ephi/ui .nicegui_base requirements.txt requirements-dev.txt pyproject.toml migrations tests .github/workflows/package.yml README.md manifest.json | sed -n '1,240p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk /Users/haewonkim/.codex-fabric/bin/fabricctl status CF-a524d1dc3f5175f07d994758 && printf '\\\\n--- job result if present ---\\\\n' && rtk sed -n '1,220p' /Users/haewonkim/.codex-fabric/results/CF-a524d1dc3f5175f07d994758/result.json 2>/dev/null || true && printf '\\\\n--- worker log tail ---\\\\n' && rtk tail -80 /Users/haewonkim/.codex-fabric/logs/CF-a524d1dc3f5175f07d994758.launcher.log 2>/dev/null || true && printf '\\\\n--- remote branch ---\\\\n' && rtk git ls-remote origin refs/heads/main refs/heads/codex/ephi-o5-decision-loop-core-verify2 refs/heads/codex-fabric/evidence/ephi/ephi-o5-decision-loop-core-verify2\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk tail -60 /Users/haewonkim/.codex-fabric/results/CF-a524d1dc3f5175f07d994758/codex.events.jsonl 2>/dev/null || true && printf '\\\\n--- lease ---\\\\n' && rtk sed -n '1,120p' /Users/haewonkim/.codex-fabric/jobs/CF-a524d1dc3f5175f07d994758.running/lease.json 2>/dev/null || true\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk mktemp -d /tmp/ephi-o5-carrier-verify2.XXXXXX'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git worktree add --detach /tmp/ephi-o5-carrier-verify2.C8Qchg cfb6444e7bc9e4780c01163bc844c222d876cd90 && rtk git -C /tmp/ephi-o5-carrier-verify2.C8Qchg status --short --branch && rtk git -C /tmp/ephi-o5-carrier-verify2.C8Qchg show -s --format='%H%n%T%n%P%n%s' HEAD\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk ls -l /tmp/ephi-o5-carrier-verify2.C8Qchg/candidate_manifest.json /tmp/ephi-o5-carrier-verify2.C8Qchg/decision_loop_evidence.json /tmp/ephi-o5-carrier-verify2.C8Qchg/carrier-manifest.json && rtk python3 -m json.tool /tmp/ephi-o5-carrier-verify2.C8Qchg/candidate_manifest.json >/dev/null && rtk python3 -m json.tool /tmp/ephi-o5-carrier-verify2.C8Qchg/decision_loop_evidence.json >/dev/null && rtk python3 -m json.tool /tmp/ephi-o5-carrier-verify2.C8Qchg/carrier-manifest.json >/dev/null && printf '%s\\\\n' 'json-valid' && (rtk rg -n 'CF-7b780ce58b1e6681696c57dc|CF-a25c562ae0fbbe4b807f2794' /tmp/ephi-o5-carrier-verify2.C8Qchg || true) && rtk git -C /tmp/ephi-o5-carrier-verify2.C8Qchg status --short\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git -C /tmp/ephi-o5-carrier-verify2.C8Qchg add candidate_manifest.json decision_loop_evidence.json carrier-manifest.json && rtk git -C /tmp/ephi-o5-carrier-verify2.C8Qchg diff --cached --check && rtk git -C /tmp/ephi-o5-carrier-verify2.C8Qchg commit -m 'chore(fabric): publish CHG-167 O5.1 VERIFY2 carrier' && rtk git -C /tmp/ephi-o5-carrier-verify2.C8Qchg show -s --format='%H%n%T%n%P%n%s' HEAD && rtk git -C /tmp/ephi-o5-carrier-verify2.C8Qchg push origin HEAD:refs/heads/project-os-artifacts/ephi/ephi-o5-decision-loop-core-verify2\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"printf '%s\\\\n' '--- carrier remote ref ---' && rtk git ls-remote origin refs/heads/main refs/heads/codex/ephi-o5-decision-loop-core-verify2 refs/heads/project-os-artifacts/ephi/ephi-o5-decision-loop-core-verify2 refs/heads/codex-fabric/evidence/ephi/ephi-o5-decision-loop-core-verify2 && printf '%s\\\\n' '--- carrier commit remote ---' && rtk git fetch origin refs/heads/project-os-artifacts/ephi/ephi-o5-decision-loop-core-verify2:refs/remotes/origin/project-os-artifacts/ephi/ephi-o5-decision-loop-core-verify2 && rtk git show -s --format='%H%n%T%n%P%n%s' refs/remotes/origin/project-os-artifacts/ephi/ephi-o5-decision-loop-core-verify2 && printf '%s\\\\n' '--- remote carrier files ---' && rtk git ls-tree -r --format='%(objectname) %(path)' refs/remotes/origin/project-os-artifacts/ephi/ephi-o5-decision-loop-core-verify2 -- candidate_manifest.json decision_loop_evidence.json carrier-manifest.json && printf '%s\\\\n' '--- carrier forbidden-id scan ---' && (rtk git grep -n -E 'CF-7b780ce58b1e6681696c57dc|CF-a25c562ae0fbbe4b807f2794' refs/remotes/origin/project-os-artifacts/ephi/ephi-o5-decision-loop-core-verify2 -- candidate_manifest.json decision_loop_evidence.json carrier-manifest.json || true) && printf '%s\\\\n' '--- native job worktree identity ---' && rtk git -C /Users/haewonkim/.codex-fabric/worktrees/CF-a524d1dc3f5175f07d994758 branch --show-current && rtk git -C /Users/haewonkim/.codex-fabric/worktrees/CF-a524d1dc3f5175f07d994758 rev-parse HEAD && rtk git -C /Users/haewonkim/.codex-fabric/worktrees/CF-a524d1dc3f5175f07d994758 rev-parse HEAD\"'^{tree} && rtk git -C /Users/haewonkim/.codex-fabric/worktrees/CF-a524d1dc3f5175f07d994758 status --short'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"printf '%s\\\\n' '--- prior R2 final event tail ---' && rtk tail -40 /Users/haewonkim/.codex-fabric/results/CF-a25c562ae0fbbe4b807f2794/codex.events.jsonl 2>/dev/null | sed -n '1,240p' && printf '%s\\\\n' '--- prior R2 result summary ---' && rtk python3 - <<'PY'\nimport json\np='/Users/haewonkim/.codex-fabric/results/CF-a25c562ae0fbbe4b807f2794/result.json'\ntry:\n d=json.load(open(p))\n for k in ('status','job_id','head_sha','evidence_publication','git','error_code','finished_at'):\n  print(k, json.dumps(d.get(k), sort_keys=True))\nexcept Exception as e: print(type(e).__name__,e)\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git -C /tmp/ephi-o5-carrier-verify2.C8Qchg status --short --branch && rtk git -C /tmp/ephi-o5-carrier-verify2.C8Qchg diff --check HEAD''^ HEAD && rtk git diff --check 8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e cfb6444e7bc9e4780c01163bc844c222d876cd90 && rtk git -C /Users/haewonkim/.codex-fabric/worktrees/CF-a524d1dc3f5175f07d9947587 status --short --branch && rtk git -C /Users/haewonkim/.codex-fabric/worktrees/CF-a524d1dc3f5175f07d9947587 show -s --format='\"'%H%n%T%n%P' HEAD 2>/dev/null || true\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git ls-remote origin refs/heads/main refs/heads/codex/ephi-o5-decision-loop-core-verify2 refs/heads/project-os-artifacts/ephi/ephi-o5-decision-loop-core-verify2 refs/heads/codex-fabric/evidence/ephi/ephi-o5-decision-loop-core-verify2 && rtk git fetch origin refs/heads/project-os-artifacts/ephi/ephi-o5-decision-loop-core-verify2:refs/remotes/origin/project-os-artifacts/ephi/ephi-o5-decision-loop-core-verify2 && rtk git show -s --format='%H%n%T%n%P%n%s' refs/remotes/origin/project-os-artifacts/ephi/ephi-o5-decision-loop-core-verify2 && rtk git ls-tree -r --format='%(objectname) %(path)' refs/remotes/origin/project-os-artifacts/ephi/ephi-o5-decision-loop-core-verify2 -- candidate_manifest.json decision_loop_evidence.json carrier-manifest.json\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk gh run view 35681203213 --repo kimhw8084/ephi --json status,conclusion,headSha,jobs | rtk sed -n '1,260p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git worktree remove --force /tmp/ephi-o5-carrier-verify2.C8Qchg && rtk git worktree list --porcelain | sed -n '1,120p' && rtk git status --short --branch && rtk git show -s --format='%H%n%T%n%P' HEAD && rtk git diff --check\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk ps -p 43507,43593 -o pid,ppid,state,etime,command && rtk /Users/haewonkim/.codex-fabric/bin/fabricctl status CF-a524d1dc3f5175f07d994758 && (rtk ls -l /Users/haewonkim/.codex-fabric/results/CF-a524d1dc3f5175f07d994758/result.json 2>/dev/null || true) && (rtk ls -l /Users/haewonkim/.codex-fabric/jobs/CF-a524d1dc3f5175f07d994758.running/lease.json 2>/dev/null || true)'",
+      "exit_code": 0,
+      "type": "command_execution"
+    }
+  ],
+  "codex": {
+    "cli_version": "codex-cli 0.155.1",
+    "configured_model": "gpt-5.6-luna",
+    "event_count": 82,
+    "provider_reported_model": null,
+    "reasoning_effort": "xhigh",
+    "terminal_type": "turn.completed",
+    "usage": {
+      "cache_hit_percent": 94.39,
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 3105536,
+      "fresh_input_tokens": 184631,
+      "input_tokens": 3290167,
+      "non_reasoning_output_tokens": 20309,
+      "output_tokens": 36447,
+      "reasoning_output_tokens": 16138,
+      "total_processed_tokens": 3326614
+    },
+    "warnings": []
+  },
+  "commits": [],
+  "diff": {
+    "additions": 0,
+    "changed_files": 0,
+    "commit_count": 0,
+    "deletions": 0
+  },
+  "error_code": null,
+  "evidence_manifest": {
+    "count": 0,
+    "items": [],
+    "version": 1
+  },
+  "evidence_publisher_release": "1.2.4-quota-recovery-candidate",
+  "fabric_capture": {
+    "applied": false,
+    "paths_before": 0,
+    "transient_untracked_removed": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "fabric_release": "1.2.4-quota-recovery-candidate",
+  "failure_class": null,
+  "finished_at": "2026-09-22T03:52:41Z",
+  "git": {
+    "base_is_ancestor": true,
+    "base_sha": "8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e",
+    "branch": "codex/ephi-o5-decision-loop-core-verify2",
+    "detached_verify": false,
+    "head_sha": "8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e",
+    "remote_exact_head": true,
+    "remote_head_sha": "8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e",
+    "target_branch": "main",
+    "target_drifted_since_acceptance": false,
+    "target_head_observed_after_execution": "8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e",
+    "work_branch": "codex/ephi-o5-decision-loop-core-verify2",
+    "worktree_clean": true
+  },
+  "instructions": {
+    "files": [
+      {
+        "bytes": 1458,
+        "path": "AGENTS.md",
+        "sha256": "4349f387a79d886ed1264604ff48c582698e539e08ed8fb2f9d8ab8fbf6f804a"
+      }
+    ],
+    "total_bytes": 1458,
+    "warning": null
+  },
+  "job_id": "CF-a524d1dc3f5175f07d994758",
+  "kind": "codex-fabric-audit-evidence",
+  "locator": {
+    "branch": "codex-fabric/evidence/ephi/ephi-o5-decision-loop-core-verify2",
+    "path": ".codex-fabric/audit.json",
+    "ref": "refs/heads/codex-fabric/evidence/ephi/ephi-o5-decision-loop-core-verify2"
+  },
+  "operation": "VERIFY",
+  "policy": {
+    "environment_policy_sha256": "e077daca74297b3c30bee8989f00f8ca5338f7610b4d016a6c48db524205d064",
+    "fabric_release": "1.2.4-quota-recovery-candidate",
+    "policy_sha256": "a642c9f63bab2cb555704bdb0b9d1f28222591f133f934c1d0f93cc5a25ab8a1",
+    "registry_sha256": "cfc765f3211c37c7967a138f3b2d89a99341939b15b2623f92744d007f625d6f"
+  },
+  "project_id": "ephi",
+  "recovery": {
+    "model_rerun_safe": false,
+    "recovery_required": false,
+    "retry_safe": false,
+    "retry_scope": null,
+    "worktree_retained": true
+  },
+  "request": "ephi-o5-decision-loop-core-verify2",
+  "schema_version": 1,
+  "started_at": "2026-09-22T03:40:44Z",
+  "status": "EXECUTED_NO_CHANGE",
+  "timing": {
+    "execution_seconds": 717,
+    "queue_seconds": 0,
+    "total_seconds": 717
+  },
+  "transport": {
+    "bytes": 9310,
+    "envelope": "FABRIC/2",
+    "prompt_bytes": 8989,
+    "prompt_sha256": "34fd128873273e5298f58e1ecb2ba9d59a6df25884a5758437280874c1568c44",
+    "sha256": "a524d1dc3f5175f07d994758e8a0cf814d33d7a33bd4569f0e85bfde424b883e"
+  }
+}
