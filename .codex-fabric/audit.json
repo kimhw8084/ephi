@@ -1,0 +1,486 @@
+{
+  "accepted_at": "2026-09-22T21:01:38Z",
+  "changed_files": [
+    {
+      "additions": 5,
+      "deletions": 1,
+      "path": ".github/workflows/package.yml",
+      "status": "M"
+    },
+    {
+      "additions": 31,
+      "deletions": 0,
+      "path": "13_Package_Review.md",
+      "status": "M"
+    },
+    {
+      "additions": 26,
+      "deletions": 0,
+      "path": "README.md",
+      "status": "M"
+    },
+    {
+      "additions": 44,
+      "deletions": 19,
+      "path": "manifest.json",
+      "status": "M"
+    },
+    {
+      "additions": 97,
+      "deletions": 0,
+      "path": "migrations/007_o5_decision_snapshot_handoff.sql",
+      "status": "A"
+    },
+    {
+      "additions": 70,
+      "deletions": 0,
+      "path": "src/ephi/application/__init__.py",
+      "status": "M"
+    },
+    {
+      "additions": 815,
+      "deletions": 0,
+      "path": "src/ephi/application/handoff.py",
+      "status": "A"
+    },
+    {
+      "additions": 1,
+      "deletions": 1,
+      "path": "src/ephi/application/worker.py",
+      "status": "M"
+    },
+    {
+      "additions": 2,
+      "deletions": 0,
+      "path": "src/ephi/infrastructure/__init__.py",
+      "status": "M"
+    },
+    {
+      "additions": 444,
+      "deletions": 0,
+      "path": "src/ephi/infrastructure/handoff.py",
+      "status": "A"
+    },
+    {
+      "additions": 11,
+      "deletions": 0,
+      "path": "src/ephi/infrastructure/postgresql.py",
+      "status": "M"
+    },
+    {
+      "additions": 7,
+      "deletions": 1,
+      "path": "src/ephi/infrastructure/postgresql_worker.py",
+      "status": "M"
+    },
+    {
+      "additions": 88,
+      "deletions": 0,
+      "path": "src/ephi/infrastructure/sqlite.py",
+      "status": "M"
+    },
+    {
+      "additions": 355,
+      "deletions": 0,
+      "path": "tests/test_o5_handoff.py",
+      "status": "A"
+    },
+    {
+      "additions": 381,
+      "deletions": 0,
+      "path": "tests/test_o5_handoff_postgresql.py",
+      "status": "A"
+    },
+    {
+      "additions": 1,
+      "deletions": 1,
+      "path": "tests/test_o9_operations.py",
+      "status": "M"
+    }
+  ],
+  "checks": [
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n -i \\\"assignment handoff|material change|decision snapshot|event kind|handoff notification|O5\\\\.2|notification intent\\\" . --glob '\"'!manifest.json'\"' --glob '\"'!evidence/import/**'\"' --glob '\"'!__pycache__/**'\"'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '260,330p' README.md\nrtk sed -n '155,220p' 13_Package_Review.md\nrtk rg -n -i \\\"handoff|notification|material\\\" 03_Application_Contracts.md 04_Data_and_Runtime.md 08_Security_Notifications_AI_Operations.md 10_Traceability_and_Decisions.md\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n 'command_type=\\\"|def claim|def acknowledge|owner|assignment' src/ephi/application/workflow.py src/ephi/application/attention.py tests/test_o3_application.py tests/test_o3_postgresql.py | head -200\nrtk sed -n '1,380p' src/ephi/application/workflow.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,260p' src/ephi/application/hashing.py\nrtk sed -n '1,130p' src/ephi/infrastructure/sqlite.py\nrtk sed -n '1,120p' src/ephi/infrastructure/postgresql.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n \\\"payload_json|\\\\[\\\\\\\"payload\\\\\\\"\\\\]|event\\\\[|list_outbox_events|outbox.*payload|result_identity\\\" tests | head -240\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n \\\"EpisodeWorkflowCommandService|CLAIM_EPISODE_CAPABILITY|ExternalActionType|ActionReconciliationState\\\" src/ephi/application/__init__.py | head -80\nrtk sed -n '1,220p' src/ephi/application/__init__.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '280,325p' src/ephi/application/decision_loop.py\nrtk sed -n '1,120p' tests/test_o5_postgresql.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest tests.test_o5_handoff -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n \\\"initialized|outbox_event_id|event_kind|material_change|snapshot\\\\(\\\" tests/test_o5_handoff_postgresql.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest tests.test_o5_handoff_postgresql -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest tests.test_o5_handoff -v'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n \\\"class .*Worker|worker_store|SQLite.*Job|PostgreSQLWorkerStore\\\" src/ephi/infrastructure src/ephi/application/worker.py | head -160\nrtk sed -n '1,190p' src/ephi/application/worker.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest tests.test_o5_handoff -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff -- src/ephi/application/handoff.py tests/test_o5_handoff.py tests/test_o5_handoff_postgresql.py\nrtk git status --short'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '10,70p' tests/test_o5_handoff_postgresql.py\nrtk sed -n '140,245p' tests/test_o5_handoff_postgresql.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest tests.test_o5_handoff tests.test_o5_handoff_postgresql -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m compileall -q src tests tools\nrtk python3 -m unittest discover -s tests -v'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"if rtk printenv EPHI_TEST_POSTGRES_DSN >/dev/null 2>&1; then rtk sh -c 'test -n \\\"\"'$EPHI_TEST_POSTGRES_DSN\"'\"' && rtk sh -c 'echo EPHI_TEST_POSTGRES_DSN=SET' || rtk sh -c 'echo EPHI_TEST_POSTGRES_DSN=EMPTY'; else rtk sh -c 'echo EPHI_TEST_POSTGRES_DSN=UNSET'; fi\nrtk pg_isready\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk psql -Atqc 'select version()'\"",
+      "exit_code": 2,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk psql -d postgres -Atqc 'select current_user, version()'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk psql -d postgres -Atqc 'select datname from pg_database where datistemplate = false order by datname'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk psql -d ephi_test18 -Atqc 'select current_database()'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk env EPHI_TEST_POSTGRES_DSN='postgresql:///ephi_test18?host=/tmp' python3 -m unittest tests.test_o5_handoff_postgresql -v\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk env EPHI_TEST_POSTGRES_DSN='postgresql:///ephi_test18?host=/tmp' python3 -m unittest tests.test_o5_handoff_postgresql -v\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk env EPHI_TEST_POSTGRES_DSN='postgresql:///ephi_test18?host=/tmp' python3 -m unittest tests.test_o2_postgresql tests.test_o2_postgresql_reads tests.test_o2_postgresql_artifacts tests.test_o2_worker_postgresql tests.test_o3_postgresql tests.test_o5_postgresql tests.test_o8_postgresql tests.test_o9_operations -v\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short\nrtk git diff --stat\nrtk python3 tools/check_package.py\nrtk python3 tools/w0_repo_baseline.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n \\\"class MutableCurrentAuthorizationAuthority|def authorize\\\" src/ephi/application/context.py\nrtk sed -n '160,280p' src/ephi/application/context.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '130,190p' src/ephi/application/context.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest tests.test_o5_handoff -v'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest tests.test_o5_handoff -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest\nrtk git diff --check\nrtk python3 tools/check_package.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk env EPHI_TEST_POSTGRES_DSN='postgresql:///ephi_test18?host=/tmp' python3 -m unittest discover -s tests -v\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk env EPHI_TEST_POSTGRES_DSN='postgresql:///ephi_test18?host=/tmp' python3 -m unittest tests.test_o5_handoff_postgresql.O5HandoffPostgreSQLTests.test_wrong_event_binding_scope_and_authorization_fail_closed -v\nrtk python3 -m unittest tests.test_o5_handoff -v\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest tests.test_o5_handoff -v'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest tests.test_o5_handoff -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest\nrtk python3 -m compileall -q src tests tools\nrtk git diff --check\nrtk git status --short\nrtk git diff --stat'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest\nrtk python3 -m unittest discover -s tests -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --check\nrtk git diff --name-only\nrtk git status --short --branch\nrtk git diff --numstat'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git add 13_Package_Review.md README.md manifest.json src/ephi/application/handoff.py tests/test_o5_handoff.py tests/test_o5_handoff_postgresql.py\nrtk git commit -m 'CHG-169: derive O5.2 handoffs from committed events'\nrtk git status --short --branch\nrtk git log --oneline --decorate -4\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git remote -v\nrtk git branch -a --contains 8ae92966d8664cc1d74878cffbb8af0008eb7791\nrtk git show --stat --oneline 70c5f89336964260f33f4ec47feea1220dc8eb1e\nrtk git ls-tree -r --name-only 70c5f89336964260f33f4ec47feea1220dc8eb1e | head -120\nrtk git log --oneline --decorate --all --grep='Fabric\\\\|evidence' -30\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git show 70c5f89336964260f33f4ec47feea1220dc8eb1:.codex-fabric/audit.json | sed -n '1,120p'\nrtk git show 70c5f89336964260f33f4ec47feea1220dc8eb1:.codex-fabric/audit.json | tail -100\nrtk find . -maxdepth 3 -type f -path '*codex-fabric*' -o -name '*audit*' | head -100\nrtk rg -n \\\"codex-fabric|audit.json|candidate-bound|fabric\\\" . --glob '\"'!evidence/import/**'\"' --glob '\"'!manifest.json'\"' | head -160\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk /Users/haewonkim/.codex-fabric/bin/fabricctl --help\nrtk /Users/haewonkim/.codex-fabric/bin/fabricctl status CF-18bc54468d880ebc9ef6d969\nrtk rg -n \"publish-evidence|publish_audit|audit-evidence|candidate_manifest|evidence\" /Users/haewonkim/.codex-fabric/releases/1.2.4-quota-recovery-candidate/fabric.py | head -200'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git push origin HEAD:refs/heads/codex/ephi-o5-decision-snapshot-handoff-fix1\nrtk git ls-remote origin refs/heads/codex/ephi-o5-decision-snapshot-handoff-fix1 refs/heads/main\nrtk git status --short --branch'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk ls -la /Users/haewonkim/.codex-fabric\nrtk ls -la /Users/haewonkim/.codex-fabric/jobs 2>/dev/null || true\nrtk ls -la /Users/haewonkim/.codex-fabric/results 2>/dev/null || true\nrtk rg -l 'ephi-o5-decision-snapshot-handoff-fix1|be2f190' /Users/haewonkim/.codex-fabric 2>/dev/null | head -100\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk cat /Users/haewonkim/.codex-fabric/jobs/CF-d9c9925e3446c1d79812215d.running/job.json\nrtk ls -la /Users/haewonkim/.codex-fabric/results/CF-d9c9925e3446c1d79812215d\nrtk /Users/haewonkim/.codex-fabric/bin/fabricctl status CF-d9c9925e3446c1d79812215d'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk ls -la .codex-fabric 2>/dev/null || true\nrtk git status --short --branch\nrtk git show -s --format='%H%n%T%n%P%n%s' HEAD\nrtk git rev-parse origin/main HEAD 'HEAD\"'^{tree}'\"' 'origin/main\"'^{tree}'\"'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest\nrtk python3 tools/w0_repo_baseline.py\nrtk git diff --check\nrtk git status --short --branch'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk env EPHI_TEST_POSTGRES_DSN='postgresql:///ephi_test18?host=/tmp' python3 -m unittest discover -s tests -v\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git status --porcelain=v1 --branch\nrtk git diff --check\nrtk git ls-remote origin refs/heads/codex/ephi-o5-decision-snapshot-handoff-fix1 refs/heads/main\nrtk git merge-base --is-ancestor b359fa2cb6b145eb47d8713a0cf0f39e5783d6b3 HEAD\nrtk git merge-base --is-ancestor 8ae92966d8664cc1d74878cffbb8af0008eb7791 HEAD\nrtk git show -s --format='%H%n%P%n%s' HEAD\nrtk /Users/haewonkim/.codex-fabric/bin/fabricctl status CF-d9c9925e3446c1d79812215d\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    }
+  ],
+  "codex": {
+    "cli_version": "codex-cli 0.155.1",
+    "configured_model": "gpt-5.6-luna",
+    "event_count": 164,
+    "provider_reported_model": null,
+    "reasoning_effort": "xhigh",
+    "terminal_type": "turn.completed",
+    "usage": {
+      "cache_hit_percent": 97.56,
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 11956480,
+      "fresh_input_tokens": 299417,
+      "input_tokens": 12255897,
+      "non_reasoning_output_tokens": 18992,
+      "output_tokens": 43972,
+      "reasoning_output_tokens": 24980,
+      "total_processed_tokens": 12299869
+    },
+    "warnings": []
+  },
+  "commits": [
+    {
+      "sha": "be2f190c3686dba2ca9aa009241fd691a6494da1",
+      "subject": "CHG-169: derive O5.2 handoffs from committed events"
+    },
+    {
+      "sha": "8ae92966d8664cc1d74878cffbb8af0008eb7791",
+      "subject": "CHG-169: add durable decision snapshots and handoff delivery"
+    }
+  ],
+  "diff": {
+    "additions": 2378,
+    "changed_files": 16,
+    "commit_count": 2,
+    "deletions": 23
+  },
+  "error_code": null,
+  "evidence_manifest": {
+    "count": 3,
+    "items": [
+      {
+        "bytes": 16520,
+        "path": "13_Package_Review.md",
+        "sha256": "2b3d7826b25dba89ef84a4fec1ac5b397624bb7d19d8baf711cf1f36e2f855c7"
+      },
+      {
+        "bytes": 19304,
+        "path": "README.md",
+        "sha256": "66522c94f82292c13eecf4e88d904a0103170dd44352e0e071603d1292cdc59e"
+      },
+      {
+        "bytes": 35132,
+        "path": "manifest.json",
+        "sha256": "8ac2998836682c9ffffe55d74d85117a9d490a927e4decb782c49e1b0189edc6"
+      }
+    ],
+    "version": 1
+  },
+  "evidence_publisher_release": "1.2.4-quota-recovery-candidate",
+  "fabric_capture": {
+    "applied": false,
+    "paths_before": 0,
+    "transient_untracked_removed": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "fabric_release": "1.2.4-quota-recovery-candidate",
+  "failure_class": null,
+  "finished_at": "2026-09-22T21:18:06Z",
+  "git": {
+    "base_is_ancestor": true,
+    "base_sha": "b359fa2cb6b145eb47d8713a0cf0f39e5783d6b3",
+    "branch": "codex/ephi-o5-decision-snapshot-handoff-fix1",
+    "detached_verify": false,
+    "head_sha": "be2f190c3686dba2ca9aa009241fd691a6494da1",
+    "remote_exact_head": true,
+    "remote_head_sha": "be2f190c3686dba2ca9aa009241fd691a6494da1",
+    "target_branch": "main",
+    "target_drifted_since_acceptance": false,
+    "target_head_observed_after_execution": "b359fa2cb6b145eb47d8713a0cf0f39e5783d6b3",
+    "work_branch": "codex/ephi-o5-decision-snapshot-handoff-fix1",
+    "worktree_clean": true
+  },
+  "instructions": {
+    "files": [
+      {
+        "bytes": 1458,
+        "path": "AGENTS.md",
+        "sha256": "4349f387a79d886ed1264604ff48c582698e539e08ed8fb2f9d8ab8fbf6f804a"
+      }
+    ],
+    "total_bytes": 1458,
+    "warning": null
+  },
+  "job_id": "CF-d9c9925e3446c1d79812215d",
+  "kind": "codex-fabric-audit-evidence",
+  "locator": {
+    "branch": "codex-fabric/evidence/ephi/ephi-o5-decision-snapshot-handoff-fix1",
+    "path": ".codex-fabric/audit.json",
+    "ref": "refs/heads/codex-fabric/evidence/ephi/ephi-o5-decision-snapshot-handoff-fix1"
+  },
+  "operation": "FIX",
+  "policy": {
+    "environment_policy_sha256": "e077daca74297b3c30bee8989f00f8ca5338f7610b4d016a6c48db524205d064",
+    "fabric_release": "1.2.4-quota-recovery-candidate",
+    "policy_sha256": "e15738f2a5e7b3c5d2ef9bdf9a19d03b9d73708b3639eb6b188f414c330007d6",
+    "registry_sha256": "cfc765f3211c37c7967a138f3b2d89a99341939b15b2623f92744d007f625d6f"
+  },
+  "project_id": "ephi",
+  "recovery": {
+    "model_rerun_safe": false,
+    "recovery_required": false,
+    "retry_safe": false,
+    "retry_scope": null,
+    "worktree_retained": true
+  },
+  "request": "ephi-o5-decision-snapshot-handoff-fix1",
+  "schema_version": 1,
+  "started_at": "2026-09-22T21:01:39Z",
+  "status": "EXECUTED_CHANGE",
+  "timing": {
+    "execution_seconds": 987,
+    "queue_seconds": 1,
+    "total_seconds": 988
+  },
+  "transport": {
+    "bytes": 6220,
+    "envelope": "FABRIC/2",
+    "prompt_bytes": 5894,
+    "prompt_sha256": "5b6a0626361f413a4d459c2497c19f874f708e681c5472c8a8419a34aee5b303",
+    "sha256": "d9c9925e3446c1d79812215d36037ca713d992096341b0d21bee6f3860625e1f"
+  }
+}
