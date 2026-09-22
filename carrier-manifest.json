@@ -1,0 +1,22 @@
+{
+  "schema_version": "ephi-chg-167-project-os-carrier.v1",
+  "carrier_kind": "project-os-artifact-carrier",
+  "project": "ephi",
+  "change": "CHG-167",
+  "request": "ephi-o5-decision-loop-core-fix1",
+  "operation": "FIX",
+  "actual_fabric_job_id": "CF-7b780ce58b1e6681696c57dc",
+  "base_sha": "8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e",
+  "final_candidate_sha": "cfb6444e7bc9e4780c01163bc844c222d876cd90",
+  "final_candidate_tree_sha": "4d1de0ad585f898fd55e39aac5110e9ccdc8aa6d",
+  "work_branch": "codex/ephi-o5-decision-loop-core-fix1",
+  "carrier_ref": "refs/heads/project-os-artifacts/ephi/ephi-o5-decision-loop-core-fix1",
+  "evidence_ref": "refs/heads/codex-fabric/evidence/ephi/ephi-o5-decision-loop-core-fix1",
+  "files": ["candidate_manifest.json", "decision_loop_evidence.json", "carrier-manifest.json"],
+  "migration": {"status": "NOT_APPLICABLE", "identity": null},
+  "remote_readback": {
+    "required": true,
+    "verification": "remote refs and representative carrier file hashes are read back after push"
+  },
+  "verdict_boundary": "FIX candidate only; independent audit must decide final acceptance"
+}

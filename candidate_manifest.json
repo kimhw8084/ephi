@@ -1,0 +1,48 @@
+{
+  "schema_version": "ephi-chg-167-candidate-manifest.v1",
+  "project": "ephi",
+  "change": "CHG-167",
+  "request": "ephi-o5-decision-loop-core-fix1",
+  "operation": "FIX",
+  "base": {
+    "ref": "refs/heads/main",
+    "commit": "8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e",
+    "tree": "de2063907127a988844179e058e435d7b7666c96"
+  },
+  "candidate": {
+    "commit": "cfb6444e7bc9e4780c01163bc844c222d876cd90",
+    "tree": "4d1de0ad585f898fd55e39aac5110e9ccdc8aa6d",
+    "sole_parent": "8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e",
+    "work_branch": "codex/ephi-o5-decision-loop-core-fix1"
+  },
+  "fabric_job": "CF-7b780ce58b1e6681696c57dc",
+  "exact_head_ci": {
+    "workflow": "Package integrity",
+    "run_id": 35681203213,
+    "head_sha": "cfb6444e7bc9e4780c01163bc844c222d876cd90",
+    "conclusion": "success",
+    "postgres_o5_step": "success"
+  },
+  "migration": {
+    "status": "NOT_APPLICABLE",
+    "identity": null,
+    "reason": "O5 is a nested extension of the existing episode_workflow JSON aggregate; no physical schema change is required."
+  },
+  "changed_files": [
+    {"path": ".github/workflows/package.yml", "blob": "febda525573f3741a3d851cfda847f31665022e3"},
+    {"path": "13_Package_Review.md", "blob": "3f95c842fecdbc56da771d86da236c839fd9d5a8"},
+    {"path": "README.md", "blob": "6a24c6fe709e5a0514a3b4ed107ea3c454cc4601"},
+    {"path": "manifest.json", "blob": "ec2d403743bff7a33167303c1202bf00ecd72472"},
+    {"path": "src/ephi/application/__init__.py", "blob": "be3965ac85a1d4421e1ad04be08b18379f5d9c07"},
+    {"path": "src/ephi/application/decision_loop.py", "blob": "d4a062785d9967fc385350e53a9205180dda5049"},
+    {"path": "src/ephi/application/workflow.py", "blob": "0e0ee926e09dc64b0c295235e126a1853657c124"},
+    {"path": "tests/test_o5_decision_loop.py", "blob": "57a3ad315c5d90246dee80ca77694c3ef4a1017f"},
+    {"path": "tests/test_o5_postgresql.py", "blob": "3cf86bc8c21895c4997d72abcfe7e598418cc6fd"}
+  ],
+  "source_hygiene": {
+    "ui_changed": false,
+    "nicegui_base_changed": false,
+    "dependency_pins_changed": false,
+    "historical_source_claims": false
+  }
+}

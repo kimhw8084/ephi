@@ -1,0 +1,80 @@
+{
+  "schema_version": "ephi-chg-167-o5-decision-loop-evidence.v1",
+  "project": "ephi",
+  "change": "CHG-167",
+  "request": "ephi-o5-decision-loop-core-fix1",
+  "candidate": "cfb6444e7bc9e4780c01163bc844c222d876cd90",
+  "authority_proof": {
+    "authoritative_aggregate_type": "episode_workflow",
+    "decision_loop_aggregate_type_alias": "episode_workflow",
+    "forbidden_duplicate_aggregate_type": "ephi_decision_loop",
+    "episode_id": "test-seeded per regression fixture",
+    "proof": [
+      "A real episode_workflow row is seeded and claimed/acknowledged through EpisodeWorkflowCommandService.",
+      "O5 InitializeDecisionLoop, action, recovery, close, and reopen mutations execute through the existing VersionedAggregateCommandExecutor against that same row.",
+      "The regression asserts no ephi_decision_loop row exists and every successful O3/O5 command advances the same aggregate version.",
+      "DecisionLoopSnapshot.workflow_state derives top-level O3 work_state and its RevisionVector.workflow_version equals the aggregate version."
+    ],
+    "version_sequence": [
+      "O3 claim advances episode_workflow version.",
+      "O3 acknowledge and O5 initialization contend at one expected version; exactly one commits and the stale contender conflicts.",
+      "O5 action, plan, lock, observations, closure, and reopen each advance episode_workflow under CAS.",
+      "O3 and O5 reads report the same authoritative CLOSED or reopened OPEN truth."
+    ]
+  },
+  "action_recovery_closure_proof": {
+    "action_binding": "A supplied prior_action_id must resolve in the same episode and active cycle; nonexistent IDs fail.",
+    "execution_state": "UNKNOWN/PENDING actions cannot establish post-action recovery; qualifying action records require explicit observed/reconciled execution state.",
+    "temporal_boundary": "Observations before the action observed/effect boundary remain history but are marked ineligible and cannot establish PASS.",
+    "closure_contract": "CONFIRMED_ISSUE closure requires the exact locked PASS recovery_plan_id, its current-cycle qualifying action, and post-action evidence; closure retains action, plan, check/evidence IDs, revisions, workflow version, disposition, reason, actor, and time.",
+    "technical_pass": "A technical recovery PASS does not change top-level O3 work_state; only CloseEpisode commits CLOSED."
+  },
+  "reopen_history_proof": {
+    "closed_precondition": true,
+    "new_cycle": true,
+    "owner_reset": "reopen deterministically returns the new cycle to OPEN with no retained old owner",
+    "prior_history": "prior checks, actions, recovery plans, observations, and closure records remain unchanged",
+    "restart": "PostgreSQL regression closes, disconnects, reconnects, reads CLOSED state, then reopens the same aggregate and verifies preserved closure history."
+  },
+  "authorization_and_atomicity": {
+    "current_authorization": "revoked authorization blocks O5 read and protected write",
+    "idempotency": "same command ID and payload replays; same command ID with different payload/type/target conflicts",
+    "rollback": "audit and outbox faults roll back the shared workflow mutation"
+  },
+  "executed_tests": {
+    "offline": {
+      "command": "python3 -m unittest discover -s tests -v",
+      "result": "PASS",
+      "tests_run": 251,
+      "skipped": 68
+    },
+    "postgresql_o5": {
+      "suite": "tests.test_o5_postgresql",
+      "runtime": "PostgreSQL 18.x",
+      "result": "PASS",
+      "tests_run": 3
+    },
+    "postgresql_broad_lane": {
+      "suites": ["O2", "O3", "O4", "O5", "O8", "O9", "adapter lifecycle"],
+      "result": "PASS",
+      "tests_run": 85
+    },
+    "package_check": "PASS",
+    "w0_repo_baseline": "PASS",
+    "git_diff_check": "PASS",
+    "exact_head_ci": {
+      "run_id": 35681203213,
+      "head_sha": "cfb6444e7bc9e4780c01163bc844c222d876cd90",
+      "result": "PASS",
+      "postgres_o5_step": "PASS"
+    }
+  },
+  "non_claims": {
+    "REAL_FAMILY_QUALIFICATION": "NOT_RUN",
+    "HUMAN_PILOT": "NOT_RUN",
+    "UI_QUALIFICATION": "NOT_RUN",
+    "PRODUCTION_ACTION_EXECUTION": "NOT_IMPLEMENTED",
+    "PRODUCTION_RECOVERY_THRESHOLDS": "NOT_ESTABLISHED",
+    "PRODUCTION_READY": false
+  }
+}
