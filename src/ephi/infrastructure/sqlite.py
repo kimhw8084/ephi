@@ -18,6 +18,7 @@ from ephi.application.context import AccessScope
 from ephi.application.errors import StorageFailureError, ValidationFailureError
 from ephi.application.hashing import canonical_json, normalize_domain_payload
 from ephi.application.storage import (
+    AggregateAlreadyExistsError,
     AggregateSnapshot,
     CommandUnitOfWork,
     ReceiptAlreadyExistsError,
@@ -86,6 +87,9 @@ CREATE TABLE IF NOT EXISTS outbox_event (
 CREATE INDEX IF NOT EXISTS idx_receipt_scope_subject ON command_receipt(scope_key, subject);
 CREATE INDEX IF NOT EXISTS idx_audit_scope_aggregate ON audit_event(scope_key, aggregate_type, aggregate_id, aggregate_version);
 CREATE INDEX IF NOT EXISTS idx_outbox_status ON outbox_event(status, created_at);
+CREATE INDEX IF NOT EXISTS idx_o5_decision_loop_scope_episode
+    ON aggregate_state(scope_key, aggregate_id, version)
+    WHERE aggregate_type = 'ephi_decision_loop';
 """
 
 
@@ -180,6 +184,27 @@ class _SQLiteCommandTransaction:
             ).rowcount)
         except sqlite3.Error as exc:
             raise StorageFailureError("durable SQLite storage failed while updating an aggregate") from exc
+
+    def insert_aggregate(
+        self,
+        scope_key: str,
+        aggregate_type: str,
+        aggregate_id: str,
+        *,
+        version: int,
+        state_json: str,
+    ) -> None:
+        try:
+            self.connection.execute(
+                "INSERT INTO aggregate_state(scope_key, aggregate_type, aggregate_id, version, state_json) VALUES (?, ?, ?, ?, ?)",
+                (scope_key, aggregate_type, aggregate_id, version, state_json),
+            )
+        except sqlite3.IntegrityError as exc:
+            if "UNIQUE" in str(exc).upper() or "PRIMARY KEY" in str(exc).upper():
+                raise AggregateAlreadyExistsError from exc
+            raise StorageFailureError("durable SQLite storage failed while creating an aggregate") from exc
+        except sqlite3.Error as exc:
+            raise StorageFailureError("durable SQLite storage failed while creating an aggregate") from exc
 
     def append_audit(
         self,

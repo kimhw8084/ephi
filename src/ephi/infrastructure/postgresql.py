@@ -19,6 +19,7 @@ from ephi.application.errors import StorageFailureError, ValidationFailureError
 from ephi.application.hashing import canonical_json, normalize_domain_payload
 from ephi.application.worker import WorkerLeaseConfig
 from ephi.application.storage import (
+    AggregateAlreadyExistsError,
     AggregateSnapshot,
     CommandEventAlreadyExistsError,
     CommandUnitOfWork,
@@ -253,6 +254,25 @@ class _PostgreSQLCommandTransaction:
             ).rowcount)
         except Exception as exc:
             raise StorageFailureError("durable PostgreSQL storage failed while updating an aggregate") from exc
+
+    def insert_aggregate(
+        self,
+        scope_key: str,
+        aggregate_type: str,
+        aggregate_id: str,
+        *,
+        version: int,
+        state_json: str,
+    ) -> None:
+        try:
+            self.connection.execute(
+                "INSERT INTO aggregate_state(scope_key, aggregate_type, aggregate_id, version, state_json) VALUES (%s, %s, %s, %s, %s::jsonb)",
+                (scope_key, aggregate_type, aggregate_id, version, state_json),
+            )
+        except Exception as exc:
+            if getattr(exc, "sqlstate", None) == "23505":
+                raise AggregateAlreadyExistsError from exc
+            raise StorageFailureError("durable PostgreSQL storage failed while creating an aggregate") from exc
 
     def append_audit(
         self,

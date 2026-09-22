@@ -41,6 +41,10 @@ class CommandEventAlreadyExistsError(Exception):
     """A durable audit/outbox command event key was won by another transaction."""
 
 
+class AggregateAlreadyExistsError(Exception):
+    """A create command lost the durable aggregate identity race."""
+
+
 class CommandUnitOfWork(Protocol):
     """The bounded local transaction used by the command executor."""
 
@@ -65,6 +69,16 @@ class CommandUnitOfWork(Protocol):
         next_version: int,
         state_json: str,
     ) -> int: ...
+
+    def insert_aggregate(
+        self,
+        scope_key: str,
+        aggregate_type: str,
+        aggregate_id: str,
+        *,
+        version: int,
+        state_json: str,
+    ) -> None: ...
 
     def append_audit(
         self,

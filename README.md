@@ -236,6 +236,32 @@ policy binding or production-readiness claims. Those remain external
 deployment/qualification work. PostgreSQL artifact evidence is additive and
 DSN-gated; the ordinary package/full-suite/W0 paths remain database-independent.
 
+## CHG-167 O5.1 durable decision-loop core
+
+The O5.1 backend substrate stores one bounded `ephi_decision_loop` aggregate per
+Episode. The existing versioned command executor remains the authority for
+expected-version CAS, current authorization, idempotent receipts, audit,
+outbox and atomic rollback. The aggregate records check lifecycles/results,
+human-authorized external action observations, locked policy identities and
+qualified recovery observations, explicit human closure dispositions, and
+append-only reopen cycles. Technical recovery PASS never closes engineering
+work; an external timeout remains UNKNOWN until an explicit later
+reconciliation.
+
+Focused offline evidence is `tests.test_o5_decision_loop`; real PostgreSQL
+18.x evidence is additive and DSN-gated in `tests.test_o5_postgresql`:
+
+```bash
+python3 -m unittest tests.test_o5_decision_loop -v
+EPHI_TEST_POSTGRES_DSN='postgresql://user:password@host:5432/database' \
+  python3 -m unittest tests.test_o5_postgresql -v
+```
+
+This is a generic deterministic fixture path. It does not claim a real-family
+pilot, human pilot, UI qualification, production action execution, production
+recovery thresholds, source qualification, exposure prevention, RCA, value,
+or production readiness. `src/ephi/ui/**` and NiceGUI Base remain unchanged.
+
 ## Pinned framework authority
 
 ## CHG-150 O8.1 current-authorization freshness boundary

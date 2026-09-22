@@ -125,6 +125,27 @@ production readiness. Artifact PostgreSQL tests are additive to the existing
 command, worker, coherent-read and retained-snapshot integration suites; the
 ordinary package/full-suite/W0 checks remain database-independent.
 
+## CHG-167 O5.1 decision-loop core
+
+The O5.1 candidate adds the narrow durable backend substrate for one Episode
+decision cycle. It reuses the O2 `VersionedAggregateCommandExecutor` and the
+existing current-authorization boundary, so every check, action, recovery,
+closure and reopen mutation has expected-version CAS, viewed revisions,
+stable command identity, receipt replay, immutable audit, outbox publication,
+and atomic rollback. The existing `ephi.recovery.RecoveryEvaluator` remains
+the only recovery-integrity authority; invalid, stale, unavailable,
+contradictory, low-confidence, mismatched, suspect, or repeated evidence
+cannot produce affirmative recovery PASS.
+
+The aggregate keeps technical recovery state separate from engineering work
+state, requires explicit closure dispositions and residual-risk evidence where
+needed, and appends a new cycle on reopen without rewriting prior closure or
+action/check/recovery history. PostgreSQL integration is real-connection and
+DSN-gated; SQLite is the durable reference adapter. This slice is not a real
+family pilot, human pilot, UI qualification, production action path,
+production-threshold qualification, RCA, value, or production-readiness
+claim.
+
 ## CHG-134 O3.1 W1 candidate
 
 The O3.1 candidate adds only the durable Attention → Episode W1 vertical slice.
