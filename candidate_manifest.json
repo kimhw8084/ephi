@@ -1,0 +1,40 @@
+{
+  "schema_version": "ephi-chg-167-candidate-manifest.v2",
+  "project": "ephi",
+  "change": "CHG-167",
+  "request": "ephi-o5-decision-loop-core-verify2",
+  "operation": "VERIFY",
+  "dispatch_base_ref": "refs/heads/main",
+  "dispatch_base_sha": "8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e",
+  "dispatch_base_tree": "de2063907127a988844179e058e435d7b7666c96",
+  "verified_candidate_sha": "cfb6444e7bc9e4780c01163bc844c222d876cd90",
+  "verified_candidate_tree": "4d1de0ad585f898fd55e39aac5110e9ccdc8aa6d",
+  "verified_candidate_parent": "8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e",
+  "candidate_parent_contract": "sole parent is dispatch-base commit",
+  "product_work_branch": "codex/ephi-o5-decision-loop-core-verify2",
+  "product_work_branch_head": "8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e",
+  "product_work_branch_tree": "de2063907127a988844179e058e435d7b7666c96",
+  "product_work_branch_remains_dispatch_base": true,
+  "source_changed": false,
+  "fabric_job": "CF-a524d1dc3f5175f07d994758",
+  "fabric_job_binding": "CF-a524d1dc3f5175f07d994758",
+  "canonical_evidence_ref": "refs/heads/codex-fabric/evidence/ephi/ephi-o5-decision-loop-core-verify2",
+  "exact_head_ci": {
+    "workflow": "Package integrity",
+    "run_id": 35681203213,
+    "suite_id": 96604797122,
+    "head_sha": "cfb6444e7bc9e4780c01163bc844c222d876cd90",
+    "all_jobs": "PASS",
+    "conclusion": "success",
+    "postgres_o5_step": "PASS"
+  },
+  "postgresql_o5_unified_workflow_step": "PASS",
+  "source_hygiene": {
+    "ui_changed": false,
+    "nicegui_base_changed": false,
+    "dependency_pins_changed": false,
+    "historical_source_claims": false
+  },
+  "no_stale_predecessor_fabric_job_ids": true,
+  "native_fabric_job_id_is_current_verify2_only": true
+}

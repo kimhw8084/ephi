@@ -1,0 +1,36 @@
+{
+  "schema_version": "ephi-chg-167-project-os-carrier.v2",
+  "carrier_kind": "project-os-artifact-carrier",
+  "project": "ephi",
+  "change": "CHG-167",
+  "request": "ephi-o5-decision-loop-core-verify2",
+  "operation": "VERIFY",
+  "actual_current_fabric_job_id": "CF-a524d1dc3f5175f07d994758",
+  "fabric_job_binding": "CF-a524d1dc3f5175f07d994758",
+  "base_sha": "8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e",
+  "base_tree_sha": "de2063907127a988844179e058e435d7b7666c96",
+  "final_candidate_sha": "cfb6444e7bc9e4780c01163bc844c222d876cd90",
+  "final_candidate_tree_sha": "4d1de0ad585f898fd55e39aac5110e9ccdc8aa6d",
+  "final_candidate_sole_parent": "8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e",
+  "work_branch": "codex/ephi-o5-decision-loop-core-verify2",
+  "work_branch_identity": "dispatch-base",
+  "carrier_ref": "refs/heads/project-os-artifacts/ephi/ephi-o5-decision-loop-core-verify2",
+  "evidence_ref": "refs/heads/codex-fabric/evidence/ephi/ephi-o5-decision-loop-core-verify2",
+  "files": [
+    "candidate_manifest.json",
+    "decision_loop_evidence.json",
+    "carrier-manifest.json"
+  ],
+  "sole_parent_contract": {
+    "required": true,
+    "parent": "cfb6444e7bc9e4780c01163bc844c222d876cd90",
+    "candidate_tree": "4d1de0ad585f898fd55e39aac5110e9ccdc8aa6d"
+  },
+  "remote_readback": {
+    "required": true,
+    "verification": "remote refs, sole parent, all carrier files, candidate tree, and forbidden-job-id absence are read back after push"
+  },
+  "predecessor_fabric_job_ids_present": false,
+  "product_mutation": false,
+  "verdict_boundary": "VERIFY evidence only; candidate-bound proof is carried by this exact-candidate sole-parent carrier and native Fabric audit"
+}

@@ -1,0 +1,63 @@
+{
+  "schema_version": "ephi-chg-167-o5-decision-loop-evidence.v2",
+  "project": "ephi",
+  "change": "CHG-167",
+  "request": "ephi-o5-decision-loop-core-verify2",
+  "operation": "VERIFY",
+  "candidate": "cfb6444e7bc9e4780c01163bc844c222d876cd90",
+  "candidate_tree": "4d1de0ad585f898fd55e39aac5110e9ccdc8aa6d",
+  "single_episode_workflow_authority": true,
+  "o3_o5_version_coherent": true,
+  "action_recovery_closure_bound": true,
+  "pre_action_recovery_blocked": true,
+  "technical_pass_does_not_close_work": true,
+  "reopen_history_preserved": true,
+  "postgres_integration": "PASS",
+  "exact_head_ci": "PASS",
+  "ui_changed": false,
+  "nicegui_base_changed": false,
+  "dependency_pins_changed": false,
+  "authority_proof": {
+    "authoritative_aggregate_type": "episode_workflow",
+    "decision_loop_aggregate_type_alias": "episode_workflow",
+    "forbidden_duplicate_aggregate_type": "ephi_decision_loop",
+    "duplicate_engineering_work_state": false,
+    "shared_executor": "VersionedAggregateCommandExecutor",
+    "workflow_version_source": "episode_workflow aggregate version",
+    "proof": [
+      "O5 resolves and mutates the existing O3 episode_workflow aggregate.",
+      "DECISION_LOOP_AGGREGATE_TYPE aliases EPISODE_WORKFLOW_AGGREGATE_TYPE.",
+      "No ephi_decision_loop aggregate row/type is created by the candidate path.",
+      "O3 and O5 consequential commands serialize through the same aggregate/version and executor."
+    ]
+  },
+  "action_recovery_closure_proof": {
+    "action_binding": "A supplied prior_action_id resolves in the same Episode and active cycle; nonexistent IDs fail.",
+    "execution_boundary": "Only an observed/reconciled SUCCEEDED action boundary qualifies post-action recovery; UNKNOWN/PENDING does not.",
+    "temporal_boundary": "Pre-action observations remain history but cannot establish post-action PASS.",
+    "closure_contract": "CONFIRMED_ISSUE closure requires the exact locked PASS recovery plan, current-cycle action binding, and post-action evidence.",
+    "technical_pass": "A technical recovery PASS does not change authoritative O3 work_state; only CloseEpisode commits CLOSED."
+  },
+  "reopen_history_proof": {
+    "closed_precondition": true,
+    "new_cycle": true,
+    "owner_reset": "reopen explicitly returns the new cycle to OPEN with no retained old owner",
+    "prior_history": "prior checks, actions, recovery plans, observations, and closure records remain unchanged",
+    "workflow_authority": "reopen mutates the same episode_workflow aggregate"
+  },
+  "ci_and_integration": {
+    "exact_head_run_id": 35681203213,
+    "exact_head_suite_id": 96604797122,
+    "exact_head_sha": "cfb6444e7bc9e4780c01163bc844c222d876cd90",
+    "exact_head_result": "PASS",
+    "postgres_o5_step": "PASS"
+  },
+  "non_claims": {
+    "REAL_FAMILY_QUALIFICATION": "NOT_RUN",
+    "HUMAN_PILOT": "NOT_RUN",
+    "UI_QUALIFICATION": "NOT_RUN",
+    "PRODUCTION_ACTION_EXECUTION": "NOT_IMPLEMENTED",
+    "PRODUCTION_RECOVERY_THRESHOLDS": "NOT_ESTABLISHED",
+    "PRODUCTION_READY": false
+  }
+}
