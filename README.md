@@ -297,6 +297,14 @@ company notification channels, real-family qualification, WIP/exposure,
 human pilot, UI qualification and production readiness remain unimplemented
 or not run, and exactly-once external delivery is not claimed.
 
+The O5.2 projector derives classification and material-change identity from
+the committed O2 outbox envelope. Its explicit eligible mapping is limited to
+`ClaimEpisode` (assignment handoff), `RecordExternalAction` (action recorded),
+`CloseEpisode` (closure), and `ReopenEpisode` (reopen); unsupported or
+malformed events fail closed. Retained caller classification/signature
+arguments are checked against the derived facts and cannot create another
+logical intent.
+
 ## CHG-147 O9.1 operations and restore rehearsal
 
 The CLI-only O9.1 boundary is documented in [operations](operations/README.md).

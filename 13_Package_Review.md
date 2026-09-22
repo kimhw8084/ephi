@@ -186,6 +186,15 @@ projection races, deduplication, recipient revocation, fencing, bounded retry
 failure, restart durability and UNKNOWN reconciliation in
 `tests.test_o5_handoff_postgresql`. No UI or NiceGUI Base file is changed.
 
+The O5.2 FIX continuation keeps O2 as the event authority. The projector
+validates the typed outbox envelope and derives classification/material-change
+identity from committed event facts using only the explicit `ClaimEpisode`,
+`RecordExternalAction`, `CloseEpisode` and `ReopenEpisode` mappings. Unsupported
+events and caller relabel/signature mismatches fail before intent/job writes;
+the focused regressions cover initialization misuse, distinct committed
+material events, exact replay, concurrent projection and binding/authorization
+fail-closed behavior.
+
 ## CHG-105 W0 runtime delta
 
 The independent framework/dependency qualification slice is recorded separately in [the runtime evidence](evidence/review/nicegui_base_runtime_evidence.json) and linked from [the NiceGUI Base binding manifest](evidence/review/nicegui_base_binding_manifest.json). It verified an isolated Python 3.11.7 environment, the exact NiceGUI Base VCS commit/version, exact `nicegui==3.15.0`, and 21/21 CHG-104 public-root authority imports. All six requested installed discovery commands returned machine-readable output. `runtime-contract` and browserless framework `runtime-smoke --port 0` PASS; application/browser/production qualification remain NOT_RUN. The canonical package self-check and Git-native baseline are the current W0 execution targets.

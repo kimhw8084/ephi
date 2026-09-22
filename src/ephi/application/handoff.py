@@ -61,6 +61,17 @@ EVENT_KINDS = frozenset(
     }
 )
 
+# O5.2 is a projector, not a second event authority.  Keep this policy
+# deliberately narrow: these O2 command types already carry the complete
+# workflow meaning needed by the handoff vocabulary.  Commands not listed
+# here are valid O2/O3/O5 commands, but are not notification triggers.
+_EVENT_KIND_BY_COMMAND = {
+    "ClaimEpisode": ASSIGNMENT_HANDOFF,
+    "RecordExternalAction": ACTION_RECORDED,
+    "CloseEpisode": CLOSURE,
+    "ReopenEpisode": REOPEN,
+}
+
 PENDING = "PENDING"
 DISPATCHING = "DISPATCHING"
 DELIVERED = "DELIVERED"
@@ -327,6 +338,77 @@ class HandoffStorage(Protocol):
     def mark_delivery_dispatching(self, scope: AccessScope, intent_id: str, lease: WorkerLease) -> None: ...
 
 
+@dataclass(frozen=True, slots=True)
+class _DerivedHandoff:
+    event_kind: str
+    material_change_signature: str
+
+
+def _authoritative_outbox_facts(event: Mapping[str, object]) -> tuple[str, dict[str, object]]:
+    """Validate and return the committed O2 event envelope.
+
+    The O2 outbox payload is intentionally an envelope containing the command
+    type, result identity, and aggregate identity.  O5.2 may classify only
+    after those facts agree with the row columns.  In particular, a payload
+    command type that disagrees with ``event_type`` is not a second opinion;
+    it is a malformed event and must fail closed.
+    """
+
+    if not isinstance(event, Mapping):
+        raise StorageFailureError("stored outbox event is not an object")
+    payload = event.get("payload_json")
+    if not isinstance(payload, Mapping):
+        raise StorageFailureError("stored outbox payload is not an object")
+    required = ("event_id", "command_type", "result_identity", "aggregate_type", "aggregate_id", "aggregate_version")
+    if any(field not in payload for field in required):
+        raise StorageFailureError("stored outbox payload has an invalid typed envelope")
+    for field in ("event_id", "command_type", "result_identity", "aggregate_type", "aggregate_id"):
+        _identity(payload[field], f"outbox payload {field}")
+    version = payload["aggregate_version"]
+    if isinstance(version, bool) or not isinstance(version, int) or version < 0:
+        raise StorageFailureError("stored outbox payload aggregate_version is invalid")
+    for field in ("event_id", "event_type", "aggregate_type", "aggregate_id"):
+        _identity(event.get(field), f"outbox {field}")
+    row_version = event.get("aggregate_version")
+    if isinstance(row_version, bool) or not isinstance(row_version, int) or row_version < 0:
+        raise StorageFailureError("stored outbox aggregate_version is invalid")
+    if payload["event_id"] != event["event_id"]:
+        raise StorageFailureError("outbox payload event identity does not match its row")
+    if payload["command_type"] != event["event_type"]:
+        raise ValidationFailureError("outbox command type does not match event_type")
+    if payload["aggregate_type"] != event["aggregate_type"] or payload["aggregate_id"] != event["aggregate_id"]:
+        raise ValidationFailureError("outbox aggregate identity does not match its row")
+    if payload["aggregate_version"] != row_version:
+        raise ValidationFailureError("outbox aggregate version does not match its row")
+    return str(payload["command_type"]), dict(payload)
+
+
+def _derive_handoff(event: Mapping[str, object]) -> _DerivedHandoff:
+    """Derive notification identity solely from one committed O2 event."""
+
+    command_type, payload = _authoritative_outbox_facts(event)
+    event_kind = _EVENT_KIND_BY_COMMAND.get(command_type)
+    if event_kind is None:
+        raise ValidationFailureError("outbox event type is not an eligible O5 handoff trigger")
+
+    # Include the complete validated, typed envelope and the immutable O2 row
+    # identity.  This makes the signature stable for replay/concurrency while
+    # keeping arbitrary caller text outside the logical intent identity.
+    material_facts = {
+        "scope_key": event["scope_key"],
+        "subject": event["subject"],
+        "command_id": event["command_id"],
+        "event_id": event["event_id"],
+        "event_type": event["event_type"],
+        "aggregate_type": event["aggregate_type"],
+        "aggregate_id": event["aggregate_id"],
+        "aggregate_version": event["aggregate_version"],
+        "payload": payload,
+    }
+    signature = sha256(canonical_json(material_facts).encode("utf-8")).hexdigest()
+    return _DerivedHandoff(event_kind, signature)
+
+
 class DeterministicRecipientDirectory:
     """Qualification-only recipient directory; no company identity binding."""
 
@@ -502,8 +584,8 @@ class DecisionSnapshotHandoffService:
         *,
         event_id: str,
         snapshot_id: str,
-        event_kind: str,
-        material_change_signature: str,
+        event_kind: str | None = None,
+        material_change_signature: str | None = None,
         recipient_selector: str,
         channel: str | None = None,
         policy_version: str = DELIVERY_POLICY_VERSION,
@@ -513,9 +595,6 @@ class DecisionSnapshotHandoffService:
         self._authorize(context.principal, context.scope, HANDOFF_CREATE_CAPABILITY)
         if context.expected_workflow_version is None or context.viewed_revisions is None:
             raise ValidationFailureError("handoff creation requires expected workflow version and viewed revisions")
-        event_kind = _identity(event_kind, "event_kind")
-        if event_kind not in EVENT_KINDS:
-            raise ValidationFailureError("event_kind is not supported")
         event_id = _identity(event_id, "event_id")
         snapshot = self.read_decision_snapshot(context.principal, context.scope, snapshot_id)
         if snapshot.workflow_version != context.expected_workflow_version or snapshot.viewed_revisions != context.viewed_revisions.as_dict():
@@ -527,12 +606,19 @@ class DecisionSnapshotHandoffService:
             raise ValidationFailureError("outbox event does not bind the requested decision snapshot")
         if event.get("aggregate_type") != "episode_workflow":
             raise ValidationFailureError("handoff event is not an Episode workflow event")
+        derived = _derive_handoff(event)
+        if event_kind is not None and _identity(event_kind, "event_kind") != derived.event_kind:
+            raise ValidationFailureError("caller event_kind does not match the committed workflow event")
+        if material_change_signature is not None and _identity(material_change_signature, "material_change_signature") != derived.material_change_signature:
+            raise ValidationFailureError("caller material_change_signature does not match the committed workflow event")
+        event_kind = derived.event_kind
+        material_change_signature = derived.material_change_signature
         resolution = self.recipients.resolve(context.scope, _identity(recipient_selector, "recipient_selector"))
         selected_channel = _identity(channel or resolution.channel, "channel")
         selected_policy = _identity(policy_version or resolution.policy_version, "policy_version")
         if selected_channel != resolution.channel or selected_policy != resolution.policy_version:
             raise AuthorizationDeniedError("recipient channel policy is not currently authorized")
-        signature = _identity(material_change_signature, "material_change_signature")
+        signature = material_change_signature
         dedup_key = sha256(
             canonical_json(
                 {
