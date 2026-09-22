@@ -1,0 +1,464 @@
+{
+  "accepted_at": "2026-09-22T02:00:53Z",
+  "changed_files": [
+    {
+      "additions": 21,
+      "deletions": 0,
+      "path": "13_Package_Review.md",
+      "status": "M"
+    },
+    {
+      "additions": 26,
+      "deletions": 0,
+      "path": "README.md",
+      "status": "M"
+    },
+    {
+      "additions": 35,
+      "deletions": 15,
+      "path": "manifest.json",
+      "status": "M"
+    },
+    {
+      "additions": 13,
+      "deletions": 0,
+      "path": "migrations/007_o5_decision_loop_core.sql",
+      "status": "A"
+    },
+    {
+      "additions": 42,
+      "deletions": 0,
+      "path": "src/ephi/application/__init__.py",
+      "status": "M"
+    },
+    {
+      "additions": 1238,
+      "deletions": 0,
+      "path": "src/ephi/application/decision_loop.py",
+      "status": "A"
+    },
+    {
+      "additions": 14,
+      "deletions": 0,
+      "path": "src/ephi/application/storage.py",
+      "status": "M"
+    },
+    {
+      "additions": 36,
+      "deletions": 17,
+      "path": "src/ephi/application/transactions.py",
+      "status": "M"
+    },
+    {
+      "additions": 20,
+      "deletions": 0,
+      "path": "src/ephi/infrastructure/postgresql.py",
+      "status": "M"
+    },
+    {
+      "additions": 25,
+      "deletions": 0,
+      "path": "src/ephi/infrastructure/sqlite.py",
+      "status": "M"
+    },
+    {
+      "additions": 301,
+      "deletions": 0,
+      "path": "tests/test_o5_decision_loop.py",
+      "status": "A"
+    },
+    {
+      "additions": 124,
+      "deletions": 0,
+      "path": "tests/test_o5_postgresql.py",
+      "status": "A"
+    },
+    {
+      "additions": 1,
+      "deletions": 1,
+      "path": "tests/test_o9_operations.py",
+      "status": "M"
+    }
+  ],
+  "checks": [
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,220p' src/ephi/application/workflow.py && rtk sed -n '1,240p' src/ephi/application/episodes.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,240p' tests/test_o3_application.py && rtk sed -n '1,260p' tests/test_o3_postgresql.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,220p' migrations/001_o2_command_core.sql && rtk sed -n '1,180p' migrations/003_o2_read_snapshot_core.sql && rtk sed -n '1,180p' migrations/006_o4_source_snapshot_ingress.sql\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '340,700p' src/ephi/infrastructure/postgresql.py && rtk sed -n '700,980p' src/ephi/infrastructure/postgresql.py && rtk rg -n \\\"apply_migrations|count_rows|seed_aggregate|class PostgreSQLReference\\\" src/ephi/infrastructure/postgresql.py && rtk sed -n '1,160p' src/ephi/infrastructure/postgresql.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,230p' tests/test_o3_postgresql.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,290p' tests/test_o2_transactions.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,280p' tests/test_recovery_integrity.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,220p' src/ephi/recovery.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,300p' tests/test_o3_application.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '220,560p' src/ephi/recovery.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,240p' src/ephi/recovery.py && rtk sed -n '1,130p' src/ephi/infrastructure/__init__.py && rtk sed -n '240,340p' src/ephi/application/__init__.py && rtk sed -n '1,140p' src/ephi/application/errors.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,220p' src/ephi/application/hashing.py && rtk sed -n '1,220p' src/ephi/application/workflow.py && rtk sed -n '1,180p' src/ephi/application/episodes.py && rtk rg -n \\\"MIGRATION_PATHS|migration_count|schema\\\" tests tools | sed -n '1,240p' && rtk sed -n '1,220p' tools/check_package.py && rtk sed -n '1,220p' tools/w0_repo_baseline.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '140,280p' src/ephi/application/errors.py && rtk sed -n '1,130p' src/ephi/application/storage.py && rtk sed -n '1,220p' migrations/002_o2_worker_core.sql && rtk sed -n '1,180p' migrations/005_o3_attention_episode_w1.sql\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '95,260p' src/ephi/application/transactions.py && rtk sed -n '80,180p' src/ephi/infrastructure/sqlite.py && rtk sed -n '220,330p' src/ephi/infrastructure/postgresql.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -m compileall -q src tests && rtk python3 - <<'PY'\nimport sys\nsys.path.insert(0, 'src')\nfrom ephi.application import DecisionLoopCommandService, CheckOutcome, RecoveryPlanState\nprint(DecisionLoopCommandService.__name__, CheckOutcome.SUPPORTS_A.value, RecoveryPlanState.PASS.value)\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nfrom datetime import datetime, timedelta, timezone\nfrom pathlib import Path\nimport tempfile, sys\nsys.path.insert(0, 'src')\nfrom ephi.application import *\nfrom ephi.recovery import RecoveryPolicy, RecoveryObservation, Severity, ObservationOutcome\nfrom ephi.infrastructure import SQLiteReferenceTransactionAdapter\n\ncaps = {\n    DECISION_LOOP_CREATE_CAPABILITY, DECISION_LOOP_READ_CAPABILITY,\n    CHECK_REQUEST_CAPABILITY, CHECK_EXECUTE_CAPABILITY,\n    ACTION_RECORD_CAPABILITY, RECOVERY_PLAN_CAPABILITY,\n    RECOVERY_OBSERVATION_CAPABILITY, CLOSURE_CAPABILITY, REOPEN_CAPABILITY,\n}\nscope = AccessScope('s', site_id='site')\np = Principal('eng', caps, (scope,), 1, 1)\na = MutableCurrentAuthorizationAuthority(p)\n\ndef ctx(cid, v, *, expected=True):\n    return CommandContext(cid, p, scope, v if expected else None, RevisionVector('a', None, None, v, None, 'm'))\nwith tempfile.TemporaryDirectory() as d:\n    store = SQLiteReferenceTransactionAdapter(Path(d)/'x.sqlite')\n    s = DecisionLoopCommandService(store, a)\n    r = s.create_episode(ctx('c', 0, expected=False), 'ep')\n    assert r.aggregate_version == 1\n    v=1\n    r=s.request_check(ctx('q',v),'ep','check-1',template_id='t',template_version='1',execution_mode=CheckExecutionMode.READ_EXISTING,target_context={'unit':'u'})\n    v=r.aggregate_version\n    r=s.start_check(ctx('st',v),'ep','check-1'); v=r.aggregate_version\n    r=s.complete_check(ctx('co',v),'ep','check-1',outcome=CheckOutcome.SUPPORTS_A,evidence_refs=['sha256:x']); v=r.aggregate_version\n    r=s.record_external_action(ctx('act',v),'ep','action-1',action_type=ExternalActionType.APPROVED_WORK_REQUEST,external_system='mes',work_request_id='wr',reconciliation_state=ActionReconciliationState.UNKNOWN); v=r.aggregate_version\n    pol=RecoveryPolicy.deterministic_w0_regression()\n    r=s.create_recovery_plan(ctx('rp',v),'ep','plan-1',policy=pol,context_identity='W0_CONTEXT',characteristic_identity='W0_CHARACTERISTIC',unit_identity='W0_UNIT',prior_action_id='action-1'); v=r.aggregate_version\n    now=datetime.now(timezone.utc)\n    for i in range(3):\n        obs=RecoveryObservation(f'o{i}','ep',f's{i}',now-timedelta(minutes=i),now-timedelta(minutes=i),now-timedelta(minutes=i), 'W0_CONTEXT','W0_CHARACTERISTIC','W0_UNIT',Severity.NORMAL,ObservationOutcome.NORMAL,0.9,'none')\n        r=s.submit_recovery_observation(ctx(f'obs{i}',v),'ep','plan-1',obs,evaluated_at=now,evidence_refs=[f'e{i}']); v=r.aggregate_version\n    snap=s.get_decision_loop(p,scope,'ep')\n    assert snap.recovery_state['technical_state']['plan-1']=='PASS', snap.as_dict()\n    assert snap.workflow_state['engineering_work_state']=='OPEN'\n    r=s.close_episode(ctx('close',v),'ep',disposition=ClosureDisposition.CONFIRMED_ISSUE,evidence_refs=['close-evidence']); v=r.aggregate_version\n    snap=s.get_decision_loop(p,scope,'ep'); assert snap.closure_state['cycle_status']=='CLOSED'\n    r=s.reopen_episode(ctx('reopen',v),'ep',reason='new cycle'); v=r.aggregate_version\n    snap=s.get_decision_loop(p,scope,'ep'); assert snap.active_cycle_id \"'!= '\"'cycle-1'; assert len(snap.state['cycles'])==2\n    print('E2E PASS', v, snap.active_cycle_id, snap.state['cycles'][0]['closures'][0]['disposition'], store.count_rows())\n    store.close()\nPY\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nfrom datetime import datetime, timedelta, timezone\nfrom pathlib import Path\nimport tempfile, sys\nsys.path.insert(0, 'src')\nfrom ephi.application import *\nfrom ephi.recovery import RecoveryPolicy, RecoveryObservation, Severity, ObservationOutcome\nfrom ephi.infrastructure import SQLiteReferenceTransactionAdapter\n\ncaps = tuple({\n    DECISION_LOOP_CREATE_CAPABILITY, DECISION_LOOP_READ_CAPABILITY,\n    CHECK_REQUEST_CAPABILITY, CHECK_EXECUTE_CAPABILITY,\n    ACTION_RECORD_CAPABILITY, RECOVERY_PLAN_CAPABILITY,\n    RECOVERY_OBSERVATION_CAPABILITY, CLOSURE_CAPABILITY, REOPEN_CAPABILITY,\n})\nscope = AccessScope('s', site_id='site')\np = Principal('eng', caps, (scope,), 1, 1)\na = MutableCurrentAuthorizationAuthority(p)\n\ndef ctx(cid, v, *, expected=True):\n    return CommandContext(cid, p, scope, v if expected else None, RevisionVector('a', None, None, v, None, 'm'))\nwith tempfile.TemporaryDirectory() as d:\n    store = SQLiteReferenceTransactionAdapter(Path(d)/'x.sqlite')\n    s = DecisionLoopCommandService(store, a)\n    r = s.create_episode(ctx('c', 0, expected=False), 'ep')\n    assert r.aggregate_version == 1\n    v=1\n    r=s.request_check(ctx('q',v),'ep','check-1',template_id='t',template_version='1',execution_mode=CheckExecutionMode.READ_EXISTING,target_context={'unit':'u'})\n    v=r.aggregate_version\n    r=s.start_check(ctx('st',v),'ep','check-1'); v=r.aggregate_version\n    r=s.complete_check(ctx('co',v),'ep','check-1',outcome=CheckOutcome.SUPPORTS_A,evidence_refs=['sha256:x']); v=r.aggregate_version\n    r=s.record_external_action(ctx('act',v),'ep','action-1',action_type=ExternalActionType.APPROVED_WORK_REQUEST,external_system='mes',work_request_id='wr',reconciliation_state=ActionReconciliationState.UNKNOWN); v=r.aggregate_version\n    pol=RecoveryPolicy.deterministic_w0_regression()\n    r=s.create_recovery_plan(ctx('rp',v),'ep','plan-1',policy=pol,context_identity='W0_CONTEXT',characteristic_identity='W0_CHARACTERISTIC',unit_identity='W0_UNIT',prior_action_id='action-1'); v=r.aggregate_version\n    now=datetime.now(timezone.utc)\n    for i in range(3):\n        obs=RecoveryObservation(f'o{i}','ep',f's{i}',now-timedelta(minutes=i),now-timedelta(minutes=i),now-timedelta(minutes=i), 'W0_CONTEXT','W0_CHARACTERISTIC','W0_UNIT',Severity.NORMAL,ObservationOutcome.NORMAL,0.9,'none')\n        r=s.submit_recovery_observation(ctx(f'obs{i}',v),'ep','plan-1',obs,evaluated_at=now,evidence_refs=[f'e{i}']); v=r.aggregate_version\n    snap=s.get_decision_loop(p,scope,'ep')\n    assert snap.recovery_state['technical_state']['plan-1']=='PASS', snap.as_dict()\n    assert snap.workflow_state['engineering_work_state']=='OPEN'\n    r=s.close_episode(ctx('close',v),'ep',disposition=ClosureDisposition.CONFIRMED_ISSUE,evidence_refs=['close-evidence']); v=r.aggregate_version\n    snap=s.get_decision_loop(p,scope,'ep'); assert snap.closure_state['cycle_status']=='CLOSED'\n    r=s.reopen_episode(ctx('reopen',v),'ep',reason='new cycle'); v=r.aggregate_version\n    snap=s.get_decision_loop(p,scope,'ep'); assert snap.active_cycle_id \"'!= '\"'cycle-1'; assert len(snap.state['cycles'])==2\n    print('E2E PASS', v, snap.active_cycle_id, snap.state['cycles'][0]['closures'][0]['disposition'], store.count_rows())\n    store.close()\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest tests.test_o5_decision_loop -v'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk nl -ba tests/test_o5_decision_loop.py | sed -n '145,265p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest tests.test_o5_decision_loop -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest tests.test_o5_decision_loop tests.test_o5_postgresql -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest discover -s tests -v'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git diff --stat && rtk git status --short && rtk git diff -- src/ephi/application/transactions.py src/ephi/application/storage.py src/ephi/infrastructure/sqlite.py src/ephi/infrastructure/postgresql.py tests/test_o9_operations.py | sed -n '1,360p' && rtk git diff --check\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n \\\"CHG-150|Pinned framework|CHG-144|CHG-133\\\" README.md 13_Package_Review.md && rtk sed -n '180,300p' README.md && rtk sed -n '240,380p' 13_Package_Review.md\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '100,175p' 13_Package_Review.md && rtk git status --short\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk which psql || true\nrtk psql --version || true\nrtk which docker || true\nrtk which podman || true\nrtk printenv EPHI_TEST_POSTGRES_DSN || true'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk docker info'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest tests.test_o5_decision_loop -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest && rtk git diff --check && rtk python3 -m unittest discover -s tests -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 tools/w0_repo_baseline.py && rtk git diff --check && rtk git status --short && rtk git diff --name-only HEAD | sed -n '1,200p' && rtk git ls-files src/ephi/ui migrations pyproject.toml | sed -n '1,160p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git add README.md 13_Package_Review.md manifest.json migrations/007_o5_decision_loop_core.sql src/ephi/application/__init__.py src/ephi/application/decision_loop.py src/ephi/application/storage.py src/ephi/application/transactions.py src/ephi/infrastructure/postgresql.py src/ephi/infrastructure/sqlite.py tests/test_o5_decision_loop.py tests/test_o5_postgresql.py tests/test_o9_operations.py && rtk git diff --cached --check && rtk git diff --cached --stat && rtk git status --short'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk rg -n \"if False|unused|TODO|FIXME|not implemented|NOT_IMPLEMENTED\" src/ephi/application/decision_loop.py tests/test_o5_decision_loop.py tests/test_o5_postgresql.py README.md 13_Package_Review.md migrations/007_o5_decision_loop_core.sql || true'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git commit -m 'CHG-167: establish durable decision loop core' && rtk git rev-parse HEAD && rtk git rev-parse HEAD\"'^{tree} && rtk git status --short --branch'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git diff --name-only 8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e 81f5c64c7da15b64020c9bf7e114f432cf7f3b46 && rtk shasum -a 256 migrations/007_o5_decision_loop_core.sql && rtk git show --format='%H%n%T%n%P' --no-patch 81f5c64c7da15b64020c9bf7e114f432cf7f3b46\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nfrom datetime import datetime, timedelta, timezone\nfrom pathlib import Path\nimport json, tempfile, sys\nsys.path.insert(0, 'src')\nfrom ephi.application import *\nfrom ephi.recovery import *\nfrom ephi.infrastructure import SQLiteReferenceTransactionAdapter\ncaps = tuple({ACTION_RECORD_CAPABILITY, CHECK_EXECUTE_CAPABILITY, CHECK_REQUEST_CAPABILITY, CLOSURE_CAPABILITY, DECISION_LOOP_CREATE_CAPABILITY, DECISION_LOOP_READ_CAPABILITY, RECOVERY_OBSERVATION_CAPABILITY, RECOVERY_PLAN_CAPABILITY, REOPEN_CAPABILITY})\nscope = AccessScope('fixture-scope', site_id='site-1')\nprincipal = Principal('fixture-engineer', caps, (scope,), 1, 1)\nauth = MutableCurrentAuthorizationAuthority(principal)\nrevisions = lambda cid, v, expected=True: CommandContext(cid, principal, scope, v if expected else None, RevisionVector('analysis-fixture', 'exposure-fixture', 'priority-fixture', v if expected else 0, None, 'manifest-fixture'))\nnow = datetime(2026, 1, 1, 12, 0, tzinfo=timezone.utc)\nwith tempfile.TemporaryDirectory() as d:\n    path = Path(d) / 'fixture.sqlite3'\n    store = SQLiteReferenceTransactionAdapter(path)\n    service = DecisionLoopCommandService(store, auth)\n    result = service.create_episode(revisions('create', 0, False), 'fixture-episode')\n    version = result.aggregate_version\n    result = service.request_check(revisions('request-check', version), 'fixture-episode', 'check-1', template_id='fixture-template', template_version='v1', execution_mode=CheckExecutionMode.READ_EXISTING, evidence_refs=()) if False else service.request_check(revisions('request-check', version), 'fixture-episode', 'check-1', template_id='fixture-template', template_version='v1', execution_mode=CheckExecutionMode.READ_EXISTING)\n    version = result.aggregate_version\n    result = service.start_check(revisions('start-check', version), 'fixture-episode', 'check-1'); version = result.aggregate_version\n    result = service.complete_check(revisions('complete-check', version), 'fixture-episode', 'check-1', outcome=CheckOutcome.SUPPORTS_A, evidence_refs=('artifact-fixture',)); version = result.aggregate_version\n    result = service.record_external_action(revisions('record-action', version), 'fixture-episode', 'action-1', action_type=ExternalActionType.APPROVED_WORK_REQUEST, external_system='approved-system', work_request_id='work-request-1'); version = result.aggregate_version\n    policy = RecoveryPolicy.deterministic_w0_regression()\n    result = service.create_recovery_plan(revisions('create-plan', version), 'fixture-episode', 'plan-1', policy=policy, prior_action_id='action-1', context_identity='W0_CONTEXT', characteristic_identity='W0_CHARACTERISTIC', unit_identity='W0_UNIT'); version = result.aggregate_version\n    for i in range(3):\n        observation = RecoveryObservation(f'observation-{i+1}', 'fixture-episode', f'sample-{i+1}', now - timedelta(minutes=i+1), now - timedelta(minutes=i+1), now - timedelta(minutes=i+1), 'W0_CONTEXT', 'W0_CHARACTERISTIC', 'W0_UNIT', Severity.NORMAL, ObservationOutcome.NORMAL, 0.95, 'none')\n        result = service.submit_recovery_observation(revisions(f'observe-{i+1}', version), 'fixture-episode', 'plan-1', observation, evaluated_at=now, evidence_refs=(f'observation-artifact-{i+1}',)); version = result.aggregate_version\n    before_restart = service.get_decision_loop(principal, scope, 'fixture-episode')\n    pass_version = version\n    store.close()\n    restarted = SQLiteReferenceTransactionAdapter(path)\n    restarted_service = DecisionLoopCommandService(restarted, auth)\n    after_restart = restarted_service.get_decision_loop(principal, scope, 'fixture-episode')\n    result = restarted_service.close_episode(revisions('close', after_restart.aggregate_version), 'fixture-episode', disposition=ClosureDisposition.CONFIRMED_ISSUE, evidence_refs=('closure-artifact',)); version = result.aggregate_version\n    result = restarted_service.reopen_episode(revisions('reopen', version), 'fixture-episode', reason='new-cycle-fixture'); version = result.aggregate_version\n    after_reopen = restarted_service.get_decision_loop(principal, scope, 'fixture-episode')\n    print(json.dumps({\n      'before_restart': {'aggregate_version': pass_version, 'active_cycle_id': before_restart.active_cycle_id, 'engineering_work_state': before_restart.workflow_state['engineering_work_state'], 'technical_recovery': before_restart.recovery_state['technical_state'], 'action_reconciliation': before_restart.action_state['action-1']['reconciliation_state'], 'check_status': before_restart.check_state['check-1']['status'], 'history_cycles': len(before_restart.state['cycles'])},\n      'after_restart': {'aggregate_version': after_restart.aggregate_version, 'active_cycle_id': after_restart.active_cycle_id, 'engineering_work_state': after_restart.workflow_state['engineering_work_state'], 'technical_recovery': after_restart.recovery_state['technical_state'], 'history_cycles': len(after_restart.state['cycles'])},\n      'after_reopen': {'aggregate_version': after_reopen.aggregate_version, 'active_cycle_id': after_reopen.active_cycle_id, 'engineering_work_state': after_reopen.workflow_state['engineering_work_state'], 'prior_cycle_status': after_reopen.state['cycles'][0]['status'], 'prior_closure': after_reopen.state['cycles'][0]['closures'][0]['disposition'], 'prior_check_count': len(after_reopen.state['cycles'][0]['checks']), 'prior_action_count': len(after_reopen.state['cycles'][0]['actions']), 'prior_plan_state': after_reopen.state['cycles'][0]['recovery_plans']['plan-1']['state'], 'history_cycles': len(after_reopen.state['cycles'])}\n    }, sort_keys=True))\n    restarted.close()\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk brew info postgresql@18 || true\nrtk brew list --versions postgresql postgresql@17 postgresql@18 || true\nrtk which initdb || true\nrtk which postgres || true'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk /opt/homebrew/opt/postgresql@18/bin/pg_ctl status -D /opt/homebrew/var/postgresql@18 || true\nrtk /opt/homebrew/opt/postgresql@18/bin/pg_isready -h 127.0.0.1 -p 5432 || true\nrtk ls -ld /opt/homebrew/var/postgresql@18'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk /opt/homebrew/opt/postgresql@18/bin/psql -h 127.0.0.1 -p 55432 -d postgres -Atqc 'SELECT version()' || true\nrtk /opt/homebrew/opt/postgresql@18/bin/psql -h 127.0.0.1 -p 55432 -d postgres -Atqc 'SELECT current_user, current_database()' || true\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"EPHI_TEST_POSTGRES_DSN='postgresql://haewonkim@127.0.0.1:55432/postgres' rtk python3 -m unittest tests.test_o5_postgresql -v\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"EPHI_TEST_POSTGRES_DSN='postgresql://haewonkim@127.0.0.1:55432/postgres' rtk python3 -m unittest discover -s tests -v\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk mktemp -d /tmp/ephi-o5-publish.XXXXXX'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk mkdir -p /tmp/ephi-o5-publish.9eyDKr/artifact /tmp/ephi-o5-publish.9eyDKr/evidence'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m json.tool /tmp/ephi-o5-publish.9eyDKr/artifact/candidate_manifest.json >/dev/null && rtk python3 -m json.tool /tmp/ephi-o5-publish.9eyDKr/evidence/decision_loop_evidence.json >/dev/null && rtk git hash-object /tmp/ephi-o5-publish.9eyDKr/artifact/candidate_manifest.json && rtk git hash-object /tmp/ephi-o5-publish.9eyDKr/evidence/decision_loop_evidence.json'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git hash-object -w /tmp/ephi-o5-publish.9eyDKr/artifact/candidate_manifest.json && rtk env GIT_INDEX_FILE=/tmp/ephi-o5-publish.9eyDKr/artifact.index git read-tree --empty && rtk env GIT_INDEX_FILE=/tmp/ephi-o5-publish.9eyDKr/artifact.index git update-index --add --cacheinfo 100644,12239533db93fb177dcbaac948bb1117612ff086,candidate_manifest.json && rtk env GIT_INDEX_FILE=/tmp/ephi-o5-publish.9eyDKr/artifact.index git write-tree'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git commit-tree 57ff31681b269f12c279352c69cd02cbe74e0a4f -p 81f5c64c7da15b64020c9bf7e114f432cf7f3b46 -m 'CHG-167 candidate artifact carrier'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git hash-object -w /tmp/ephi-o5-publish.9eyDKr/evidence/decision_loop_evidence.json && rtk env GIT_INDEX_FILE=/tmp/ephi-o5-publish.9eyDKr/evidence.index git read-tree --empty && rtk env GIT_INDEX_FILE=/tmp/ephi-o5-publish.9eyDKr/evidence.index git update-index --add --cacheinfo 100644,f8c30cc04f5321c39a7195a40bff37f176b3ef08,decision_loop_evidence.json && rtk env GIT_INDEX_FILE=/tmp/ephi-o5-publish.9eyDKr/evidence.index git write-tree'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git commit-tree 91f45d8bee9cc8309bfc1783d84bcd8f1b1082bf -p 81f5c64c7da15b64020c9bf7e114f432cf7f3b46 -m 'CHG-167 candidate evidence carrier'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git update-ref refs/heads/project-os-artifacts/ephi/ephi-o5-decision-loop-core-v1 29c0c1f28018ae1f936320a957c1391ed1c0986a 0000000000000000000000000000000000000000\nrtk git update-ref refs/heads/codex-fabric/evidence/ephi/ephi-o5-decision-loop-core-v1 d95ba80f375703eedcdb9d1fd6325f1185da6bf1 0000000000000000000000000000000000000000\nrtk git show --no-patch --format='%H%n%T%n%P%n%s' refs/heads/project-os-artifacts/ephi/ephi-o5-decision-loop-core-v1\nrtk git show --no-patch --format='%H%n%T%n%P%n%s' refs/heads/codex-fabric/evidence/ephi/ephi-o5-decision-loop-core-v1\nrtk git status --short --branch\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py && rtk git diff --check && rtk git rev-parse HEAD && rtk git rev-parse HEAD''^{tree} && rtk git show -s --format='\"'%P' HEAD && rtk git status --porcelain=v1 --branch && rtk git diff --name-only 8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e HEAD | rg '\"'^(src/ephi/ui/|pyproject.toml|examples/nicegui_base/|tools/o10)'\"' || true\nrtk git show --no-patch --format='%H %T %P' refs/heads/project-os-artifacts/ephi/ephi-o5-decision-loop-core-v1\nrtk git show --no-patch --format='%H %T %P' refs/heads/codex-fabric/evidence/ephi/ephi-o5-decision-loop-core-v1\nrtk git show refs/heads/project-os-artifacts/ephi/ephi-o5-decision-loop-core-v1:candidate_manifest.json | rtk python3 -m json.tool >/dev/null\nrtk git show refs/heads/codex-fabric/evidence/ephi/ephi-o5-decision-loop-core-v1:decision_loop_evidence.json | rtk python3 -m json.tool >/dev/null\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    }
+  ],
+  "codex": {
+    "cli_version": "codex-cli 0.155.1",
+    "configured_model": "gpt-5.6-luna",
+    "event_count": 172,
+    "provider_reported_model": null,
+    "reasoning_effort": "xhigh",
+    "terminal_type": "turn.completed",
+    "usage": {
+      "cache_hit_percent": 97.09,
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 9408000,
+      "fresh_input_tokens": 281761,
+      "input_tokens": 9689761,
+      "non_reasoning_output_tokens": 43034,
+      "output_tokens": 67927,
+      "reasoning_output_tokens": 24893,
+      "total_processed_tokens": 9757688
+    },
+    "warnings": []
+  },
+  "commits": [
+    {
+      "sha": "81f5c64c7da15b64020c9bf7e114f432cf7f3b46",
+      "subject": "CHG-167: establish durable decision loop core"
+    }
+  ],
+  "diff": {
+    "additions": 1896,
+    "changed_files": 13,
+    "commit_count": 1,
+    "deletions": 33
+  },
+  "error_code": null,
+  "evidence_manifest": {
+    "count": 3,
+    "items": [
+      {
+        "bytes": 14876,
+        "path": "13_Package_Review.md",
+        "sha256": "782983f4e9b82e9503369e718f236ed1a6f3015a85f02c77f6b5e629e690ab35"
+      },
+      {
+        "bytes": 17853,
+        "path": "README.md",
+        "sha256": "638f55aa4add509f872b2dc3d9712f393df55e995b549febabac4ee7b8e24e28"
+      },
+      {
+        "bytes": 34455,
+        "path": "manifest.json",
+        "sha256": "a0f4c82c8505acce376ce55c7b9b7d6b07f5a57249c3b56b6d18317ad0f36d44"
+      }
+    ],
+    "version": 1
+  },
+  "evidence_publisher_release": "1.2.4-quota-recovery-candidate",
+  "fabric_capture": {
+    "applied": false,
+    "paths_before": 0,
+    "transient_untracked_removed": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "fabric_release": "1.2.4-quota-recovery-candidate",
+  "failure_class": null,
+  "finished_at": "2026-09-22T02:23:27Z",
+  "git": {
+    "base_is_ancestor": true,
+    "base_sha": "8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e",
+    "branch": "codex/ephi-o5-decision-loop-core-v1",
+    "detached_verify": false,
+    "head_sha": "81f5c64c7da15b64020c9bf7e114f432cf7f3b46",
+    "remote_exact_head": true,
+    "remote_head_sha": "81f5c64c7da15b64020c9bf7e114f432cf7f3b46",
+    "target_branch": "main",
+    "target_drifted_since_acceptance": false,
+    "target_head_observed_after_execution": "8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e",
+    "work_branch": "codex/ephi-o5-decision-loop-core-v1",
+    "worktree_clean": true
+  },
+  "instructions": {
+    "files": [
+      {
+        "bytes": 1458,
+        "path": "AGENTS.md",
+        "sha256": "4349f387a79d886ed1264604ff48c582698e539e08ed8fb2f9d8ab8fbf6f804a"
+      }
+    ],
+    "total_bytes": 1458,
+    "warning": null
+  },
+  "job_id": "CF-7b780ce58b1e6681696c57dc",
+  "kind": "codex-fabric-audit-evidence",
+  "locator": {
+    "branch": "codex-fabric/evidence/ephi/ephi-o5-decision-loop-core-v1",
+    "path": ".codex-fabric/audit.json",
+    "ref": "refs/heads/codex-fabric/evidence/ephi/ephi-o5-decision-loop-core-v1"
+  },
+  "operation": "BUILD",
+  "policy": {
+    "environment_policy_sha256": "e077daca74297b3c30bee8989f00f8ca5338f7610b4d016a6c48db524205d064",
+    "fabric_release": "1.2.4-quota-recovery-candidate",
+    "policy_sha256": "a642c9f63bab2cb555704bdb0b9d1f28222591f133f934c1d0f93cc5a25ab8a1",
+    "registry_sha256": "cfc765f3211c37c7967a138f3b2d89a99341939b15b2623f92744d007f625d6f"
+  },
+  "project_id": "ephi",
+  "recovery": {
+    "model_rerun_safe": false,
+    "recovery_required": false,
+    "retry_safe": false,
+    "retry_scope": null,
+    "worktree_retained": true
+  },
+  "request": "ephi-o5-decision-loop-core-v1",
+  "schema_version": 1,
+  "started_at": "2026-09-22T02:00:53Z",
+  "status": "EXECUTED_CHANGE",
+  "timing": {
+    "execution_seconds": 1354,
+    "queue_seconds": 0,
+    "total_seconds": 1354
+  },
+  "transport": {
+    "bytes": 15733,
+    "envelope": "FABRIC/2",
+    "prompt_bytes": 15422,
+    "prompt_sha256": "ee9c840f0b5b2de2124ddc1a8d81809f98474ee6e99e45ef0291361375dd06e2",
+    "sha256": "7b780ce58b1e6681696c57dca1cefea639debf3c831d0fc4987e45ed572bbace"
+  }
+}
