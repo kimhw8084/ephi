@@ -279,6 +279,24 @@ existing PostgreSQL CI lane. This remains reference/integration evidence and
 does not establish family qualification, human pilot, UI qualification or
 production readiness.
 
+## CHG-169 O5.2 decision snapshots and authorized handoff delivery
+
+O5.2 adds bounded immutable decision snapshots bound to one Episode cycle,
+one exact `episode_workflow` version and the caller's viewed `RevisionVector`.
+Handoff intents are projected only from committed O2 `outbox_event` rows and
+deduplicated by material change, current recipient, channel and policy
+identity. Delivery jobs use the existing PostgreSQL worker lease/fencing and
+`applied_effect` receipt authority; an expired lease or ambiguous external
+outcome becomes `UNKNOWN` and requires explicit reconciliation.
+
+The qualification-only deterministic in-app recipient/channel adapters are
+not company notification integrations. `tests.test_o5_handoff` covers the
+offline immutable/read boundary; `tests.test_o5_handoff_postgresql` is the
+additive real-PostgreSQL-18 evidence in the existing integration lane. Real
+company notification channels, real-family qualification, WIP/exposure,
+human pilot, UI qualification and production readiness remain unimplemented
+or not run, and exactly-once external delivery is not claimed.
+
 ## CHG-147 O9.1 operations and restore rehearsal
 
 The CLI-only O9.1 boundary is documented in [operations](operations/README.md).

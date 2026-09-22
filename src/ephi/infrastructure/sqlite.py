@@ -86,6 +86,87 @@ CREATE TABLE IF NOT EXISTS outbox_event (
 CREATE INDEX IF NOT EXISTS idx_receipt_scope_subject ON command_receipt(scope_key, subject);
 CREATE INDEX IF NOT EXISTS idx_audit_scope_aggregate ON audit_event(scope_key, aggregate_type, aggregate_id, aggregate_version);
 CREATE INDEX IF NOT EXISTS idx_outbox_status ON outbox_event(status, created_at);
+
+CREATE TABLE IF NOT EXISTS decision_snapshot (
+    snapshot_id TEXT PRIMARY KEY,
+    scope_key TEXT NOT NULL,
+    content_hash TEXT NOT NULL CHECK (length(content_hash) = 64),
+    episode_id TEXT NOT NULL,
+    cycle_id TEXT NOT NULL,
+    workflow_version INTEGER NOT NULL CHECK (workflow_version >= 0),
+    viewed_revisions_json TEXT NOT NULL,
+    content_json TEXT NOT NULL,
+    created_by TEXT NOT NULL,
+    created_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')),
+    UNIQUE (scope_key, snapshot_id)
+);
+
+CREATE TABLE IF NOT EXISTS handoff_intent (
+    intent_id TEXT PRIMARY KEY,
+    scope_key TEXT NOT NULL,
+    triggering_event_id TEXT NOT NULL,
+    episode_id TEXT NOT NULL,
+    cycle_id TEXT NOT NULL,
+    decision_snapshot_id TEXT NOT NULL,
+    event_kind TEXT NOT NULL,
+    material_change_signature TEXT NOT NULL,
+    recipient_selector TEXT NOT NULL,
+    resolved_recipient TEXT NOT NULL,
+    channel TEXT NOT NULL,
+    policy_version TEXT NOT NULL,
+    dedup_key TEXT NOT NULL,
+    deep_link_json TEXT NOT NULL,
+    safe_payload_json TEXT NOT NULL,
+    job_id TEXT,
+    created_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')),
+    updated_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')),
+    UNIQUE (scope_key, dedup_key)
+);
+
+CREATE TABLE IF NOT EXISTS handoff_delivery_status (
+    intent_id TEXT PRIMARY KEY,
+    scope_key TEXT NOT NULL,
+    job_id TEXT,
+    delivery_state TEXT NOT NULL CHECK (delivery_state IN ('PENDING', 'DISPATCHING', 'DELIVERED', 'FAILED', 'UNKNOWN', 'CANCELED', 'SUPERSEDED')),
+    attempt_count INTEGER NOT NULL DEFAULT 0 CHECK (attempt_count >= 0),
+    last_failure_code TEXT,
+    last_failure_message TEXT,
+    last_failure_at TEXT,
+    ambiguity_warning TEXT,
+    external_reference TEXT,
+    idempotency_key TEXT NOT NULL,
+    created_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')),
+    updated_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')),
+    UNIQUE (scope_key, idempotency_key)
+);
+
+CREATE TABLE IF NOT EXISTS handoff_delivery_attempt (
+    intent_id TEXT NOT NULL,
+    scope_key TEXT NOT NULL,
+    attempt_no INTEGER NOT NULL CHECK (attempt_no > 0),
+    delivery_state TEXT NOT NULL CHECK (delivery_state IN ('PENDING', 'DISPATCHING', 'DELIVERED', 'FAILED', 'UNKNOWN', 'CANCELED', 'SUPERSEDED')),
+    error_code TEXT,
+    external_reference TEXT,
+    recorded_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')),
+    PRIMARY KEY (intent_id, attempt_no),
+    FOREIGN KEY (intent_id) REFERENCES handoff_delivery_status(intent_id)
+);
+
+CREATE INDEX IF NOT EXISTS idx_decision_snapshot_episode ON decision_snapshot(scope_key, episode_id, workflow_version, created_at);
+CREATE INDEX IF NOT EXISTS idx_handoff_intent_event ON handoff_intent(scope_key, triggering_event_id);
+CREATE INDEX IF NOT EXISTS idx_handoff_delivery_state ON handoff_delivery_status(scope_key, delivery_state, updated_at);
+
+CREATE TRIGGER IF NOT EXISTS decision_snapshot_immutable_update
+BEFORE UPDATE ON decision_snapshot
+BEGIN
+    SELECT RAISE(ABORT, 'decision_snapshot rows are immutable');
+END;
+
+CREATE TRIGGER IF NOT EXISTS decision_snapshot_immutable_delete
+BEFORE DELETE ON decision_snapshot
+BEGIN
+    SELECT RAISE(ABORT, 'decision_snapshot rows are immutable');
+END;
 """
 
 
@@ -326,6 +407,13 @@ class SQLiteReferenceTransactionAdapter:
         """Open the storage-neutral bounded command transaction."""
 
         return _SQLiteCommandTransaction(self)
+
+    def handoff_store(self):
+        """Return the O5.2 snapshot/handoff adapter on this durable store."""
+
+        from .handoff import ReferenceHandoffStore
+
+        return ReferenceHandoffStore(self)
 
     def close(self) -> None:
         connection = getattr(self, "_connection", None)
