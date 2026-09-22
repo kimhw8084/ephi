@@ -1,0 +1,127 @@
+{
+  "schema_version": 1,
+  "project": "ephi",
+  "repository": "kimhw8084/ephi",
+  "change": "CHG-169",
+  "request": "ephi-o5-decision-snapshot-handoff-v1",
+  "fabric_job": "CF-18bc54468d880ebc9ef6d969",
+  "base": "b359fa2cb6b145eb47d8713a0cf0f39e5783d6b3",
+  "base_tree": "4d1de0ad585f898fd55e39aac5110e9ccdc8aa6d",
+  "candidate_head": "8ae92966d8664cc1d74878cffbb8af0008eb7791",
+  "candidate_tree": "b3d513ac0ad0cdf0cd5d834bd447b769ac96a209",
+  "postgresql": {
+    "server": "PostgreSQL 18.6",
+    "integration_lane": "existing package.yml PostgreSQL integration job",
+    "full_lane_tests": 75,
+    "full_lane_passed": 75,
+    "o5_2_tests": 6,
+    "o5_2_passed": 6
+  },
+  "snapshot_immutability_version_proof": {
+    "offline_tests": [
+      "test_snapshot_is_deterministic_bounded_and_immutable",
+      "test_stale_view_or_workflow_rejects_without_partial_snapshot",
+      "test_later_episode_state_does_not_rewrite_old_snapshot_and_reads_reauthorize",
+      "test_snapshot_rejects_unrestricted_artifact_urls"
+    ],
+    "postgresql_tests": [
+      "test_snapshot_immutability_and_stale_no_partial_effects",
+      "test_restart_persists_snapshot_intent_job_and_status"
+    ],
+    "proof": [
+      "snapshot_id and content_hash are deterministic over canonical bounded content",
+      "snapshot rows have database immutable update/delete triggers",
+      "insert rechecks the exact episode_workflow version under the writer transaction",
+      "viewed RevisionVector.workflow_version must equal the expected workflow version",
+      "stale rejection leaves the decision_snapshot row count unchanged",
+      "later workflow state is not read back into the committed snapshot"
+    ]
+  },
+  "outbox_intent_job_delivery_trace": {
+    "source": "committed O2 outbox_event",
+    "projection": "idempotent handoff_intent keyed by triggering event, exact snapshot, material signature, recipient, channel and policy",
+    "job": "existing job table and WorkerJobPort with HANDOFF_DELIVERY type filter",
+    "delivery": "existing lease/fencing plus applied_effect receipt commits delivery status",
+    "status": "handoff_delivery_status and handoff_delivery_attempt",
+    "proof": "test_outbox_projection_dedup_race_and_material_change_separation and test_delivery_revocation_unknown_reconciliation_status_and_workflow_separation"
+  },
+  "dedup_race_proof": {
+    "same_material_signature": "one intent and one semantic delivery job",
+    "different_material_signature": "distinct intent and delivery job",
+    "concurrent_projectors": "two PostgreSQL connections reconcile to one deduplicated intent",
+    "tests": [
+      "test_outbox_projection_dedup_race_and_material_change_separation",
+      "test_concurrent_enqueue_race_reconciles_one_logical_job"
+    ]
+  },
+  "recipient_revocation_proof": {
+    "creation": "deterministic qualification-only resolver resolves selector in the authorized scope",
+    "dispatch": "recipient selector is re-resolved immediately before protected channel send",
+    "revocation_result": "RECIPIENT_REVOKED terminal failure with no channel send",
+    "reads": "current authorization is required before snapshot, handoff status and deep-link resolution",
+    "test": "test_delivery_revocation_unknown_reconciliation_status_and_workflow_separation"
+  },
+  "unknown_reconciliation_proof": {
+    "ambiguous_timeout": "channel exception/result records UNKNOWN and ambiguity warning",
+    "no_blind_resend": "UNKNOWN jobs are not claimed for a second send and dispatch does not retry them",
+    "explicit_reconciliation": "channel reconcile is required and can resolve UNKNOWN to DELIVERED using external reference/idempotency",
+    "test": "test_unknown_is_not_blindly_retried_and_explicit_reconciliation_can_resolve"
+  },
+  "restart_persistence_proof": {
+    "persisted": [
+      "decision_snapshot",
+      "handoff_intent",
+      "job semantic identity",
+      "handoff_delivery_status",
+      "delivery attempts"
+    ],
+    "test": "test_restart_persists_snapshot_intent_job_and_status",
+    "result": "new PostgreSQL adapter observes the same snapshot hash, dedup key, PENDING status and job id"
+  },
+  "fencing_retry_and_workflow_separation_proof": {
+    "stale_lease": "stale worker commit raises StaleLeaseError",
+    "retry_exhaustion": "retryable transport failure reaches visible FAILED terminal job/status at max attempts",
+    "workflow_separation": "delivery acknowledgement/failure leaves episode_workflow unchanged",
+    "test": "test_stale_worker_cannot_commit_delivery_status_and_retry_exhaustion_is_visible"
+  },
+  "safe_payload_proof": {
+    "allowed": [
+      "episode identity",
+      "cycle identity",
+      "bounded what_changed",
+      "bounded why_it_matters",
+      "source/knowledge cutoff",
+      "bounded key_limitation",
+      "bounded next_authorized_action",
+      "safe deep-link descriptor"
+    ],
+    "rejected_or_absent": [
+      "raw measurements",
+      "raw material/WIP lists",
+      "secrets/tokens/credentials",
+      "unrestricted artifact/object-store URLs",
+      "authorization credentials"
+    ],
+    "test": "test_snapshot_rejects_unrestricted_artifact_urls"
+  },
+  "ci_and_scope": {
+    "migration": "007_o5_decision_snapshot_handoff.sql",
+    "migration_sha256": "68c46a76a345a316288d724937fd330cca65301e432811f9086440be20f3623c",
+    "ui_changed": false,
+    "nicegui_base_changed": false,
+    "dependency_pins_changed": false,
+    "real_company_channels": "NOT_IMPLEMENTED",
+    "no_wip_exposure_escalation": true,
+    "no_second_workflow_outbox_queue_or_authorization_authority": true
+  },
+  "non_claims": {
+    "REAL_COMPANY_NOTIFICATION_CHANNEL": "NOT_IMPLEMENTED",
+    "REAL_FAMILY_QUALIFICATION": "NOT_RUN",
+    "WIP_EXPOSURE": "NOT_QUALIFIED",
+    "HUMAN_PILOT": "NOT_RUN",
+    "UI_QUALIFICATION": "NOT_RUN",
+    "EXACTLY_ONCE_EXTERNAL_DELIVERY": "NOT_CLAIMED",
+    "PRODUCTION_ACTION_EXECUTION": "NOT_IMPLEMENTED",
+    "PRODUCTION_READY": false
+  }
+}

@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "project": "ephi",
+  "repository": "kimhw8084/ephi",
+  "change": "CHG-169",
+  "parent": "O5 / W3 complete engineer decision loop",
+  "request": "ephi-o5-decision-snapshot-handoff-v1",
+  "operation": "BUILD",
+  "fabric_job": "CF-18bc54468d880ebc9ef6d969",
+  "base": "b359fa2cb6b145eb47d8713a0cf0f39e5783d6b3",
+  "base_tree": "4d1de0ad585f898fd55e39aac5110e9ccdc8aa6d",
+  "candidate_head": "8ae92966d8664cc1d74878cffbb8af0008eb7791",
+  "candidate_tree": "b3d513ac0ad0cdf0cd5d834bd447b769ac96a209",
+  "work_branch": "codex/ephi-o5-decision-snapshot-handoff-v1",
+  "artifact_ref": "refs/heads/project-os-artifacts/ephi/ephi-o5-decision-snapshot-handoff-v1",
+  "source_changed": true,
+  "ui_changed": false,
+  "nicegui_base_changed": false,
+  "dependency_pins_changed": false,
+  "migration": {
+    "path": "migrations/007_o5_decision_snapshot_handoff.sql",
+    "sha256": "68c46a76a345a316288d724937fd330cca65301e432811f9086440be20f3623c"
+  },
+  "changed_files": [
+    ".github/workflows/package.yml",
+    "13_Package_Review.md",
+    "README.md",
+    "manifest.json",
+    "migrations/007_o5_decision_snapshot_handoff.sql",
+    "src/ephi/application/__init__.py",
+    "src/ephi/application/handoff.py",
+    "src/ephi/application/worker.py",
+    "src/ephi/infrastructure/__init__.py",
+    "src/ephi/infrastructure/handoff.py",
+    "src/ephi/infrastructure/postgresql.py",
+    "src/ephi/infrastructure/postgresql_worker.py",
+    "src/ephi/infrastructure/sqlite.py",
+    "tests/test_o5_handoff.py",
+    "tests/test_o5_handoff_postgresql.py",
+    "tests/test_o9_operations.py"
+  ],
+  "checks": {
+    "package_manifest_refresh": "PASS",
+    "w0_repo_baseline": "PASS",
+    "git_diff_check": "PASS",
+    "compileall": "PASS",
+    "offline_full_suite": {
+      "command": "python3 -m unittest discover -s tests -v",
+      "total": 261,
+      "passed": 187,
+      "skipped": 74,
+      "failed": 0,
+      "errors": 0
+    },
+    "postgresql_18_existing_lane": {
+      "server": "PostgreSQL 18.6",
+      "total": 75,
+      "passed": 75,
+      "skipped": 0,
+      "failed": 0,
+      "errors": 0
+    },
+    "postgresql_18_o5_2": {
+      "module": "tests.test_o5_handoff_postgresql",
+      "total": 6,
+      "passed": 6,
+      "skipped": 0,
+      "failed": 0,
+      "errors": 0
+    },
+    "exact_head_ci": "NOT_AVAILABLE"
+  },
+  "authority_invariants": {
+    "episode_workflow_single_human_work_aggregate": true,
+    "o2_outbox_event_source": true,
+    "o2_worker_job_lease_fencing_receipt_authority": true,
+    "current_authorization_authority": true,
+    "immutable_artifact_authority": true,
+    "notification_not_workflow_authority": true
+  },
+  "non_claims": {
+    "REAL_COMPANY_NOTIFICATION_CHANNEL": "NOT_IMPLEMENTED",
+    "REAL_FAMILY_QUALIFICATION": "NOT_RUN",
+    "WIP_EXPOSURE": "NOT_QUALIFIED",
+    "HUMAN_PILOT": "NOT_RUN",
+    "UI_QUALIFICATION": "NOT_RUN",
+    "EXACTLY_ONCE_EXTERNAL_DELIVERY": "NOT_CLAIMED",
+    "PRODUCTION_ACTION_EXECUTION": "NOT_IMPLEMENTED",
+    "PRODUCTION_READY": false,
+    "HISTORICAL_SOURCE_IDENTITY": "NOT_CLAIMED",
+    "HISTORICAL_TEST_EQUIVALENCE": "NOT_CLAIMED"
+  }
+}
