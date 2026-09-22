@@ -1,0 +1,440 @@
+{
+  "accepted_at": "2026-09-22T02:38:18Z",
+  "changed_files": [
+    {
+      "additions": 5,
+      "deletions": 1,
+      "path": ".github/workflows/package.yml",
+      "status": "M"
+    },
+    {
+      "additions": 16,
+      "deletions": 0,
+      "path": "13_Package_Review.md",
+      "status": "M"
+    },
+    {
+      "additions": 20,
+      "deletions": 0,
+      "path": "README.md",
+      "status": "M"
+    },
+    {
+      "additions": 25,
+      "deletions": 10,
+      "path": "manifest.json",
+      "status": "M"
+    },
+    {
+      "additions": 42,
+      "deletions": 0,
+      "path": "src/ephi/application/__init__.py",
+      "status": "M"
+    },
+    {
+      "additions": 1371,
+      "deletions": 0,
+      "path": "src/ephi/application/decision_loop.py",
+      "status": "A"
+    },
+    {
+      "additions": 1,
+      "deletions": 1,
+      "path": "src/ephi/application/workflow.py",
+      "status": "M"
+    },
+    {
+      "additions": 365,
+      "deletions": 0,
+      "path": "tests/test_o5_decision_loop.py",
+      "status": "A"
+    },
+    {
+      "additions": 176,
+      "deletions": 0,
+      "path": "tests/test_o5_postgresql.py",
+      "status": "A"
+    }
+  ],
+  "checks": [
+    {
+      "command": "/bin/zsh -lc 'rtk rg -n \"last_viewed_revisions\" src/ephi/application/decision_loop.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1118,1136p' src/ephi/application/decision_loop.py && rtk sed -n '1258,1276p' src/ephi/application/decision_loop.py && rtk sed -n '1306,1318p' src/ephi/application/decision_loop.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '370,480p' src/ephi/application/read.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest tests.test_o5_decision_loop -v'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest tests.test_o5_decision_loop -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m py_compile src/ephi/application/decision_loop.py tests/test_o5_decision_loop.py tests/test_o5_postgresql.py && rtk python3 -m unittest tests.test_o3_application tests.test_o5_decision_loop -v'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '185,225p' tests/test_o5_decision_loop.py && rtk sed -n '135,185p' tests/test_o5_postgresql.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '120,180p' tests/test_o5_postgresql.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest tests.test_o3_application tests.test_o5_decision_loop -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n \\\"CHG-144|CHG-133|CHG-150|CHG-167|PostgreSQL\\\" README.md 13_Package_Review.md | tail -40 && rtk git diff -- src/ephi/application/workflow.py .github/workflows/package.yml | sed -n '1,240p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '235,285p' README.md && rtk sed -n '130,175p' 13_Package_Review.md\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk nl -ba 13_Package_Review.md | sed -n '140,168p' && rtk nl -ba README.md | sed -n '250,275p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest discover -s tests -v'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py && rtk python3 tools/w0_repo_baseline.py && rtk git diff --check && rtk python3 -m unittest discover -s tests -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk printenv EPHI_TEST_POSTGRES_DSN || true && rtk command -v psql || true && rtk pg_isready -h 127.0.0.1 -p 5432 || true && rtk python3 - <<'PY'\ntry:\n import psycopg\n print('psycopg', psycopg.__version__)\nexcept Exception as e:\n print('psycopg unavailable', type(e).__name__)\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk command -v postgres || true && rtk command -v pg_ctl || true && rtk ls /opt/homebrew/var/postgresql* 2>/dev/null || true && rtk docker ps --format '{{.Image}} {{.Ports}}' 2>/dev/null || true\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk postgres --version && rtk pg_controldata /opt/homebrew/var/postgresql@18 2>/dev/null | rg 'Database cluster state|pg_control version|Catalog version' || true && rtk ps -p \"'$(rtk sed -n '\"'1p' /opt/homebrew/var/postgresql@18/postmaster.pid 2>/dev/null) -o pid=,comm= 2>/dev/null || true && rtk tail -40 /opt/homebrew/var/log/postgresql@18.log 2>/dev/null || true\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk pg_ctl status -D /opt/homebrew/var/postgresql@18 && rtk rg -n '\"'^(port|listen_addresses|unix_socket_directories)'\"' /opt/homebrew/var/postgresql@18/postgresql.conf /opt/homebrew/var/postgresql@18/postgresql.auto.conf && rtk ps -p 12957 -o pid,comm,args\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk psql -h 127.0.0.1 -p 55432 -d postgres -Atqc 'select version()' && rtk psql -h 127.0.0.1 -p 55432 -d postgres -Atqc 'select current_user'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"EPHI_TEST_POSTGRES_DSN='postgresql://haewonkim@127.0.0.1:55432/postgres' rtk python3 -m unittest tests.test_o5_postgresql -v\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"EPHI_TEST_POSTGRES_DSN='postgresql://haewonkim@127.0.0.1:55432/postgres' rtk python3 -m unittest tests.test_o2_postgresql tests.test_o2_worker_postgresql tests.test_o2_postgresql_reads tests.test_o2_postgresql_artifacts tests.test_o3_postgresql tests.test_o5_postgresql tests.test_o8_postgresql tests.test_o4_source_ingress_postgresql tests.test_postgresql_adapter_lifecycle tests.test_o9_operations -v\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git status --short && rtk git diff --name-only && rtk git diff -- src/ephi/application/workflow.py .github/workflows/package.yml README.md 13_Package_Review.md | sed -n '1,360p' && rtk rg -n \\\"ephi_decision_loop|engineering_work_state|create_if_missing|migrations/007|DECISION_LOOP_AGGREGATE_TYPE\\\" src/ephi tests .github migrations README.md 13_Package_Review.md || true && rtk git diff 8fd41a2 -- src/ephi/ui | sed -n '1,120p' && rtk git diff 8fd41a2 -- pyproject.toml | sed -n '1,120p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest && rtk git add .github/workflows/package.yml 13_Package_Review.md README.md manifest.json src/ephi/application/__init__.py src/ephi/application/workflow.py src/ephi/application/decision_loop.py tests/test_o5_decision_loop.py tests/test_o5_postgresql.py && rtk git diff --cached --check && rtk git diff --cached --stat && rtk git diff --cached 8fd41a2 -- src/ephi/ui pyproject.toml migrations && rtk git diff --cached --numstat'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n \\\"def (initialize_decision_loop|create_episode|request_check|start_check|complete_check|cancel_check|record_external_action|reconcile_external_action|create_recovery_plan|update_recovery_plan|lock_recovery_plan|submit_recovery_observation|close_episode|reopen_episode|get_decision_loop)|_post_commit_revision|prior_action_id|post_action|recovery_plan_id|action_id|workflow_version\\\" src/ephi/application/decision_loop.py | sed -n '1,220p' && rtk sed -n '360,560p' src/ephi/application/decision_loop.py && rtk sed -n '1160,1345p' src/ephi/application/decision_loop.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest && rtk git add .github/workflows/package.yml 13_Package_Review.md README.md manifest.json src/ephi/application/__init__.py src/ephi/application/workflow.py src/ephi/application/decision_loop.py tests/test_o5_decision_loop.py tests/test_o5_postgresql.py && rtk python3 tools/check_package.py && rtk git diff --cached --check && rtk python3 -m unittest discover -s tests -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git commit -m 'CHG-167: repair O5 unified Episode workflow authority'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git rev-parse HEAD && rtk git rev-parse HEAD''^{tree} && rtk git rev-parse HEAD''^ && rtk git status --short --branch && rtk git show --stat --oneline --decorate HEAD'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git push origin HEAD:refs/heads/codex/ephi-o5-decision-loop-core-fix1'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk gh run list --repo kimhw8084/ephi --branch codex/ephi-o5-decision-loop-core-fix1 --limit 10 --json databaseId,headSha,status,conclusion,name,event,createdAt,updatedAt || true'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk gh run watch 35681203213 --repo kimhw8084/ephi --exit-status'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk gh run view 35681203213 --repo kimhw8084/ephi --json status,conclusion,headSha,jobs'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git ls-remote origin 'refs/heads/project-os-artifacts/ephi/*' 'refs/heads/codex-fabric/evidence/ephi/*'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git show --stat --oneline --decorate e1491a29f1796f64bd9986cdda2d50f08dfa9bc5 && rtk git ls-tree -r --name-only e1491a29f1796f64bd9986cdda2d50f08dfa9bc5'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git show e1491a29f1796f64bd9986cdda2d50f08dfa9bc5:carrier-manifest.json'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git ls-tree -r --name-only 0a1cdce8ce75c09b6559b54974e3b9486c88d6e0 | rg '(\"'^|/)(carrier-manifest|candidate_manifest|decision_loop|changed-files|evidence)'\"'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git ls-remote origin refs/heads/main refs/heads/codex/ephi-o5-decision-loop-core-fix1 refs/heads/codex-fabric/evidence/ephi/ephi-o5-decision-loop-core-v1 && rtk git status --short --branch && rtk git show -s --format='%H%n%T%n%P%n%s' HEAD\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk mktemp -d /tmp/ephi-o5-carrier.XXXXXX'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git worktree add --detach /tmp/ephi-o5-carrier.JKqUNb cfb6444e7bc9e4780c01163bc844c222d876cd90'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --name-status 8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e cfb6444e7bc9e4780c01163bc844c222d876cd90 && rtk git diff --stat 8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e cfb6444e7bc9e4780c01163bc844c222d876cd90'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,260p' tests/test_o5_decision_loop.py && rtk sed -n '1,220p' tests/test_o5_postgresql.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git ls-tree cfb6444e7bc9e4780c01163bc844c222d876cd90 -- .github/workflows/package.yml 13_Package_Review.md README.md manifest.json src/ephi/application/__init__.py src/ephi/application/decision_loop.py src/ephi/application/workflow.py tests/test_o5_decision_loop.py tests/test_o5_postgresql.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git status --short && rtk python3 -m json.tool candidate_manifest.json >/dev/null && rtk python3 -m json.tool decision_loop_evidence.json >/dev/null && rtk python3 -m json.tool carrier-manifest.json >/dev/null && rtk git add candidate_manifest.json decision_loop_evidence.json carrier-manifest.json && rtk git commit -m 'chore(fabric): publish CHG-167 O5.1 carrier' && rtk git show -s --format='%H%n%T%n%P%n%s' HEAD\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git push origin HEAD:refs/heads/project-os-artifacts/ephi/ephi-o5-decision-loop-core-fix1'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git fetch origin refs/heads/codex/ephi-o5-decision-loop-core-fix1:refs/remotes/origin/codex/ephi-o5-decision-loop-core-fix1 refs/heads/project-os-artifacts/ephi/ephi-o5-decision-loop-core-fix1:refs/remotes/origin/project-os-artifacts/ephi/ephi-o5-decision-loop-core-fix1 refs/heads/codex-fabric/evidence/ephi/ephi-o5-decision-loop-core-v1:refs/remotes/origin/codex-fabric/evidence/ephi/ephi-o5-decision-loop-core-v1 && rtk git rev-parse refs/remotes/origin/codex/ephi-o5-decision-loop-core-fix1 && rtk git rev-parse refs/remotes/origin/project-os-artifacts/ephi/ephi-o5-decision-loop-core-fix1 && rtk git rev-parse refs/remotes/origin/codex-fabric/evidence/ephi/ephi-o5-decision-loop-core-v1 && rtk git show -s --format='%H%n%T%n%P%n%s' refs/remotes/origin/project-os-artifacts/ephi/ephi-o5-decision-loop-core-fix1 && rtk git ls-tree -r --format='%(objectname) %(path)' refs/remotes/origin/project-os-artifacts/ephi/ephi-o5-decision-loop-core-fix1 -- candidate_manifest.json decision_loop_evidence.json carrier-manifest.json && rtk git show refs/remotes/origin/project-os-artifacts/ephi/ephi-o5-decision-loop-core-fix1:candidate_manifest.json | rtk sed -n '1,10p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git worktree remove --force /tmp/ephi-o5-carrier.JKqUNb && rtk git diff --check 8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e cfb6444e7bc9e4780c01163bc844c222d876cd90 && rtk git diff --name-only 8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e cfb6444e7bc9e4780c01163bc844c222d876cd90 -- src/ephi/ui .nicegui_base requirements.txt requirements-dev.txt && rtk git status --short --branch'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git show-ref | rg 'ephi-o5-decision-loop-core-(fix1|v1)' || true && rtk git ls-remote origin refs/heads/codex-fabric/evidence/ephi/ephi-o5-decision-loop-core-fix1 refs/heads/codex-fabric/evidence/ephi/ephi-o5-decision-loop-core-v1\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git show e1491a29f1796f64bd9986cdda2d50f08dfa9bc5:carrier-manifest.json | rtk rg 'evidence|status|fabric' && rtk git show 17cc166dbc13d73297de954c3515fdcd162a4d9e:carrier-manifest.json | rtk rg 'evidence|status|fabric' || true\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk ls -la .codex-fabric 2>/dev/null || true && rtk sed -n '1,80p' .codex-fabric/audit.json 2>/dev/null || true\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git show b43b6e8df17d8a1e78dc8d9a2ff9aaf2f53a8443:carrier-manifest.json | rtk sed -n '1,120p' && rtk git show b43b6e8df17d8a1e78dc8d9a2ff9aaf2f53a8443:carrier-manifest.json | rtk rg 'status|evidence|fabric|candidate'\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    }
+  ],
+  "codex": {
+    "cli_version": "codex-cli 0.155.1",
+    "configured_model": "gpt-5.6-luna",
+    "event_count": 221,
+    "provider_reported_model": null,
+    "reasoning_effort": "xhigh",
+    "terminal_type": "turn.completed",
+    "usage": {
+      "cache_hit_percent": 97.54,
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 13560576,
+      "fresh_input_tokens": 342100,
+      "input_tokens": 13902676,
+      "non_reasoning_output_tokens": 37246,
+      "output_tokens": 58905,
+      "reasoning_output_tokens": 21659,
+      "total_processed_tokens": 13961581
+    },
+    "warnings": []
+  },
+  "commits": [
+    {
+      "sha": "cfb6444e7bc9e4780c01163bc844c222d876cd90",
+      "subject": "CHG-167: repair O5 unified Episode workflow authority"
+    }
+  ],
+  "diff": {
+    "additions": 2021,
+    "changed_files": 9,
+    "commit_count": 1,
+    "deletions": 12
+  },
+  "error_code": null,
+  "evidence_manifest": {
+    "count": 3,
+    "items": [
+      {
+        "bytes": 14609,
+        "path": "13_Package_Review.md",
+        "sha256": "2a63111e109d6eb692084af7787cfac75e2ab9173d6000d9d94dbac91431eefb"
+      },
+      {
+        "bytes": 17739,
+        "path": "README.md",
+        "sha256": "f5ea8a5df6ba9311f92debc0a983d64739cbd7fa94901acf9b7b7d8ca9ef2068"
+      },
+      {
+        "bytes": 34281,
+        "path": "manifest.json",
+        "sha256": "ec84d6997a02cdea650915e9a7db24de5984f3b197e89a54e1af78952669dffb"
+      }
+    ],
+    "version": 1
+  },
+  "evidence_publisher_release": "1.2.4-quota-recovery-candidate",
+  "fabric_capture": {
+    "applied": false,
+    "paths_before": 0,
+    "transient_untracked_removed": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "fabric_release": "1.2.4-quota-recovery-candidate",
+  "failure_class": null,
+  "finished_at": "2026-09-22T03:02:04Z",
+  "git": {
+    "base_is_ancestor": true,
+    "base_sha": "8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e",
+    "branch": "codex/ephi-o5-decision-loop-core-fix1",
+    "detached_verify": false,
+    "head_sha": "cfb6444e7bc9e4780c01163bc844c222d876cd90",
+    "remote_exact_head": true,
+    "remote_head_sha": "cfb6444e7bc9e4780c01163bc844c222d876cd90",
+    "target_branch": "main",
+    "target_drifted_since_acceptance": false,
+    "target_head_observed_after_execution": "8fd41a2fd9f6420cc63bf8a0beaa73a472d25f0e",
+    "work_branch": "codex/ephi-o5-decision-loop-core-fix1",
+    "worktree_clean": true
+  },
+  "instructions": {
+    "files": [
+      {
+        "bytes": 1458,
+        "path": "AGENTS.md",
+        "sha256": "4349f387a79d886ed1264604ff48c582698e539e08ed8fb2f9d8ab8fbf6f804a"
+      }
+    ],
+    "total_bytes": 1458,
+    "warning": null
+  },
+  "job_id": "CF-a25c562ae0fbbe4b807f2794",
+  "kind": "codex-fabric-audit-evidence",
+  "locator": {
+    "branch": "codex-fabric/evidence/ephi/ephi-o5-decision-loop-core-fix1",
+    "path": ".codex-fabric/audit.json",
+    "ref": "refs/heads/codex-fabric/evidence/ephi/ephi-o5-decision-loop-core-fix1"
+  },
+  "operation": "FIX",
+  "policy": {
+    "environment_policy_sha256": "e077daca74297b3c30bee8989f00f8ca5338f7610b4d016a6c48db524205d064",
+    "fabric_release": "1.2.4-quota-recovery-candidate",
+    "policy_sha256": "a642c9f63bab2cb555704bdb0b9d1f28222591f133f934c1d0f93cc5a25ab8a1",
+    "registry_sha256": "cfc765f3211c37c7967a138f3b2d89a99341939b15b2623f92744d007f625d6f"
+  },
+  "project_id": "ephi",
+  "recovery": {
+    "model_rerun_safe": false,
+    "recovery_required": false,
+    "retry_safe": false,
+    "retry_scope": null,
+    "worktree_retained": true
+  },
+  "request": "ephi-o5-decision-loop-core-fix1",
+  "schema_version": 1,
+  "started_at": "2026-09-22T02:38:18Z",
+  "status": "EXECUTED_CHANGE",
+  "timing": {
+    "execution_seconds": 1426,
+    "queue_seconds": 0,
+    "total_seconds": 1426
+  },
+  "transport": {
+    "bytes": 16915,
+    "envelope": "FABRIC/2",
+    "prompt_bytes": 16602,
+    "prompt_sha256": "575f657e56627b653f1ebd148823e2f627e84f9bca7a1f6a25a061c6aa2bd5af",
+    "sha256": "a25c562ae0fbbe4b807f27945ee082ab0f697e5077a331fd427b6ee58132fc97"
+  }
+}
