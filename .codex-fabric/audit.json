@@ -1,0 +1,995 @@
+{
+  "accepted_at": "2026-09-23T18:27:38Z",
+  "changed_files": [
+    {
+      "additions": 21,
+      "deletions": 0,
+      "path": "01_Product_and_Architecture.md",
+      "status": "M"
+    },
+    {
+      "additions": 34,
+      "deletions": 0,
+      "path": "13_Package_Review.md",
+      "status": "M"
+    },
+    {
+      "additions": 21,
+      "deletions": 0,
+      "path": "README.md",
+      "status": "M"
+    },
+    {
+      "additions": 205,
+      "deletions": 0,
+      "path": "docs/Downstream_Integration_ABI.md",
+      "status": "A"
+    },
+    {
+      "additions": 1069,
+      "deletions": 0,
+      "path": "evidence/review/chg_182_u1_post_go_ci_fix/o10_rendered.json",
+      "status": "A"
+    },
+    {
+      "additions": 1532,
+      "deletions": 0,
+      "path": "evidence/review/chg_182_u1_post_go_ci_fix/o8_direct.json",
+      "status": "A"
+    },
+    {
+      "additions": 1532,
+      "deletions": 0,
+      "path": "evidence/review/chg_182_u1_post_go_ci_fix/o8_proxy.json",
+      "status": "A"
+    },
+    {
+      "additions": 9,
+      "deletions": 0,
+      "path": "evidence/review/chg_182_u1_post_go_ci_fix/production_no_bundle_startup.json",
+      "status": "A"
+    },
+    {
+      "additions": 569,
+      "deletions": 0,
+      "path": "evidence/review/chg_182_u1_post_go_ci_fix/qualification.json",
+      "status": "A"
+    },
+    {
+      "additions": 269,
+      "deletions": 0,
+      "path": "evidence/review/chg_182_u1_post_go_ci_fix/u1_episode_geometry.json",
+      "status": "A"
+    },
+    {
+      "additions": 436,
+      "deletions": 0,
+      "path": "evidence/review/chg_182_u1_r3_fix_qualification.json",
+      "status": "A"
+    },
+    {
+      "additions": 98,
+      "deletions": 0,
+      "path": "evidence/review/chg_182_u1_r3_fix_w0_baseline.json",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u1/chg_182_u1_post_go_ci_fix/attention-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u1/chg_182_u1_post_go_ci_fix/episode-actions-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u1/chg_182_u1_post_go_ci_fix/episode-open-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/attention-1024x768.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/attention-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/attention-320x800.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/attention-390x844.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/attention-768x1024.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/attention-failure.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/attention-no-matching-rows-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/attention-no-permitted-rows.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/attention-offline.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/attention-permission.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/attention-populated-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/attention-stale.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/episode-1024x768.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/episode-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/episode-320x800.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/episode-390x844.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/episode-768x1024.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/episode-capability-states.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/episode-claimed-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/episode-coherent-conflict.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/episode-no-selection-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/episode-offline.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/episode-owner-changed.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/episode-permission.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/episode-populated-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/episode-version-conflict.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u1/chg_182_u1_r3_fix/attention-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u1/chg_182_u1_r3_fix/episode-actions-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u1/chg_182_u1_r3_fix/episode-open-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": 129,
+      "deletions": 0,
+      "path": "evidence/u1/downstream_abi_conformance.json",
+      "status": "A"
+    },
+    {
+      "additions": 1,
+      "deletions": 0,
+      "path": "examples/__init__.py",
+      "status": "A"
+    },
+    {
+      "additions": 1,
+      "deletions": 0,
+      "path": "examples/synthetic_downstream/__init__.py",
+      "status": "A"
+    },
+    {
+      "additions": 297,
+      "deletions": 0,
+      "path": "examples/synthetic_downstream/provider.py",
+      "status": "A"
+    },
+    {
+      "additions": 292,
+      "deletions": 12,
+      "path": "manifest.json",
+      "status": "M"
+    },
+    {
+      "additions": 1,
+      "deletions": 0,
+      "path": "pyproject.toml",
+      "status": "M"
+    },
+    {
+      "additions": 11,
+      "deletions": 0,
+      "path": "src/ephi/config.py",
+      "status": "M"
+    },
+    {
+      "additions": 63,
+      "deletions": 0,
+      "path": "src/ephi/downstream/__init__.py",
+      "status": "A"
+    },
+    {
+      "additions": 3,
+      "deletions": 0,
+      "path": "src/ephi/downstream/__main__.py",
+      "status": "A"
+    },
+    {
+      "additions": 68,
+      "deletions": 0,
+      "path": "src/ephi/downstream/boundary.py",
+      "status": "A"
+    },
+    {
+      "additions": 200,
+      "deletions": 0,
+      "path": "src/ephi/downstream/composition.py",
+      "status": "A"
+    },
+    {
+      "additions": 411,
+      "deletions": 0,
+      "path": "src/ephi/downstream/contracts.py",
+      "status": "A"
+    },
+    {
+      "additions": 176,
+      "deletions": 0,
+      "path": "src/ephi/downstream/preflight.py",
+      "status": "A"
+    },
+    {
+      "additions": 270,
+      "deletions": 0,
+      "path": "src/ephi/downstream/validation.py",
+      "status": "A"
+    },
+    {
+      "additions": 51,
+      "deletions": 19,
+      "path": "src/ephi/ui/app.py",
+      "status": "M"
+    },
+    {
+      "additions": 564,
+      "deletions": 0,
+      "path": "tests/test_downstream_abi.py",
+      "status": "A"
+    },
+    {
+      "additions": 290,
+      "deletions": 0,
+      "path": "tests/test_downstream_postgresql.py",
+      "status": "A"
+    },
+    {
+      "additions": 88,
+      "deletions": 0,
+      "path": "tests/test_episode_workspace_geometry.py",
+      "status": "A"
+    },
+    {
+      "additions": 646,
+      "deletions": 0,
+      "path": "tools/u1_episode_geometry_qualification.py",
+      "status": "A"
+    }
+  ],
+  "checks": [
+    {
+      "command": "/bin/zsh -lc \"rtk git show origin/codex-fabric/evidence/ephi/ephi-o5-decision-snapshot-handoff-v1:.codex-fabric/audit.json | rtk sed -n '1,100p' && rtk git show --stat --oneline origin/project-os-artifacts/ephi/ephi-o5-decision-snapshot-handoff-v1\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg --files evidence/review evidence/u1 | rtk rg 'post_go_ci_fix'\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy mkdir -p evidence/review/chg_182_u1_post_go_ci_fix evidence/u1/chg_182_u1_post_go_ci_fix && rtk proxy python3 tools/u1_episode_geometry_qualification.py --dsn 'postgresql://haewonkim@/ephi_chg182_u1_fix_verify_20260923?host=/tmp' --output evidence/review/chg_182_u1_post_go_ci_fix/u1_episode_geometry.json --artifacts evidence/u1/chg_182_u1_post_go_ci_fix\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"EPHI_TEST_POSTGRES_DSN='postgresql://haewonkim@/ephi_chg182_u1_fix_verify_20260923?host=/tmp' PYTHONPATH=src rtk proxy python3 tools/o8_browser_qualification.py --dsn 'postgresql://haewonkim@/ephi_chg182_u1_fix_verify_20260923?host=/tmp' --port 18765 --root-path '' --output evidence/review/chg_182_u1_post_go_ci_fix/o8_direct.json\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"EPHI_TEST_POSTGRES_DSN='postgresql://haewonkim@/ephi_chg182_u1_fix_verify_20260923?host=/tmp' PYTHONPATH=src rtk proxy python3 tools/o8_browser_qualification.py --dsn 'postgresql://haewonkim@/ephi_chg182_u1_fix_verify_20260923?host=/tmp' --port 18766 --proxy-port 18767 --proxy --root-path /ephi --output evidence/review/chg_182_u1_post_go_ci_fix/o8_proxy.json\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"EPHI_TEST_POSTGRES_DSN='postgresql://haewonkim@/ephi_chg182_u1_fix_verify_20260923?host=/tmp' PYTHONPATH=src rtk proxy python3 tools/o10_rendered_accessibility.py --dsn 'postgresql://haewonkim@/ephi_chg182_u1_fix_verify_20260923?host=/tmp' --output evidence/review/chg_182_u1_post_go_ci_fix/o10_rendered.json --artifacts evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy python3 -c \\\"import json,pathlib,hashlib; root=pathlib.Path('.'); names=['evidence/review/chg_182_u1_post_go_ci_fix/u1_episode_geometry.json','evidence/review/chg_182_u1_post_go_ci_fix/o8_direct.json','evidence/review/chg_182_u1_post_go_ci_fix/o8_proxy.json','evidence/review/chg_182_u1_post_go_ci_fix/o10_rendered.json'];\\\\nfor name in names:\\\\n p=root/name; data=p.read_bytes(); report=json.loads(data); print(name,hashlib.sha256(data).hexdigest(),report.get('status'),report.get('candidate_commit'),report.get('postgres',{}).get('version'),report.get('execution',{}).get('proxy_mode'),report.get('geometry',{}).get('status'),report.get('fail_closed_startup_reconfirmation',{}).get('status'))\\\"\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy python3 -c \\\"import json,pathlib,hashlib; root=pathlib.Path('.'); names=['evidence/review/chg_182_u1_post_go_ci_fix/u1_episode_geometry.json','evidence/review/chg_182_u1_post_go_ci_fix/o8_direct.json','evidence/review/chg_182_u1_post_go_ci_fix/o8_proxy.json','evidence/review/chg_182_u1_post_go_ci_fix/o10_rendered.json']; [print(name,hashlib.sha256((root/name).read_bytes()).hexdigest(),json.loads((root/name).read_text()).get('status'),json.loads((root/name).read_text()).get('candidate_commit'),json.loads((root/name).read_text()).get('postgres',{}).get('version'),json.loads((root/name).read_text()).get('execution',{}).get('proxy_mode'),json.loads((root/name).read_text()).get('geometry',{}).get('status'),json.loads((root/name).read_text()).get('fail_closed_startup_reconfirmation',{}).get('status')) for name in names]\\\"\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n '\\\"status\\\"|\\\"postgres\\\"|\\\"postgres_version\\\"|\\\"execution\\\"|\\\"attention_page_rendered\\\"|\\\"episode_page_rendered\\\"|\\\"websocket_session_observed\\\"|\\\"console_errors\\\"|\\\"trusted_proxy_count\\\"|\\\"static_resources_loaded_under_root_path\\\"|\\\"criteria\\\"|\\\"acceptance\\\"' evidence/review/chg_182_u1_post_go_ci_fix/o8_direct.json evidence/review/chg_182_u1_post_go_ci_fix/o8_proxy.json evidence/review/chg_182_u1_post_go_ci_fix/o10_rendered.json evidence/review/chg_182_u1_post_go_ci_fix/u1_episode_geometry.json\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk proxy python3 /tmp/ephi_production_startup_check.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy python3 -c \\\"import json,pathlib; p=pathlib.Path('evidence/review/chg_182_u1_post_go_ci_fix/u1_episode_geometry.json'); x=json.loads(p.read_text()); print(sorted(x)); print(sorted(x['downstream_launch'])); print(sorted(x['downstream_launch']['browser_acceptance'])); print(sorted(x['fail_closed_startup_reconfirmation'])); print(sorted(x['fail_closed_startup_reconfirmation']['cases']))\\\"\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk rg --files evidence/u1/chg_182_u1_post_go_ci_fix evidence/review/chg_182_u1_post_go_ci_fix'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk rg -n \"package files|file_count|inventory|manifest\" tools/check_package.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n 'github/workflows|assert.*diff' /tmp/ephi_build_ci_evidence.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'PYTHONPATH=src rtk proxy python3 /tmp/ephi_build_ci_evidence.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk proxy /tmp/ephi-chg182-u1-fix-py311/bin/python tools/check_package.py --refresh-manifest && rtk proxy /tmp/ephi-chg182-u1-fix-py311/bin/python tools/check_package.py && rtk git diff --check && rtk git status --short'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy /tmp/ephi-chg182-u1-fix-py311/bin/python tools/check_package.py && rtk proxy /tmp/ephi-chg182-u1-fix-py311/bin/python -c 'import subprocess,sys; p=subprocess.run([sys.executable,\\\"-m\\\",\\\"unittest\\\",\\\"discover\\\",\\\"-s\\\",\\\"tests\\\",\\\"-v\\\"],text=True,capture_output=True); sys.stdout.write((p.stdout+p.stderr)[-1200:]); sys.exit(p.returncode)'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy /tmp/ephi-chg182-u1-fix-py313/bin/python tools/check_package.py && rtk proxy /tmp/ephi-chg182-u1-fix-py313/bin/python -c 'import subprocess,sys; p=subprocess.run([sys.executable,\\\"-m\\\",\\\"unittest\\\",\\\"discover\\\",\\\"-s\\\",\\\"tests\\\",\\\"-v\\\"],text=True,capture_output=True); sys.stdout.write((p.stdout+p.stderr)[-1200:]); sys.exit(p.returncode)'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy /tmp/ephi-chg182-u1-fix-py314/bin/python tools/check_package.py && rtk proxy /tmp/ephi-chg182-u1-fix-py314/bin/python -c 'import subprocess,sys; p=subprocess.run([sys.executable,\\\"-m\\\",\\\"unittest\\\",\\\"discover\\\",\\\"-s\\\",\\\"tests\\\",\\\"-v\\\"],text=True,capture_output=True); sys.stdout.write((p.stdout+p.stderr)[-1200:]); sys.exit(p.returncode)'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy /tmp/ephi-chg182-u1-fix-py312/bin/python tools/check_package.py && rtk proxy /tmp/ephi-chg182-u1-fix-py312/bin/python -c 'import subprocess,sys; p=subprocess.run([sys.executable,\\\"-m\\\",\\\"unittest\\\",\\\"discover\\\",\\\"-s\\\",\\\"tests\\\",\\\"-v\\\"],text=True,capture_output=True); sys.stdout.write((p.stdout+p.stderr)[-1200:]); sys.exit(p.returncode)'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk proxy python3 /tmp/ephi_append_matrix_evidence.py && rtk proxy /tmp/ephi-chg182-u1-fix-py311/bin/python tools/check_package.py --refresh-manifest && rtk proxy /tmp/ephi-chg182-u1-fix-py311/bin/python tools/check_package.py && rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy /tmp/ephi-chg182-u1-fix-py311/bin/python tools/check_package.py && rtk proxy /tmp/ephi-chg182-u1-fix-py311/bin/python -c 'import subprocess,sys; p=subprocess.run([sys.executable,\\\"-m\\\",\\\"unittest\\\",\\\"discover\\\",\\\"-s\\\",\\\"tests\\\",\\\"-v\\\"],text=True,capture_output=True); sys.stdout.write((p.stdout+p.stderr)[-700:]); sys.exit(p.returncode)'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy /tmp/ephi-chg182-u1-fix-py313/bin/python tools/check_package.py && rtk proxy /tmp/ephi-chg182-u1-fix-py313/bin/python -c 'import subprocess,sys; p=subprocess.run([sys.executable,\\\"-m\\\",\\\"unittest\\\",\\\"discover\\\",\\\"-s\\\",\\\"tests\\\",\\\"-v\\\"],text=True,capture_output=True); sys.stdout.write((p.stdout+p.stderr)[-700:]); sys.exit(p.returncode)'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy /tmp/ephi-chg182-u1-fix-py314/bin/python tools/check_package.py && rtk proxy /tmp/ephi-chg182-u1-fix-py314/bin/python -c 'import subprocess,sys; p=subprocess.run([sys.executable,\\\"-m\\\",\\\"unittest\\\",\\\"discover\\\",\\\"-s\\\",\\\"tests\\\",\\\"-v\\\"],text=True,capture_output=True); sys.stdout.write((p.stdout+p.stderr)[-700:]); sys.exit(p.returncode)'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy /tmp/ephi-chg182-u1-fix-py312/bin/python tools/check_package.py && rtk proxy /tmp/ephi-chg182-u1-fix-py312/bin/python -c 'import subprocess,sys; p=subprocess.run([sys.executable,\\\"-m\\\",\\\"unittest\\\",\\\"discover\\\",\\\"-s\\\",\\\"tests\\\",\\\"-v\\\"],text=True,capture_output=True); sys.stdout.write((p.stdout+p.stderr)[-700:]); sys.exit(p.returncode)'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"PYTHONPATH=src rtk proxy python3 -c \\\"import json; from ephi.application.o10 import evaluate_o10_acceptance; p='evidence/review/chg_182_u1_post_go_ci_fix/o10_rendered.json'; r=json.load(open(p)); a=evaluate_o10_acceptance(r); assert r['status']==a['status']=='PASS' and a['criteria']; print('O10_1_RENDERED_ACCESSIBILITY_PASS',len(a['criteria']))\\\" && PYTHONPATH=src rtk proxy /tmp/ephi-chg182-u1-fix-py311/bin/python -m ephi --self-check --json && rtk proxy /tmp/ephi-chg182-u1-fix-py311/bin/python -m compileall -q src/ephi && rtk git diff --check\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"EPHI_TEST_POSTGRES_DSN='postgresql://haewonkim@/ephi_chg182_u1_fix_verify_20260923?host=/tmp' PYTHONPATH=src rtk proxy python3 -c 'import subprocess,sys; p=subprocess.run([sys.executable,\\\"-m\\\",\\\"unittest\\\",\\\"discover\\\",\\\"-s\\\",\\\"tests\\\",\\\"-v\\\"],text=True,capture_output=True); sys.stdout.write((p.stdout+p.stderr)[-1800:]); sys.exit(p.returncode)'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git show origin/codex-fabric/evidence/ephi/ephi-u1-downstream-extension-abi-fix1:.codex-fabric/audit.json | rtk sed -n '1,140p' && rtk git show -s --format='%H%n%P%n%s' origin/codex-fabric/evidence/ephi/ephi-u1-downstream-extension-abi-fix1\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy python3 -c \\\"import json,pathlib; p=pathlib.Path('evidence/review/chg_182_u1_post_go_ci_fix/qualification.json'); r=json.loads(p.read_text()); print('fields',sorted(r)); print('candidate',r['source_candidate']); print('matrix',r['final_repository_matrix_with_candidate_bound_evidence']); print('evidence_count',len(r['attached_reports_and_artifacts'])); print('nonclaims',r['non_claims'])\\\" && rtk rg -n -e 'postgresql://' -e 'temporary-not-recorded-startup-secret' -e 'SYNTHETIC_DSN_MARKER' evidence/review/chg_182_u1_post_go_ci_fix evidence/u1/chg_182_u1_post_go_ci_fix\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy python3 -c \\\"import json,pathlib; p=pathlib.Path('evidence/review/chg_182_u1_post_go_ci_fix/qualification.json'); r=json.loads(p.read_text()); r['final_repository_matrix_with_candidate_bound_evidence'].pop('worktree_clean_after_commit',None); r.pop('final_checkout_expectation',None); p.write_text(json.dumps(r,ensure_ascii=False,sort_keys=True,indent=2)+'\\\\\\\\n',encoding='utf-8')\\\" && rtk proxy /tmp/ephi-chg182-u1-fix-py311/bin/python tools/check_package.py --refresh-manifest && rtk proxy /tmp/ephi-chg182-u1-fix-py311/bin/python tools/check_package.py && rtk git diff --check\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy /tmp/ephi-chg182-u1-fix-py311/bin/python tools/check_package.py && rtk proxy /tmp/ephi-chg182-u1-fix-py311/bin/python -c 'import subprocess,sys; p=subprocess.run([sys.executable,\\\"-m\\\",\\\"unittest\\\",\\\"discover\\\",\\\"-s\\\",\\\"tests\\\",\\\"-v\\\"],text=True,capture_output=True); sys.stdout.write((p.stdout+p.stderr)[-400:]); sys.exit(p.returncode)'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy /tmp/ephi-chg182-u1-fix-py313/bin/python tools/check_package.py && rtk proxy /tmp/ephi-chg182-u1-fix-py313/bin/python -c 'import subprocess,sys; p=subprocess.run([sys.executable,\\\"-m\\\",\\\"unittest\\\",\\\"discover\\\",\\\"-s\\\",\\\"tests\\\",\\\"-v\\\"],text=True,capture_output=True); sys.stdout.write((p.stdout+p.stderr)[-400:]); sys.exit(p.returncode)'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy /tmp/ephi-chg182-u1-fix-py314/bin/python tools/check_package.py && rtk proxy /tmp/ephi-chg182-u1-fix-py314/bin/python -c 'import subprocess,sys; p=subprocess.run([sys.executable,\\\"-m\\\",\\\"unittest\\\",\\\"discover\\\",\\\"-s\\\",\\\"tests\\\",\\\"-v\\\"],text=True,capture_output=True); sys.stdout.write((p.stdout+p.stderr)[-400:]); sys.exit(p.returncode)'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy /tmp/ephi-chg182-u1-fix-py312/bin/python tools/check_package.py && rtk proxy /tmp/ephi-chg182-u1-fix-py312/bin/python -c 'import subprocess,sys; p=subprocess.run([sys.executable,\\\"-m\\\",\\\"unittest\\\",\\\"discover\\\",\\\"-s\\\",\\\"tests\\\",\\\"-v\\\"],text=True,capture_output=True); sys.stdout.write((p.stdout+p.stderr)[-400:]); sys.exit(p.returncode)'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git add manifest.json evidence/review/chg_182_u1_post_go_ci_fix evidence/u1/chg_182_u1_post_go_ci_fix && rtk git diff --cached --check && rtk git status --short && rtk git diff --cached --stat && rtk git diff --cached --numstat'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git commit -m 'Add CHG-182 U1 post-GO CI evidence' && rtk git status --short --branch && rtk git rev-parse HEAD && rtk git merge-base --is-ancestor 93b4e44fae90fbecff6e5d4201004aac8a41a381 HEAD\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk proxy /tmp/ephi-chg182-u1-fix-py311/bin/python tools/check_package.py --refresh-manifest && rtk proxy /tmp/ephi-chg182-u1-fix-py311/bin/python tools/check_package.py && rtk git status --short --branch && rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"PYTHONPATH=src rtk proxy /tmp/ephi-chg182-u1-fix-py311/bin/python -m ephi --self-check --json && rtk proxy /tmp/ephi-chg182-u1-fix-py311/bin/python -m compileall -q src/ephi && rtk git diff --check && rtk proxy python3 -c \\\"import subprocess; assert not subprocess.check_output(['git','status','--porcelain']).strip(); print('CLEAN_CHECKOUT_PASS')\\\"\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk proxy /tmp/ephi-chg182-u1-fix-py311/bin/python tools/w0_repo_baseline.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy /tmp/ephi-chg182-u1-fix-py311/bin/python tools/check_package.py && rtk proxy /tmp/ephi-chg182-u1-fix-py311/bin/python -c 'import subprocess,sys; p=subprocess.run([sys.executable,\\\"-m\\\",\\\"unittest\\\",\\\"discover\\\",\\\"-s\\\",\\\"tests\\\",\\\"-v\\\"],text=True,capture_output=True); sys.stdout.write((p.stdout+p.stderr)[-300:]); sys.exit(p.returncode)'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy /tmp/ephi-chg182-u1-fix-py313/bin/python tools/check_package.py && rtk proxy /tmp/ephi-chg182-u1-fix-py313/bin/python -c 'import subprocess,sys; p=subprocess.run([sys.executable,\\\"-m\\\",\\\"unittest\\\",\\\"discover\\\",\\\"-s\\\",\\\"tests\\\",\\\"-v\\\"],text=True,capture_output=True); sys.stdout.write((p.stdout+p.stderr)[-300:]); sys.exit(p.returncode)'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy /tmp/ephi-chg182-u1-fix-py314/bin/python tools/check_package.py && rtk proxy /tmp/ephi-chg182-u1-fix-py314/bin/python -c 'import subprocess,sys; p=subprocess.run([sys.executable,\\\"-m\\\",\\\"unittest\\\",\\\"discover\\\",\\\"-s\\\",\\\"tests\\\",\\\"-v\\\"],text=True,capture_output=True); sys.stdout.write((p.stdout+p.stderr)[-300:]); sys.exit(p.returncode)'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy /tmp/ephi-chg182-u1-fix-py312/bin/python tools/check_package.py && rtk proxy /tmp/ephi-chg182-u1-fix-py312/bin/python -c 'import subprocess,sys; p=subprocess.run([sys.executable,\\\"-m\\\",\\\"unittest\\\",\\\"discover\\\",\\\"-s\\\",\\\"tests\\\",\\\"-v\\\"],text=True,capture_output=True); sys.stdout.write((p.stdout+p.stderr)[-300:]); sys.exit(p.returncode)'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"EPHI_TEST_POSTGRES_DSN='postgresql://haewonkim@/ephi_chg182_u1_fix_verify_20260923?host=/tmp' PYTHONPATH=src rtk proxy python3 -c 'import subprocess,sys; p=subprocess.run([sys.executable,\\\"-m\\\",\\\"unittest\\\",\\\"discover\\\",\\\"-s\\\",\\\"tests\\\",\\\"-v\\\"],text=True,capture_output=True); sys.stdout.write((p.stdout+p.stderr)[-450:]); sys.exit(p.returncode)'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git ls-remote --heads origin codex/ephi-u1-downstream-extension-abi-fix2 && rtk git branch --show-current && rtk git status --short --branch && rtk git rev-parse origin/main'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git push --set-upstream origin codex/ephi-u1-downstream-extension-abi-fix2:codex/ephi-u1-downstream-extension-abi-fix2'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk which gh && rtk gh pr view 26 --repo kimhw8084/ephi --json number,headRefName,headRefOid,baseRefName,baseRefOid,state,url'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git push origin HEAD:refs/heads/codex/ephi-u1-downstream-extension-abi-fix1 && rtk gh pr view 26 --repo kimhw8084/ephi --json number,headRefName,headRefOid,baseRefName,baseRefOid,state,url && rtk git ls-remote --heads origin codex/ephi-u1-downstream-extension-abi-fix1 codex/ephi-u1-downstream-extension-abi-fix2'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk gh api repos/kimhw8084/ephi/pulls/26 --jq '.head.ref + \\\" \\\" + .head.sha + \\\" \\\" + .base.sha + \\\" \\\" + .state'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git push origin --delete codex/ephi-u1-downstream-extension-abi-fix2 && rtk git fetch origin refs/heads/codex/ephi-u1-downstream-extension-abi-fix1:refs/remotes/origin/codex/ephi-u1-downstream-extension-abi-fix1 && rtk git branch --set-upstream-to=origin/codex/ephi-u1-downstream-extension-abi-fix1 codex/ephi-u1-downstream-extension-abi-fix2 && rtk git branch -vv && rtk git status --short --branch && rtk git ls-remote --heads origin codex/ephi-u1-downstream-extension-abi-fix1 codex/ephi-u1-downstream-extension-abi-fix2'",
+      "exit_code": 0,
+      "type": "command_execution"
+    }
+  ],
+  "codex": {
+    "cli_version": "codex-cli 0.155.1",
+    "configured_model": "gpt-6-luna",
+    "event_count": 306,
+    "provider_reported_model": null,
+    "reasoning_effort": "xhigh",
+    "terminal_type": "turn.completed",
+    "usage": {
+      "cache_hit_percent": 98.02,
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 12369920,
+      "fresh_input_tokens": 250115,
+      "input_tokens": 12620035,
+      "non_reasoning_output_tokens": 26053,
+      "output_tokens": 89944,
+      "reasoning_output_tokens": 63891,
+      "total_processed_tokens": 12709979
+    },
+    "warnings": []
+  },
+  "commits": [
+    {
+      "sha": "cfc7a0ee6c5f4a66fdaa93ca09544898321fa78f",
+      "subject": "Add CHG-182 U1 post-GO CI evidence"
+    },
+    {
+      "sha": "b661174dd65e23ef29e9da7ae6e9a8f8585e4d82",
+      "subject": "Fix dependency-light U1 fail-closed assertion"
+    },
+    {
+      "sha": "93b4e44fae90fbecff6e5d4201004aac8a41a381",
+      "subject": "Add CHG-182 U1 R3 qualification evidence"
+    },
+    {
+      "sha": "c6aa11b2988479d78d0651bca8dbf976f64fc9ad",
+      "subject": "CHG-182 U1 R3: place Episode content in workspace slots"
+    },
+    {
+      "sha": "9df7b1f3f49758fba459479404ae74215736b81f",
+      "subject": "CHG-182: add downstream extension ABI v1"
+    }
+  ],
+  "diff": {
+    "additions": 9357,
+    "changed_files": 63,
+    "commit_count": 5,
+    "deletions": 31
+  },
+  "error_code": null,
+  "evidence_manifest": {
+    "count": 46,
+    "items": [
+      {
+        "bytes": 12444,
+        "path": "01_Product_and_Architecture.md",
+        "sha256": "462fe354f63119a712a623523b0511f01161a49018bb69da001d4a40ef46e8c6"
+      },
+      {
+        "bytes": 19822,
+        "path": "13_Package_Review.md",
+        "sha256": "6ef19626468b8c9ef93508d9dfc618b8dcfa9a25b7ef14f910b67337f5649cc6"
+      },
+      {
+        "bytes": 22236,
+        "path": "README.md",
+        "sha256": "949ad1e595b72df11e042757b8de5f027a393e4cafa3ffd821386b2ceaaf19e7"
+      },
+      {
+        "bytes": 12983,
+        "path": "docs/Downstream_Integration_ABI.md",
+        "sha256": "cf889b4476f8fac3ee9401b44a2ecfdd9224320c122edf683a8500550e126776"
+      },
+      {
+        "bytes": 44259,
+        "path": "evidence/review/chg_182_u1_post_go_ci_fix/o10_rendered.json",
+        "sha256": "feef091369bdf16cd455a08a9393c27c1dbef9c5a545a82305011d7bce14015d"
+      },
+      {
+        "bytes": 42516,
+        "path": "evidence/review/chg_182_u1_post_go_ci_fix/o8_direct.json",
+        "sha256": "a7072f404c780953396031f8bb392e2b5c7f8bae46328c1e6f6539f97a3ae6fe"
+      },
+      {
+        "bytes": 42762,
+        "path": "evidence/review/chg_182_u1_post_go_ci_fix/o8_proxy.json",
+        "sha256": "07482f3f4ed375daf0b9922b6139996922782a52b056f2aeae35f71c12964a3c"
+      },
+      {
+        "bytes": 224,
+        "path": "evidence/review/chg_182_u1_post_go_ci_fix/production_no_bundle_startup.json",
+        "sha256": "addafe63ea3b13fac98da2302739757780b5a2511c4c6ec4a8cfd245b68f1d0e"
+      },
+      {
+        "bytes": 26826,
+        "path": "evidence/review/chg_182_u1_post_go_ci_fix/qualification.json",
+        "sha256": "a088428fa3935cfc55763f0b08bd6475da0d56c78e2a67a7112e834fc0b84cb7"
+      },
+      {
+        "bytes": 13212,
+        "path": "evidence/review/chg_182_u1_post_go_ci_fix/u1_episode_geometry.json",
+        "sha256": "8c26308054cbc6eab0cbe7ae991afaf2e0d21f900b9600dd9019ab8516a0b8e5"
+      },
+      {
+        "bytes": 16928,
+        "path": "evidence/review/chg_182_u1_r3_fix_qualification.json",
+        "sha256": "6d73d7000b0fc842f573cc9cf34e7d9c7a72150c9b7387535c1c030b44eb353a"
+      },
+      {
+        "bytes": 2712,
+        "path": "evidence/review/chg_182_u1_r3_fix_w0_baseline.json",
+        "sha256": "a9eb82b1746962eb259421204ab71ddf757f49a1fd4347f7d7983541ce5bae52"
+      },
+      {
+        "bytes": 92727,
+        "path": "evidence/u1/chg_182_u1_post_go_ci_fix/attention-1440x900.png",
+        "sha256": "4afedda3ba29764937ee474e84b309ecba6094a5ac81e023aa497043ac50470f"
+      },
+      {
+        "bytes": 63288,
+        "path": "evidence/u1/chg_182_u1_post_go_ci_fix/episode-actions-1440x900.png",
+        "sha256": "33c992bdae74a6e936ddb98678e58db5f84a74d5135835b6e0a4d046d676941b"
+      },
+      {
+        "bytes": 65076,
+        "path": "evidence/u1/chg_182_u1_post_go_ci_fix/episode-open-1440x900.png",
+        "sha256": "3f3e438d6756bb98c4f399d7e2f63adb810a881cc8a0a07e291cbc931bad8d06"
+      },
+      {
+        "bytes": 83227,
+        "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/attention-1024x768.png",
+        "sha256": "e10d4d24ec9084ee715f1cf73bbd0e6e0940e9cd31edb41393ddcd2acb87b0fa"
+      },
+      {
+        "bytes": 75373,
+        "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/attention-1440x900.png",
+        "sha256": "b8d7dec3175e64f164eeeed076054829a89251889cad041ff4122b85de4fb324"
+      },
+      {
+        "bytes": 63192,
+        "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/attention-320x800.png",
+        "sha256": "0e43b7428cbfde03237ea910556fde1b4f1c45e5f5fd65a40ff88115fcd0259e"
+      },
+      {
+        "bytes": 63669,
+        "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/attention-390x844.png",
+        "sha256": "0eaf9399b73af838a88e7f043d072547d9048b34e7d4018d51dfa683ff549110"
+      },
+      {
+        "bytes": 79090,
+        "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/attention-768x1024.png",
+        "sha256": "b3b5bb5946f4ef32907ff01d3cd7ffe308cb392e7ec04944d04dfbee781734bc"
+      },
+      {
+        "bytes": 25371,
+        "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/attention-failure.png",
+        "sha256": "275e09a9b9baf5dde6a7939756f90ac72f494ab1293388d944299a761c8a0180"
+      },
+      {
+        "bytes": 89885,
+        "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/attention-no-matching-rows-1440x900.png",
+        "sha256": "a5ffad7bc70a030d4da2a7ecd383f4c6a4063b66d2d5b0ad4bc3f1766f26ae7f"
+      },
+      {
+        "bytes": 26541,
+        "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/attention-no-permitted-rows.png",
+        "sha256": "6ce1e9074dbf53dad714b2455f8054a5c525fb881071ce30dd3fff0acb34ea0f"
+      },
+      {
+        "bytes": 27680,
+        "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/attention-offline.png",
+        "sha256": "314678b7bde2ad56b19134ba5fc56709d8ec138228bf5651b29be88ecab168f0"
+      },
+      {
+        "bytes": 24829,
+        "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/attention-permission.png",
+        "sha256": "dbfe5026fe50e94933fbfb87829761c090c458e927c08c68d1d3138ff7fe2887"
+      },
+      {
+        "bytes": 75373,
+        "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/attention-populated-1440x900.png",
+        "sha256": "b8d7dec3175e64f164eeeed076054829a89251889cad041ff4122b85de4fb324"
+      },
+      {
+        "bytes": 27077,
+        "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/attention-stale.png",
+        "sha256": "11325811fc04416c3849c174897a94119c5a9d20459b7898372917675808d4cc"
+      },
+      {
+        "bytes": 94278,
+        "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/episode-1024x768.png",
+        "sha256": "15d619bd5734d1e4931b57641b782050a36256988621414eb01e1807224581ce"
+      },
+      {
+        "bytes": 95429,
+        "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/episode-1440x900.png",
+        "sha256": "cbb4f32b23279c1622ac7392fe7ddb5c2ead64bb83b0d2c4ad43519b75d1335e"
+      },
+      {
+        "bytes": 71467,
+        "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/episode-320x800.png",
+        "sha256": "420909bf107db16a732a7a475f8fa118d34e2eca91fe6ac032e54d9544238e88"
+      },
+      {
+        "bytes": 72152,
+        "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/episode-390x844.png",
+        "sha256": "c8284b6f6b800826969863721318420b7b26c73e132e1eaf8bf8c84675483b3c"
+      },
+      {
+        "bytes": 80514,
+        "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/episode-768x1024.png",
+        "sha256": "ffba959fd916257aa712058e025f23935526bceca519cd0e2d8971ccc1ea3b93"
+      },
+      {
+        "bytes": 47653,
+        "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/episode-capability-states.png",
+        "sha256": "8c99703f3b1a4dc9477dd6b98f04d60b721bfa03bb871fc3842879cd9aa4826d"
+      },
+      {
+        "bytes": 96076,
+        "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/episode-claimed-1440x900.png",
+        "sha256": "9af7389aba296ed630ff9f3aab02d5a2361ce58461b8b15266cc924c5e04c294"
+      },
+      {
+        "bytes": 29049,
+        "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/episode-coherent-conflict.png",
+        "sha256": "cba20fdc445f5dcbc460b9f80b4d21b6f84f0daffd181321b9a20c6657662035"
+      },
+      {
+        "bytes": 46229,
+        "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/episode-no-selection-1440x900.png",
+        "sha256": "0d8191869344bd8d2b80d5cb0b669dee1e4505dc6c5e624f2d9ab6ab8a36e772"
+      },
+      {
+        "bytes": 29274,
+        "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/episode-offline.png",
+        "sha256": "bde8919c3f492b620356513b5d2867aed558dfe0c6c71d44c52679ecc6588e2b"
+      },
+      {
+        "bytes": 28275,
+        "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/episode-owner-changed.png",
+        "sha256": "fe483369b2d36f7fd8d45eee82c272154c49872a62dd6bb590d844e41612a278"
+      },
+      {
+        "bytes": 27104,
+        "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/episode-permission.png",
+        "sha256": "4e6d07e5f21f3eee62d620b1bd8e3dc0dd4efb5b7c2a9106833c8cd44fad3904"
+      },
+      {
+        "bytes": 95436,
+        "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/episode-populated-1440x900.png",
+        "sha256": "71ddc8776567f814f65efe7b1314939bf9f3bffc2ad7f932eed02e2cac042e95"
+      },
+      {
+        "bytes": 29246,
+        "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/episode-version-conflict.png",
+        "sha256": "6605fc14b9ce614e148f9172829e5a263aa6a7728c0747e7e98707c00ee4bb53"
+      },
+      {
+        "bytes": 92727,
+        "path": "evidence/u1/chg_182_u1_r3_fix/attention-1440x900.png",
+        "sha256": "4afedda3ba29764937ee474e84b309ecba6094a5ac81e023aa497043ac50470f"
+      },
+      {
+        "bytes": 63530,
+        "path": "evidence/u1/chg_182_u1_r3_fix/episode-actions-1440x900.png",
+        "sha256": "796f801e1024091f6a9af98f546e95b07ef13df1c64037467cd497da5fedd33b"
+      },
+      {
+        "bytes": 65323,
+        "path": "evidence/u1/chg_182_u1_r3_fix/episode-open-1440x900.png",
+        "sha256": "8f7d0a2821565eccb73cc3635dca9b6fc6868081512033bf57c580e1720a3862"
+      },
+      {
+        "bytes": 9744,
+        "path": "evidence/u1/downstream_abi_conformance.json",
+        "sha256": "900c58454be92da519ad90722debb14a56a8663ba4caf69cf0911ad93bbb8b82"
+      },
+      {
+        "bytes": 47526,
+        "path": "manifest.json",
+        "sha256": "80d55b1e6ce003d32b3b56dde98d27a7e224d084209ed0b28848b341d2d22b48"
+      }
+    ],
+    "version": 1
+  },
+  "evidence_publisher_release": "1.2.5-dashboard-controls-candidate",
+  "fabric_capture": {
+    "applied": false,
+    "paths_before": 0,
+    "transient_untracked_removed": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "fabric_release": "1.2.5-dashboard-controls-candidate",
+  "failure_class": null,
+  "finished_at": "2026-09-23T19:07:12Z",
+  "git": {
+    "base_is_ancestor": true,
+    "base_sha": "156e47b1e0cc3c77a2a3f0e2b65875eacc9aa0b4",
+    "branch": "codex/ephi-u1-downstream-extension-abi-fix2",
+    "detached_verify": false,
+    "head_sha": "cfc7a0ee6c5f4a66fdaa93ca09544898321fa78f",
+    "remote_exact_head": true,
+    "remote_head_sha": "cfc7a0ee6c5f4a66fdaa93ca09544898321fa78f",
+    "target_branch": "main",
+    "target_drifted_since_acceptance": false,
+    "target_head_observed_after_execution": "156e47b1e0cc3c77a2a3f0e2b65875eacc9aa0b4",
+    "work_branch": "codex/ephi-u1-downstream-extension-abi-fix2",
+    "worktree_clean": true
+  },
+  "instructions": {
+    "files": [
+      {
+        "bytes": 1458,
+        "path": "AGENTS.md",
+        "sha256": "4349f387a79d886ed1264604ff48c582698e539e08ed8fb2f9d8ab8fbf6f804a"
+      }
+    ],
+    "total_bytes": 1458,
+    "warning": null
+  },
+  "job_id": "CF-f60b3a0bca9956cd7a6bf4a7",
+  "kind": "codex-fabric-audit-evidence",
+  "locator": {
+    "branch": "codex-fabric/evidence/ephi/ephi-u1-downstream-extension-abi-fix2",
+    "path": ".codex-fabric/audit.json",
+    "ref": "refs/heads/codex-fabric/evidence/ephi/ephi-u1-downstream-extension-abi-fix2"
+  },
+  "operation": "FIX",
+  "policy": {
+    "environment_policy_sha256": "e077daca74297b3c30bee8989f00f8ca5338f7610b4d016a6c48db524205d064",
+    "fabric_release": "1.2.5-dashboard-controls-candidate",
+    "policy_sha256": "123615bf2f6e57dcac197e49ca98ceac59ada86a55e2c84445ea5d00812c0833",
+    "registry_sha256": "cfc765f3211c37c7967a138f3b2d89a99341939b15b2623f92744d007f625d6f"
+  },
+  "project_id": "ephi",
+  "recovery": {
+    "model_rerun_safe": false,
+    "recovery_required": false,
+    "retry_safe": false,
+    "retry_scope": null,
+    "worktree_retained": true
+  },
+  "request": "ephi-u1-downstream-extension-abi-fix2",
+  "schema_version": 1,
+  "started_at": "2026-09-23T18:27:38Z",
+  "status": "EXECUTED_CHANGE",
+  "timing": {
+    "execution_seconds": 2374,
+    "queue_seconds": 0,
+    "total_seconds": 2374
+  },
+  "transport": {
+    "bytes": 8885,
+    "envelope": "FABRIC/2",
+    "prompt_bytes": 8561,
+    "prompt_sha256": "b95a8ee572a2ba3c020e835e6bee3a2d99bfd5fb2542346ba0ba66ab1f863def",
+    "sha256": "f60b3a0bca9956cd7a6bf4a74fbf4106699236a4252b1fbb69a6d662f5d68b4e"
+  }
+}
