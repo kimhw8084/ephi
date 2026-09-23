@@ -1,0 +1,9 @@
+{
+  "development_authorities_present": false,
+  "entrypoint_configured": false,
+  "environment": "production",
+  "expected_bounded_reason": true,
+  "process_exit_nonzero": true,
+  "secret_absent": true,
+  "status": "PASS"
+}
