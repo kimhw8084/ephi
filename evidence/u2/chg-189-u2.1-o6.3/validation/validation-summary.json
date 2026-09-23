@@ -1,0 +1,106 @@
+{
+  "application_self_check": {
+    "entrypoint": "ephi.app:main",
+    "identity": {
+      "distribution": "ephi",
+      "historical_identity_claimed": false,
+      "implementation": "canonical-repository",
+      "source_authority": "kimhw8084/ephi",
+      "version": "0.1.0"
+    },
+    "output_sha256": "922c49b6dce20fb67d29b126549a369bf55b199b893ae9cf0e1c986e0ef9320d",
+    "status": "PASS"
+  },
+  "candidate": {
+    "commit": "f2d89196afc38af95837a58c1f628894f494f9e9",
+    "tree": "dfa18f0650ff5b869e47b50a86e2a6ce58d84da0"
+  },
+  "compileall": {
+    "scope": [
+      "src",
+      "examples",
+      "tests",
+      "tools"
+    ],
+    "status": "PASS"
+  },
+  "git_diff_check": {
+    "status": "PASS"
+  },
+  "manifest_refresh": {
+    "package_files": 316,
+    "status": "PASS"
+  },
+  "package_checks": {
+    "python3.11": {
+      "output_sha256": "3e8f4d69abe521be1aeafa8a9baff49a3dcb683a9fe71a14559cef163c3afa3d",
+      "package_files": 316,
+      "status": "PASS"
+    },
+    "python3.12": {
+      "output_sha256": "3e8f4d69abe521be1aeafa8a9baff49a3dcb683a9fe71a14559cef163c3afa3d",
+      "package_files": 316,
+      "status": "PASS"
+    },
+    "python3.13": {
+      "output_sha256": "3e8f4d69abe521be1aeafa8a9baff49a3dcb683a9fe71a14559cef163c3afa3d",
+      "package_files": 316,
+      "status": "PASS"
+    },
+    "python3.14": {
+      "output_sha256": "3e8f4d69abe521be1aeafa8a9baff49a3dcb683a9fe71a14559cef163c3afa3d",
+      "package_files": 316,
+      "status": "PASS"
+    }
+  },
+  "postgresql": {
+    "full_suite_tests": 343,
+    "skipped": 0,
+    "status": "PASS",
+    "version": "18.6 (Homebrew)"
+  },
+  "python_3_14_scope": "Package-integrity compatibility only; project runtime remains >=3.11,<3.14.",
+  "schema": "ephi.chg189.validation-summary.v1",
+  "tests": {
+    "dependency_light_python311": {
+      "duration_seconds": 12.005,
+      "log": "test_logs/chg189-final-python311-tests.log",
+      "output_sha256": "2dd080ab5e48a3ebac391384189e59f09a2901d6b22a63091ddebb2b3e1e6c6f",
+      "skipped": 81,
+      "status": "PASS",
+      "tests": 343
+    },
+    "dependency_light_python312": {
+      "duration_seconds": 12.236,
+      "log": "test_logs/chg189-final-python312-tests.log",
+      "output_sha256": "b4c830a3eb77e887acd5deb6e38db437b6c71d7816b1b971465f7141f4307813",
+      "skipped": 94,
+      "status": "PASS",
+      "tests": 343
+    },
+    "dependency_light_python313": {
+      "duration_seconds": 11.166,
+      "log": "test_logs/chg189-final-python313-tests.log",
+      "output_sha256": "0b700cbdbeb17f3d84ee20eaa4477bdae1919456e00251cc3531706557c6aede",
+      "skipped": 94,
+      "status": "PASS",
+      "tests": 343
+    },
+    "dependency_light_python314_package_integrity_only": {
+      "duration_seconds": 11.845,
+      "log": "test_logs/chg189-final-python314-tests.log",
+      "output_sha256": "ffe0a98c915e34846c573d2320af71ed4606dd1bac1544365ff6ad92b23cb2aa",
+      "skipped": 94,
+      "status": "PASS",
+      "tests": 343
+    },
+    "postgresql18_full_suite_python311": {
+      "duration_seconds": 16.956,
+      "log": "test_logs/chg189-python311-postgres18-tests.log",
+      "output_sha256": "72f6a0c590fc96eb437dc37c31c0724d2d0e9d8f035a7f84e9857a476d284232",
+      "skipped": 0,
+      "status": "PASS",
+      "tests": 343
+    }
+  }
+}

@@ -1,0 +1,317 @@
+{
+  "branch": "codex/ephi-u2-investigation-rca-workspace-v1",
+  "candidate_commit": "f2d89196afc38af95837a58c1f628894f494f9e9",
+  "candidate_state": "COMMITTED_CANDIDATE",
+  "candidate_tree": "dfa18f0650ff5b869e47b50a86e2a6ce58d84da0",
+  "changed_files_from_predecessor": [
+    "evidence/review/chg_182_u1_post_go_ci_fix/o10_rendered.json",
+    "evidence/review/chg_182_u1_post_go_ci_fix/o8_direct.json",
+    "evidence/review/chg_182_u1_post_go_ci_fix/o8_proxy.json",
+    "evidence/review/chg_182_u1_post_go_ci_fix/production_no_bundle_startup.json",
+    "evidence/review/chg_182_u1_post_go_ci_fix/qualification.json",
+    "evidence/review/chg_182_u1_post_go_ci_fix/u1_episode_geometry.json",
+    "evidence/review/chg_182_u1_r3_fix_qualification.json",
+    "evidence/review/chg_182_u1_r3_fix_w0_baseline.json",
+    "evidence/u1/chg_182_u1_post_go_ci_fix/attention-1440x900.png",
+    "evidence/u1/chg_182_u1_post_go_ci_fix/episode-actions-1440x900.png",
+    "evidence/u1/chg_182_u1_post_go_ci_fix/episode-open-1440x900.png",
+    "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/attention-1024x768.png",
+    "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/attention-1440x900.png",
+    "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/attention-320x800.png",
+    "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/attention-390x844.png",
+    "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/attention-768x1024.png",
+    "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/attention-failure.png",
+    "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/attention-no-matching-rows-1440x900.png",
+    "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/attention-no-permitted-rows.png",
+    "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/attention-offline.png",
+    "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/attention-permission.png",
+    "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/attention-populated-1440x900.png",
+    "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/attention-stale.png",
+    "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/episode-1024x768.png",
+    "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/episode-1440x900.png",
+    "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/episode-320x800.png",
+    "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/episode-390x844.png",
+    "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/episode-768x1024.png",
+    "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/episode-capability-states.png",
+    "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/episode-claimed-1440x900.png",
+    "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/episode-coherent-conflict.png",
+    "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/episode-no-selection-1440x900.png",
+    "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/episode-offline.png",
+    "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/episode-owner-changed.png",
+    "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/episode-permission.png",
+    "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/episode-populated-1440x900.png",
+    "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/episode-version-conflict.png",
+    "evidence/u1/chg_182_u1_r3_fix/attention-1440x900.png",
+    "evidence/u1/chg_182_u1_r3_fix/episode-actions-1440x900.png",
+    "evidence/u1/chg_182_u1_r3_fix/episode-open-1440x900.png",
+    "examples/synthetic_downstream/flagship.py",
+    "examples/synthetic_downstream/provider.py",
+    "manifest.json",
+    "src/ephi/application/__init__.py",
+    "src/ephi/application/investigation.py",
+    "src/ephi/application/o10.py",
+    "src/ephi/application/rca.py",
+    "src/ephi/application/rca_materialization.py",
+    "src/ephi/config.py",
+    "src/ephi/downstream/composition.py",
+    "src/ephi/ui/app.py",
+    "tests/test_downstream_abi.py",
+    "tests/test_episode_workspace_geometry.py",
+    "tests/test_o6_rca.py",
+    "tests/test_o6_rca_postgresql.py",
+    "tools/o10_rendered_accessibility.py",
+    "tools/o8_browser_qualification.py",
+    "tools/u1_episode_geometry_qualification.py",
+    "tools/u2_investigation_qualification.py"
+  ],
+  "downstream_launch": {
+    "application_entrypoint": "python -m ephi --serve",
+    "browser_acceptance": {
+      "actions_status": "PASS",
+      "browser": {
+        "allowed_origin": "http://127.0.0.1:53393",
+        "engine": "headless Chromium via Playwright",
+        "events": {
+          "console_errors": [],
+          "http_errors": [],
+          "page_errors": [],
+          "request_failures": [],
+          "websockets": [
+            {
+              "path": "/_nicegui_ws/socket.io/"
+            },
+            {
+              "path": "/_nicegui_ws/socket.io/"
+            },
+            {
+              "path": "/_nicegui_ws/socket.io/"
+            }
+          ]
+        },
+        "ordinary_keyboard_flow": {
+          "attention_row_selected_by_space": true,
+          "claim_changes_open_to_claimed": true,
+          "claim_focus_target": "Acknowledge episode",
+          "episode_opened_by_enter": true,
+          "focus_after_return": "Attention",
+          "initial_focus_is_episode_heading": true,
+          "return_to_attention_by_enter": true
+        },
+        "session_cookie_attributes": [
+          {
+            "http_only": true,
+            "path": "/",
+            "same_site": "Strict",
+            "secure": false
+          }
+        ],
+        "viewport": {
+          "height": 900,
+          "width": 1440
+        },
+        "websocket_session_observed": true
+      },
+      "geometry": {
+        "analysis_workspace": {
+          "height": 1739,
+          "width": 1184,
+          "x": 256,
+          "y": 60
+        },
+        "description_list": {
+          "height": 450,
+          "width": 646.65625,
+          "x": 330,
+          "y": 595
+        },
+        "description_list_width_minimum": 480,
+        "document": {
+          "height": 1799,
+          "width": 1440
+        },
+        "document_height_maximum": 2700,
+        "episode_surface": {
+          "height": 1572,
+          "width": 754.65625,
+          "x": 276,
+          "y": 195
+        },
+        "episode_surface_height_maximum": 1800,
+        "episode_surface_width_minimum": 648,
+        "header_slot": {
+          "height": 52,
+          "width": 1144,
+          "x": 276,
+          "y": 119
+        },
+        "heading_in_header_slot": true,
+        "main": {
+          "height": 1799,
+          "width": 1440,
+          "x": 0,
+          "y": 0
+        },
+        "primary_slot": {
+          "height": 1584,
+          "width": 754.65625,
+          "x": 276,
+          "y": 195
+        },
+        "status": "PASS",
+        "surface_in_primary_slot": true,
+        "viewport": {
+          "height": 900,
+          "width": 1440
+        }
+      },
+      "http": {
+        "attention_status": 200,
+        "episode_status": 200
+      },
+      "primary_action": {
+        "bounds": {
+          "height": 44,
+          "width": 109.203125,
+          "x": 309,
+          "y": 791
+        },
+        "center_hit": true,
+        "clipped": false,
+        "enabled": true,
+        "inside_viewport": true,
+        "visible": true
+      },
+      "provider_identity": {
+        "episode_id": "episode-u1-geometry",
+        "scope_id": "synthetic-u1-scope",
+        "subject": "synthetic-engineer",
+        "subject_rendered": true,
+        "workflow_after_claim": "CLAIMED",
+        "workflow_before_action": "OPEN"
+      },
+      "return_to_attention": {
+        "bounds": {
+          "height": 44,
+          "width": 138.84375,
+          "x": 426.203125,
+          "y": 791
+        },
+        "center_hit": true,
+        "clipped": false,
+        "enabled": true,
+        "inside_viewport": true,
+        "visible": true
+      },
+      "screenshots": {
+        "attention": {
+          "bytes": 92727,
+          "path": "attention-1440x900.png",
+          "sha256": "4afedda3ba29764937ee474e84b309ecba6094a5ac81e023aa497043ac50470f"
+        },
+        "episode": {
+          "bytes": 73015,
+          "path": "episode-open-1440x900.png",
+          "sha256": "4f6c82a02d881eb89daa03dab905d6ecbc0aba6b691e98ac7d7e5905f4b44fe6"
+        },
+        "episode_actions": {
+          "bytes": 76828,
+          "path": "episode-actions-1440x900.png",
+          "sha256": "e43135de1c8122a088820f5ffd365233004d9c8372b01c8a849b5ae6515156d0"
+        }
+      }
+    },
+    "dev_identity_authority_present": false,
+    "entrypoint": "examples.synthetic_downstream.provider:build_bundle",
+    "environment": "test",
+    "episode_id": "episode-u1-geometry",
+    "legacy_metrology_source_authority_present": false,
+    "scope_id": "synthetic-u1-scope",
+    "subject": "synthetic-engineer",
+    "workflow_state": "OPEN",
+    "workflow_state_after_browser_action": "CLAIMED"
+  },
+  "exact_episode_source_diff": "diff --git a/src/ephi/ui/app.py b/src/ephi/ui/app.py\nindex a608ca5..6f57c01 100644\n--- a/src/ephi/ui/app.py\n+++ b/src/ephi/ui/app.py\n@@ -51,6 +51,15 @@ from nicegui_base import (\n from ephi.application.attention import AttentionQueryService\n from ephi.application.context import AccessScope, CommandContext, CurrentAuthorizationAuthority, Principal\n from ephi.application.episodes import EpisodeBrief, EpisodeBriefQueryService\n+from ephi.application.investigation import (\n+    ComponentState,\n+    EpisodeInvestigation,\n+    EpisodeInvestigationQueryService,\n+    InvestigationProfile,\n+)\n+from ephi.application.decision_loop import CheckExecutionMode\n+from ephi.application.decision_loop import CHECK_REQUEST_CAPABILITY\n+from ephi.application.planner import CheckTemplateCatalog\n from ephi.application.workflow import EpisodeWorkflowCommandService\n from ephi.application.o10 import (\n     attention_result_status as _attention_result_status,\n@@ -59,7 +68,7 @@ from ephi.application.o10 import (\n     state_for_error as _state_for_error_facts,\n )\n from ephi.application.source_reality import require_runtime_source_binding\n-from ephi.config import RuntimeSettings\n+from ephi.config import RuntimeSettings, downstream_entrypoint_from_environment\n from ephi.downstream import DownstreamComposition, compose_downstream, load_provider_bundle\n from ephi.infrastructure.postgresql import PostgreSQLReferenceTransactionAdapter\n from ephi.transport import (\n@@ -136,6 +145,20 @@ _O10_UI_CSS = \"\"\"\n .ephi-o10-episode-surface .cui-button {\n     min-width: 44px !important;\n }\n+.ephi-o10-episode-surface .ephi-investigation-heading {\n+    margin: 0 0 var(--cui-space-2);\n+    color: var(--cui-text-primary);\n+    font-size: var(--cui-font-size-lg);\n+    line-height: var(--cui-line-height-29);\n+    overflow-wrap: anywhere;\n+}\n+.ephi-o10-episode-surface .ephi-investigation-subheading {\n+    margin: var(--cui-space-2) 0 var(--cui-space-1);\n+    color: var(--cui-text-primary);\n+    font-size: 18px;\n+    line-height: 24px;\n+    overflow-wrap: anywhere;\n+}\n .ephi-o10-preview h2 {\n     margin: 0 0 var(--cui-space-2);\n     color: var(--cui-text-primary);\n@@ -266,6 +289,7 @@ class EphiUiComposition:\n     runtime: ApplicationRuntime\n     workspace: object\n     downstream: DownstreamComposition | None = None\n+    investigations: EpisodeInvestigationQueryService | None = None\n \n     def close(self) -> None:\n         self.adapter.close()\n@@ -292,8 +316,7 @@ def _development_principal_from_environment(scope: AccessScope) -> Principal:\n def build_composition_from_environment() -> EphiUiComposition:\n     \"\"\"Compose through the explicit downstream ABI or the retained dev/test path.\"\"\"\n \n-    environment = os.environ.get(\"EPHI_ENV\", \"development\").lower()\n-    downstream_entrypoint = os.environ.get(\"EPHI_DOWNSTREAM_ENTRYPOINT\", \"\").strip()\n+    downstream_entrypoint = downstream_entrypoint_from_environment()\n     if downstream_entrypoint:\n         downstream = compose_downstream(\n             load_provider_bundle(downstream_entrypoint),\n@@ -320,10 +343,8 @@ def build_composition_from_environment() -> EphiUiComposition:\n             runtime,\n             workspace,\n             downstream,\n+            downstream.episode_investigations,\n         )\n-    if environment not in {\"development\", \"test\"}:\n-        raise RuntimeError(\"non-development EPHI requires an explicit downstream provider bundle\")\n-\n     dsn = _required_environment(\"EPHI_POSTGRES_DSN\")\n     metrology_source_adapter, metrology_source_binding = require_runtime_source_binding()\n     identity = _DevelopmentIdentityProvider()\n@@ -754,6 +775,299 @@ async def _load_brief(composition: EphiUiComposition, episode_id: str, guard: St\n     return brief\n \n \n+async def _load_investigation(\n+    composition: EphiUiComposition,\n+    episode_id: str,\n+    guard: StaleResponseGuard,\n+) -> tuple[EpisodeBrief, EpisodeInvestigation | None]:\n+    token = guard.next()\n+    loader = AsyncLoader(timeout=30)\n+\n+    def query() -> tuple[EpisodeBrief, EpisodeInvestigation | None]:\n+        principal = composition.principal_provider()\n+        scope = composition.scope_provider()\n+        if composition.investigations is None:\n+            return composition.briefs.get_episode_brief(principal, scope, episode_id), None\n+        investigation = composition.investigations.get_episode_investigation(principal, scope, episode_id)\n+        return investigation.brief, investigation\n+\n+    result = await loader.load(lambda: asyncio.to_thread(query))\n+    if result is None or not guard.is_current(token):\n+        raise _StaleResponseError(\"stale Episode investigation response was discarded\")\n+    return result\n+\n+\n+def _section_heading(ui: object, text: str, *, level: int = 2) -> None:\n+    heading = ui.element(f\"h{level}\").classes(  # type: ignore[attr-defined]\n+        \"ephi-investigation-heading\" if level == 2 else \"ephi-investigation-subheading\"\n+    )\n+    with heading:\n+        ui.label(text)  # type: ignore[attr-defined]\n+\n+\n+def _reason_text(reason_codes: object) -> str:\n+    if not isinstance(reason_codes, (tuple, list)):\n+        return \"No reason code supplied\"\n+    return \", \".join(str(item) for item in reason_codes) or \"No limitations recorded\"\n+\n+\n+def _component_unavailable(ui: object, label: str, component: object) -> None:\n+    state = getattr(getattr(component, \"state\", None), \"value\", \"UNAVAILABLE\")\n+    reasons = getattr(component, \"reason_codes\", ())\n+    ui.label(f\"{label}: {state.replace('_', ' ').lower()}. {_reason_text(reasons)}\")  # type: ignore[attr-defined]\n+\n+\n+def _exposure_summary(profile: InvestigationProfile | None) -> str:\n+    if profile is None:\n+        return \"Not represented in this profile; availability is unknown\"\n+    unknown = next((\n+        item for item in profile.planner_facts.explicit_unknowns\n+        if \"exposure\" in item.fact_identity.lower() or \"wip\" in item.fact_identity.lower()\n+    ), None)\n+    return (\n+        f\"Unavailable / not qualified: {unknown.reason}\"\n+        if unknown is not None else \"Not represented in this profile; availability is unknown\"\n+    )\n+\n+\n+def _render_investigation_plan_card(\n+    ui: object,\n+    investigation: EpisodeInvestigation,\n+    profile: InvestigationProfile | None,\n+    principal: Principal,\n+    *,\n+    check_catalog: CheckTemplateCatalog | None,\n+    on_request_check: Callable[[object, object], object],\n+    action_buttons: list[ActionButton],\n+) -> None:\n+    with Card():\n+        _section_heading(ui, \"Investigation plan\")\n+        if investigation.planner.state is not ComponentState.READY:\n+            _component_unavailable(ui, \"Planner\", investigation.planner)\n+            return\n+        plan = investigation.planner.value\n+        if not hasattr(plan, \"recommendations\"):\n+            _component_unavailable(ui, \"Planner\", investigation.planner)\n+            return\n+        if not plan.recommendations:\n+            ui.label(\"No eligible check is available from the current curated catalog and qualified facts.\")  # type: ignore[attr-defined]\n+        else:\n+            hypothesis_by_id = {item.hypothesis_identity: item for item in profile.hypotheses} if profile is not None else {}\n+            for recommendation in plan.recommendations:\n+                _section_heading(ui, f\"{recommendation.rank}. {recommendation.title}\", level=3)\n+                ui.label(f\"Execution mode: {recommendation.execution_mode.replace('_', ' ').lower()}\")  # type: ignore[attr-defined]\n+                for alternative in recommendation.alternatives_discriminated:\n+                    left = hypothesis_by_id.get(str(alternative[\"hypothesis_a_id\"]))\n+                    right = hypothesis_by_id.get(str(alternative[\"hypothesis_b_id\"]))\n+                    labels = f\"{left.title if left else alternative['hypothesis_a_id']} versus {right.title if right else alternative['hypothesis_b_id']}\"\n+                    ui.label(f\"Distinguishes {labels}; curated ordinal discrimination {alternative['ordinal_discrimination']} (not probability).\")  # type: ignore[attr-defined]\n+                if recommendation.independent_evidence_added:\n+                    ui.label(f\"New independent evidence groups: {', '.join(recommendation.independent_evidence_added)}\")  # type: ignore[attr-defined]\n+                catalog_templates = check_catalog.templates if check_catalog is not None else ()\n+                template = next((item for item in catalog_templates if item.template_id == recommendation.template_id and item.version == recommendation.template_version), None)\n+                mode = CheckExecutionMode(recommendation.execution_mode)\n+                if (\n+                    template is not None\n+                    and mode in {CheckExecutionMode.REQUEST_HUMAN_MEASUREMENT, CheckExecutionMode.REQUEST_APPROVED_EXTERNAL_WORK}\n+                    and principal.has_capability(CHECK_REQUEST_CAPABILITY)\n+                    and (template.approval_capability is None or principal.has_capability(template.approval_capability))\n+                ):\n+                    button = ActionButton(\"Request check\", intent=ButtonIntent.SECONDARY, on_click=lambda rec=recommendation, item=template: on_request_check(rec, item))\n+                    if not action_buttons:\n+                        _mark_focus_target(button.element, \"primary-action\")\n+                    action_buttons.append(button)\n+                ui.label(f\"Why eligible now: {'; '.join(recommendation.why_eligible_now)}\")  # type: ignore[attr-defined]\n+                facts = recommendation.capability_and_prerequisite_facts\n+                if facts:\n+                    ui.label(\"Prerequisite / qualification facts: \" + \"; \".join(\n+                        \", \".join(f\"{key}={value}\" for key, value in sorted(item.items()) if key in {\"capability_id\", \"prerequisite_id\", \"qualification_identity\", \"state\"})\n+                        for item in facts\n+                    ))  # type: ignore[attr-defined]\n+                costs = recommendation.effort_turnaround_disruption\n+                turnaround = costs.get(\"turnaround\", {})\n+                ui.label(f\"Effort {costs.get('effort_band', 'unknown').lower()} \u00b7 disruption {costs.get('disruption_class', 'unknown').lower()} \u00b7 turnaround {turnaround.get('seconds') if turnaround.get('seconds') is not None else 'unknown'} seconds\")  # type: ignore[attr-defined]\n+                if profile is not None:\n+                    deadline = profile.planner_facts.decision_deadline\n+                    deadline_text = deadline.deadline.isoformat() if deadline.deadline is not None else f\"unknown \u2014 {deadline.unknown_reason}\"\n+                    ui.label(f\"Decision deadline {deadline_text} \u00b7 source {deadline.source_identity}\")  # type: ignore[attr-defined]\n+                not_resolved = \", \".join(recommendation.will_not_resolve) or \"No additional planner-supplied limitation; this check alone does not establish either hypothesis.\"\n+                ui.label(f\"Will not resolve: {not_resolved}\")  # type: ignore[attr-defined]\n+        if plan.excluded_checks:\n+            ui.label(f\"Excluded alternatives ({len(plan.excluded_checks)}):\")  # type: ignore[attr-defined]\n+            for excluded in plan.excluded_checks[:20]:\n+                ui.label(f\"{excluded.template_id} \u00b7 {_reason_text(tuple(item.value for item in excluded.reasons))}\")  # type: ignore[attr-defined]\n+            if len(plan.excluded_checks) > 20:\n+                ui.label(f\"{len(plan.excluded_checks) - 20} additional exclusions are available in the typed planner result.\")  # type: ignore[attr-defined]\n+\n+\n+def _render_evidence_card(ui: object, investigation: EpisodeInvestigation, profile: InvestigationProfile | None) -> None:\n+    with Card():\n+        _section_heading(ui, \"Evidence and competing explanations\")\n+        if profile is None:\n+            _component_unavailable(ui, \"Evidence groups\", investigation.profile)\n+            return\n+        hypothesis_by_id = {item.hypothesis_identity: item for item in profile.hypotheses}\n+        for pair in profile.planner_facts.unresolved_pairs:\n+            left = hypothesis_by_id[pair.hypothesis_a_id]\n+            right = hypothesis_by_id[pair.hypothesis_b_id]\n+            ui.label(f\"Unresolved: {left.title} versus {right.title}\").classes(\"text-subtitle1\")  # type: ignore[attr-defined]\n+            ui.label(f\"{left.summary} {right.summary}\")  # type: ignore[attr-defined]\n+        by_dependence: dict[str, list[object]] = {}\n+        for group in profile.evidence_groups:\n+            by_dependence.setdefault(group.dependence_identity, []).append(group)\n+        for dependence_identity, groups in sorted(by_dependence.items()):\n+            titles = \"; \".join(item.title for item in groups)\n+            ui.label(f\"Evidence dependency group \u00b7 {dependence_identity} \u00b7 {len(groups)} related fact(s): {titles}\").classes(\"text-subtitle2\")  # type: ignore[attr-defined]\n+            for group in groups:\n+                ui.label(f\"{group.polarity.replace('_', ' ').title()} \u2014 {group.summary}\")  # type: ignore[attr-defined]\n+                ui.label(f\"Source {group.source_identity} \u00b7 event {group.event_at.isoformat()} \u00b7 available {group.available_at.isoformat()} \u00b7 qualification {group.qualification_state}\")  # type: ignore[attr-defined]\n+                if group.limitation_codes:\n+                    ui.label(f\"Evidence limitations: {_reason_text(group.limitation_codes)}\")  # type: ignore[attr-defined]\n+        for unknown in profile.planner_facts.explicit_unknowns:\n+            ui.label(f\"Unknown: {unknown.fact_identity} \u2014 {unknown.reason} (source {unknown.source_identity})\")  # type: ignore[attr-defined]\n+        for limitation in profile.limitations:\n+            ui.label(f\"Investigation limitation: {limitation.replace('_', ' ').lower()}\")  # type: ignore[attr-defined]\n+\n+\n+def _render_comparable_cases_card(ui: object, investigation: EpisodeInvestigation) -> None:\n+    with Card():\n+        _section_heading(ui, \"Comparable cases\")\n+        if investigation.comparable_history.state is not ComponentState.READY:\n+            _component_unavailable(ui, \"Comparable history\", investigation.comparable_history)\n+            if investigation.comparable_history.state is ComponentState.MATERIALIZATION_REQUIRED:\n+                ui.label(f\"Comparable history requires materialization ({_reason_text(investigation.comparable_history.reason_codes)}). No partial case ranking is shown.\")  # type: ignore[attr-defined]\n+            return\n+        page = investigation.comparable_history.value\n+        ui.label(f\"Exact-structure case comparison \u00b7 {page.total_row_count} eligible case(s) \u00b7 cutoff {investigation.known_at.isoformat()}\")  # type: ignore[attr-defined]\n+        for case in page.cases:\n+            _section_heading(ui, f\"Episode {case.episode_id} \u00b7 {case.context_identity}\", level=3)\n+            similarity = case.similarity_components\n+            ui.label(f\"Shared exact features: {', '.join(similarity.shared_exact_feature_ids) or 'none'}\")  # type: ignore[attr-defined]\n+            ui.label(f\"Differences: {', '.join(similarity.differing_feature_ids) or 'none'} \u00b7 current only: {', '.join(similarity.current_only_feature_ids) or 'none'} \u00b7 case only: {', '.join(similarity.candidate_only_feature_ids) or 'none'}\")  # type: ignore[attr-defined]\n+            ui.label(f\"Family {case.family_identity} \u00b7 revision {case.revision_id} \u00b7 source {case.source_identity.snapshot_id} \u00b7 eligibility {case.eligibility_state.value} \u00b7 curation {case.curation_state.value}\")  # type: ignore[attr-defined]\n+            if case.data_completeness_limitations:\n+                ui.label(f\"Completeness limitations: {_reason_text(case.data_completeness_limitations)}\")  # type: ignore[attr-defined]\n+            for claim in case.historical_claims:\n+                maturity = f\" \u00b7 outcome {claim.outcome_maturity} through {claim.outcome_cutoff.isoformat()}\" if claim.outcome_maturity is not None and claim.outcome_cutoff is not None else \"\"\n+                ui.label(f\"Cutoff-eligible historical {claim.claim_type.value.replace('_', ' ').lower()} claim {claim.claim_identity} \u00b7 evidence {claim.evidence_identity} \u00b7 curation {claim.curation_state.value} \u00b7 known {claim.known_at.isoformat()} \u00b7 available {claim.available_at.isoformat()}{maturity}\")  # type: ignore[attr-defined]\n+            ui.label(\"Structural similarity is descriptive and does not establish the same cause.\")  # type: ignore[attr-defined]\n+        if not any(case.historical_claims for case in page.cases):\n+            ui.label(\"No curated, cutoff-eligible historical root-cause, action or outcome claims are available in these cases.\")  # type: ignore[attr-defined]\n+        for excluded in page.excluded_candidates:\n+            ui.label(f\"Case excluded: {excluded.episode_id} \u00b7 {_reason_text(excluded.reason_codes)}\")  # type: ignore[attr-defined]\n+\n+\n+def _render_rca_card(ui: object, investigation: EpisodeInvestigation) -> None:\n+    with Card():\n+        _section_heading(ui, \"Bounded RCA \u00b7 observational only\")\n+        if investigation.rca.state is ComponentState.PENDING:\n+            materialization = investigation.rca.value\n+            job_state = getattr(getattr(materialization, \"state\", None), \"value\", \"PENDING\")\n+            ui.label(f\"RCA materialization {str(job_state).lower()}. No partial summary is shown while the bounded analysis runs.\")  # type: ignore[attr-defined]\n+            return\n+        if investigation.rca.state not in {ComponentState.READY, ComponentState.MATERIALIZATION_REQUIRED}:\n+            _component_unavailable(ui, \"RCA\", investigation.rca)\n+            return\n+        result = investigation.rca.value\n+        if result.state.value == \"MATERIALIZATION_REQUIRED\":\n+            ui.label(\"RCA materialization is required. No partial commonality summary is shown.\")  # type: ignore[attr-defined]\n+            return\n+        ui.label(f\"State {result.state.value.replace('_', ' ').lower()} \u00b7 control quality {result.control_quality.value.lower()}\")  # type: ignore[attr-defined]\n+        ui.label(f\"Affected cohort {result.affected_cohort_identity} \u00b7 independent groups {result.affected_independent_group_count if result.affected_independent_group_count is not None else 'not computed'}\")  # type: ignore[attr-defined]\n+        ui.label(f\"Controls {', '.join(result.control_cohort_identities) or 'none'} \u00b7 independent groups {result.control_independent_group_count if result.control_independent_group_count is not None else 'not computed'}\")  # type: ignore[attr-defined]\n+        ui.label(f\"Included evidence {result.included_evidence_count if result.included_evidence_count is not None else 'not computed'} \u00b7 excluded {len(result.excluded_evidence)} \u00b7 coverage {result.coverage.lower()}\")  # type: ignore[attr-defined]\n+        for cohort in result.cohorts:\n+            ui.label(f\"{cohort.role.value.title()} {cohort.cohort_identity}: {cohort.eligibility.value.lower()} \u00b7 {cohort.context_identity} / {cohort.characteristic_identity} ({cohort.unit_identity}) \u00b7 {cohort.interval_start.isoformat()} to {cohort.interval_end.isoformat()} \u00b7 matched {', '.join(cohort.matched_dimensions) or 'none'} \u00b7 source {cohort.source_identity} \u00b7 qualification {cohort.qualification_identity}\")  # type: ignore[attr-defined]\n+            if cohort.mismatches or cohort.reason_codes:\n+                ui.label(f\"Cohort qualifications / mismatches: {_reason_text((*cohort.reason_codes, *cohort.mismatches))}\")  # type: ignore[attr-defined]\n+        if result.associations:\n+            ui.label(\"Descriptive commonality counts (numerator / independent-group denominator):\")  # type: ignore[attr-defined]\n+            for fact in result.associations:\n+                ui.label(f\"{fact.factor_identity}: affected {fact.affected.numerator}/{fact.affected.denominator}; controls {fact.controls.numerator}/{fact.controls.denominator}; rate difference {fact.rate_difference_numerator}/{fact.rate_difference_denominator}.\")  # type: ignore[attr-defined]\n+        else:\n+            ui.label(\"No commonality summary is available because controls are invalid, insufficient, mismatched or unqualified. Add qualified control evidence or run the discriminating check.\")  # type: ignore[attr-defined]\n+        for contradiction in result.temporal_contradictions:\n+            ui.label(f\"Temporal contradiction: {contradiction.fact_identity} \u00b7 {contradiction.reason_code}\")  # type: ignore[attr-defined]\n+        for exclusion in result.excluded_evidence:\n+            ui.label(f\"Evidence excluded: {exclusion.identity} \u00b7 {exclusion.reason_code}\")  # type: ignore[attr-defined]\n+        ui.label(f\"Interpretation: observational only. {', '.join(result.limitation_codes) or 'No additional limitations recorded'}.\")  # type: ignore[attr-defined]\n+\n+\n+def _render_current_work_card(ui: object, investigation: EpisodeInvestigation) -> None:\n+    with Card():\n+        _section_heading(ui, \"Current work and recovery\")\n+        if investigation.workflow.state is not ComponentState.READY:\n+            _component_unavailable(ui, \"O5 workflow\", investigation.workflow)\n+            return\n+        snapshot = investigation.workflow.value\n+        checks = sorted(snapshot.check_state.values(), key=lambda item: str(item.get(\"check_id\", \"\")))\n+        ui.label(f\"Work state {snapshot.workflow_state['work_state']} \u00b7 owner {snapshot.state.get('owner') or 'unassigned'} \u00b7 cycle {snapshot.active_cycle_id} \u00b7 workflow version {snapshot.aggregate_version}.\")  # type: ignore[attr-defined]\n+        if checks:\n+            for check in checks:\n+                outcome = (check.get(\"result\") or {}).get(\"outcome\") if isinstance(check.get(\"result\"), dict) else \"not recorded\"\n+                ui.label(f\"Check {check.get('check_id')} \u00b7 {check.get('template_id')} \u00b7 {check.get('status')} \u00b7 outcome {outcome}\")  # type: ignore[attr-defined]\n+        else:\n+            ui.label(\"No check has been requested in the current O5 cycle.\")  # type: ignore[attr-defined]\n+        actions = sorted(snapshot.action_state.values(), key=lambda item: str(item.get(\"action_id\", \"\")))\n+        for action in actions:\n+            ui.label(f\"Recorded human action {action.get('action_id')} \u00b7 {action.get('action_type')} \u00b7 reconciliation {action.get('reconciliation_state', 'unknown')}\")  # type: ignore[attr-defined]\n+        if not actions:\n+            ui.label(\"No external action is recorded in this cycle.\")  # type: ignore[attr-defined]\n+        plans = snapshot.recovery_state.get(\"plans\", {})\n+        for plan_id, plan in sorted(plans.items()):\n+            ui.label(f\"Recovery plan {plan_id} \u00b7 {plan.get('state', 'unknown')} \u00b7 eligible evidence count {plan.get('eligible_evidence_count', 'unavailable')}\")  # type: ignore[attr-defined]\n+        if not plans:\n+            ui.label(\"Recovery: not started; no affirmative recovery evidence is asserted.\")  # type: ignore[attr-defined]\n+        closure = snapshot.closure_state\n+        ui.label(f\"Closure state {closure['cycle_status']} \u00b7 closure records {len(closure['closures'])}.\")  # type: ignore[attr-defined]\n+\n+\n+def _render_investigation_workspace(\n+    ui: object,\n+    investigation: EpisodeInvestigation,\n+    principal: Principal,\n+    *,\n+    check_catalog: CheckTemplateCatalog | None,\n+    on_request_check: Callable[[object, object], object],\n+    action_buttons: list[ActionButton],\n+) -> None:\n+    profile = investigation.profile.value if investigation.profile.state is ComponentState.READY else None\n+    brief = investigation.brief\n+    typed_profile = profile if isinstance(profile, InvestigationProfile) else None\n+    exposure_summary = _exposure_summary(typed_profile)\n+    _render_investigation_plan_card(\n+        ui, investigation, typed_profile, principal, check_catalog=check_catalog,\n+        on_request_check=on_request_check, action_buttons=action_buttons,\n+    )\n+    with Card():\n+        _section_heading(ui, \"Current decision\")\n+        if isinstance(profile, InvestigationProfile):\n+            ui.label(f\"Episode identity {brief.episode_id}\")  # type: ignore[attr-defined]\n+            ui.label(profile.change.headline).classes(\"text-h5\")  # type: ignore[attr-defined]\n+            ui.label(profile.change.description)  # type: ignore[attr-defined]\n+            ui.label(f\"Asset {profile.target.asset_identity} \u00b7 family {profile.target.family_identity} \u00b7 context {profile.target.context_identity} \u00b7 {profile.target.characteristic_identity} ({profile.target.unit_identity})\")  # type: ignore[attr-defined]\n+            ui.label(f\"Observed onset {_display_value(profile.change.onset_at, unavailable='Unavailable / not qualified')} \u00b7 magnitude {_display_value(profile.change.magnitude, unavailable='Unavailable / not qualified')}\")  # type: ignore[attr-defined]\n+            ui.label(f\"Source identity {profile.source_identity.snapshot_id} \u00b7 revision {profile.source_identity.source_revision} \u00b7 known at {_display_value(investigation.known_at)} \u00b7 source qualification state not represented in this profile\")  # type: ignore[attr-defined]\n+            ui.label(f\"Owner {_display_value(brief.workflow.get('owner'), unavailable='Unassigned / unavailable')} \u00b7 workflow state {brief.workflow.get('work_state', 'UNKNOWN')} \u00b7 cycle {investigation.active_cycle_id or 'unavailable'} \u00b7 version {brief.revision_vector.workflow_version}\")  # type: ignore[attr-defined]\n+            ui.label(f\"WIP / exposure: {exposure_summary}\")  # type: ignore[attr-defined]\n+            if \"SYNTHETIC_DEMONSTRATION\" in profile.limitations:\n+                ui.label(\"Synthetic demonstration facts only. These IDs, values, limits and policy are not company facts.\").classes(\"ephi-o10-truth-note\")  # type: ignore[attr-defined]\n+        else:\n+            ui.label(str(brief.analytical.get(\"title\", \"Episode issue/change description unavailable\")))  # type: ignore[attr-defined]\n+            DescriptionList((\n+                KeyValueItem(\"known_at\", \"Known at\", _display_value(brief.known_at)),\n+                KeyValueItem(\"owner\", \"Owner\", _display_value(brief.workflow.get(\"owner\"), unavailable=\"Unassigned / unavailable\")),\n+                KeyValueItem(\"work_state\", \"Workflow\", _display_value(brief.workflow.get(\"work_state\"))),\n+                KeyValueItem(\"capability\", \"Source / capability\", _display_value(brief.capability_state)),\n+                KeyValueItem(\"exposure\", \"WIP / exposure\", \"Unavailable / not qualified\"),\n+            ))\n+            _component_unavailable(ui, \"Investigation profile\", investigation.profile)\n+    _render_evidence_card(ui, investigation, typed_profile)\n+    _render_comparable_cases_card(ui, investigation)\n+    _render_rca_card(ui, investigation)\n+    _render_current_work_card(ui, investigation)\n+\n+\n class _EpisodeView:\n     def __init__(self, composition: EphiUiComposition, host: object, page_heading: object, episode_id: str, focus_request: object) -> None:\n         self.composition = composition\n@@ -763,7 +1077,9 @@ class _EpisodeView:\n         self.focus_request = focus_request\n         self.guard = StaleResponseGuard()\n         self.primary_action: ActionButton | None = None\n+        self.check_actions: list[ActionButton] = []\n         self.live_status: object | None = None\n+        self.investigation: EpisodeInvestigation | None = None\n \n     def _clear(self) -> None:\n         self.host.clear()  # type: ignore[attr-defined]\n@@ -815,11 +1131,11 @@ class _EpisodeView:\n     async def load(self, *, focus_target: str | None = None) -> None:\n         self.render_loading()\n         try:\n-            brief = await _load_brief(self.composition, self.episode_id, self.guard)\n+            brief, investigation = await _load_investigation(self.composition, self.episode_id, self.guard)\n         except Exception as error:\n             self.render_error(error)\n             return\n-        self.render_brief(brief, focus_target=focus_target)\n+        self.render_brief(brief, investigation=investigation, focus_target=focus_target)\n \n     def render_error(self, error: BaseException) -> None:\n         from nicegui import ui\n@@ -849,11 +1165,20 @@ class _EpisodeView:\n         self._mount(render)\n         _schedule_focus(self.page_heading if spec.kind is StateKind.PERMISSION else self.host)\n \n-    def render_brief(self, brief: EpisodeBrief, *, focus_target: str | None = None) -> None:\n+    def render_brief(\n+        self,\n+        brief: EpisodeBrief,\n+        *,\n+        investigation: EpisodeInvestigation | None = None,\n+        focus_target: str | None = None,\n+        status_message: str | None = None,\n+    ) -> None:\n         from nicegui import ui\n \n         self.primary_action = None\n+        self.check_actions = []\n         self.live_status = None\n+        self.investigation = investigation\n         principal = self.composition.principal_provider()\n         action = _episode_action(brief, principal)\n \n@@ -877,11 +1202,11 @@ class _EpisodeView:\n                     await asyncio.to_thread(self.composition.workflow.claim_episode, command, brief.episode_id)\n                 else:\n                     await asyncio.to_thread(self.composition.workflow.acknowledge_episode, command, brief.episode_id)\n-                refreshed = await _load_brief(self.composition, brief.episode_id, self.guard)\n+                refreshed, refreshed_investigation = await _load_investigation(self.composition, brief.episode_id, self.guard)\n             except Exception as error:\n                 self.render_error(error)\n                 return\n-            self.render_brief(refreshed, focus_target=\"primary\")\n+            self.render_brief(refreshed, investigation=refreshed_investigation, focus_target=\"primary\")\n             # The action render replaces the old button in-place. Complete the\n             # focus hand-off in this same governed command callback so focus\n             # cannot remain on the unmounted, disabled control.\n@@ -889,6 +1214,82 @@ class _EpisodeView:\n \n             self.focus_request.props('data-ephi-focus-request=\"primary-action\"')  # type: ignore[attr-defined]\n \n+        async def request_recommended_check(recommendation: object, template: object) -> None:\n+            if self.primary_action is not None:\n+                self.primary_action.element.disable()\n+            for button in self.check_actions:\n+                button.element.disable()\n+            if self.live_status is not None:\n+                self.live_status.set_text(\"Requesting the selected planner check through the current authorized O5 workflow.\")  # type: ignore[attr-defined]\n+            investigation_view = self.investigation\n+            downstream = self.composition.downstream\n+            if investigation_view is None or downstream is None or investigation_view.active_cycle_id is None:\n+                self.render_error(RuntimeError(\"current downstream investigation action is unavailable\"))\n+                return\n+            plan_component = investigation_view.planner\n+            plan = plan_component.value\n+            if plan_component.state is not ComponentState.READY or not hasattr(plan, \"plan_identity\") or recommendation not in plan.recommendations:\n+                await self.load(focus_target=\"status\")\n+                return\n+            current_principal = self.composition.principal_provider()\n+            scope = self.composition.scope_provider()\n+            if (\n+                plan.workflow_version != brief.revision_vector.workflow_version\n+                or plan.viewed_revisions != brief.revision_vector\n+                or investigation_view.revision_id != brief.revision_id\n+            ):\n+                await self.load(focus_target=\"status\")\n+                return\n+            check_identity = hashlib.sha256(\n+                f\"ephi-check:{plan.plan_identity}:{investigation_view.active_cycle_id}:{recommendation.template_id}\".encode(\"utf-8\")\n+            ).hexdigest()\n+            command = CommandContext(\n+                _stable_command_id(f\"RequestCheck:{recommendation.template_id}\", brief, scope, current_principal.subject),\n+                current_principal,\n+                scope,\n+                brief.revision_vector.workflow_version,\n+                brief.revision_vector,\n+                \"Request the current deterministic investigation-plan check\",\n+            )\n+            profile_component = investigation_view.profile\n+            profile = profile_component.value\n+            if profile_component.state is not ComponentState.READY or not isinstance(profile, InvestigationProfile):\n+                await self.load(focus_target=\"status\")\n+                return\n+            prerequisite_states = {\n+                item.prerequisite_id: item.state.value\n+                for item in profile.planner_facts.prerequisite_facts\n+            }\n+            try:\n+                downstream.decision_loop.request_check(\n+                    command,\n+                    brief.episode_id,\n+                    check_identity,\n+                    template_id=template.template_id,\n+                    template_version=template.version,\n+                    execution_mode=CheckExecutionMode(recommendation.execution_mode),\n+                    required_capabilities=tuple(sorted({\n+                        *(item.capability_id for item in template.required_capabilities),\n+                        *((template.approval_capability,) if template.approval_capability else ()),\n+                    })),\n+                    prerequisite_state=prerequisite_states,\n+                    target_context=profile.planner_facts.target_context.as_dict(),\n+                    cycle_id=investigation_view.active_cycle_id,\n+                )\n+                refreshed, refreshed_investigation = await _load_investigation(self.composition, brief.episode_id, self.guard)\n+            except Exception as error:\n+                # The O5 command remains the compare-and-set authority. A\n+                # stale plan refreshes from current server state before a new\n+                # recommendation action can be offered.\n+                if getattr(error, \"code\", None) in {\"VERSION_CONFLICT\", \"COHERENT_READ_CONFLICT\", \"QUERY_IDENTITY_MISMATCH\"}:\n+                    await self.load(focus_target=\"status\")\n+                    return\n+                self.render_error(error)\n+                return\n+            message = f\"Check request committed at workflow version {refreshed.revision_vector.workflow_version}.\"\n+            self.render_brief(refreshed, investigation=refreshed_investigation, focus_target=\"status\", status_message=message)\n+            self.focus_request.props('data-ephi-focus-request=\"status\"')\n+\n         def return_to_attention() -> None:\n             self.composition.workspace.state.set(FOCUS_KEY, \"attention_heading\", source=\"ephi.episode.focus\")\n             ui.navigate.to(\"/\")\n@@ -896,22 +1297,29 @@ class _EpisodeView:\n         def render() -> None:\n             with FullScreenWorkspace():\n                 with Card():\n+                    profile_value = investigation.profile.value if investigation is not None and investigation.profile.state is ComponentState.READY else None\n+                    headline = profile_value.change.headline if isinstance(profile_value, InvestigationProfile) else str(brief.analytical.get(\"title\", \"Decision brief\"))\n+                    metadata = [\n+                        KeyValueItem(\"revision\", \"Analytical revision\", brief.revision_vector.analysis_revision),\n+                        KeyValueItem(\"workflow\", \"Workflow version\", brief.revision_vector.workflow_version),\n+                    ]\n+                    if isinstance(profile_value, InvestigationProfile):\n+                        metadata.append(KeyValueItem(\"source_identity\", \"Source identity\", profile_value.source_identity.snapshot_id))\n+                        metadata.append(KeyValueItem(\"exposure\", \"WIP / exposure\", _exposure_summary(profile_value)))\n+                        metadata.append(KeyValueItem(\"known_at\", \"Known at cutoff\", _display_value(investigation.known_at)))\n                     EntityHeader(\n-                        brief.episode_id,\n-                        subtitle=str(brief.analytical.get(\"title\", \"Decision brief\")),\n+                        profile_value.target.asset_identity if isinstance(profile_value, InvestigationProfile) else brief.episode_id,\n+                        subtitle=headline,\n                         entity_type=\"Episode\",\n                         status=str(brief.workflow.get(\"work_state\", \"UNKNOWN\")),\n-                        metadata=(\n-                            KeyValueItem(\"revision\", \"Analytical revision\", brief.revision_vector.analysis_revision),\n-                            KeyValueItem(\"workflow\", \"Workflow version\", brief.revision_vector.workflow_version),\n-                        ),\n+                        metadata=tuple(metadata),\n                     )\n-                    for key, value in sorted(brief.capability_state.items()):\n-                        StatusBadge(f\"{key}: {_display_value(value)}\", intent=_intent_for_capability(value))\n-                    DescriptionList(\n-                        (\n+                    if not isinstance(profile_value, InvestigationProfile):\n+                        for key, value in sorted(brief.capability_state.items()):\n+                            StatusBadge(f\"{key}: {_display_value(value)}\", intent=_intent_for_capability(value))\n+                    if investigation is None:\n+                        DescriptionList((\n                             KeyValueItem(\"episode_id\", \"Episode ID\", brief.episode_id),\n-                            KeyValueItem(\"title\", \"Issue / title\", _display_value(brief.analytical.get(\"title\"))),\n                             KeyValueItem(\"known_at\", \"Known at\", _display_value(brief.known_at)),\n                             KeyValueItem(\"analysis_revision\", \"Analytical revision\", _display_value(brief.revision_vector.analysis_revision)),\n                             KeyValueItem(\"workflow_version\", \"Workflow version\", _display_value(brief.revision_vector.workflow_version)),\n@@ -919,13 +1327,21 @@ class _EpisodeView:\n                             KeyValueItem(\"owner\", \"Owner\", _display_value(brief.workflow.get(\"owner\"), unavailable=\"Unassigned / unavailable\")),\n                             KeyValueItem(\"source_state\", \"Source / capability state\", _display_value(brief.capability_state)),\n                             KeyValueItem(\"eligible_action\", \"Current eligible action\", action[0] if action else \"Unavailable: current authorization or owner does not permit an action\"),\n+                        ))\n+                        ui.label(\"Investigation profile, onset, qualified exposure, planner, comparable history and RCA are unavailable for this legacy Episode.\").classes(\"ephi-o10-truth-note\")\n+                    if investigation is not None:\n+                        catalog = self.composition.downstream.policy_configuration.check_catalog if self.composition.downstream is not None else None\n+                        _render_investigation_workspace(\n+                            ui,\n+                            investigation,\n+                            principal,\n+                            check_catalog=catalog,\n+                            on_request_check=request_recommended_check,\n+                            action_buttons=self.check_actions,\n                         )\n-                    )\n-                    ui.label(\"Confidence, onset, exposure, next-check, recovery and value are unavailable/not yet qualified in this W1 brief.\").classes(\"ephi-o10-truth-note\")\n-                    self.live_status = ui.label(\n-                        f\"Episode {brief.episode_id} is rendered from the current authorized coherent read.\"\n-                    ).classes(\"ephi-o10-live-status\")\n-                    self.live_status.props('role=\"status\" aria-live=\"polite\" aria-atomic=\"true\"')\n+                    self.live_status = ui.label(status_message or f\"Episode {brief.episode_id} is rendered from the current authorized coherent read.\").classes(\"ephi-o10-live-status ephi-o10-focus-target\")\n+                    self.live_status.props('role=\"status\" aria-live=\"polite\" aria-atomic=\"true\" tabindex=\"-1\"')\n+                    self.live_status.props('data-ephi-focus-target=\"status\"')\n                     with ui.element(\"div\").classes(\"ephi-o10-action-row\"):\n                         if action is not None:\n                             self.primary_action = ActionButton(action[0], intent=ButtonIntent.PRIMARY, on_click=lambda: commit(action[1]))\n@@ -947,7 +1363,7 @@ class _EpisodeView:\n         if focus_target == \"primary\" and self.primary_action is not None:\n             _schedule_focus(self.primary_action.element, marker=\"primary-action\")\n         elif focus_target == \"status\" and self.live_status is not None:\n-            _schedule_focus(self.live_status)\n+            _schedule_focus(self.live_status, marker=\"status\")\n         else:\n             _schedule_focus(self.page_heading)\n \n@@ -961,6 +1377,8 @@ async def build_episode_page(composition: EphiUiComposition) -> None:\n     _install_o10_ui_css()\n     workspace = composition.workspace\n     episode_id = workspace.state.get(EPISODE_KEY)\n+    if not episode_id and os.environ.get(\"EPHI_ENV\", \"development\").lower() == \"test\" and composition.downstream is not None:\n+        episode_id = os.environ.get(\"EPHI_TEST_SELECTED_EPISODE_ID\")\n     if not episode_id:\n         # This explicit fixture binding is retained only for the existing O8\n         # direct-route qualification. A selected workspace identity always wins.\n@@ -978,24 +1396,26 @@ async def build_episode_page(composition: EphiUiComposition) -> None:\n         from nicegui import ui\n \n         ui.query(\"main\").props('role=\"region\" aria-label=\"EPHI application content\"')\n-        with AnalysisWorkspacePage(\"\", None):\n-            heading = _semantic_heading(\n-                \"Episode decision brief\",\n-                \"One coherent analytical/read revision with live durable workflow\",\n-                autofocus=not episode_id or workspace.state.get(FOCUS_KEY) == \"episode_heading\",\n-            )\n-            episode_host = ui.element(\"div\").classes(\"ephi-o10-episode-surface\").props('tabindex=\"-1\" role=\"region\" aria-label=\"Episode rendered state\"')\n-            if not episode_id:\n+        with AnalysisWorkspacePage(\"\", None) as page:\n+            with page.slot(LayoutSlot.HEADER):\n+                heading = _semantic_heading(\n+                    \"Episode investigation workspace\",\n+                    \"One coherent analytical revision with current evidence, plan, comparable cases and bounded RCA\",\n+                    autofocus=not episode_id or workspace.state.get(FOCUS_KEY) == \"episode_heading\",\n+                )\n+            with page.slot(LayoutSlot.PRIMARY):\n+                episode_host = ui.element(\"div\").classes(\"ephi-o10-episode-surface\").props('tabindex=\"-1\" role=\"region\" aria-label=\"Episode rendered state\"')\n+                if not episode_id:\n+                    focus_request = ui.element(\"div\").props('data-ephi-focus-request=\"\" aria-hidden=\"true\"')\n+                    view = _EpisodeView(composition, episode_host, heading, \"\", focus_request)\n+                    view.render_no_selection()\n+                    return\n                 focus_request = ui.element(\"div\").props('data-ephi-focus-request=\"\" aria-hidden=\"true\"')\n-                view = _EpisodeView(composition, episode_host, heading, \"\", focus_request)\n-                view.render_no_selection()\n-                return\n-            focus_request = ui.element(\"div\").props('data-ephi-focus-request=\"\" aria-hidden=\"true\"')\n-            view = _EpisodeView(composition, episode_host, heading, episode_id, focus_request)\n-            focus_target = workspace.state.get(FOCUS_KEY)\n-            await view.load(focus_target=focus_target if isinstance(focus_target, str) else None)\n-            if focus_target == \"episode_heading\":\n-                workspace.state.set(FOCUS_KEY, None, source=\"ephi.episode.focus\")\n+                view = _EpisodeView(composition, episode_host, heading, episode_id, focus_request)\n+                focus_target = workspace.state.get(FOCUS_KEY)\n+                await view.load(focus_target=focus_target if isinstance(focus_target, str) else None)\n+                if focus_target == \"episode_heading\":\n+                    workspace.state.set(FOCUS_KEY, None, source=\"ephi.episode.focus\")\n \n \n def build_page() -> None:",
+  "fail_closed_startup_reconfirmation": {
+    "cases": {
+      "incompatible_abi": {
+        "entrypoint_explicit": true,
+        "marker_leak_absent": true,
+        "output_sha256": "3d32e8a570b9e6725bf35427c2afdb1b0e1354a26bb8011a3b75fb1c2331c3b7",
+        "process_exit_nonzero": true,
+        "status": "PASS"
+      },
+      "malformed_entrypoint": {
+        "entrypoint_explicit": true,
+        "marker_leak_absent": true,
+        "output_sha256": "309e4a1aa0bc68eea9a5fa1e91f2220fb9328f3bd18aaf6640e9d6d8d0be27ac",
+        "process_exit_nonzero": true,
+        "status": "PASS"
+      },
+      "missing_bundle_with_legacy_authorities": {
+        "entrypoint_explicit": false,
+        "marker_leak_absent": true,
+        "output_sha256": "f19f854478b4d1e2433d0a5284ad538ba768af89a747a2ed6dbae4d45fd67d24",
+        "process_exit_nonzero": true,
+        "status": "PASS"
+      },
+      "nonexistent_provider": {
+        "entrypoint_explicit": true,
+        "marker_leak_absent": true,
+        "output_sha256": "408884961367f101a1090e253f55c53b8824438b7fa3f487d10c4d9656b3c79c",
+        "process_exit_nonzero": true,
+        "status": "PASS"
+      },
+      "provider_factory_exception": {
+        "entrypoint_explicit": true,
+        "marker_leak_absent": true,
+        "output_sha256": "408884961367f101a1090e253f55c53b8824438b7fa3f487d10c4d9656b3c79c",
+        "process_exit_nonzero": true,
+        "status": "PASS"
+      },
+      "provider_import_exception": {
+        "entrypoint_explicit": true,
+        "marker_leak_absent": true,
+        "output_sha256": "408884961367f101a1090e253f55c53b8824438b7fa3f487d10c4d9656b3c79c",
+        "process_exit_nonzero": true,
+        "status": "PASS"
+      },
+      "runtime_provider_exception": {
+        "entrypoint_explicit": true,
+        "marker_leak_absent": true,
+        "output_sha256": "81fbabbe0322709afedb78c4672ce2c9a7d8515bb63e035ebfb0b49467df0dbb",
+        "process_exit_nonzero": true,
+        "status": "PASS"
+      }
+    },
+    "status": "PASS"
+  },
+  "non_claims": {
+    "company_identity_tls": "NOT_RUN",
+    "g10": "NOT_RUN",
+    "g12_port_gate_production": "NOT_CLAIMED",
+    "real_family_g02_g06": "NOT_RUN"
+  },
+  "postgres": {
+    "real_postgresql_18": true,
+    "version": "18.6 (Homebrew)"
+  },
+  "predecessor_candidate": "9df7b1f3f49758fba459479404ae74215736b81f",
+  "predecessor_geometry": {
+    "description_list_height_px": 5777,
+    "description_list_width_px": 7,
+    "document_or_main_height_px": 12022,
+    "episode_surface_height_px": 11807,
+    "episode_surface_width_px": 73,
+    "source": "R2 VERIFY CF-cb9b379d7bef4704181d277a user-provided observation"
+  },
+  "project": "ephi",
+  "request": "EPHI-CHG-182-U1-R3-FIX",
+  "schema_version": 1,
+  "scope_proof": {
+    "forbidden_changed_paths": [],
+    "migrations_changed": false,
+    "nicegui_base_changed": false,
+    "unrelated_ephi_ui_surfaces_changed": false
+  },
+  "target_base": "156e47b1e0cc3c77a2a3f0e2b65875eacc9aa0b4"
+}

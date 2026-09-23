@@ -1,0 +1,33 @@
+{
+  "commit": "a9702ad3f990f379f902ebe43934e0d5fe589b7e",
+  "dependency_light_checks": {
+    "errors": 0,
+    "failed": 0,
+    "output_sha256": "7119909f05d6b29b7a4f39744543e39343416908eec934a10181bdee89aba4c8",
+    "passed": 262,
+    "skipped": 81,
+    "status": "PASS"
+  },
+  "git_status": "PASS",
+  "historical_test_result": {
+    "passed": 275,
+    "skipped": 1,
+    "status": "REFERENCE_ONLY",
+    "used_by_baseline": false
+  },
+  "package_integrity": {
+    "file_count": 266,
+    "manifest_sha256": "78a6d2df1eba7453fad76b62e441ae51a05e00fed0558da07a0e695624347ed4",
+    "status": "PASS"
+  },
+  "python": {
+    "requires": ">=3.11,<3.14",
+    "supported": true,
+    "version": "3.11.7"
+  },
+  "scope": "canonical-repository-only",
+  "stage": "pre-candidate-commit canonical baseline validation",
+  "status": "BASELINE_PASS",
+  "tree": "30af4c411cd64ad02eb9c0a63a8b3c4ccc85d301",
+  "worktree_clean": false
+}

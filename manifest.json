@@ -655,6 +655,251 @@
       "sha256": "900c58454be92da519ad90722debb14a56a8663ba4caf69cf0911ad93bbb8b82"
     },
     {
+      "path": "evidence/u2/chg-189-u2.1-o6.3/artifact-inventory.json",
+      "bytes": 8469,
+      "sha256": "eda2bde15a50a272e617c10d6c6630f3d4940005eaf411caf1aeb87a0dbdc045"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-o6.3/package_logs/chg189-package-py311.log",
+      "bytes": 209,
+      "sha256": "3e8f4d69abe521be1aeafa8a9baff49a3dcb683a9fe71a14559cef163c3afa3d"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-o6.3/package_logs/chg189-package-py312.log",
+      "bytes": 209,
+      "sha256": "3e8f4d69abe521be1aeafa8a9baff49a3dcb683a9fe71a14559cef163c3afa3d"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-o6.3/package_logs/chg189-package-py313.log",
+      "bytes": 209,
+      "sha256": "3e8f4d69abe521be1aeafa8a9baff49a3dcb683a9fe71a14559cef163c3afa3d"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-o6.3/package_logs/chg189-package-py314.log",
+      "bytes": 209,
+      "sha256": "3e8f4d69abe521be1aeafa8a9baff49a3dcb683a9fe71a14559cef163c3afa3d"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-o6.3/package_logs/chg189-self-check.json",
+      "bytes": 1117,
+      "sha256": "922c49b6dce20fb67d29b126549a369bf55b199b893ae9cf0e1c986e0ef9320d"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-o6.3/qualification.json",
+      "bytes": 11976,
+      "sha256": "81c47311e9c4d44b1876cb86bb6edc31b64be96ed94a87b782d10083ed4f2dd5"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-o6.3/reports/chg189-o10.json",
+      "bytes": 44562,
+      "sha256": "5a80be8afea50cc55faa1a712a4fc8c0aca2ab1e58694913892e0d7c2818a5c4"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-o6.3/reports/chg189-o8.json",
+      "bytes": 46453,
+      "sha256": "1a135d6b57bdf8b89710b37bbbc5892231c2d68e53952543319b983890e835db"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-o6.3/reports/chg189-u1.json",
+      "bytes": 57916,
+      "sha256": "0afde0ab98c0af9ef447d6160be8745e4d7e47a548118f68d742c800a4440598"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-o6.3/reports/chg189-u2-browser.json",
+      "bytes": 15314,
+      "sha256": "7280a735c4f0a3111309564263b185963c007a57c894943db40ad23f9e252c2e"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/flagship/attention-desktop-1440x900.png",
+      "bytes": 76701,
+      "sha256": "c263c466688b5d160ac90285682661f8dbda0498bfcef688140697b108baafe4"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/flagship/episode-desktop-1440x900.png",
+      "bytes": 125296,
+      "sha256": "b58d0bf65b65337541bec94aa47998b4b9b2d7148da8f00e31bb0c1a7d25b338"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/flagship/episode-desktop-after-check-1440x900.png",
+      "bytes": 117808,
+      "sha256": "099c4a33b9404eede24351626f16e684ce9cdfbe7401091b92fd93b7210051c3"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/flagship/episode-desktop-work-after-check-1440x900.png",
+      "bytes": 138286,
+      "sha256": "a7ef8d208aa4928412fa24bf2ef0999fa3acc23190a4926d1b9d10e7d4f1ecc4"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/flagship/episode-mobile-390x844.png",
+      "bytes": 63261,
+      "sha256": "49b1e27a6fa1e10921f349c3b3ad02c0cffcac80a8dd10c3d0a1318dac53cd63"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/attention-1024x768.png",
+      "bytes": 83227,
+      "sha256": "e10d4d24ec9084ee715f1cf73bbd0e6e0940e9cd31edb41393ddcd2acb87b0fa"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/attention-1440x900.png",
+      "bytes": 75373,
+      "sha256": "b8d7dec3175e64f164eeeed076054829a89251889cad041ff4122b85de4fb324"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/attention-320x800.png",
+      "bytes": 63192,
+      "sha256": "0e43b7428cbfde03237ea910556fde1b4f1c45e5f5fd65a40ff88115fcd0259e"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/attention-390x844.png",
+      "bytes": 63669,
+      "sha256": "0eaf9399b73af838a88e7f043d072547d9048b34e7d4018d51dfa683ff549110"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/attention-768x1024.png",
+      "bytes": 79090,
+      "sha256": "b3b5bb5946f4ef32907ff01d3cd7ffe308cb392e7ec04944d04dfbee781734bc"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/attention-failure.png",
+      "bytes": 25371,
+      "sha256": "275e09a9b9baf5dde6a7939756f90ac72f494ab1293388d944299a761c8a0180"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/attention-no-matching-rows-1440x900.png",
+      "bytes": 89885,
+      "sha256": "a5ffad7bc70a030d4da2a7ecd383f4c6a4063b66d2d5b0ad4bc3f1766f26ae7f"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/attention-no-permitted-rows.png",
+      "bytes": 26541,
+      "sha256": "6ce1e9074dbf53dad714b2455f8054a5c525fb881071ce30dd3fff0acb34ea0f"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/attention-offline.png",
+      "bytes": 27680,
+      "sha256": "314678b7bde2ad56b19134ba5fc56709d8ec138228bf5651b29be88ecab168f0"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/attention-permission.png",
+      "bytes": 24829,
+      "sha256": "dbfe5026fe50e94933fbfb87829761c090c458e927c08c68d1d3138ff7fe2887"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/attention-populated-1440x900.png",
+      "bytes": 75373,
+      "sha256": "b8d7dec3175e64f164eeeed076054829a89251889cad041ff4122b85de4fb324"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/attention-stale.png",
+      "bytes": 27077,
+      "sha256": "11325811fc04416c3849c174897a94119c5a9d20459b7898372917675808d4cc"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/episode-1024x768.png",
+      "bytes": 94634,
+      "sha256": "5ef6d7c4a7c5df38e7c09df6453f2b25b530fc826c1aa9629eb7de1e9a134c04"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/episode-1440x900.png",
+      "bytes": 95755,
+      "sha256": "ea68164eac8bb14823aae56b045cdbbc793fd11c6671629fee3ed63d8b8d2591"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/episode-320x800.png",
+      "bytes": 73424,
+      "sha256": "01a2b016256827b07624ad1603e64a2dd2ae3f9c39340ed2e4da5676c8724115"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/episode-390x844.png",
+      "bytes": 72325,
+      "sha256": "6c4db218306f690ac2c5b352aacb25749a86b0dd1fc20acdd766713c6ffd52c4"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/episode-768x1024.png",
+      "bytes": 80881,
+      "sha256": "fbe745f4c94845712a1f43198d836a77d9c7dbb5f3bf3a9229f6e8f497a68a40"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/episode-capability-states.png",
+      "bytes": 47653,
+      "sha256": "8c99703f3b1a4dc9477dd6b98f04d60b721bfa03bb871fc3842879cd9aa4826d"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/episode-claimed-1440x900.png",
+      "bytes": 99220,
+      "sha256": "2480595824aded426c022fcbae245f1bf4150c6fae8a0a7d57dffd103cf65715"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/episode-coherent-conflict.png",
+      "bytes": 29049,
+      "sha256": "cba20fdc445f5dcbc460b9f80b4d21b6f84f0daffd181321b9a20c6657662035"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/episode-no-selection-1440x900.png",
+      "bytes": 50004,
+      "sha256": "0d287d426735cf27af84d2cdc785ef6c6dadd8bdcb75e8c64fc8a2bad5c73de6"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/episode-offline.png",
+      "bytes": 29274,
+      "sha256": "bde8919c3f492b620356513b5d2867aed558dfe0c6c71d44c52679ecc6588e2b"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/episode-owner-changed.png",
+      "bytes": 28275,
+      "sha256": "fe483369b2d36f7fd8d45eee82c272154c49872a62dd6bb590d844e41612a278"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/episode-permission.png",
+      "bytes": 27104,
+      "sha256": "4e6d07e5f21f3eee62d620b1bd8e3dc0dd4efb5b7c2a9106833c8cd44fad3904"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/episode-populated-1440x900.png",
+      "bytes": 95840,
+      "sha256": "8d618ea4021aee16b70c26795c25155961b1c8a5489bbc0e01f525ba3b498c1b"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/episode-version-conflict.png",
+      "bytes": 29246,
+      "sha256": "6605fc14b9ce614e148f9172829e5a263aa6a7728c0747e7e98707c00ee4bb53"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-o6.3/test_logs/chg189-final-python311-tests.log",
+      "bytes": 69565,
+      "sha256": "2dd080ab5e48a3ebac391384189e59f09a2901d6b22a63091ddebb2b3e1e6c6f"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-o6.3/test_logs/chg189-final-python312-tests.log",
+      "bytes": 70558,
+      "sha256": "b4c830a3eb77e887acd5deb6e38db437b6c71d7816b1b971465f7141f4307813"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-o6.3/test_logs/chg189-final-python313-tests.log",
+      "bytes": 70558,
+      "sha256": "0b700cbdbeb17f3d84ee20eaa4477bdae1919456e00251cc3531706557c6aede"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-o6.3/test_logs/chg189-final-python314-tests.log",
+      "bytes": 70558,
+      "sha256": "ffe0a98c915e34846c573d2320af71ed4606dd1bac1544365ff6ad92b23cb2aa"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-o6.3/test_logs/chg189-python311-postgres18-tests.log",
+      "bytes": 63417,
+      "sha256": "72f6a0c590fc96eb437dc37c31c0724d2d0e9d8f035a7f84e9857a476d284232"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-o6.3/validation/validation-summary.json",
+      "bytes": 3268,
+      "sha256": "83d48b326d36db7586f2bd5782e5d1b8cfc1bdf844e2627cc920bec642d8b9fa"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-o6.3/validation/w0-baseline.json",
+      "bytes": 913,
+      "sha256": "622034b22e81846d87d2af2c2ad8f286ef2599b7822f19e59c8da0bcacb38bd5"
+    },
+    {
       "path": "examples/__init__.py",
       "bytes": 61,
       "sha256": "b060d41e6705cac80caacb622fc737209d85f878bc0a4a6d976adc651b26d7f1"
