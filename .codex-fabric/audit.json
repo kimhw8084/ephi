@@ -1,0 +1,569 @@
+{
+  "accepted_at": "2026-09-23T13:45:33Z",
+  "changed_files": [
+    {
+      "additions": 21,
+      "deletions": 0,
+      "path": "01_Product_and_Architecture.md",
+      "status": "M"
+    },
+    {
+      "additions": 34,
+      "deletions": 0,
+      "path": "13_Package_Review.md",
+      "status": "M"
+    },
+    {
+      "additions": 21,
+      "deletions": 0,
+      "path": "README.md",
+      "status": "M"
+    },
+    {
+      "additions": 205,
+      "deletions": 0,
+      "path": "docs/Downstream_Integration_ABI.md",
+      "status": "A"
+    },
+    {
+      "additions": 129,
+      "deletions": 0,
+      "path": "evidence/u1/downstream_abi_conformance.json",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u1/verify2/attention-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u1/verify2/episode-1440x900-viewport.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u1/verify2/episode-full-page.png",
+      "status": "A"
+    },
+    {
+      "additions": 386,
+      "deletions": 0,
+      "path": "evidence/u1/verify2/verify2.json",
+      "status": "A"
+    },
+    {
+      "additions": 1,
+      "deletions": 0,
+      "path": "examples/__init__.py",
+      "status": "A"
+    },
+    {
+      "additions": 1,
+      "deletions": 0,
+      "path": "examples/synthetic_downstream/__init__.py",
+      "status": "A"
+    },
+    {
+      "additions": 297,
+      "deletions": 0,
+      "path": "examples/synthetic_downstream/provider.py",
+      "status": "A"
+    },
+    {
+      "additions": 100,
+      "deletions": 10,
+      "path": "manifest.json",
+      "status": "M"
+    },
+    {
+      "additions": 1,
+      "deletions": 0,
+      "path": "pyproject.toml",
+      "status": "M"
+    },
+    {
+      "additions": 63,
+      "deletions": 0,
+      "path": "src/ephi/downstream/__init__.py",
+      "status": "A"
+    },
+    {
+      "additions": 3,
+      "deletions": 0,
+      "path": "src/ephi/downstream/__main__.py",
+      "status": "A"
+    },
+    {
+      "additions": 68,
+      "deletions": 0,
+      "path": "src/ephi/downstream/boundary.py",
+      "status": "A"
+    },
+    {
+      "additions": 200,
+      "deletions": 0,
+      "path": "src/ephi/downstream/composition.py",
+      "status": "A"
+    },
+    {
+      "additions": 411,
+      "deletions": 0,
+      "path": "src/ephi/downstream/contracts.py",
+      "status": "A"
+    },
+    {
+      "additions": 176,
+      "deletions": 0,
+      "path": "src/ephi/downstream/preflight.py",
+      "status": "A"
+    },
+    {
+      "additions": 270,
+      "deletions": 0,
+      "path": "src/ephi/downstream/validation.py",
+      "status": "A"
+    },
+    {
+      "additions": 35,
+      "deletions": 1,
+      "path": "src/ephi/ui/app.py",
+      "status": "M"
+    },
+    {
+      "additions": 553,
+      "deletions": 0,
+      "path": "tests/test_downstream_abi.py",
+      "status": "A"
+    },
+    {
+      "additions": 290,
+      "deletions": 0,
+      "path": "tests/test_downstream_postgresql.py",
+      "status": "A"
+    }
+  ],
+  "checks": [
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '65,145p' src/ephi/downstream/validation.py; rtk sed -n '1,130p' src/ephi/application/source_reality.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nfrom __future__ import annotations\nimport json, os, secrets, socket, subprocess, sys, tempfile\nfrom pathlib import Path\n\nroot = Path.cwd()\nsecret = '[REDACTED_SECRET]'\ndsn = 'postgresql://synthetic_user:synthetic_password@private-db.example.test:5432/private_db'\nmarkers = [secret, dsn, 'synthetic_password', 'private-db.example.test', 'synthetic_bearer_token_do_not_log', 'synthetic_cookie_value_do_not_log', 'synthetic_storage_secret_do_not_log', 'raw_source_row_do_not_log', 'private_mapping_value_do_not_log']\nreport = {'matrix': [], 'all_startup_failures_bounded': True, 'all_secret_markers_absent': True, 'incompatible_abi_provider_not_used': None, 'legacy_source_fallback_not_imported': None}\nwith tempfile.TemporaryDirectory(prefix='ephi-u1-negative-') as temp_name:\n    temp = Path(temp_name)\n    module = temp / 'u1_negative_cases.py'\n    module.write_text('''from dataclasses import replace\\\\nimport os\\\\nfrom pathlib import Path\\\\nfrom ephi.downstream import ProviderBinding\\\\nfrom examples.synthetic_downstream.provider import build_bundle\\\\n\\\\nclass IdentityTrap:\\\\n    def __init__(self, wrapped): self.wrapped = wrapped\\\\n    def _trip(self): Path(os.environ[\\\\\\\"U1_PROVIDER_USE_SENTINEL\\\\\\\"]).write_text(\\\\\\\"used\\\\\\\")\\\\n    def resolve_scope(self): self._trip(); return self.wrapped.resolve_scope()\\\\n    def resolve_principal(self): self._trip(); return self.wrapped.resolve_principal()\\\\n    def resolve_current_principal(self, subject): self._trip(); return self.wrapped.resolve_current_principal(subject)\\\\n\\\\nclass RuntimeExploder:\\\\n    def __init__(self, wrapped): self.wrapped = wrapped\\\\n    @property\\\\n    def capabilities(self): return self.wrapped.capabilities\\\\n    def open_postgresql(self):\\\\n        raise RuntimeError(os.environ[\\\\\\\"U1_EXCEPTION_MARKER_BUNDLE\\\\\\\"])\\\\n\\\\ndef incompatible_bundle():\\\\n    bundle = build_bundle()\\\\n    identity = ProviderBinding(bundle.identity.contract, IdentityTrap(bundle.identity.implementation))\\\\n    return replace(bundle, abi_version=\\\\\\\"9.0.0\\\\\\\", identity=identity)\\\\n\\\\ndef factory_boom():\\\\n    raise RuntimeError(os.environ[\\\\\\\"U1_EXCEPTION_MARKER_BUNDLE\\\\\\\"])\\\\n\\\\ndef runtime_boom():\\\\n    bundle = build_bundle()\\\\n    runtime = ProviderBinding(bundle.runtime.contract, RuntimeExploder(bundle.runtime.implementation), bundle.runtime.public_metadata)\\\\n    return replace(bundle, runtime=runtime)\\\\n''', encoding='utf-8')\\\\n    (temp / 'u1_import_boom.py').write_text('''raise RuntimeError(__import__(\\\\\\\"os\\\\\\\").environ[\\\\\\\"U1_EXCEPTION_MARKER_BUNDLE\\\\\\\"])\\\\n''', encoding='utf-8')\\\\n    (temp / 'legacy_trap.py').write_text('''from pathlib import Path\\\\nimport os\\\\nPath(os.environ[\\\\\\\"U1_LEGACY_IMPORT_SENTINEL\\\\\\\"]).write_text(\\\\\\\"imported\\\\\\\")\\\\ndef factory(): return object()\\\\n''', encoding='utf-8')\\\\n    use_sentinel = temp / 'provider-used'\\\\n    legacy_sentinel = temp / 'legacy-imported'\\\\n    marker_bundle = ' | '.join(markers)\\\\n    cases = [\\\\n        ('missing_entrypoint_nondevelopment_no_fallback', None),\\\\n        ('malformed_entrypoint', 'bad entrypoint'),\\\\n        ('nonexistent_provider_module', 'u1_no_such_provider:build_bundle'),\\\\n        ('provider_import_error', 'u1_import_boom:build_bundle'),\\\\n        ('provider_factory_error', 'u1_negative_cases:factory_boom'),\\\\n        ('incompatible_abi_before_provider_use', 'u1_negative_cases:incompatible_bundle'),\\\\n        ('runtime_provider_error', 'u1_negative_cases:runtime_boom'),\\\\n    ]\\\\n    for name, entrypoint in cases:\\\\n        sock = socket.socket(); sock.bind(('127.0.0.1', 0)); port = sock.getsockname()[1]; sock.close()\\\\n        origin = f'http://127.0.0.1:{port}'\\\\n        env = {k:v for k,v in os.environ.items() if not k.startswith(('EPHI_', 'NICEGUI_BASE_'))}\\\\n        env.update({'PYTHONPATH': str(root / 'src') + os.pathsep + str(temp), 'PYTHONUNBUFFERED':'1', 'EPHI_ENV':'qa', 'EPHI_HOST':'127.0.0.1', 'EPHI_PORT':str(port), 'EPHI_ALLOWED_BROWSER_ORIGINS':origin, 'NICEGUI_BASE_STORAGE_SECRET':'synthetic_storage_secret_do_not_log', 'NICEGUI_BASE_SECURE_SESSION_COOKIE':'false', 'NICEGUI_BASE_SAME_SITE':'strict', 'EPHI_TEST_POSTGRES_DSN':dsn, 'EPHI_POSTGRES_DSN':dsn, 'U1_EXCEPTION_MARKER_BUNDLE':marker_bundle, 'U1_PROVIDER_USE_SENTINEL':str(use_sentinel), 'U1_LEGACY_IMPORT_SENTINEL':str(legacy_sentinel)})\\\\n        if entrypoint is not None: env['EPHI_DOWNSTREAM_ENTRYPOINT'] = entrypoint\\\\n        if name == 'missing_entrypoint_nondevelopment_no_fallback':\\\\n            env.update({'EPHI_DEV_SCOPE_ID':'legacy-dev-scope', 'EPHI_DEV_SITE_ID':'legacy-site', 'EPHI_DEV_FAMILY_ID':'legacy-family', 'EPHI_DEV_IDENTITY_SUBJECT':'legacy-dev-subject', 'EPHI_DEV_IDENTITY_CAPABILITIES':'ephi.attention.read', 'EPHI_METROLOGY_SOURCE_ADAPTER':'legacy_trap:factory', 'EPHI_METROLOGY_SOURCE_ID':'legacy-source', 'EPHI_METROLOGY_PROVIDER_ID':'legacy-provider', 'EPHI_METROLOGY_FAMILY_ID':'legacy-family', 'EPHI_METROLOGY_CAPABILITY_ID':'legacy-capability', 'EPHI_METROLOGY_SCOPE_ID':'legacy-dev-scope', 'EPHI_METROLOGY_SCHEMA_ID':'legacy-schema', 'EPHI_METROLOGY_MAPPING_VERSION':'1', 'EPHI_METROLOGY_MAPPING_HASH':'a'*64, 'EPHI_METROLOGY_UNIT':'um'})\\\\n        result = subprocess.run([sys.executable, '-m', 'ephi', '--serve'], cwd=root, env=env, capture_output=True, text=True, timeout=25)\\\\n        output = (result.stdout + '\\\\\\\\n' + result.stderr).strip()\\\\n        leaked = sorted(marker for marker in markers if marker and marker in output)\\\\n        last = output.splitlines()[-1] if output else ''\\\\n        server_started = ('Uvicorn running on' in output) or ('Application startup complete' in output)\\\\n        row = {'case':name, 'exit_code':result.returncode, 'startup_rejected':result.returncode \"'!= 0 and not server_started, '\"'sanitized_reason_line': last[-180:], 'secret_markers_leaked': leaked, 'server_started':server_started}\\\\n        report['matrix'].append(row)\\\\n        report['all_startup_failures_bounded'] = report['all_startup_failures_bounded'] and row['startup_rejected']\\\\n        report['all_secret_markers_absent'] = report['all_secret_markers_absent'] and not leaked\\\\n        if name == 'incompatible_abi_before_provider_use': report['incompatible_abi_provider_not_used'] = not use_sentinel.exists()\\\\n        if name == 'missing_entrypoint_nondevelopment_no_fallback': report['legacy_source_fallback_not_imported'] = not legacy_sentinel.exists()\\\\n        if result.returncode == 0 or server_started or leaked:\\\\n            report['failing_case_output_sha256'] = __import__('hashlib').sha256(output.encode()).hexdigest()\\\\n            report['failing_case_output_bytes'] = len(output.encode())\\\\n    report['status'] = 'PASS' if report['all_startup_failures_bounded'] and report['all_secret_markers_absent'] and report['incompatible_abi_provider_not_used'] and report['legacy_source_fallback_not_imported'] else 'FAIL'\nprint(json.dumps(report, sort_keys=True, separators=(',',':')))\nPY\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nfrom __future__ import annotations\nimport hashlib, json, os, socket, subprocess, sys, tempfile\nfrom pathlib import Path\n\nroot = Path.cwd()\nsecret = '[REDACTED_SECRET]'\ndsn = 'postgresql://synthetic_user:synthetic_password@private-db.example.test:5432/private_db'\nmarkers = [secret, dsn, 'synthetic_password', 'private-db.example.test', 'synthetic_bearer_token_do_not_log', 'synthetic_cookie_value_do_not_log', 'synthetic_storage_secret_do_not_log', 'raw_source_row_do_not_log', 'private_mapping_value_do_not_log']\nreport = {'matrix': [], 'all_startup_failures_bounded': True, 'all_secret_markers_absent': True, 'incompatible_abi_provider_not_used': None, 'legacy_source_fallback_not_imported': None}\nwith tempfile.TemporaryDirectory(prefix='ephi-u1-negative-') as temp_name:\n    temp = Path(temp_name)\n    module = temp / 'u1_negative_cases.py'\n    module.write_text(\\\"\\\"\\\"\\\\\nfrom dataclasses import replace\nimport os\nfrom pathlib import Path\nfrom ephi.downstream import ProviderBinding\nfrom examples.synthetic_downstream.provider import build_bundle\n\nclass IdentityTrap:\n    def __init__(self, wrapped): self.wrapped = wrapped\n    def _trip(self): Path(os.environ['U1_PROVIDER_USE_SENTINEL']).write_text('used')\n    def resolve_scope(self): self._trip(); return self.wrapped.resolve_scope()\n    def resolve_principal(self): self._trip(); return self.wrapped.resolve_principal()\n    def resolve_current_principal(self, subject): self._trip(); return self.wrapped.resolve_current_principal(subject)\n\nclass RuntimeExploder:\n    def __init__(self, wrapped): self.wrapped = wrapped\n    @property\n    def capabilities(self): return self.wrapped.capabilities\n    def open_postgresql(self):\n        raise RuntimeError(os.environ['U1_EXCEPTION_MARKER_BUNDLE'])\n\ndef incompatible_bundle():\n    bundle = build_bundle()\n    identity = ProviderBinding(bundle.identity.contract, IdentityTrap(bundle.identity.implementation))\n    return replace(bundle, abi_version='9.0.0', identity=identity)\n\ndef factory_boom():\n    raise RuntimeError(os.environ['U1_EXCEPTION_MARKER_BUNDLE'])\n\ndef runtime_boom():\n    bundle = build_bundle()\n    runtime = ProviderBinding(bundle.runtime.contract, RuntimeExploder(bundle.runtime.implementation), bundle.runtime.public_metadata)\n    return replace(bundle, runtime=runtime)\n\\\"\\\"\\\", encoding='utf-8')\n    (temp / 'u1_import_boom.py').write_text(\\\"\\\"\\\"\\\\\nraise RuntimeError(__import__('os').environ['U1_EXCEPTION_MARKER_BUNDLE'])\n\\\"\\\"\\\", encoding='utf-8')\n    (temp / 'legacy_trap.py').write_text(\\\"\\\"\\\"\\\\\nfrom pathlib import Path\nimport os\nPath(os.environ['U1_LEGACY_IMPORT_SENTINEL']).write_text('imported')\ndef factory(): return object()\n\\\"\\\"\\\", encoding='utf-8')\n    use_sentinel = temp / 'provider-used'\n    legacy_sentinel = temp / 'legacy-imported'\n    marker_bundle = ' | '.join(markers)\n    cases = [\n        ('missing_entrypoint_nondevelopment_no_fallback', None),\n        ('malformed_entrypoint', 'bad entrypoint'),\n        ('nonexistent_provider_module', 'u1_no_such_provider:build_bundle'),\n        ('provider_import_error', 'u1_import_boom:build_bundle'),\n        ('provider_factory_error', 'u1_negative_cases:factory_boom'),\n        ('incompatible_abi_before_provider_use', 'u1_negative_cases:incompatible_bundle'),\n        ('runtime_provider_error', 'u1_negative_cases:runtime_boom'),\n    ]\n    for name, entrypoint in cases:\n        sock = socket.socket(); sock.bind(('127.0.0.1', 0)); port = sock.getsockname()[1]; sock.close()\n        origin = f'http://127.0.0.1:{port}'\n        env = {k:v for k,v in os.environ.items() if not k.startswith(('EPHI_', 'NICEGUI_BASE_'))}\n        env.update({'PYTHONPATH': str(root / 'src') + os.pathsep + str(temp), 'PYTHONUNBUFFERED':'1', 'EPHI_ENV':'qa', 'EPHI_HOST':'127.0.0.1', 'EPHI_PORT':str(port), 'EPHI_ALLOWED_BROWSER_ORIGINS':origin, 'NICEGUI_BASE_STORAGE_SECRET':'synthetic_storage_secret_do_not_log', 'NICEGUI_BASE_SECURE_SESSION_COOKIE':'false', 'NICEGUI_BASE_SAME_SITE':'strict', 'EPHI_TEST_POSTGRES_DSN':dsn, 'EPHI_POSTGRES_DSN':dsn, 'U1_EXCEPTION_MARKER_BUNDLE':marker_bundle, 'U1_PROVIDER_USE_SENTINEL':str(use_sentinel), 'U1_LEGACY_IMPORT_SENTINEL':str(legacy_sentinel)})\n        if entrypoint is not None: env['EPHI_DOWNSTREAM_ENTRYPOINT'] = entrypoint\n        if name == 'missing_entrypoint_nondevelopment_no_fallback':\n            env.update({'EPHI_DEV_SCOPE_ID':'legacy-dev-scope', 'EPHI_DEV_SITE_ID':'legacy-site', 'EPHI_DEV_FAMILY_ID':'legacy-family', 'EPHI_DEV_IDENTITY_SUBJECT':'legacy-dev-subject', 'EPHI_DEV_IDENTITY_CAPABILITIES':'ephi.attention.read', 'EPHI_METROLOGY_SOURCE_ADAPTER':'legacy_trap:factory', 'EPHI_METROLOGY_SOURCE_ID':'legacy-source', 'EPHI_METROLOGY_PROVIDER_ID':'legacy-provider', 'EPHI_METROLOGY_FAMILY_ID':'legacy-family', 'EPHI_METROLOGY_CAPABILITY_ID':'legacy-capability', 'EPHI_METROLOGY_SCOPE_ID':'legacy-dev-scope', 'EPHI_METROLOGY_SCHEMA_ID':'legacy-schema', 'EPHI_METROLOGY_MAPPING_VERSION':'1', 'EPHI_METROLOGY_MAPPING_HASH':'a'*64, 'EPHI_METROLOGY_UNIT':'um'})\n        result = subprocess.run([sys.executable, '-m', 'ephi', '--serve'], cwd=root, env=env, capture_output=True, text=True, timeout=25)\n        output = (result.stdout + '\\\\n' + result.stderr).strip()\n        leaked = sorted(marker for marker in markers if marker and marker in output)\n        last = output.splitlines()[-1] if output else ''\n        server_started = ('Uvicorn running on' in output) or ('Application startup complete' in output)\n        row = {'case':name, 'exit_code':result.returncode, 'startup_rejected':result.returncode \"'!= 0 and not server_started, '\"'sanitized_reason_line': last[-180:], 'secret_markers_leaked': leaked, 'server_started':server_started}\n        report['matrix'].append(row)\n        report['all_startup_failures_bounded'] = report['all_startup_failures_bounded'] and row['startup_rejected']\n        report['all_secret_markers_absent'] = report['all_secret_markers_absent'] and not leaked\n        if name == 'incompatible_abi_before_provider_use': report['incompatible_abi_provider_not_used'] = not use_sentinel.exists()\n        if name == 'missing_entrypoint_nondevelopment_no_fallback': report['legacy_source_fallback_not_imported'] = not legacy_sentinel.exists()\n        if result.returncode == 0 or server_started or leaked:\n            report['failing_case_output_sha256'] = hashlib.sha256(output.encode()).hexdigest()\n            report['failing_case_output_bytes'] = len(output.encode())\n    report['status'] = 'PASS' if report['all_startup_failures_bounded'] and report['all_secret_markers_absent'] and report['incompatible_abi_provider_not_used'] and report['legacy_source_fallback_not_imported'] else 'FAIL'\nprint(json.dumps(report, sort_keys=True, separators=(',',':')))\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/o8_browser_qualification.py --help; rtk python3 tools/o10_rendered_accessibility.py --help'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk env PYTHONPATH=src EPHI_TEST_POSTGRES_DSN='postgresql:///ephi_u1_verify_20260923' python3 -m unittest tests.test_downstream_postgresql -v\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk env PYTHONPATH=src EPHI_TEST_POSTGRES_DSN='postgresql:///ephi_u1_verify_20260923' python3 -m unittest tests.test_downstream_abi -v\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk env PYTHONPATH=src EPHI_TEST_POSTGRES_DSN='postgresql:///ephi_u1_verify_20260923' python3 tools/o8_browser_qualification.py --output /tmp/ephi_u1_verify2/o8-browser.json\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk env PYTHONPATH=src EPHI_TEST_POSTGRES_DSN='postgresql:///ephi_u1_verify_20260923' python3 tools/o10_rendered_accessibility.py --output /tmp/ephi_u1_verify2/o10-rendered.json --artifacts /tmp/ephi_u1_verify2/o10-artifacts\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk env PYTHONPATH=src EPHI_TEST_POSTGRES_DSN='postgresql:///ephi_u1_verify_20260923' python3 -m unittest discover -s tests -v\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nfrom PIL import Image\nfrom pathlib import Path\nfor name in ('attention-1440x900.png','episode-1440x900.png'):\n image = Image.open(Path('/tmp/ephi_u1_verify2') / name)\n print(name, image.size)\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nfrom PIL import Image\nfrom pathlib import Path\nsource = Image.open('/tmp/ephi_u1_verify2/episode-1440x900.png')\nsource.crop((0, 0, 1440, 900)).save('/tmp/ephi_u1_verify2/episode-viewport.png')\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk ls -lh /tmp/ephi_u1_verify2/o10-artifacts; rtk rg --files /tmp/ephi_u1_verify2/o10-artifacts'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '860,925p' tools/o10_rendered_accessibility.py; rtk sed -n '480,570p' tools/o10_rendered_accessibility.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nimport json\np=json.load(open('/tmp/ephi_u1_verify2/o10-rendered.json'))\nprint(json.dumps({k:p.get(k) for k in ('status','criteria','real_browser','responsive_browser','failure_inventory')}, sort_keys=True, default=str)[:6000])\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk env PYTHONPATH=src EPHI_TEST_POSTGRES_DSN='postgresql:///ephi_u1_verify_20260923' python3 - <<'PY'\nfrom ephi.application import AccessScope, RevisionVector\nfrom ephi.infrastructure import PostgreSQLReferenceTransactionAdapter\nimport os\nadapter = PostgreSQLReferenceTransactionAdapter(os.environ['EPHI_TEST_POSTGRES_DSN'])\ntry:\n    adapter.connection.execute('TRUNCATE handoff_delivery_attempt, handoff_delivery_status, handoff_intent, decision_snapshot, source_capability, source_snapshot, artifact_catalog, o3_attention_projection, query_snapshot_row, query_snapshot, read_head, read_revision, applied_effect, job, outbox_event, audit_event, command_receipt, aggregate_state CASCADE')\n    scope = AccessScope('synthetic-u1-scope', site_id='synthetic-site', family_id='synthetic-u1-family')\n    episode_id = 'synthetic-u1-episode'\n    adapter.seed_aggregate(scope, 'episode_workflow', episode_id, {'work_state':'OPEN', 'owner':None}, version=0)\n    adapter.seed_attention_projection(scope, episode_id, {'title':'Synthetic downstream authorized scope case','asset_id':'synthetic-asset','priority':'P2','severity':'MEDIUM','technical_state':'READY','source_state':'NOT_QUALIFIED','deadline':None,'age':'1'})\n    workflow = adapter.get_aggregate(scope, 'episode_workflow', episode_id)\n    adapter.publish_current_revision(scope, 'episode', episode_id, 'synthetic-u1-browser-read-1', RevisionVector('synthetic-u1-analysis-1',None,None,0,None,'synthetic-u1-manifest-1'), {'title':'Synthetic downstream authorized scope case','analytical_revision':'synthetic-u1-analysis-1','capability_state':{'source':'NOT_QUALIFIED'}}, workflow)\n    print({'seeded': True, 'episode_id': episode_id, 'scope_id': scope.scope_id})\nfinally:\n    adapter.close()\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nfrom __future__ import annotations\nimport json, os, secrets, socket, subprocess, sys, time, urllib.request\nfrom pathlib import Path\nfrom urllib.parse import urlsplit\nroot=Path.cwd(); out=Path('/tmp/ephi_u1_verify2'); out.mkdir(exist_ok=True)\nsock=socket.socket(); sock.bind(('127.0.0.1',0)); port=sock.getsockname()[1]; sock.close()\norigin=f'http://127.0.0.1:{port}'\nenv={k:v for k,v in os.environ.items() if not k.startswith(('EPHI_','NICEGUI_BASE_'))}\nenv.update({'PYTHONPATH':str(root/'src'),'PYTHONUNBUFFERED':'1','EPHI_ENV':'qa','EPHI_HOST':'127.0.0.1','EPHI_PORT':str(port),'EPHI_DOWNSTREAM_ENTRYPOINT':'examples.synthetic_downstream.provider:build_bundle','EPHI_TEST_POSTGRES_DSN':'postgresql:///ephi_u1_verify_20260923','EPHI_ALLOWED_BROWSER_ORIGINS':origin,'EPHI_SYNTHETIC_SCOPE_ID':'synthetic-u1-scope','EPHI_SYNTHETIC_SUBJECT':'synthetic-engineer','EPHI_SYNTHETIC_ARTIFACT_ROOT':str(out/'blobs'),'NICEGUI_BASE_STORAGE_SECRET':secrets.token_urlsafe(32),'NICEGUI_BASE_SAME_SITE':'strict','NICEGUI_BASE_SECURE_SESSION_COOKIE':'false'})\nlog=open(out/'positive-server.log','w+',encoding='utf8')\nproc=subprocess.Popen([sys.executable,'-m','ephi','--serve'],cwd=root,env=env,stdout=log,stderr=subprocess.STDOUT,text=True)\nr={'entrypoint':'examples.synthetic_downstream.provider:build_bundle','command':'python -m ephi --serve','environment':'qa','legacy_dev_vars_present':[],'legacy_source_authority_vars_present':[],'route_results':[],'browser_events':{'console_errors':[],'page_errors':[],'request_failures':[],'http_errors':[],'websockets':[]}}\ntry:\n    ready=False; end=time.monotonic()+45\n    while time.monotonic()<end and proc.poll() is None:\n        try:\n            with urllib.request.urlopen(urllib.request.Request(origin,headers={'Origin':origin}),timeout=2) as response:\n                if response.status==200: ready=True; break\n        except Exception: time.sleep(.25)\n    if not ready: raise RuntimeError('server did not become ready')\n    from playwright.sync_api import sync_playwright\n    with sync_playwright() as p:\n        browser=p.chromium.launch(headless=True); context=browser.new_context(viewport={'width':1440,'height':900},device_scale_factor=1); page=context.new_page(); ev=r['browser_events']; responses=[]\n        page.on('console',lambda m: ev['console_errors'].append(m.text) if m.type=='error' else None)\n        page.on('pageerror',lambda e: ev['page_errors'].append(str(e)))\n        page.on('requestfailed',lambda req: ev['request_failures'].append({'path':urlsplit(req.url).path,'failure':req.failure or 'unknown'}))\n        page.on('response',lambda response:(responses.append({'path':urlsplit(response.url).path,'status':response.status}),ev['http_errors'].append({'path':urlsplit(response.url).path,'status':response.status}) if response.status>=400 else None))\n        page.on('websocket',lambda ws:ev['websockets'].append({'path':urlsplit(ws.url).path,'status':'opened'}))\n        first=page.goto(origin,wait_until='domcontentloaded',timeout=30000); page.get_by_role('heading',name='Attention').wait_for(timeout=30000)\n        row=page.locator('.cui-data-table .ag-center-cols-container .ag-row').filter(has_text='synthetic-u1-episode'); row.wait_for(timeout=30000)\n        page.wait_for_function(\\\"() => [...document.querySelectorAll('[role=status]')].some(n => (n.innerText||'').includes('1 permitted Attention row'))\\\",timeout=30000)\n        row_text=row.inner_text(); body=page.locator('body').inner_text()\n        r['route_results'].append({'route':'/','http_status':first.status if first else None,'rendered_subject':'synthetic-engineer' if 'synthetic-engineer' in body else 'MISSING','episode_row':'synthetic-u1-episode' if 'synthetic-u1-episode' in row_text else 'MISSING','row_count':page.locator('.cui-data-table .ag-center-cols-container .ag-row').count(),'viewport':[1440,900]})\n        page.screenshot(path=str(out/'attention-1440x900.png'),full_page=False)\n        page.get_by_role('searchbox',name='Search table').wait_for(timeout=30000); grid=page.locator('.cui-data-table .ag-root-wrapper').first\n        reached=False\n        for _ in range(100):\n            page.keyboard.press('Tab'); reached=bool(page.evaluate(\\\"Boolean(document.activeElement?.closest('.cui-data-table .ag-root-wrapper'))\\\"))\n            if reached: break\n        if not reached: grid.focus()\n        page.keyboard.press('Tab'); page.keyboard.press('ArrowDown'); page.keyboard.press('Space')\n        button=page.locator('[aria-label=\\\"Selected episode preview\\\"]').get_by_role('button',name='Open episode'); button.wait_for(timeout=15000); button.click()\n        page.wait_for_url('**/episode',timeout=30000); page.get_by_role('heading',name='Episode decision brief').wait_for(timeout=30000)\n        page.locator('dl').get_by_text('synthetic-u1-episode',exact=True).wait_for(timeout=30000); page.locator('dl').get_by_text('OPEN',exact=True).wait_for(timeout=30000)\n        page.get_by_role('button',name='Claim episode').wait_for(timeout=30000)\n        metrics=page.evaluate(\\\"\\\"\\\"() => { const rect = e => { if (\"'!e) return null; const r=e.getBoundingClientRect(); return {x:Math.round(r.x),y:Math.round(r.y),width:Math.round(r.width),height:Math.round(r.height)} }; const surface=document.querySelector('\"'.ephi-o10-episode-surface'); const dl=document.querySelector('.ephi-o10-episode-surface dl'); const card=document.querySelector('.ephi-o10-episode-surface .cui-card'); return {viewport:{width:innerWidth,height:innerHeight},document:{width:document.documentElement.scrollWidth,height:document.documentElement.scrollHeight},main:rect(document.querySelector('main')),episode_surface:rect(surface),description_list:rect(dl),card:rect(card),episode_surface_computed_width:surface ? getComputedStyle(surface).width : null}; }\\\"\\\"\\\")\n        episode_text=page.locator('body').inner_text()\n        r['route_results'].append({'route':'/episode','http_status':next((x['status'] for x in reversed(responses) if x['path'].rstrip('/').endswith('/episode')),None),'rendered_subject':'synthetic-engineer' if 'synthetic-engineer' in episode_text else 'MISSING','episode_id':'synthetic-u1-episode','workflow_state':'OPEN','normal_navigation':'Attention selection → Open episode','viewport':[1440,900]})\n        r['episode_layout_diagnostic']=metrics\n        r['session_cookie_names']=sorted(cookie['name'] for cookie in context.cookies(origin))\n        page.screenshot(path=str(out/'episode-1440x900-viewport.png'),full_page=False)\n        page.screenshot(path=str(out/'episode-full-page.png'),full_page=True)\n        r['browser_events']['websocket_opened']=bool(ev['websockets'])\n        r['browser_events']['status']='PASS' if not any(ev[k] for k in ('console_errors','page_errors','request_failures','http_errors')) and ev['websockets'] else 'FAIL'\n        context.close(); browser.close()\n    r['layout_status']='SOURCE_DEFECT' if metrics['document']['height']>3000 or (metrics['episode_surface'] and metrics['episode_surface']['width']<300) else 'BOUNDED'\n    r['status']='SOURCE_FIX_REQUIRED' if r['layout_status']=='SOURCE_DEFECT' else r['browser_events']['status']\nfinally:\n    if proc.poll() is None:\n        proc.terminate()\n        try: proc.wait(timeout=10)\n        except subprocess.TimeoutExpired: proc.kill(); proc.wait(timeout=5)\n    log.close()\nprint(json.dumps(r,sort_keys=True,separators=(',',':')))\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk env PYTHONPATH=src EPHI_TEST_POSTGRES_DSN='postgresql:///ephi_u1_verify_20260923' python3 - <<'PY'\nimport json, os, subprocess, sys\ncmd=[sys.executable,'-m','ephi.downstream','--entrypoint','examples.synthetic_downstream.provider:build_bundle','--json']\nreports=[]\nfor _ in range(2):\n    run=subprocess.run(cmd,check=True,capture_output=True,text=True,env=os.environ.copy())\n    reports.append(json.loads(run.stdout))\nfirst,second=reports\nresult={'processes':2,'safe_manifest_hashes':[x['downstream_abi']['safe_manifest_hash'] for x in reports],'hash_stable':first['downstream_abi']['safe_manifest_hash']==second['downstream_abi']['safe_manifest_hash'],'safe_outputs_identical':reports[0]==reports[1],'compatibility_statuses':[x['compatibility']['status'] for x in reports],'composition_statuses':[x['safe_composition_smoke']['status'] for x in reports],'required_categories':[x['providers'][i]['category'] for i in range(len(first['providers']))],'provider_states':[x['providers'][i]['status'] for i in range(len(first['providers']))],'synthetic_boundary':first['synthetic_boundary'],'target_qualification':first['target_qualification']}\nprint(json.dumps(result,sort_keys=True,separators=(',',':')))\nPY\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk env PYTHONPATH=src EPHI_TEST_POSTGRES_DSN='postgresql:///ephi_u1_verify_20260923' python3 - <<'PY'\nimport json, os, subprocess, sys\ncmd=[sys.executable,'-m','ephi.downstream','--entrypoint','examples.synthetic_downstream.provider:build_bundle','--json']\nreports=[]\nfor _ in range(2):\n    run=subprocess.run(cmd,check=True,capture_output=True,text=True,env=os.environ.copy())\n    reports.append(json.loads(run.stdout))\nfirst,second=reports\nresult={'processes':2,'safe_manifest_hashes':[x['downstream_abi']['safe_manifest_hash'] for x in reports],'hash_stable':first['downstream_abi']['safe_manifest_hash']==second['downstream_abi']['safe_manifest_hash'],'safe_outputs_identical':reports[0]==reports[1],'compatibility_statuses':[x['compatibility']['status'] for x in reports],'composition_statuses':[x['safe_composition_smoke']['status'] for x in reports],'required_categories':[item['category'] for item in first['providers']],'provider_states':[item['status'] for item in first['providers']],'synthetic_boundary':first['synthetic_boundary'],'target_qualification':first['target_qualification']}\nprint(json.dumps(result,sort_keys=True,separators=(',',':')))\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk env PYTHONPATH=src EPHI_ENV=qa EPHI_TEST_POSTGRES_DSN='postgresql:///ephi_u1_verify_20260923' python3 - <<'PY'\nimport json, os, subprocess, sys\ncmd=[sys.executable,'-m','ephi.downstream','--entrypoint','examples.synthetic_downstream.provider:build_bundle','--json']\nreports=[]\nfor _ in range(2):\n    run=subprocess.run(cmd,check=True,capture_output=True,text=True,env=os.environ.copy())\n    reports.append(json.loads(run.stdout))\nprint(json.dumps({'environment':'qa','processes':2,'safe_manifest_hashes':[r['downstream_abi']['safe_manifest_hash'] for r in reports],'hash_stable':reports[0]['downstream_abi']['safe_manifest_hash']==reports[1]['downstream_abi']['safe_manifest_hash'],'safe_outputs_identical':reports[0]==reports[1],'composition_statuses':[r['safe_composition_smoke']['status'] for r in reports]},sort_keys=True,separators=(',',':')))\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m compileall -q src examples tests'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk env PYTHONPATH=src python3 -m ephi --self-check --json'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git diff --check && rtk git status --short --branch && rtk git diff --name-only 156e47b1e0cc3c77a2a3f0e2b65875eacc9aa0b4..9df7b1f3f49758fba459479404ae74215736b81f -- migrations && rtk git diff --quiet 9df7b1f3f49758fba459479404ae74215736b81f..HEAD -- src/ephi examples; printf 'source_diff_exit=%s\\\\n' \\\"\"'$?\"; rtk git rev-parse HEAD''^{tree}'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/w0_repo_baseline.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nimport json\nfor name in ('o8-browser.json','o10-rendered.json'):\n    data=json.load(open('/tmp/ephi_u1_verify2/'+name))\n    if name.startswith('o8'):\n        result={'status':data.get('status'),'postgres_version':data.get('postgres_version'),'browser':data.get('browser'),'security':data.get('security'),'routes':data.get('routes'),'transport':data.get('transport')}\n    else:\n        acceptance=data.get('acceptance',{})\n        real=data.get('real_browser',{})\n        result={'status':data.get('status'),'acceptance_status':acceptance.get('status'),'criteria':acceptance.get('criteria'),'browser_events':real.get('events'),'browser':real.get('browser'),'screenshots':data.get('screenshot_inventory')}\n    print(name, json.dumps(result,sort_keys=True,default=str)[:2200])\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n 'Uvicorn running|running on' /tmp/ephi_u1_verify2/positive-server.log\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n '\\\"version\\\"|\\\"status\\\"|\\\"websocket_session_observed\\\"|\\\"session_cookie_attributes\\\"|\\\"console_errors\\\"|\\\"failed_network_urls\\\"' /tmp/ephi_u1_verify2/o8-browser.json | head -30; rtk rg -n '\\\"status\\\"|\\\"responsive_viewports\\\"|\\\"browser_events_clean\\\"' /tmp/ephi_u1_verify2/o10-rendered.json | head -25\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git rev-parse origin/main; rtk git rev-parse main; rtk git rev-parse HEAD; rtk git show -s --format='%H%n%P%n%T' HEAD; rtk git status --porcelain=v1; rtk git diff --name-only 156e47b1e0cc3c77a2a3f0e2b65875eacc9aa0b4..HEAD -- migrations\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk env PYTHONPATH=src EPHI_ENV=qa EPHI_TEST_POSTGRES_DSN='postgresql:///ephi_u1_verify_20260923' python3 -m ephi.downstream --entrypoint examples.synthetic_downstream.provider:build_bundle --json\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nimport json\nx=json.load(open('/tmp/ephi_u1_verify2/o8-browser.json'))\nprint('keys',sorted(x))\nfor k,v in x.items():\n    if isinstance(v,dict):\n        print(k, 'keys',sorted(v)[:40])\n        for kk,vv in v.items():\n            if 'origin' in kk.lower() or 'deni' in kk.lower() or 'status' in kk.lower():\n                print(' ',kk,repr(vv)[:400])\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nimport json\nx=json.load(open('/tmp/ephi_u1_verify2/o8-browser.json'))\nprint(json.dumps({'status':x['status'],'postgres':x['postgres'],'execution':x['execution'],'origin_policy':x['security_preflight'],'websocket_matrix':x['websocket_matrix'],'rejected_http':x['disallowed_state_changing_http'],'browser':{k:v for k,v in x['browser'].items() if k not in ('observed_websocket_urls','response_header_facts')},'route_status':x['runtime_route_inventory'].get('status')},sort_keys=True,separators=(',',':')))\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nfrom __future__ import annotations\nimport hashlib, json, shutil\nfrom pathlib import Path\n\nroot=Path.cwd()\nout=root/'evidence/u1/verify2'\nout.mkdir(parents=True,exist_ok=True)\nartifacts={\n    'attention-1440x900.png':Path('/tmp/ephi_u1_verify2/attention-1440x900.png'),\n    'episode-1440x900-viewport.png':Path('/tmp/ephi_u1_verify2/episode-1440x900-viewport.png'),\n    'episode-full-page.png':Path('/tmp/ephi_u1_verify2/episode-full-page.png'),\n}\nfor name,source in artifacts.items(): shutil.copyfile(source,out/name)\nartifact_facts={}\nfor name in artifacts:\n    data=(out/name).read_bytes()\n    artifact_facts[name]={'bytes':len(data),'sha256':hashlib.sha256(data).hexdigest()}\nreport={\n  'schema_version':1,\n  'request':'EPHI / CHG-182 / U1 R2 VERIFY continuation',\n  'verdict':'SOURCE_FIX_REQUIRED',\n  'verdict_reason':'The actual downstream-composed Episode page renders its content in a 73 px wide column at 1440x900 and creates a 12022 px document. The browser reaches the permitted Episode with no runtime/network errors, but the rendered state is not bounded.',\n  'fabric_binding':{\n    'authoritative_target':'main@156e47b1e0cc3c77a2a3f0e2b65875eacc9aa0b4',\n    'registered_origin_branch':'main',\n    'predecessor_request':'ephi-u1-downstream-extension-abi-v1',\n    'predecessor_fabric_job':'CF-840b0bc71e2f88b6cde8a973',\n    'predecessor_candidate':'9df7b1f3f49758fba459479404ae74215736b81f',\n    'verify2_transport_binding':'target base kept at the registered main commit; predecessor was carried forward as its exact direct child'\n  },\n  'git_identity':{\n    'verification_branch':'codex/ephi-u1-downstream-extension-abi-verify2',\n    'registered_base_commit':'156e47b1e0cc3c77a2a3f0e2b65875eacc9aa0b4',\n    'remote_main_at_execution':'156e47b1e0cc3c77a2a3f0e2b65875eacc9aa0b4',\n    'local_main_pointer_observed':'fb9710e42b64f3a0ff58599011dd9fa8d06100d8',\n    'local_main_moved':False,\n    'candidate_commit':'9df7b1f3f49758fba459479404ae74215736b81f',\n    'candidate_parent':'156e47b1e0cc3c77a2a3f0e2b65875eacc9aa0b4',\n    'candidate_tree':'a73b4cbb9e9f30d7c410048ced40175b015a916c',\n    'candidate_was_verification_branch_head_during_execution':True,\n    'candidate_exact_commit_preserved_in_ancestry':True,\n    'candidate_is_direct_descendant_of_registered_base':True,\n    'product_source_paths_compared':['src/ephi','examples'],\n    'product_source_bytes_changed_after_candidate':False,\n    'product_source_diff_paths_after_candidate':[],\n    'migration_diff_paths_from_base_to_candidate':[],\n    'nicegui_base_modifications':False\n  },\n  'positive_application_launch':{\n    'normal_launch_command':'python -m ephi --serve',\n    'runtime_path':'ephi.app:main -> ephi.ui.app:run_ephi -> build_composition_from_environment',\n    'environment_class':'qa',\n    'downstream_entrypoint':'examples.synthetic_downstream.provider:build_bundle',\n    'postgresql':{'server_version':'18.6 (Homebrew)','database':'dedicated local verification database; DSN redacted'},\n    'allowed_origin':'http://127.0.0.1:56742',\n    'session_transport':{'storage_secret':'present; ephemeral value not recorded','same_site':'Strict','secure_cookie':False,'cookie_name':'session','cookie_value_recorded':False,'nicegui_websocket_path':'/_nicegui_ws/socket.io/','websocket_sessions_opened':2},\n    'synthetic_runtime_metadata_matches_environment':True,\n    'authority_supplied_by_downstream_bundle':[\n      'operation-time identity and AccessScope',\n      'exact source binding and bounded observer',\n      'immutable artifact blob/catalog provider',\n      'handoff recipient/channel provider',\n      'typed policy configuration',\n      'PostgreSQL runtime provider'\n    ],\n    'existing_ephi_authorities_composed':[\n      'CurrentAuthorizationAuthority',\n      'AttentionQueryService',\n      'EpisodeBriefQueryService',\n      'EpisodeWorkflowCommandService',\n      'DecisionLoopCommandService',\n      'NextCheckPlannerService',\n      'DecisionSnapshotHandoffService and existing worker/outbox storage',\n      'ArtifactService and same PostgreSQL catalog adapter',\n      'SourceSnapshotIngressService and exact observer binding'\n    ],\n    'browser_seed':{\n      'authority':'existing PostgreSQL reference adapter fixture methods',\n      'episode_id':'synthetic-u1-episode',\n      'scope_id':'synthetic-u1-scope',\n      'workflow_state':'OPEN',\n      'browser_owned_authority':False,\n      'test_only_route_added':False\n    },\n    'legacy_fallbacks_absent':{\n      'EPHI_DEV_variables':True,\n      'EPHI_METROLOGY_SOURCE_ADAPTER_and_related_variables':True,\n      'EPHI_POSTGRES_DSN':True,\n      'EPHI_W1_EPISODE_ID':True\n    },\n    'actual_browser':{\n      'engine':'isolated headless Chromium via Playwright 1.62.0',\n      'viewport':[1440,900],\n      'routes':[\n        {'path':'/','http_status':200,'rendered_subject':'synthetic-engineer','rendered_scope':'synthetic-u1-scope','rendered_episode':'synthetic-u1-episode','attention_rows':1},\n        {'path':'/episode','http_status':200,'navigation':'selected permitted Attention row, then normal Open episode action','rendered_subject':'synthetic-engineer','rendered_scope':'synthetic-u1-scope','rendered_episode':'synthetic-u1-episode','workflow_state':'OPEN','claim_action_available':True}\n      ],\n      'server_alive_after_browser':True,\n      'browser_failure_inventory':{'console_errors':[],'page_errors':[],'failed_requests':[],'http_errors':[]},\n      'screenshots':artifact_facts\n    },\n    'episode_layout_diagnostic':{\n      'status':'SOURCE_DEFECT',\n      'viewport_px':{'width':1440,'height':900},\n      'document_px':{'width':1440,'height':12022},\n      'main_px':{'width':1440,'height':12022},\n      'episode_surface_px':{'width':73,'height':11807,'x':276,'y':195},\n      'description_list_px':{'width':7,'height':5777,'x':309,'y':2763},\n      'diagnostic':'The normal Episode page content collapses into a narrow vertical column and the page is not bounded.',\n      'source_attribution':'Not determined here; preserve the exact candidate and bind a separate FIX request.'\n    }\n  },\n  'actual_application_startup_negative_matrix':{\n    'status':'PASS',\n    'all_cases_exit_before_server_start':True,\n    'all_cases_exit_code':1,\n    'cases':[\n      {'case':'non-development bundle absent with legacy dev/source values and import trap configured','result':'FAIL_CLOSED','safe_reason':'non-development EPHI requires an explicit downstream provider bundle','legacy_source_module_imported':False},\n      {'case':'malformed module:factory entrypoint','result':'FAIL_CLOSED','reason_code':'INVALID_ENTRYPOINT'},\n      {'case':'nonexistent provider module','result':'FAIL_CLOSED','reason_code':'PROVIDER_LOAD_ERROR'},\n      {'case':'provider module import exception','result':'FAIL_CLOSED','reason_code':'PROVIDER_LOAD_ERROR'},\n      {'case':'provider factory exception','result':'FAIL_CLOSED','reason_code':'PROVIDER_LOAD_ERROR'},\n      {'case':'incompatible ABI 9.0.0 with identity-call sentinel','result':'FAIL_CLOSED','reason_code':'INCOMPATIBLE_ABI','provider_method_invoked':False},\n      {'case':'runtime provider exception','result':'FAIL_CLOSED','reason_code':'COMPOSITION_FAIL_CLOSED'}\n    ],\n    'secret_marker_scan':{'marker_classes':['DSN and password','token','cookie','storage secret','private endpoint','raw source row','private mapping value','synthetic exception marker'],'outputs_scanned':7,'leaks':0,'raw_exception_details_suppressed':True,'negative_server_or_rendered_state_created':False}\n  },\n  'u1_invariant_reconfirmation':{\n    'abi_id':'org.ephi.downstream',\n    'abi_version':'1.0.0',\n    'qa_safe_manifest_hash':'a4fd8c31bde6e80784d9e19a11b3f3e30a04577118419364be70eaf89e886225',\n    'safe_manifest_rebuild_restart':{'separate_processes':2,'hashes_equal':True,'canonical_safe_outputs_equal':True},\n    'six_required_categories':{'status':'PASS','categories':['identity','source','artifacts','notifications','policy','runtime'],'all_compatible':True},\n    'synthetic_package_boundary':{'public_imports':'PASS','core_edit_boundary':'PASS','forbidden_imports':[],'forbidden_constructs':[]},\n    'no_upstream_migration_changes':True,\n    'no_alternate_authorities':{'workflow_read_receipt_auth_source_state':'PASS','composition_uses_existing_authorities':True},\n    'current_authorization_freshness_and_revocation':'PASS; focused downstream ABI tests and O8 current-authorization suite',\n    'source_describe_binding_mismatch':'PASS; focused downstream ABI tests fail closed on exact binding mismatch',\n    'manufacturing_control_capability':'ABSENT; observer contract remains bounded and read only',\n    'artifact_sha256_byte_size_scope_corruption':'PASS; focused ABI and PostgreSQL downstream composition/restart tests',\n    'handoff_committed_outbox_dedup_unknown_reconciliation':'PASS; PostgreSQL downstream composition/restart test',\n    'typed_policy_and_upstream_validation':'PASS; focused ABI test rejects unsupported schemas and malformed typed values',\n    'manifest_preflight_error_secret_safety':'PASS; focused tests and seven actual startup negative cases',\n    'ui_feature_expansion':'NONE; existing Attention and Episode routes only',\n    'nicegui_base_or_chg162_workaround':'NONE'\n  },\n  'regressions':{\n    'focused_downstream_abi_conformance':{'command':'python -m unittest tests.test_downstream_abi -v','passed':24,'failed':0,'errors':0,'skipped':0,'status':'PASS'},\n    'downstream_postgresql_composition_restart':{'command':'python -m unittest tests.test_downstream_postgresql -v','passed':1,'failed':0,'errors':0,'skipped':0,'postgresql':'18.6','status':'PASS'},\n    'o8_browser_session_transport':{'command':'tools/o8_browser_qualification.py','status':'PASS','attention_and_episode_rendered':True,'websocket_session_observed':True,'cookie_value_recorded':False,'off_origin_mutation_status':403,'websocket_matrix':['allowed origin accepted','missing/null/wrong scheme/wrong port/attacker suffix rejected']},\n    'o10_rendered_browser':{'command':'tools/o10_rendered_accessibility.py','status':'PASS','criteria_all_passed':True,'browser_console_page_request_errors':0,'viewports_px':[[320,800],[390,844],[768,1024],[1024,768],[1440,900]],'note':'Separate legacy dev-identity regression only; direct downstream Episode screenshot and geometry are recorded above.'},\n    'full_suite_real_postgresql_18':{'command':'python -m unittest discover -s tests -v','postgresql':'18.6','passed':324,'failed':0,'errors':0,'skipped':0,'status':'PASS'},\n    'w0_clean_candidate_baseline_before_verify_artifacts':{'command':'tools/w0_repo_baseline.py','status':'BASELINE_PASS','candidate_commit':'9df7b1f3f49758fba459479404ae74215736b81f','worktree_clean':True,'tests_passed':245,'tests_skipped':79,'tests_failed':0,'tests_errors':0},\n    'application_self_check':'PASS',\n    'compileall':'PASS',\n    'git_diff_check_before_evidence_artifacts':'PASS',\n    'package_checker_pre_evidence_refresh':{'status':'PASS','package_files':218}\n  },\n  'target_only_nonclaims':{\n    'G02_real_family_source_science':'NOT_RUN',\n    'G06_real_family_source_science':'NOT_RUN',\n    'company_identity_and_tls':'NOT_RUN',\n    'G10_production_like_capacity':'NOT_RUN',\n    'G12':'NOT_CLAIMED',\n    'Port_Gate':'NOT_CLAIMED',\n    'Production':'NOT_CLAIMED'\n  },\n  'publication':{'verification_pass':False,'product_source_fix_required':True,'push_or_fabric_pass_publication':'NOT_PERFORMED'},\n  'validation_after_evidence_addition':{'package_checker_manifest_refresh':'PENDING','package_files':'PENDING','full_postgresql_suite':'PENDING','git_diff_check':'PENDING'}\n}\n(out/'verify2.json').write_text(json.dumps(report,sort_keys=True,indent=2,ensure_ascii=False)+'\\\\n',encoding='utf-8')\nprint(json.dumps({'evidence_file':str(out/'verify2.json'),'screenshots':artifact_facts,'report_bytes':(out/'verify2.json').stat().st_size},sort_keys=True,separators=(',',':')))\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk env PYTHONPATH=src EPHI_TEST_POSTGRES_DSN='postgresql:///ephi_u1_verify_20260923' python3 -m unittest discover -s tests -v\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nimport json\nfrom pathlib import Path\np=Path('evidence/u1/verify2/verify2.json')\ndata=json.loads(p.read_text(encoding='utf-8'))\ndata['validation_after_evidence_addition']={\n  'package_checker_manifest_refresh':{'status':'PASS','package_files':222},\n  'full_postgresql_suite':{'status':'PASS','postgresql':'18.6','passed':324,'failed':0,'errors':0,'skipped':0},\n  'git_diff_check':'PASS',\n  'application_self_check':'PASS',\n  'compileall':'PASS',\n  'w0_repo_baseline_on_clean_candidate':'BASELINE_PASS; exact candidate commit and clean worktree, 245 pass / 79 integration skips / 0 fail / 0 error'\n}\np.write_text(json.dumps(data,sort_keys=True,indent=2,ensure_ascii=False)+'\\\\n',encoding='utf-8')\nprint({'updated':str(p),'bytes':p.stat().st_size})\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m compileall -q src examples tests'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk env PYTHONPATH=src python3 -m ephi --self-check --json'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk env PYTHONPATH=src EPHI_TEST_POSTGRES_DSN='postgresql:///ephi_u1_verify_20260923' python3 -m unittest discover -s tests -v\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short --branch; rtk git diff --stat; rtk git diff --name-only 9df7b1f3f49758fba459479404ae74215736b81f -- src/ephi examples; rtk git diff --name-only 156e47b1e0cc3c77a2a3f0e2b65875eacc9aa0b4..HEAD -- migrations; rtk git diff -- manifest.json | head -60'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git add manifest.json evidence/u1/verify2 && rtk git commit -m 'Record CHG-182 U1 verify2 application evidence'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m compileall -q src examples tests && rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk env PYTHONPATH=src python3 -m ephi --self-check --json'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git status --short --branch; rtk git show -s --format='%H%n%P%n%T' HEAD; rtk git merge-base --is-ancestor 9df7b1f3f49758fba459479404ae74215736b81f HEAD; rtk git diff --quiet 9df7b1f3f49758fba459479404ae74215736b81f..HEAD -- src/ephi examples; printf 'product_source_diff_exit=%s\\\\n' \\\"\"'$?\"; rtk git rev-parse origin/main; rtk git rev-parse main'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/w0_repo_baseline.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk dropdb --if-exists ephi_u1_verify_20260923'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk rm -rf /tmp/ephi_u1_verify2'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git status --short --branch; rtk git show --stat --oneline --summary HEAD; rtk git merge-base --is-ancestor 9df7b1f3f49758fba459479404ae74215736b81f HEAD; rtk git diff --quiet 9df7b1f3f49758fba459479404ae74215736b81f..HEAD -- src/ephi examples; printf 'product_source_diff_exit=%s\\\\n' \\\"\"'$?\"; rtk git diff --check; rtk test -f evidence/u1/verify2/verify2.json && rtk test -f evidence/u1/verify2/episode-1440x900-viewport.png'",
+      "exit_code": 2,
+      "type": "command_execution"
+    }
+  ],
+  "codex": {
+    "cli_version": "codex-cli 0.155.1",
+    "configured_model": "gpt-6-luna",
+    "event_count": 213,
+    "provider_reported_model": null,
+    "reasoning_effort": "xhigh",
+    "terminal_type": "turn.completed",
+    "usage": {
+      "cache_hit_percent": 97.44,
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 8418176,
+      "fresh_input_tokens": 221146,
+      "input_tokens": 8639322,
+      "non_reasoning_output_tokens": 27195,
+      "output_tokens": 71515,
+      "reasoning_output_tokens": 44320,
+      "total_processed_tokens": 8710837
+    },
+    "warnings": []
+  },
+  "commits": [
+    {
+      "sha": "d34e739a301bcb7834d1b45f20027a30ed63845c",
+      "subject": "Record CHG-182 U1 verify2 application evidence"
+    },
+    {
+      "sha": "9df7b1f3f49758fba459479404ae74215736b81f",
+      "subject": "CHG-182: add downstream extension ABI v1"
+    }
+  ],
+  "diff": {
+    "additions": 3265,
+    "changed_files": 24,
+    "commit_count": 2,
+    "deletions": 11
+  },
+  "error_code": null,
+  "evidence_manifest": {
+    "count": 10,
+    "items": [
+      {
+        "bytes": 12444,
+        "path": "01_Product_and_Architecture.md",
+        "sha256": "462fe354f63119a712a623523b0511f01161a49018bb69da001d4a40ef46e8c6"
+      },
+      {
+        "bytes": 19822,
+        "path": "13_Package_Review.md",
+        "sha256": "6ef19626468b8c9ef93508d9dfc618b8dcfa9a25b7ef14f910b67337f5649cc6"
+      },
+      {
+        "bytes": 22236,
+        "path": "README.md",
+        "sha256": "949ad1e595b72df11e042757b8de5f027a393e4cafa3ffd821386b2ceaaf19e7"
+      },
+      {
+        "bytes": 12983,
+        "path": "docs/Downstream_Integration_ABI.md",
+        "sha256": "cf889b4476f8fac3ee9401b44a2ecfdd9224320c122edf683a8500550e126776"
+      },
+      {
+        "bytes": 9744,
+        "path": "evidence/u1/downstream_abi_conformance.json",
+        "sha256": "900c58454be92da519ad90722debb14a56a8663ba4caf69cf0911ad93bbb8b82"
+      },
+      {
+        "bytes": 76376,
+        "path": "evidence/u1/verify2/attention-1440x900.png",
+        "sha256": "a9f51a0de71a66f096a31736a1d3dce1bcf124768fb899a793294c66302be9f5"
+      },
+      {
+        "bytes": 40042,
+        "path": "evidence/u1/verify2/episode-1440x900-viewport.png",
+        "sha256": "e717cead48fe1fd4d885733f6116f670b6f3f41f72e056f73bed3411b09b51bc"
+      },
+      {
+        "bytes": 209355,
+        "path": "evidence/u1/verify2/episode-full-page.png",
+        "sha256": "a7d5991e5a92a5b1ea308c35b0f6acbe5c0d9b86af90807aa5ea4c0dc0f4c359"
+      },
+      {
+        "bytes": 13569,
+        "path": "evidence/u1/verify2/verify2.json",
+        "sha256": "dce321582d82cc4d818bfd6e4da61d5cb3f54674b36ba27b365be5db29356660"
+      },
+      {
+        "bytes": 39578,
+        "path": "manifest.json",
+        "sha256": "e0c01f02bc8ab71813dba57a76af5f108ddc2024388d3c79067a3d952c8a2d06"
+      }
+    ],
+    "version": 1
+  },
+  "evidence_publisher_release": "1.2.5-dashboard-controls-candidate",
+  "fabric_capture": {
+    "applied": false,
+    "paths_before": 0,
+    "transient_untracked_removed": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "fabric_release": "1.2.5-dashboard-controls-candidate",
+  "failure_class": null,
+  "finished_at": "2026-09-23T14:32:44Z",
+  "git": {
+    "base_is_ancestor": true,
+    "base_sha": "156e47b1e0cc3c77a2a3f0e2b65875eacc9aa0b4",
+    "branch": "codex/ephi-u1-downstream-extension-abi-verify2",
+    "detached_verify": false,
+    "head_sha": "d34e739a301bcb7834d1b45f20027a30ed63845c",
+    "remote_exact_head": true,
+    "remote_head_sha": "d34e739a301bcb7834d1b45f20027a30ed63845c",
+    "target_branch": "main",
+    "target_drifted_since_acceptance": false,
+    "target_head_observed_after_execution": "156e47b1e0cc3c77a2a3f0e2b65875eacc9aa0b4",
+    "work_branch": "codex/ephi-u1-downstream-extension-abi-verify2",
+    "worktree_clean": true
+  },
+  "instructions": {
+    "files": [
+      {
+        "bytes": 1458,
+        "path": "AGENTS.md",
+        "sha256": "4349f387a79d886ed1264604ff48c582698e539e08ed8fb2f9d8ab8fbf6f804a"
+      }
+    ],
+    "total_bytes": 1458,
+    "warning": null
+  },
+  "job_id": "CF-cb9b379d7bef4704181d277a",
+  "kind": "codex-fabric-audit-evidence",
+  "locator": {
+    "branch": "codex-fabric/evidence/ephi/ephi-u1-downstream-extension-abi-verify2",
+    "path": ".codex-fabric/audit.json",
+    "ref": "refs/heads/codex-fabric/evidence/ephi/ephi-u1-downstream-extension-abi-verify2"
+  },
+  "operation": "VERIFY",
+  "policy": {
+    "environment_policy_sha256": "e077daca74297b3c30bee8989f00f8ca5338f7610b4d016a6c48db524205d064",
+    "fabric_release": "1.2.5-dashboard-controls-candidate",
+    "policy_sha256": "123615bf2f6e57dcac197e49ca98ceac59ada86a55e2c84445ea5d00812c0833",
+    "registry_sha256": "cfc765f3211c37c7967a138f3b2d89a99341939b15b2623f92744d007f625d6f"
+  },
+  "project_id": "ephi",
+  "recovery": {
+    "model_rerun_safe": false,
+    "recovery_required": false,
+    "retry_safe": false,
+    "retry_scope": null,
+    "worktree_retained": true
+  },
+  "request": "ephi-u1-downstream-extension-abi-verify2",
+  "schema_version": 1,
+  "started_at": "2026-09-23T13:45:33Z",
+  "status": "EXECUTED_CHANGE",
+  "timing": {
+    "execution_seconds": 2831,
+    "queue_seconds": 0,
+    "total_seconds": 2831
+  },
+  "transport": {
+    "bytes": 9254,
+    "envelope": "FABRIC/2",
+    "prompt_bytes": 8921,
+    "prompt_sha256": "04b255469ed599089a5c1edebc8b41c6c0ec33e86ac10352adbc67bca760b116",
+    "sha256": "cb9b379d7bef4704181d277a4d55bc8e84adf110cef107837df85c580fdd150d"
+  }
+}
