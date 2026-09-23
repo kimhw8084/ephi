@@ -263,7 +263,7 @@ def _positive_browser_path(dsn: str, seed: dict[str, str], artifact_dir: Path) -
                 open_button.focus()
                 page.keyboard.press("Enter")
                 page.wait_for_url("**/episode", timeout=30000)
-                page.get_by_role("heading", name="Episode decision brief", exact=True).wait_for(timeout=30000)
+                page.get_by_role("heading", name="Episode investigation workspace", exact=True).wait_for(timeout=30000)
                 page.locator(".ephi-o10-episode-surface dl").get_by_text("OPEN", exact=True).wait_for(timeout=30000)
 
                 heading = page.locator('[data-cui-slot="header"] h1')

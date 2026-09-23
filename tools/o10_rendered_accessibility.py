@@ -286,7 +286,7 @@ def _attach_events(page: Any, events: dict[str, list[dict[str, str]]]) -> None:
 
 
 def _wait_for_text(page: Any, text: str, timeout: int = 30000) -> None:
-    if text in {"Attention", "Episode decision brief"}:
+    if text in {"Attention", "Episode investigation workspace"}:
         page.get_by_role("heading", name=text).wait_for(timeout=timeout)
         return
     page.get_by_text(text, exact=False).first.wait_for(timeout=timeout)
@@ -352,9 +352,9 @@ def _keyboard_open_and_claim(page: Any, base: str, episode_id: str, evidence_dir
     focus_after_selection = _focused_name(page)
     preview_button.press("Enter")
     page.wait_for_url("**/episode", timeout=30000)
-    _wait_for_text(page, "Episode decision brief")
+    _wait_for_text(page, "Episode investigation workspace")
     _wait_for_visible_text(page, episode_id)
-    page.locator("dl").get_by_text("OPEN", exact=True).wait_for(timeout=30000)
+    page.get_by_text("OPEN", exact=True).last.wait_for(timeout=30000)
     page.get_by_role("button", name="Claim episode").wait_for(timeout=30000)
     episode_aria = _aria_snapshot(page)
     episode_semantic_facts = _semantic_facts(page, surface="episode", episode_id=episode_id, aria_snapshot=episode_aria)
@@ -363,7 +363,7 @@ def _keyboard_open_and_claim(page: Any, base: str, episode_id: str, evidence_dir
     primary_focus = _focus_style(page, primary, already_keyboard_focused=True)
     focus_before_primary = _focused_name(page)
     primary.press("Enter")
-    page.locator("dl").get_by_text("CLAIMED", exact=True).wait_for(timeout=30000)
+    page.get_by_text("CLAIMED", exact=True).last.wait_for(timeout=30000)
     page.wait_for_function(
         """() => {
             const node = document.querySelector('[data-ephi-focus-target="primary-action"]');
@@ -512,7 +512,7 @@ def _real_browser(base: str, seed: dict[str, str], evidence_dir: Path) -> dict[s
         semantics_attention = critical["attention_semantic_facts"]
         walkthrough = _keyboard_walkthrough(page)
         page.goto(base + "/episode", wait_until="domcontentloaded")
-        _wait_for_text(page, "Episode decision brief")
+        _wait_for_text(page, "Episode investigation workspace")
         forced_colors = {"status": "NOT_SUPPORTED"}
         try:
             page.emulate_media(forced_colors="active")
@@ -659,7 +659,7 @@ def _responsive_browser(base: str, evidence_dir: Path, episode_id: str, events: 
                 attention_open.focus()
                 page.keyboard.press("Enter")
                 page.wait_for_url("**/episode", timeout=30000)
-                _wait_for_text(page, "Episode decision brief")
+                _wait_for_text(page, "Episode investigation workspace")
                 stage = "episode_identity"
                 _wait_for_visible_text(page, episode_id)
                 page.screenshot(path=str(evidence_dir / f"episode-{width}x{height}.png"), full_page=True)
@@ -669,7 +669,7 @@ def _responsive_browser(base: str, evidence_dir: Path, episode_id: str, events: 
                 episode_overflow = _overflow_facts(page)
                 content_visibility = {
                     **attention_content_visibility,
-                    "episode_heading": _visible_and_unclipped(page.get_by_role("heading", name="Episode decision brief"), page),
+                    "episode_heading": _visible_and_unclipped(page.get_by_role("heading", name="Episode investigation workspace"), page),
                     "episode_status": _visible_and_unclipped(page.locator(".ephi-o10-live-status"), page),
                     "episode_primary": _visible_and_unclipped(episode_primary, page),
                 }

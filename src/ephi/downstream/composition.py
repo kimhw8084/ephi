@@ -9,14 +9,19 @@ from ephi.application import (
     AccessScope,
     ArtifactService,
     AttentionQueryService,
+    ComparableCaseHistoryQueryService,
     CurrentAuthorizationAuthority,
     DecisionLoopCommandService,
     DecisionSnapshotHandoffService,
     EpisodeBriefQueryService,
+    EpisodeInvestigationQueryService,
     EpisodeWorkflowCommandService,
     MetrologySourceBinding,
     NextCheckPlannerService,
     Principal,
+    RcaAnalysisService,
+    RcaMaterializationCoordinator,
+    RcaMaterializationView,
     DeliveryChannelAdapter,
     SourceSnapshotIngressService,
 )
@@ -45,6 +50,8 @@ class DownstreamComposition:
     scope_provider: Callable[[], AccessScope]
     attention: AttentionQueryService
     episode_briefs: EpisodeBriefQueryService
+    episode_investigations: EpisodeInvestigationQueryService
+    rca_materializations: RcaMaterializationCoordinator
     workflow: EpisodeWorkflowCommandService
     decision_loop: DecisionLoopCommandService
     planner: NextCheckPlannerService
@@ -55,6 +62,19 @@ class DownstreamComposition:
     source_binding: MetrologySourceBinding
     policy_configuration: PolicyConfiguration
     notification_channel: DeliveryChannelAdapter
+
+    def process_rca_materialization(self, scope: AccessScope, owner: str) -> RcaMaterializationView | None:
+        """Run one queued bounded RCA job through the existing worker authority."""
+
+        principal = self.principal_provider()
+        return self.rca_materializations.process_one(
+            principal,
+            scope,
+            owner,
+            load_current_facts=lambda current_principal, query: self.episode_investigations.load_current_rca_facts(
+                current_principal, query
+            ),
+        )
 
     def close(self) -> None:
         try:
@@ -149,6 +169,25 @@ def compose_downstream(
         workflow = EpisodeWorkflowCommandService(adapter, current_authorization)
         decision_loop = DecisionLoopCommandService(adapter, current_authorization)
         planner = NextCheckPlannerService(decision_loop)
+        policy_configuration = policy_provider.configuration
+        if not isinstance(policy_configuration, PolicyConfiguration):
+            raise DownstreamFailure(DownstreamReasonCode.COMPOSITION_FAIL_CLOSED, categories=(ProviderCategory.POLICY.value,))
+        comparable_history = ComparableCaseHistoryQueryService(read_store, read_store, current_authorization)
+        rca_service = RcaAnalysisService(current_authorization)
+        rca_materializations = RcaMaterializationCoordinator(
+            adapter.worker_store(), adapter, artifact_service, current_authorization, rca_service
+        )
+        episode_investigations = EpisodeInvestigationQueryService(
+            episode_briefs,
+            decision_loop,
+            planner,
+            current_authorization,
+            policy_configuration.planner_policy,
+            policy_configuration.check_catalog,
+            rca_service,
+            comparable_history,
+            rca_materializations,
+        )
         handoff = DecisionSnapshotHandoffService(
             adapter,
             current_authorization,
@@ -156,12 +195,6 @@ def compose_downstream(
             recipients=notifications.recipients,
         )
         source_ingress = SourceSnapshotIngressService(adapter.source_store(), artifact_service)
-        policy_configuration = policy_provider.configuration
-        # This second, inexpensive type check keeps property-based provider
-        # implementations from changing policy identity after preflight.
-        if not isinstance(policy_configuration, PolicyConfiguration):
-            raise DownstreamFailure(DownstreamReasonCode.COMPOSITION_FAIL_CLOSED, categories=(ProviderCategory.POLICY.value,))
-
         return DownstreamComposition(
             adapter=adapter,
             runtime_settings=settings,
@@ -170,6 +203,8 @@ def compose_downstream(
             scope_provider=identity.resolve_scope,
             attention=attention,
             episode_briefs=episode_briefs,
+            episode_investigations=episode_investigations,
+            rca_materializations=rca_materializations,
             workflow=workflow,
             decision_loop=decision_loop,
             planner=planner,

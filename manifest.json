@@ -690,9 +690,14 @@
       "sha256": "de9996707b14c26d73a5bffe85ab6e92a88eeee694c3e18bca97913b340a7b30"
     },
     {
+      "path": "examples/synthetic_downstream/flagship.py",
+      "bytes": 13216,
+      "sha256": "0f9d586b6935eec88b0021b2955d4a6d4e854a7fe9315f59f5f8ff80fc9adac0"
+    },
+    {
       "path": "examples/synthetic_downstream/provider.py",
-      "bytes": 10913,
-      "sha256": "40a30a83e3dec5632dff49941cc411b41edee71a64a5a8ab7ae0135bc537bc4e"
+      "bytes": 17577,
+      "sha256": "7390f3e02271648f614ce85cfd4c0912080a501bf253908578b46b037df2a174"
     },
     {
       "path": "migrations/001_o2_command_core.sql",
@@ -836,8 +841,8 @@
     },
     {
       "path": "src/ephi/application/__init__.py",
-      "bytes": 14323,
-      "sha256": "b1b00c2687d98c127eb8bda31105cad7ed17db763694d8bd7ffd09e922437120"
+      "bytes": 16792,
+      "sha256": "ab76ba66d6e646f19ac79c5a467bb7e4c05005c7794052f96f050a8372c4267f"
     },
     {
       "path": "src/ephi/application/artifacts.py",
@@ -885,9 +890,14 @@
       "sha256": "f607423b3b89eb8a3af5245ce9c4b3129d0890ebc4d8e3624d22689757bd671d"
     },
     {
+      "path": "src/ephi/application/investigation.py",
+      "bytes": 44317,
+      "sha256": "f06b43ccd0eac8e9d7da0d11751e27c7c6704f85af0839a67ffa071511c4c5f1"
+    },
+    {
       "path": "src/ephi/application/o10.py",
-      "bytes": 14748,
-      "sha256": "9a47ddaaf1318807687829342e38afeb3e5ff289bdf495907c9132e493250f98"
+      "bytes": 14757,
+      "sha256": "48bcab2951755e0ec40c18f338e4d730f437dc84c80a823e07ce10695c73377f"
     },
     {
       "path": "src/ephi/application/operations.py",
@@ -898,6 +908,16 @@
       "path": "src/ephi/application/planner.py",
       "bytes": 82054,
       "sha256": "6754475cf3f25d30b2e229c2a17e829c04909bd18a2dee52ee1a10a182810e58"
+    },
+    {
+      "path": "src/ephi/application/rca.py",
+      "bytes": 58580,
+      "sha256": "f789aa8f3c5071bcb88598bf1c9679b4ad8df41c45b7ddae52ddc3d53a474f12"
+    },
+    {
+      "path": "src/ephi/application/rca_materialization.py",
+      "bytes": 16561,
+      "sha256": "c3dc82aaee794c395673a973d54f0359e0e7fcdb56f3aa771ba8c03bbde63e36"
     },
     {
       "path": "src/ephi/application/read.py",
@@ -956,8 +976,8 @@
     },
     {
       "path": "src/ephi/downstream/composition.py",
-      "bytes": 8719,
-      "sha256": "fc95f968a258fb7a04b5590faa25845515c29aab7dd6ed841c4c3003bf01f85c"
+      "bytes": 10221,
+      "sha256": "fe52549048c8301fb8b96c4718ecf6815ee07a055b4f370b2c3456ce42807021"
     },
     {
       "path": "src/ephi/downstream/contracts.py",
@@ -1046,8 +1066,8 @@
     },
     {
       "path": "src/ephi/ui/app.py",
-      "bytes": 45386,
-      "sha256": "43657029b1c73312a3e2736b33bbbe841f1f2b1ed27cb379c32f534f6963e239"
+      "bytes": 75830,
+      "sha256": "806d2b19573fccd5005fa3412aeefe7a382c0ebfef5da17ae9c6aa03634040c3"
     },
     {
       "path": "src/ephi/ui/provider.py",
@@ -1205,6 +1225,16 @@
       "sha256": "8846df8b55840b3df0501c61aeea4cdccb471f793332151251fa40c931db6d79"
     },
     {
+      "path": "tests/test_o6_rca.py",
+      "bytes": 22261,
+      "sha256": "c6a5d992fcfc41ba862d07a65cc37545f6b2fc16ce286a6a2ec52d018807da7f"
+    },
+    {
+      "path": "tests/test_o6_rca_postgresql.py",
+      "bytes": 8196,
+      "sha256": "77ece03e044a4376cc01a7dee16a94458971494abacfbe51219aae03c3ff543d"
+    },
+    {
       "path": "tests/test_o8_browser_transport.py",
       "bytes": 18557,
       "sha256": "b4a7c23b06f105850eef8eb070db3cd4794e147f0ca72ed6997f208952a85d24"
@@ -1276,8 +1306,8 @@
     },
     {
       "path": "tools/o10_rendered_accessibility.py",
-      "bytes": 47191,
-      "sha256": "ad56f95d731da535a42b8c878cd86417de676ec4d4cab1a99cf562b3ce5f5a5b"
+      "bytes": 47218,
+      "sha256": "1b9ec53edf13bdcc2b3b71234d75304901a8b8b4716f73d51648ae18e3e1da4d"
     },
     {
       "path": "tools/o10_state_harness.py",
@@ -1286,8 +1316,8 @@
     },
     {
       "path": "tools/o8_browser_qualification.py",
-      "bytes": 30077,
-      "sha256": "fd1e5342582cc367b2fa96c3ae800de4933b9f0cd18443c121b55444f5adac4f"
+      "bytes": 30086,
+      "sha256": "b6c94fdf8f167a3f4716ee55a5e2b70c0730f5eb8d4d874621b1bda1eda7cabe"
     },
     {
       "path": "tools/o8_surface_inventory.py",
@@ -1316,8 +1346,13 @@
     },
     {
       "path": "tools/u1_episode_geometry_qualification.py",
-      "bytes": 31611,
-      "sha256": "c28879052ec42d1c9a990915b9c3c6df688b4ef0ea8ccbf8855e7f71f8a902c0"
+      "bytes": 31620,
+      "sha256": "e8c700843846f373ec4010889e1e6b80953facf04859cfeddb6e2c88ec00788f"
+    },
+    {
+      "path": "tools/u2_investigation_qualification.py",
+      "bytes": 37947,
+      "sha256": "cb5022e55440c4faaf14886be5412de699991076ead46e76015096a0f02faf86"
     },
     {
       "path": "tools/w0_baseline.py",

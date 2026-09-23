@@ -51,6 +51,15 @@ from nicegui_base import (
 from ephi.application.attention import AttentionQueryService
 from ephi.application.context import AccessScope, CommandContext, CurrentAuthorizationAuthority, Principal
 from ephi.application.episodes import EpisodeBrief, EpisodeBriefQueryService
+from ephi.application.investigation import (
+    ComponentState,
+    EpisodeInvestigation,
+    EpisodeInvestigationQueryService,
+    InvestigationProfile,
+)
+from ephi.application.decision_loop import CheckExecutionMode
+from ephi.application.decision_loop import CHECK_REQUEST_CAPABILITY
+from ephi.application.planner import CheckTemplateCatalog
 from ephi.application.workflow import EpisodeWorkflowCommandService
 from ephi.application.o10 import (
     attention_result_status as _attention_result_status,
@@ -135,6 +144,20 @@ _O10_UI_CSS = """
 }
 .ephi-o10-episode-surface .cui-button {
     min-width: 44px !important;
+}
+.ephi-o10-episode-surface .ephi-investigation-heading {
+    margin: 0 0 var(--cui-space-2);
+    color: var(--cui-text-primary);
+    font-size: var(--cui-font-size-lg);
+    line-height: var(--cui-line-height-29);
+    overflow-wrap: anywhere;
+}
+.ephi-o10-episode-surface .ephi-investigation-subheading {
+    margin: var(--cui-space-2) 0 var(--cui-space-1);
+    color: var(--cui-text-primary);
+    font-size: 18px;
+    line-height: 24px;
+    overflow-wrap: anywhere;
 }
 .ephi-o10-preview h2 {
     margin: 0 0 var(--cui-space-2);
@@ -266,6 +289,7 @@ class EphiUiComposition:
     runtime: ApplicationRuntime
     workspace: object
     downstream: DownstreamComposition | None = None
+    investigations: EpisodeInvestigationQueryService | None = None
 
     def close(self) -> None:
         self.adapter.close()
@@ -319,6 +343,7 @@ def build_composition_from_environment() -> EphiUiComposition:
             runtime,
             workspace,
             downstream,
+            downstream.episode_investigations,
         )
     dsn = _required_environment("EPHI_POSTGRES_DSN")
     metrology_source_adapter, metrology_source_binding = require_runtime_source_binding()
@@ -750,6 +775,299 @@ async def _load_brief(composition: EphiUiComposition, episode_id: str, guard: St
     return brief
 
 
+async def _load_investigation(
+    composition: EphiUiComposition,
+    episode_id: str,
+    guard: StaleResponseGuard,
+) -> tuple[EpisodeBrief, EpisodeInvestigation | None]:
+    token = guard.next()
+    loader = AsyncLoader(timeout=30)
+
+    def query() -> tuple[EpisodeBrief, EpisodeInvestigation | None]:
+        principal = composition.principal_provider()
+        scope = composition.scope_provider()
+        if composition.investigations is None:
+            return composition.briefs.get_episode_brief(principal, scope, episode_id), None
+        investigation = composition.investigations.get_episode_investigation(principal, scope, episode_id)
+        return investigation.brief, investigation
+
+    result = await loader.load(lambda: asyncio.to_thread(query))
+    if result is None or not guard.is_current(token):
+        raise _StaleResponseError("stale Episode investigation response was discarded")
+    return result
+
+
+def _section_heading(ui: object, text: str, *, level: int = 2) -> None:
+    heading = ui.element(f"h{level}").classes(  # type: ignore[attr-defined]
+        "ephi-investigation-heading" if level == 2 else "ephi-investigation-subheading"
+    )
+    with heading:
+        ui.label(text)  # type: ignore[attr-defined]
+
+
+def _reason_text(reason_codes: object) -> str:
+    if not isinstance(reason_codes, (tuple, list)):
+        return "No reason code supplied"
+    return ", ".join(str(item) for item in reason_codes) or "No limitations recorded"
+
+
+def _component_unavailable(ui: object, label: str, component: object) -> None:
+    state = getattr(getattr(component, "state", None), "value", "UNAVAILABLE")
+    reasons = getattr(component, "reason_codes", ())
+    ui.label(f"{label}: {state.replace('_', ' ').lower()}. {_reason_text(reasons)}")  # type: ignore[attr-defined]
+
+
+def _exposure_summary(profile: InvestigationProfile | None) -> str:
+    if profile is None:
+        return "Not represented in this profile; availability is unknown"
+    unknown = next((
+        item for item in profile.planner_facts.explicit_unknowns
+        if "exposure" in item.fact_identity.lower() or "wip" in item.fact_identity.lower()
+    ), None)
+    return (
+        f"Unavailable / not qualified: {unknown.reason}"
+        if unknown is not None else "Not represented in this profile; availability is unknown"
+    )
+
+
+def _render_investigation_plan_card(
+    ui: object,
+    investigation: EpisodeInvestigation,
+    profile: InvestigationProfile | None,
+    principal: Principal,
+    *,
+    check_catalog: CheckTemplateCatalog | None,
+    on_request_check: Callable[[object, object], object],
+    action_buttons: list[ActionButton],
+) -> None:
+    with Card():
+        _section_heading(ui, "Investigation plan")
+        if investigation.planner.state is not ComponentState.READY:
+            _component_unavailable(ui, "Planner", investigation.planner)
+            return
+        plan = investigation.planner.value
+        if not hasattr(plan, "recommendations"):
+            _component_unavailable(ui, "Planner", investigation.planner)
+            return
+        if not plan.recommendations:
+            ui.label("No eligible check is available from the current curated catalog and qualified facts.")  # type: ignore[attr-defined]
+        else:
+            hypothesis_by_id = {item.hypothesis_identity: item for item in profile.hypotheses} if profile is not None else {}
+            for recommendation in plan.recommendations:
+                _section_heading(ui, f"{recommendation.rank}. {recommendation.title}", level=3)
+                ui.label(f"Execution mode: {recommendation.execution_mode.replace('_', ' ').lower()}")  # type: ignore[attr-defined]
+                for alternative in recommendation.alternatives_discriminated:
+                    left = hypothesis_by_id.get(str(alternative["hypothesis_a_id"]))
+                    right = hypothesis_by_id.get(str(alternative["hypothesis_b_id"]))
+                    labels = f"{left.title if left else alternative['hypothesis_a_id']} versus {right.title if right else alternative['hypothesis_b_id']}"
+                    ui.label(f"Distinguishes {labels}; curated ordinal discrimination {alternative['ordinal_discrimination']} (not probability).")  # type: ignore[attr-defined]
+                if recommendation.independent_evidence_added:
+                    ui.label(f"New independent evidence groups: {', '.join(recommendation.independent_evidence_added)}")  # type: ignore[attr-defined]
+                catalog_templates = check_catalog.templates if check_catalog is not None else ()
+                template = next((item for item in catalog_templates if item.template_id == recommendation.template_id and item.version == recommendation.template_version), None)
+                mode = CheckExecutionMode(recommendation.execution_mode)
+                if (
+                    template is not None
+                    and mode in {CheckExecutionMode.REQUEST_HUMAN_MEASUREMENT, CheckExecutionMode.REQUEST_APPROVED_EXTERNAL_WORK}
+                    and principal.has_capability(CHECK_REQUEST_CAPABILITY)
+                    and (template.approval_capability is None or principal.has_capability(template.approval_capability))
+                ):
+                    button = ActionButton("Request check", intent=ButtonIntent.SECONDARY, on_click=lambda rec=recommendation, item=template: on_request_check(rec, item))
+                    if not action_buttons:
+                        _mark_focus_target(button.element, "primary-action")
+                    action_buttons.append(button)
+                ui.label(f"Why eligible now: {'; '.join(recommendation.why_eligible_now)}")  # type: ignore[attr-defined]
+                facts = recommendation.capability_and_prerequisite_facts
+                if facts:
+                    ui.label("Prerequisite / qualification facts: " + "; ".join(
+                        ", ".join(f"{key}={value}" for key, value in sorted(item.items()) if key in {"capability_id", "prerequisite_id", "qualification_identity", "state"})
+                        for item in facts
+                    ))  # type: ignore[attr-defined]
+                costs = recommendation.effort_turnaround_disruption
+                turnaround = costs.get("turnaround", {})
+                ui.label(f"Effort {costs.get('effort_band', 'unknown').lower()} · disruption {costs.get('disruption_class', 'unknown').lower()} · turnaround {turnaround.get('seconds') if turnaround.get('seconds') is not None else 'unknown'} seconds")  # type: ignore[attr-defined]
+                if profile is not None:
+                    deadline = profile.planner_facts.decision_deadline
+                    deadline_text = deadline.deadline.isoformat() if deadline.deadline is not None else f"unknown — {deadline.unknown_reason}"
+                    ui.label(f"Decision deadline {deadline_text} · source {deadline.source_identity}")  # type: ignore[attr-defined]
+                not_resolved = ", ".join(recommendation.will_not_resolve) or "No additional planner-supplied limitation; this check alone does not establish either hypothesis."
+                ui.label(f"Will not resolve: {not_resolved}")  # type: ignore[attr-defined]
+        if plan.excluded_checks:
+            ui.label(f"Excluded alternatives ({len(plan.excluded_checks)}):")  # type: ignore[attr-defined]
+            for excluded in plan.excluded_checks[:20]:
+                ui.label(f"{excluded.template_id} · {_reason_text(tuple(item.value for item in excluded.reasons))}")  # type: ignore[attr-defined]
+            if len(plan.excluded_checks) > 20:
+                ui.label(f"{len(plan.excluded_checks) - 20} additional exclusions are available in the typed planner result.")  # type: ignore[attr-defined]
+
+
+def _render_evidence_card(ui: object, investigation: EpisodeInvestigation, profile: InvestigationProfile | None) -> None:
+    with Card():
+        _section_heading(ui, "Evidence and competing explanations")
+        if profile is None:
+            _component_unavailable(ui, "Evidence groups", investigation.profile)
+            return
+        hypothesis_by_id = {item.hypothesis_identity: item for item in profile.hypotheses}
+        for pair in profile.planner_facts.unresolved_pairs:
+            left = hypothesis_by_id[pair.hypothesis_a_id]
+            right = hypothesis_by_id[pair.hypothesis_b_id]
+            ui.label(f"Unresolved: {left.title} versus {right.title}").classes("text-subtitle1")  # type: ignore[attr-defined]
+            ui.label(f"{left.summary} {right.summary}")  # type: ignore[attr-defined]
+        by_dependence: dict[str, list[object]] = {}
+        for group in profile.evidence_groups:
+            by_dependence.setdefault(group.dependence_identity, []).append(group)
+        for dependence_identity, groups in sorted(by_dependence.items()):
+            titles = "; ".join(item.title for item in groups)
+            ui.label(f"Evidence dependency group · {dependence_identity} · {len(groups)} related fact(s): {titles}").classes("text-subtitle2")  # type: ignore[attr-defined]
+            for group in groups:
+                ui.label(f"{group.polarity.replace('_', ' ').title()} — {group.summary}")  # type: ignore[attr-defined]
+                ui.label(f"Source {group.source_identity} · event {group.event_at.isoformat()} · available {group.available_at.isoformat()} · qualification {group.qualification_state}")  # type: ignore[attr-defined]
+                if group.limitation_codes:
+                    ui.label(f"Evidence limitations: {_reason_text(group.limitation_codes)}")  # type: ignore[attr-defined]
+        for unknown in profile.planner_facts.explicit_unknowns:
+            ui.label(f"Unknown: {unknown.fact_identity} — {unknown.reason} (source {unknown.source_identity})")  # type: ignore[attr-defined]
+        for limitation in profile.limitations:
+            ui.label(f"Investigation limitation: {limitation.replace('_', ' ').lower()}")  # type: ignore[attr-defined]
+
+
+def _render_comparable_cases_card(ui: object, investigation: EpisodeInvestigation) -> None:
+    with Card():
+        _section_heading(ui, "Comparable cases")
+        if investigation.comparable_history.state is not ComponentState.READY:
+            _component_unavailable(ui, "Comparable history", investigation.comparable_history)
+            if investigation.comparable_history.state is ComponentState.MATERIALIZATION_REQUIRED:
+                ui.label(f"Comparable history requires materialization ({_reason_text(investigation.comparable_history.reason_codes)}). No partial case ranking is shown.")  # type: ignore[attr-defined]
+            return
+        page = investigation.comparable_history.value
+        ui.label(f"Exact-structure case comparison · {page.total_row_count} eligible case(s) · cutoff {investigation.known_at.isoformat()}")  # type: ignore[attr-defined]
+        for case in page.cases:
+            _section_heading(ui, f"Episode {case.episode_id} · {case.context_identity}", level=3)
+            similarity = case.similarity_components
+            ui.label(f"Shared exact features: {', '.join(similarity.shared_exact_feature_ids) or 'none'}")  # type: ignore[attr-defined]
+            ui.label(f"Differences: {', '.join(similarity.differing_feature_ids) or 'none'} · current only: {', '.join(similarity.current_only_feature_ids) or 'none'} · case only: {', '.join(similarity.candidate_only_feature_ids) or 'none'}")  # type: ignore[attr-defined]
+            ui.label(f"Family {case.family_identity} · revision {case.revision_id} · source {case.source_identity.snapshot_id} · eligibility {case.eligibility_state.value} · curation {case.curation_state.value}")  # type: ignore[attr-defined]
+            if case.data_completeness_limitations:
+                ui.label(f"Completeness limitations: {_reason_text(case.data_completeness_limitations)}")  # type: ignore[attr-defined]
+            for claim in case.historical_claims:
+                maturity = f" · outcome {claim.outcome_maturity} through {claim.outcome_cutoff.isoformat()}" if claim.outcome_maturity is not None and claim.outcome_cutoff is not None else ""
+                ui.label(f"Cutoff-eligible historical {claim.claim_type.value.replace('_', ' ').lower()} claim {claim.claim_identity} · evidence {claim.evidence_identity} · curation {claim.curation_state.value} · known {claim.known_at.isoformat()} · available {claim.available_at.isoformat()}{maturity}")  # type: ignore[attr-defined]
+            ui.label("Structural similarity is descriptive and does not establish the same cause.")  # type: ignore[attr-defined]
+        if not any(case.historical_claims for case in page.cases):
+            ui.label("No curated, cutoff-eligible historical root-cause, action or outcome claims are available in these cases.")  # type: ignore[attr-defined]
+        for excluded in page.excluded_candidates:
+            ui.label(f"Case excluded: {excluded.episode_id} · {_reason_text(excluded.reason_codes)}")  # type: ignore[attr-defined]
+
+
+def _render_rca_card(ui: object, investigation: EpisodeInvestigation) -> None:
+    with Card():
+        _section_heading(ui, "Bounded RCA · observational only")
+        if investigation.rca.state is ComponentState.PENDING:
+            materialization = investigation.rca.value
+            job_state = getattr(getattr(materialization, "state", None), "value", "PENDING")
+            ui.label(f"RCA materialization {str(job_state).lower()}. No partial summary is shown while the bounded analysis runs.")  # type: ignore[attr-defined]
+            return
+        if investigation.rca.state not in {ComponentState.READY, ComponentState.MATERIALIZATION_REQUIRED}:
+            _component_unavailable(ui, "RCA", investigation.rca)
+            return
+        result = investigation.rca.value
+        if result.state.value == "MATERIALIZATION_REQUIRED":
+            ui.label("RCA materialization is required. No partial commonality summary is shown.")  # type: ignore[attr-defined]
+            return
+        ui.label(f"State {result.state.value.replace('_', ' ').lower()} · control quality {result.control_quality.value.lower()}")  # type: ignore[attr-defined]
+        ui.label(f"Affected cohort {result.affected_cohort_identity} · independent groups {result.affected_independent_group_count if result.affected_independent_group_count is not None else 'not computed'}")  # type: ignore[attr-defined]
+        ui.label(f"Controls {', '.join(result.control_cohort_identities) or 'none'} · independent groups {result.control_independent_group_count if result.control_independent_group_count is not None else 'not computed'}")  # type: ignore[attr-defined]
+        ui.label(f"Included evidence {result.included_evidence_count if result.included_evidence_count is not None else 'not computed'} · excluded {len(result.excluded_evidence)} · coverage {result.coverage.lower()}")  # type: ignore[attr-defined]
+        for cohort in result.cohorts:
+            ui.label(f"{cohort.role.value.title()} {cohort.cohort_identity}: {cohort.eligibility.value.lower()} · {cohort.context_identity} / {cohort.characteristic_identity} ({cohort.unit_identity}) · {cohort.interval_start.isoformat()} to {cohort.interval_end.isoformat()} · matched {', '.join(cohort.matched_dimensions) or 'none'} · source {cohort.source_identity} · qualification {cohort.qualification_identity}")  # type: ignore[attr-defined]
+            if cohort.mismatches or cohort.reason_codes:
+                ui.label(f"Cohort qualifications / mismatches: {_reason_text((*cohort.reason_codes, *cohort.mismatches))}")  # type: ignore[attr-defined]
+        if result.associations:
+            ui.label("Descriptive commonality counts (numerator / independent-group denominator):")  # type: ignore[attr-defined]
+            for fact in result.associations:
+                ui.label(f"{fact.factor_identity}: affected {fact.affected.numerator}/{fact.affected.denominator}; controls {fact.controls.numerator}/{fact.controls.denominator}; rate difference {fact.rate_difference_numerator}/{fact.rate_difference_denominator}.")  # type: ignore[attr-defined]
+        else:
+            ui.label("No commonality summary is available because controls are invalid, insufficient, mismatched or unqualified. Add qualified control evidence or run the discriminating check.")  # type: ignore[attr-defined]
+        for contradiction in result.temporal_contradictions:
+            ui.label(f"Temporal contradiction: {contradiction.fact_identity} · {contradiction.reason_code}")  # type: ignore[attr-defined]
+        for exclusion in result.excluded_evidence:
+            ui.label(f"Evidence excluded: {exclusion.identity} · {exclusion.reason_code}")  # type: ignore[attr-defined]
+        ui.label(f"Interpretation: observational only. {', '.join(result.limitation_codes) or 'No additional limitations recorded'}.")  # type: ignore[attr-defined]
+
+
+def _render_current_work_card(ui: object, investigation: EpisodeInvestigation) -> None:
+    with Card():
+        _section_heading(ui, "Current work and recovery")
+        if investigation.workflow.state is not ComponentState.READY:
+            _component_unavailable(ui, "O5 workflow", investigation.workflow)
+            return
+        snapshot = investigation.workflow.value
+        checks = sorted(snapshot.check_state.values(), key=lambda item: str(item.get("check_id", "")))
+        ui.label(f"Work state {snapshot.workflow_state['work_state']} · owner {snapshot.state.get('owner') or 'unassigned'} · cycle {snapshot.active_cycle_id} · workflow version {snapshot.aggregate_version}.")  # type: ignore[attr-defined]
+        if checks:
+            for check in checks:
+                outcome = (check.get("result") or {}).get("outcome") if isinstance(check.get("result"), dict) else "not recorded"
+                ui.label(f"Check {check.get('check_id')} · {check.get('template_id')} · {check.get('status')} · outcome {outcome}")  # type: ignore[attr-defined]
+        else:
+            ui.label("No check has been requested in the current O5 cycle.")  # type: ignore[attr-defined]
+        actions = sorted(snapshot.action_state.values(), key=lambda item: str(item.get("action_id", "")))
+        for action in actions:
+            ui.label(f"Recorded human action {action.get('action_id')} · {action.get('action_type')} · reconciliation {action.get('reconciliation_state', 'unknown')}")  # type: ignore[attr-defined]
+        if not actions:
+            ui.label("No external action is recorded in this cycle.")  # type: ignore[attr-defined]
+        plans = snapshot.recovery_state.get("plans", {})
+        for plan_id, plan in sorted(plans.items()):
+            ui.label(f"Recovery plan {plan_id} · {plan.get('state', 'unknown')} · eligible evidence count {plan.get('eligible_evidence_count', 'unavailable')}")  # type: ignore[attr-defined]
+        if not plans:
+            ui.label("Recovery: not started; no affirmative recovery evidence is asserted.")  # type: ignore[attr-defined]
+        closure = snapshot.closure_state
+        ui.label(f"Closure state {closure['cycle_status']} · closure records {len(closure['closures'])}.")  # type: ignore[attr-defined]
+
+
+def _render_investigation_workspace(
+    ui: object,
+    investigation: EpisodeInvestigation,
+    principal: Principal,
+    *,
+    check_catalog: CheckTemplateCatalog | None,
+    on_request_check: Callable[[object, object], object],
+    action_buttons: list[ActionButton],
+) -> None:
+    profile = investigation.profile.value if investigation.profile.state is ComponentState.READY else None
+    brief = investigation.brief
+    typed_profile = profile if isinstance(profile, InvestigationProfile) else None
+    exposure_summary = _exposure_summary(typed_profile)
+    _render_investigation_plan_card(
+        ui, investigation, typed_profile, principal, check_catalog=check_catalog,
+        on_request_check=on_request_check, action_buttons=action_buttons,
+    )
+    with Card():
+        _section_heading(ui, "Current decision")
+        if isinstance(profile, InvestigationProfile):
+            ui.label(f"Episode identity {brief.episode_id}")  # type: ignore[attr-defined]
+            ui.label(profile.change.headline).classes("text-h5")  # type: ignore[attr-defined]
+            ui.label(profile.change.description)  # type: ignore[attr-defined]
+            ui.label(f"Asset {profile.target.asset_identity} · family {profile.target.family_identity} · context {profile.target.context_identity} · {profile.target.characteristic_identity} ({profile.target.unit_identity})")  # type: ignore[attr-defined]
+            ui.label(f"Observed onset {_display_value(profile.change.onset_at, unavailable='Unavailable / not qualified')} · magnitude {_display_value(profile.change.magnitude, unavailable='Unavailable / not qualified')}")  # type: ignore[attr-defined]
+            ui.label(f"Source identity {profile.source_identity.snapshot_id} · revision {profile.source_identity.source_revision} · known at {_display_value(investigation.known_at)} · source qualification state not represented in this profile")  # type: ignore[attr-defined]
+            ui.label(f"Owner {_display_value(brief.workflow.get('owner'), unavailable='Unassigned / unavailable')} · workflow state {brief.workflow.get('work_state', 'UNKNOWN')} · cycle {investigation.active_cycle_id or 'unavailable'} · version {brief.revision_vector.workflow_version}")  # type: ignore[attr-defined]
+            ui.label(f"WIP / exposure: {exposure_summary}")  # type: ignore[attr-defined]
+            if "SYNTHETIC_DEMONSTRATION" in profile.limitations:
+                ui.label("Synthetic demonstration facts only. These IDs, values, limits and policy are not company facts.").classes("ephi-o10-truth-note")  # type: ignore[attr-defined]
+        else:
+            ui.label(str(brief.analytical.get("title", "Episode issue/change description unavailable")))  # type: ignore[attr-defined]
+            DescriptionList((
+                KeyValueItem("known_at", "Known at", _display_value(brief.known_at)),
+                KeyValueItem("owner", "Owner", _display_value(brief.workflow.get("owner"), unavailable="Unassigned / unavailable")),
+                KeyValueItem("work_state", "Workflow", _display_value(brief.workflow.get("work_state"))),
+                KeyValueItem("capability", "Source / capability", _display_value(brief.capability_state)),
+                KeyValueItem("exposure", "WIP / exposure", "Unavailable / not qualified"),
+            ))
+            _component_unavailable(ui, "Investigation profile", investigation.profile)
+    _render_evidence_card(ui, investigation, typed_profile)
+    _render_comparable_cases_card(ui, investigation)
+    _render_rca_card(ui, investigation)
+    _render_current_work_card(ui, investigation)
+
+
 class _EpisodeView:
     def __init__(self, composition: EphiUiComposition, host: object, page_heading: object, episode_id: str, focus_request: object) -> None:
         self.composition = composition
@@ -759,7 +1077,9 @@ class _EpisodeView:
         self.focus_request = focus_request
         self.guard = StaleResponseGuard()
         self.primary_action: ActionButton | None = None
+        self.check_actions: list[ActionButton] = []
         self.live_status: object | None = None
+        self.investigation: EpisodeInvestigation | None = None
 
     def _clear(self) -> None:
         self.host.clear()  # type: ignore[attr-defined]
@@ -811,11 +1131,11 @@ class _EpisodeView:
     async def load(self, *, focus_target: str | None = None) -> None:
         self.render_loading()
         try:
-            brief = await _load_brief(self.composition, self.episode_id, self.guard)
+            brief, investigation = await _load_investigation(self.composition, self.episode_id, self.guard)
         except Exception as error:
             self.render_error(error)
             return
-        self.render_brief(brief, focus_target=focus_target)
+        self.render_brief(brief, investigation=investigation, focus_target=focus_target)
 
     def render_error(self, error: BaseException) -> None:
         from nicegui import ui
@@ -845,11 +1165,20 @@ class _EpisodeView:
         self._mount(render)
         _schedule_focus(self.page_heading if spec.kind is StateKind.PERMISSION else self.host)
 
-    def render_brief(self, brief: EpisodeBrief, *, focus_target: str | None = None) -> None:
+    def render_brief(
+        self,
+        brief: EpisodeBrief,
+        *,
+        investigation: EpisodeInvestigation | None = None,
+        focus_target: str | None = None,
+        status_message: str | None = None,
+    ) -> None:
         from nicegui import ui
 
         self.primary_action = None
+        self.check_actions = []
         self.live_status = None
+        self.investigation = investigation
         principal = self.composition.principal_provider()
         action = _episode_action(brief, principal)
 
@@ -873,17 +1202,93 @@ class _EpisodeView:
                     await asyncio.to_thread(self.composition.workflow.claim_episode, command, brief.episode_id)
                 else:
                     await asyncio.to_thread(self.composition.workflow.acknowledge_episode, command, brief.episode_id)
-                refreshed = await _load_brief(self.composition, brief.episode_id, self.guard)
+                refreshed, refreshed_investigation = await _load_investigation(self.composition, brief.episode_id, self.guard)
             except Exception as error:
                 self.render_error(error)
                 return
-            self.render_brief(refreshed, focus_target="primary")
+            self.render_brief(refreshed, investigation=refreshed_investigation, focus_target="primary")
             # The action render replaces the old button in-place. Complete the
             # focus hand-off in this same governed command callback so focus
             # cannot remain on the unmounted, disabled control.
             from nicegui import ui
 
             self.focus_request.props('data-ephi-focus-request="primary-action"')  # type: ignore[attr-defined]
+
+        async def request_recommended_check(recommendation: object, template: object) -> None:
+            if self.primary_action is not None:
+                self.primary_action.element.disable()
+            for button in self.check_actions:
+                button.element.disable()
+            if self.live_status is not None:
+                self.live_status.set_text("Requesting the selected planner check through the current authorized O5 workflow.")  # type: ignore[attr-defined]
+            investigation_view = self.investigation
+            downstream = self.composition.downstream
+            if investigation_view is None or downstream is None or investigation_view.active_cycle_id is None:
+                self.render_error(RuntimeError("current downstream investigation action is unavailable"))
+                return
+            plan_component = investigation_view.planner
+            plan = plan_component.value
+            if plan_component.state is not ComponentState.READY or not hasattr(plan, "plan_identity") or recommendation not in plan.recommendations:
+                await self.load(focus_target="status")
+                return
+            current_principal = self.composition.principal_provider()
+            scope = self.composition.scope_provider()
+            if (
+                plan.workflow_version != brief.revision_vector.workflow_version
+                or plan.viewed_revisions != brief.revision_vector
+                or investigation_view.revision_id != brief.revision_id
+            ):
+                await self.load(focus_target="status")
+                return
+            check_identity = hashlib.sha256(
+                f"ephi-check:{plan.plan_identity}:{investigation_view.active_cycle_id}:{recommendation.template_id}".encode("utf-8")
+            ).hexdigest()
+            command = CommandContext(
+                _stable_command_id(f"RequestCheck:{recommendation.template_id}", brief, scope, current_principal.subject),
+                current_principal,
+                scope,
+                brief.revision_vector.workflow_version,
+                brief.revision_vector,
+                "Request the current deterministic investigation-plan check",
+            )
+            profile_component = investigation_view.profile
+            profile = profile_component.value
+            if profile_component.state is not ComponentState.READY or not isinstance(profile, InvestigationProfile):
+                await self.load(focus_target="status")
+                return
+            prerequisite_states = {
+                item.prerequisite_id: item.state.value
+                for item in profile.planner_facts.prerequisite_facts
+            }
+            try:
+                downstream.decision_loop.request_check(
+                    command,
+                    brief.episode_id,
+                    check_identity,
+                    template_id=template.template_id,
+                    template_version=template.version,
+                    execution_mode=CheckExecutionMode(recommendation.execution_mode),
+                    required_capabilities=tuple(sorted({
+                        *(item.capability_id for item in template.required_capabilities),
+                        *((template.approval_capability,) if template.approval_capability else ()),
+                    })),
+                    prerequisite_state=prerequisite_states,
+                    target_context=profile.planner_facts.target_context.as_dict(),
+                    cycle_id=investigation_view.active_cycle_id,
+                )
+                refreshed, refreshed_investigation = await _load_investigation(self.composition, brief.episode_id, self.guard)
+            except Exception as error:
+                # The O5 command remains the compare-and-set authority. A
+                # stale plan refreshes from current server state before a new
+                # recommendation action can be offered.
+                if getattr(error, "code", None) in {"VERSION_CONFLICT", "COHERENT_READ_CONFLICT", "QUERY_IDENTITY_MISMATCH"}:
+                    await self.load(focus_target="status")
+                    return
+                self.render_error(error)
+                return
+            message = f"Check request committed at workflow version {refreshed.revision_vector.workflow_version}."
+            self.render_brief(refreshed, investigation=refreshed_investigation, focus_target="status", status_message=message)
+            self.focus_request.props('data-ephi-focus-request="status"')
 
         def return_to_attention() -> None:
             self.composition.workspace.state.set(FOCUS_KEY, "attention_heading", source="ephi.episode.focus")
@@ -892,22 +1297,29 @@ class _EpisodeView:
         def render() -> None:
             with FullScreenWorkspace():
                 with Card():
+                    profile_value = investigation.profile.value if investigation is not None and investigation.profile.state is ComponentState.READY else None
+                    headline = profile_value.change.headline if isinstance(profile_value, InvestigationProfile) else str(brief.analytical.get("title", "Decision brief"))
+                    metadata = [
+                        KeyValueItem("revision", "Analytical revision", brief.revision_vector.analysis_revision),
+                        KeyValueItem("workflow", "Workflow version", brief.revision_vector.workflow_version),
+                    ]
+                    if isinstance(profile_value, InvestigationProfile):
+                        metadata.append(KeyValueItem("source_identity", "Source identity", profile_value.source_identity.snapshot_id))
+                        metadata.append(KeyValueItem("exposure", "WIP / exposure", _exposure_summary(profile_value)))
+                        metadata.append(KeyValueItem("known_at", "Known at cutoff", _display_value(investigation.known_at)))
                     EntityHeader(
-                        brief.episode_id,
-                        subtitle=str(brief.analytical.get("title", "Decision brief")),
+                        profile_value.target.asset_identity if isinstance(profile_value, InvestigationProfile) else brief.episode_id,
+                        subtitle=headline,
                         entity_type="Episode",
                         status=str(brief.workflow.get("work_state", "UNKNOWN")),
-                        metadata=(
-                            KeyValueItem("revision", "Analytical revision", brief.revision_vector.analysis_revision),
-                            KeyValueItem("workflow", "Workflow version", brief.revision_vector.workflow_version),
-                        ),
+                        metadata=tuple(metadata),
                     )
-                    for key, value in sorted(brief.capability_state.items()):
-                        StatusBadge(f"{key}: {_display_value(value)}", intent=_intent_for_capability(value))
-                    DescriptionList(
-                        (
+                    if not isinstance(profile_value, InvestigationProfile):
+                        for key, value in sorted(brief.capability_state.items()):
+                            StatusBadge(f"{key}: {_display_value(value)}", intent=_intent_for_capability(value))
+                    if investigation is None:
+                        DescriptionList((
                             KeyValueItem("episode_id", "Episode ID", brief.episode_id),
-                            KeyValueItem("title", "Issue / title", _display_value(brief.analytical.get("title"))),
                             KeyValueItem("known_at", "Known at", _display_value(brief.known_at)),
                             KeyValueItem("analysis_revision", "Analytical revision", _display_value(brief.revision_vector.analysis_revision)),
                             KeyValueItem("workflow_version", "Workflow version", _display_value(brief.revision_vector.workflow_version)),
@@ -915,13 +1327,21 @@ class _EpisodeView:
                             KeyValueItem("owner", "Owner", _display_value(brief.workflow.get("owner"), unavailable="Unassigned / unavailable")),
                             KeyValueItem("source_state", "Source / capability state", _display_value(brief.capability_state)),
                             KeyValueItem("eligible_action", "Current eligible action", action[0] if action else "Unavailable: current authorization or owner does not permit an action"),
+                        ))
+                        ui.label("Investigation profile, onset, qualified exposure, planner, comparable history and RCA are unavailable for this legacy Episode.").classes("ephi-o10-truth-note")
+                    if investigation is not None:
+                        catalog = self.composition.downstream.policy_configuration.check_catalog if self.composition.downstream is not None else None
+                        _render_investigation_workspace(
+                            ui,
+                            investigation,
+                            principal,
+                            check_catalog=catalog,
+                            on_request_check=request_recommended_check,
+                            action_buttons=self.check_actions,
                         )
-                    )
-                    ui.label("Confidence, onset, exposure, next-check, recovery and value are unavailable/not yet qualified in this W1 brief.").classes("ephi-o10-truth-note")
-                    self.live_status = ui.label(
-                        f"Episode {brief.episode_id} is rendered from the current authorized coherent read."
-                    ).classes("ephi-o10-live-status")
-                    self.live_status.props('role="status" aria-live="polite" aria-atomic="true"')
+                    self.live_status = ui.label(status_message or f"Episode {brief.episode_id} is rendered from the current authorized coherent read.").classes("ephi-o10-live-status ephi-o10-focus-target")
+                    self.live_status.props('role="status" aria-live="polite" aria-atomic="true" tabindex="-1"')
+                    self.live_status.props('data-ephi-focus-target="status"')
                     with ui.element("div").classes("ephi-o10-action-row"):
                         if action is not None:
                             self.primary_action = ActionButton(action[0], intent=ButtonIntent.PRIMARY, on_click=lambda: commit(action[1]))
@@ -943,7 +1363,7 @@ class _EpisodeView:
         if focus_target == "primary" and self.primary_action is not None:
             _schedule_focus(self.primary_action.element, marker="primary-action")
         elif focus_target == "status" and self.live_status is not None:
-            _schedule_focus(self.live_status)
+            _schedule_focus(self.live_status, marker="status")
         else:
             _schedule_focus(self.page_heading)
 
@@ -957,6 +1377,8 @@ async def build_episode_page(composition: EphiUiComposition) -> None:
     _install_o10_ui_css()
     workspace = composition.workspace
     episode_id = workspace.state.get(EPISODE_KEY)
+    if not episode_id and os.environ.get("EPHI_ENV", "development").lower() == "test" and composition.downstream is not None:
+        episode_id = os.environ.get("EPHI_TEST_SELECTED_EPISODE_ID")
     if not episode_id:
         # This explicit fixture binding is retained only for the existing O8
         # direct-route qualification. A selected workspace identity always wins.
@@ -977,8 +1399,8 @@ async def build_episode_page(composition: EphiUiComposition) -> None:
         with AnalysisWorkspacePage("", None) as page:
             with page.slot(LayoutSlot.HEADER):
                 heading = _semantic_heading(
-                    "Episode decision brief",
-                    "One coherent analytical/read revision with live durable workflow",
+                    "Episode investigation workspace",
+                    "One coherent analytical revision with current evidence, plan, comparable cases and bounded RCA",
                     autofocus=not episode_id or workspace.state.get(FOCUS_KEY) == "episode_heading",
                 )
             with page.slot(LayoutSlot.PRIMARY):
