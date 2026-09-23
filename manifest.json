@@ -455,6 +455,26 @@
       "sha256": "900c58454be92da519ad90722debb14a56a8663ba4caf69cf0911ad93bbb8b82"
     },
     {
+      "path": "evidence/u1/verify2/attention-1440x900.png",
+      "bytes": 76376,
+      "sha256": "a9f51a0de71a66f096a31736a1d3dce1bcf124768fb899a793294c66302be9f5"
+    },
+    {
+      "path": "evidence/u1/verify2/episode-1440x900-viewport.png",
+      "bytes": 40042,
+      "sha256": "e717cead48fe1fd4d885733f6116f670b6f3f41f72e056f73bed3411b09b51bc"
+    },
+    {
+      "path": "evidence/u1/verify2/episode-full-page.png",
+      "bytes": 209355,
+      "sha256": "a7d5991e5a92a5b1ea308c35b0f6acbe5c0d9b86af90807aa5ea4c0dc0f4c359"
+    },
+    {
+      "path": "evidence/u1/verify2/verify2.json",
+      "bytes": 13569,
+      "sha256": "dce321582d82cc4d818bfd6e4da61d5cb3f54674b36ba27b365be5db29356660"
+    },
+    {
       "path": "examples/__init__.py",
       "bytes": 61,
       "sha256": "b060d41e6705cac80caacb622fc737209d85f878bc0a4a6d976adc651b26d7f1"

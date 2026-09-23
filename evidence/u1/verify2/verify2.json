@@ -1,0 +1,386 @@
+{
+  "actual_application_startup_negative_matrix": {
+    "all_cases_exit_before_server_start": true,
+    "all_cases_exit_code": 1,
+    "cases": [
+      {
+        "case": "non-development bundle absent with legacy dev/source values and import trap configured",
+        "legacy_source_module_imported": false,
+        "result": "FAIL_CLOSED",
+        "safe_reason": "non-development EPHI requires an explicit downstream provider bundle"
+      },
+      {
+        "case": "malformed module:factory entrypoint",
+        "reason_code": "INVALID_ENTRYPOINT",
+        "result": "FAIL_CLOSED"
+      },
+      {
+        "case": "nonexistent provider module",
+        "reason_code": "PROVIDER_LOAD_ERROR",
+        "result": "FAIL_CLOSED"
+      },
+      {
+        "case": "provider module import exception",
+        "reason_code": "PROVIDER_LOAD_ERROR",
+        "result": "FAIL_CLOSED"
+      },
+      {
+        "case": "provider factory exception",
+        "reason_code": "PROVIDER_LOAD_ERROR",
+        "result": "FAIL_CLOSED"
+      },
+      {
+        "case": "incompatible ABI 9.0.0 with identity-call sentinel",
+        "provider_method_invoked": false,
+        "reason_code": "INCOMPATIBLE_ABI",
+        "result": "FAIL_CLOSED"
+      },
+      {
+        "case": "runtime provider exception",
+        "reason_code": "COMPOSITION_FAIL_CLOSED",
+        "result": "FAIL_CLOSED"
+      }
+    ],
+    "secret_marker_scan": {
+      "leaks": 0,
+      "marker_classes": [
+        "DSN and password",
+        "token",
+        "cookie",
+        "storage secret",
+        "private endpoint",
+        "raw source row",
+        "private mapping value",
+        "synthetic exception marker"
+      ],
+      "negative_server_or_rendered_state_created": false,
+      "outputs_scanned": 7,
+      "raw_exception_details_suppressed": true
+    },
+    "status": "PASS"
+  },
+  "fabric_binding": {
+    "authoritative_target": "main@156e47b1e0cc3c77a2a3f0e2b65875eacc9aa0b4",
+    "predecessor_candidate": "9df7b1f3f49758fba459479404ae74215736b81f",
+    "predecessor_fabric_job": "CF-840b0bc71e2f88b6cde8a973",
+    "predecessor_request": "ephi-u1-downstream-extension-abi-v1",
+    "registered_origin_branch": "main",
+    "verify2_transport_binding": "target base kept at the registered main commit; predecessor was carried forward as its exact direct child"
+  },
+  "git_identity": {
+    "candidate_commit": "9df7b1f3f49758fba459479404ae74215736b81f",
+    "candidate_exact_commit_preserved_in_ancestry": true,
+    "candidate_is_direct_descendant_of_registered_base": true,
+    "candidate_parent": "156e47b1e0cc3c77a2a3f0e2b65875eacc9aa0b4",
+    "candidate_tree": "a73b4cbb9e9f30d7c410048ced40175b015a916c",
+    "candidate_was_verification_branch_head_during_execution": true,
+    "local_main_moved": false,
+    "local_main_pointer_observed": "fb9710e42b64f3a0ff58599011dd9fa8d06100d8",
+    "migration_diff_paths_from_base_to_candidate": [],
+    "nicegui_base_modifications": false,
+    "product_source_bytes_changed_after_candidate": false,
+    "product_source_diff_paths_after_candidate": [],
+    "product_source_paths_compared": [
+      "src/ephi",
+      "examples"
+    ],
+    "registered_base_commit": "156e47b1e0cc3c77a2a3f0e2b65875eacc9aa0b4",
+    "remote_main_at_execution": "156e47b1e0cc3c77a2a3f0e2b65875eacc9aa0b4",
+    "verification_branch": "codex/ephi-u1-downstream-extension-abi-verify2"
+  },
+  "positive_application_launch": {
+    "actual_browser": {
+      "browser_failure_inventory": {
+        "console_errors": [],
+        "failed_requests": [],
+        "http_errors": [],
+        "page_errors": []
+      },
+      "engine": "isolated headless Chromium via Playwright 1.62.0",
+      "routes": [
+        {
+          "attention_rows": 1,
+          "http_status": 200,
+          "path": "/",
+          "rendered_episode": "synthetic-u1-episode",
+          "rendered_scope": "synthetic-u1-scope",
+          "rendered_subject": "synthetic-engineer"
+        },
+        {
+          "claim_action_available": true,
+          "http_status": 200,
+          "navigation": "selected permitted Attention row, then normal Open episode action",
+          "path": "/episode",
+          "rendered_episode": "synthetic-u1-episode",
+          "rendered_scope": "synthetic-u1-scope",
+          "rendered_subject": "synthetic-engineer",
+          "workflow_state": "OPEN"
+        }
+      ],
+      "screenshots": {
+        "attention-1440x900.png": {
+          "bytes": 76376,
+          "sha256": "a9f51a0de71a66f096a31736a1d3dce1bcf124768fb899a793294c66302be9f5"
+        },
+        "episode-1440x900-viewport.png": {
+          "bytes": 40042,
+          "sha256": "e717cead48fe1fd4d885733f6116f670b6f3f41f72e056f73bed3411b09b51bc"
+        },
+        "episode-full-page.png": {
+          "bytes": 209355,
+          "sha256": "a7d5991e5a92a5b1ea308c35b0f6acbe5c0d9b86af90807aa5ea4c0dc0f4c359"
+        }
+      },
+      "server_alive_after_browser": true,
+      "viewport": [
+        1440,
+        900
+      ]
+    },
+    "allowed_origin": "http://127.0.0.1:56742",
+    "authority_supplied_by_downstream_bundle": [
+      "operation-time identity and AccessScope",
+      "exact source binding and bounded observer",
+      "immutable artifact blob/catalog provider",
+      "handoff recipient/channel provider",
+      "typed policy configuration",
+      "PostgreSQL runtime provider"
+    ],
+    "browser_seed": {
+      "authority": "existing PostgreSQL reference adapter fixture methods",
+      "browser_owned_authority": false,
+      "episode_id": "synthetic-u1-episode",
+      "scope_id": "synthetic-u1-scope",
+      "test_only_route_added": false,
+      "workflow_state": "OPEN"
+    },
+    "downstream_entrypoint": "examples.synthetic_downstream.provider:build_bundle",
+    "environment_class": "qa",
+    "episode_layout_diagnostic": {
+      "description_list_px": {
+        "height": 5777,
+        "width": 7,
+        "x": 309,
+        "y": 2763
+      },
+      "diagnostic": "The normal Episode page content collapses into a narrow vertical column and the page is not bounded.",
+      "document_px": {
+        "height": 12022,
+        "width": 1440
+      },
+      "episode_surface_px": {
+        "height": 11807,
+        "width": 73,
+        "x": 276,
+        "y": 195
+      },
+      "main_px": {
+        "height": 12022,
+        "width": 1440
+      },
+      "source_attribution": "Not determined here; preserve the exact candidate and bind a separate FIX request.",
+      "status": "SOURCE_DEFECT",
+      "viewport_px": {
+        "height": 900,
+        "width": 1440
+      }
+    },
+    "existing_ephi_authorities_composed": [
+      "CurrentAuthorizationAuthority",
+      "AttentionQueryService",
+      "EpisodeBriefQueryService",
+      "EpisodeWorkflowCommandService",
+      "DecisionLoopCommandService",
+      "NextCheckPlannerService",
+      "DecisionSnapshotHandoffService and existing worker/outbox storage",
+      "ArtifactService and same PostgreSQL catalog adapter",
+      "SourceSnapshotIngressService and exact observer binding"
+    ],
+    "legacy_fallbacks_absent": {
+      "EPHI_DEV_variables": true,
+      "EPHI_METROLOGY_SOURCE_ADAPTER_and_related_variables": true,
+      "EPHI_POSTGRES_DSN": true,
+      "EPHI_W1_EPISODE_ID": true
+    },
+    "normal_launch_command": "python -m ephi --serve",
+    "postgresql": {
+      "database": "dedicated local verification database; DSN redacted",
+      "server_version": "18.6 (Homebrew)"
+    },
+    "runtime_path": "ephi.app:main -> ephi.ui.app:run_ephi -> build_composition_from_environment",
+    "session_transport": {
+      "cookie_name": "session",
+      "cookie_value_recorded": false,
+      "nicegui_websocket_path": "/_nicegui_ws/socket.io/",
+      "same_site": "Strict",
+      "secure_cookie": false,
+      "storage_secret": "present; ephemeral value not recorded",
+      "websocket_sessions_opened": 2
+    },
+    "synthetic_runtime_metadata_matches_environment": true
+  },
+  "publication": {
+    "product_source_fix_required": true,
+    "push_or_fabric_pass_publication": "NOT_PERFORMED",
+    "verification_pass": false
+  },
+  "regressions": {
+    "application_self_check": "PASS",
+    "compileall": "PASS",
+    "downstream_postgresql_composition_restart": {
+      "command": "python -m unittest tests.test_downstream_postgresql -v",
+      "errors": 0,
+      "failed": 0,
+      "passed": 1,
+      "postgresql": "18.6",
+      "skipped": 0,
+      "status": "PASS"
+    },
+    "focused_downstream_abi_conformance": {
+      "command": "python -m unittest tests.test_downstream_abi -v",
+      "errors": 0,
+      "failed": 0,
+      "passed": 24,
+      "skipped": 0,
+      "status": "PASS"
+    },
+    "full_suite_real_postgresql_18": {
+      "command": "python -m unittest discover -s tests -v",
+      "errors": 0,
+      "failed": 0,
+      "passed": 324,
+      "postgresql": "18.6",
+      "skipped": 0,
+      "status": "PASS"
+    },
+    "git_diff_check_before_evidence_artifacts": "PASS",
+    "o10_rendered_browser": {
+      "browser_console_page_request_errors": 0,
+      "command": "tools/o10_rendered_accessibility.py",
+      "criteria_all_passed": true,
+      "note": "Separate legacy dev-identity regression only; direct downstream Episode screenshot and geometry are recorded above.",
+      "status": "PASS",
+      "viewports_px": [
+        [
+          320,
+          800
+        ],
+        [
+          390,
+          844
+        ],
+        [
+          768,
+          1024
+        ],
+        [
+          1024,
+          768
+        ],
+        [
+          1440,
+          900
+        ]
+      ]
+    },
+    "o8_browser_session_transport": {
+      "attention_and_episode_rendered": true,
+      "command": "tools/o8_browser_qualification.py",
+      "cookie_value_recorded": false,
+      "off_origin_mutation_status": 403,
+      "status": "PASS",
+      "websocket_matrix": [
+        "allowed origin accepted",
+        "missing/null/wrong scheme/wrong port/attacker suffix rejected"
+      ],
+      "websocket_session_observed": true
+    },
+    "package_checker_pre_evidence_refresh": {
+      "package_files": 218,
+      "status": "PASS"
+    },
+    "w0_clean_candidate_baseline_before_verify_artifacts": {
+      "candidate_commit": "9df7b1f3f49758fba459479404ae74215736b81f",
+      "command": "tools/w0_repo_baseline.py",
+      "status": "BASELINE_PASS",
+      "tests_errors": 0,
+      "tests_failed": 0,
+      "tests_passed": 245,
+      "tests_skipped": 79,
+      "worktree_clean": true
+    }
+  },
+  "request": "EPHI / CHG-182 / U1 R2 VERIFY continuation",
+  "schema_version": 1,
+  "target_only_nonclaims": {
+    "G02_real_family_source_science": "NOT_RUN",
+    "G06_real_family_source_science": "NOT_RUN",
+    "G10_production_like_capacity": "NOT_RUN",
+    "G12": "NOT_CLAIMED",
+    "Port_Gate": "NOT_CLAIMED",
+    "Production": "NOT_CLAIMED",
+    "company_identity_and_tls": "NOT_RUN"
+  },
+  "u1_invariant_reconfirmation": {
+    "abi_id": "org.ephi.downstream",
+    "abi_version": "1.0.0",
+    "artifact_sha256_byte_size_scope_corruption": "PASS; focused ABI and PostgreSQL downstream composition/restart tests",
+    "current_authorization_freshness_and_revocation": "PASS; focused downstream ABI tests and O8 current-authorization suite",
+    "handoff_committed_outbox_dedup_unknown_reconciliation": "PASS; PostgreSQL downstream composition/restart test",
+    "manifest_preflight_error_secret_safety": "PASS; focused tests and seven actual startup negative cases",
+    "manufacturing_control_capability": "ABSENT; observer contract remains bounded and read only",
+    "nicegui_base_or_chg162_workaround": "NONE",
+    "no_alternate_authorities": {
+      "composition_uses_existing_authorities": true,
+      "workflow_read_receipt_auth_source_state": "PASS"
+    },
+    "no_upstream_migration_changes": true,
+    "qa_safe_manifest_hash": "a4fd8c31bde6e80784d9e19a11b3f3e30a04577118419364be70eaf89e886225",
+    "safe_manifest_rebuild_restart": {
+      "canonical_safe_outputs_equal": true,
+      "hashes_equal": true,
+      "separate_processes": 2
+    },
+    "six_required_categories": {
+      "all_compatible": true,
+      "categories": [
+        "identity",
+        "source",
+        "artifacts",
+        "notifications",
+        "policy",
+        "runtime"
+      ],
+      "status": "PASS"
+    },
+    "source_describe_binding_mismatch": "PASS; focused downstream ABI tests fail closed on exact binding mismatch",
+    "synthetic_package_boundary": {
+      "core_edit_boundary": "PASS",
+      "forbidden_constructs": [],
+      "forbidden_imports": [],
+      "public_imports": "PASS"
+    },
+    "typed_policy_and_upstream_validation": "PASS; focused ABI test rejects unsupported schemas and malformed typed values",
+    "ui_feature_expansion": "NONE; existing Attention and Episode routes only"
+  },
+  "validation_after_evidence_addition": {
+    "application_self_check": "PASS",
+    "compileall": "PASS",
+    "full_postgresql_suite": {
+      "errors": 0,
+      "failed": 0,
+      "passed": 324,
+      "postgresql": "18.6",
+      "skipped": 0,
+      "status": "PASS"
+    },
+    "git_diff_check": "PASS",
+    "package_checker_manifest_refresh": {
+      "package_files": 222,
+      "status": "PASS"
+    },
+    "w0_repo_baseline_on_clean_candidate": "BASELINE_PASS; exact candidate commit and clean worktree, 245 pass / 79 integration skips / 0 fail / 0 error"
+  },
+  "verdict": "SOURCE_FIX_REQUIRED",
+  "verdict_reason": "The actual downstream-composed Episode page renders its content in a 73 px wide column at 1440x900 and creates a 12022 px document. The browser reaches the permitted Episode with no runtime/network errors, but the rendered state is not bounded."
+}
