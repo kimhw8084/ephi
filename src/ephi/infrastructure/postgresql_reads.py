@@ -17,6 +17,14 @@ from typing import Any, TYPE_CHECKING
 from uuid import uuid4
 
 from ephi.application.context import AccessScope, Principal, RevisionIdentity, RevisionVector
+from ephi.application.comparable_history import (
+    COMPARABLE_HISTORY_READ_CAPABILITY,
+    MAX_COMPARABLE_QUERY_MILLISECONDS,
+    ComparableCaseRevisionRecord,
+    ComparableHistoryMaterializationRequired,
+    HistoricalSourceFacts,
+    HistoricalSourceIdentity,
+)
 from ephi.application.errors import (
     AggregateNotFoundError,
     AuthorizationDeniedError,
@@ -557,6 +565,137 @@ class PostgreSQLReadSnapshotStore:
             raise StorageFailureError("durable PostgreSQL historical read failed") from exc
 
     @staticmethod
+    def _history_source_facts(row: Mapping[str, Any], scope: AccessScope) -> HistoricalSourceFacts | None:
+        if row.get("history_source_snapshot_id") is None:
+            return None
+        try:
+            identity = HistoricalSourceIdentity(
+                row["history_source_snapshot_id"],
+                row["history_source_revision"],
+                row["history_source_manifest_hash"],
+                row["history_source_artifact_sha256"],
+            )
+            facts = HistoricalSourceFacts(
+                identity,
+                row["history_source_family_identity"],
+                row["history_source_available_at"],
+                row["history_source_published_at"],
+                row["history_source_status"],
+            )
+            return facts
+        except Exception as exc:
+            raise StorageFailureError("durable comparable-case source manifest facts are invalid") from exc
+
+    def fetch_episode_history_window(
+        self,
+        principal: Principal,
+        scope: AccessScope,
+        current_episode_id: str,
+        known_by: datetime,
+        *,
+        limit: int,
+        required_read_capability: str = COMPARABLE_HISTORY_READ_CAPABILITY,
+    ) -> tuple[ComparableCaseRevisionRecord, ...]:
+        """Read a bounded same-scope window from immutable Episode revisions.
+
+        ``LIMIT`` caps returned revisions and a local statement timeout caps
+        index/filter work. A caller requests one row beyond its accepted
+        candidate bound so it can return MATERIALIZATION_REQUIRED instead of
+        silently truncating. Source facts are joined only by both scope and
+        immutable snapshot ID, and availability is filtered before ranking.
+        """
+
+        self._authorize(principal, scope, required_read_capability)
+        current_episode_id = _identity(current_episode_id, "current_episode_id")
+        if not isinstance(known_by, datetime) or known_by.tzinfo is None or known_by.utcoffset() is None:
+            raise ValidationFailureError("known_by must be a timezone-aware timestamp")
+        if isinstance(limit, bool) or not isinstance(limit, int) or not 1 <= limit <= 101:
+            raise QueryTooBroadError("Episode history window exceeds the bounded query contract", limit=101)
+        try:
+            with self._transaction(repeatable_read=True, read_only=True) as connection:
+                connection.execute(f"SET LOCAL statement_timeout = '{MAX_COMPARABLE_QUERY_MILLISECONDS}ms'")
+                rows = connection.execute(
+                    """
+                    SELECT r.revision_id, r.scope_key, r.entity_type, r.entity_id,
+                           r.revision_vector_json, r.payload_json, r.known_at, r.published_at,
+                           r.workflow_aggregate_type, r.workflow_aggregate_id,
+                           r.workflow_version, r.workflow_state_json,
+                           s.snapshot_id AS history_source_snapshot_id,
+                           s.source_revision AS history_source_revision,
+                           s.manifest_hash AS history_source_manifest_hash,
+                           s.manifest_artifact_sha256 AS history_source_artifact_sha256,
+                           s.family_id AS history_source_family_identity,
+                           s.available_cutoff AS history_source_available_at,
+                           s.published_at AS history_source_published_at,
+                           s.status AS history_source_status
+                    FROM read_revision AS r
+                    LEFT JOIN source_snapshot AS s
+                      ON s.scope_key = r.scope_key
+                     AND s.snapshot_id = r.payload_json #>> '{comparable_case,source_identity,snapshot_id}'
+                    WHERE r.scope_key = %s
+                      AND r.entity_type = 'episode'
+                      AND r.entity_id <> %s
+                      AND r.known_at <= %s
+                      AND r.published_at <= %s
+                      AND (
+                            s.snapshot_id IS NULL
+                            OR (s.available_cutoff <= %s AND s.published_at <= %s)
+                      )
+                    ORDER BY r.known_at DESC, r.published_at DESC, r.entity_id ASC, r.revision_id ASC
+                    LIMIT %s
+                    """,
+                    (scope.canonical_key, current_episode_id, known_by, known_by, known_by, known_by, limit),
+                ).fetchall()
+                records = []
+                for row in rows:
+                    revision = self._read_revision_from_row(row)
+                    if revision.scope.canonical_key != scope.canonical_key:
+                        raise ScopeDeniedError("Episode history row is outside the requested scope")
+                    records.append(ComparableCaseRevisionRecord(revision, self._history_source_facts(row, scope)))
+                return tuple(records)
+        except CommandError:
+            raise
+        except Exception as exc:
+            if getattr(exc, "sqlstate", None) == "57014":
+                raise ComparableHistoryMaterializationRequired from exc
+            raise StorageFailureError("durable PostgreSQL comparable-case history read failed") from exc
+
+    def fetch_comparable_source_facts(
+        self,
+        principal: Principal,
+        scope: AccessScope,
+        identity: HistoricalSourceIdentity,
+        required_read_capability: str = COMPARABLE_HISTORY_READ_CAPABILITY,
+    ) -> HistoricalSourceFacts | None:
+        """Resolve one immutable source identity only inside the authorized scope."""
+
+        self._authorize(principal, scope, required_read_capability)
+        if not isinstance(identity, HistoricalSourceIdentity):
+            raise ValidationFailureError("source lookup requires an exact HistoricalSourceIdentity")
+        try:
+            with self._transaction(repeatable_read=True, read_only=True) as connection:
+                row = connection.execute(
+                    """
+                    SELECT snapshot_id AS history_source_snapshot_id,
+                           source_revision AS history_source_revision,
+                           manifest_hash AS history_source_manifest_hash,
+                           manifest_artifact_sha256 AS history_source_artifact_sha256,
+                           family_id AS history_source_family_identity,
+                           available_cutoff AS history_source_available_at,
+                           published_at AS history_source_published_at,
+                           status AS history_source_status
+                    FROM source_snapshot
+                    WHERE scope_key = %s AND snapshot_id = %s
+                    """,
+                    (scope.canonical_key, identity.snapshot_id),
+                ).fetchone()
+                return None if row is None else self._history_source_facts(row, scope)
+        except CommandError:
+            raise
+        except Exception as exc:
+            raise StorageFailureError("durable PostgreSQL comparable source lookup failed") from exc
+
+    @staticmethod
     def _validate_ttl(ttl_seconds: int) -> int:
         if isinstance(ttl_seconds, bool) or not isinstance(ttl_seconds, int) or ttl_seconds <= 0:
             raise ValidationFailureError("ttl_seconds must be a positive integer")
@@ -628,7 +767,8 @@ class PostgreSQLReadSnapshotStore:
                     ) VALUES (%s, %s, %s, %s, %s::jsonb, %s, %s,
                               clock_timestamp(), clock_timestamp() + (%s * INTERVAL '1 second'), %s)
                     RETURNING snapshot_id, query_identity_hash, scope_key, subject,
-                              security_revision_json, required_read_capability, token_binding,
+                              security_revision_json::text AS security_revision_json,
+                              required_read_capability, token_binding,
                               created_at, expires_at, total_row_count
                     """,
                     (
@@ -704,7 +844,7 @@ class PostgreSQLReadSnapshotStore:
         try:
             with self._transaction(repeatable_read=True, read_only=True) as connection:
                 row = connection.execute(
-                    "SELECT snapshot_id, query_identity_hash, scope_key, subject, security_revision_json, required_read_capability, token_binding, created_at, expires_at, total_row_count, clock_timestamp() AS database_now FROM query_snapshot WHERE snapshot_id = %s",
+                    "SELECT snapshot_id, query_identity_hash, scope_key, subject, security_revision_json::text AS security_revision_json, required_read_capability, token_binding, created_at, expires_at, total_row_count, clock_timestamp() AS database_now FROM query_snapshot WHERE snapshot_id = %s",
                     (snapshot_id,),
                 ).fetchone()
                 if row is None:
@@ -728,7 +868,7 @@ class PostgreSQLReadSnapshotStore:
                     raise QueryCursorValidationError("cursor ordinal is outside the retained snapshot")
                 expected_count = min(page_size, snapshot.total_row_count - start_ordinal + 1)
                 rows = connection.execute(
-                    "SELECT snapshot_id, ordinal, row_id, row_version_json, payload_json FROM query_snapshot_row WHERE snapshot_id = %s AND ordinal >= %s AND ordinal < %s ORDER BY ordinal ASC",
+                    "SELECT snapshot_id, ordinal, row_id, row_version_json::text AS row_version_json, payload_json FROM query_snapshot_row WHERE snapshot_id = %s AND ordinal >= %s AND ordinal < %s ORDER BY ordinal ASC",
                     (snapshot_id, start_ordinal, start_ordinal + expected_count),
                 ).fetchall()
                 if len(rows) != expected_count:
