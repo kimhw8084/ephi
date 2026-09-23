@@ -529,6 +529,12 @@ class PostgreSQLReferenceTransactionAdapter:
     def read_historical_bundle(self, *args, **kwargs):
         return self.read_store().read_historical_bundle(*args, **kwargs)
 
+    def fetch_episode_history_window(self, *args, **kwargs):
+        return self.read_store().fetch_episode_history_window(*args, **kwargs)
+
+    def fetch_comparable_source_facts(self, *args, **kwargs):
+        return self.read_store().fetch_comparable_source_facts(*args, **kwargs)
+
     def read_historical_revision(self, *args, **kwargs):
         return self.read_store().read_historical_revision(*args, **kwargs)
 

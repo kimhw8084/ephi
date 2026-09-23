@@ -1,0 +1,68 @@
+{
+  "evidence_kind": "candidate_bound_o6_2_build_evidence",
+  "status": "PASS_BOUNDED_BUILD_WITH_EXPLICIT_QUALIFICATION_BOUNDARY",
+  "project": "ephi",
+  "request": "CHG-174",
+  "operation": "BUILD",
+  "target_base_branch": "origin/main",
+  "target_base_sha": "bbb25f9819498ede51e95e64737efa8f6d024bd3",
+  "candidate_branch": "codex/ephi-o6-comparable-case-history-v1",
+  "candidate_sha": "ca2296e7d2d8373ab5da914cc8c113bac4ac3bfc",
+  "candidate_tree": "d9e49aebb8dca80994e1844b86a16c63e2fc16cb",
+  "candidate_parent": "bbb25f9819498ede51e95e64737efa8f6d024bd3",
+  "fabric_job": null,
+  "evidence_origin": "Repository-local deterministic candidate record. No Fabric job interface or artifact bridge was available in this session; no remote Fabric job is claimed.",
+  "checks": {
+    "o6_2_focused_unit_and_postgresql_18_restart": "PASS_15_TESTS",
+    "postgresql_18_o2_o3_o4_o5_o6_1_o6_2_o8_o9_adapter_regressions": {
+      "status": "PASS_96_TESTS",
+      "modules": [
+        "tests.test_o2_postgresql",
+        "tests.test_o2_worker_postgresql",
+        "tests.test_o2_postgresql_reads",
+        "tests.test_o2_postgresql_artifacts",
+        "tests.test_o3_postgresql",
+        "tests.test_o4_source_ingress_postgresql",
+        "tests.test_o5_postgresql",
+        "tests.test_o5_handoff_postgresql",
+        "tests.test_o6_planner_postgresql",
+        "tests.test_o6_comparable_history_postgresql",
+        "tests.test_o8_postgresql",
+        "tests.test_o9_operations",
+        "tests.test_postgresql_adapter_lifecycle"
+      ]
+    },
+    "full_unit_and_postgresql_suite": "PASS_299_TESTS",
+    "compileall_src_ephi_and_tests": "PASS",
+    "package_refresh_manifest": "PASS_203_PACKAGE_FILES",
+    "post_evidence_package_refresh_manifest": "PASS_204_PACKAGE_FILES",
+    "w0_repo_baseline": "BASELINE_PASS_CLEAN_IMPLEMENTATION_CANDIDATE",
+    "git_diff_check": "PASS"
+  },
+  "real_postgresql": {
+    "server": "PostgreSQL 18.6 (Homebrew), aarch64-apple-darwin25.6.0",
+    "o6_2_restart_durability": "Deterministic bounded retrieval and retained continuation reproduced after adapter restart from durable history; Episode/workflow truth unchanged.",
+    "fixture_boundary": "Synthetic fixtures exercise retrieval mechanics only; no real-family G02/G06 qualification is claimed."
+  },
+  "implementation_boundary": {
+    "retrieval": "Bounded exact structured fingerprint comparison over existing immutable Episode read revisions and scoped source manifests.",
+    "population_limit": 100,
+    "query_time_limit_ms": 500,
+    "similarity_interpretation": "Descriptive exact-match components only; no probability, root-cause confidence, causal equivalence, or scientific validation.",
+    "materialization": "Explicit MATERIALIZATION_REQUIRED on population overflow or synchronous query timeout; no new queue or background framework.",
+    "authorization": "Current authorization and scope checked before historical reads, before disclosure, and on cursor continuation.",
+    "ui_changes": false,
+    "rca": "NOT_IMPLEMENTED"
+  },
+  "release_boundary": {
+    "w4": "NOT_COMPLETE",
+    "g02_g06_real_family_qualification": "NOT_CLAIMED",
+    "chg_144": "BLOCKED_REAL_SOURCE",
+    "chg_162": "EXTERNAL_FRAMEWORK_DEPENDENCY",
+    "chg_161": "BLOCKED_BENCHMARK_ENVIRONMENT",
+    "o5_human_pilot": "NOT_CLAIMED",
+    "production_readiness": "NOT_CLAIMED",
+    "main_mutation_or_merge": false
+  },
+  "scope_boundary": "O6.2 comparable prior-case retrieval only; no RCA cohort construction or factor ranking, no manufacturing-control behavior, no UI/NiceGUI Base changes, and no W4 completion claim."
+}

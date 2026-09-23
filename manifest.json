@@ -410,6 +410,11 @@
       "sha256": "74325a651776d5c638b7ed1df81f3ebfe001d0452f7e16647bfcdd9e57a75dad"
     },
     {
+      "path": "evidence/review/chg_174_o6_2_build.json",
+      "bytes": 3596,
+      "sha256": "15df3ba6dd07b6b4b8641598355164cdcd5b2f48c60d0d89f69f7baac639046f"
+    },
+    {
       "path": "evidence/review/nicegui_base_binding_manifest.json",
       "bytes": 15859,
       "sha256": "797ebcc38c8aa8846c3bd65305b1f20686ff2e17b43b6f770400ec10c826649c"
@@ -498,6 +503,11 @@
       "path": "migrations/007_o5_decision_snapshot_handoff.sql",
       "bytes": 4742,
       "sha256": "68c46a76a345a316288d724937fd330cca65301e432811f9086440be20f3623c"
+    },
+    {
+      "path": "migrations/008_o6_comparable_case_history.sql",
+      "bytes": 333,
+      "sha256": "02a82a3fd8efcd18cb0db090fcdc9b7db028e13be6dd2ac43235f3ac40458910"
     },
     {
       "path": "nicegui_base.toml",
@@ -601,8 +611,8 @@
     },
     {
       "path": "src/ephi/application/__init__.py",
-      "bytes": 12635,
-      "sha256": "7d403827c37a6b4855ba1488f45555b874c952a33bc5998293247a427da395b1"
+      "bytes": 14323,
+      "sha256": "b1b00c2687d98c127eb8bda31105cad7ed17db763694d8bd7ffd09e922437120"
     },
     {
       "path": "src/ephi/application/artifacts.py",
@@ -613,6 +623,11 @@
       "path": "src/ephi/application/attention.py",
       "bytes": 11112,
       "sha256": "6111e647c9e323833c2166885060a1cee43f90e526b6b177e54aeb75584b534b"
+    },
+    {
+      "path": "src/ephi/application/comparable_history.py",
+      "bytes": 58761,
+      "sha256": "3a49ffe8afa4b8c6ca68b9f8bd04b69f0683883c5da1e803c8eacad7b010be10"
     },
     {
       "path": "src/ephi/application/context.py",
@@ -721,8 +736,8 @@
     },
     {
       "path": "src/ephi/infrastructure/postgresql.py",
-      "bytes": 28571,
-      "sha256": "c22891a48f0a2e2b926dd41ed889b96dc2bfab83b3eab440e43b7e505e1a46fb"
+      "bytes": 28855,
+      "sha256": "be055522189120180e3ac1907c65e40f12e1483b72d5b2c1096f7254c2eed386"
     },
     {
       "path": "src/ephi/infrastructure/postgresql_o3.py",
@@ -731,8 +746,8 @@
     },
     {
       "path": "src/ephi/infrastructure/postgresql_reads.py",
-      "bytes": 35977,
-      "sha256": "1971d219a28ea56939e3c1bd34b50cffe99c318756f44f927ff2092290a01344"
+      "bytes": 43418,
+      "sha256": "f15c4d13fdd05c00a5a31b1fe0035fe07ea4b6cb8f86f857026c0779d7ae7a88"
     },
     {
       "path": "src/ephi/infrastructure/postgresql_source.py",
@@ -895,6 +910,16 @@
       "sha256": "4b0324e59a6aebb08eca9fac0e8f000546798d25932fed582217d6770b00331c"
     },
     {
+      "path": "tests/test_o6_comparable_history.py",
+      "bytes": 31077,
+      "sha256": "6d3b59846c2df45b9c226a7f16fff113d787479b37271b64a4d8b2b07aa7c0de"
+    },
+    {
+      "path": "tests/test_o6_comparable_history_postgresql.py",
+      "bytes": 10640,
+      "sha256": "961e41998eb0634c93c075f98b63d9b623c4bdb6070391bcdec817ba0ad40d31"
+    },
+    {
       "path": "tests/test_o6_planner.py",
       "bytes": 27630,
       "sha256": "3b6e7c58f38a848e03c83e62779b9bd7e918b6c6a7771b4ff23c0b3bc15b96c8"
@@ -921,8 +946,8 @@
     },
     {
       "path": "tests/test_o9_operations.py",
-      "bytes": 23415,
-      "sha256": "c77bf8990acb0dae7b657a9ff03f9ba936f477dee9f54f573c5c624899e3bf31"
+      "bytes": 23529,
+      "sha256": "3e67cc1ef0a013492aec991c93aee92a49c586f36b369a374202bf831898e60d"
     },
     {
       "path": "tests/test_package.py",

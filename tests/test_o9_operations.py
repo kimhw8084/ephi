@@ -98,9 +98,10 @@ class O9OperationsContractTests(unittest.TestCase):
         first = _migration_identity(ROOT)
         second = _migration_identity(ROOT)
         self.assertEqual(first, second)
-        self.assertEqual(first["migration_count"], 7)
+        self.assertEqual(first["migration_count"], 8)
         self.assertEqual(len(first["identity_sha256"]), 64)
         self.assertEqual([item["path"] for item in first["files"]], sorted(item["path"] for item in first["files"]))
+        self.assertIn("migrations/008_o6_comparable_case_history.sql", [item["path"] for item in first["files"]])
 
     def test_backup_artifact_verification_fails_closed_for_missing_and_corrupt_bytes(self):
         with tempfile.TemporaryDirectory() as directory:
