@@ -60,6 +60,7 @@ from ephi.application.o10 import (
 )
 from ephi.application.source_reality import require_runtime_source_binding
 from ephi.config import RuntimeSettings
+from ephi.downstream import DownstreamComposition, compose_downstream, load_provider_bundle
 from ephi.infrastructure.postgresql import PostgreSQLReferenceTransactionAdapter
 from ephi.transport import (
     build_runtime_security_contract,
@@ -264,6 +265,7 @@ class EphiUiComposition:
     metrology_source_binding: object
     runtime: ApplicationRuntime
     workspace: object
+    downstream: DownstreamComposition | None = None
 
     def close(self) -> None:
         self.adapter.close()
@@ -288,7 +290,39 @@ def _development_principal_from_environment(scope: AccessScope) -> Principal:
 
 
 def build_composition_from_environment() -> EphiUiComposition:
-    """Compose only from explicit PostgreSQL and identity bindings."""
+    """Compose through the explicit downstream ABI or the retained dev/test path."""
+
+    environment = os.environ.get("EPHI_ENV", "development").lower()
+    downstream_entrypoint = os.environ.get("EPHI_DOWNSTREAM_ENTRYPOINT", "").strip()
+    if downstream_entrypoint:
+        downstream = compose_downstream(
+            load_provider_bundle(downstream_entrypoint),
+            runtime_settings=RuntimeSettings.from_environment(),
+        )
+        principal_provider = downstream.principal_provider
+        scope_provider = downstream.scope_provider
+        source = EphiReadDataSource(downstream.attention, principal_provider, scope_provider)
+        runtime = ApplicationRuntime()
+        runtime.data.register_source(source)
+        workspace = runtime.open_workspace("ephi-attention-episode-w1")
+        workspace.state.set(FILTER_KEY, {}, source="ephi.initial")
+        return EphiUiComposition(
+            downstream.adapter,
+            principal_provider,
+            scope_provider,
+            downstream.current_authorization,
+            downstream.attention,
+            downstream.episode_briefs,
+            downstream.workflow,
+            source,
+            downstream.source_observer,
+            downstream.source_binding,
+            runtime,
+            workspace,
+            downstream,
+        )
+    if environment not in {"development", "test"}:
+        raise RuntimeError("non-development EPHI requires an explicit downstream provider bundle")
 
     dsn = _required_environment("EPHI_POSTGRES_DSN")
     metrology_source_adapter, metrology_source_binding = require_runtime_source_binding()

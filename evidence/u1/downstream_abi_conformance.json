@@ -1,0 +1,129 @@
+{
+  "candidate": {
+    "base_commit": "156e47b1e0cc3c77a2a3f0e2b65875eacc9aa0b4",
+    "branch": "codex/ephi-u1-downstream-extension-abi-v1",
+    "changed_inputs_sha256": "db8bd313bcb1e3d372147cbd6c4b8052ca0b736e714ca7f8b3b55406bc75ce18",
+    "digest_rule": "SHA-256 over sorted changed input path, NUL, file bytes, NUL; excludes manifest.json and this evidence file",
+    "ephi_identity": {
+      "distribution": "ephi",
+      "historical_identity_claimed": false,
+      "implementation": "canonical-repository",
+      "source_authority": "kimhw8084/ephi",
+      "version": "0.1.0"
+    }
+  },
+  "schema_version": 1,
+  "scope": "U1 generic one-way downstream extension conformance only",
+  "abi": {
+    "id": "org.ephi.downstream",
+    "version": "1.0.0",
+    "safe_manifest_hash": "c61b85985e20cc02f09f77c1bd5beba463567912e5923457ed000061ce5bf8a1",
+    "hash_algorithm": "SHA-256 of canonical_json(safe manifest)",
+    "provider_contract_version": "1.0.0",
+    "manifest_schema": "org.ephi.downstream.manifest.v1",
+    "compatibility": "PASS / CONTRACT_PASS"
+  },
+  "provider_inventory": [
+    {"category": "identity", "required": true, "contract_id": "org.ephi.identity.current-authorization", "version": "1.0.0", "capabilities": ["authorization.current.resolve", "principal.resolve"], "status": "COMPATIBLE"},
+    {"category": "source", "required": true, "contract_id": "org.ephi.source.metrology-observer", "version": "1.0.0", "capabilities": ["binding.exact.describe", "observation.bounded.read"], "status": "COMPATIBLE"},
+    {"category": "artifacts", "required": true, "contract_id": "org.ephi.artifacts.immutable", "version": "1.0.0", "capabilities": ["authorization.current", "catalog.scope-isolated", "content.sha256-size.identity"], "status": "COMPATIBLE"},
+    {"category": "notifications", "required": true, "contract_id": "org.ephi.notifications.handoff-delivery", "version": "1.0.0", "capabilities": ["delivery.unknown.reconcile", "outbox.committed-intents", "recipient.authorization.current"], "status": "COMPATIBLE"},
+    {"category": "policy", "required": true, "contract_id": "org.ephi.policy.curated-configuration", "version": "1.0.0", "capabilities": ["policy.typed.v1", "validation.upstream"], "policy_schema_id": "org.ephi.policy-configuration", "policy_schema_version": "1.0.0", "configuration_version": "1.0.0", "status": "COMPATIBLE"},
+    {"category": "runtime", "required": true, "contract_id": "org.ephi.runtime.deployment-capabilities", "version": "1.0.0", "capabilities": ["postgresql.reference.v1", "runtime-settings.preserved"], "postgresql_contract_version": "1.0.0", "postgresql_major_version": 18, "target_environment_class": "test", "status": "COMPATIBLE"}
+  ],
+  "synthetic_package": {
+    "path": "examples/synthetic_downstream",
+    "entrypoint": "examples.synthetic_downstream.provider:build_bundle",
+    "fixture_files": ["examples/__init__.py", "examples/synthetic_downstream/__init__.py", "examples/synthetic_downstream/provider.py"],
+    "discovery_path": "same explicit module:factory loader used for private packages",
+    "public_imports": "PASS",
+    "core_edit_boundary": "PASS",
+    "forbidden_imports": [],
+    "forbidden_constructs": [],
+    "generic_source_or_migration_edits_in_fixture": false,
+    "copied_generic_production_implementation": false,
+    "alternate_authority_or_state_store": false
+  },
+  "conformance_matrix": {
+    "positive": [
+      {"case": "same bundle across rebuild and process restart", "status": "PASS", "result": "identical canonical safe-manifest hash"},
+      {"case": "synthetic package explicit discovery and actual composition", "status": "PASS", "reason_code": "CONTRACT_PASS"},
+      {"case": "current identity resolves through CurrentAuthorizationAuthority", "status": "PASS"},
+      {"case": "allowed scope and capability", "status": "PASS"},
+      {"case": "source exact describe and MetrologySourceBinding", "status": "PASS"},
+      {"case": "same-scope immutable artifact bytes", "status": "PASS", "identity": "SHA-256 plus byte size"},
+      {"case": "typed family/check/planner/recovery policy input", "status": "PASS"},
+      {"case": "preflight and PostgreSQL-backed composition smoke", "status": "PASS"}
+    ],
+    "negative": [
+      {"case": "unknown ABI major before provider use", "status": "REJECTED", "reason_code": "INCOMPATIBLE_ABI"},
+      {"case": "each required provider category missing individually", "status": "REJECTED", "reason_code": "MISSING_REQUIRED_PROVIDER"},
+      {"case": "multiple required providers missing", "status": "REJECTED", "reason_code": "MISSING_REQUIRED_PROVIDER", "ordering": "deterministic category order"},
+      {"case": "wrong provider contract/capability", "status": "REJECTED", "reason_code": "INCOMPATIBLE_PROVIDER_CONTRACT"},
+      {"case": "wrong factory return or provider object", "status": "REJECTED", "reason_code": "PROVIDER_LOAD_ERROR"},
+      {"case": "malformed module:factory entrypoint", "status": "REJECTED", "reason_code": "INVALID_ENTRYPOINT"},
+      {"case": "module import and factory exceptions with secret markers", "status": "REJECTED", "reason_code": "PROVIDER_LOAD_ERROR", "raw_exception_or_marker_emitted": false},
+      {"case": "provider execution exception", "status": "REJECTED", "reason_code": "COMPOSITION_FAIL_CLOSED", "raw_exception_or_marker_emitted": false},
+      {"case": "stale/revoked identity or security revision", "status": "DENIED", "authority": "CurrentAuthorizationAuthority"},
+      {"case": "stale presented Principal is not upgraded by provider grants", "status": "DENIED"},
+      {"case": "source/family/scope/schema/mapping/unit/identity/adapter mismatch", "status": "REJECTED", "reason_code": "SOURCE_BINDING_MISMATCH"},
+      {"case": "source-control capability", "status": "REJECTED", "result": "observer contract exposes no control command"},
+      {"case": "wrong-scope, missing or corrupted artifact", "status": "DENIED_OR_INTEGRITY_FAILURE"},
+      {"case": "duplicate committed notification", "status": "DEDUPLICATED", "authority": "existing handoff/outbox service"},
+      {"case": "ambiguous external delivery", "status": "UNKNOWN_RECONCILIATION", "false_success": false},
+      {"case": "unknown policy schema or malformed typed policy", "status": "REJECTED", "reason_code": "POLICY_SCHEMA_UNSUPPORTED_OR_TYPED_VALIDATION"},
+      {"case": "missing non-development provider bundle", "status": "FAIL_CLOSED", "fixture_fallback": false}
+    ]
+  },
+  "security_and_data_boundary": {
+    "safe_manifest_fields": "public contract/version/capability and target class only",
+    "runtime_secret_scan": "PASS",
+    "private_policy_mapping_values_in_manifest_or_preflight": false,
+    "private_object_paths_credentials_dsns_tokens_cookies_endpoints_source_rows_in_manifest_or_errors": false,
+    "provider_failure_sanitization": "structural typed reason code; raw exception string is discarded",
+    "authorization_authority": "existing CurrentAuthorizationAuthority",
+    "browser_submitted_identity_is_authority": false,
+    "source_control_commands": false,
+    "generic_migrations_changed": false
+  },
+  "postgresql_18_evidence": {
+    "server_version": "18.6",
+    "status": "PASS",
+    "test": "tests.test_downstream_postgresql.DownstreamPostgreSQLTests.test_authorized_durable_read_claim_artifact_and_handoff_survive_recomposition",
+    "durable_paths": ["authorized O3 read", "workflow claim/CAS", "committed outbox handoff deduplication", "UNKNOWN then reconciliation", "O4 source metadata ingress", "immutable artifact catalog/blob"],
+    "same_existing_runtime_adapter_for_workflow_handoff_catalog_and_source": true,
+    "adapter_and_process_restart": "PASS",
+    "new_database_or_state_authority": false,
+    "company_database_qualification": "NOT_CLAIMED"
+  },
+  "regressions": {
+    "full_suite": {"command": "EPHI_TEST_POSTGRES_DSN=... python3 -m unittest discover -s tests -v", "passed": 324, "failed": 0, "errors": 0, "skipped": 0, "status": "PASS"},
+    "focused_downstream_abi": {"tests": 24, "status": "PASS"},
+    "focused_downstream_postgresql_18": {"tests": 1, "status": "PASS"},
+    "w0_repo_baseline": {"status": "BASELINE_PASS", "baseline_tests_passed": 245, "baseline_tests_skipped": 79, "package_integrity_files": 217, "historical_observations": "REFERENCE_ONLY"},
+    "application_self_check": "PASS",
+    "compileall": "PASS",
+    "git_diff_check": "PASS",
+    "package_manifest_refresh": {"status": "PASS", "package_files": 218},
+    "package_manifest_check": "PASS"
+  },
+  "changed_files": {
+    "generic_product": ["src/ephi/downstream/__init__.py", "src/ephi/downstream/__main__.py", "src/ephi/downstream/boundary.py", "src/ephi/downstream/composition.py", "src/ephi/downstream/contracts.py", "src/ephi/downstream/preflight.py", "src/ephi/downstream/validation.py", "src/ephi/ui/app.py", "pyproject.toml"],
+    "synthetic_fixture": ["examples/__init__.py", "examples/synthetic_downstream/__init__.py", "examples/synthetic_downstream/provider.py"],
+    "tests": ["tests/test_downstream_abi.py", "tests/test_downstream_postgresql.py"],
+    "documentation": ["01_Product_and_Architecture.md", "13_Package_Review.md", "README.md", "docs/Downstream_Integration_ABI.md"],
+    "evidence": ["evidence/u1/downstream_abi_conformance.json"],
+    "package_integrity": ["manifest.json"],
+    "database_migrations": [],
+    "ui_feature_expansion": [],
+    "nicegui_base_changes": []
+  },
+  "target_qualification": {
+    "real_family_source_science_g02_g06": "NOT_RUN",
+    "company_identity_tls": "NOT_RUN",
+    "production_like_performance_capacity_g10": "NOT_RUN",
+    "g12_port_gate_release_production": "NOT_CLAIMED",
+    "company_deployment_readiness": "NOT_CLAIMED",
+    "exactly_once_external_messaging": "NOT_CLAIMED"
+  }
+}

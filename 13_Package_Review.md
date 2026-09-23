@@ -216,3 +216,37 @@ ordinal utility weights scientifically.
 ## CHG-105 W0 runtime delta
 
 The independent framework/dependency qualification slice is recorded separately in [the runtime evidence](evidence/review/nicegui_base_runtime_evidence.json) and linked from [the NiceGUI Base binding manifest](evidence/review/nicegui_base_binding_manifest.json). It verified an isolated Python 3.11.7 environment, the exact NiceGUI Base VCS commit/version, exact `nicegui==3.15.0`, and 21/21 CHG-104 public-root authority imports. All six requested installed discovery commands returned machine-readable output. `runtime-contract` and browserless framework `runtime-smoke --port 0` PASS; application/browser/production qualification remain NOT_RUN. The canonical package self-check and Git-native baseline are the current W0 execution targets.
+
+## CHG-182 U1 downstream extension ABI candidate
+
+U1 publishes `org.ephi.downstream` ABI 1.0.0 with a deterministic safe manifest
+and explicit frozen provider bundle for current authorization, bounded
+metrology observation, immutable artifacts, notification delivery, curated
+policy configuration and runtime capabilities. The entrypoint loader accepts
+only a declared `module:factory`; compatibility and the complete required
+category inventory are validated before provider use. Provider exceptions are
+reduced to typed bounded reason codes. Composition returns the current EPHI
+authorization authority, PostgreSQL runtime and existing application
+services; it creates no alternate workflow, receipt, authorization, source or
+read authority. No migration or generic persistence change is included.
+
+The synthetic package under `examples/synthetic_downstream/` exercises the
+same discovery and composition path as a private package. Its source boundary
+check records the public imports and verifies that the fixture makes no
+generic source/migration edits or monkeypatches. Deterministic focused evidence
+is in `tests.test_downstream_abi`; real PostgreSQL 18.6 composition, authorized
+durable read/claim, committed handoff deduplication and UNKNOWN reconciliation,
+source metadata, artifact integrity, and adapter/process restart evidence is
+in `tests.test_downstream_postgresql`. The full PostgreSQL-enabled suite passed
+324 tests; the canonical W0 baseline also passed. `evidence/u1/` binds the
+safe ABI manifest hash, provider inventory, boundary result, negative and
+positive conformance matrix, runtime secret scan, qualification limitations,
+and changed-file inventory to the candidate input digest.
+
+This evidence establishes only the generic one-way extension boundary. It
+does not qualify real family/source science (G02/G06), company identity/TLS,
+production-like performance/capacity (G10), G12, the Port Gate, release or
+Production. Company adapters/configuration are private deployment inputs; the
+released EPHI core and migrations remain unpatched. A generic incompatibility
+must be reproduced with sanitized generic facts and raised upstream without
+exporting company source, code, logs or artifacts.

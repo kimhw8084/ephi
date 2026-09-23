@@ -81,8 +81,8 @@
     },
     {
       "path": "01_Product_and_Architecture.md",
-      "bytes": 11184,
-      "sha256": "35df464240e2f9e6a22385b1061447725a30038b6271cce3e4687b60f3f4c199"
+      "bytes": 12444,
+      "sha256": "462fe354f63119a712a623523b0511f01161a49018bb69da001d4a40ef46e8c6"
     },
     {
       "path": "02_Source_Audit.md",
@@ -141,8 +141,8 @@
     },
     {
       "path": "13_Package_Review.md",
-      "bytes": 17604,
-      "sha256": "cfe8a09211e13740a75cee444437659739275dd910966d888a72407c24d9bfff"
+      "bytes": 19822,
+      "sha256": "6ef19626468b8c9ef93508d9dfc618b8dcfa9a25b7ef14f910b67337f5649cc6"
     },
     {
       "path": "AGENTS.md",
@@ -156,8 +156,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 20901,
-      "sha256": "db73aeaa29fa41471c0aa7460c5e5b1f0b58acd1b9e7c22bfc63f9d99a7a7f6c"
+      "bytes": 22236,
+      "sha256": "949ad1e595b72df11e042757b8de5f027a393e4cafa3ffd821386b2ceaaf19e7"
     },
     {
       "path": "app.py",
@@ -173,6 +173,11 @@
       "path": "certification_output/runtime_smoke/RUNTIME_SMOKE_SERVER.log",
       "bytes": 1863,
       "sha256": "0520a045b2641cbd63a6f7d97a8e01dc94e8e171fe58108d391b7fe789867a49"
+    },
+    {
+      "path": "docs/Downstream_Integration_ABI.md",
+      "bytes": 12983,
+      "sha256": "cf889b4476f8fac3ee9401b44a2ecfdd9224320c122edf683a8500550e126776"
     },
     {
       "path": "docs/nicegui_base/AGENT_WORKFLOW.md",
@@ -445,6 +450,16 @@
       "sha256": "d995b28e9196c0a2145655905e5c3ddac6c1821c42af0e5a9a79aee0737cef75"
     },
     {
+      "path": "evidence/u1/downstream_abi_conformance.json",
+      "bytes": 9744,
+      "sha256": "900c58454be92da519ad90722debb14a56a8663ba4caf69cf0911ad93bbb8b82"
+    },
+    {
+      "path": "examples/__init__.py",
+      "bytes": 61,
+      "sha256": "b060d41e6705cac80caacb622fc737209d85f878bc0a4a6d976adc651b26d7f1"
+    },
+    {
       "path": "examples/nicegui_base/README.md",
       "bytes": 960,
       "sha256": "854b348484efbd945b053c61ba3471240336eaad192141133aa272ab82ace937"
@@ -468,6 +483,16 @@
       "path": "examples/nicegui_base/golden_data_explorer.py",
       "bytes": 2435,
       "sha256": "a85ac5e49e00cd56217dd81d6c3f563cc5d6b8cedb582735a0c669ae9f24b73a"
+    },
+    {
+      "path": "examples/synthetic_downstream/__init__.py",
+      "bytes": 82,
+      "sha256": "de9996707b14c26d73a5bffe85ab6e92a88eeee694c3e18bca97913b340a7b30"
+    },
+    {
+      "path": "examples/synthetic_downstream/provider.py",
+      "bytes": 10913,
+      "sha256": "40a30a83e3dec5632dff49941cc411b41edee71a64a5a8ab7ae0135bc537bc4e"
     },
     {
       "path": "migrations/001_o2_command_core.sql",
@@ -561,8 +586,8 @@
     },
     {
       "path": "pyproject.toml",
-      "bytes": 657,
-      "sha256": "0ef88ce76633bbebfada55628717ff5189b05eb05bf276f1f27d4ceeac27f0a1"
+      "bytes": 708,
+      "sha256": "918b594f13451e7be372178772b8803c0f4dbde5ab6c5385ab0ea0e10cecd5ae"
     },
     {
       "path": "requirements-dev.txt",
@@ -715,6 +740,41 @@
       "sha256": "758f0cee7244bd875be2f0e97e627f31ee5152d48ec832e78f0dcdf347a60ecd"
     },
     {
+      "path": "src/ephi/downstream/__init__.py",
+      "bytes": 1620,
+      "sha256": "2833bb9d7219d232ea9c1c2e95a1847771e9417acb2f3af3b65a6f42b88d68c2"
+    },
+    {
+      "path": "src/ephi/downstream/__main__.py",
+      "bytes": 54,
+      "sha256": "d948c0355df167b0b7bcd7eeddd30111c4154224124f8980404e95c8040571b7"
+    },
+    {
+      "path": "src/ephi/downstream/boundary.py",
+      "bytes": 2989,
+      "sha256": "ee63498ebcea83b69cf060569b909213b3e371e4a757eb6a3548896d2dce8b23"
+    },
+    {
+      "path": "src/ephi/downstream/composition.py",
+      "bytes": 8719,
+      "sha256": "fc95f968a258fb7a04b5590faa25845515c29aab7dd6ed841c4c3003bf01f85c"
+    },
+    {
+      "path": "src/ephi/downstream/contracts.py",
+      "bytes": 14576,
+      "sha256": "d34ef29315d48c435249df3f982d40cc2cf15959f94d31c5885427f488a1c4a8"
+    },
+    {
+      "path": "src/ephi/downstream/preflight.py",
+      "bytes": 7211,
+      "sha256": "022ce861d0f17981710a65a43de685c90cb24a0d98d36b5d79445d56fe8e05d1"
+    },
+    {
+      "path": "src/ephi/downstream/validation.py",
+      "bytes": 11074,
+      "sha256": "3d2902e4020a4012761f726343519d5ce24c5803e802ca06d43588d36ea775d0"
+    },
+    {
       "path": "src/ephi/framework.py",
       "bytes": 769,
       "sha256": "2a4fad562a6de56683b892bcf9c178ff4a6d627fc0db9ca389aed2dca8dd3797"
@@ -786,8 +846,8 @@
     },
     {
       "path": "src/ephi/ui/app.py",
-      "bytes": 43863,
-      "sha256": "6a31fa847ef4e2f7dd0763bcfc1de6af79fcfdeb0ee74320c6b5c9f8f3d65171"
+      "bytes": 45410,
+      "sha256": "d6f5e863394664230be359d2e9b9f2ef2f69e608b1a7a142c5dd651302725b75"
     },
     {
       "path": "src/ephi/ui/provider.py",
@@ -818,6 +878,16 @@
       "path": "tests/test_advisory_integrity.py",
       "bytes": 7684,
       "sha256": "3025f70a03352eb092e6eec1ee1d9acf7b091e9518334e993b9f5dba688cf527"
+    },
+    {
+      "path": "tests/test_downstream_abi.py",
+      "bytes": 26948,
+      "sha256": "f11a95b87b765b53660ffa8da7253d61870ecc0d45d5ce12e5b1b9a6a4539896"
+    },
+    {
+      "path": "tests/test_downstream_postgresql.py",
+      "bytes": 12418,
+      "sha256": "f5ecc6583fb11b43615ab372e26a98c9332b6c134bd77a7c3d40c2812347d086"
     },
     {
       "path": "tests/test_ephi_application.py",

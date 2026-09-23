@@ -11,6 +11,7 @@ EPHI's intended workflow is **Detect → Explain → Prioritize → Contain → 
 - [Design overview](00_START_HERE.md): product choices, scope and provenance boundaries.
 - [Package review and readiness](13_Package_Review.md): current repository state and qualification limits.
 - [Developer handoff](11_Developer_Start.md): install, import, self-check and the first authorized slice.
+- [Downstream integration ABI](docs/Downstream_Integration_ABI.md): one-way private integration, provider contracts and conformance preflight.
 - [Delivery gates](09_Delivery_and_Gates.md): acceptance criteria from baseline through a qualified family release.
 - [W0 baseline specification](environment/w0_repo_baseline.json): machine-readable canonical identity and checks.
 
@@ -31,6 +32,7 @@ EPHI's intended workflow is **Detect → Explain → Prioritize → Contain → 
 | [11 · Developer start](11_Developer_Start.md) | First implementation slice |
 | [12 · Sources and evidence](12_Sources_and_Evidence.md) | Provenance and reproducibility limits |
 | [13 · Package review](13_Package_Review.md) | Repository preparation and corrections |
+| [Downstream Integration ABI v1](docs/Downstream_Integration_ABI.md) | One-way private integration and conformance boundary |
 
 The numbered chapters are the maintained design. [manifest.json](manifest.json) records current file hashes. [Historical evidence](evidence/README.md) is preserved separately from [review evidence](evidence/review/package_review.json).
 
@@ -363,6 +365,25 @@ Those commands may install dependencies and are not required by the offline repo
 ## Historical compatibility tools
 
 `tools/source_preflight.py` and `tools/w0_baseline.py` are retained as explicitly legacy, optional historical-source compatibility utilities for CHG-85/CHG-104/CHG-109 fixture tests. They are not invoked by package validation, the canonical baseline, application tests or implementation gates. Preserved historical evidence remains reference-only and is not rewritten.
+
+## CHG-182 U1 one-way downstream integration ABI
+
+The versioned ABI is `org.ephi.downstream` `1.0.0`, independent of the EPHI
+distribution version. Its six required provider categories compose the
+existing current-authorization, bounded source-observer, immutable-artifact,
+committed handoff, typed policy and runtime/PostgreSQL authorities. Discovery
+accepts only one explicit `module:factory` entrypoint. The canonical safe
+manifest contains public contract/version/capability metadata only and has a
+deterministic canonical SHA-256 identity.
+
+The supported synthetic private-style package is under
+`examples/synthetic_downstream`; run
+`python -m ephi.downstream --entrypoint examples.synthetic_downstream.provider:build_bundle --json`
+for secret-safe compatibility and PostgreSQL composition preflight. The
+boundary check covers this example's public imports and location, not
+arbitrary private code. Successful U1 conformance does not imply real family
+source/science G02/G06, company identity/TLS, performance G10, G12, Port Gate
+or Production qualification.
 
 ## Contributing
 
