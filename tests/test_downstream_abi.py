@@ -30,7 +30,7 @@ from ephi.application import (  # noqa: E402
     ScopedArtifactReference,
     TargetContext,
 )
-from ephi.config import RuntimeSettings  # noqa: E402
+from ephi.config import RuntimeSettings, downstream_entrypoint_from_environment  # noqa: E402
 from ephi.downstream import (  # noqa: E402
     ABI_ID,
     ABI_VERSION,
@@ -314,12 +314,23 @@ class ProviderValidationTests(unittest.TestCase):
                 self.assertEqual(caught.exception.reason_code, DownstreamReasonCode.INVALID_ENTRYPOINT)
 
     def test_missing_non_development_bundle_does_not_use_fixture_fallback(self):
-        from ephi.ui.app import build_composition_from_environment
-
         with patch.dict(os.environ, {"EPHI_ENV": "production"}, clear=False):
             os.environ.pop("EPHI_DOWNSTREAM_ENTRYPOINT", None)
             with self.assertRaisesRegex(RuntimeError, "explicit downstream provider bundle"):
-                build_composition_from_environment()
+                downstream_entrypoint_from_environment()
+
+    def test_explicit_non_development_bundle_is_returned_for_composition(self):
+        self.assertEqual(
+            downstream_entrypoint_from_environment(
+                {"EPHI_ENV": "production", "EPHI_DOWNSTREAM_ENTRYPOINT": " package.factory:build "}
+            ),
+            "package.factory:build",
+        )
+
+    def test_development_and_test_may_use_the_retained_fallback(self):
+        for environment in ("development", "test"):
+            with self.subTest(environment=environment):
+                self.assertEqual(downstream_entrypoint_from_environment({"EPHI_ENV": environment}), "")
 
 
 class ExistingAuthorityPreservationTests(unittest.TestCase):

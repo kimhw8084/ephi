@@ -59,7 +59,7 @@ from ephi.application.o10 import (
     state_for_error as _state_for_error_facts,
 )
 from ephi.application.source_reality import require_runtime_source_binding
-from ephi.config import RuntimeSettings
+from ephi.config import RuntimeSettings, downstream_entrypoint_from_environment
 from ephi.downstream import DownstreamComposition, compose_downstream, load_provider_bundle
 from ephi.infrastructure.postgresql import PostgreSQLReferenceTransactionAdapter
 from ephi.transport import (
@@ -292,8 +292,7 @@ def _development_principal_from_environment(scope: AccessScope) -> Principal:
 def build_composition_from_environment() -> EphiUiComposition:
     """Compose through the explicit downstream ABI or the retained dev/test path."""
 
-    environment = os.environ.get("EPHI_ENV", "development").lower()
-    downstream_entrypoint = os.environ.get("EPHI_DOWNSTREAM_ENTRYPOINT", "").strip()
+    downstream_entrypoint = downstream_entrypoint_from_environment()
     if downstream_entrypoint:
         downstream = compose_downstream(
             load_provider_bundle(downstream_entrypoint),
@@ -321,9 +320,6 @@ def build_composition_from_environment() -> EphiUiComposition:
             workspace,
             downstream,
         )
-    if environment not in {"development", "test"}:
-        raise RuntimeError("non-development EPHI requires an explicit downstream provider bundle")
-
     dsn = _required_environment("EPHI_POSTGRES_DSN")
     metrology_source_adapter, metrology_source_binding = require_runtime_source_binding()
     identity = _DevelopmentIdentityProvider()

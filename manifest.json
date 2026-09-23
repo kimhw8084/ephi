@@ -761,8 +761,8 @@
     },
     {
       "path": "src/ephi/config.py",
-      "bytes": 1290,
-      "sha256": "758f0cee7244bd875be2f0e97e627f31ee5152d48ec832e78f0dcdf347a60ecd"
+      "bytes": 1853,
+      "sha256": "3daf8bfa58ecc6dd6504d4eec29388d9f0a2790b91e2769de7fceaab6c426439"
     },
     {
       "path": "src/ephi/downstream/__init__.py",
@@ -871,8 +871,8 @@
     },
     {
       "path": "src/ephi/ui/app.py",
-      "bytes": 45581,
-      "sha256": "9c43272427b2e2098ea4eb5dfc04f56b96f7c3567e7ad3d979c074ca56c3b7b5"
+      "bytes": 45386,
+      "sha256": "43657029b1c73312a3e2736b33bbbe841f1f2b1ed27cb379c32f534f6963e239"
     },
     {
       "path": "src/ephi/ui/provider.py",
@@ -906,8 +906,8 @@
     },
     {
       "path": "tests/test_downstream_abi.py",
-      "bytes": 26948,
-      "sha256": "f11a95b87b765b53660ffa8da7253d61870ecc0d45d5ce12e5b1b9a6a4539896"
+      "bytes": 27529,
+      "sha256": "b57aeeb2fd621e1677f38dd4a20d626ea33656c5e0c86898a2a7e3f9e9d311b3"
     },
     {
       "path": "tests/test_downstream_postgresql.py",
