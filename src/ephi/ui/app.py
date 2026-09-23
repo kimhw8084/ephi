@@ -59,7 +59,8 @@ from ephi.application.o10 import (
     state_for_error as _state_for_error_facts,
 )
 from ephi.application.source_reality import require_runtime_source_binding
-from ephi.config import RuntimeSettings
+from ephi.config import RuntimeSettings, downstream_entrypoint_from_environment
+from ephi.downstream import DownstreamComposition, compose_downstream, load_provider_bundle
 from ephi.infrastructure.postgresql import PostgreSQLReferenceTransactionAdapter
 from ephi.transport import (
     build_runtime_security_contract,
@@ -264,6 +265,7 @@ class EphiUiComposition:
     metrology_source_binding: object
     runtime: ApplicationRuntime
     workspace: object
+    downstream: DownstreamComposition | None = None
 
     def close(self) -> None:
         self.adapter.close()
@@ -288,8 +290,36 @@ def _development_principal_from_environment(scope: AccessScope) -> Principal:
 
 
 def build_composition_from_environment() -> EphiUiComposition:
-    """Compose only from explicit PostgreSQL and identity bindings."""
+    """Compose through the explicit downstream ABI or the retained dev/test path."""
 
+    downstream_entrypoint = downstream_entrypoint_from_environment()
+    if downstream_entrypoint:
+        downstream = compose_downstream(
+            load_provider_bundle(downstream_entrypoint),
+            runtime_settings=RuntimeSettings.from_environment(),
+        )
+        principal_provider = downstream.principal_provider
+        scope_provider = downstream.scope_provider
+        source = EphiReadDataSource(downstream.attention, principal_provider, scope_provider)
+        runtime = ApplicationRuntime()
+        runtime.data.register_source(source)
+        workspace = runtime.open_workspace("ephi-attention-episode-w1")
+        workspace.state.set(FILTER_KEY, {}, source="ephi.initial")
+        return EphiUiComposition(
+            downstream.adapter,
+            principal_provider,
+            scope_provider,
+            downstream.current_authorization,
+            downstream.attention,
+            downstream.episode_briefs,
+            downstream.workflow,
+            source,
+            downstream.source_observer,
+            downstream.source_binding,
+            runtime,
+            workspace,
+            downstream,
+        )
     dsn = _required_environment("EPHI_POSTGRES_DSN")
     metrology_source_adapter, metrology_source_binding = require_runtime_source_binding()
     identity = _DevelopmentIdentityProvider()
@@ -944,24 +974,26 @@ async def build_episode_page(composition: EphiUiComposition) -> None:
         from nicegui import ui
 
         ui.query("main").props('role="region" aria-label="EPHI application content"')
-        with AnalysisWorkspacePage("", None):
-            heading = _semantic_heading(
-                "Episode decision brief",
-                "One coherent analytical/read revision with live durable workflow",
-                autofocus=not episode_id or workspace.state.get(FOCUS_KEY) == "episode_heading",
-            )
-            episode_host = ui.element("div").classes("ephi-o10-episode-surface").props('tabindex="-1" role="region" aria-label="Episode rendered state"')
-            if not episode_id:
+        with AnalysisWorkspacePage("", None) as page:
+            with page.slot(LayoutSlot.HEADER):
+                heading = _semantic_heading(
+                    "Episode decision brief",
+                    "One coherent analytical/read revision with live durable workflow",
+                    autofocus=not episode_id or workspace.state.get(FOCUS_KEY) == "episode_heading",
+                )
+            with page.slot(LayoutSlot.PRIMARY):
+                episode_host = ui.element("div").classes("ephi-o10-episode-surface").props('tabindex="-1" role="region" aria-label="Episode rendered state"')
+                if not episode_id:
+                    focus_request = ui.element("div").props('data-ephi-focus-request="" aria-hidden="true"')
+                    view = _EpisodeView(composition, episode_host, heading, "", focus_request)
+                    view.render_no_selection()
+                    return
                 focus_request = ui.element("div").props('data-ephi-focus-request="" aria-hidden="true"')
-                view = _EpisodeView(composition, episode_host, heading, "", focus_request)
-                view.render_no_selection()
-                return
-            focus_request = ui.element("div").props('data-ephi-focus-request="" aria-hidden="true"')
-            view = _EpisodeView(composition, episode_host, heading, episode_id, focus_request)
-            focus_target = workspace.state.get(FOCUS_KEY)
-            await view.load(focus_target=focus_target if isinstance(focus_target, str) else None)
-            if focus_target == "episode_heading":
-                workspace.state.set(FOCUS_KEY, None, source="ephi.episode.focus")
+                view = _EpisodeView(composition, episode_host, heading, episode_id, focus_request)
+                focus_target = workspace.state.get(FOCUS_KEY)
+                await view.load(focus_target=focus_target if isinstance(focus_target, str) else None)
+                if focus_target == "episode_heading":
+                    workspace.state.set(FOCUS_KEY, None, source="ephi.episode.focus")
 
 
 def build_page() -> None:

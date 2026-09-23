@@ -1,0 +1,569 @@
+{
+  "attached_reports_and_artifacts": [
+    {
+      "bytes": 44259,
+      "path": "evidence/review/chg_182_u1_post_go_ci_fix/o10_rendered.json",
+      "sha256": "feef091369bdf16cd455a08a9393c27c1dbef9c5a545a82305011d7bce14015d"
+    },
+    {
+      "bytes": 42516,
+      "path": "evidence/review/chg_182_u1_post_go_ci_fix/o8_direct.json",
+      "sha256": "a7072f404c780953396031f8bb392e2b5c7f8bae46328c1e6f6539f97a3ae6fe"
+    },
+    {
+      "bytes": 42762,
+      "path": "evidence/review/chg_182_u1_post_go_ci_fix/o8_proxy.json",
+      "sha256": "07482f3f4ed375daf0b9922b6139996922782a52b056f2aeae35f71c12964a3c"
+    },
+    {
+      "bytes": 224,
+      "path": "evidence/review/chg_182_u1_post_go_ci_fix/production_no_bundle_startup.json",
+      "sha256": "addafe63ea3b13fac98da2302739757780b5a2511c4c6ec4a8cfd245b68f1d0e"
+    },
+    {
+      "bytes": 13212,
+      "path": "evidence/review/chg_182_u1_post_go_ci_fix/u1_episode_geometry.json",
+      "sha256": "8c26308054cbc6eab0cbe7ae991afaf2e0d21f900b9600dd9019ab8516a0b8e5"
+    },
+    {
+      "bytes": 92727,
+      "path": "evidence/u1/chg_182_u1_post_go_ci_fix/attention-1440x900.png",
+      "sha256": "4afedda3ba29764937ee474e84b309ecba6094a5ac81e023aa497043ac50470f"
+    },
+    {
+      "bytes": 63288,
+      "path": "evidence/u1/chg_182_u1_post_go_ci_fix/episode-actions-1440x900.png",
+      "sha256": "33c992bdae74a6e936ddb98678e58db5f84a74d5135835b6e0a4d046d676941b"
+    },
+    {
+      "bytes": 65076,
+      "path": "evidence/u1/chg_182_u1_post_go_ci_fix/episode-open-1440x900.png",
+      "sha256": "3f3e438d6756bb98c4f399d7e2f63adb810a881cc8a0a07e291cbc931bad8d06"
+    },
+    {
+      "bytes": 83227,
+      "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/attention-1024x768.png",
+      "sha256": "e10d4d24ec9084ee715f1cf73bbd0e6e0940e9cd31edb41393ddcd2acb87b0fa"
+    },
+    {
+      "bytes": 75373,
+      "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/attention-1440x900.png",
+      "sha256": "b8d7dec3175e64f164eeeed076054829a89251889cad041ff4122b85de4fb324"
+    },
+    {
+      "bytes": 63192,
+      "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/attention-320x800.png",
+      "sha256": "0e43b7428cbfde03237ea910556fde1b4f1c45e5f5fd65a40ff88115fcd0259e"
+    },
+    {
+      "bytes": 63669,
+      "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/attention-390x844.png",
+      "sha256": "0eaf9399b73af838a88e7f043d072547d9048b34e7d4018d51dfa683ff549110"
+    },
+    {
+      "bytes": 79090,
+      "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/attention-768x1024.png",
+      "sha256": "b3b5bb5946f4ef32907ff01d3cd7ffe308cb392e7ec04944d04dfbee781734bc"
+    },
+    {
+      "bytes": 25371,
+      "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/attention-failure.png",
+      "sha256": "275e09a9b9baf5dde6a7939756f90ac72f494ab1293388d944299a761c8a0180"
+    },
+    {
+      "bytes": 89885,
+      "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/attention-no-matching-rows-1440x900.png",
+      "sha256": "a5ffad7bc70a030d4da2a7ecd383f4c6a4063b66d2d5b0ad4bc3f1766f26ae7f"
+    },
+    {
+      "bytes": 26541,
+      "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/attention-no-permitted-rows.png",
+      "sha256": "6ce1e9074dbf53dad714b2455f8054a5c525fb881071ce30dd3fff0acb34ea0f"
+    },
+    {
+      "bytes": 27680,
+      "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/attention-offline.png",
+      "sha256": "314678b7bde2ad56b19134ba5fc56709d8ec138228bf5651b29be88ecab168f0"
+    },
+    {
+      "bytes": 24829,
+      "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/attention-permission.png",
+      "sha256": "dbfe5026fe50e94933fbfb87829761c090c458e927c08c68d1d3138ff7fe2887"
+    },
+    {
+      "bytes": 75373,
+      "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/attention-populated-1440x900.png",
+      "sha256": "b8d7dec3175e64f164eeeed076054829a89251889cad041ff4122b85de4fb324"
+    },
+    {
+      "bytes": 27077,
+      "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/attention-stale.png",
+      "sha256": "11325811fc04416c3849c174897a94119c5a9d20459b7898372917675808d4cc"
+    },
+    {
+      "bytes": 94278,
+      "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/episode-1024x768.png",
+      "sha256": "15d619bd5734d1e4931b57641b782050a36256988621414eb01e1807224581ce"
+    },
+    {
+      "bytes": 95429,
+      "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/episode-1440x900.png",
+      "sha256": "cbb4f32b23279c1622ac7392fe7ddb5c2ead64bb83b0d2c4ad43519b75d1335e"
+    },
+    {
+      "bytes": 71467,
+      "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/episode-320x800.png",
+      "sha256": "420909bf107db16a732a7a475f8fa118d34e2eca91fe6ac032e54d9544238e88"
+    },
+    {
+      "bytes": 72152,
+      "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/episode-390x844.png",
+      "sha256": "c8284b6f6b800826969863721318420b7b26c73e132e1eaf8bf8c84675483b3c"
+    },
+    {
+      "bytes": 80514,
+      "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/episode-768x1024.png",
+      "sha256": "ffba959fd916257aa712058e025f23935526bceca519cd0e2d8971ccc1ea3b93"
+    },
+    {
+      "bytes": 47653,
+      "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/episode-capability-states.png",
+      "sha256": "8c99703f3b1a4dc9477dd6b98f04d60b721bfa03bb871fc3842879cd9aa4826d"
+    },
+    {
+      "bytes": 96076,
+      "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/episode-claimed-1440x900.png",
+      "sha256": "9af7389aba296ed630ff9f3aab02d5a2361ce58461b8b15266cc924c5e04c294"
+    },
+    {
+      "bytes": 29049,
+      "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/episode-coherent-conflict.png",
+      "sha256": "cba20fdc445f5dcbc460b9f80b4d21b6f84f0daffd181321b9a20c6657662035"
+    },
+    {
+      "bytes": 46229,
+      "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/episode-no-selection-1440x900.png",
+      "sha256": "0d8191869344bd8d2b80d5cb0b669dee1e4505dc6c5e624f2d9ab6ab8a36e772"
+    },
+    {
+      "bytes": 29274,
+      "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/episode-offline.png",
+      "sha256": "bde8919c3f492b620356513b5d2867aed558dfe0c6c71d44c52679ecc6588e2b"
+    },
+    {
+      "bytes": 28275,
+      "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/episode-owner-changed.png",
+      "sha256": "fe483369b2d36f7fd8d45eee82c272154c49872a62dd6bb590d844e41612a278"
+    },
+    {
+      "bytes": 27104,
+      "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/episode-permission.png",
+      "sha256": "4e6d07e5f21f3eee62d620b1bd8e3dc0dd4efb5b7c2a9106833c8cd44fad3904"
+    },
+    {
+      "bytes": 95436,
+      "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/episode-populated-1440x900.png",
+      "sha256": "71ddc8776567f814f65efe7b1314939bf9f3bffc2ad7f932eed02e2cac042e95"
+    },
+    {
+      "bytes": 29246,
+      "path": "evidence/u1/chg_182_u1_post_go_ci_fix/o10_screenshots/episode-version-conflict.png",
+      "sha256": "6605fc14b9ce614e148f9172829e5a263aa6a7728c0747e7e98707c00ee4bb53"
+    }
+  ],
+  "canonical_w0_baseline": {
+    "command": "python tools/w0_repo_baseline.py",
+    "package_integrity_file_count": 224,
+    "python": "3.11.7",
+    "source_candidate_commit": "b661174dd65e23ef29e9da7ae6e9a8f8585e4d82",
+    "status": "BASELINE_PASS",
+    "stdlib_only_venv": true,
+    "test_output_sha256": "b1efb55da4ab2cbc2ba80878df96fad461c0f09434429d67f626b058c7daca73",
+    "tests": {
+      "errors": 0,
+      "failed": 0,
+      "passed": 235,
+      "skipped": 92,
+      "total": 327
+    },
+    "worktree_clean": true
+  },
+  "captured_date": "2026-09-23",
+  "change": "EPHI-CHG-182-U1-POST-GO-CI-FIX",
+  "dependency_light_matrix": {
+    "all_python_matrix_results_pass": true,
+    "lane_contract": "matches .github/workflows/package.yml: check_package.py then unittest discovery in fresh Python runtime without installed project dependencies",
+    "matrix": [
+      {
+        "check_package": "PASS",
+        "environment": "stdlib-only venv created with --without-pip",
+        "errors": 0,
+        "explicit_skips": 92,
+        "nicegui_base_present": false,
+        "nicegui_present": false,
+        "package_file_count_at_source_candidate": 225,
+        "python": "3.11",
+        "python_3_14_is_package_matrix_compatibility_only": false,
+        "runtime": "3.11.7",
+        "tests_passed": 235,
+        "tests_run": 327,
+        "unittest_discovery": "PASS"
+      },
+      {
+        "check_package": "PASS",
+        "environment": "stdlib-only venv created with --without-pip",
+        "errors": 0,
+        "explicit_skips": 92,
+        "nicegui_base_present": false,
+        "nicegui_present": false,
+        "package_file_count_at_source_candidate": 225,
+        "python": "3.12",
+        "python_3_14_is_package_matrix_compatibility_only": false,
+        "runtime": "3.12.9",
+        "tests_passed": 235,
+        "tests_run": 327,
+        "unittest_discovery": "PASS"
+      },
+      {
+        "check_package": "PASS",
+        "environment": "stdlib-only venv created with --without-pip",
+        "errors": 0,
+        "explicit_skips": 92,
+        "nicegui_base_present": false,
+        "nicegui_present": false,
+        "package_file_count_at_source_candidate": 225,
+        "python": "3.13",
+        "python_3_14_is_package_matrix_compatibility_only": false,
+        "runtime": "3.13.13",
+        "tests_passed": 235,
+        "tests_run": 327,
+        "unittest_discovery": "PASS"
+      },
+      {
+        "check_package": "PASS",
+        "environment": "stdlib-only venv created with --without-pip",
+        "errors": 0,
+        "explicit_skips": 92,
+        "nicegui_base_present": false,
+        "nicegui_present": false,
+        "package_file_count_at_source_candidate": 225,
+        "python": "3.14",
+        "python_3_14_is_package_matrix_compatibility_only": true,
+        "runtime": "3.14.5",
+        "tests_passed": 235,
+        "tests_run": 327,
+        "unittest_discovery": "PASS"
+      }
+    ]
+  },
+  "exact_source_change": {
+    "base": "93b4e44fae90fbecff6e5d4201004aac8a41a381",
+    "changed_ephi_ui_paths": [
+      "src/ephi/ui/app.py"
+    ],
+    "changed_files": [
+      "manifest.json",
+      "src/ephi/config.py",
+      "src/ephi/ui/app.py",
+      "tests/test_downstream_abi.py"
+    ],
+    "diff_sha256": "e23387f33e3daac78a086cc62b988b57db0f1e84e06e3ad45fdbfaf714542a53",
+    "github_workflow_changed": false,
+    "head": "b661174dd65e23ef29e9da7ae6e9a8f8585e4d82",
+    "migrations_changed": false,
+    "nicegui_base_changed": false,
+    "unified_diff": "diff --git a/manifest.json b/manifest.json\nindex 613f64a..4a589e2 100644\n--- a/manifest.json\n+++ b/manifest.json\n@@ -761,8 +761,8 @@\n     },\n     {\n       \"path\": \"src/ephi/config.py\",\n-      \"bytes\": 1290,\n-      \"sha256\": \"758f0cee7244bd875be2f0e97e627f31ee5152d48ec832e78f0dcdf347a60ecd\"\n+      \"bytes\": 1853,\n+      \"sha256\": \"3daf8bfa58ecc6dd6504d4eec29388d9f0a2790b91e2769de7fceaab6c426439\"\n     },\n     {\n       \"path\": \"src/ephi/downstream/__init__.py\",\n@@ -871,8 +871,8 @@\n     },\n     {\n       \"path\": \"src/ephi/ui/app.py\",\n-      \"bytes\": 45581,\n-      \"sha256\": \"9c43272427b2e2098ea4eb5dfc04f56b96f7c3567e7ad3d979c074ca56c3b7b5\"\n+      \"bytes\": 45386,\n+      \"sha256\": \"43657029b1c73312a3e2736b33bbbe841f1f2b1ed27cb379c32f534f6963e239\"\n     },\n     {\n       \"path\": \"src/ephi/ui/provider.py\",\n@@ -906,8 +906,8 @@\n     },\n     {\n       \"path\": \"tests/test_downstream_abi.py\",\n-      \"bytes\": 26948,\n-      \"sha256\": \"f11a95b87b765b53660ffa8da7253d61870ecc0d45d5ce12e5b1b9a6a4539896\"\n+      \"bytes\": 27529,\n+      \"sha256\": \"b57aeeb2fd621e1677f38dd4a20d626ea33656c5e0c86898a2a7e3f9e9d311b3\"\n     },\n     {\n       \"path\": \"tests/test_downstream_postgresql.py\",\ndiff --git a/src/ephi/config.py b/src/ephi/config.py\nindex 09302fc..6a2e289 100644\n--- a/src/ephi/config.py\n+++ b/src/ephi/config.py\n@@ -35,3 +35,14 @@ class RuntimeSettings:\n \n     def as_dict(self) -> dict[str, object]:\n         return asdict(self)\n+\n+\n+def downstream_entrypoint_from_environment(environ: Mapping[str, str] | None = None) -> str:\n+    \"\"\"Return the configured provider entrypoint, failing closed outside dev/test.\"\"\"\n+\n+    values = os.environ if environ is None else environ\n+    environment = values.get(\"EPHI_ENV\", \"development\").lower()\n+    entrypoint = values.get(\"EPHI_DOWNSTREAM_ENTRYPOINT\", \"\").strip()\n+    if not entrypoint and environment not in {\"development\", \"test\"}:\n+        raise RuntimeError(\"non-development EPHI requires an explicit downstream provider bundle\")\n+    return entrypoint\ndiff --git a/src/ephi/ui/app.py b/src/ephi/ui/app.py\nindex fa81e3c..127a4e6 100644\n--- a/src/ephi/ui/app.py\n+++ b/src/ephi/ui/app.py\n@@ -59,7 +59,7 @@ from ephi.application.o10 import (\n     state_for_error as _state_for_error_facts,\n )\n from ephi.application.source_reality import require_runtime_source_binding\n-from ephi.config import RuntimeSettings\n+from ephi.config import RuntimeSettings, downstream_entrypoint_from_environment\n from ephi.downstream import DownstreamComposition, compose_downstream, load_provider_bundle\n from ephi.infrastructure.postgresql import PostgreSQLReferenceTransactionAdapter\n from ephi.transport import (\n@@ -292,8 +292,7 @@ def _development_principal_from_environment(scope: AccessScope) -> Principal:\n def build_composition_from_environment() -> EphiUiComposition:\n     \"\"\"Compose through the explicit downstream ABI or the retained dev/test path.\"\"\"\n \n-    environment = os.environ.get(\"EPHI_ENV\", \"development\").lower()\n-    downstream_entrypoint = os.environ.get(\"EPHI_DOWNSTREAM_ENTRYPOINT\", \"\").strip()\n+    downstream_entrypoint = downstream_entrypoint_from_environment()\n     if downstream_entrypoint:\n         downstream = compose_downstream(\n             load_provider_bundle(downstream_entrypoint),\n@@ -321,9 +320,6 @@ def build_composition_from_environment() -> EphiUiComposition:\n             workspace,\n             downstream,\n         )\n-    if environment not in {\"development\", \"test\"}:\n-        raise RuntimeError(\"non-development EPHI requires an explicit downstream provider bundle\")\n-\n     dsn = _required_environment(\"EPHI_POSTGRES_DSN\")\n     metrology_source_adapter, metrology_source_binding = require_runtime_source_binding()\n     identity = _DevelopmentIdentityProvider()\ndiff --git a/tests/test_downstream_abi.py b/tests/test_downstream_abi.py\nindex cbd3293..33cb60b 100644\n--- a/tests/test_downstream_abi.py\n+++ b/tests/test_downstream_abi.py\n@@ -30,7 +30,7 @@ from ephi.application import (  # noqa: E402\n     ScopedArtifactReference,\n     TargetContext,\n )\n-from ephi.config import RuntimeSettings  # noqa: E402\n+from ephi.config import RuntimeSettings, downstream_entrypoint_from_environment  # noqa: E402\n from ephi.downstream import (  # noqa: E402\n     ABI_ID,\n     ABI_VERSION,\n@@ -314,12 +314,23 @@ class ProviderValidationTests(unittest.TestCase):\n                 self.assertEqual(caught.exception.reason_code, DownstreamReasonCode.INVALID_ENTRYPOINT)\n \n     def test_missing_non_development_bundle_does_not_use_fixture_fallback(self):\n-        from ephi.ui.app import build_composition_from_environment\n-\n         with patch.dict(os.environ, {\"EPHI_ENV\": \"production\"}, clear=False):\n             os.environ.pop(\"EPHI_DOWNSTREAM_ENTRYPOINT\", None)\n             with self.assertRaisesRegex(RuntimeError, \"explicit downstream provider bundle\"):\n-                build_composition_from_environment()\n+                downstream_entrypoint_from_environment()\n+\n+    def test_explicit_non_development_bundle_is_returned_for_composition(self):\n+        self.assertEqual(\n+            downstream_entrypoint_from_environment(\n+                {\"EPHI_ENV\": \"production\", \"EPHI_DOWNSTREAM_ENTRYPOINT\": \" package.factory:build \"}\n+            ),\n+            \"package.factory:build\",\n+        )\n+\n+    def test_development_and_test_may_use_the_retained_fallback(self):\n+        for environment in (\"development\", \"test\"):\n+            with self.subTest(environment=environment):\n+                self.assertEqual(downstream_entrypoint_from_environment({\"EPHI_ENV\": environment}), \"\")\n \n \n class ExistingAuthorityPreservationTests(unittest.TestCase):"
+  },
+  "final_repository_matrix_with_candidate_bound_evidence": {
+    "git_diff_check": "PASS before evidence commit; staged diff is checked before commit",
+    "manifest_refresh": "PASS",
+    "matrix": [
+      {
+        "check_package": "PASS",
+        "errors": 0,
+        "explicit_skips": 92,
+        "python": "3.11",
+        "tests_passed": 235,
+        "tests_run": 327,
+        "unittest_discovery": "PASS"
+      },
+      {
+        "check_package": "PASS",
+        "errors": 0,
+        "explicit_skips": 92,
+        "python": "3.12",
+        "tests_passed": 235,
+        "tests_run": 327,
+        "unittest_discovery": "PASS"
+      },
+      {
+        "check_package": "PASS",
+        "errors": 0,
+        "explicit_skips": 92,
+        "python": "3.13",
+        "tests_passed": 235,
+        "tests_run": 327,
+        "unittest_discovery": "PASS"
+      },
+      {
+        "check_package": "PASS",
+        "errors": 0,
+        "explicit_skips": 92,
+        "python": "3.14",
+        "tests_passed": 235,
+        "tests_run": 327,
+        "unittest_discovery": "PASS"
+      }
+    ],
+    "package_file_count": 260
+  },
+  "installed_regressions": {
+    "downstream_postgresql_composition_restart": {
+      "durable_restart": true,
+      "postgres": "18.6",
+      "status": "PASS",
+      "tests": 1
+    },
+    "episode_workspace_geometry_unit": {
+      "status": "PASS",
+      "tests": 1
+    },
+    "focused_downstream_abi": {
+      "errors": 0,
+      "status": "PASS",
+      "tests": 26
+    },
+    "full_postgresql_enabled_suite": {
+      "errors": 0,
+      "postgres": "18.6",
+      "skipped": 0,
+      "status": "PASS",
+      "tests": 327
+    },
+    "o10_rendered_accessibility": {
+      "acceptance_criteria_count": 16,
+      "postgres": "18.6 (Homebrew)",
+      "report": "evidence/review/chg_182_u1_post_go_ci_fix/o10_rendered.json",
+      "report_sha256": "feef091369bdf16cd455a08a9393c27c1dbef9c5a545a82305011d7bce14015d",
+      "status": "PASS"
+    },
+    "o8_browser_session": {
+      "direct": {
+        "browser_attention_episode_websocket": true,
+        "console_and_network_errors": 0,
+        "postgres": "18.6 (Homebrew)",
+        "report": "evidence/review/chg_182_u1_post_go_ci_fix/o8_direct.json",
+        "report_sha256": "a7072f404c780953396031f8bb392e2b5c7f8bae46328c1e6f6539f97a3ae6fe",
+        "status": "PASS",
+        "trusted_proxy_count": 2
+      },
+      "focused_transport_tests": {
+        "status": "PASS",
+        "tests": 22
+      },
+      "proxy_root_path": {
+        "browser_attention_episode_websocket": true,
+        "console_and_network_errors": 0,
+        "postgres": "18.6 (Homebrew)",
+        "report": "evidence/review/chg_182_u1_post_go_ci_fix/o8_proxy.json",
+        "report_sha256": "07482f3f4ed375daf0b9922b6139996922782a52b056f2aeae35f71c12964a3c",
+        "root_path": "/ephi",
+        "static_resources_under_root_path": true,
+        "status": "PASS",
+        "trusted_proxy_count": 1
+      }
+    },
+    "production_without_bundle_startup": {
+      "bounded_reason": true,
+      "process_exit_nonzero": true,
+      "report": "evidence/review/chg_182_u1_post_go_ci_fix/production_no_bundle_startup.json",
+      "secret_absent": true,
+      "status": "PASS"
+    },
+    "runtime": {
+      "nicegui": "3.15.0",
+      "nicegui_base": "3.0.0a8",
+      "playwright": "1.62.0",
+      "python": "3.11.7"
+    },
+    "synthetic_bundle_startup_and_negative_matrix": {
+      "claim_and_keyboard_actions": "PASS",
+      "episode_geometry": {
+        "analysis_workspace": {
+          "height": 1345,
+          "width": 1184,
+          "x": 256,
+          "y": 60
+        },
+        "description_list": {
+          "height": 818,
+          "width": 688.65625,
+          "x": 309,
+          "y": 356
+        },
+        "description_list_width_minimum": 480,
+        "document": {
+          "height": 1405,
+          "width": 1440
+        },
+        "document_height_maximum": 2700,
+        "episode_surface": {
+          "height": 1178,
+          "width": 754.65625,
+          "x": 276,
+          "y": 195
+        },
+        "episode_surface_height_maximum": 1800,
+        "episode_surface_width_minimum": 648,
+        "header_slot": {
+          "height": 52,
+          "width": 1144,
+          "x": 276,
+          "y": 119
+        },
+        "heading_in_header_slot": true,
+        "main": {
+          "height": 1405,
+          "width": 1440,
+          "x": 0,
+          "y": 0
+        },
+        "primary_slot": {
+          "height": 1190,
+          "width": 754.65625,
+          "x": 276,
+          "y": 195
+        },
+        "status": "PASS",
+        "surface_in_primary_slot": true,
+        "viewport": {
+          "height": 900,
+          "width": 1440
+        }
+      },
+      "fail_closed_cases": {
+        "incompatible_abi": {
+          "secret_safe": true,
+          "status": "PASS"
+        },
+        "malformed_entrypoint": {
+          "secret_safe": true,
+          "status": "PASS"
+        },
+        "missing_bundle_with_legacy_authorities": {
+          "secret_safe": true,
+          "status": "PASS"
+        },
+        "nonexistent_provider": {
+          "secret_safe": true,
+          "status": "PASS"
+        },
+        "provider_factory_exception": {
+          "secret_safe": true,
+          "status": "PASS"
+        },
+        "provider_import_exception": {
+          "secret_safe": true,
+          "status": "PASS"
+        },
+        "runtime_provider_exception": {
+          "secret_safe": true,
+          "status": "PASS"
+        }
+      },
+      "positive_downstream_episode_path": "PASS",
+      "postgres": "18.6 (Homebrew)",
+      "report": "evidence/review/chg_182_u1_post_go_ci_fix/u1_episode_geometry.json",
+      "status": "PASS"
+    }
+  },
+  "non_claims": {
+    "company_identity_tls": "NOT_RUN",
+    "g10": "NOT_RUN",
+    "g12_port_gate_production": "NOT_CLAIMED",
+    "python_3_14_runtime_support": "NOT_CLAIMED; 3.14 is a package-integrity compatibility lane only",
+    "real_family_g02_g06": "NOT_RUN"
+  },
+  "package_self_check_compile": {
+    "compileall_src_ephi": "PASS",
+    "package_checker": "PASS; 225 package files on source candidate before additive evidence files",
+    "self_check": "PASS; canonical identity and supported runtime claims unchanged"
+  },
+  "pr_26_failure": {
+    "check_suite": 97207693879,
+    "failing_lanes": [
+      "Canonical repository baseline",
+      "Package checks Python 3.11",
+      "Package checks Python 3.12",
+      "Package checks Python 3.13",
+      "Package checks Python 3.14"
+    ],
+    "integration_result": "CHECKS_FAILED",
+    "passing_lanes": [
+      "PostgreSQL command/worker/read/artifact/O3/O5/O5.2/O9 integration",
+      "O8.2 browser/session security integration",
+      "O10.1 rendered accessibility integration"
+    ],
+    "reported_baseline_result": {
+      "errors": 1,
+      "passed": 232,
+      "skipped": 92
+    },
+    "root_cause": {
+      "classification": "dependency-light test-boundary debt; not CI flakiness or a product assertion failure",
+      "exception": "ModuleNotFoundError: No module named 'nicegui_base'",
+      "import_chain": [
+        "tests/test_downstream_abi.py",
+        "ephi.ui.app",
+        "ephi.ui.__init__ imports .provider",
+        "ephi.ui.provider imports nicegui_base"
+      ],
+      "old_test_import": "from ephi.ui.app import build_composition_from_environment",
+      "reproduced_before_fix": true,
+      "test": "tests.test_downstream_abi.ProviderValidationTests.test_missing_non_development_bundle_does_not_use_fixture_fallback"
+    },
+    "workflow_run": 35898461074
+  },
+  "preserved_u1_behavior": [
+    "Downstream ABI org.ephi.downstream 1.0.0 and six required provider categories remain unchanged.",
+    "Explicit module:factory discovery, deterministic secret-safe manifest, and typed bounded failures remain unchanged.",
+    "CurrentAuthorizationAuthority freshness/revocation semantics and exact O4 metrology observer/source binding remain unchanged.",
+    "Artifact SHA-256, byte-size, scope, and corruption semantics remain unchanged.",
+    "Committed-outbox handoff deduplication, UNKNOWN, and reconciliation semantics remain unchanged.",
+    "Typed planner/check/recovery policy validation and PostgreSQL durable authority remain unchanged.",
+    "Actual EPHI launch continues through EPHI_DOWNSTREAM_ENTRYPOINT; missing, malformed, incompatible, and provider-error cases fail closed without secret leakage.",
+    "Accepted Episode HEADER/PRIMARY slot geometry remains unchanged and passed fresh downstream browser qualification.",
+    "No autonomous manufacturing-control capability or NiceGUI Base patch/workaround was added."
+  ],
+  "repair": {
+    "assertion_test": "tests/test_downstream_abi.py::ProviderValidationTests.test_missing_non_development_bundle_does_not_use_fixture_fallback",
+    "negative_assertion_skipped_or_weakened": false,
+    "production_and_test_policy_tests": [
+      "production without an entrypoint raises the existing bounded RuntimeError",
+      "an explicit production entrypoint is returned for composition",
+      "development and test retain the current fallback path"
+    ],
+    "production_call_site": "src/ephi/ui/app.py::build_composition_from_environment",
+    "semantic_rule": "Non-development EPHI requires an explicit downstream provider entrypoint and must not fall back to EPHI_DEV_* or legacy source fixtures.",
+    "single_policy_authority": "src/ephi/config.py::downstream_entrypoint_from_environment"
+  },
+  "schema_version": 1,
+  "scope_checks": {
+    "dependency_light_workflow_modified": false,
+    "migrations_modified": false,
+    "nicegui_base_modified": false,
+    "runtime_support_claim_broadened": false,
+    "unrelated_ui_surfaces_modified": false
+  },
+  "source_candidate": {
+    "authoritative_target_base": "156e47b1e0cc3c77a2a3f0e2b65875eacc9aa0b4",
+    "branch": "codex/ephi-u1-downstream-extension-abi-fix2",
+    "fix_source_commit": "b661174dd65e23ef29e9da7ae6e9a8f8585e4d82",
+    "fix_source_parent_is_prior_candidate": true,
+    "fix_source_tree": "12c8d7894dd2ca1d22ba267579c5af6c342f8ad3",
+    "git_native_w0_status": "BASELINE_PASS",
+    "origin_main_unchanged_at_capture": true,
+    "prior_go_candidate": "93b4e44fae90fbecff6e5d4201004aac8a41a381",
+    "prior_go_candidate_in_ancestry": true
+  }
+}

@@ -130,3 +130,24 @@ I12 Technical recovery and engineering closure are independent; neither silently
 ## 8. Non-goals
 
 No new generic detector collection before the first closed loop; no autonomous holds/routing; no chatbot as primary UI; no new dashboard builder; no uncontrolled online learning; no microservice estate; no live warehouse scans on page open; no duplicate NiceGUI Base runtime/state/catalog; no implied production certification from unit tests.
+
+## 9. One-way downstream extension boundary
+
+Released EPHI remains the permanent generic product. An intranet deployment
+pulls EPHI and supplies private adapters, typed mappings/configuration,
+secrets and infrastructure bindings through the versioned downstream ABI.
+Company code, data, logs, artifacts and patches do not flow back upstream, and
+the company environment does not privately patch released generic EPHI source
+or migrations. A required generic-core change is an ABI incompatibility and
+must be released as a future sanitized upstream change.
+
+The downstream ABI composes existing authorities. It does not provide a
+second authorization, workflow, read, receipt, queue, source database, artifact
+catalog, detector or runtime. Current authorization, O4 bounded observer
+semantics, immutable artifact integrity, O5 committed handoff delivery, O6
+typed policy validation, O8 transport/session security, O9 operations and the
+current PostgreSQL state remain authoritative. ABI conformance proves only
+provider compatibility and the supported composition path; it does not pass
+G02, G06, G10, G12, the Port Gate or Production. See
+[Downstream Integration ABI v1](docs/Downstream_Integration_ABI.md) for the
+maintained provider and preflight contract.

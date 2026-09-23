@@ -35,3 +35,14 @@ class RuntimeSettings:
 
     def as_dict(self) -> dict[str, object]:
         return asdict(self)
+
+
+def downstream_entrypoint_from_environment(environ: Mapping[str, str] | None = None) -> str:
+    """Return the configured provider entrypoint, failing closed outside dev/test."""
+
+    values = os.environ if environ is None else environ
+    environment = values.get("EPHI_ENV", "development").lower()
+    entrypoint = values.get("EPHI_DOWNSTREAM_ENTRYPOINT", "").strip()
+    if not entrypoint and environment not in {"development", "test"}:
+        raise RuntimeError("non-development EPHI requires an explicit downstream provider bundle")
+    return entrypoint

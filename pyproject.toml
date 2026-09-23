@@ -20,6 +20,7 @@ postgres = [
 
 [project.scripts]
 ephi = "ephi.app:main"
+ephi-downstream-preflight = "ephi.downstream:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]

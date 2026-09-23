@@ -1,0 +1,436 @@
+{
+  "before_vs_after_geometry": {
+    "description_list_px": {
+      "fix_after": {
+        "height": 818,
+        "width": 688.65625
+      },
+      "r2_before": {
+        "height": 5777,
+        "width": 7
+      }
+    },
+    "document_or_main_height_px": {
+      "fix_after": 1405,
+      "r2_before": 12022
+    },
+    "episode_surface_px": {
+      "fix_after": {
+        "height": 1178,
+        "width": 754.65625
+      },
+      "r2_before": {
+        "height": 11807,
+        "width": 73
+      }
+    },
+    "r2_source": "CF-cb9b379d7bef4704181d277a user-provided R2 observation",
+    "viewport_px": {
+      "height": 900,
+      "width": 1440
+    }
+  },
+  "branch": "codex/ephi-u1-downstream-extension-abi-fix1",
+  "candidate_commit": "c6aa11b2988479d78d0651bca8dbf976f64fc9ad",
+  "candidate_state": "COMMITTED_CANDIDATE",
+  "candidate_tree": "7c149fad5addd99fcdd49e22cd4a3f528fe95941",
+  "changed_files_from_predecessor": [
+    "manifest.json",
+    "src/ephi/ui/app.py",
+    "tests/test_episode_workspace_geometry.py",
+    "tools/u1_episode_geometry_qualification.py"
+  ],
+  "downstream_invariant_reconfirmation": {
+    "abi_id": "org.ephi.downstream",
+    "abi_version": "1.0.0",
+    "focused_test_command": "python3 -m unittest tests.test_downstream_abi tests.test_downstream_postgresql -v",
+    "focused_test_result": {
+      "postgresql_version": "18.6 (Homebrew)",
+      "status": "PASS",
+      "tests": 25
+    },
+    "non_development_fail_closed_and_sanitization": "PASS; see fail_closed_startup_reconfirmation",
+    "note": "The exact accepted predecessor remains an ancestor; the candidate changes only Episode slot placement, its regression, qualification tooling, and manifest.",
+    "provider_categories": [
+      "artifacts",
+      "identity",
+      "notifications",
+      "policy",
+      "runtime",
+      "source"
+    ],
+    "source_authority_changes_outside_episode_builder": false
+  },
+  "downstream_launch": {
+    "application_entrypoint": "python -m ephi --serve",
+    "browser_acceptance": {
+      "actions_status": "PASS",
+      "browser": {
+        "allowed_origin": "http://127.0.0.1:58809",
+        "engine": "headless Chromium via Playwright",
+        "events": {
+          "console_errors": [],
+          "http_errors": [],
+          "page_errors": [],
+          "request_failures": [],
+          "websockets": [
+            {
+              "path": "/_nicegui_ws/socket.io/"
+            },
+            {
+              "path": "/_nicegui_ws/socket.io/"
+            },
+            {
+              "path": "/_nicegui_ws/socket.io/"
+            }
+          ]
+        },
+        "ordinary_keyboard_flow": {
+          "attention_row_selected_by_space": true,
+          "claim_changes_open_to_claimed": true,
+          "claim_focus_target": "Acknowledge episode",
+          "episode_opened_by_enter": true,
+          "focus_after_return": "Attention",
+          "initial_focus_is_episode_heading": true,
+          "return_to_attention_by_enter": true
+        },
+        "session_cookie_attributes": [
+          {
+            "http_only": true,
+            "path": "/",
+            "same_site": "Strict",
+            "secure": false
+          }
+        ],
+        "viewport": {
+          "height": 900,
+          "width": 1440
+        },
+        "websocket_session_observed": true
+      },
+      "geometry": {
+        "analysis_workspace": {
+          "height": 1345,
+          "width": 1184,
+          "x": 256,
+          "y": 60
+        },
+        "description_list": {
+          "height": 818,
+          "width": 688.65625,
+          "x": 309,
+          "y": 356
+        },
+        "description_list_width_minimum": 480,
+        "document": {
+          "height": 1405,
+          "width": 1440
+        },
+        "document_height_maximum": 2700,
+        "episode_surface": {
+          "height": 1178,
+          "width": 754.65625,
+          "x": 276,
+          "y": 195
+        },
+        "episode_surface_height_maximum": 1800,
+        "episode_surface_width_minimum": 648,
+        "header_slot": {
+          "height": 52,
+          "width": 1144,
+          "x": 276,
+          "y": 119
+        },
+        "heading_in_header_slot": true,
+        "main": {
+          "height": 1405,
+          "width": 1440,
+          "x": 0,
+          "y": 0
+        },
+        "primary_slot": {
+          "height": 1190,
+          "width": 754.65625,
+          "x": 276,
+          "y": 195
+        },
+        "status": "PASS",
+        "surface_in_primary_slot": true,
+        "viewport": {
+          "height": 900,
+          "width": 1440
+        }
+      },
+      "http": {
+        "attention_status": 200,
+        "episode_status": 200
+      },
+      "primary_action": {
+        "bounds": {
+          "height": 44,
+          "width": 109.203125,
+          "x": 309,
+          "y": 791
+        },
+        "center_hit": true,
+        "clipped": false,
+        "enabled": true,
+        "inside_viewport": true,
+        "visible": true
+      },
+      "provider_identity": {
+        "episode_id": "episode-u1-geometry",
+        "scope_id": "synthetic-u1-scope",
+        "subject": "synthetic-engineer",
+        "subject_rendered": true,
+        "workflow_after_claim": "CLAIMED",
+        "workflow_before_action": "OPEN"
+      },
+      "return_to_attention": {
+        "bounds": {
+          "height": 44,
+          "width": 138.84375,
+          "x": 426.203125,
+          "y": 791
+        },
+        "center_hit": true,
+        "clipped": false,
+        "enabled": true,
+        "inside_viewport": true,
+        "visible": true
+      },
+      "screenshots": {
+        "attention": {
+          "bytes": 92727,
+          "path": "evidence/u1/chg_182_u1_r3_fix/attention-1440x900.png",
+          "sha256": "4afedda3ba29764937ee474e84b309ecba6094a5ac81e023aa497043ac50470f"
+        },
+        "episode": {
+          "bytes": 65323,
+          "path": "evidence/u1/chg_182_u1_r3_fix/episode-open-1440x900.png",
+          "sha256": "8f7d0a2821565eccb73cc3635dca9b6fc6868081512033bf57c580e1720a3862"
+        },
+        "episode_actions": {
+          "bytes": 63530,
+          "path": "evidence/u1/chg_182_u1_r3_fix/episode-actions-1440x900.png",
+          "sha256": "796f801e1024091f6a9af98f546e95b07ef13df1c64037467cd497da5fedd33b"
+        }
+      }
+    },
+    "dev_identity_authority_present": false,
+    "entrypoint": "examples.synthetic_downstream.provider:build_bundle",
+    "environment": "test",
+    "episode_id": "episode-u1-geometry",
+    "legacy_metrology_source_authority_present": false,
+    "scope_id": "synthetic-u1-scope",
+    "subject": "synthetic-engineer",
+    "workflow_state": "OPEN",
+    "workflow_state_after_browser_action": "CLAIMED"
+  },
+  "exact_episode_source_diff": "diff --git a/src/ephi/ui/app.py b/src/ephi/ui/app.py\nindex a608ca5..fa81e3c 100644\n--- a/src/ephi/ui/app.py\n+++ b/src/ephi/ui/app.py\n@@ -978,24 +978,26 @@ async def build_episode_page(composition: EphiUiComposition) -> None:\n         from nicegui import ui\n \n         ui.query(\"main\").props('role=\"region\" aria-label=\"EPHI application content\"')\n-        with AnalysisWorkspacePage(\"\", None):\n-            heading = _semantic_heading(\n-                \"Episode decision brief\",\n-                \"One coherent analytical/read revision with live durable workflow\",\n-                autofocus=not episode_id or workspace.state.get(FOCUS_KEY) == \"episode_heading\",\n-            )\n-            episode_host = ui.element(\"div\").classes(\"ephi-o10-episode-surface\").props('tabindex=\"-1\" role=\"region\" aria-label=\"Episode rendered state\"')\n-            if not episode_id:\n+        with AnalysisWorkspacePage(\"\", None) as page:\n+            with page.slot(LayoutSlot.HEADER):\n+                heading = _semantic_heading(\n+                    \"Episode decision brief\",\n+                    \"One coherent analytical/read revision with live durable workflow\",\n+                    autofocus=not episode_id or workspace.state.get(FOCUS_KEY) == \"episode_heading\",\n+                )\n+            with page.slot(LayoutSlot.PRIMARY):\n+                episode_host = ui.element(\"div\").classes(\"ephi-o10-episode-surface\").props('tabindex=\"-1\" role=\"region\" aria-label=\"Episode rendered state\"')\n+                if not episode_id:\n+                    focus_request = ui.element(\"div\").props('data-ephi-focus-request=\"\" aria-hidden=\"true\"')\n+                    view = _EpisodeView(composition, episode_host, heading, \"\", focus_request)\n+                    view.render_no_selection()\n+                    return\n                 focus_request = ui.element(\"div\").props('data-ephi-focus-request=\"\" aria-hidden=\"true\"')\n-                view = _EpisodeView(composition, episode_host, heading, \"\", focus_request)\n-                view.render_no_selection()\n-                return\n-            focus_request = ui.element(\"div\").props('data-ephi-focus-request=\"\" aria-hidden=\"true\"')\n-            view = _EpisodeView(composition, episode_host, heading, episode_id, focus_request)\n-            focus_target = workspace.state.get(FOCUS_KEY)\n-            await view.load(focus_target=focus_target if isinstance(focus_target, str) else None)\n-            if focus_target == \"episode_heading\":\n-                workspace.state.set(FOCUS_KEY, None, source=\"ephi.episode.focus\")\n+                view = _EpisodeView(composition, episode_host, heading, episode_id, focus_request)\n+                focus_target = workspace.state.get(FOCUS_KEY)\n+                await view.load(focus_target=focus_target if isinstance(focus_target, str) else None)\n+                if focus_target == \"episode_heading\":\n+                    workspace.state.set(FOCUS_KEY, None, source=\"ephi.episode.focus\")\n \n \n def build_page() -> None:",
+  "exact_episode_source_diff_sha256": "fc80f83d91572963ad5f0a75e2be1b1f5cd265bd424fd6ad536f6efb2fb0fba9",
+  "fabric_evidence_publication": {
+    "reason": "No Fabric or Project OS evidence publisher is callable in this session; the deterministic report and screenshots are committed to the FIX work branch.",
+    "status": "NOT_AVAILABLE_IN_SESSION"
+  },
+  "fail_closed_startup_reconfirmation": {
+    "cases": {
+      "incompatible_abi": {
+        "entrypoint_explicit": true,
+        "marker_leak_absent": true,
+        "output_sha256": "da049ae7b82d25b49514918cb5b7993b8264986a475dee6d3f7f632e92469477",
+        "process_exit_nonzero": true,
+        "status": "PASS"
+      },
+      "malformed_entrypoint": {
+        "entrypoint_explicit": true,
+        "marker_leak_absent": true,
+        "output_sha256": "57ac1485e0ccbb9d9ebc2a73409f04da72ee717b7df507170b5e69bd6d83b766",
+        "process_exit_nonzero": true,
+        "status": "PASS"
+      },
+      "missing_bundle_with_legacy_authorities": {
+        "entrypoint_explicit": false,
+        "marker_leak_absent": true,
+        "output_sha256": "eaac9e3d4f6c70420e191f4402ed7eba6dc702860721c4aef4594942824d1fc5",
+        "process_exit_nonzero": true,
+        "status": "PASS"
+      },
+      "nonexistent_provider": {
+        "entrypoint_explicit": true,
+        "marker_leak_absent": true,
+        "output_sha256": "45490ec72d15be16ca3fe6594cb780d6a6f229ca2abb12ef9ee2c5aca65f6e57",
+        "process_exit_nonzero": true,
+        "status": "PASS"
+      },
+      "provider_factory_exception": {
+        "entrypoint_explicit": true,
+        "marker_leak_absent": true,
+        "output_sha256": "45490ec72d15be16ca3fe6594cb780d6a6f229ca2abb12ef9ee2c5aca65f6e57",
+        "process_exit_nonzero": true,
+        "status": "PASS"
+      },
+      "provider_import_exception": {
+        "entrypoint_explicit": true,
+        "marker_leak_absent": true,
+        "output_sha256": "45490ec72d15be16ca3fe6594cb780d6a6f229ca2abb12ef9ee2c5aca65f6e57",
+        "process_exit_nonzero": true,
+        "status": "PASS"
+      },
+      "runtime_provider_exception": {
+        "entrypoint_explicit": true,
+        "marker_leak_absent": true,
+        "output_sha256": "e65bad75b6afd7585c9f97b7d44ceb005d31d270a56786573497642862158a09",
+        "process_exit_nonzero": true,
+        "status": "PASS"
+      }
+    },
+    "status": "PASS"
+  },
+  "independent_project_os_audit": "PENDING",
+  "non_claims": {
+    "company_identity": "NOT_RUN",
+    "g10": "NOT_RUN",
+    "g12": "NOT_CLAIMED",
+    "port_gate": "NOT_CLAIMED",
+    "production": "NOT_CLAIMED",
+    "real_family_g02": "NOT_RUN",
+    "real_family_g06": "NOT_RUN",
+    "target_tls": "NOT_RUN"
+  },
+  "postgres": {
+    "real_postgresql_18": true,
+    "version": "18.6 (Homebrew)"
+  },
+  "predecessor_candidate": "9df7b1f3f49758fba459479404ae74215736b81f",
+  "predecessor_geometry": {
+    "description_list_height_px": 5777,
+    "description_list_width_px": 7,
+    "document_or_main_height_px": 12022,
+    "episode_surface_height_px": 11807,
+    "episode_surface_width_px": 73,
+    "source": "R2 VERIFY CF-cb9b379d7bef4704181d277a user-provided observation"
+  },
+  "project": "ephi",
+  "regression_results": {
+    "episode_workspace_slot_regression": {
+      "status": "PASS",
+      "tests": 1
+    },
+    "full_suite": {
+      "errors": 0,
+      "failed": 0,
+      "postgresql_modules": [
+        "tests.test_downstream_postgresql",
+        "tests.test_o2_postgresql",
+        "tests.test_o2_postgresql_artifacts",
+        "tests.test_o2_postgresql_reads",
+        "tests.test_o2_worker_postgresql",
+        "tests.test_o3_postgresql",
+        "tests.test_o4_source_ingress_postgresql",
+        "tests.test_o5_postgresql",
+        "tests.test_o5_handoff_postgresql",
+        "tests.test_o6_planner_postgresql",
+        "tests.test_o6_comparable_history_postgresql",
+        "tests.test_o8_postgresql",
+        "tests.test_o9_operations"
+      ],
+      "postgresql_server_version": "18.6 (Homebrew)",
+      "skipped": 0,
+      "status": "PASS",
+      "tests": 325
+    },
+    "o10_rendered_accessibility": {
+      "status": "PASS"
+    },
+    "o8_browser_session": {
+      "status": "PASS"
+    }
+  },
+  "related_qualification_runs": {
+    "o10_rendered_accessibility": {
+      "acceptance_status": "PASS",
+      "browser_events": {
+        "console_errors": [],
+        "page_errors": [],
+        "request_failures": []
+      },
+      "criteria_passed": [
+        "browser_events_clean",
+        "contrast",
+        "degraded_states",
+        "durable_command",
+        "focus_continuity_complete",
+        "forced_colors",
+        "keyboard_critical_path_complete",
+        "keyboard_walkthrough",
+        "normal_focus_indicator",
+        "postgresql_18",
+        "reduced_motion",
+        "responsive_viewports",
+        "secret_safety",
+        "semantic_assertions",
+        "truthful_populated_attention",
+        "truthful_search_empty"
+      ],
+      "failed_criteria": [],
+      "report_sha256": "6eac35d03eba0e307a426482a10a1761f8194b2615d6a0a8108acf46812a0513",
+      "scope": "Existing O10 rendered/accessibility harness run against the candidate worktree.",
+      "status": "PASS"
+    },
+    "o8_browser_session": {
+      "browser_events_clean": true,
+      "report_sha256": "0683157f5ea69ec921c9458e66958f4f1b22b7220a7d912581d39b522a0b0cbb",
+      "scope": "Existing O8 browser/session harness; the downstream provider path is separately recorded in downstream_launch.browser_acceptance.",
+      "status": "PASS",
+      "websocket_matrix": {
+        "allowed": "PASS",
+        "attacker_suffix": "PASS",
+        "missing": "PASS",
+        "null": "PASS",
+        "wrong_port": "PASS",
+        "wrong_scheme": "PASS"
+      }
+    }
+  },
+  "repository_checks": {
+    "application_self_check": {
+      "command": "PYTHONPATH=src python3 -m ephi --self-check --json",
+      "status": "PASS"
+    },
+    "compileall": {
+      "command": "python3 -m compileall -q src/ephi tests tools/u1_episode_geometry_qualification.py",
+      "status": "PASS"
+    },
+    "git_diff_check": {
+      "command": "git diff --check",
+      "status": "PASS"
+    },
+    "package_checker": {
+      "command": "python3 tools/check_package.py --refresh-manifest",
+      "package_file_count_expected_after_evidence": 225,
+      "status": "PASS"
+    },
+    "w0_repo_baseline": {
+      "candidate_commit": "c6aa11b2988479d78d0651bca8dbf976f64fc9ad",
+      "evidence_path": "evidence/review/chg_182_u1_r3_fix_w0_baseline.json",
+      "evidence_sha256": "a9eb82b1746962eb259421204ab71ddf757f49a1fd4347f7d7983541ce5bae52",
+      "output_sha256": "a9eb82b1746962eb259421204ab71ddf757f49a1fd4347f7d7983541ce5bae52",
+      "package_status": "PASS",
+      "skipped": 0,
+      "status": "BASELINE_PASS",
+      "tests": 325,
+      "worktree_clean": true
+    }
+  },
+  "request": "EPHI-CHG-182-U1-R3-FIX",
+  "schema_version": 1,
+  "scope_proof": {
+    "forbidden_changed_paths": [],
+    "migrations_changed": false,
+    "nicegui_base_changed": false,
+    "unrelated_ephi_ui_surfaces_changed": false
+  },
+  "status": "PASS",
+  "target_base": "156e47b1e0cc3c77a2a3f0e2b65875eacc9aa0b4"
+}
