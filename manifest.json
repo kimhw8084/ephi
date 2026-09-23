@@ -420,6 +420,16 @@
       "sha256": "15df3ba6dd07b6b4b8641598355164cdcd5b2f48c60d0d89f69f7baac639046f"
     },
     {
+      "path": "evidence/review/chg_182_u1_r3_fix_qualification.json",
+      "bytes": 16928,
+      "sha256": "6d73d7000b0fc842f573cc9cf34e7d9c7a72150c9b7387535c1c030b44eb353a"
+    },
+    {
+      "path": "evidence/review/chg_182_u1_r3_fix_w0_baseline.json",
+      "bytes": 2712,
+      "sha256": "a9eb82b1746962eb259421204ab71ddf757f49a1fd4347f7d7983541ce5bae52"
+    },
+    {
       "path": "evidence/review/nicegui_base_binding_manifest.json",
       "bytes": 15859,
       "sha256": "797ebcc38c8aa8846c3bd65305b1f20686ff2e17b43b6f770400ec10c826649c"
@@ -448,6 +458,21 @@
       "path": "evidence/source_inventory.json",
       "bytes": 264378,
       "sha256": "d995b28e9196c0a2145655905e5c3ddac6c1821c42af0e5a9a79aee0737cef75"
+    },
+    {
+      "path": "evidence/u1/chg_182_u1_r3_fix/attention-1440x900.png",
+      "bytes": 92727,
+      "sha256": "4afedda3ba29764937ee474e84b309ecba6094a5ac81e023aa497043ac50470f"
+    },
+    {
+      "path": "evidence/u1/chg_182_u1_r3_fix/episode-actions-1440x900.png",
+      "bytes": 63530,
+      "sha256": "796f801e1024091f6a9af98f546e95b07ef13df1c64037467cd497da5fedd33b"
+    },
+    {
+      "path": "evidence/u1/chg_182_u1_r3_fix/episode-open-1440x900.png",
+      "bytes": 65323,
+      "sha256": "8f7d0a2821565eccb73cc3635dca9b6fc6868081512033bf57c580e1720a3862"
     },
     {
       "path": "evidence/u1/downstream_abi_conformance.json",

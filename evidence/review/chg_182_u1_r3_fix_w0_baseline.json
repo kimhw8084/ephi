@@ -1,0 +1,98 @@
+{
+  "change": "CHG-111",
+  "excluded_inputs": [
+    "chat attachments",
+    "source-preflight JSON",
+    "staged-source directories",
+    "historical source archive"
+  ],
+  "git": {
+    "commit": "c6aa11b2988479d78d0651bca8dbf976f64fc9ad",
+    "root": "/Users/haewonkim/.codex-fabric/worktrees/CF-0ac7544eba6a516f6ae31898",
+    "status": "PASS",
+    "status_porcelain": "",
+    "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tree": "7c149fad5addd99fcdd49e22cd4a3f528fe95941",
+    "worktree_clean": true
+  },
+  "historical_test_result": {
+    "passed": 275,
+    "skipped": 1,
+    "status": "REFERENCE_ONLY",
+    "used_by_baseline": false
+  },
+  "import": {
+    "identity": {
+      "application": {
+        "distribution": "ephi",
+        "historical_identity_claimed": false,
+        "implementation": "canonical-repository",
+        "source_authority": "kimhw8084/ephi",
+        "version": "0.1.0"
+      },
+      "entrypoint": "ephi.app:main",
+      "framework": {
+        "distribution": "nicegui-base",
+        "git_commit": "000298562d6bcbf6df304edbd41b98b30fe4bfcf",
+        "nicegui": "3.15.0",
+        "version": "3.0.0a8"
+      },
+      "python_requires": ">=3.11,<3.14"
+    },
+    "status": "PASS",
+    "version": "0.1.0"
+  },
+  "package": {
+    "dependencies": [
+      "nicegui-base @ git+https://github.com/kimhw8084/nicegui-base.git@000298562d6bcbf6df304edbd41b98b30fe4bfcf",
+      "nicegui==3.15.0"
+    ],
+    "distribution": "ephi",
+    "entrypoint": "ephi.app:main",
+    "requires_python": ">=3.11,<3.14",
+    "status": "PASS",
+    "version": "0.1.0"
+  },
+  "package_integrity": {
+    "file_count": 219,
+    "manifest_sha256": "19f1099fdec94666981b1a6aadb7eae89dba5c5533887456aea7c9df6ee75f9d",
+    "status": "PASS"
+  },
+  "python": {
+    "major": 3,
+    "micro": 7,
+    "minor": 11,
+    "requires": ">=3.11,<3.14",
+    "status": "PASS",
+    "supported": true
+  },
+  "reason": "CANONICAL_REPOSITORY_CHECKS_PASS",
+  "schema_version": 1,
+  "scope": "canonical-repository-only",
+  "specification": {
+    "path": "/Users/haewonkim/.codex-fabric/worktrees/CF-0ac7544eba6a516f6ae31898/environment/w0_repo_baseline.json",
+    "sha256": "50385883ce2eadda92ace6684cbc086fa117d16ad655b1a6a1f1e824c3d418b1",
+    "status": "PASS"
+  },
+  "status": "BASELINE_PASS",
+  "tests": {
+    "command": [
+      "/opt/anaconda3/bin/python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-v"
+    ],
+    "errors": 0,
+    "failed": 0,
+    "output_sha256": "c096eed8afdd03f994804236c16dbef2ffc194b21d8875015461efd9e4d93d2d",
+    "parsed": true,
+    "passed": 325,
+    "returncode": 0,
+    "skipped": 0,
+    "status": "PASS"
+  },
+  "wave": "W0"
+}
