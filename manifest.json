@@ -846,8 +846,8 @@
     },
     {
       "path": "src/ephi/ui/app.py",
-      "bytes": 45410,
-      "sha256": "d6f5e863394664230be359d2e9b9f2ef2f69e608b1a7a142c5dd651302725b75"
+      "bytes": 45581,
+      "sha256": "9c43272427b2e2098ea4eb5dfc04f56b96f7c3567e7ad3d979c074ca56c3b7b5"
     },
     {
       "path": "src/ephi/ui/provider.py",
@@ -893,6 +893,11 @@
       "path": "tests/test_ephi_application.py",
       "bytes": 2681,
       "sha256": "6abc52107c7b5da7d1e63836beb25f48a137c669ef4d55300e41b6b22b7fc878"
+    },
+    {
+      "path": "tests/test_episode_workspace_geometry.py",
+      "bytes": 3161,
+      "sha256": "f638b1baad7adf1fa801b36c46e85e73ff2949fd27ddbb30d458f57785208df4"
     },
     {
       "path": "tests/test_o10_rendered_accessibility.py",
@@ -1108,6 +1113,11 @@
       "path": "tools/source_reality_preflight.py",
       "bytes": 518,
       "sha256": "370dfcb8efd8b5d3bad90d3606fe7d0a1ab78e5bb031e3971c5e5b61c0162f7e"
+    },
+    {
+      "path": "tools/u1_episode_geometry_qualification.py",
+      "bytes": 31611,
+      "sha256": "c28879052ec42d1c9a990915b9c3c6df688b4ef0ea8ccbf8855e7f71f8a902c0"
     },
     {
       "path": "tools/w0_baseline.py",

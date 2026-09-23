@@ -978,24 +978,26 @@ async def build_episode_page(composition: EphiUiComposition) -> None:
         from nicegui import ui
 
         ui.query("main").props('role="region" aria-label="EPHI application content"')
-        with AnalysisWorkspacePage("", None):
-            heading = _semantic_heading(
-                "Episode decision brief",
-                "One coherent analytical/read revision with live durable workflow",
-                autofocus=not episode_id or workspace.state.get(FOCUS_KEY) == "episode_heading",
-            )
-            episode_host = ui.element("div").classes("ephi-o10-episode-surface").props('tabindex="-1" role="region" aria-label="Episode rendered state"')
-            if not episode_id:
+        with AnalysisWorkspacePage("", None) as page:
+            with page.slot(LayoutSlot.HEADER):
+                heading = _semantic_heading(
+                    "Episode decision brief",
+                    "One coherent analytical/read revision with live durable workflow",
+                    autofocus=not episode_id or workspace.state.get(FOCUS_KEY) == "episode_heading",
+                )
+            with page.slot(LayoutSlot.PRIMARY):
+                episode_host = ui.element("div").classes("ephi-o10-episode-surface").props('tabindex="-1" role="region" aria-label="Episode rendered state"')
+                if not episode_id:
+                    focus_request = ui.element("div").props('data-ephi-focus-request="" aria-hidden="true"')
+                    view = _EpisodeView(composition, episode_host, heading, "", focus_request)
+                    view.render_no_selection()
+                    return
                 focus_request = ui.element("div").props('data-ephi-focus-request="" aria-hidden="true"')
-                view = _EpisodeView(composition, episode_host, heading, "", focus_request)
-                view.render_no_selection()
-                return
-            focus_request = ui.element("div").props('data-ephi-focus-request="" aria-hidden="true"')
-            view = _EpisodeView(composition, episode_host, heading, episode_id, focus_request)
-            focus_target = workspace.state.get(FOCUS_KEY)
-            await view.load(focus_target=focus_target if isinstance(focus_target, str) else None)
-            if focus_target == "episode_heading":
-                workspace.state.set(FOCUS_KEY, None, source="ephi.episode.focus")
+                view = _EpisodeView(composition, episode_host, heading, episode_id, focus_request)
+                focus_target = workspace.state.get(FOCUS_KEY)
+                await view.load(focus_target=focus_target if isinstance(focus_target, str) else None)
+                if focus_target == "episode_heading":
+                    workspace.state.set(FOCUS_KEY, None, source="ephi.episode.focus")
 
 
 def build_page() -> None:
