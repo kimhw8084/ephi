@@ -1,0 +1,445 @@
+{
+  "accepted_at": "2026-09-22T23:57:26Z",
+  "changed_files": [
+    {
+      "additions": 68,
+      "deletions": 0,
+      "path": "evidence/review/chg_174_o6_2_build.json",
+      "status": "A"
+    },
+    {
+      "additions": 33,
+      "deletions": 8,
+      "path": "manifest.json",
+      "status": "M"
+    },
+    {
+      "additions": 5,
+      "deletions": 0,
+      "path": "migrations/008_o6_comparable_case_history.sql",
+      "status": "A"
+    },
+    {
+      "additions": 56,
+      "deletions": 0,
+      "path": "src/ephi/application/__init__.py",
+      "status": "M"
+    },
+    {
+      "additions": 1182,
+      "deletions": 0,
+      "path": "src/ephi/application/comparable_history.py",
+      "status": "A"
+    },
+    {
+      "additions": 6,
+      "deletions": 0,
+      "path": "src/ephi/infrastructure/postgresql.py",
+      "status": "M"
+    },
+    {
+      "additions": 143,
+      "deletions": 3,
+      "path": "src/ephi/infrastructure/postgresql_reads.py",
+      "status": "M"
+    },
+    {
+      "additions": 653,
+      "deletions": 0,
+      "path": "tests/test_o6_comparable_history.py",
+      "status": "A"
+    },
+    {
+      "additions": 252,
+      "deletions": 0,
+      "path": "tests/test_o6_comparable_history_postgresql.py",
+      "status": "A"
+    },
+    {
+      "additions": 2,
+      "deletions": 1,
+      "path": "tests/test_o9_operations.py",
+      "status": "M"
+    }
+  ],
+  "checks": [
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"EPHI_TEST_POSTGRES_DSN='postgresql://postgres@127.0.0.1:55432/ephi_o62_tests' rtk python3 -m unittest discover -s tests -v\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"EPHI_TEST_POSTGRES_DSN='postgresql://postgres@127.0.0.1:55432/ephi_o62_tests' rtk python3 -m unittest discover -s tests\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk rg -n \"root_cause|action_success|outcome|claim\" tests/test_o6_comparable_history.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n 'fabric_job|candidate_sha|candidate_tree|target_base_sha' evidence/review\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --stat'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short --branch'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '390,485p' tests/test_o6_comparable_history.py && rtk sed -n '1,100p' evidence/review/chg_134_fix3_qualification.json\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n 'Fabric evidence|fabric_job|candidate_bound|artifact_bridge' tools evidence/review README.md 13_Package_Review.md\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n -C 5 'evidence_identity|curation_identity|HISTORICAL_CLAIM' src/ephi/application/comparable_history.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n 'material|candidate|qualification' tools\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '340,390p' src/ephi/application/comparable_history.py && rtk sed -n '1140,1185p' src/ephi/application/comparable_history.py && rtk git diff -- src/ephi/application/comparable_history.py | head -n 30\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m compileall -q src/ephi tests'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"EPHI_TEST_POSTGRES_DSN='postgresql://postgres@127.0.0.1:55432/ephi_o62_tests' rtk python3 -m unittest tests.test_o6_comparable_history tests.test_o6_comparable_history_postgresql -v\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/w0_repo_baseline.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"EPHI_TEST_POSTGRES_DSN='postgresql://postgres@127.0.0.1:55432/ephi_o62_tests' rtk python3 -m unittest discover -s tests\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m compileall -q src/ephi tests'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git rev-parse HEAD main && rtk git branch --show-current'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/w0_repo_baseline.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git branch -vv && rtk git log -4 --oneline --decorate --all'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git add manifest.json src/ephi/application/__init__.py src/ephi/application/comparable_history.py src/ephi/infrastructure/postgresql.py src/ephi/infrastructure/postgresql_reads.py migrations/008_o6_comparable_case_history.sql tests/test_o6_comparable_history.py tests/test_o6_comparable_history_postgresql.py tests/test_o9_operations.py && rtk git diff --cached --check && rtk git diff --cached --stat && rtk git status --short --branch'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git commit -m 'CHG-174 O6.2 bounded comparable case history'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git rev-parse origin/main'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git show -s --format=%H%n%T%n%P%n%s HEAD'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --check && rtk git status --short --branch'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git ls-remote --heads origin codex/ephi-o6-comparable-case-history-v1'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/w0_repo_baseline.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"EPHI_TEST_POSTGRES_DSN='postgresql://postgres@127.0.0.1:55432/ephi_o62_tests' rtk python3 -m unittest tests.test_o2_postgresql tests.test_o2_worker_postgresql tests.test_o2_postgresql_reads tests.test_o2_postgresql_artifacts tests.test_o3_postgresql tests.test_o4_source_ingress_postgresql tests.test_o5_postgresql tests.test_o5_handoff_postgresql tests.test_o6_planner_postgresql tests.test_o6_comparable_history_postgresql tests.test_o8_postgresql tests.test_o9_operations tests.test_postgresql_adapter_lifecycle\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m compileall -q src/ephi tests'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"EPHI_TEST_POSTGRES_DSN='postgresql://postgres@127.0.0.1:55432/ephi_o62_tests' rtk python3 -m unittest discover -s tests\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -m json.tool evidence/review/chg_174_o6_2_build.json > /dev/null && rtk git add manifest.json evidence/review/chg_174_o6_2_build.json && rtk git diff --cached --check && rtk git diff --cached --stat && rtk git commit -m 'Add CHG-174 O6.2 candidate evidence'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m compileall -q src/ephi tests'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git show -s --format=%H%n%T%n%P HEAD && rtk git rev-parse origin/main && rtk git status --short --branch'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git ls-remote --heads origin codex/ephi-o6-comparable-case-history-v1'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/w0_repo_baseline.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git push -u origin codex/ephi-o6-comparable-case-history-v1'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git ls-remote origin refs/heads/main refs/heads/codex/ephi-o6-comparable-case-history-v1 && rtk git status --short --branch && rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk /opt/homebrew/opt/postgresql@18/bin/pg_ctl -D /tmp/ephi-o6-comparable-pg.MOtYt5/data -m fast -w stop'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk rm -rf /tmp/ephi-o6-comparable-pg.MOtYt5'",
+      "exit_code": 0,
+      "type": "command_execution"
+    }
+  ],
+  "codex": {
+    "cli_version": "codex-cli 0.155.1",
+    "configured_model": "gpt-6-luna",
+    "event_count": 332,
+    "provider_reported_model": null,
+    "reasoning_effort": "xhigh",
+    "terminal_type": "turn.completed",
+    "usage": {
+      "cache_hit_percent": 97.79,
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 14906368,
+      "fresh_input_tokens": 337420,
+      "input_tokens": 15243788,
+      "non_reasoning_output_tokens": 45609,
+      "output_tokens": 123558,
+      "reasoning_output_tokens": 77949,
+      "total_processed_tokens": 15367346
+    },
+    "warnings": []
+  },
+  "commits": [
+    {
+      "sha": "e99d518f36208951ef4122a14ab06fcfbaa9c180",
+      "subject": "Add CHG-174 O6.2 candidate evidence"
+    },
+    {
+      "sha": "ca2296e7d2d8373ab5da914cc8c113bac4ac3bfc",
+      "subject": "CHG-174 O6.2 bounded comparable case history"
+    }
+  ],
+  "diff": {
+    "additions": 2400,
+    "changed_files": 10,
+    "commit_count": 2,
+    "deletions": 12
+  },
+  "error_code": null,
+  "evidence_manifest": {
+    "count": 2,
+    "items": [
+      {
+        "bytes": 3596,
+        "path": "evidence/review/chg_174_o6_2_build.json",
+        "sha256": "15df3ba6dd07b6b4b8641598355164cdcd5b2f48c60d0d89f69f7baac639046f"
+      },
+      {
+        "bytes": 36513,
+        "path": "manifest.json",
+        "sha256": "54aa8e61b24115f4e37988a91f04d41bb9e4d1a1f751c971735f81a4e7f93b47"
+      }
+    ],
+    "version": 1
+  },
+  "evidence_publisher_release": "1.2.4-quota-recovery-candidate",
+  "fabric_capture": {
+    "applied": false,
+    "paths_before": 0,
+    "transient_untracked_removed": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "fabric_release": "1.2.4-quota-recovery-candidate",
+  "failure_class": null,
+  "finished_at": "2026-09-23T00:40:10Z",
+  "git": {
+    "base_is_ancestor": true,
+    "base_sha": "bbb25f9819498ede51e95e64737efa8f6d024bd3",
+    "branch": "codex/ephi-o6-comparable-case-history-v1",
+    "detached_verify": false,
+    "head_sha": "e99d518f36208951ef4122a14ab06fcfbaa9c180",
+    "remote_exact_head": true,
+    "remote_head_sha": "e99d518f36208951ef4122a14ab06fcfbaa9c180",
+    "target_branch": "main",
+    "target_drifted_since_acceptance": false,
+    "target_head_observed_after_execution": "bbb25f9819498ede51e95e64737efa8f6d024bd3",
+    "work_branch": "codex/ephi-o6-comparable-case-history-v1",
+    "worktree_clean": true
+  },
+  "instructions": {
+    "files": [
+      {
+        "bytes": 1458,
+        "path": "AGENTS.md",
+        "sha256": "4349f387a79d886ed1264604ff48c582698e539e08ed8fb2f9d8ab8fbf6f804a"
+      }
+    ],
+    "total_bytes": 1458,
+    "warning": null
+  },
+  "job_id": "CF-ed2568a46b550b69e0b8eefc",
+  "kind": "codex-fabric-audit-evidence",
+  "locator": {
+    "branch": "codex-fabric/evidence/ephi/ephi-o6-comparable-case-history-v1",
+    "path": ".codex-fabric/audit.json",
+    "ref": "refs/heads/codex-fabric/evidence/ephi/ephi-o6-comparable-case-history-v1"
+  },
+  "operation": "BUILD",
+  "policy": {
+    "environment_policy_sha256": "e077daca74297b3c30bee8989f00f8ca5338f7610b4d016a6c48db524205d064",
+    "fabric_release": "1.2.4-quota-recovery-candidate",
+    "policy_sha256": "123615bf2f6e57dcac197e49ca98ceac59ada86a55e2c84445ea5d00812c0833",
+    "registry_sha256": "cfc765f3211c37c7967a138f3b2d89a99341939b15b2623f92744d007f625d6f"
+  },
+  "project_id": "ephi",
+  "recovery": {
+    "model_rerun_safe": false,
+    "recovery_required": false,
+    "retry_safe": false,
+    "retry_scope": null,
+    "worktree_retained": true
+  },
+  "request": "ephi-o6-comparable-case-history-v1",
+  "schema_version": 1,
+  "started_at": "2026-09-22T23:57:26Z",
+  "status": "EXECUTED_CHANGE",
+  "timing": {
+    "execution_seconds": 2564,
+    "queue_seconds": 0,
+    "total_seconds": 2564
+  },
+  "transport": {
+    "bytes": 7868,
+    "envelope": "FABRIC/2",
+    "prompt_bytes": 7548,
+    "prompt_sha256": "659c4a6338b1277de74572ee4dd996d690ad65ccd99eb70199a652f5f5c753b7",
+    "sha256": "ed2568a46b550b69e0b8eefc2bf4631e047206871a02bf642525e922e7e681f9"
+  }
+}
