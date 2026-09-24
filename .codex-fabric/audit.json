@@ -1,0 +1,601 @@
+{
+  "accepted_at": "2026-09-24T16:38:57Z",
+  "changed_files": [
+    {
+      "additions": 4,
+      "deletions": 0,
+      "path": ".github/workflows/package.yml",
+      "status": "M"
+    },
+    {
+      "additions": 22,
+      "deletions": 0,
+      "path": "11_Developer_Start.md",
+      "status": "M"
+    },
+    {
+      "additions": 30,
+      "deletions": 0,
+      "path": "13_Package_Review.md",
+      "status": "M"
+    },
+    {
+      "additions": 30,
+      "deletions": 0,
+      "path": "README.md",
+      "status": "M"
+    },
+    {
+      "additions": 702,
+      "deletions": 0,
+      "path": "evidence/u2/chg-205-u2.2-o7.1/qualification.json",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-205-u2.2-o7.1/screenshots/outcomes-1440x900-reviewed.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-205-u2.2-o7.1/screenshots/outcomes-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-205-u2.2-o7.1/screenshots/outcomes-390x844.png",
+      "status": "A"
+    },
+    {
+      "additions": 94,
+      "deletions": 0,
+      "path": "examples/synthetic_downstream/outcomes.py",
+      "status": "A"
+    },
+    {
+      "additions": 3,
+      "deletions": 0,
+      "path": "examples/synthetic_downstream/provider.py",
+      "status": "M"
+    },
+    {
+      "additions": 79,
+      "deletions": 34,
+      "path": "manifest.json",
+      "status": "M"
+    },
+    {
+      "additions": 7,
+      "deletions": 0,
+      "path": "migrations/009_o7_outcome_group_identity.sql",
+      "status": "A"
+    },
+    {
+      "additions": 14,
+      "deletions": 0,
+      "path": "src/ephi/application/storage.py",
+      "status": "M"
+    },
+    {
+      "additions": 67,
+      "deletions": 15,
+      "path": "src/ephi/application/transactions.py",
+      "status": "M"
+    },
+    {
+      "additions": 10,
+      "deletions": 0,
+      "path": "src/ephi/downstream/composition.py",
+      "status": "M"
+    },
+    {
+      "additions": 44,
+      "deletions": 0,
+      "path": "src/ephi/infrastructure/postgresql.py",
+      "status": "M"
+    },
+    {
+      "additions": 45,
+      "deletions": 0,
+      "path": "src/ephi/infrastructure/sqlite.py",
+      "status": "M"
+    },
+    {
+      "additions": 366,
+      "deletions": 2,
+      "path": "src/ephi/ui/app.py",
+      "status": "M"
+    },
+    {
+      "additions": 33,
+      "deletions": 2,
+      "path": "src/ephi/value/__init__.py",
+      "status": "M"
+    },
+    {
+      "additions": 268,
+      "deletions": 0,
+      "path": "src/ephi/value/model.py",
+      "status": "M"
+    },
+    {
+      "additions": 47,
+      "deletions": 1,
+      "path": "src/ephi/value/repository.py",
+      "status": "M"
+    },
+    {
+      "additions": 643,
+      "deletions": 2,
+      "path": "src/ephi/value/service.py",
+      "status": "M"
+    },
+    {
+      "additions": 2,
+      "deletions": 1,
+      "path": "tests/test_o9_operations.py",
+      "status": "M"
+    },
+    {
+      "additions": 218,
+      "deletions": 0,
+      "path": "tests/test_outcomes_postgresql.py",
+      "status": "A"
+    },
+    {
+      "additions": 330,
+      "deletions": 0,
+      "path": "tests/test_outcomes_workflow.py",
+      "status": "A"
+    },
+    {
+      "additions": 19,
+      "deletions": 0,
+      "path": "tests/test_value_integrity.py",
+      "status": "M"
+    },
+    {
+      "additions": 549,
+      "deletions": 0,
+      "path": "tools/o7_outcomes_browser_qualification.py",
+      "status": "A"
+    }
+  ],
+  "checks": [
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest discover -s tests -v > /tmp/chg205-unittest-final.log 2>&1'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk tail -5 /tmp/chg205-unittest-final.log'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import json; d=json.load(open(\\\"/tmp/chg205-w0-final.json\\\")); print(d[\\\"status\\\"], d[\\\"reason\\\"], d[\\\"package_integrity\\\"][\\\"status\\\"], d[\\\"package_integrity\\\"][\\\"manifest_sha256\\\"])'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import json; d=json.load(open(\\\"evidence/u2/chg-205-u2.2-o7.1/qualification.json\\\")); print(d[\\\"status\\\"], d[\\\"verification\\\"][\\\"postgresql_17_11_regressions\\\"][\\\"server_version\\\"], d[\\\"browser\\\"][\\\"desktop_1440x900\\\"][\\\"status\\\"], d[\\\"browser\\\"][\\\"phone_390x844\\\"][\\\"status\\\"])'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --check && rtk git status --short'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff -- src/ephi/application/storage.py src/ephi/application/transactions.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff -- src/ephi/value/model.py src/ephi/value/repository.py src/ephi/value/__init__.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff -- src/ephi/value/service.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff -- src/ephi/infrastructure/postgresql.py src/ephi/infrastructure/sqlite.py migrations/009_o7_outcome_group_identity.sql'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '92,320p' src/ephi/value/model.py && rtk sed -n '1,240p' src/ephi/value/service.py && rtk sed -n '240,620p' src/ephi/value/service.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '170,315p' src/ephi/value/service.py && rtk sed -n '330,500p' src/ephi/value/service.py && rtk sed -n '500,570p' src/ephi/value/service.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n \\\"def normalize_domain_payload|def _normalize\\\" src/ephi/application/transactions.py && rtk sed -n '80,130p' src/ephi/application/transactions.py && rtk sed -n '315,370p' src/ephi/value/service.py\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk rg -n \"normalize_domain_payload|canonical_command_payload_hash\" src/ephi/application'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '35,85p' src/ephi/application/hashing.py && rtk sed -n '400,510p' src/ephi/value/service.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '450,555p' src/ephi/value/service.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '555,625p' src/ephi/value/service.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest tests.test_value_integrity tests.test_outcomes_workflow tests.test_o2_transactions -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk proxy env EPHI_TEST_POSTGRES_DSN=postgresql://haewonkim@127.0.0.1:55436/ephi_outcomes python3 -m unittest tests.test_outcomes_postgresql -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk proxy env EPHI_TEST_POSTGRES_DSN=postgresql://haewonkim@127.0.0.1:55436/ephi_outcomes python3 tools/o7_outcomes_browser_qualification.py --output evidence/u2/chg-205-u2.2-o7.1/qualification.json --artifacts evidence/u2/chg-205-u2.2-o7.1/screenshots'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk cat migrations/009_o7_outcome_group_identity.sql && rtk rg -n \"CREATE TABLE aggregate_state|UNIQUE.*aggregate_state|aggregate_state\" migrations/001* migrations/003* | head -50'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk proxy env EPHI_TEST_POSTGRES_DSN=postgresql://haewonkim@127.0.0.1:55436/ephi_outcomes python3 -m unittest tests.test_o3_postgresql -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk proxy env EPHI_TEST_POSTGRES_DSN=postgresql://haewonkim@127.0.0.1:55436/ephi_outcomes python3 -m unittest tests.test_o8_postgresql -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk proxy env EPHI_TEST_POSTGRES_DSN=postgresql://haewonkim@127.0.0.1:55436/ephi_outcomes python3 -m unittest tests.test_o9_operations -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git status --short && rtk git rev-parse HEAD && rtk python3 - <<'PY'\nimport json\nfrom pathlib import Path\np=Path('evidence/u2/chg-205-u2.2-o7.1/qualification.json')\nd=json.loads(p.read_text())\nprint(json.dumps({k:d.get(k) for k in ('status','candidate_input_digest','postgres','desktop','phone','verification')}, indent=2))\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk proxy env EPHI_TEST_POSTGRES_DSN=postgresql://haewonkim@127.0.0.1:55436/ephi_outcomes python3 -m unittest tests.test_o3_postgresql -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk proxy env EPHI_TEST_POSTGRES_DSN=postgresql://haewonkim@127.0.0.1:55436/ephi_outcomes python3 -m unittest tests.test_o8_postgresql -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk proxy env EPHI_TEST_POSTGRES_DSN=postgresql://haewonkim@127.0.0.1:55436/ephi_outcomes python3 -m unittest tests.test_o9_operations -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest discover -s tests -v > /tmp/chg205-unittest-final.log 2>&1; status=$?; tail -n 18 /tmp/chg205-unittest-final.log; exit $status'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest discover -s tests -v > /tmp/chg205-unittest-final.log 2>&1; rc=$?; tail -n 22 /tmp/chg205-unittest-final.log; exit $rc'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nimport json\nfrom pathlib import Path\np=Path('evidence/u2/chg-205-u2.2-o7.1/qualification.json')\nd=json.loads(p.read_text())\nprint(json.dumps(d, indent=2)[:14000])\nPY\nrtk rg -n \\\"qualification.json|verification|candidate_input_digest\\\" tools/o7_outcomes_browser_qualification.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m compileall -q src/ephi tests tools'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/w0_repo_baseline.py --no-tests'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest discover -s tests -v > /tmp/chg205-unittest-final.log 2>&1; rc=$?; tail -n 8 /tmp/chg205-unittest-final.log; exit $rc'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nimport json\nfrom pathlib import Path\np=Path('evidence/u2/chg-205-u2.2-o7.1/qualification.json')\ndata=json.loads(p.read_text())\ndata['verification']={\n  'package': {\n    'refresh_manifest': 'PASS',\n    'check_package': 'PASS',\n    'tracked_package_files': 326\n  },\n  'full_offline_suite': {\n    'command': 'python3 -m unittest discover -s tests -v',\n    'status': 'PASS',\n    'run': 363,\n    'skipped': 85\n  },\n  'focused_f04_o2_outcomes': {\n    'command': 'python3 -m unittest tests.test_value_integrity tests.test_outcomes_workflow tests.test_o2_transactions -v',\n    'status': 'PASS',\n    'run': 28\n  },\n  'postgresql_17_11_homebrew': {\n    'status': 'PASS',\n    'outcomes_restart_concurrency_idempotency': {'suite': 'tests.test_outcomes_postgresql', 'run': 3, 'status': 'PASS'},\n    'o3': {'suite': 'tests.test_o3_postgresql', 'run': 5, 'status': 'PASS'},\n    'o8': {'suite': 'tests.test_o8_postgresql', 'run': 4, 'status': 'PASS'},\n    'o9': {'suite': 'tests.test_o9_operations', 'run': 17, 'status': 'PASS'},\n    'postgresql_18_qualification': 'NOT_RUN_LOCAL_POSTGRES_VERSION_17'\n  },\n  'w0': {\n    'command': 'python3 tools/w0_repo_baseline.py --no-tests',\n    'status': 'BASELINE_PASS',\n    'scope': 'Git, package and runtime facts only',\n    'tests': 'NOT_RUN'\n  },\n  'compileall': 'PASS',\n  'git_diff_check': 'PASS',\n  'offline_regression_scope': ['O2', 'O3', 'O5', 'O6', 'O8', 'O9', 'U1', 'CHG-189']\n}\np.write_text(json.dumps(data, indent=2, ensure_ascii=False)+'\\\\n')\nPY\nrtk python3 tools/check_package.py --refresh-manifest\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m compileall -q src/ephi tests tools'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 tools/w0_repo_baseline.py --no-tests > /tmp/chg205-w0-final.json && rtk python3 -c \\\"import json; d=json.load(open('/tmp/chg205-w0-final.json')); print(d['status'], d['tests']['status'], d['package_integrity']['file_count'])\\\"\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest discover -s tests -v > /tmp/chg205-unittest-final.log 2>&1; rc=$?; tail -n 8 /tmp/chg205-unittest-final.log; exit $rc'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n \\\"PASS: .*package files|file_count\\\" tools/check_package.py tools/w0_repo_baseline.py && rtk python3 - <<'PY'\nimport json\nfrom pathlib import Path\nm=json.loads(Path('manifest.json').read_text())\nprint(type(m).__name__, len(m.get('files', [])) if isinstance(m,dict) else len(m))\nq=json.loads(Path('evidence/u2/chg-205-u2.2-o7.1/qualification.json').read_text())\nprint(json.dumps(q['verification'], indent=2))\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nimport json\nfrom pathlib import Path\np=Path('evidence/u2/chg-205-u2.2-o7.1/qualification.json')\ndata=json.loads(p.read_text())\ndata['verification']['package'].pop('tracked_package_files', None)\np.write_text(json.dumps(data, indent=2, ensure_ascii=False)+'\\\\n')\nPY\nrtk python3 tools/check_package.py --refresh-manifest\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m compileall -q src/ephi tests tools'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 tools/w0_repo_baseline.py --no-tests > /tmp/chg205-w0-final.json && rtk python3 -c \\\"import json; d=json.load(open('/tmp/chg205-w0-final.json')); print(d['status'], d['tests']['status'])\\\"\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest discover -s tests -v > /tmp/chg205-unittest-final.log 2>&1; rc=$?; tail -n 8 /tmp/chg205-unittest-final.log; exit $rc'",
+      "exit_code": 0,
+      "type": "command_execution"
+    }
+  ],
+  "codex": {
+    "cli_version": "codex-cli 0.156.1",
+    "configured_model": "gpt-6-luna",
+    "event_count": 660,
+    "provider_reported_model": null,
+    "reasoning_effort": "xhigh",
+    "terminal_type": "turn.completed",
+    "usage": {
+      "cache_hit_percent": 98.25,
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 36464896,
+      "fresh_input_tokens": 651065,
+      "input_tokens": 37115961,
+      "non_reasoning_output_tokens": 89437,
+      "output_tokens": 226605,
+      "reasoning_output_tokens": 137168,
+      "total_processed_tokens": 37342566
+    },
+    "warnings": []
+  },
+  "commits": [
+    {
+      "sha": "2ced91f0017631c2fce46822e0a06a3d1cb349da",
+      "subject": "fabric: capture completed model changes [CF-967f6b86f26461033692924c]"
+    }
+  ],
+  "diff": {
+    "additions": 3626,
+    "changed_files": 27,
+    "commit_count": 1,
+    "deletions": 57
+  },
+  "error_code": null,
+  "evidence_manifest": {
+    "count": 8,
+    "items": [
+      {
+        "bytes": 7638,
+        "path": "11_Developer_Start.md",
+        "sha256": "2bfa1d4457590f946e1a894a9f9eac04aab5291c48c1e2e1f3d04b6389d1741f"
+      },
+      {
+        "bytes": 21606,
+        "path": "13_Package_Review.md",
+        "sha256": "29d6549726525afcdfbd364d5f8cdb5967ffc421729b37327cac5f1c10143c46"
+      },
+      {
+        "bytes": 23973,
+        "path": "README.md",
+        "sha256": "d1524fc9c3fa8ebc89998ca95d307541fe2eab7b17d54fe8d2dd1e7929af9421"
+      },
+      {
+        "bytes": 21687,
+        "path": "evidence/u2/chg-205-u2.2-o7.1/qualification.json",
+        "sha256": "9fbbac98f603f0df37fbca47b00fab38da4c076270c3954d3b7499ccdb14973d"
+      },
+      {
+        "bytes": 145348,
+        "path": "evidence/u2/chg-205-u2.2-o7.1/screenshots/outcomes-1440x900-reviewed.png",
+        "sha256": "2f70fbb755dec68cf9e91cc8694f5f515fb67d016766bfeb42e05837b621576e"
+      },
+      {
+        "bytes": 351077,
+        "path": "evidence/u2/chg-205-u2.2-o7.1/screenshots/outcomes-1440x900.png",
+        "sha256": "97d2f5a437a9cf22b9e0310912bca8439a036189968d51efdd567ab40ea3bb78"
+      },
+      {
+        "bytes": 298050,
+        "path": "evidence/u2/chg-205-u2.2-o7.1/screenshots/outcomes-390x844.png",
+        "sha256": "5ec406ff7676f7ee0db8db7e7a8bf84667e787fd07e06aa1137149aa0c9fdc81"
+      },
+      {
+        "bytes": 60639,
+        "path": "manifest.json",
+        "sha256": "dac2cf1bd0bc1a35f54d30c023834e8c0e8cfa9b4c4db9a3dbcdadc49fbb1cf0"
+      }
+    ],
+    "version": 1
+  },
+  "evidence_publisher_release": "1.2.5-dashboard-controls-candidate",
+  "fabric_capture": {
+    "applied": true,
+    "commit_message": "fabric: capture completed model changes [CF-967f6b86f26461033692924c]",
+    "commit_sha": "2ced91f0017631c2fce46822e0a06a3d1cb349da",
+    "paths_before": 24,
+    "status_before": [
+      " M .github/workflows/package.yml",
+      " M 11_Developer_Start.md",
+      " M 13_Package_Review.md",
+      " M README.md",
+      " M examples/synthetic_downstream/provider.py",
+      " M manifest.json",
+      " M src/ephi/application/storage.py",
+      " M src/ephi/application/transactions.py",
+      " M src/ephi/downstream/composition.py",
+      " M src/ephi/infrastructure/postgresql.py",
+      " M src/ephi/infrastructure/sqlite.py",
+      " M src/ephi/ui/app.py",
+      " M src/ephi/value/__init__.py",
+      " M src/ephi/value/model.py",
+      " M src/ephi/value/repository.py",
+      " M src/ephi/value/service.py",
+      " M tests/test_o9_operations.py",
+      " M tests/test_value_integrity.py",
+      "?? evidence/u2/chg-205-u2.2-o7.1/",
+      "?? examples/synthetic_downstream/outcomes.py",
+      "?? migrations/009_o7_outcome_group_identity.sql",
+      "?? tests/test_outcomes_postgresql.py",
+      "?? tests/test_outcomes_workflow.py",
+      "?? tools/o7_outcomes_browser_qualification.py"
+    ],
+    "transient_untracked_removed": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "fabric_release": "1.2.5-dashboard-controls-candidate",
+  "failure_class": null,
+  "finished_at": "2026-09-24T18:15:48Z",
+  "git": {
+    "base_is_ancestor": true,
+    "base_sha": "8eb33a205f2f589b0f1510cd00fbe45dd78094e9",
+    "branch": "codex/ephi-u2-outcomes-value-review-v1",
+    "detached_verify": false,
+    "head_sha": "2ced91f0017631c2fce46822e0a06a3d1cb349da",
+    "remote_exact_head": true,
+    "remote_head_sha": "2ced91f0017631c2fce46822e0a06a3d1cb349da",
+    "target_branch": "main",
+    "target_drifted_since_acceptance": false,
+    "target_head_observed_after_execution": "8eb33a205f2f589b0f1510cd00fbe45dd78094e9",
+    "work_branch": "codex/ephi-u2-outcomes-value-review-v1",
+    "worktree_clean": true
+  },
+  "instructions": {
+    "files": [
+      {
+        "bytes": 1458,
+        "path": "AGENTS.md",
+        "sha256": "4349f387a79d886ed1264604ff48c582698e539e08ed8fb2f9d8ab8fbf6f804a"
+      }
+    ],
+    "total_bytes": 1458,
+    "warning": null
+  },
+  "job_id": "CF-967f6b86f26461033692924c",
+  "kind": "codex-fabric-audit-evidence",
+  "locator": {
+    "branch": "codex-fabric/evidence/ephi/ephi-u2-outcomes-value-review-v1",
+    "path": ".codex-fabric/audit.json",
+    "ref": "refs/heads/codex-fabric/evidence/ephi/ephi-u2-outcomes-value-review-v1"
+  },
+  "operation": "BUILD",
+  "policy": {
+    "environment_policy_sha256": "e077daca74297b3c30bee8989f00f8ca5338f7610b4d016a6c48db524205d064",
+    "fabric_release": "1.2.5-dashboard-controls-candidate",
+    "policy_sha256": "123615bf2f6e57dcac197e49ca98ceac59ada86a55e2c84445ea5d00812c0833",
+    "registry_sha256": "af81b8552f9d6a33847310e3c6bcd2d48401782b963a58efd2993e93570cb4aa"
+  },
+  "project_id": "ephi",
+  "recovery": {
+    "model_rerun_safe": false,
+    "recovery_required": false,
+    "retry_safe": false,
+    "retry_scope": null,
+    "worktree_retained": true
+  },
+  "request": "ephi-u2-outcomes-value-review-v1",
+  "schema_version": 1,
+  "started_at": "2026-09-24T16:38:57Z",
+  "status": "EXECUTED_CHANGE",
+  "timing": {
+    "execution_seconds": 5811,
+    "queue_seconds": 0,
+    "total_seconds": 5811
+  },
+  "transport": {
+    "bytes": 4731,
+    "envelope": "FABRIC/2",
+    "prompt_bytes": 4415,
+    "prompt_sha256": "ef263be1955bf8267d7fc5a4ddf941e793341c6b049a492442915622aac300bd",
+    "sha256": "967f6b86f26461033692924c2eec0c39ad2976e3bc0598921727b36f9974d740"
+  }
+}
