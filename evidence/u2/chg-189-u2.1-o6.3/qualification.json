@@ -1,0 +1,353 @@
+{
+  "analytical_contract": {
+    "input_identity": "43e1d7ee4ce876db96cc4bd7c1ba8a1ece26a5f75d37a46170cebb165720f9e9",
+    "knowledge_cutoff": "2026-09-23T23:00:14.587191+00:00",
+    "limitations": [
+      "NO_WIP_EXPOSURE_SOURCE",
+      "OBSERVATIONAL_ONLY",
+      "SYNTHETIC_DEMONSTRATION"
+    ],
+    "policy_identity": "ephi.investigation-policy.v1:349f58bdcb577987e4360c3ca2c8919489d79fda037b4c74711975fcad2ef862",
+    "profile_schema": "ephi.investigation-profile.v1",
+    "query_identity": "e9af78d32b8d660df0cefde888902fb7a05c8bf9375b1400fdd14ae59de76522",
+    "rca_schema": "ephi.rca.observational.v1",
+    "result_identity": "7f4e906bcf10ab1fd13c6d8aa03833b2c1d08a65f626ea7f8abdb43d59d253d6",
+    "source_identities": [
+      "ephi.source-binding.v1:fbcc4c53a23b9cf44a90cfc97625b07e283dff91a67beb69b8518e8247a8a660",
+      "synthetic-cd-source-affected-and-controls"
+    ]
+  },
+  "artifact_inventory": {
+    "file_count": 47,
+    "path": "artifact-inventory.json",
+    "sha256": "eda2bde15a50a272e617c10d6c6630f3d4940005eaf411caf1aeb87a0dbdc045"
+  },
+  "base": {
+    "branch": "main",
+    "commit": "a9702ad3f990f379f902ebe43934e0d5fe589b7e"
+  },
+  "browser_regressions": {
+    "o10": {
+      "acceptance": {
+        "criteria": {
+          "browser_events_clean": true,
+          "contrast": true,
+          "degraded_states": true,
+          "durable_command": true,
+          "focus_continuity_complete": true,
+          "forced_colors": true,
+          "keyboard_critical_path_complete": true,
+          "keyboard_walkthrough": true,
+          "normal_focus_indicator": true,
+          "postgresql_18": true,
+          "reduced_motion": true,
+          "responsive_viewports": true,
+          "secret_safety": true,
+          "semantic_assertions": true,
+          "truthful_populated_attention": true,
+          "truthful_search_empty": true
+        },
+        "failed": [],
+        "status": "PASS"
+      },
+      "screenshots": 26,
+      "status": "PASS"
+    },
+    "o8": {
+      "console_errors": 0,
+      "failed_network_urls": 0,
+      "status": "PASS",
+      "websocket_session_observed": true
+    },
+    "u1_episode_geometry": {
+      "actions_status": "PASS",
+      "candidate_commit": "f2d89196afc38af95837a58c1f628894f494f9e9",
+      "fail_closed_startup_status": "PASS",
+      "geometry_status": "PASS"
+    }
+  },
+  "browser_runs": [
+    {
+      "direct_selected_episode_path": "server-bound selected Episode \u2192 current downstream composition",
+      "document_height": 6363,
+      "document_width": 390,
+      "events": {
+        "console_errors": [],
+        "http_errors": [],
+        "page_errors": [],
+        "request_failures": [],
+        "websockets": [
+          {
+            "path": "/_nicegui_ws/socket.io/"
+          }
+        ]
+      },
+      "horizontal_overflow": false,
+      "o5_receipt_facts": null,
+      "planner_action_geometry": {
+        "height": 44,
+        "width": 274,
+        "x": 58,
+        "y": 800
+      },
+      "post_action_focus": null,
+      "screenshot": "episode-mobile-390x844.png",
+      "timings_ms": {
+        "application_render_ready": 391.987
+      },
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    },
+    {
+      "direct_selected_episode_path": "Attention selected Episode \u2192 current downstream composition",
+      "document_height": 4249,
+      "document_width": 1440,
+      "events": {
+        "console_errors": [],
+        "http_errors": [],
+        "page_errors": [],
+        "request_failures": [],
+        "websockets": [
+          {
+            "path": "/_nicegui_ws/socket.io/"
+          },
+          {
+            "path": "/_nicegui_ws/socket.io/"
+          },
+          {
+            "path": "/_nicegui_ws/socket.io/"
+          }
+        ]
+      },
+      "horizontal_overflow": false,
+      "o5_receipt_facts": {
+        "check_status": "REQUESTED",
+        "check_template_id": "synthetic-peer-reference-remeasure",
+        "command_id": "066f6fb696bbfe16ba863130d6d9769b7ca2ae96e64822353ecf0e11f24e346e",
+        "durably_committed": true,
+        "receipt_result_identity": "ed1c40ec671eca3d985900f586f664e16387e91d95bc5f22bfcb10fa3ca2b4ee",
+        "receipt_status": "COMMITTED",
+        "workflow_version": 2
+      },
+      "planner_action_geometry": {
+        "height": 44,
+        "width": 646.65625,
+        "x": 330,
+        "y": 641
+      },
+      "post_action_focus": {
+        "role": "status",
+        "tag": "DIV",
+        "text": "Check request committed at workflow version 2."
+      },
+      "screenshot": "episode-desktop-1440x900.png",
+      "timings_ms": {
+        "application_render_ready": 946.334
+      },
+      "viewport": {
+        "height": 900,
+        "width": 1440
+      }
+    }
+  ],
+  "candidate": {
+    "branch": "codex/ephi-u2-investigation-rca-workspace-v1",
+    "commit": "f2d89196afc38af95837a58c1f628894f494f9e9",
+    "tree": "dfa18f0650ff5b869e47b50a86e2a6ce58d84da0"
+  },
+  "change": "CHG-189",
+  "claim_scope": "U2.1 / O6.3 implementation only",
+  "coherent_episode": {
+    "active_cycle_identity": "synthetic-cd-cycle-1",
+    "known_at": "2026-09-23T18:00:14.587191-05:00",
+    "revision_identity": "synthetic-cd-analysis-revision-v1",
+    "workflow_version": 1
+  },
+  "comparable_history": {
+    "cases": [
+      {
+        "candidate_only": [],
+        "current_only": [],
+        "differences": [
+          "tool-class"
+        ],
+        "episode_id": "episode-synthetic-case-peer-path-a",
+        "limitations": [
+          "ONE_TOOL_CLASS_DIFFERENCE"
+        ],
+        "similarities": [
+          "maintenance-regime",
+          "recipe-regime",
+          "trajectory-shape"
+        ]
+      },
+      {
+        "candidate_only": [],
+        "current_only": [],
+        "differences": [
+          "maintenance-regime",
+          "tool-class",
+          "trajectory-shape"
+        ],
+        "episode_id": "episode-synthetic-case-superficial-b",
+        "limitations": [
+          "TRAJECTORY_AND_MAINTENANCE_REGIME_DIFFER"
+        ],
+        "similarities": [
+          "recipe-regime"
+        ]
+      }
+    ],
+    "compatibility": "Existing O6.2 regression tests passed.",
+    "query_identity": "0b4423d8919f12f2fd4900f8f044ab992be0f3ba68c3ed0ff2ce2e86bbc07e78",
+    "result_identity": "f5c51de2bcafa446e9f67d6468049bdb700ebbf2c6bae810fb9d69080a4e9be0",
+    "status": "READY"
+  },
+  "downstream_path": {
+    "actual_ephi_server": true,
+    "entrypoint": "examples.synthetic_downstream.provider:build_flagship_bundle",
+    "legacy_or_development_source_bindings_used": false,
+    "status": "PASS"
+  },
+  "external_evidence_publication": {
+    "do_not_mark_visual_atlas_current_or_accepted": true,
+    "independent_audit": "REQUIRED",
+    "reason": "No qualified Project OS/Fabric evidence publisher is callable in this session; this deterministic evidence bundle is committed in the repository for independent audit.",
+    "status": "NOT_AVAILABLE"
+  },
+  "non_claims": [
+    "All fixture facts are synthetic demonstration data, not production science or company limits.",
+    "This evidence does not establish O6/W4 completion, G10 capacity, G02/G06 real-family qualification, O5 W3 pilot completion, Port Gate or Production readiness."
+  ],
+  "objective": "U2.1 / O6.3 implementation qualification",
+  "observational_rca": {
+    "affected_independent_groups": 3,
+    "associations": [
+      {
+        "affected": {
+          "denominator": 3,
+          "independent_group_count": 3,
+          "numerator": 3
+        },
+        "controls": {
+          "denominator": 3,
+          "independent_group_count": 3,
+          "numerator": 1
+        },
+        "factor_identity": "measurement-head-trajectory",
+        "interpretation": "descriptive_observational_commonality_only",
+        "rate_difference_denominator": 9,
+        "rate_difference_numerator": 6
+      }
+    ],
+    "control_independent_groups": 3,
+    "control_quality": "QUALIFIED",
+    "no_probability_or_causal_confidence_fields": "Verified by passing public DTO test.",
+    "status": "READY",
+    "temporal_contradictions": [
+      {
+        "fact_identity": "synthetic-later-head-service",
+        "reason_code": "CANDIDATE_CHANGE_AFTER_OBSERVED_ONSET"
+      }
+    ],
+    "valid_invalid_control_matrix": {
+      "invalid": {
+        "association_count": 0,
+        "control_quality": "UNQUALIFIED",
+        "input_identity": "eb7cfa477a8ab606413dbcbed4414742ee3b17b1201bee7f701031e7ce9d0748",
+        "query_identity": "e9af78d32b8d660df0cefde888902fb7a05c8bf9375b1400fdd14ae59de76522",
+        "reason_codes": [
+          "CONTROL_NOT_QUALIFIED",
+          "CONTROL_QUALIFICATION_OR_MATCHING_FAILED",
+          "REFERENCE_PATH_STALE"
+        ],
+        "result_identity": "c7a2231717dc986563e7ac3ffec9b139ae4f044f4208901e583f8dd35588b243",
+        "state": "UNQUALIFIED_CONTROLS"
+      },
+      "valid": {
+        "association_count": 1,
+        "control_quality": "QUALIFIED",
+        "state": "READY"
+      }
+    }
+  },
+  "planner": {
+    "compatibility": "Existing O6.1 regression tests passed.",
+    "excluded_checks": [
+      {
+        "facts": [
+          "capability_stale:synthetic.stale.peer-reference",
+          "turnaround_unsupported:Stale path has no qualified turnaround"
+        ],
+        "reasons": [
+          "STALE_PEER_REFERENCE",
+          "UNSUPPORTED_TURNAROUND"
+        ],
+        "template_id": "synthetic-stale-reference-repeat",
+        "template_version": "1.0.0"
+      }
+    ],
+    "identity": "81aff754d8705a418e5caed583cb66c1e622563876a5c91ee6baab5bf1ce6eb9",
+    "ranking_kind": "DETERMINISTIC_ORDINAL_ONLY",
+    "recommendations": [
+      {
+        "alternatives_discriminated": [
+          {
+            "contradiction_ids": [],
+            "dependence_group_ids": [
+              "measurement-head-trajectory"
+            ],
+            "hypothesis_a_id": "measurement-head-drift",
+            "hypothesis_b_id": "process-material-shift",
+            "ordinal_discrimination": 1.0,
+            "pair_id": "head-drift-v-process-shift"
+          }
+        ],
+        "execution_mode": "REQUEST_HUMAN_MEASUREMENT",
+        "rank": 1,
+        "template_id": "synthetic-peer-reference-remeasure",
+        "title": "Qualified peer/reference remeasure",
+        "will_not_resolve": []
+      }
+    ],
+    "status": "READY"
+  },
+  "schema": "ephi.chg189.u2.1-o6.3-candidate-qualification.v1",
+  "source_inventory": {
+    "changed_files": [
+      "examples/synthetic_downstream/flagship.py",
+      "examples/synthetic_downstream/provider.py",
+      "manifest.json",
+      "src/ephi/application/__init__.py",
+      "src/ephi/application/investigation.py",
+      "src/ephi/application/o10.py",
+      "src/ephi/application/rca.py",
+      "src/ephi/application/rca_materialization.py",
+      "src/ephi/downstream/composition.py",
+      "src/ephi/ui/app.py",
+      "tests/test_o6_rca.py",
+      "tests/test_o6_rca_postgresql.py",
+      "tools/o10_rendered_accessibility.py",
+      "tools/o8_browser_qualification.py",
+      "tools/u1_episode_geometry_qualification.py",
+      "tools/u2_investigation_qualification.py"
+    ],
+    "migration_files": [],
+    "nicegui_base_modified": false,
+    "no_source_identity_or_historical_behavior_claim": true
+  },
+  "status": "PASS",
+  "synthetic_disclaimer": "Synthetic demonstration only: every identifier, measurement, timestamp, qualification, policy and relationship is fictional.",
+  "validation": {
+    "dependency_light_suites": "PASS, 343 tests on Python 3.11, 3.12, 3.13, 3.14; Python 3.14 remains package-integrity compatibility only.",
+    "full_postgresql18_suite": "PASS, 343 tests, zero skips",
+    "package_checks": "PASS on Python 3.11, 3.12, 3.13, 3.14; 316 package files.",
+    "report": "validation/validation-summary.json",
+    "self_check_compile_diff": "PASS",
+    "w0": "validation/w0-baseline.json",
+    "w0_stage": "pre-candidate-commit canonical baseline PASS at the exact requested base"
+  },
+  "visual_review": "PENDING_INDEPENDENT_PROJECT_OS_AUDIT"
+}

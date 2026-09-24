@@ -1,0 +1,463 @@
+{
+  "base_sha": "a9702ad3f990f379f902ebe43934e0d5fe589b7e",
+  "branch": "codex/ephi-u2-investigation-rca-workspace-v1",
+  "browser": [
+    {
+      "browser_action_flow": "DIRECT_EPISODE_CONTENT_AND_GEOMETRY",
+      "diagnostic_timing_ms": {
+        "application_render_ready": 391.987
+      },
+      "direct_selected_episode_path": "server-bound selected Episode \u2192 current downstream composition",
+      "engineering_headline_geometry": {
+        "height": 38,
+        "width": 308,
+        "x": 41,
+        "y": 261
+      },
+      "events": {
+        "console_errors": [],
+        "http_errors": [],
+        "page_errors": [],
+        "request_failures": [],
+        "websockets": [
+          {
+            "path": "/_nicegui_ws/socket.io/"
+          }
+        ]
+      },
+      "geometry": {
+        "buttons": [
+          {
+            "height": 44,
+            "name": "Request check",
+            "visible": true,
+            "width": 274
+          },
+          {
+            "height": 44,
+            "name": "Claim episode",
+            "visible": true,
+            "width": 109.203125
+          },
+          {
+            "height": 44,
+            "name": "Return to Attention",
+            "visible": true,
+            "width": 138.84375
+          }
+        ],
+        "documentHeight": 6363,
+        "documentWidth": 390,
+        "episodeSurface": {
+          "height": 6125,
+          "width": 358,
+          "x": 16,
+          "y": 210
+        },
+        "headings": [
+          "Episode investigation workspace",
+          "Investigation plan",
+          "1. Qualified peer/reference remeasure",
+          "Current decision",
+          "Evidence and competing explanations",
+          "Comparable cases",
+          "Episode episode-synthetic-case-peer-path-a \u00b7 synthetic-recipe-r47",
+          "Episode episode-synthetic-case-superficial-b \u00b7 synthetic-recipe-r47",
+          "Bounded RCA \u00b7 observational only",
+          "Current work and recovery"
+        ],
+        "overflowX": false,
+        "primaryZones": {
+          "Bounded RCA \u00b7 observational only": {
+            "bottom": 4917,
+            "top": 4888,
+            "visible": false
+          },
+          "Comparable cases": {
+            "bottom": 3849,
+            "top": 3820,
+            "visible": false
+          },
+          "Current decision": {
+            "bottom": 1555,
+            "top": 1526,
+            "visible": false
+          },
+          "Current work and recovery": {
+            "bottom": 5902,
+            "top": 5873,
+            "visible": false
+          },
+          "Evidence and competing explanations": {
+            "bottom": 2356,
+            "top": 2327,
+            "visible": false
+          },
+          "Investigation plan": {
+            "bottom": 526,
+            "top": 497,
+            "visible": true
+          }
+        },
+        "scrollY": 0,
+        "viewportWidth": 390
+      },
+      "launch_environment": {
+        "actual_ephi_server": true,
+        "development_or_legacy_source_bindings_present": false,
+        "downstream_entrypoint": "examples.synthetic_downstream.provider:build_flagship_bundle",
+        "dsn_storage_secret_and_artifact_paths": "present as process inputs; values redacted"
+      },
+      "mobile_action_visible_after_scroll": true,
+      "o5_receipt_facts": null,
+      "planner_action_geometry": {
+        "height": 44,
+        "width": 274,
+        "x": 58,
+        "y": 800
+      },
+      "post_action_focus": null,
+      "screenshot": "episode-mobile-390x844.png",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    },
+    {
+      "browser_action_flow": "PLANNER_TO_O5_REQUEST_AND_RETURN",
+      "diagnostic_timing_ms": {
+        "application_render_ready": 946.334
+      },
+      "direct_selected_episode_path": "Attention selected Episode \u2192 current downstream composition",
+      "engineering_headline_geometry": {
+        "height": 19,
+        "width": 688.65625,
+        "x": 309,
+        "y": 254
+      },
+      "events": {
+        "console_errors": [],
+        "http_errors": [],
+        "page_errors": [],
+        "request_failures": [],
+        "websockets": [
+          {
+            "path": "/_nicegui_ws/socket.io/"
+          },
+          {
+            "path": "/_nicegui_ws/socket.io/"
+          },
+          {
+            "path": "/_nicegui_ws/socket.io/"
+          }
+        ]
+      },
+      "geometry": {
+        "buttons": [
+          {
+            "height": 44,
+            "name": "Request check",
+            "visible": true,
+            "width": 646.65625
+          },
+          {
+            "height": 44,
+            "name": "Claim episode",
+            "visible": true,
+            "width": 109.203125
+          },
+          {
+            "height": 44,
+            "name": "Return to Attention",
+            "visible": true,
+            "width": 138.84375
+          }
+        ],
+        "documentHeight": 4249,
+        "documentWidth": 1440,
+        "episodeSurface": {
+          "height": 4022,
+          "width": 754.65625,
+          "x": 276,
+          "y": 195
+        },
+        "headings": [
+          "Episode investigation workspace",
+          "Investigation plan",
+          "1. Qualified peer/reference remeasure",
+          "Current decision",
+          "Evidence and competing explanations",
+          "Comparable cases",
+          "Episode episode-synthetic-case-peer-path-a \u00b7 synthetic-recipe-r47",
+          "Episode episode-synthetic-case-superficial-b \u00b7 synthetic-recipe-r47",
+          "Bounded RCA \u00b7 observational only",
+          "Current work and recovery"
+        ],
+        "overflowX": false,
+        "primaryZones": {
+          "Bounded RCA \u00b7 observational only": {
+            "bottom": 3254,
+            "top": 3225,
+            "visible": false
+          },
+          "Comparable cases": {
+            "bottom": 2597,
+            "top": 2568,
+            "visible": false
+          },
+          "Current decision": {
+            "bottom": 1150,
+            "top": 1121,
+            "visible": false
+          },
+          "Current work and recovery": {
+            "bottom": 3867,
+            "top": 3838,
+            "visible": false
+          },
+          "Evidence and competing explanations": {
+            "bottom": 1661,
+            "top": 1632,
+            "visible": false
+          },
+          "Investigation plan": {
+            "bottom": 441,
+            "top": 412,
+            "visible": true
+          }
+        },
+        "scrollY": 0,
+        "viewportWidth": 1440
+      },
+      "launch_environment": {
+        "actual_ephi_server": true,
+        "development_or_legacy_source_bindings_present": false,
+        "downstream_entrypoint": "examples.synthetic_downstream.provider:build_flagship_bundle",
+        "dsn_storage_secret_and_artifact_paths": "present as process inputs; values redacted"
+      },
+      "mobile_action_visible_after_scroll": null,
+      "o5_receipt_facts": {
+        "check_status": "REQUESTED",
+        "check_template_id": "synthetic-peer-reference-remeasure",
+        "command_id": "066f6fb696bbfe16ba863130d6d9769b7ca2ae96e64822353ecf0e11f24e346e",
+        "durably_committed": true,
+        "receipt_result_identity": "ed1c40ec671eca3d985900f586f664e16387e91d95bc5f22bfcb10fa3ca2b4ee",
+        "receipt_status": "COMMITTED",
+        "workflow_version": 2
+      },
+      "planner_action_geometry": {
+        "height": 44,
+        "width": 646.65625,
+        "x": 330,
+        "y": 641
+      },
+      "post_action_focus": {
+        "role": "status",
+        "tag": "DIV",
+        "text": "Check request committed at workflow version 2."
+      },
+      "screenshot": "episode-desktop-1440x900.png",
+      "viewport": {
+        "height": 900,
+        "width": 1440
+      }
+    }
+  ],
+  "change": "CHG-189",
+  "downstream_entrypoint": "examples.synthetic_downstream.provider:build_flagship_bundle",
+  "fixture": {
+    "active_cycle_id": "synthetic-cd-cycle-1",
+    "episode_id": "episode-synthetic-cd-sem-12",
+    "fixture_disclaimer": "Synthetic demonstration only: every identifier, measurement, timestamp, qualification, policy and relationship is fictional.",
+    "history_episode_ids": [
+      "episode-synthetic-case-peer-path-a",
+      "episode-synthetic-case-superficial-b"
+    ],
+    "investigation_qualification": {
+      "coherent_view": {
+        "active_cycle_identity": "synthetic-cd-cycle-1",
+        "known_at": "2026-09-23T18:00:14.587191-05:00",
+        "revision_identity": "synthetic-cd-analysis-revision-v1",
+        "workflow_version": 1
+      },
+      "comparable_history": {
+        "cases": [
+          {
+            "candidate_only": [],
+            "current_only": [],
+            "differences": [
+              "tool-class"
+            ],
+            "episode_id": "episode-synthetic-case-peer-path-a",
+            "limitations": [
+              "ONE_TOOL_CLASS_DIFFERENCE"
+            ],
+            "similarities": [
+              "maintenance-regime",
+              "recipe-regime",
+              "trajectory-shape"
+            ]
+          },
+          {
+            "candidate_only": [],
+            "current_only": [],
+            "differences": [
+              "maintenance-regime",
+              "tool-class",
+              "trajectory-shape"
+            ],
+            "episode_id": "episode-synthetic-case-superficial-b",
+            "limitations": [
+              "TRAJECTORY_AND_MAINTENANCE_REGIME_DIFFER"
+            ],
+            "similarities": [
+              "recipe-regime"
+            ]
+          }
+        ],
+        "query_identity": "0b4423d8919f12f2fd4900f8f044ab992be0f3ba68c3ed0ff2ce2e86bbc07e78",
+        "result_identity": "f5c51de2bcafa446e9f67d6468049bdb700ebbf2c6bae810fb9d69080a4e9be0",
+        "state": "READY"
+      },
+      "diagnostic_timing_ms": {
+        "coherent_investigation_query": 14.907
+      },
+      "planner": {
+        "excluded_checks": [
+          {
+            "facts": [
+              "capability_stale:synthetic.stale.peer-reference",
+              "turnaround_unsupported:Stale path has no qualified turnaround"
+            ],
+            "reasons": [
+              "STALE_PEER_REFERENCE",
+              "UNSUPPORTED_TURNAROUND"
+            ],
+            "template_id": "synthetic-stale-reference-repeat",
+            "template_version": "1.0.0"
+          }
+        ],
+        "plan_identity": "81aff754d8705a418e5caed583cb66c1e622563876a5c91ee6baab5bf1ce6eb9",
+        "ranking_kind": "DETERMINISTIC_ORDINAL_ONLY",
+        "recommendations": [
+          {
+            "alternatives_discriminated": [
+              {
+                "contradiction_ids": [],
+                "dependence_group_ids": [
+                  "measurement-head-trajectory"
+                ],
+                "hypothesis_a_id": "measurement-head-drift",
+                "hypothesis_b_id": "process-material-shift",
+                "ordinal_discrimination": 1.0,
+                "pair_id": "head-drift-v-process-shift"
+              }
+            ],
+            "execution_mode": "REQUEST_HUMAN_MEASUREMENT",
+            "rank": 1,
+            "template_id": "synthetic-peer-reference-remeasure",
+            "title": "Qualified peer/reference remeasure",
+            "will_not_resolve": []
+          }
+        ],
+        "state": "READY"
+      },
+      "rca": {
+        "affected_independent_group_count": 3,
+        "associations": [
+          {
+            "affected": {
+              "denominator": 3,
+              "independent_group_count": 3,
+              "numerator": 3
+            },
+            "controls": {
+              "denominator": 3,
+              "independent_group_count": 3,
+              "numerator": 1
+            },
+            "factor_identity": "measurement-head-trajectory",
+            "interpretation": "descriptive_observational_commonality_only",
+            "rate_difference_denominator": 9,
+            "rate_difference_numerator": 6
+          }
+        ],
+        "control_independent_group_count": 3,
+        "control_quality": "QUALIFIED",
+        "input_identity": "43e1d7ee4ce876db96cc4bd7c1ba8a1ece26a5f75d37a46170cebb165720f9e9",
+        "knowledge_cutoff": "2026-09-23T23:00:14.587191+00:00",
+        "limitations": [
+          "NO_WIP_EXPOSURE_SOURCE",
+          "OBSERVATIONAL_ONLY",
+          "SYNTHETIC_DEMONSTRATION"
+        ],
+        "policy_identity": "ephi.investigation-policy.v1:349f58bdcb577987e4360c3ca2c8919489d79fda037b4c74711975fcad2ef862",
+        "query_identity": "e9af78d32b8d660df0cefde888902fb7a05c8bf9375b1400fdd14ae59de76522",
+        "result_identity": "7f4e906bcf10ab1fd13c6d8aa03833b2c1d08a65f626ea7f8abdb43d59d253d6",
+        "schema_identity": "ephi.rca.observational.v1",
+        "source_identities": [
+          "ephi.source-binding.v1:fbcc4c53a23b9cf44a90cfc97625b07e283dff91a67beb69b8518e8247a8a660",
+          "synthetic-cd-source-affected-and-controls"
+        ],
+        "state": "READY",
+        "temporal_contradictions": [
+          {
+            "fact_identity": "synthetic-later-head-service",
+            "reason_code": "CANDIDATE_CHANGE_AFTER_OBSERVED_ONSET"
+          }
+        ]
+      },
+      "synthetic_control_matrix": {
+        "invalid": {
+          "association_count": 0,
+          "control_quality": "UNQUALIFIED",
+          "input_identity": "eb7cfa477a8ab606413dbcbed4414742ee3b17b1201bee7f701031e7ce9d0748",
+          "query_identity": "e9af78d32b8d660df0cefde888902fb7a05c8bf9375b1400fdd14ae59de76522",
+          "reason_codes": [
+            "CONTROL_NOT_QUALIFIED",
+            "CONTROL_QUALIFICATION_OR_MATCHING_FAILED",
+            "REFERENCE_PATH_STALE"
+          ],
+          "result_identity": "c7a2231717dc986563e7ac3ffec9b139ae4f044f4208901e583f8dd35588b243",
+          "state": "UNQUALIFIED_CONTROLS"
+        },
+        "valid": {
+          "association_count": 1,
+          "control_quality": "QUALIFIED",
+          "state": "READY"
+        }
+      }
+    },
+    "policy_identity": "ephi.investigation-policy.v1:349f58bdcb577987e4360c3ca2c8919489d79fda037b4c74711975fcad2ef862",
+    "postgres_version": "18.6 (Homebrew)",
+    "revision_id": "synthetic-cd-analysis-revision-v1",
+    "revision_vector": {
+      "analysis_revision": "synthetic-cd-analysis-v1",
+      "exposure_revision": null,
+      "plan_version": null,
+      "priority_revision": null,
+      "qualification_manifest_id": "synthetic-cd-manifest-v1",
+      "workflow_version": 1
+    },
+    "scope": {
+      "area_id": null,
+      "family_id": "synthetic-cd-metrology-family",
+      "project_ids": [],
+      "scope_id": "synthetic-cd-investigation-scope",
+      "site_id": "synthetic-site"
+    },
+    "scope_id": "synthetic-cd-investigation-scope",
+    "source_snapshot_count": 3,
+    "subject": "synthetic-engineer",
+    "workflow_state": "OPEN"
+  },
+  "limitations": [
+    "All fixture facts are synthetic demonstration data, not production science or company limits.",
+    "This evidence does not establish O6/W4 completion, G10 capacity, G02/G06 real-family qualification, O5 W3 pilot completion, Port Gate or Production readiness."
+  ],
+  "objective": "O6.3",
+  "schema": "ephi.u2.1-qualification.v1",
+  "tested_candidate_sha": "f2d89196afc38af95837a58c1f628894f494f9e9",
+  "tested_candidate_tree": "dfa18f0650ff5b869e47b50a86e2a6ce58d84da0",
+  "wave": "U2.1"
+}

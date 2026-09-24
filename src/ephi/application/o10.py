@@ -191,7 +191,7 @@ def evaluate_o10_acceptance(report: Mapping[str, object]) -> dict[str, object]:
     )
     semantic_episode_ok = (
         episode.get("h1_count") == 1
-        and episode.get("h1_text") == ["Episode decision brief"]
+        and episode.get("h1_text") == ["Episode investigation workspace"]
         and episode.get("main_count") == 1
         and episode.get("primary_navigation_count") == 1
         and episode.get("episode_region_count") == 1
