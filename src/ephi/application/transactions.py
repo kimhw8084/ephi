@@ -23,12 +23,14 @@ from .storage import (
     AggregateAlreadyExistsError,
     CommandEventAlreadyExistsError,
     CommandStorage,
+    CommandUnitOfWork,
     ReceiptAlreadyExistsError,
     StoredCommandReceipt,
 )
 
 
 Effect = Callable[[Mapping[str, Any], Mapping[str, Any]], Mapping[str, Any]]
+TransactionalEffect = Callable[[CommandUnitOfWork, Mapping[str, Any], Mapping[str, Any]], Mapping[str, Any]]
 
 
 @dataclass(frozen=True, slots=True)
@@ -130,6 +132,7 @@ class VersionedAggregateCommandExecutor:
         payload: Mapping[str, object],
         required_capability: str,
         effect: Effect | None = None,
+        transactional_effect: TransactionalEffect | None = None,
         create_if_missing: bool = False,
         initial_state: Mapping[str, object] | None = None,
     ) -> CommandResult:
@@ -143,6 +146,10 @@ class VersionedAggregateCommandExecutor:
             raise ValidationFailureError("domain payload must be a mapping")
         if effect is not None and not callable(effect):
             raise ValidationFailureError("effect must be callable or None")
+        if transactional_effect is not None and not callable(transactional_effect):
+            raise ValidationFailureError("transactional_effect must be callable or None")
+        if effect is not None and transactional_effect is not None:
+            raise ValidationFailureError("supply either effect or transactional_effect, not both")
         if not isinstance(create_if_missing, bool):
             raise ValidationFailureError("create_if_missing must be a boolean")
         if initial_state is not None and not isinstance(initial_state, Mapping):
@@ -206,11 +213,12 @@ class VersionedAggregateCommandExecutor:
                     raise VersionConflictError(aggregate_id, context.expected_workflow_version, current_version)
                 current_state = aggregate.state if aggregate is not None else normalized_initial_state
                 try:
-                    next_state_raw = (
-                        effect(current_state, normalized_payload)
-                        if effect is not None
-                        else _default_effect(current_state, normalized_payload, command_type)
-                    )
+                    if transactional_effect is not None:
+                        next_state_raw = transactional_effect(transaction, current_state, normalized_payload)
+                    elif effect is not None:
+                        next_state_raw = effect(current_state, normalized_payload)
+                    else:
+                        next_state_raw = _default_effect(current_state, normalized_payload, command_type)
                 except CommandError:
                     raise
                 except Exception as exc:

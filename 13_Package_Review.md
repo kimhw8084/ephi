@@ -257,11 +257,14 @@ This candidate extends the existing F04 exact-value authority and active-leaf
 cutoff semantics with typed scoped economic-event identity, immutable claim
 and value revisions, attribution-only Episode/decision/action/contributor
 references, and a separate immutable reviewer revision bound to both exact
-claim and value revision identities. PostgreSQL persistence uses the existing
-O2 aggregate command executor and its receipt, audit and outbox transaction;
-migration 009 adds scoped economic-event uniqueness. There is no second value
-ledger or conversion path. Amounts remain exact `Decimal` values/JSON strings
-and summaries stay separate by recorded currency.
+claim and value revision identities. Migration 010 stores immutable monetary
+facts in `outcome_value_revision.amount NUMERIC`; aggregate JSONB has no
+duplicate value amounts. Revision insertion shares O2 aggregate CAS, receipt,
+audit and outbox in one transaction. Explicit `VOID` revisions have no amount,
+supersede the active leaf and remain queryable without predecessor
+resurrection. Canonical `query_identity` and `result_identity` bind filters
+and ordered as-known facts. There is no conversion path; summaries stay
+separate by recorded currency.
 
 The canonical `/ephi/outcomes` destination presents estimated opportunity,
 observed operational outcomes and independently reviewed benefit/net cost
@@ -272,11 +275,10 @@ candidate does not establish ROI/savings, company data/models/adapters,
 real-family qualification, W3–W5 pilot completion, Operations expansion,
 G12, Port Gate, release or Production.
 
-Candidate-bound browser evidence is in
-`evidence/u2/chg-205-u2.2-o7.1/qualification.json` with desktop 1440×900 and
-phone 390×844 screenshots. The browser qualification passed with no console,
-request-failure or HTTP-failure events; it also verifies that a later review
-remains pending at the earlier knowledge cutoff. The local persistence and
-browser server was PostgreSQL 17.11. The PostgreSQL 18.x lane is not qualified
-by this local result; the DSN-gated suite is added to CI's PostgreSQL 18.x
-job.
+The predecessor candidate-bound browser evidence remains in
+`evidence/u2/chg-205-u2.2-o7.1/qualification.json`. The repair continuation
+evidence is in `evidence/u2/chg-205-u2.2-o7.1/review-fix1/qualification.json`
+with desktop 1440×900 and phone 390×844 screenshots. Both viewport runs passed
+with no browser errors or horizontal overflow; the continuation visibly
+qualifies the VOID row and records PostgreSQL 18.6. The existing CI PostgreSQL
+18.x Outcomes lane remains intact.

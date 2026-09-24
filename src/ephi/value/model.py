@@ -53,6 +53,13 @@ class ReviewDecision(str, Enum):
     REJECTED = "REJECTED"
 
 
+class ValueRevisionKind(str, Enum):
+    """Whether a value revision contributes an amount or explicitly voids one."""
+
+    VALUE = "VALUE"
+    VOID = "VOID"
+
+
 def _optional_identity(value: object, field: str) -> str | None:
     if value is None:
         return None
@@ -330,7 +337,7 @@ class ValueEntry:
     scope: str
     group_id: str
     category: str
-    amount: Decimal
+    amount: Decimal | None
     currency: str
     event_at: datetime
     known_at: datetime
@@ -340,13 +347,25 @@ class ValueEntry:
     cost_model_identity: str | None = None
     rate_policy_identity: str | None = None
     maturity: EvidenceMaturity = EvidenceMaturity.OBSERVED
+    revision_kind: ValueRevisionKind = ValueRevisionKind.VALUE
 
     def __post_init__(self) -> None:
         object.__setattr__(self, "entry_id", validate_identity(self.entry_id, "entry_id"))
         object.__setattr__(self, "scope", validate_identity(self.scope, "scope"))
         object.__setattr__(self, "group_id", validate_identity(self.group_id, "group_id"))
         object.__setattr__(self, "category", validate_identity(self.category, "category"))
-        object.__setattr__(self, "amount", parse_amount(self.amount))
+        if not isinstance(self.revision_kind, ValueRevisionKind):
+            try:
+                object.__setattr__(self, "revision_kind", ValueRevisionKind(self.revision_kind))
+            except (TypeError, ValueError) as exc:
+                raise ValueValidationError("revision_kind must be VALUE or VOID") from exc
+        if self.revision_kind is ValueRevisionKind.VOID:
+            if self.amount is not None:
+                raise ValueValidationError("a void revision must not carry a monetary amount")
+        else:
+            if self.amount is None:
+                raise ValueValidationError("a value revision requires a monetary amount")
+            object.__setattr__(self, "amount", parse_amount(self.amount))
         object.__setattr__(self, "currency", validate_currency(self.currency))
         object.__setattr__(self, "event_at", validate_timestamp(self.event_at, "event_at"))
         object.__setattr__(self, "known_at", validate_timestamp(self.known_at, "known_at"))
@@ -375,7 +394,7 @@ class ValueEntry:
             "scope": self.scope,
             "group_id": self.group_id,
             "category": self.category,
-            "amount": str(self.amount),
+            "amount": str(self.amount) if self.amount is not None else None,
             "currency": self.currency,
             "event_at": self.event_at.isoformat(),
             "known_at": self.known_at.isoformat(),
@@ -385,6 +404,7 @@ class ValueEntry:
             "cost_model_identity": self.cost_model_identity,
             "rate_policy_identity": self.rate_policy_identity,
             "maturity": self.maturity.value,
+            "revision_kind": self.revision_kind.value,
         }
 
     def to_json(self) -> str:
@@ -400,7 +420,7 @@ class ValueEntry:
                 scope=value["scope"],
                 group_id=value["group_id"],
                 category=value["category"],
-                amount=value["amount"],
+                amount=value.get("amount"),
                 currency=value["currency"],
                 event_at=datetime.fromisoformat(value["event_at"].replace("Z", "+00:00")),
                 known_at=datetime.fromisoformat(value["known_at"].replace("Z", "+00:00")),
@@ -410,6 +430,7 @@ class ValueEntry:
                 cost_model_identity=value.get("cost_model_identity"),
                 rate_policy_identity=value.get("rate_policy_identity"),
                 maturity=value.get("maturity", EvidenceMaturity.OBSERVED.value),
+                revision_kind=value.get("revision_kind", ValueRevisionKind.VALUE.value),
             )
         except (KeyError, AttributeError, TypeError) as exc:
             raise ValueValidationError("serialized value entry is incomplete") from exc

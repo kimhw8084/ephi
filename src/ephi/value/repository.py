@@ -13,6 +13,7 @@ from .model import (
     SupersessionError,
     UnknownPredecessorError,
     ValueEntry,
+    ValueRevisionKind,
     ValueValidationError,
     validate_timestamp,
 )
@@ -49,6 +50,19 @@ class OutcomeAggregateStore(Protocol):
     ) -> tuple[Any, ...]:
         ...
 
+    def list_outcome_value_revisions(
+        self,
+        scope_key: str,
+        group_id: str,
+    ) -> tuple[dict[str, object], ...]:
+        ...
+
+    def get_outcome_group(self, scope: AccessScope, group_id: str) -> Any | None:
+        ...
+
+    def list_outcome_groups(self, scope: AccessScope, *, limit: int) -> tuple[Any, ...]:
+        ...
+
 
 class OutcomeAggregateRepository:
     """Read claim/value/review history from versioned O2 aggregate state.
@@ -65,17 +79,37 @@ class OutcomeAggregateRepository:
         self.store = store
 
     def get_group(self, scope: AccessScope, group_id: str) -> Any | None:
-        snapshot = self.store.get_aggregate(scope, self.aggregate_type, group_id)
+        coherent_read = getattr(self.store, "get_outcome_group", None)
+        snapshot = (
+            coherent_read(scope, group_id)
+            if callable(coherent_read)
+            else self.store.get_aggregate(scope, self.aggregate_type, group_id)
+        )
         if snapshot is not None and snapshot.state.get("group_id") != group_id:
             raise ValueValidationError("stored outcome aggregate identity is inconsistent")
-        return snapshot
+        return snapshot if snapshot is None or "value_entries" in snapshot.state else self._with_revisions(snapshot)
 
     def list_groups(self, scope: AccessScope, *, limit: int) -> tuple[Any, ...]:
-        snapshots = self.store.list_aggregates(scope, self.aggregate_type, limit=limit)
+        coherent_read = getattr(self.store, "list_outcome_groups", None)
+        snapshots = (
+            coherent_read(scope, limit=limit)
+            if callable(coherent_read)
+            else self.store.list_aggregates(scope, self.aggregate_type, limit=limit)
+        )
+        result = []
         for snapshot in snapshots:
             if snapshot.state.get("group_id") != snapshot.aggregate_id:
                 raise ValueValidationError("stored outcome aggregate identity is inconsistent")
-        return snapshots
+            result.append(snapshot if "value_entries" in snapshot.state else self._with_revisions(snapshot))
+        return tuple(result)
+
+    def _with_revisions(self, snapshot: Any) -> Any:
+        from dataclasses import replace
+
+        revisions = self.store.list_outcome_value_revisions(snapshot.scope_key, snapshot.aggregate_id)
+        state = dict(snapshot.state)
+        state["value_entries"] = list(revisions)
+        return replace(snapshot, state=state)
 
 
 class InMemoryValueRepository:
@@ -103,6 +137,8 @@ class InMemoryValueRepository:
             raise UnknownPredecessorError(f"unknown predecessor: {entry.supersedes}")
         if predecessor.identity_key != entry.identity_key:
             raise SupersessionConflictError("successor identity does not match predecessor")
+        if entry.revision_kind is ValueRevisionKind.VOID and predecessor.revision_kind is ValueRevisionKind.VOID:
+            raise SupersessionConflictError("a void revision cannot void an already voided value")
         if predecessor.known_at >= entry.known_at:
             raise SupersessionError("successor known_at must be later than its predecessor")
         if entry.supersedes in self._successors:

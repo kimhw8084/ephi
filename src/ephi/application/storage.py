@@ -80,6 +80,19 @@ class CommandUnitOfWork(Protocol):
         state_json: str,
     ) -> None: ...
 
+    def list_outcome_value_revisions(
+        self,
+        scope_key: str,
+        group_id: str,
+    ) -> tuple[Mapping[str, object], ...]: ...
+
+    def append_outcome_value_revision(
+        self,
+        scope_key: str,
+        group_id: str,
+        revision: Mapping[str, object],
+    ) -> None: ...
+
     def append_audit(
         self,
         *,

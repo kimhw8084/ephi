@@ -32,6 +32,8 @@ from ephi.value import (  # noqa: E402
     OutcomesService,
     ReviewDecision,
 )
+from ephi.value.model import ValueRevisionKind  # noqa: E402
+from ephi.value.repository import OutcomeAggregateRepository  # noqa: E402
 from ephi.value.service import (  # noqa: E402
     ESTIMATED_OPPORTUNITY,
     OBSERVED_OUTCOME,
@@ -89,6 +91,7 @@ def _seed_database(dsn: str) -> dict[str, object]:
         adapter.connection.execute(
             "TRUNCATE source_capability, source_snapshot, artifact_catalog, query_snapshot_row, query_snapshot, "
             "read_head, read_revision, outbox_event, audit_event, command_receipt, aggregate_state, "
+            "outcome_value_revision, "
             "o3_attention_projection CASCADE"
         )
         adapter.seed_aggregate(SCOPE, EPISODE_WORKFLOW_AGGREGATE_TYPE, "episode-o7-browser", {"work_state": "OPEN", "owner": None}, version=0)
@@ -122,8 +125,9 @@ def _seed_database(dsn: str) -> dict[str, object]:
         authorization = CurrentAuthorizationAuthority(lambda subject: current[subject])
         start = datetime.now(UTC).replace(second=0, microsecond=0) - timedelta(minutes=6)
         clock = _DemoClock(start)
+        repository = OutcomeAggregateRepository(adapter)
         service = OutcomesService(
-            __import__("ephi.value.repository", fromlist=["OutcomeAggregateRepository"]).OutcomeAggregateRepository(adapter),
+            repository,
             VersionedAggregateCommandExecutor(adapter, authorization),
             authorization,
             clock=clock,
@@ -161,7 +165,7 @@ def _seed_database(dsn: str) -> dict[str, object]:
                 coverage_denominator=10,
             )
             latest_known = clock.value
-            entry_id = result.state["value_entries"][0]["entry_id"]
+            entry_id = repository.get_group(SCOPE, result.aggregate_id).state["value_entries"][0]["entry_id"]
             return result.state["group_id"], entry_id, result.aggregate_version
 
         # This claim is reviewed later. Its intermediate cutoff remains a
@@ -253,7 +257,7 @@ def _seed_database(dsn: str) -> dict[str, object]:
         state_facts["period_moving_correction"] = {
             "group_id": correction_group,
             "original_entry": original_entry,
-            "corrected_entry": correction.state["value_entries"][-1]["entry_id"],
+            "corrected_entry": repository.get_group(SCOPE, correction_group).state["value_entries"][-1]["entry_id"],
             "cutoff_before_correction": cutoff_before_correction.isoformat(),
             "before_value": str(next(row.value.amount for row in before.rows if row.group_id == correction_group)),
             "after_value": str(next(row.value.amount for row in after.rows if row.group_id == correction_group)),
@@ -276,6 +280,35 @@ def _seed_database(dsn: str) -> dict[str, object]:
             "one_group_count": sum(row.economic_event_key == "synthetic-shared-event-once" for row in after.rows),
         }
         state_facts["currency_summaries"] = {item.currency: str(item.estimated_opportunity) for item in after.summaries}
+        void_group, void_entry, void_version = submit(
+            "synthetic-void-value", VALIDATED_BENEFIT, "9.50", "USD",
+            EvidenceMaturity.OBSERVED, evidence_ids=("synthetic-void-evidence",),
+            event_at=start - timedelta(days=3),
+        )
+        before_void_cutoff = clock.value
+        clock.advance()
+        void_result = service.void_value_revision(
+            CommandContext("o7-demo-void-value", claimant, SCOPE, void_version),
+            group_id=void_group,
+            value_entry_id=void_entry,
+        )
+        before_void = service.query(
+            reviewer, SCOPE, event_period=query_period, knowledge_cutoff=before_void_cutoff,
+        )
+        after_void = service.query(
+            reviewer, SCOPE, event_period=query_period, knowledge_cutoff=clock.value,
+        )
+        state_facts["void_revision"] = {
+            "group_id": void_group,
+            "value_entry_id": void_entry,
+            "void_revision_id": repository.get_group(SCOPE, void_group).state["value_entries"][-1]["entry_id"],
+            "before_amount": str(next(row.value.amount for row in before_void.rows if row.group_id == void_group)),
+            "before_state": next(row.state for row in before_void.rows if row.group_id == void_group),
+            "after_amount": next(row.value.amount for row in after_void.rows if row.group_id == void_group),
+            "after_state": next(row.state for row in after_void.rows if row.group_id == void_group),
+            "revision_kind": ValueRevisionKind.VOID.value,
+            "summary_after": str(next(item.validated_net for item in after_void.summaries if item.currency == "USD")),
+        }
         return {
             "postgres_version": version,
             "scope_id": SCOPE.scope_id,
@@ -340,6 +373,8 @@ def _browser_view(base: str, *, width: int, height: int, artifacts: Path, review
             "VALIDATED",
             "ZERO",
             "NEGATIVE",
+            "VOID",
+            "VOID · no amount (USD)",
             "RESTATED",
             "synthetic-period-moving-correction",
             "synthetic-shared-event-once",

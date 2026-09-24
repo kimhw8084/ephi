@@ -30,6 +30,7 @@ from .model import (
     ReviewRevision,
     SupersessionConflictError,
     ValueEntry,
+    ValueRevisionKind,
     ValueValidationError,
     validate_currency,
     validate_identity,
@@ -99,6 +100,7 @@ class ValueService:
             and (group_id is None or entry.group_id == group_id)
             and (category is None or entry.category == category)
             and (currency is None or entry.currency == currency)
+            and entry.amount is not None
         ]
         if event_period is not None:
             selected = [entry for entry in selected if event_period.contains(entry.event_at)]
@@ -106,7 +108,7 @@ class ValueService:
         currencies = {entry.currency for entry in selected}
         if len(currencies) > 1:
             raise MixedCurrencyError("mixed-currency aggregation is unsupported")
-        return sum((entry.amount for entry in selected), Decimal("0"))
+        return _exact_sum(entry.amount for entry in selected if entry.amount is not None)
 
     def total(self, **kwargs: object) -> Decimal:
         """Concise alias for the exact Decimal aggregate query."""
@@ -155,6 +157,8 @@ class OutcomesQueryResult:
     event_period: EventPeriod
     restated: bool
     excluded_count: int
+    query_identity: str
+    result_identity: str
     reason: str | None = None
 
 
@@ -170,6 +174,106 @@ def _command_record_id(kind: str, context: CommandContext) -> str:
 
 def _evidence_identity(evidence_ids: tuple[str, ...]) -> str:
     return hashlib.sha256(json.dumps(list(evidence_ids), separators=(",", ":")).encode("utf-8")).hexdigest()
+
+
+def _canonical_identity(kind: str, document: Mapping[str, object]) -> str:
+    encoded = json.dumps(document, sort_keys=True, separators=(",", ":"), ensure_ascii=False, allow_nan=False)
+    return hashlib.sha256(f"ephi-outcomes-{kind}-v1\0{encoded}".encode("utf-8")).hexdigest()
+
+
+def _timestamp_identity(value: datetime) -> str:
+    return value.astimezone(timezone.utc).isoformat(timespec="microseconds").replace("+00:00", "Z")
+
+
+def _exact_sum(values: Iterable[Decimal]) -> Decimal:
+    """Add finite Decimals as integer coefficients, independent of context precision."""
+
+    numbers = tuple(values)
+    if not numbers:
+        return Decimal("0")
+    exponent = min(value.as_tuple().exponent for value in numbers)
+    total = 0
+    for value in numbers:
+        parts = value.as_tuple()
+        coefficient = int("".join(str(digit) for digit in parts.digits) or "0")
+        if parts.sign:
+            coefficient = -coefficient
+        total += coefficient * (10 ** (parts.exponent - exponent))
+    sign = 1 if total < 0 else 0
+    digits = tuple(int(digit) for digit in str(abs(total)))
+    return Decimal((sign, digits, exponent))
+
+
+def _revision_rows(transaction: object, scope_key: str, group_id: str) -> tuple[ValueEntry, ...]:
+    loader = getattr(transaction, "list_outcome_value_revisions", None)
+    if not callable(loader):
+        raise ValueValidationError("command store does not support normalized outcome value revisions")
+    return tuple(ValueEntry.from_dict(item) for item in loader(scope_key, group_id))
+
+
+def _append_revision(transaction: object, entry: ValueEntry) -> None:
+    writer = getattr(transaction, "append_outcome_value_revision", None)
+    if not callable(writer):
+        raise ValueValidationError("command store does not support normalized outcome value revisions")
+    writer(entry.scope, entry.group_id, entry.as_dict())
+
+
+def _result_facts(rows: Iterable[OutcomeRecord]) -> list[dict[str, object]]:
+    return [
+        {
+            "group_id": row.group_id,
+            "economic_event_key": row.economic_event_key,
+            "value": row.value.as_dict(),
+            "claim": row.claim.as_dict(),
+            "review": row.review.as_dict() if row.review is not None else None,
+            "state": row.state,
+            "amount_state": row.amount_state,
+            "corrected": row.corrected,
+            "pending_age_seconds": row.pending_age_seconds,
+        }
+        for row in rows
+    ]
+
+
+def _summary_facts(summaries: Iterable[OutcomeCurrencySummary]) -> list[dict[str, object]]:
+    return [
+        {
+            "currency": summary.currency,
+            "estimated_opportunity": str(summary.estimated_opportunity),
+            "observed_operational_outcome": str(summary.observed_operational_outcome),
+            "validated_benefit": str(summary.validated_benefit),
+            "validated_operating_cost": str(summary.validated_operating_cost),
+            "validated_net": str(summary.validated_net),
+            "claim_group_count": summary.claim_group_count,
+            "coverage_group_count": summary.coverage_group_count,
+            "pending_record_count": summary.pending_record_count,
+            "validated_record_count": summary.validated_record_count,
+        }
+        for summary in summaries
+    ]
+
+
+def _outcomes_result_identity(
+    query_identity: str,
+    *,
+    state: str,
+    rows: Iterable[OutcomeRecord],
+    summaries: Iterable[OutcomeCurrencySummary],
+    currencies: Iterable[str],
+    restated: bool,
+    excluded_count: int,
+    reason: str | None = None,
+) -> str:
+    return _canonical_identity("result", {
+        "query_identity": query_identity,
+        "state": state,
+        "rows": _result_facts(rows),
+        "summaries": _summary_facts(summaries),
+        "currencies": list(currencies),
+        "restated": restated,
+        "excluded_count": excluded_count,
+        "reason": reason,
+    })
 
 
 def _as_list(state: Mapping[str, object], key: str) -> tuple[object, ...]:
@@ -294,7 +398,7 @@ class OutcomesService:
             "coverage_denominator": coverage_denominator,
         }
 
-        def create(_current: Mapping[str, object], raw: Mapping[str, object]) -> Mapping[str, object]:
+        def create(transaction: object, _current: Mapping[str, object], raw: Mapping[str, object]) -> Mapping[str, object]:
             now = _server_now(self.clock)
             entry = ValueEntry(
                 entry_id, context.scope.canonical_key, identity.group_id, category,
@@ -306,6 +410,7 @@ class OutcomesService:
                 owner, event_at, now, evidence, attribution, coverage_numerator,
                 coverage_denominator,
             )
+            _append_revision(transaction, entry)
             return {
                 "schema_version": 1,
                 "group_id": identity.group_id,
@@ -313,7 +418,6 @@ class OutcomesService:
                 "scope_key": context.scope.canonical_key,
                 "created_by": context.principal.subject,
                 "created_at": now.isoformat(),
-                "value_entries": [entry.as_dict()],
                 "claim_revisions": [claim.as_dict()],
                 "review_revisions": [],
             }
@@ -325,7 +429,7 @@ class OutcomesService:
             aggregate_id=identity.group_id,
             payload=payload,
             required_capability=VALUE_SUBMIT_CAPABILITY,
-            effect=create,
+            transactional_effect=create,
             create_if_missing=True,
             initial_state={"group_id": identity.group_id, "economic_event_key": event_key},
         )
@@ -427,11 +531,11 @@ class OutcomesService:
             "coverage_denominator": coverage_denominator,
         }
 
-        def append(current: Mapping[str, object], raw: Mapping[str, object]) -> Mapping[str, object]:
+        def append(transaction: object, current: Mapping[str, object], raw: Mapping[str, object]) -> Mapping[str, object]:
             if current.get("group_id") != group_id:
                 raise ValueValidationError("stored outcome aggregate identity is inconsistent")
             now = _server_now(self.clock)
-            current_values = _value_entries(current)
+            current_values = _revision_rows(transaction, context.scope.canonical_key, group_id)
             current_claims = _claim_revisions(current)
             repo = InMemoryValueRepository(current_values)
             current_leaves = repo.active_leaves_as_of(now)
@@ -453,6 +557,7 @@ class OutcomesService:
                 evidence_hash, cost_model_identity, rate_policy_identity, maturity,
             )
             repo.append(entry)
+            _append_revision(transaction, entry)
             claim_value = ClaimRevision(
                 claim_id, group_id, value_id, context.principal.subject,
                 owner, event_at, now, evidence, attribution, coverage_numerator,
@@ -467,7 +572,6 @@ class OutcomesService:
             elif supersedes is not None:
                 raise ValueValidationError("a corrected value requires a linked claim correction")
             next_state = dict(current)
-            next_state["value_entries"] = [*current.get("value_entries", []), entry.as_dict()]
             next_state["claim_revisions"] = [*current.get("claim_revisions", []), claim_value.as_dict()]
             return next_state
 
@@ -478,7 +582,99 @@ class OutcomesService:
             aggregate_id=group_id,
             payload=payload,
             required_capability=VALUE_SUBMIT_CAPABILITY,
-            effect=append,
+            transactional_effect=append,
+        )
+
+    def void_value_revision(
+        self,
+        context: CommandContext,
+        *,
+        group_id: str,
+        value_entry_id: str,
+    ) -> CommandResult:
+        """Append a non-monetary revision that voids the current value leaf."""
+
+        self.current_authorization.authorize(context.principal, context.scope, VALUE_SUBMIT_CAPABILITY)
+        group_id = validate_identity(group_id, "group_id")
+        value_entry_id = validate_identity(value_entry_id, "value_entry_id")
+        void_id = _command_record_id("value-void", context)
+        void_claim_id = _command_record_id("claim-void", context)
+        payload = {"group_id": group_id, "value_entry_id": value_entry_id}
+
+        def append_void(transaction: object, current: Mapping[str, object], _raw: Mapping[str, object]) -> Mapping[str, object]:
+            if current.get("group_id") != group_id:
+                raise ValueValidationError("stored outcome aggregate identity is inconsistent")
+            now = _server_now(self.clock)
+            values = _revision_rows(transaction, context.scope.canonical_key, group_id)
+            repo = InMemoryValueRepository(values)
+            target = next((item for item in values if item.entry_id == value_entry_id), None)
+            current_leaf = next(
+                (
+                    item for item in repo.active_leaves_as_of(now)
+                    if item.category == (target.category if target is not None else None)
+                    and item.currency == (target.currency if target is not None else None)
+                ),
+                None,
+            )
+            if target is None:
+                raise AggregateNotFoundError("outcome value revision is not available in the requested scope")
+            if target.revision_kind is ValueRevisionKind.VOID or current_leaf is None or current_leaf.entry_id != target.entry_id:
+                raise SupersessionConflictError("only the current active value revision can be voided")
+            if target.claim_revision_id is None:
+                raise ValueValidationError("void target has no immutable claim identity")
+            prior_claim = next(
+                (item for item in _claim_revisions(current) if item.claim_revision_id == target.claim_revision_id),
+                None,
+            )
+            if prior_claim is None or prior_claim.known_at >= now:
+                raise ValueValidationError("void target has no later-known claim predecessor")
+            if any(item.supersedes == prior_claim.claim_revision_id for item in _claim_revisions(current)):
+                raise ValueValidationError("a claim revision cannot have branching successors")
+            void_claim = ClaimRevision(
+                void_claim_id,
+                group_id,
+                void_id,
+                context.principal.subject,
+                prior_claim.owner,
+                target.event_at,
+                now,
+                prior_claim.evidence_ids,
+                prior_claim.attribution,
+                prior_claim.coverage_numerator,
+                prior_claim.coverage_denominator,
+                prior_claim.claim_revision_id,
+            )
+            void = ValueEntry(
+                void_id,
+                target.scope,
+                target.group_id,
+                target.category,
+                None,
+                target.currency,
+                target.event_at,
+                now,
+                target.entry_id,
+                void_claim_id,
+                target.evidence_identity,
+                target.cost_model_identity,
+                target.rate_policy_identity,
+                target.maturity,
+                ValueRevisionKind.VOID,
+            )
+            repo.append(void)
+            _append_revision(transaction, void)
+            next_state = dict(current)
+            next_state["claim_revisions"] = [*current.get("claim_revisions", []), void_claim.as_dict()]
+            return next_state
+
+        return self.commands.execute(
+            context,
+            command_type="VoidOutcomeValueRevision",
+            aggregate_type=OUTCOME_GROUP_AGGREGATE,
+            aggregate_id=group_id,
+            payload=payload,
+            required_capability=VALUE_SUBMIT_CAPABILITY,
+            transactional_effect=append_void,
         )
 
     def review_value(
@@ -518,14 +714,16 @@ class OutcomesService:
             "group_id": group_id,
         }
 
-        def append_review(current: Mapping[str, object], raw: Mapping[str, object]) -> Mapping[str, object]:
+        def append_review(transaction: object, current: Mapping[str, object], raw: Mapping[str, object]) -> Mapping[str, object]:
             if current.get("group_id") != group_id:
                 raise ValueValidationError("stored outcome aggregate identity is inconsistent")
-            current_values = _value_entries(current)
+            current_values = _revision_rows(transaction, context.scope.canonical_key, group_id)
             current_target = next((item for item in current_values if item.entry_id == value_entry_id), None)
             if current_target is None:
                 raise AggregateNotFoundError("outcome value revision is not available in the requested scope")
-            current_claim = next((item for item in _claim_revisions(current) if item.value_entry_id == value_entry_id), None)
+            if current_target.revision_kind is ValueRevisionKind.VOID:
+                raise SupersessionConflictError("a void revision cannot be reviewed")
+            current_claim = next((item for item in _claim_revisions(current) if item.claim_revision_id == current_target.claim_revision_id), None)
             if current_claim is None:
                 raise ValueValidationError("value revision has no immutable claim identity")
             if current_target not in InMemoryValueRepository(current_values).active_leaves_as_of(cutoff):
@@ -566,7 +764,7 @@ class OutcomesService:
             aggregate_id=group_id,
             payload=payload,
             required_capability=VALUE_VALIDATE_CAPABILITY,
-            effect=append_review,
+            transactional_effect=append_review,
         )
 
     def query(
@@ -589,14 +787,32 @@ class OutcomesService:
             raise ValueValidationError("knowledge cutoff cannot be in the future")
         if currency is not None:
             currency = validate_currency(currency)
-        allowed_maturities = {"ALL", "PENDING", "OBSERVED", "OBSERVED_NOT_VALIDATED", "VALIDATED", "REJECTED", "CENSORED", "INSUFFICIENT_EVIDENCE", "ZERO", "NEGATIVE"}
+        allowed_maturities = {"ALL", "PENDING", "OBSERVED", "OBSERVED_NOT_VALIDATED", "VALIDATED", "REJECTED", "CENSORED", "INSUFFICIENT_EVIDENCE", "ZERO", "NEGATIVE", "VOID"}
         if maturity is not None:
             maturity = validate_identity(maturity, "maturity").upper()
             if maturity not in allowed_maturities:
                 raise ValueValidationError("unsupported evidence-maturity filter")
+        query_identity = _canonical_identity("query", {
+            "scope": scope.canonical_key,
+            "event_period": {
+                "start": _timestamp_identity(event_period.start),
+                "end": _timestamp_identity(event_period.end),
+            },
+            "knowledge_cutoff": _timestamp_identity(cutoff),
+            "currency": currency,
+            "maturity": maturity or "ALL",
+        })
         snapshots = self.repository.list_groups(scope, limit=MAX_OUTCOME_GROUPS + 1)
         if len(snapshots) > MAX_OUTCOME_GROUPS:
-            return OutcomesQueryResult("PARTIAL", (), (), (), cutoff, event_period, False, 0, "OUTCOME_QUERY_LIMIT_EXCEEDED")
+            reason = "OUTCOME_QUERY_LIMIT_EXCEEDED"
+            result_identity = _outcomes_result_identity(
+                query_identity, state="PARTIAL", rows=(), summaries=(), currencies=(),
+                restated=False, excluded_count=0, reason=reason,
+            )
+            return OutcomesQueryResult(
+                "PARTIAL", (), (), (), cutoff, event_period, False, 0,
+                query_identity, result_identity, reason,
+            )
 
         rows: list[OutcomeRecord] = []
         restated = False
@@ -613,7 +829,7 @@ class OutcomesService:
             leaves = value_repo.active_leaves_as_of(cutoff)
             claims = _claim_revisions(state)
             known_claims = tuple(item for item in claims if item.known_at <= cutoff)
-            claim_by_value = {item.value_entry_id: item for item in known_claims}
+            claim_by_revision = {item.claim_revision_id: item for item in known_claims}
             reviews = _review_revisions(state)
             review_leaves = _append_only_leaf(
                 reviews, id_field="review_id", supersedes_field="supersedes",
@@ -628,7 +844,7 @@ class OutcomesService:
             for leaf in leaves:
                 if leaf.group_id != group_id:
                     continue
-                claim = claim_by_value.get(leaf.entry_id)
+                claim = claim_by_revision.get(leaf.claim_revision_id)
                 if claim is None:
                     excluded_count += 1
                     continue
@@ -665,7 +881,12 @@ class OutcomesService:
                 ):
                     review = None
                 state_label = self._state_label(leaf, review)
-                amount_state = "ZERO" if leaf.amount == 0 else "NEGATIVE" if leaf.amount < 0 else "POSITIVE"
+                amount_state = (
+                    "VOID" if leaf.revision_kind is ValueRevisionKind.VOID
+                    else "ZERO" if leaf.amount == 0
+                    else "NEGATIVE" if leaf.amount is not None and leaf.amount < 0
+                    else "POSITIVE"
+                )
                 if maturity is not None and maturity != "ALL":
                     matches = {
                         state_label,
@@ -681,15 +902,27 @@ class OutcomesService:
                     state_label, amount_state, leaf.supersedes is not None, age,
                 ))
 
+        rows.sort(key=lambda row: (
+            row.group_id, row.value.category, row.value.currency,
+            _timestamp_identity(row.value.event_at), _timestamp_identity(row.value.known_at),
+            row.value.entry_id,
+        ))
         summaries = self._summaries(rows)
+        state = "READY" if rows else "EMPTY"
+        sorted_currencies = tuple(sorted(all_currencies))
+        result_identity = _outcomes_result_identity(
+            query_identity, state=state, rows=rows, summaries=summaries,
+            currencies=sorted_currencies, restated=restated, excluded_count=excluded_count,
+        )
         return OutcomesQueryResult(
-            "READY" if rows else "EMPTY", tuple(rows), summaries,
-            tuple(sorted(all_currencies)), cutoff, event_period, restated,
-            excluded_count,
+            state, tuple(rows), summaries, sorted_currencies, cutoff, event_period,
+            restated, excluded_count, query_identity, result_identity,
         )
 
     @staticmethod
     def _state_label(value: ValueEntry, review: ReviewRevision | None) -> str:
+        if value.revision_kind is ValueRevisionKind.VOID:
+            return "VOID"
         if value.maturity is EvidenceMaturity.REJECTED:
             return "REJECTED"
         if value.maturity is EvidenceMaturity.CENSORED:
@@ -710,15 +943,16 @@ class OutcomesService:
         summaries = []
         for currency in currencies:
             current = [row for row in rows if row.value.currency == currency]
-            estimated = sum((row.value.amount for row in current if row.value.category == ESTIMATED_OPPORTUNITY), Decimal("0"))
-            observed = sum((row.value.amount for row in current if row.value.category == OBSERVED_OUTCOME and row.value.maturity is EvidenceMaturity.OBSERVED), Decimal("0"))
-            benefit = sum((row.value.amount for row in current if row.value.category == VALIDATED_BENEFIT and row.state == "VALIDATED"), Decimal("0"))
-            cost = sum((row.value.amount for row in current if row.value.category == OPERATING_COST and row.state == "VALIDATED"), Decimal("0"))
+            contributing = [row for row in current if row.value.amount is not None]
+            estimated = _exact_sum(row.value.amount for row in contributing if row.value.category == ESTIMATED_OPPORTUNITY and row.value.amount is not None)
+            observed = _exact_sum(row.value.amount for row in contributing if row.value.category == OBSERVED_OUTCOME and row.value.maturity is EvidenceMaturity.OBSERVED and row.value.amount is not None)
+            benefit = _exact_sum(row.value.amount for row in contributing if row.value.category == VALIDATED_BENEFIT and row.state == "VALIDATED" and row.value.amount is not None)
+            cost = _exact_sum(row.value.amount for row in contributing if row.value.category == OPERATING_COST and row.state == "VALIDATED" and row.value.amount is not None)
             summaries.append(OutcomeCurrencySummary(
-                currency, estimated, observed, benefit, cost, benefit - cost,
-                len({row.group_id for row in current}),
-                len({row.group_id for row in current if row.claim.coverage_denominator is not None}),
-                sum(row.state == "PENDING" for row in current),
-                sum(row.state == "VALIDATED" for row in current),
+                currency, estimated, observed, benefit, cost, _exact_sum((benefit, -cost)),
+                len({row.group_id for row in contributing}),
+                len({row.group_id for row in contributing if row.claim.coverage_denominator is not None}),
+                sum(row.state == "PENDING" for row in contributing),
+                sum(row.state == "VALIDATED" for row in contributing),
             ))
         return tuple(summaries)

@@ -1476,6 +1476,8 @@ def _outcomes_parse_datetime(value: object, field: str) -> datetime:
 
 
 def _outcomes_amount(value: object, currency: str) -> str:
+    if value is None:
+        return f"VOID · no amount ({currency})"
     return f"{value} {currency}"
 
 
@@ -1503,6 +1505,7 @@ async def _render_outcomes_content(composition: EphiUiComposition) -> None:
                     "REJECTED": "Rejected",
                     "CENSORED": "Censored",
                     "INSUFFICIENT_EVIDENCE": "Insufficient evidence",
+                    "VOID": "Voided value revisions",
                     "ZERO": "Zero outcomes",
                     "NEGATIVE": "Negative outcomes",
                 },
@@ -1683,7 +1686,8 @@ async def _render_outcomes_content(composition: EphiUiComposition) -> None:
                                 ui.label(f"Linked Episodes {', '.join(record.claim.attribution.episode_ids) or 'none'} · decisions {', '.join(record.claim.attribution.decision_ids) or 'none'} · actions {', '.join(record.claim.attribution.action_ids) or 'none'}")
                                 ui.label(f"Contributors {', '.join(record.claim.attribution.contributor_ids) or 'none'} · affected material scope {', '.join(record.claim.attribution.material_scope) or 'not supplied'}")
                                 ui.label(f"Coverage numerator / denominator {record.claim.coverage_numerator if record.claim.coverage_numerator is not None else 'not supplied'} / {record.claim.coverage_denominator if record.claim.coverage_denominator is not None else 'not supplied'}")
-                                ui.label(f"Correction identity: supersedes {record.value.supersedes or 'none'} · state {'corrected active leaf' if record.corrected else 'original active leaf'}")
+                                revision_state = "active void leaf; predecessor is not restored" if record.value.revision_kind.value == "VOID" else "corrected active leaf" if record.corrected else "original active leaf"
+                                ui.label(f"Correction identity: supersedes {record.value.supersedes or 'none'} · state {revision_state}")
                                 ui.label("Deduplication: the economic event key identifies one group. Episode, decision, action and contributor links are deduplicated references and never multiply the group amount.")
                                 ui.label("Cutoff rule: select the active value and review leaves known by the displayed cutoff, then filter by event period. Later-known corrections and approvals remain excluded from earlier AS_KNOWN results.")
                                 if record.review is not None:
@@ -1694,6 +1698,7 @@ async def _render_outcomes_content(composition: EphiUiComposition) -> None:
                                 may_review = (
                                     principal.has_capability("value.validate")
                                     and principal.subject != record.claim.claimant
+                                    and record.value.revision_kind.value == "VALUE"
                                     and record.value.category in {"benefit", "operating_cost"}
                                     and record.value.maturity.value == "OBSERVED"
                                 )
@@ -1740,7 +1745,13 @@ async def _render_outcomes_content(composition: EphiUiComposition) -> None:
                                     review_button = _ensure_outcomes_action_target(ActionButton("Review evidence and sign off", intent=ButtonIntent.SECONDARY, on_click=review_dialog.open))
                                     review_action_buttons.append(review_button)
                                 elif record.value.category in {"benefit", "operating_cost"}:
-                                    message = "Self-validation is blocked for the claimant." if principal.subject == record.claim.claimant else "Current reviewer authorization or observed evidence is required for sign-off."
+                                    message = (
+                                        "Voided revisions remain in history and cannot be reviewed."
+                                        if record.value.revision_kind.value == "VOID"
+                                        else "Self-validation is blocked for the claimant."
+                                        if principal.subject == record.claim.claimant
+                                        else "Current reviewer authorization or observed evidence is required for sign-off."
+                                    )
                                     ui.label(message).classes("ephi-o10-truth-note")
 
                     selected_entry.on_value_change(render_detail)
