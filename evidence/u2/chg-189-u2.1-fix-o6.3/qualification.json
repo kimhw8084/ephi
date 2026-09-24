@@ -1,0 +1,490 @@
+{
+  "candidate": {
+    "branch": "codex/ephi-u2-investigation-rca-workspace-fix1",
+    "parent": "2bb59169052c35b08b0adf0ea06aed51bd200114",
+    "r1_audit_evidence_commit": "214d8a63133378901f40250feb12e3315cc6792b",
+    "r1_fabric_evidence_ref": "codex-fabric/evidence/ephi/ephi-u2-investigation-rca-workspace-v1@214d8a63133378901f40250feb12e3315cc6792b",
+    "r1_work_head": "2bb59169052c35b08b0adf0ea06aed51bd200114",
+    "source_implementation_head": "f2d89196afc38af95837a58c1f628894f494f9e9",
+    "tree": "ed15995e2a6064a5e86b0cd5b9eedf23ef92c192",
+    "work_head": "0f378d2de9aadb0ff2fec1429152afe5b51d0152"
+  },
+  "changed_source_paths": [
+    "src/ephi/application/investigation.py",
+    "src/ephi/application/rca.py",
+    "tests/test_o6_rca.py",
+    "tests/test_o6_rca_postgresql.py"
+  ],
+  "cycle_coherence_matrix": [
+    {
+      "case": "same active cycle; O5 workflow version advances after RequestCheck",
+      "regression": "test_same_active_cycle_accepts_newer_o5_version_without_rebinding_profile_cycle",
+      "result": "READY; planner uses current version and REQUESTED state; cycle identity remains the profile cycle"
+    },
+    {
+      "case": "active cycle reopened while immutable profile names prior cycle",
+      "regression": "test_reopened_cycle_marks_profile_stale_and_does_not_run_planner_history_or_rca",
+      "result": "profile/planner/history/RCA marked STALE with EXACT_VIEW_CYCLE_MISMATCH; no planner/history/RCA call; old facts absent from response"
+    },
+    {
+      "case": "load current RCA facts against mismatched active cycle",
+      "regression": "test_reopened_cycle_marks_profile_stale_and_does_not_run_planner_history_or_rca",
+      "result": "CoherentReadConflictError before RCA composition"
+    },
+    {
+      "case": "materialization worker after active cycle reopen",
+      "regression": "test_reopened_cycle_marks_job_stale_without_artifact_publication",
+      "result": "job/result STALE; no artifact publication or current read"
+    },
+    {
+      "case": "old-cycle check/evidence rebinding",
+      "regressions": [
+        "test_reopened_cycle_marks_profile_stale_and_does_not_run_planner_history_or_rca",
+        "test_reopened_cycle_marks_job_stale_without_artifact_publication"
+      ],
+      "result": "no cycle rewrite; downstream plan/history/RCA do not execute on mismatch"
+    }
+  ],
+  "flagship_browser": {
+    "active_cycle_id": "synthetic-cd-cycle-1",
+    "actual_ephi_server": true,
+    "browser_screenshots": [
+      {
+        "path": "screenshots/flagship/attention-desktop-1440x900.png",
+        "sha256": "6cd0ad334e6723ddf600b6932d000f14315030ffe6ec43229038f68f8295eed1"
+      },
+      {
+        "path": "screenshots/flagship/episode-desktop-1440x900.png",
+        "sha256": "abac1a45c1602b40560cb83d769142ecf4c4abeb80e32bca7b5ecb0d6b928263"
+      },
+      {
+        "path": "screenshots/flagship/episode-desktop-after-check-1440x900.png",
+        "sha256": "acbf0dab3b004c3d70fbe981a91c38a80edeb4b3d9605bf78abad92cae20975f"
+      },
+      {
+        "path": "screenshots/flagship/episode-desktop-work-after-check-1440x900.png",
+        "sha256": "764fd8e3e6abbd8beaa9b7b9042a661f6715ed427e2fa37a2f96341e75d3f451"
+      },
+      {
+        "path": "screenshots/flagship/episode-mobile-390x844.png",
+        "sha256": "6ed7eaaca1a285fbbb9e4ccf42ada6e63c7c87a8ac74829ea8ae4110fc9b57dd"
+      },
+      {
+        "path": "screenshots/o10/attention-1024x768.png",
+        "sha256": "e10d4d24ec9084ee715f1cf73bbd0e6e0940e9cd31edb41393ddcd2acb87b0fa"
+      },
+      {
+        "path": "screenshots/o10/attention-1440x900.png",
+        "sha256": "b8d7dec3175e64f164eeeed076054829a89251889cad041ff4122b85de4fb324"
+      },
+      {
+        "path": "screenshots/o10/attention-320x800.png",
+        "sha256": "0e43b7428cbfde03237ea910556fde1b4f1c45e5f5fd65a40ff88115fcd0259e"
+      },
+      {
+        "path": "screenshots/o10/attention-390x844.png",
+        "sha256": "0eaf9399b73af838a88e7f043d072547d9048b34e7d4018d51dfa683ff549110"
+      },
+      {
+        "path": "screenshots/o10/attention-768x1024.png",
+        "sha256": "b3b5bb5946f4ef32907ff01d3cd7ffe308cb392e7ec04944d04dfbee781734bc"
+      },
+      {
+        "path": "screenshots/o10/attention-failure.png",
+        "sha256": "275e09a9b9baf5dde6a7939756f90ac72f494ab1293388d944299a761c8a0180"
+      },
+      {
+        "path": "screenshots/o10/attention-no-matching-rows-1440x900.png",
+        "sha256": "a5ffad7bc70a030d4da2a7ecd383f4c6a4063b66d2d5b0ad4bc3f1766f26ae7f"
+      },
+      {
+        "path": "screenshots/o10/attention-no-permitted-rows.png",
+        "sha256": "6ce1e9074dbf53dad714b2455f8054a5c525fb881071ce30dd3fff0acb34ea0f"
+      },
+      {
+        "path": "screenshots/o10/attention-offline.png",
+        "sha256": "314678b7bde2ad56b19134ba5fc56709d8ec138228bf5651b29be88ecab168f0"
+      },
+      {
+        "path": "screenshots/o10/attention-permission.png",
+        "sha256": "dbfe5026fe50e94933fbfb87829761c090c458e927c08c68d1d3138ff7fe2887"
+      },
+      {
+        "path": "screenshots/o10/attention-populated-1440x900.png",
+        "sha256": "b8d7dec3175e64f164eeeed076054829a89251889cad041ff4122b85de4fb324"
+      },
+      {
+        "path": "screenshots/o10/attention-stale.png",
+        "sha256": "11325811fc04416c3849c174897a94119c5a9d20459b7898372917675808d4cc"
+      },
+      {
+        "path": "screenshots/o10/episode-1024x768.png",
+        "sha256": "3d17e188d00ef022b111709fefdf00fd3a24944465c2fc4c060e3eaae4e333ba"
+      },
+      {
+        "path": "screenshots/o10/episode-1440x900.png",
+        "sha256": "65a1b2f732e4cee44e3f594566af6af8bee02d840fe73ead8fe9333f78401eac"
+      },
+      {
+        "path": "screenshots/o10/episode-320x800.png",
+        "sha256": "b0c5f76e461f68042096c8098788b6c490f844248c0059fe10b4698be396d59e"
+      },
+      {
+        "path": "screenshots/o10/episode-390x844.png",
+        "sha256": "9d99f620259e0d3b8e11fdbc9765a3d4ae271ea025718a530f02511487e2b394"
+      },
+      {
+        "path": "screenshots/o10/episode-768x1024.png",
+        "sha256": "86b36596449bc7e222264e6ba33a9bca32150365a0adab3b37e618b2b9b214e3"
+      },
+      {
+        "path": "screenshots/o10/episode-capability-states.png",
+        "sha256": "8c99703f3b1a4dc9477dd6b98f04d60b721bfa03bb871fc3842879cd9aa4826d"
+      },
+      {
+        "path": "screenshots/o10/episode-claimed-1440x900.png",
+        "sha256": "68a868b85eb312111d5ade88316815afb42752e380f0088e7b7464c608f60349"
+      },
+      {
+        "path": "screenshots/o10/episode-coherent-conflict.png",
+        "sha256": "cba20fdc445f5dcbc460b9f80b4d21b6f84f0daffd181321b9a20c6657662035"
+      },
+      {
+        "path": "screenshots/o10/episode-no-selection-1440x900.png",
+        "sha256": "0d287d426735cf27af84d2cdc785ef6c6dadd8bdcb75e8c64fc8a2bad5c73de6"
+      },
+      {
+        "path": "screenshots/o10/episode-offline.png",
+        "sha256": "bde8919c3f492b620356513b5d2867aed558dfe0c6c71d44c52679ecc6588e2b"
+      },
+      {
+        "path": "screenshots/o10/episode-owner-changed.png",
+        "sha256": "fe483369b2d36f7fd8d45eee82c272154c49872a62dd6bb590d844e41612a278"
+      },
+      {
+        "path": "screenshots/o10/episode-permission.png",
+        "sha256": "4e6d07e5f21f3eee62d620b1bd8e3dc0dd4efb5b7c2a9106833c8cd44fad3904"
+      },
+      {
+        "path": "screenshots/o10/episode-populated-1440x900.png",
+        "sha256": "999ec1340d322472d0cb3beda381b3704fb15fecf61a29f1357249d565035f73"
+      },
+      {
+        "path": "screenshots/o10/episode-version-conflict.png",
+        "sha256": "6605fc14b9ce614e148f9172829e5a263aa6a7728c0747e7e98707c00ee4bb53"
+      }
+    ],
+    "comparable_history": {
+      "case_count": 2,
+      "query_identity": "a56b3195412169764ae413b94620d139bea4061a2d0bf40f572ecacd53d66326",
+      "result_identity": "a83bcba624fda3ca557bebe3471316f28e6aa400b2e883331be2852fc7eca254",
+      "state": "READY"
+    },
+    "desktop": {
+      "browser_errors": {
+        "console_errors": [],
+        "http_errors": [],
+        "page_errors": [],
+        "request_failures": [],
+        "websockets": [
+          {
+            "path": "/_nicegui_ws/socket.io/"
+          },
+          {
+            "path": "/_nicegui_ws/socket.io/"
+          },
+          {
+            "path": "/_nicegui_ws/socket.io/"
+          }
+        ]
+      },
+      "document_width": 1440,
+      "flow": "PLANNER_TO_O5_REQUEST_AND_RETURN",
+      "headings": [
+        "Episode investigation workspace",
+        "Investigation plan",
+        "1. Qualified peer/reference remeasure",
+        "Current decision",
+        "Evidence and competing explanations",
+        "Comparable cases",
+        "Episode episode-synthetic-case-peer-path-a \u00b7 synthetic-recipe-r47",
+        "Episode episode-synthetic-case-superficial-b \u00b7 synthetic-recipe-r47",
+        "Bounded RCA \u00b7 observational only",
+        "Current work and recovery"
+      ],
+      "o5_receipt": {
+        "check_status": "REQUESTED",
+        "check_template_id": "synthetic-peer-reference-remeasure",
+        "command_id": "066f6fb696bbfe16ba863130d6d9769b7ca2ae96e64822353ecf0e11f24e346e",
+        "durably_committed": true,
+        "receipt_result_identity": "ed1c40ec671eca3d985900f586f664e16387e91d95bc5f22bfcb10fa3ca2b4ee",
+        "receipt_status": "COMMITTED",
+        "workflow_version": 2
+      },
+      "overflow_x": false,
+      "post_action_focus": {
+        "role": "status",
+        "tag": "DIV",
+        "text": "Check request committed at workflow version 2."
+      },
+      "request_check_geometry": {
+        "height": 44,
+        "width": 646.65625,
+        "x": 330,
+        "y": 641
+      },
+      "return_to_attention": "keyboard action returned to Attention and was asserted by qualification tool",
+      "viewport": {
+        "height": 900,
+        "width": 1440
+      }
+    },
+    "entrypoint": "examples.synthetic_downstream.provider:build_flagship_bundle",
+    "episode_id": "episode-synthetic-cd-sem-12",
+    "fixture_disclaimer": "Synthetic demonstration only: every identifier, measurement, timestamp, qualification, policy and relationship is fictional.",
+    "invalid_control": {
+      "association_count": 0,
+      "control_quality": "UNQUALIFIED",
+      "reason_codes": [
+        "CONTROL_NOT_QUALIFIED",
+        "CONTROL_QUALIFICATION_OR_MATCHING_FAILED",
+        "REFERENCE_PATH_STALE"
+      ],
+      "state": "UNQUALIFIED_CONTROLS"
+    },
+    "mobile": {
+      "browser_errors": {
+        "console_errors": [],
+        "http_errors": [],
+        "page_errors": [],
+        "request_failures": [],
+        "websockets": [
+          {
+            "path": "/_nicegui_ws/socket.io/"
+          }
+        ]
+      },
+      "document_width": 390,
+      "flow": "server-bound selected Episode \u2192 current downstream composition",
+      "headings": [
+        "Episode investigation workspace",
+        "Investigation plan",
+        "1. Qualified peer/reference remeasure",
+        "Current decision",
+        "Evidence and competing explanations",
+        "Comparable cases",
+        "Episode episode-synthetic-case-peer-path-a \u00b7 synthetic-recipe-r47",
+        "Episode episode-synthetic-case-superficial-b \u00b7 synthetic-recipe-r47",
+        "Bounded RCA \u00b7 observational only",
+        "Current work and recovery"
+      ],
+      "overflow_x": false,
+      "request_action_hit_tested_after_scroll": true,
+      "request_check_height": 44,
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    },
+    "planner": {
+      "explicitly_excluded_template": "synthetic-stale-reference-repeat",
+      "plan_identity": "648209b45f8a2884596a867ded388d46cd6f17271fd2c23b47c072c3798914e8",
+      "ranking_kind": "DETERMINISTIC_ORDINAL_ONLY",
+      "recommended_template": "synthetic-peer-reference-remeasure"
+    },
+    "rca": {
+      "affected_independent_group_count": 3,
+      "association_count": 1,
+      "control_independent_group_count": 3,
+      "interpretation": [
+        "NO_WIP_EXPOSURE_SOURCE",
+        "OBSERVATIONAL_ONLY",
+        "SYNTHETIC_DEMONSTRATION"
+      ],
+      "knowledge_cutoff": "2026-09-24T01:47:45.113800+00:00",
+      "qualified_control_quality": "QUALIFIED",
+      "query_identity": "c46122b0f6494615a8eb70bbbdf34f27214cd0961692660c685a91b7916d49c8",
+      "result_identity": "00b2afdff36ffa36d887610d7d926906c8e71fed02f3712451a319c1e062abf8"
+    }
+  },
+  "focused_regression_suites": {
+    "planner_comparable_history_o5": {
+      "log": "test_logs/focused-planner-history-o5.log",
+      "status": "PASS",
+      "tests": 37
+    },
+    "postgresql18_materialization": {
+      "log": "test_logs/chg189-fix-postgres18-focused.log",
+      "status": "PASS",
+      "tests": 3
+    },
+    "rca_and_investigation": {
+      "log": "test_logs/focused-rca.log",
+      "status": "PASS",
+      "tests": 22
+    }
+  },
+  "future_cutoff_matrix": [
+    {
+      "case": "evidence event_at after knowledge_cutoff",
+      "regression": "test_future_event_cannot_contribute_even_under_adversarial_typed_input",
+      "result": "excluded defensively from counts/commonality; safe EVIDENCE_EVENT_AFTER_CUTOFF reason; factor identities omitted"
+    },
+    {
+      "case": "evidence available_at after knowledge_cutoff",
+      "regression": "test_future_source_facts_are_excluded_and_reported_without_factor_disclosure",
+      "result": "excluded; EVIDENCE_AFTER_CUTOFF and generic EVIDENCE_EXCLUDED_AFTER_CUTOFF; future factor/source omitted"
+    },
+    {
+      "case": "event_at after available_at",
+      "regression": "test_timestamp_physical_consistency_and_cutoff_boundaries_fail_closed",
+      "result": "typed validation fails closed for RCA evidence, RCA temporal facts, and investigation evidence groups"
+    },
+    {
+      "case": "cohort interval_end after cutoff (and interval_start after cutoff)",
+      "regression": "test_timestamp_physical_consistency_and_cutoff_boundaries_fail_closed",
+      "result": "RcaDataset validation fails closed"
+    },
+    {
+      "case": "asserted RCA/profile change onset after cutoff",
+      "regression": "test_timestamp_physical_consistency_and_cutoff_boundaries_fail_closed; test_investigation_observations_and_onset_must_be_at_or_before_profile_cutoff",
+      "result": "dataset/profile validation fails closed"
+    },
+    {
+      "case": "investigation evidence-group event or availability after cutoff",
+      "regression": "test_investigation_observations_and_onset_must_be_at_or_before_profile_cutoff",
+      "result": "immutable profile validation fails closed"
+    },
+    {
+      "case": "temporal fact own availability after cutoff",
+      "regression": "test_unavailable_temporal_fact_is_filtered_without_identity_or_content_disclosure; test_future_profile_temporal_identity_is_not_returned_when_profile_fails_validation",
+      "result": "filtered from contradiction output with generic TEMPORAL_FACTS_EXCLUDED_AFTER_CUTOFF; no fact identity/content/source disclosure"
+    },
+    {
+      "case": "known historical claim with linked maturity after cutoff",
+      "regression": "test_temporal_contradictions_are_deterministic_descriptive_limitations",
+      "result": "retained as bounded HISTORICAL_CLAIM_MATURITY_AFTER_CUTOFF limitation"
+    }
+  ],
+  "materialization_postgresql18": {
+    "focused_tests": 3,
+    "log": "test_logs/chg189-fix-postgres18-focused.log",
+    "results": {
+      "authorization": "existing RCA/history/planner authorization regressions passed",
+      "oversized_synchronous_rca": "materialization required/PENDING; no partial counts",
+      "reopened_cycle": "STALE; artifact count unchanged; cannot read current result",
+      "stale_revision": "STALE; cannot publish current result",
+      "worker_and_adapter_restart": "queued job, immutable artifact, result identity, and read survive restart"
+    },
+    "server_version": "18.6 (Homebrew)"
+  },
+  "non_claims": [
+    "All flagship/browser fixture facts are synthetic.",
+    "No source identity, byte identity, algorithm equivalence, historical test equivalence, or historical defect-fix claim.",
+    "No causal inference, posterior, probability, root-cause confidence, real WIP/exposure, or real company data.",
+    "No NiceGUI Base patch, schema migration, O7, family/assets/operations breadth, G02/G06 real-family qualification, O5 W3 pilot completion, G10 capacity claim, Port Gate, G12, release, or Production claim.",
+    "Candidate is not integrated into main and is awaiting independent Project OS audit."
+  ],
+  "o6_compatibility": {
+    "comparable_history_source_blob_r1_and_candidate": "ebec6be5f768349cdb26ac438cceb2b524e3c46a",
+    "comparable_history_source_unchanged": true,
+    "history_identity_regression": "PASS: exact comparable results deterministic and ties use stable identity",
+    "planner_identity_regression": "PASS: identical canonical inputs retain identity, order, reasons, and ordinal traces",
+    "planner_source_blob_r1_and_candidate": "72b74ecc6404ff57ec274a8734a6b8a2ac5edd89",
+    "planner_source_unchanged": true,
+    "qualification_note": "Browser run identities are recorded with their exact as-known cutoff; cross-run identity equality is not asserted when run cutoffs differ."
+  },
+  "qualification_gates": {
+    "o10_rendered_accessibility": {
+      "criteria_count": 16,
+      "failed_criteria": [],
+      "status": "PASS"
+    },
+    "o8_direct": {
+      "proxy": false,
+      "status": "PASS"
+    },
+    "o8_proxy": {
+      "proxy": true,
+      "root_path": "/ephi-fix",
+      "status": "PASS"
+    },
+    "u1_downstream": {
+      "candidate_commit": "0f378d2de9aadb0ff2fec1429152afe5b51d0152",
+      "postgres_version": "18.6 (Homebrew)",
+      "status": "PASS"
+    },
+    "u2_flagship": {
+      "status": "PASS"
+    }
+  },
+  "repository_gates": {
+    "canonical_w0": {
+      "candidate_commit": "0f378d2de9aadb0ff2fec1429152afe5b51d0152",
+      "status": "BASELINE_PASS",
+      "tree": "ed15995e2a6064a5e86b0cd5b9eedf23ef92c192",
+      "worktree_clean": true
+    },
+    "compileall": "PASS",
+    "dependency_light_unittest": {
+      "python3_11": {
+        "log": "test_logs/python311-dependency-light-full.log",
+        "skipped": 82,
+        "status": "PASS",
+        "tests": 352
+      },
+      "python3_12": {
+        "log": "test_logs/python312-dependency-light-full.log",
+        "skipped": 95,
+        "status": "PASS",
+        "tests": 352
+      },
+      "python3_13": {
+        "log": "test_logs/python313-dependency-light-full.log",
+        "skipped": 95,
+        "status": "PASS",
+        "tests": 352
+      },
+      "python3_14": "package integrity only; runtime remains >=3.11,<3.14"
+    },
+    "git_diff_check": "PASS",
+    "package_checker": {
+      "interpreters": [
+        "3.11",
+        "3.12",
+        "3.13",
+        "3.14"
+      ],
+      "status": "PASS"
+    },
+    "postgresql18_full_suite": {
+      "log": "test_logs/python311-postgresql18-full.log",
+      "skipped": 0,
+      "status": "PASS",
+      "tests": 352
+    },
+    "self_check": "PASS"
+  },
+  "result": "candidate fixed; ready for independent Project OS audit",
+  "schema_version": 1,
+  "security_scientific_regressions": {
+    "authorization_before_rca_profile_lookup": "PASS: test_authorization_precedes_candidate_profile_lookup",
+    "cutoffs_and_source_identity_are_bound": "PASS: exact query/source/policy/schema checks and future source/event regressions",
+    "dependent_measurements_do_not_inflate_independent_counts": "PASS: test_dependent_repeated_measurements_do_not_inflate_independent_counts",
+    "invalid_unqualified_and_insufficient_controls_suppress_associations": "PASS: test_invalid_unqualified_or_insufficient_controls_suppress_commonality; test_matching_mismatch_suppresses_commonality",
+    "public_rca_has_no_probability_or_causal_confidence": "PASS: test_public_result_emits_no_probability_or_causal_confidence_field",
+    "safe_evidence": "PASS: generated reports redact DSN, storage secret, authorization and cookie values; raw source rows are not recorded",
+    "stale_revision_and_current_authorization": "PASS: RCA current-facts conflict and existing planner/history/O5 authorization regressions"
+  },
+  "source_diff": {
+    "path": "source.diff",
+    "scope": "only changed application and regression source listed above",
+    "sha256": "466448348cc402cb0cc98fb8564c7e473c118c52b7166718a560de2173b4ed72"
+  },
+  "target": {
+    "base_sha": "a9702ad3f990f379f902ebe43934e0d5fe589b7e",
+    "branch": "main",
+    "integrated": false
+  },
+  "work_item": "EPHI / CHG-189 / U2.1 / O6.3 R2 FIX"
+}

@@ -655,9 +655,284 @@
       "sha256": "900c58454be92da519ad90722debb14a56a8663ba4caf69cf0911ad93bbb8b82"
     },
     {
+      "path": "evidence/u2/chg-189-u2.1-fix-o6.3/package_logs/package-python311.log",
+      "bytes": 209,
+      "sha256": "4923782a2d3cfa497cd97ae61424d342a22694becf542d3acff93111a4b3a3aa"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-fix-o6.3/package_logs/package-python312.log",
+      "bytes": 209,
+      "sha256": "4923782a2d3cfa497cd97ae61424d342a22694becf542d3acff93111a4b3a3aa"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-fix-o6.3/package_logs/package-python313.log",
+      "bytes": 209,
+      "sha256": "4923782a2d3cfa497cd97ae61424d342a22694becf542d3acff93111a4b3a3aa"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-fix-o6.3/package_logs/package-python314.log",
+      "bytes": 209,
+      "sha256": "4923782a2d3cfa497cd97ae61424d342a22694becf542d3acff93111a4b3a3aa"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-fix-o6.3/qualification.json",
+      "bytes": 20437,
+      "sha256": "cc7f73b5f1fb800abb0b876870712f792491f5bb7294fbe3a62fa59e0348dbe6"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-fix-o6.3/reports/o10-rendered-accessibility.json",
+      "bytes": 44279,
+      "sha256": "c49f4f8d86978f0232301e90e74cb6940ad01f72d95a3bcd098241701c8d28c4"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-fix-o6.3/reports/o8-direct.json",
+      "bytes": 660,
+      "sha256": "fa5d721c1cec2016421a2988db83bce8456f641a1c5cc987d339ee7cc25c6b65"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-fix-o6.3/reports/o8-proxy.json",
+      "bytes": 658,
+      "sha256": "2b69b92e3e8d4c76d2c895cbf24001c315624a1d1d5bd42f2059b60fcaa0aa16"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-fix-o6.3/reports/u1-downstream.json",
+      "bytes": 2077,
+      "sha256": "0b8d6043ac4973205d7e1a1399ac36f6295b6a210c41d29398a6fff676c04135"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-fix-o6.3/reports/u2-browser.json",
+      "bytes": 15316,
+      "sha256": "ff2438cede5f2ffce42aff4764f04a067b960b21fd2f3014b2db89c94d00c03a"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-fix-o6.3/screenshots/flagship/attention-desktop-1440x900.png",
+      "bytes": 76692,
+      "sha256": "6cd0ad334e6723ddf600b6932d000f14315030ffe6ec43229038f68f8295eed1"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-fix-o6.3/screenshots/flagship/episode-desktop-1440x900.png",
+      "bytes": 125433,
+      "sha256": "abac1a45c1602b40560cb83d769142ecf4c4abeb80e32bca7b5ecb0d6b928263"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-fix-o6.3/screenshots/flagship/episode-desktop-after-check-1440x900.png",
+      "bytes": 117952,
+      "sha256": "acbf0dab3b004c3d70fbe981a91c38a80edeb4b3d9605bf78abad92cae20975f"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-fix-o6.3/screenshots/flagship/episode-desktop-work-after-check-1440x900.png",
+      "bytes": 138172,
+      "sha256": "764fd8e3e6abbd8beaa9b7b9042a661f6715ed427e2fa37a2f96341e75d3f451"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-fix-o6.3/screenshots/flagship/episode-mobile-390x844.png",
+      "bytes": 63395,
+      "sha256": "6ed7eaaca1a285fbbb9e4ccf42ada6e63c7c87a8ac74829ea8ae4110fc9b57dd"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-fix-o6.3/screenshots/o10/attention-1024x768.png",
+      "bytes": 83227,
+      "sha256": "e10d4d24ec9084ee715f1cf73bbd0e6e0940e9cd31edb41393ddcd2acb87b0fa"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-fix-o6.3/screenshots/o10/attention-1440x900.png",
+      "bytes": 75373,
+      "sha256": "b8d7dec3175e64f164eeeed076054829a89251889cad041ff4122b85de4fb324"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-fix-o6.3/screenshots/o10/attention-320x800.png",
+      "bytes": 63192,
+      "sha256": "0e43b7428cbfde03237ea910556fde1b4f1c45e5f5fd65a40ff88115fcd0259e"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-fix-o6.3/screenshots/o10/attention-390x844.png",
+      "bytes": 63669,
+      "sha256": "0eaf9399b73af838a88e7f043d072547d9048b34e7d4018d51dfa683ff549110"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-fix-o6.3/screenshots/o10/attention-768x1024.png",
+      "bytes": 79090,
+      "sha256": "b3b5bb5946f4ef32907ff01d3cd7ffe308cb392e7ec04944d04dfbee781734bc"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-fix-o6.3/screenshots/o10/attention-failure.png",
+      "bytes": 25371,
+      "sha256": "275e09a9b9baf5dde6a7939756f90ac72f494ab1293388d944299a761c8a0180"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-fix-o6.3/screenshots/o10/attention-no-matching-rows-1440x900.png",
+      "bytes": 89885,
+      "sha256": "a5ffad7bc70a030d4da2a7ecd383f4c6a4063b66d2d5b0ad4bc3f1766f26ae7f"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-fix-o6.3/screenshots/o10/attention-no-permitted-rows.png",
+      "bytes": 26541,
+      "sha256": "6ce1e9074dbf53dad714b2455f8054a5c525fb881071ce30dd3fff0acb34ea0f"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-fix-o6.3/screenshots/o10/attention-offline.png",
+      "bytes": 27680,
+      "sha256": "314678b7bde2ad56b19134ba5fc56709d8ec138228bf5651b29be88ecab168f0"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-fix-o6.3/screenshots/o10/attention-permission.png",
+      "bytes": 24829,
+      "sha256": "dbfe5026fe50e94933fbfb87829761c090c458e927c08c68d1d3138ff7fe2887"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-fix-o6.3/screenshots/o10/attention-populated-1440x900.png",
+      "bytes": 75373,
+      "sha256": "b8d7dec3175e64f164eeeed076054829a89251889cad041ff4122b85de4fb324"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-fix-o6.3/screenshots/o10/attention-stale.png",
+      "bytes": 27077,
+      "sha256": "11325811fc04416c3849c174897a94119c5a9d20459b7898372917675808d4cc"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-fix-o6.3/screenshots/o10/episode-1024x768.png",
+      "bytes": 94436,
+      "sha256": "3d17e188d00ef022b111709fefdf00fd3a24944465c2fc4c060e3eaae4e333ba"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-fix-o6.3/screenshots/o10/episode-1440x900.png",
+      "bytes": 95567,
+      "sha256": "65a1b2f732e4cee44e3f594566af6af8bee02d840fe73ead8fe9333f78401eac"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-fix-o6.3/screenshots/o10/episode-320x800.png",
+      "bytes": 73261,
+      "sha256": "b0c5f76e461f68042096c8098788b6c490f844248c0059fe10b4698be396d59e"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-fix-o6.3/screenshots/o10/episode-390x844.png",
+      "bytes": 72155,
+      "sha256": "9d99f620259e0d3b8e11fdbc9765a3d4ae271ea025718a530f02511487e2b394"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-fix-o6.3/screenshots/o10/episode-768x1024.png",
+      "bytes": 80710,
+      "sha256": "86b36596449bc7e222264e6ba33a9bca32150365a0adab3b37e618b2b9b214e3"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-fix-o6.3/screenshots/o10/episode-capability-states.png",
+      "bytes": 47653,
+      "sha256": "8c99703f3b1a4dc9477dd6b98f04d60b721bfa03bb871fc3842879cd9aa4826d"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-fix-o6.3/screenshots/o10/episode-claimed-1440x900.png",
+      "bytes": 98927,
+      "sha256": "68a868b85eb312111d5ade88316815afb42752e380f0088e7b7464c608f60349"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-fix-o6.3/screenshots/o10/episode-coherent-conflict.png",
+      "bytes": 29049,
+      "sha256": "cba20fdc445f5dcbc460b9f80b4d21b6f84f0daffd181321b9a20c6657662035"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-fix-o6.3/screenshots/o10/episode-no-selection-1440x900.png",
+      "bytes": 50004,
+      "sha256": "0d287d426735cf27af84d2cdc785ef6c6dadd8bdcb75e8c64fc8a2bad5c73de6"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-fix-o6.3/screenshots/o10/episode-offline.png",
+      "bytes": 29274,
+      "sha256": "bde8919c3f492b620356513b5d2867aed558dfe0c6c71d44c52679ecc6588e2b"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-fix-o6.3/screenshots/o10/episode-owner-changed.png",
+      "bytes": 28275,
+      "sha256": "fe483369b2d36f7fd8d45eee82c272154c49872a62dd6bb590d844e41612a278"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-fix-o6.3/screenshots/o10/episode-permission.png",
+      "bytes": 27104,
+      "sha256": "4e6d07e5f21f3eee62d620b1bd8e3dc0dd4efb5b7c2a9106833c8cd44fad3904"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-fix-o6.3/screenshots/o10/episode-populated-1440x900.png",
+      "bytes": 95549,
+      "sha256": "999ec1340d322472d0cb3beda381b3704fb15fecf61a29f1357249d565035f73"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-fix-o6.3/screenshots/o10/episode-version-conflict.png",
+      "bytes": 29246,
+      "sha256": "6605fc14b9ce614e148f9172829e5a263aa6a7728c0747e7e98707c00ee4bb53"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-fix-o6.3/source.diff",
+      "bytes": 32827,
+      "sha256": "466448348cc402cb0cc98fb8564c7e473c118c52b7166718a560de2173b4ed72"
+    },
+    {
       "path": "evidence/u2/chg-189-u2.1-fix-o6.3/test_logs/chg189-fix-postgres18-focused.log",
       "bytes": 690,
       "sha256": "85cfe1b62278f0157076df941b4513fe597559fc6e6224c7f69982a6f00ff995"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-fix-o6.3/test_logs/focused-planner-history-o5.log",
+      "bytes": 7495,
+      "sha256": "b8241ce01bc8ac1cd8162080f993b4c25478a706e15232616417cb135dcd671e"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-fix-o6.3/test_logs/focused-rca.log",
+      "bytes": 4422,
+      "sha256": "9ed8ee995887d7b8c882677bca7398acd2f4836b1f635ae29960c9574895af89"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-fix-o6.3/test_logs/o10.log",
+      "bytes": 57,
+      "sha256": "3d21b88e52815a9caeae7283313598ce4bf023975698711517c3392a69c8873b"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-fix-o6.3/test_logs/o8-direct.log",
+      "bytes": 63,
+      "sha256": "541c6721195077f4f17a599195f681d7ad2aabd1ab0cf0d852d8231e89c4938f"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-fix-o6.3/test_logs/o8-proxy.log",
+      "bytes": 62,
+      "sha256": "b1423923795f0362b2dd34fe28ccad4bf4343ac182bd1cb44b0de006f131cf8e"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-fix-o6.3/test_logs/python311-dependency-light-full.log",
+      "bytes": 71480,
+      "sha256": "3f23b89d4587c326a3f57f7dd4427f74cffaf1826b27db83db1e0997f6702f92"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-fix-o6.3/test_logs/python311-postgresql18-full.log",
+      "bytes": 65256,
+      "sha256": "1b31cf06a8c41f9d3427ee5fd952826e46028bdea2a49092048cef8cc20ecbe8"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-fix-o6.3/test_logs/python312-dependency-light-full.log",
+      "bytes": 72473,
+      "sha256": "cf8c564012b2d16d9a283d29f89d13cc8d42624bfe14ac1c086027f7a68c5a1e"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-fix-o6.3/test_logs/python313-dependency-light-full.log",
+      "bytes": 72473,
+      "sha256": "ade9b2d7b89813619472d2d257456d55dd68411dabfc33eadcabd4e142b1aad7"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-fix-o6.3/test_logs/u1-downstream.log",
+      "bytes": 923,
+      "sha256": "f23be1f1f01fcaff9de85ec180a214c2aea3246c2ccd599c2925f6837ba0663c"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-fix-o6.3/test_logs/u2-browser.log",
+      "bytes": 6951,
+      "sha256": "e1a2399899dc8590e575934bc7ea1c5c0b9d7d2582067c9bfd76fab0f26d04e1"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-fix-o6.3/validation/self-check.json",
+      "bytes": 1117,
+      "sha256": "922c49b6dce20fb67d29b126549a369bf55b199b893ae9cf0e1c986e0ef9320d"
+    },
+    {
+      "path": "evidence/u2/chg-189-u2.1-fix-o6.3/validation/w0-baseline.json",
+      "bytes": 2716,
+      "sha256": "54ede0d2b7ce4ffc1bb05a7931cfc1130d329e1a887d14a2e34cfea1a0e44143"
     },
     {
       "path": "evidence/u2/chg-189-u2.1-o6.3/artifact-inventory.json",

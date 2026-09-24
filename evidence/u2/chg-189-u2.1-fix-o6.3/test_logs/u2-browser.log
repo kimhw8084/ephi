@@ -1,0 +1,190 @@
+{
+  "browser_runs": 2,
+  "fixture": {
+    "active_cycle_id": "synthetic-cd-cycle-1",
+    "episode_id": "episode-synthetic-cd-sem-12",
+    "fixture_disclaimer": "Synthetic demonstration only: every identifier, measurement, timestamp, qualification, policy and relationship is fictional.",
+    "history_episode_ids": [
+      "episode-synthetic-case-peer-path-a",
+      "episode-synthetic-case-superficial-b"
+    ],
+    "investigation_qualification": {
+      "coherent_view": {
+        "active_cycle_identity": "synthetic-cd-cycle-1",
+        "known_at": "2026-09-23T20:47:45.113800-05:00",
+        "revision_identity": "synthetic-cd-analysis-revision-v1",
+        "workflow_version": 1
+      },
+      "comparable_history": {
+        "cases": [
+          {
+            "candidate_only": [],
+            "current_only": [],
+            "differences": [
+              "tool-class"
+            ],
+            "episode_id": "episode-synthetic-case-peer-path-a",
+            "limitations": [
+              "ONE_TOOL_CLASS_DIFFERENCE"
+            ],
+            "similarities": [
+              "maintenance-regime",
+              "recipe-regime",
+              "trajectory-shape"
+            ]
+          },
+          {
+            "candidate_only": [],
+            "current_only": [],
+            "differences": [
+              "maintenance-regime",
+              "tool-class",
+              "trajectory-shape"
+            ],
+            "episode_id": "episode-synthetic-case-superficial-b",
+            "limitations": [
+              "TRAJECTORY_AND_MAINTENANCE_REGIME_DIFFER"
+            ],
+            "similarities": [
+              "recipe-regime"
+            ]
+          }
+        ],
+        "query_identity": "a56b3195412169764ae413b94620d139bea4061a2d0bf40f572ecacd53d66326",
+        "result_identity": "a83bcba624fda3ca557bebe3471316f28e6aa400b2e883331be2852fc7eca254",
+        "state": "READY"
+      },
+      "diagnostic_timing_ms": {
+        "coherent_investigation_query": 33.992
+      },
+      "planner": {
+        "excluded_checks": [
+          {
+            "facts": [
+              "capability_stale:synthetic.stale.peer-reference",
+              "turnaround_unsupported:Stale path has no qualified turnaround"
+            ],
+            "reasons": [
+              "STALE_PEER_REFERENCE",
+              "UNSUPPORTED_TURNAROUND"
+            ],
+            "template_id": "synthetic-stale-reference-repeat",
+            "template_version": "1.0.0"
+          }
+        ],
+        "plan_identity": "648209b45f8a2884596a867ded388d46cd6f17271fd2c23b47c072c3798914e8",
+        "ranking_kind": "DETERMINISTIC_ORDINAL_ONLY",
+        "recommendations": [
+          {
+            "alternatives_discriminated": [
+              {
+                "contradiction_ids": [],
+                "dependence_group_ids": [
+                  "measurement-head-trajectory"
+                ],
+                "hypothesis_a_id": "measurement-head-drift",
+                "hypothesis_b_id": "process-material-shift",
+                "ordinal_discrimination": 1.0,
+                "pair_id": "head-drift-v-process-shift"
+              }
+            ],
+            "execution_mode": "REQUEST_HUMAN_MEASUREMENT",
+            "rank": 1,
+            "template_id": "synthetic-peer-reference-remeasure",
+            "title": "Qualified peer/reference remeasure",
+            "will_not_resolve": []
+          }
+        ],
+        "state": "READY"
+      },
+      "rca": {
+        "affected_independent_group_count": 3,
+        "associations": [
+          {
+            "affected": {
+              "denominator": 3,
+              "independent_group_count": 3,
+              "numerator": 3
+            },
+            "controls": {
+              "denominator": 3,
+              "independent_group_count": 3,
+              "numerator": 1
+            },
+            "factor_identity": "measurement-head-trajectory",
+            "interpretation": "descriptive_observational_commonality_only",
+            "rate_difference_denominator": 9,
+            "rate_difference_numerator": 6
+          }
+        ],
+        "control_independent_group_count": 3,
+        "control_quality": "QUALIFIED",
+        "input_identity": "e5bd82e04ef1763a63fa8843d036f94cbf0098bff381f1a2210fd9270c89b41a",
+        "knowledge_cutoff": "2026-09-24T01:47:45.113800+00:00",
+        "limitations": [
+          "NO_WIP_EXPOSURE_SOURCE",
+          "OBSERVATIONAL_ONLY",
+          "SYNTHETIC_DEMONSTRATION"
+        ],
+        "policy_identity": "ephi.investigation-policy.v1:349f58bdcb577987e4360c3ca2c8919489d79fda037b4c74711975fcad2ef862",
+        "query_identity": "c46122b0f6494615a8eb70bbbdf34f27214cd0961692660c685a91b7916d49c8",
+        "result_identity": "00b2afdff36ffa36d887610d7d926906c8e71fed02f3712451a319c1e062abf8",
+        "schema_identity": "ephi.rca.observational.v1",
+        "source_identities": [
+          "ephi.source-binding.v1:fbcc4c53a23b9cf44a90cfc97625b07e283dff91a67beb69b8518e8247a8a660",
+          "synthetic-cd-source-affected-and-controls"
+        ],
+        "state": "READY",
+        "temporal_contradictions": [
+          {
+            "fact_identity": "synthetic-later-head-service",
+            "reason_code": "CANDIDATE_CHANGE_AFTER_OBSERVED_ONSET"
+          }
+        ]
+      },
+      "synthetic_control_matrix": {
+        "invalid": {
+          "association_count": 0,
+          "control_quality": "UNQUALIFIED",
+          "input_identity": "9590ebc27dc711060da33442063e8be9a16355eef1c7f4c91d3ed15c579f3a43",
+          "query_identity": "c46122b0f6494615a8eb70bbbdf34f27214cd0961692660c685a91b7916d49c8",
+          "reason_codes": [
+            "CONTROL_NOT_QUALIFIED",
+            "CONTROL_QUALIFICATION_OR_MATCHING_FAILED",
+            "REFERENCE_PATH_STALE"
+          ],
+          "result_identity": "5af312dd182604decf78c12d2402f068178145ef8b85b98c9e576c86a989fcbf",
+          "state": "UNQUALIFIED_CONTROLS"
+        },
+        "valid": {
+          "association_count": 1,
+          "control_quality": "QUALIFIED",
+          "state": "READY"
+        }
+      }
+    },
+    "policy_identity": "ephi.investigation-policy.v1:349f58bdcb577987e4360c3ca2c8919489d79fda037b4c74711975fcad2ef862",
+    "postgres_version": "18.6 (Homebrew)",
+    "revision_id": "synthetic-cd-analysis-revision-v1",
+    "revision_vector": {
+      "analysis_revision": "synthetic-cd-analysis-v1",
+      "exposure_revision": null,
+      "plan_version": null,
+      "priority_revision": null,
+      "qualification_manifest_id": "synthetic-cd-manifest-v1",
+      "workflow_version": 1
+    },
+    "scope": {
+      "area_id": null,
+      "family_id": "synthetic-cd-metrology-family",
+      "project_ids": [],
+      "scope_id": "synthetic-cd-investigation-scope",
+      "site_id": "synthetic-site"
+    },
+    "scope_id": "synthetic-cd-investigation-scope",
+    "source_snapshot_count": 3,
+    "subject": "synthetic-engineer",
+    "workflow_state": "OPEN"
+  },
+  "output": "/tmp/chg189-fix-u2-browser.json"
+}
