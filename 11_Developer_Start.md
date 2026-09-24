@@ -109,3 +109,25 @@ composition in addition to the W0/O2/O2-read foundations. It still does not
 contain company adapters, production credentials, speculative science modules
 or fake product behavior. Continue from [09_Delivery_and_Gates.md](09_Delivery_and_Gates.md)
 and stop at the authorized wave exit criteria.
+
+## CHG-205 U2.2 / O7.1 generic Outcomes workflow
+
+The bounded Outcomes slice extends `src/ephi/value/model.py`,
+`repository.py`, and `service.py` while preserving the existing F04
+active-leaf-as-of behavior. PostgreSQL writes use the existing O2
+versioned aggregate command executor and atomic receipt/audit/outbox path;
+`migrations/009_o7_outcome_group_identity.sql` adds only scoped economic-event
+deduplication. Review is a separate immutable, revision-bound transition and
+must be reauthorized when queried or committed. Do not combine currencies
+without an explicit versioned conversion policy or infer validated savings
+from estimates/observations.
+
+For this slice, run `tests.test_value_integrity`,
+`tests.test_outcomes_workflow`, and `tests.test_o2_transactions` offline. Run
+`tests.test_outcomes_postgresql` with `EPHI_TEST_POSTGRES_DSN` for restart,
+concurrency, uniqueness and O2 receipt evidence. Browser qualification uses
+the synthetic-only `tools/o7_outcomes_browser_qualification.py` and records
+the tested PostgreSQL server version. Keep its report/screenshots in
+`evidence/u2/chg-205-u2.2-o7.1/`. Stop at generic U2/O7 behavior; do not add
+company monetary data, conversion values, family qualification, human pilot
+completion, Port Gate, G12 or Production claims.

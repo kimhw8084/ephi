@@ -19,6 +19,7 @@ from ephi.application.errors import StorageFailureError, ValidationFailureError
 from ephi.application.hashing import canonical_json, normalize_domain_payload
 from ephi.application.worker import WorkerLeaseConfig
 from ephi.application.storage import (
+    AggregateAlreadyExistsError,
     AggregateSnapshot,
     CommandEventAlreadyExistsError,
     CommandUnitOfWork,
@@ -257,6 +258,25 @@ class _PostgreSQLCommandTransaction:
             ).rowcount)
         except Exception as exc:
             raise StorageFailureError("durable PostgreSQL storage failed while updating an aggregate") from exc
+
+    def insert_aggregate(
+        self,
+        scope_key: str,
+        aggregate_type: str,
+        aggregate_id: str,
+        *,
+        version: int,
+        state_json: str,
+    ) -> None:
+        try:
+            self.connection.execute(
+                "INSERT INTO aggregate_state(scope_key, aggregate_type, aggregate_id, version, state_json) VALUES (%s, %s, %s, %s, %s::jsonb)",
+                (scope_key, aggregate_type, aggregate_id, version, state_json),
+            )
+        except Exception as exc:
+            if getattr(exc, "sqlstate", None) == "23505":
+                raise AggregateAlreadyExistsError from exc
+            raise StorageFailureError("durable PostgreSQL storage failed while creating an aggregate") from exc
 
     def append_audit(
         self,
@@ -625,6 +645,30 @@ class PostgreSQLReferenceTransactionAdapter:
         if row is None:
             return None
         return AggregateSnapshot(row["scope_key"], row["aggregate_type"], row["aggregate_id"], row["version"], _json_object(row["state_json"], "aggregate state"))
+
+    def list_aggregates(self, scope: AccessScope, aggregate_type: str, *, limit: int) -> tuple[AggregateSnapshot, ...]:
+        if not isinstance(scope, AccessScope):
+            raise ValidationFailureError("scope must be an AccessScope")
+        aggregate_type = _validated_identity(aggregate_type, "aggregate_type")
+        if isinstance(limit, bool) or not isinstance(limit, int) or not 1 <= limit <= 5001:
+            raise ValidationFailureError("aggregate list limit must be between 1 and 5001")
+        try:
+            rows = self.connection.execute(
+                "SELECT scope_key, aggregate_type, aggregate_id, version, state_json FROM aggregate_state WHERE scope_key = %s AND aggregate_type = %s ORDER BY aggregate_id LIMIT %s",
+                (scope.canonical_key, aggregate_type, limit),
+            ).fetchall()
+        except Exception as exc:
+            raise StorageFailureError("durable PostgreSQL storage failed while listing aggregates") from exc
+        return tuple(
+            AggregateSnapshot(
+                row["scope_key"],
+                row["aggregate_type"],
+                row["aggregate_id"],
+                row["version"],
+                _json_object(row["state_json"], "aggregate state"),
+            )
+            for row in rows
+        )
 
     def get_command_receipt(self, scope_key: str, subject: str, command_id: str) -> StoredCommandReceipt | None:
         scope_key = _validated_identity(scope_key, "scope_key")

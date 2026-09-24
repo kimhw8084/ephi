@@ -51,8 +51,8 @@
     },
     {
       "path": ".github/workflows/package.yml",
-      "bytes": 14187,
-      "sha256": "8c55046fd368d9995528c61e1cc493aa4e0730208d07e65e3b3c8fe4af1061b4"
+      "bytes": 14441,
+      "sha256": "a28af1a233b45ce28ea4dd0819f3410cfe82f18687c326998a5a16f0fe6671c7"
     },
     {
       "path": ".gitignore",
@@ -131,8 +131,8 @@
     },
     {
       "path": "11_Developer_Start.md",
-      "bytes": 6354,
-      "sha256": "8e62f46dc9e37ee17a308e7d27163435c16f059433351800722bc722f405bda5"
+      "bytes": 7638,
+      "sha256": "2bfa1d4457590f946e1a894a9f9eac04aab5291c48c1e2e1f3d04b6389d1741f"
     },
     {
       "path": "12_Sources_and_Evidence.md",
@@ -141,8 +141,8 @@
     },
     {
       "path": "13_Package_Review.md",
-      "bytes": 19822,
-      "sha256": "6ef19626468b8c9ef93508d9dfc618b8dcfa9a25b7ef14f910b67337f5649cc6"
+      "bytes": 21606,
+      "sha256": "29d6549726525afcdfbd364d5f8cdb5967ffc421729b37327cac5f1c10143c46"
     },
     {
       "path": "AGENTS.md",
@@ -156,8 +156,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 22236,
-      "sha256": "949ad1e595b72df11e042757b8de5f027a393e4cafa3ffd821386b2ceaaf19e7"
+      "bytes": 23973,
+      "sha256": "d1524fc9c3fa8ebc89998ca95d307541fe2eab7b17d54fe8d2dd1e7929af9421"
     },
     {
       "path": "app.py",
@@ -905,6 +905,26 @@
       "sha256": "622034b22e81846d87d2af2c2ad8f286ef2599b7822f19e59c8da0bcacb38bd5"
     },
     {
+      "path": "evidence/u2/chg-205-u2.2-o7.1/qualification.json",
+      "bytes": 21687,
+      "sha256": "9fbbac98f603f0df37fbca47b00fab38da4c076270c3954d3b7499ccdb14973d"
+    },
+    {
+      "path": "evidence/u2/chg-205-u2.2-o7.1/screenshots/outcomes-1440x900-reviewed.png",
+      "bytes": 145348,
+      "sha256": "2f70fbb755dec68cf9e91cc8694f5f515fb67d016766bfeb42e05837b621576e"
+    },
+    {
+      "path": "evidence/u2/chg-205-u2.2-o7.1/screenshots/outcomes-1440x900.png",
+      "bytes": 351077,
+      "sha256": "97d2f5a437a9cf22b9e0310912bca8439a036189968d51efdd567ab40ea3bb78"
+    },
+    {
+      "path": "evidence/u2/chg-205-u2.2-o7.1/screenshots/outcomes-390x844.png",
+      "bytes": 298050,
+      "sha256": "5ec406ff7676f7ee0db8db7e7a8bf84667e787fd07e06aa1137149aa0c9fdc81"
+    },
+    {
       "path": "examples/__init__.py",
       "bytes": 61,
       "sha256": "b060d41e6705cac80caacb622fc737209d85f878bc0a4a6d976adc651b26d7f1"
@@ -945,9 +965,14 @@
       "sha256": "0f9d586b6935eec88b0021b2955d4a6d4e854a7fe9315f59f5f8ff80fc9adac0"
     },
     {
+      "path": "examples/synthetic_downstream/outcomes.py",
+      "bytes": 3205,
+      "sha256": "cfdbff9173e869fc54286e2359c60474a4dd6a2a7b589c0ab35796dba6254222"
+    },
+    {
       "path": "examples/synthetic_downstream/provider.py",
-      "bytes": 17577,
-      "sha256": "7390f3e02271648f614ce85cfd4c0912080a501bf253908578b46b037df2a174"
+      "bytes": 17649,
+      "sha256": "60be47b870917dbb67af9da6ed5ca410e0a7ec87b8a564016dcc1b14c037f06d"
     },
     {
       "path": "migrations/001_o2_command_core.sql",
@@ -988,6 +1013,11 @@
       "path": "migrations/008_o6_comparable_case_history.sql",
       "bytes": 333,
       "sha256": "02a82a3fd8efcd18cb0db090fcdc9b7db028e13be6dd2ac43235f3ac40458910"
+    },
+    {
+      "path": "migrations/009_o7_outcome_group_identity.sql",
+      "bytes": 395,
+      "sha256": "e32092ec25181a669e1b7548907369951b8b32d90574ac0d4922e88f48bae23a"
     },
     {
       "path": "nicegui_base.toml",
@@ -1186,13 +1216,13 @@
     },
     {
       "path": "src/ephi/application/storage.py",
-      "bytes": 3097,
-      "sha256": "80e48945f6a2d177257d75a7c9872e97b3379f5164ca3b3049837dc5a89b0297"
+      "bytes": 3423,
+      "sha256": "dfec67d9ffeb03167ceae21d0015efb2468879a6ba751dded580f1ee8dd2bd63"
     },
     {
       "path": "src/ephi/application/transactions.py",
-      "bytes": 15474,
-      "sha256": "b030c63df05f6470b55a6a02e3f5c59da2f5491af581886c6d2ca27e2df553d8"
+      "bytes": 18210,
+      "sha256": "95fbbe09f3898a515274c89e0ae3cf21dc3f3f55c98603bfa372fea917b8cec1"
     },
     {
       "path": "src/ephi/application/worker.py",
@@ -1226,8 +1256,8 @@
     },
     {
       "path": "src/ephi/downstream/composition.py",
-      "bytes": 10221,
-      "sha256": "fe52549048c8301fb8b96c4718ecf6815ee07a055b4f370b2c3456ce42807021"
+      "bytes": 10667,
+      "sha256": "8ff05b346761b710289a988d9285b45cd90bce9c29ae49a9256eba6b6ed84806"
     },
     {
       "path": "src/ephi/downstream/contracts.py",
@@ -1266,8 +1296,8 @@
     },
     {
       "path": "src/ephi/infrastructure/postgresql.py",
-      "bytes": 28855,
-      "sha256": "be055522189120180e3ac1907c65e40f12e1483b72d5b2c1096f7254c2eed386"
+      "bytes": 30921,
+      "sha256": "809862562e5debe8e560c4d709d232455dce2fb30bf2db8f4957be896046baa3"
     },
     {
       "path": "src/ephi/infrastructure/postgresql_o3.py",
@@ -1291,8 +1321,8 @@
     },
     {
       "path": "src/ephi/infrastructure/sqlite.py",
-      "bytes": 24237,
-      "sha256": "602d6ae89aae10246f69721a59f99a0d1acc451738284f835305a013b8b8d464"
+      "bytes": 26715,
+      "sha256": "83a55fe37990229ecc2daa74e239c11ad334d219bf7611fc8183775ed85c5248"
     },
     {
       "path": "src/ephi/py.typed",
@@ -1316,8 +1346,8 @@
     },
     {
       "path": "src/ephi/ui/app.py",
-      "bytes": 75830,
-      "sha256": "806d2b19573fccd5005fa3412aeefe7a382c0ebfef5da17ae9c6aa03634040c3"
+      "bytes": 101849,
+      "sha256": "e134d943b3f0621b11506a45ce9376d04ec03f0036e3be90a839e360c44640ea"
     },
     {
       "path": "src/ephi/ui/provider.py",
@@ -1326,23 +1356,23 @@
     },
     {
       "path": "src/ephi/value/__init__.py",
-      "bytes": 687,
-      "sha256": "3c1ae7fc494e66a7afa70689041102ecb70c25fad9d8e03b86d404a9a89e6e32"
+      "bytes": 1410,
+      "sha256": "94d56b983b47b8f63610789418863bf61b87ad74cc760d6c3a614b507d70806d"
     },
     {
       "path": "src/ephi/value/model.py",
-      "bytes": 5799,
-      "sha256": "8d06e53eaf7af1dbb9c397072e797cba9c9f65ed40b27c1814ccfe48bd528d5b"
+      "bytes": 18135,
+      "sha256": "c73f2d82e6c7fdf563b26da2a3a889fe7e5ea18cd29a4771f8e95c29ee92dc4d"
     },
     {
       "path": "src/ephi/value/repository.py",
-      "bytes": 4226,
-      "sha256": "d3ec39335796d1d42b249ef057190ff345b597170107370c6c17a49ff9ffeef0"
+      "bytes": 6043,
+      "sha256": "6b3f88dff46e630d6f9b7bf97ad0155db559fb4a588434e9d16f92d74e79abd2"
     },
     {
       "path": "src/ephi/value/service.py",
-      "bytes": 3007,
-      "sha256": "95642604c52ff0a18b63e05b4af95e81d7c3b59c4460e2c354493994f691f45b"
+      "bytes": 34824,
+      "sha256": "0dfb910230f800e2f42ad51f596722e8cbf3d532ab7c41bbe62aebab3354ba32"
     },
     {
       "path": "tests/test_advisory_integrity.py",
@@ -1501,8 +1531,18 @@
     },
     {
       "path": "tests/test_o9_operations.py",
-      "bytes": 23529,
-      "sha256": "3e67cc1ef0a013492aec991c93aee92a49c586f36b369a374202bf831898e60d"
+      "bytes": 23642,
+      "sha256": "90b607571e889ebf6c3c64ee7d179bce485b4408b7d9e8187032ec39ac7640bb"
+    },
+    {
+      "path": "tests/test_outcomes_postgresql.py",
+      "bytes": 10400,
+      "sha256": "e526526a9e608cb5fe74f8bcfdafe2ded60b1273ff9bcdc91e26544e1b767b7d"
+    },
+    {
+      "path": "tests/test_outcomes_workflow.py",
+      "bytes": 15650,
+      "sha256": "be4e7595796694f63e7962453d63afdc1b747d7765ebeaa895123647f451fe2a"
     },
     {
       "path": "tests/test_package.py",
@@ -1526,8 +1566,8 @@
     },
     {
       "path": "tests/test_value_integrity.py",
-      "bytes": 9050,
-      "sha256": "cbb5948ce5e233743174e36f09fb035f8d783ea543c8591dbc6480d1e641af8e"
+      "bytes": 10192,
+      "sha256": "db8e6f26b8ed66601f678a20a838b47d637516f0c085d84a4a13a0846153ea2d"
     },
     {
       "path": "tests/test_w0_baseline.py",
@@ -1563,6 +1603,11 @@
       "path": "tools/o10_state_harness.py",
       "bytes": 5064,
       "sha256": "8047759c834921ce4de7d6c5d9b933caaec2554917cc74c8368e7968dbebd922"
+    },
+    {
+      "path": "tools/o7_outcomes_browser_qualification.py",
+      "bytes": 28087,
+      "sha256": "a0ee5a2a7a3e91b86764218a21810ce689d75bddbffb13e25c9e03428ade3dc7"
     },
     {
       "path": "tools/o8_browser_qualification.py",

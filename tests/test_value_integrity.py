@@ -13,6 +13,7 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from ephi.value import (  # noqa: E402
     EventPeriod,
+    EvidenceMaturity,
     InMemoryValueRepository,
     MixedCurrencyError,
     SupersessionConflictError,
@@ -212,6 +213,24 @@ class ValueIntegrityTests(unittest.TestCase):
         self.assertEqual(payload["amount"], "10.00")
         self.assertIsInstance(payload["amount"], str)
         self.assertEqual(json.loads(json.dumps({"amount": Decimal("10")}, default=decimal_json_default))["amount"], "10")
+
+    def test_outcome_metadata_round_trips_without_changing_f04_leaf_selection(self):
+        original = ValueEntry(
+            "benefit-root", "scope-1", "group-1", "benefit", Decimal("0.00"), "USD",
+            JANUARY_1, JANUARY_1, evidence_identity="evidence-hash-v1",
+            cost_model_identity="labor-cost-v1", maturity=EvidenceMaturity.OBSERVED,
+        )
+        correction = ValueEntry(
+            "benefit-correction", "scope-1", "group-1", "benefit", Decimal("-1.25"), "USD",
+            JANUARY_3, JANUARY_3, "benefit-root", "claim-revision-2",
+            "corrected-evidence-hash", "labor-cost-v1", None, EvidenceMaturity.OBSERVED,
+        )
+        self.assertEqual(ValueEntry.from_dict(original.as_dict()), original)
+        self.assertEqual(ValueEntry.from_dict(correction.as_dict()), correction)
+        repository = InMemoryValueRepository((original, correction))
+        self.assertEqual(repository.active_leaves_as_of(JANUARY_2), (original,))
+        self.assertEqual(repository.active_leaves_as_of(JANUARY_4), (correction,))
+        self.assertEqual(correction.as_dict()["amount"], "-1.25")
 
     def test_canonical_runner_passes_f02_f03_f04_f05(self):
         result = run_canonical_integrity_regressions()

@@ -27,6 +27,9 @@ from ephi.application import (
 )
 from ephi.config import RuntimeSettings
 from ephi.infrastructure import PostgreSQLReferenceTransactionAdapter
+from ephi.value import OutcomesService
+from ephi.value.repository import OutcomeAggregateRepository
+from ephi.application.transactions import VersionedAggregateCommandExecutor
 
 from .contracts import (
     BoundedMetrologyObserver,
@@ -62,6 +65,7 @@ class DownstreamComposition:
     source_binding: MetrologySourceBinding
     policy_configuration: PolicyConfiguration
     notification_channel: DeliveryChannelAdapter
+    outcomes: OutcomesService
 
     def process_rca_materialization(self, scope: AccessScope, owner: str) -> RcaMaterializationView | None:
         """Run one queued bounded RCA job through the existing worker authority."""
@@ -195,6 +199,11 @@ def compose_downstream(
             recipients=notifications.recipients,
         )
         source_ingress = SourceSnapshotIngressService(adapter.source_store(), artifact_service)
+        outcomes = OutcomesService(
+            OutcomeAggregateRepository(adapter),
+            VersionedAggregateCommandExecutor(adapter, current_authorization),
+            current_authorization,
+        )
         return DownstreamComposition(
             adapter=adapter,
             runtime_settings=settings,
@@ -215,6 +224,7 @@ def compose_downstream(
             source_binding=source.expected_binding,
             policy_configuration=policy_configuration,
             notification_channel=notifications.channel,
+            outcomes=outcomes,
         )
     except DownstreamFailure:
         if adapter is not None:

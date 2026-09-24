@@ -1,6 +1,10 @@
 """Small canonical temporal value boundary for the F04 integrity slice."""
 
 from .model import (
+    ClaimAttribution,
+    ClaimGroupIdentity,
+    ClaimRevision,
+    EvidenceMaturity,
     EventPeriod,
     MixedCurrencyError,
     SupersessionConflictError,
@@ -8,18 +12,45 @@ from .model import (
     UnknownPredecessorError,
     ValueEntry,
     ValueValidationError,
+    ReviewDecision,
+    ReviewRevision,
     decimal_json_default,
 )
-from .repository import InMemoryValueRepository, ValueRepository
-from .service import ValueService
+from .repository import InMemoryValueRepository, OutcomeAggregateRepository, ValueRepository
+from .service import (
+    ESTIMATED_OPPORTUNITY,
+    OBSERVED_OUTCOME,
+    OPERATING_COST,
+    VALIDATED_BENEFIT,
+    OutcomeCurrencySummary,
+    OutcomeRecord,
+    OutcomesQueryResult,
+    OutcomesService,
+    ValueService,
+)
 
 __all__ = [
     "EventPeriod",
+    "ClaimAttribution",
+    "ClaimGroupIdentity",
+    "ClaimRevision",
+    "EvidenceMaturity",
     "InMemoryValueRepository",
     "MixedCurrencyError",
     "SupersessionConflictError",
     "SupersessionError",
     "UnknownPredecessorError",
+    "ReviewDecision",
+    "ReviewRevision",
+    "OutcomeAggregateRepository",
+    "OutcomeCurrencySummary",
+    "OutcomeRecord",
+    "OutcomesQueryResult",
+    "OutcomesService",
+    "ESTIMATED_OPPORTUNITY",
+    "OBSERVED_OUTCOME",
+    "OPERATING_COST",
+    "VALIDATED_BENEFIT",
     "ValueEntry",
     "ValueRepository",
     "ValueService",
