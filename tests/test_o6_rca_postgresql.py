@@ -181,6 +181,29 @@ class PostgreSQLRcaMaterializationTests(unittest.TestCase):
             self.principal, stale_query, load_current_facts=lambda: advanced(self.principal, stale_query),
         ))
 
+    def test_reopened_cycle_marks_job_stale_without_artifact_publication(self):
+        queued = self.coordinator.enqueue(self.principal, self.query)
+        self.assertEqual(queued.state, RcaMaterializationState.PENDING)
+        artifact_count_before = self.adapter.connection.execute(
+            "SELECT COUNT(*) AS count FROM artifact_catalog WHERE scope_key = %s",
+            (self.scope.canonical_key,),
+        ).fetchone()["count"]
+
+        def reopened(_principal, _query):
+            return replace(self.facts, active_cycle_identity="cycle-after-reopen")
+
+        view = self.coordinator.process_one(
+            self.principal, self.scope, "synthetic-rca-worker-reopened", load_current_facts=reopened,
+        )
+        self.assertEqual(view.state, RcaMaterializationState.STALE)
+        self.assertEqual(self.coordinator.status(self.principal, self.query).state, RcaMaterializationState.STALE)
+        self.assertIsNone(self.coordinator.read_result(self.principal, self.query, load_current_facts=lambda: reopened(self.principal, self.query)))
+        artifact_count_after = self.adapter.connection.execute(
+            "SELECT COUNT(*) AS count FROM artifact_catalog WHERE scope_key = %s",
+            (self.scope.canonical_key,),
+        ).fetchone()["count"]
+        self.assertEqual(artifact_count_after, artifact_count_before)
+
 
 if __name__ == "__main__":
     unittest.main()

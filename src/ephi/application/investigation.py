@@ -306,6 +306,8 @@ class InvestigationEvidenceGroup:
         object.__setattr__(self, "summary", _text(self.summary, "evidence summary"))
         for field in ("event_at", "available_at"):
             object.__setattr__(self, field, _timestamp(getattr(self, field), field))
+        if self.event_at > self.available_at:
+            raise ValidationFailureError("investigation evidence event_at must not follow available_at")
         if self.qualification_state not in {"QUALIFIED", "UNQUALIFIED", "STALE", "UNKNOWN"}:
             raise ValidationFailureError("evidence qualification state is unsupported")
         object.__setattr__(self, "evidence_references", tuple(_identity(item, "evidence reference") for item in _sequence(self.evidence_references, "evidence references", 20)))
@@ -356,6 +358,10 @@ class InvestigationProfile:
         groups = tuple(sorted(self.evidence_groups, key=lambda item: (item.dependence_identity, item.evidence_group_identity)))
         if len({item.evidence_group_identity for item in groups}) != len(groups):
             raise ValidationFailureError("investigation evidence group identities must be unique")
+        if self.change.onset_at is not None and self.change.onset_at > self.knowledge_cutoff:
+            raise ValidationFailureError("investigation change onset must not be after the knowledge cutoff")
+        if any(item.event_at > self.knowledge_cutoff or item.available_at > self.knowledge_cutoff for item in groups):
+            raise ValidationFailureError("investigation evidence groups must be known by the profile cutoff")
         object.__setattr__(self, "evidence_groups", groups)
         object.__setattr__(self, "limitations", tuple(_identity(item, "investigation limitation", maximum=64) for item in _sequence(self.limitations, "investigation limitations", MAX_INVESTIGATION_LIMITATIONS)))
         if self.comparable_profile.source_identity != self.source_identity:
@@ -371,6 +377,13 @@ class InvestigationProfile:
             raise ValidationFailureError("O6.2 family/context must match investigation target")
         if self.rca_dataset.knowledge_cutoff != self.knowledge_cutoff:
             raise ValidationFailureError("RCA cutoff must match the exact investigation profile cutoff")
+        if any(
+            fact.event_at > self.knowledge_cutoff or fact.available_at > self.knowledge_cutoff
+            for fact in self.rca_dataset.evidence
+        ):
+            raise ValidationFailureError("RCA evidence must be known by the investigation profile cutoff")
+        if any(fact.available_at > self.knowledge_cutoff for fact in self.rca_dataset.temporal_facts):
+            raise ValidationFailureError("RCA temporal facts must be available by the investigation profile cutoff")
         hypothesis_ids = {item.hypothesis_identity for item in hypotheses}
         pair_hypothesis_ids = {item.hypothesis_a_id for item in self.planner_facts.unresolved_pairs} | {item.hypothesis_b_id for item in self.planner_facts.unresolved_pairs}
         if hypothesis_ids != pair_hypothesis_ids:
@@ -525,6 +538,12 @@ def _failure_component(exc: BaseException, *, stale: bool = False) -> Investigat
     return InvestigationComponent(ComponentState.STALE if reason == "STALE_VIEW" else ComponentState.FAILED, None, (reason,))
 
 
+def _brief_without_investigation_profile(brief: EpisodeBrief) -> EpisodeBrief:
+    analytical = dict(brief.analytical)
+    analytical.pop(INVESTIGATION_PROFILE_KEY, None)
+    return replace(brief, analytical=analytical)
+
+
 def _rca_source_identities(profile: InvestigationProfile) -> tuple[str, ...]:
     """Bind cohort source IDs plus the exact O6.2 source revision tuple."""
 
@@ -575,6 +594,8 @@ class EpisodeInvestigationQueryService:
         current_profile = InvestigationProfile.from_payload(
             fresh_brief.analytical.get(INVESTIGATION_PROFILE_KEY), revision_known_at=fresh_brief.known_at
         )
+        if current_profile.planner_facts.cycle_id != fresh_loop.active_cycle_id:
+            raise CoherentReadConflictError("investigation profile cycle does not match the current active Episode cycle")
         current_sources = _rca_source_identities(current_profile)
         return RcaCurrentFacts(
             fresh_brief.episode_id, fresh_brief.revision_id, fresh_loop.aggregate_version,
@@ -634,7 +655,7 @@ class EpisodeInvestigationQueryService:
             failed = _failure_component(exc)
             return EpisodeInvestigation(
                 scope, brief.episode_id, brief.revision_id, brief.revision_vector, brief.known_at,
-                workflow_snapshot.active_cycle_id if workflow_snapshot else None, brief, workflow_component, failed,
+                workflow_snapshot.active_cycle_id if workflow_snapshot else None, _brief_without_investigation_profile(brief), workflow_component, failed,
                 InvestigationComponent(ComponentState.UNAVAILABLE, None, ("PROFILE_NOT_QUALIFIED",)),
                 InvestigationComponent(ComponentState.UNAVAILABLE, None, ("PROFILE_NOT_QUALIFIED",)),
                 InvestigationComponent(ComponentState.UNAVAILABLE, None, ("PROFILE_NOT_QUALIFIED",)),
@@ -647,9 +668,15 @@ class EpisodeInvestigationQueryService:
                                         InvestigationComponent(ComponentState.UNAVAILABLE, None, ("WORKFLOW_VIEW_UNAVAILABLE",)),
                                         InvestigationComponent(ComponentState.UNAVAILABLE, None, ("WORKFLOW_VIEW_UNAVAILABLE",)))
 
+        if profile.planner_facts.cycle_id != workflow_snapshot.active_cycle_id:
+            stale = InvestigationComponent(ComponentState.STALE, None, ("EXACT_VIEW_CYCLE_MISMATCH",))
+            return EpisodeInvestigation(
+                scope, brief.episode_id, brief.revision_id, brief.revision_vector, brief.known_at,
+                workflow_snapshot.active_cycle_id, _brief_without_investigation_profile(brief), workflow_component, stale, stale, stale, stale,
+            )
+
         planner_facts = replace(
             profile.planner_facts,
-            cycle_id=workflow_snapshot.active_cycle_id,
             workflow_version=brief.revision_vector.workflow_version,
             viewed_revisions=brief.revision_vector,
         )

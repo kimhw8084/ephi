@@ -8,7 +8,7 @@ raw source rows and feature values do not cross this application boundary.
 from __future__ import annotations
 
 from collections.abc import Callable, Mapping, Sequence
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from datetime import datetime, timezone
 from enum import StrEnum
 import hashlib
@@ -194,6 +194,8 @@ class RcaEvidenceFact:
             object.__setattr__(self, field, _identity(getattr(self, field), field))
         for field in ("event_at", "available_at"):
             object.__setattr__(self, field, _instant(getattr(self, field), field))
+        if self.event_at > self.available_at:
+            raise ValidationFailureError("RCA evidence event_at must not follow available_at")
         object.__setattr__(self, "factor_identities", _identities(self.factor_identities, "factor_identities"))
 
     def as_dict(self) -> dict[str, object]:
@@ -270,6 +272,8 @@ class RcaTemporalFact:
             raise ValidationFailureError("temporal fact kind is unsupported")
         for field in ("event_at", "available_at"):
             object.__setattr__(self, field, _instant(getattr(self, field), field))
+        if self.event_at > self.available_at:
+            raise ValidationFailureError("RCA temporal event_at must not follow available_at")
         if self.linked_event_at is not None:
             object.__setattr__(self, "linked_event_at", _instant(self.linked_event_at, "linked_event_at"))
         if self.claimed_order not in {None, "PRECEDES", "FOLLOWS"}:
@@ -318,6 +322,8 @@ class RcaDataset:
         object.__setattr__(self, "policy_identity", _identity(self.policy_identity, "policy_identity"))
         for field in ("knowledge_cutoff", "onset_at"):
             object.__setattr__(self, field, _instant(getattr(self, field), field))
+        if self.onset_at > self.knowledge_cutoff:
+            raise ValidationFailureError("RCA onset must not be after the knowledge cutoff")
         object.__setattr__(self, "affected_cohort_identity", _identity(self.affected_cohort_identity, "affected_cohort_identity"))
         if not isinstance(self.cohorts, (tuple, list)) or not 1 <= len(self.cohorts) <= MAX_RCA_COHORTS or any(not isinstance(item, RcaCohort) for item in self.cohorts):
             raise ValidationFailureError("RCA cohorts must be a bounded typed sequence")
@@ -330,6 +336,8 @@ class RcaDataset:
             raise ValidationFailureError("RCA affected cohort identity must select the affected cohort")
         if sum(item.role == CohortRole.AFFECTED for item in cohorts) != 1:
             raise ValidationFailureError("RCA requires exactly one affected cohort")
+        if any(item.interval_start > self.knowledge_cutoff or item.interval_end > self.knowledge_cutoff for item in cohorts):
+            raise ValidationFailureError("RCA cohort intervals must not extend beyond the knowledge cutoff")
         object.__setattr__(self, "cohorts", cohorts)
         if not isinstance(self.evidence, (tuple, list)) or len(self.evidence) > MAX_RCA_EVIDENCE_FACTS or any(not isinstance(item, RcaEvidenceFact) for item in self.evidence):
             raise ValidationFailureError("RCA evidence facts exceed the bounded profile contract")
@@ -775,7 +783,7 @@ def _temporal_contradictions(dataset: RcaDataset, cutoff: datetime) -> tuple[Tem
     affected = next(item for item in dataset.cohorts if item.cohort_identity == dataset.affected_cohort_identity)
     for fact in dataset.temporal_facts:
         if fact.available_at > cutoff:
-            result.append(TemporalContradiction(fact.fact_identity, "FACT_NOT_AVAILABLE_AT_CUTOFF"))
+            continue
         if fact.kind == TemporalFactKind.CANDIDATE_CHANGE and fact.event_at > dataset.onset_at:
             result.append(TemporalContradiction(fact.fact_identity, "CANDIDATE_CHANGE_AFTER_OBSERVED_ONSET"))
         elif fact.kind == TemporalFactKind.CONTROL_REGIME_START and fact.event_at > affected.interval_end:
@@ -868,16 +876,36 @@ class RcaAnalysisService:
             raise ValidationFailureError("RCA current facts loader returned an unsupported value")
         dataset = self.validate_current_facts(query, current)
 
-        sample_count = len(dataset.evidence)
-        evidence_count = sample_count + len(dataset.temporal_facts) + len(dataset.exclusions)
-        control_cohorts = tuple(item for item in dataset.cohorts if item.role == CohortRole.CONTROL)
-        included_cohort_ids = {dataset.affected_cohort_identity, *(item.cohort_identity for item in control_cohorts)}
-        profile_sources = {item.source_identity for item in dataset.cohorts}
-        profile_sources.update(item.source_identity for item in dataset.evidence)
-        profile_sources.update(item.source_identity for item in dataset.temporal_facts)
+        future_evidence = tuple(
+            fact for fact in dataset.evidence
+            if fact.event_at > query.knowledge_cutoff or fact.available_at > query.knowledge_cutoff
+        )
+        future_temporal_facts = tuple(fact for fact in dataset.temporal_facts if fact.available_at > query.knowledge_cutoff)
+        visible_evidence = tuple(
+            fact for fact in dataset.evidence
+            if fact.event_at <= query.knowledge_cutoff and fact.available_at <= query.knowledge_cutoff
+        )
+        visible_temporal_facts = tuple(fact for fact in dataset.temporal_facts if fact.available_at <= query.knowledge_cutoff)
+        visible_limitations = set(dataset.limitation_codes)
+        if future_temporal_facts:
+            visible_limitations.add("TEMPORAL_FACTS_EXCLUDED_AFTER_CUTOFF")
+        analysis_dataset = replace(
+            dataset,
+            evidence=visible_evidence,
+            temporal_facts=visible_temporal_facts,
+            limitation_codes=tuple(sorted(visible_limitations)),
+        )
+
+        sample_count = len(analysis_dataset.evidence)
+        evidence_count = sample_count + len(analysis_dataset.temporal_facts) + len(analysis_dataset.exclusions)
+        control_cohorts = tuple(item for item in analysis_dataset.cohorts if item.role == CohortRole.CONTROL)
+        included_cohort_ids = {analysis_dataset.affected_cohort_identity, *(item.cohort_identity for item in control_cohorts)}
+        profile_sources = {item.source_identity for item in analysis_dataset.cohorts}
+        profile_sources.update(item.source_identity for item in analysis_dataset.evidence)
+        profile_sources.update(item.source_identity for item in analysis_dataset.temporal_facts)
         if not profile_sources.issubset(query.source_identities):
             raise CoherentReadConflictError("RCA evidence source identity is outside the bound query")
-        input_identity = hashlib.sha256(canonical_json({"query": query.as_dict(), "dataset": dataset.as_dict()}).encode("utf-8")).hexdigest()
+        input_identity = hashlib.sha256(canonical_json({"query": query.as_dict(), "dataset": analysis_dataset.as_dict()}).encode("utf-8")).hexdigest()
         if sample_count > sample_limit or evidence_count > evidence_limit:
             if materialized:
                 raise ValidationFailureError("RCA facts exceed the durable materialization contract")
@@ -886,10 +914,14 @@ class RcaAnalysisService:
                 query.identity, input_identity, result_identity, query.episode_identity,
                 query.analytical_revision_identity, query.workflow_version, query.active_cycle_identity,
                 query.knowledge_cutoff, query.source_identities, query.policy_identity, query.schema_identity,
-                RcaState.MATERIALIZATION_REQUIRED, ControlQuality.INSUFFICIENT, dataset.affected_cohort_identity,
-                tuple(item.cohort_identity for item in control_cohorts), dataset.cohorts, (), None, None, None,
+                RcaState.MATERIALIZATION_REQUIRED, ControlQuality.INSUFFICIENT, analysis_dataset.affected_cohort_identity,
+                tuple(item.cohort_identity for item in control_cohorts), analysis_dataset.cohorts, (), None, None, None,
                 (), ("SYNCHRONOUS_BOUND_EXCEEDED",), (), (), (), (),
-                tuple(sorted(set(dataset.limitation_codes) | {"SYNCHRONOUS_BOUND_EXCEEDED"})), dataset.coverage,
+                tuple(sorted(
+                    set(analysis_dataset.limitation_codes)
+                    | {"SYNCHRONOUS_BOUND_EXCEEDED"}
+                    | ({"EVIDENCE_EXCLUDED_AFTER_CUTOFF"} if future_evidence else set())
+                )), analysis_dataset.coverage,
             )
         grouped_by_cohort: dict[str, dict[str, set[str]]] = {}
         all_future_exclusions: list[RcaExclusion] = []
@@ -897,8 +929,9 @@ class RcaAnalysisService:
         for fact in dataset.evidence:
             if fact.cohort_identity not in included_cohort_ids:
                 continue
-            if fact.available_at > query.knowledge_cutoff:
-                all_future_exclusions.append(RcaExclusion(fact.evidence_identity, fact.cohort_identity, "EVIDENCE_AFTER_CUTOFF"))
+            if fact.event_at > query.knowledge_cutoff or fact.available_at > query.knowledge_cutoff:
+                reason = "EVIDENCE_EVENT_AFTER_CUTOFF" if fact.event_at > query.knowledge_cutoff else "EVIDENCE_AFTER_CUTOFF"
+                all_future_exclusions.append(RcaExclusion(fact.evidence_identity, fact.cohort_identity, reason))
                 continue
             group_key = (fact.cohort_identity, fact.dependence_identity)
             prior_sample = sample_for_group.setdefault(group_key, fact.sample_identity)
@@ -916,7 +949,7 @@ class RcaAnalysisService:
                 control_groups.setdefault(group_id, set()).update(factors)
         affected_count = len(affected_groups)
         control_count = len(control_groups)
-        affected_cohort = next(item for item in dataset.cohorts if item.cohort_identity == dataset.affected_cohort_identity)
+        affected_cohort = next(item for item in analysis_dataset.cohorts if item.cohort_identity == analysis_dataset.affected_cohort_identity)
         mismatch_values = {item for cohort in control_cohorts for item in cohort.mismatches}
         for cohort in control_cohorts:
             if cohort.context_identity != affected_cohort.context_identity:
@@ -955,15 +988,15 @@ class RcaAnalysisService:
                 ))
             associations = tuple(values)
 
-        exclusions = tuple(sorted((*dataset.exclusions, *future_exclusions), key=lambda item: (item.cohort_identity, item.identity, item.reason_code)))
+        exclusions = tuple(sorted((*analysis_dataset.exclusions, *future_exclusions), key=lambda item: (item.cohort_identity, item.identity, item.reason_code)))
         included_evidence = tuple(
             RcaEvidenceTiming(item.evidence_identity, item.cohort_identity, item.source_identity, item.event_at, item.available_at)
-            for item in dataset.evidence
-            if item.cohort_identity in included_cohort_ids and item.available_at <= query.knowledge_cutoff
+            for item in analysis_dataset.evidence
+            if item.cohort_identity in included_cohort_ids
         )
         included_evidence_count = len(included_evidence)
-        temporal = _temporal_contradictions(dataset, query.knowledge_cutoff)
-        limitations = tuple(sorted(set(dataset.limitation_codes) | ({"PARTIAL_COVERAGE"} if dataset.coverage != "COMPLETE" else set()) | ({"EVIDENCE_EXCLUDED_AFTER_CUTOFF"} if future_exclusions else set())))
+        temporal = _temporal_contradictions(analysis_dataset, query.knowledge_cutoff)
+        limitations = tuple(sorted(set(analysis_dataset.limitation_codes) | ({"PARTIAL_COVERAGE"} if analysis_dataset.coverage != "COMPLETE" else set()) | ({"EVIDENCE_EXCLUDED_AFTER_CUTOFF"} if future_exclusions else set())))
         body = {
             "query_identity": query.identity, "input_identity": input_identity,
             "episode_identity": query.episode_identity, "analytical_revision_identity": query.analytical_revision_identity,
@@ -971,9 +1004,9 @@ class RcaAnalysisService:
             "knowledge_cutoff": query.knowledge_cutoff, "source_identities": list(query.source_identities),
             "policy_identity": query.policy_identity, "schema_identity": query.schema_identity,
             "state": state.value,
-            "control_quality": quality.value, "affected_cohort_identity": dataset.affected_cohort_identity,
+            "control_quality": quality.value, "affected_cohort_identity": analysis_dataset.affected_cohort_identity,
             "control_cohort_identities": [item.cohort_identity for item in control_cohorts],
-            "cohorts": [item.as_dict() for item in dataset.cohorts],
+            "cohorts": [item.as_dict() for item in analysis_dataset.cohorts],
             "included_evidence": [item.as_dict() for item in included_evidence],
             "affected_independent_group_count": affected_count, "control_independent_group_count": control_count,
             "included_evidence_count": included_evidence_count,
@@ -981,7 +1014,7 @@ class RcaAnalysisService:
             "matching_dimensions": list(matching), "mismatches": list(mismatches),
             "associations": [item.as_dict() for item in associations],
             "temporal_contradictions": [item.as_dict() for item in temporal],
-            "limitation_codes": list(limitations), "coverage": dataset.coverage,
+            "limitation_codes": list(limitations), "coverage": analysis_dataset.coverage,
         }
         result_reasons = tuple(sorted(set(reasons) | {reason for cohort in control_cohorts for reason in cohort.reason_codes}))
         body["reason_codes"] = list(result_reasons)
@@ -990,11 +1023,11 @@ class RcaAnalysisService:
             query.identity, input_identity, result_identity, query.episode_identity,
             query.analytical_revision_identity, query.workflow_version, query.active_cycle_identity,
             query.knowledge_cutoff, query.source_identities, query.policy_identity, query.schema_identity,
-            state, quality, dataset.affected_cohort_identity,
-            tuple(item.cohort_identity for item in control_cohorts), dataset.cohorts, included_evidence,
+            state, quality, analysis_dataset.affected_cohort_identity,
+            tuple(item.cohort_identity for item in control_cohorts), analysis_dataset.cohorts, included_evidence,
             affected_count, control_count,
             included_evidence_count, exclusions, result_reasons, matching, mismatches,
-            associations, temporal, limitations, dataset.coverage,
+            associations, temporal, limitations, analysis_dataset.coverage,
         )
 
 

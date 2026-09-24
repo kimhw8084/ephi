@@ -1,0 +1,8 @@
+test_large_rca_materializes_and_survives_worker_and_adapter_restart (tests.test_o6_rca_postgresql.PostgreSQLRcaMaterializationTests.test_large_rca_materializes_and_survives_worker_and_adapter_restart) ... ok
+test_reopened_cycle_marks_job_stale_without_artifact_publication (tests.test_o6_rca_postgresql.PostgreSQLRcaMaterializationTests.test_reopened_cycle_marks_job_stale_without_artifact_publication) ... ok
+test_stale_revision_cannot_publish_materialized_result (tests.test_o6_rca_postgresql.PostgreSQLRcaMaterializationTests.test_stale_revision_cannot_publish_materialized_result) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 1.313s
+
+OK

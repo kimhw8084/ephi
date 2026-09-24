@@ -2,9 +2,11 @@
 
 from dataclasses import replace
 from datetime import datetime, timedelta, timezone
+from decimal import Decimal
 import hashlib
 from pathlib import Path
 import sys
+from types import SimpleNamespace
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -12,10 +14,13 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from ephi.application import (
     AccessScope,
+    ComponentState,
     ControlQuality,
     CohortEligibility,
     CohortRole,
     EPISODE_REVISION_CUTOFF,
+    EPISODE_READ_CAPABILITY,
+    EpisodeBrief,
     EpisodeInvestigationQueryService,
     InvestigationProfile,
     MutableCurrentAuthorizationAuthority,
@@ -37,6 +42,7 @@ from ephi.application import (
     canonical_json,
 )
 from ephi.application.comparable_history import (
+    COMPARABLE_PROFILE_KEY,
     COMPARABLE_PROFILE_SCHEMA,
     ComparableCaseProfile,
     CurationState,
@@ -48,10 +54,13 @@ from ephi.application.comparable_history import (
 from ephi.application.planner import (
     CapabilityFact,
     CapabilityState,
+    CheckTemplateCatalog,
     DeadlineState,
     DecisionDeadlineFact,
     EvidenceDependenceGroup,
     PlannerReadFacts,
+    PlannerPolicy,
+    PairWeight,
     QualificationFact,
     QualificationState,
     TargetContext,
@@ -109,7 +118,7 @@ def _dataset(*, control_eligibility=CohortEligibility.QUALIFIED, controls=3, aff
         ))
     if future:
         facts.append(RcaEvidenceFact(
-            "future-evidence", "peer-controls", "wafer-c-future", "control-run-future", SOURCE_IDENTITY,
+            "future-evidence", "peer-controls", "wafer-c-future", "control-run-future", "future-private-source",
             NOW - timedelta(minutes=5), NOW + timedelta(seconds=1), "synthetic-recipe-r47", "mean-cd", "nm",
             ("future-factor",),
         ))
@@ -160,6 +169,86 @@ def _operation(dataset=None):
     return principal, authority, query, current
 
 
+def _cycle_profile(cycle_id="cycle-current"):
+    from examples.synthetic_downstream.flagship import comparable_profile, flagship_investigation_payload
+    from ephi.application.investigation import investigation_policy_identity
+
+    policy = PlannerPolicy("cycle-test-policy", "v1", (PairWeight("pair-cycle-test", Decimal("1")),))
+    catalog = CheckTemplateCatalog("cycle-test-catalog", "v1", ())
+    policy_id = investigation_policy_identity(policy, catalog)
+    vector = RevisionVector("analysis-cycle-test", None, None, 9, None, "qualification-cycle-test")
+    source = HistoricalSourceIdentity("source-cycle-test", "revision-cycle-test", "a" * 64, "b" * 64)
+    payload = flagship_investigation_payload(
+        episode_id="episode-cycle-test", revision_vector=vector, cycle_id=cycle_id, source=source,
+        comparables=comparable_profile(
+            source, feature_values={"recipe": "R47"}, case_identity="cycle-test",
+        ),
+        policy_identity=policy_id,
+    )
+    profile = InvestigationProfile.from_payload(payload, revision_known_at=NOW)
+    return profile, policy, catalog
+
+
+def _cycle_service(profile, policy, catalog, active_cycle_id, current_workflow_version, calls):
+    from ephi.application.investigation import INVESTIGATION_PROFILE_KEY, EpisodeInvestigationQueryService
+
+    scope = AccessScope(
+        "cycle-test-scope", site_id="synthetic-site", family_id=profile.target.family_identity,
+    )
+    current_vector = replace(profile.planner_facts.viewed_revisions, workflow_version=current_workflow_version)
+    comparable = profile.as_dict()[COMPARABLE_PROFILE_KEY]
+    brief = EpisodeBrief(
+        profile.planner_facts.episode_id, "revision-cycle-test", NOW, NOW,
+        {INVESTIGATION_PROFILE_KEY: profile.as_dict(), COMPARABLE_PROFILE_KEY: comparable},
+        {"work_state": "OPEN"}, current_vector, {"source": "READY"},
+    )
+    workflow = SimpleNamespace(
+        aggregate_version=current_workflow_version,
+        scope_key=scope.canonical_key,
+        revision_vector=current_vector,
+        active_cycle_id=active_cycle_id,
+        state={"decision_loop": {"checks": [{"check_id": "check-cycle-test", "state": "REQUESTED"}]}},
+    )
+
+    class Briefs:
+        def get_episode_brief(self, principal, scope, episode_id):
+            return brief
+
+    class Workflows:
+        def get_decision_loop(self, principal, scope, episode_id):
+            return workflow
+
+    class Planner:
+        def plan(self, *args, **kwargs):
+            calls["planner"] = kwargs["facts"]
+            calls["expected_workflow_version"] = kwargs["expected_workflow_version"]
+            calls["planner_current_check_states"] = tuple(
+                item["state"] for item in workflow.state["decision_loop"]["checks"]
+            )
+            return SimpleNamespace(plan_identity="plan-cycle-test")
+
+    class History:
+        def retrieve(self, principal, query, *, page_size):
+            calls["history"] = query
+            return SimpleNamespace(state=SimpleNamespace(value="READY"), result_identity="history-cycle-test")
+
+    class Rca:
+        def analyze(self, principal, query, *, load_current_facts):
+            calls["rca_query"] = query
+            calls["rca_facts"] = load_current_facts()
+            return SimpleNamespace(state=RcaState.READY, result_identity="rca-cycle-test", reason_codes=())
+
+    principal = Principal(
+        "cycle-test-reader", (EPISODE_READ_CAPABILITY,), (scope,), 1, 1,
+    )
+    authorization = MutableCurrentAuthorizationAuthority(principal)
+    service = EpisodeInvestigationQueryService(
+        Briefs(), Workflows(), Planner(), authorization, policy, catalog,
+        Rca(), History(),
+    )
+    return service, principal, brief, workflow, scope
+
+
 class RcaContractTests(unittest.TestCase):
     def test_identical_inputs_have_restart_stable_query_and_result_identities(self):
         first = _operation()
@@ -202,6 +291,37 @@ class RcaContractTests(unittest.TestCase):
         self.assertEqual([row.reason_code for row in result.excluded_evidence], ["EVIDENCE_AFTER_CUTOFF"])
         self.assertIn("EVIDENCE_EXCLUDED_AFTER_CUTOFF", result.limitation_codes)
         self.assertNotIn("future-factor", canonical_json(result.as_dict()))
+        self.assertNotIn("future-private-source", canonical_json(result.as_dict()))
+
+    def test_future_event_cannot_contribute_even_under_adversarial_typed_input(self):
+        principal, authority, query, current = _operation()
+        future_event = RcaEvidenceFact(
+            "future-event-evidence", "peer-controls", "future-sample", "future-run", SOURCE_IDENTITY,
+            NOW + timedelta(seconds=1), NOW + timedelta(seconds=2),
+            "synthetic-recipe-r47", "mean-cd", "nm", ("future-event-factor",),
+        )
+        dataset = replace(current.dataset, evidence=(*current.dataset.evidence, future_event))
+        current = replace(current, dataset=dataset)
+        # Bypass the dataclass constructor to model a corrupted in-memory typed
+        # object. The analyzer must still apply the exact query cutoff.
+        adversarial = tuple(fact for fact in dataset.evidence if fact.dependence_identity == "affected-run-0")
+        self.assertEqual(len(adversarial), 2)
+        for fact in adversarial:
+            object.__setattr__(fact, "event_at", NOW + timedelta(seconds=1))
+            object.__setattr__(fact, "factor_identities", ("adversarial-future-factor",))
+        result = RcaAnalysisService(authority).analyze(principal, query, load_current_facts=lambda: current)
+        self.assertEqual(result.affected_independent_group_count, 2)
+        self.assertEqual(result.control_independent_group_count, 3)
+        self.assertIn(
+            (adversarial[0].evidence_identity, "EVIDENCE_EVENT_AFTER_CUTOFF"),
+            {(item.identity, item.reason_code) for item in result.excluded_evidence},
+        )
+        self.assertIn(
+            (future_event.evidence_identity, "EVIDENCE_EVENT_AFTER_CUTOFF"),
+            {(item.identity, item.reason_code) for item in result.excluded_evidence},
+        )
+        self.assertNotIn("adversarial-future-factor", canonical_json(result.as_dict()))
+        self.assertNotIn("future-event-factor", canonical_json(result.as_dict()))
 
     def test_dependent_repeated_measurements_do_not_inflate_independent_counts(self):
         principal, authority, query, current = _operation()
@@ -251,6 +371,47 @@ class RcaContractTests(unittest.TestCase):
             ],
         )
 
+    def test_unavailable_temporal_fact_is_filtered_without_identity_or_content_disclosure(self):
+        base = _dataset()
+        dataset = replace(base, temporal_facts=(
+            *base.temporal_facts,
+            RcaTemporalFact(
+                "future-private-temporal-identity", TemporalFactKind.CANDIDATE_CHANGE,
+                NOW + timedelta(seconds=1), NOW + timedelta(seconds=2), "future-private-source",
+            ),
+        ))
+        principal, authority, query, current = _operation(dataset)
+        # The future temporal source is intentionally outside the as-known source
+        # inventory and must not cause a source-mismatch disclosure either.
+        result = RcaAnalysisService(authority).analyze(principal, query, load_current_facts=lambda: current)
+        serialized = canonical_json(result.as_dict())
+        self.assertNotIn("future-private-temporal-identity", serialized)
+        self.assertNotIn("future-private-source", serialized)
+        self.assertIn("TEMPORAL_FACTS_EXCLUDED_AFTER_CUTOFF", result.limitation_codes)
+        self.assertNotIn("FACT_NOT_AVAILABLE_AT_CUTOFF", {item.reason_code for item in result.temporal_contradictions})
+
+    def test_timestamp_physical_consistency_and_cutoff_boundaries_fail_closed(self):
+        with self.assertRaises(ValidationFailureError):
+            RcaEvidenceFact(
+                "reversed-evidence", "affected", "sample", "run", SOURCE_IDENTITY,
+                NOW, NOW - timedelta(seconds=1), "synthetic-recipe-r47", "mean-cd", "nm", (),
+            )
+        with self.assertRaises(ValidationFailureError):
+            RcaTemporalFact(
+                "reversed-temporal", TemporalFactKind.CANDIDATE_CHANGE,
+                NOW, NOW - timedelta(seconds=1), SOURCE_IDENTITY,
+            )
+        with self.assertRaises(ValidationFailureError):
+            replace(_dataset(), onset_at=NOW + timedelta(seconds=1))
+        base = _dataset()
+        for future_cohort in (
+            replace(base.cohorts[1], interval_end=NOW + timedelta(seconds=1)),
+            replace(base.cohorts[1], interval_start=NOW + timedelta(seconds=1), interval_end=NOW + timedelta(seconds=2)),
+        ):
+            with self.subTest(future_cohort=future_cohort):
+                with self.assertRaises(ValidationFailureError):
+                    replace(base, cohorts=(base.cohorts[0], future_cohort))
+
     def test_large_synchronous_population_requests_materialization_without_truncation(self):
         base = _dataset(controls=0)
         affected = base.cohorts[0]
@@ -278,6 +439,111 @@ class RcaContractTests(unittest.TestCase):
 
 
 class InvestigationProfileContractTests(unittest.TestCase):
+    def test_investigation_observations_and_onset_must_be_at_or_before_profile_cutoff(self):
+        profile, _policy, _catalog = _cycle_profile()
+        group = profile.evidence_groups[0]
+        with self.assertRaises(ValidationFailureError):
+            replace(group, event_at=NOW, available_at=NOW - timedelta(seconds=1))
+        with self.assertRaises(ValidationFailureError):
+            replace(
+                profile,
+                evidence_groups=(replace(group, event_at=NOW + timedelta(seconds=1), available_at=NOW + timedelta(seconds=2)), *profile.evidence_groups[1:]),
+            )
+        with self.assertRaises(ValidationFailureError):
+            replace(
+                profile,
+                evidence_groups=(replace(group, available_at=NOW + timedelta(seconds=1)), *profile.evidence_groups[1:]),
+            )
+        with self.assertRaises(ValidationFailureError):
+            replace(profile, change=replace(profile.change, onset_at=NOW + timedelta(seconds=1)))
+
+    def test_immutable_profile_rejects_future_rca_evidence_and_unavailable_temporal_facts(self):
+        profile, _policy, _catalog = _cycle_profile()
+        future_evidence = RcaEvidenceFact(
+            "future-profile-evidence", profile.rca_dataset.affected_cohort_identity,
+            "future-profile-sample", "future-profile-run", "source-cycle-test",
+            NOW + timedelta(seconds=1), NOW + timedelta(seconds=2),
+            profile.target.context_identity, profile.target.characteristic_identity,
+            profile.target.unit_identity, ("future-factor",),
+        )
+        future_temporal = RcaTemporalFact(
+            "future-profile-temporal", TemporalFactKind.CANDIDATE_CHANGE,
+            NOW + timedelta(seconds=1), NOW + timedelta(seconds=2), "source-cycle-test",
+        )
+        with self.assertRaises(ValidationFailureError):
+            replace(
+                profile,
+                rca_dataset=replace(profile.rca_dataset, evidence=(*profile.rca_dataset.evidence, future_evidence)),
+            )
+        with self.assertRaises(ValidationFailureError):
+            replace(
+                profile,
+                rca_dataset=replace(profile.rca_dataset, temporal_facts=(*profile.rca_dataset.temporal_facts, future_temporal)),
+            )
+
+    def test_same_active_cycle_accepts_newer_o5_version_without_rebinding_profile_cycle(self):
+        profile, policy, catalog = _cycle_profile("cycle-current")
+        calls = {}
+        service, principal, _brief, workflow, scope = _cycle_service(
+            profile, policy, catalog, "cycle-current", 10, calls,
+        )
+        view = service.get_episode_investigation(principal, scope, profile.planner_facts.episode_id)
+        self.assertEqual(workflow.state["decision_loop"]["checks"][0]["state"], "REQUESTED")
+        self.assertEqual(view.profile.state, ComponentState.READY)
+        self.assertEqual(calls["planner"].cycle_id, "cycle-current")
+        self.assertEqual(calls["planner"].workflow_version, 10)
+        self.assertEqual(calls["planner"].viewed_revisions.workflow_version, 10)
+        self.assertEqual(calls["expected_workflow_version"], 10)
+        self.assertEqual(calls["planner_current_check_states"], ("REQUESTED",))
+        self.assertEqual(calls["history"].cycle_id, "cycle-current")
+        self.assertEqual(calls["history"].workflow_version, 10)
+        self.assertEqual(calls["rca_query"].active_cycle_identity, "cycle-current")
+        self.assertEqual(calls["rca_facts"].active_cycle_identity, "cycle-current")
+
+    def test_reopened_cycle_marks_profile_stale_and_does_not_run_planner_history_or_rca(self):
+        profile, policy, catalog = _cycle_profile("cycle-before-reopen")
+        calls = {}
+        service, principal, _brief, workflow, scope = _cycle_service(
+            profile, policy, catalog, "cycle-after-reopen", 10, calls,
+        )
+        view = service.get_episode_investigation(principal, scope, profile.planner_facts.episode_id)
+        self.assertEqual(view.active_cycle_id, "cycle-after-reopen")
+        for component in (view.profile, view.planner, view.comparable_history, view.rca):
+            self.assertEqual(component.state, ComponentState.STALE)
+            self.assertEqual(component.reason_codes, ("EXACT_VIEW_CYCLE_MISMATCH",))
+        self.assertEqual(calls, {})
+        self.assertNotIn("measurement-head-drift", canonical_json(view.as_dict()))
+
+        query = RcaQuery(
+            scope, profile.planner_facts.episode_id, view.revision_id, 10,
+            "cycle-before-reopen", profile.knowledge_cutoff, ("source-cycle-test",),
+            profile.rca_dataset.policy_identity, profile.rca_dataset.schema_identity,
+        )
+        with self.assertRaises(CoherentReadConflictError):
+            service.load_current_rca_facts(principal, query)
+        self.assertEqual(calls, {})
+
+    def test_future_profile_temporal_identity_is_not_returned_when_profile_fails_validation(self):
+        from ephi.application.investigation import INVESTIGATION_PROFILE_KEY
+
+        profile, policy, catalog = _cycle_profile()
+        calls = {}
+        service, principal, brief, _workflow, scope = _cycle_service(
+            profile, policy, catalog, "cycle-current", 9, calls,
+        )
+        raw_profile = profile.as_dict()
+        raw_profile["rca"]["temporal_facts"].append(RcaTemporalFact(
+            "unavailable-profile-temporal-id", TemporalFactKind.CANDIDATE_CHANGE,
+            NOW + timedelta(seconds=1), NOW + timedelta(seconds=2), "unavailable-profile-source",
+        ).as_dict())
+        brief.analytical[INVESTIGATION_PROFILE_KEY] = raw_profile
+        view = service.get_episode_investigation(principal, scope, profile.planner_facts.episode_id)
+        serialized = canonical_json(view.as_dict())
+        self.assertEqual(view.profile.state, ComponentState.FAILED)
+        self.assertNotIn("unavailable-profile-temporal-id", serialized)
+        self.assertNotIn("unavailable-profile-source", serialized)
+        self.assertNotIn("planner", calls)
+
     def test_legacy_episode_without_richer_profile_returns_truthful_unavailable_components(self):
         from types import SimpleNamespace
         from ephi.application import ComponentState, EpisodeBrief
