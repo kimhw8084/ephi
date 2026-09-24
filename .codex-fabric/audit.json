@@ -1,0 +1,627 @@
+{
+  "accepted_at": "2026-09-24T22:50:55Z",
+  "changed_files": [
+    {
+      "additions": 4,
+      "deletions": 0,
+      "path": ".github/workflows/package.yml",
+      "status": "M"
+    },
+    {
+      "additions": 27,
+      "deletions": 0,
+      "path": "11_Developer_Start.md",
+      "status": "M"
+    },
+    {
+      "additions": 32,
+      "deletions": 0,
+      "path": "13_Package_Review.md",
+      "status": "M"
+    },
+    {
+      "additions": 38,
+      "deletions": 0,
+      "path": "README.md",
+      "status": "M"
+    },
+    {
+      "additions": 702,
+      "deletions": 0,
+      "path": "evidence/u2/chg-205-u2.2-o7.1/qualification.json",
+      "status": "A"
+    },
+    {
+      "additions": 658,
+      "deletions": 0,
+      "path": "evidence/u2/chg-205-u2.2-o7.1/review-fix1/qualification.json",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-205-u2.2-o7.1/review-fix1/screenshots/outcomes-1440x900-reviewed.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-205-u2.2-o7.1/review-fix1/screenshots/outcomes-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-205-u2.2-o7.1/review-fix1/screenshots/outcomes-390x844.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-205-u2.2-o7.1/screenshots/outcomes-1440x900-reviewed.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-205-u2.2-o7.1/screenshots/outcomes-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-205-u2.2-o7.1/screenshots/outcomes-390x844.png",
+      "status": "A"
+    },
+    {
+      "additions": 94,
+      "deletions": 0,
+      "path": "examples/synthetic_downstream/outcomes.py",
+      "status": "A"
+    },
+    {
+      "additions": 3,
+      "deletions": 0,
+      "path": "examples/synthetic_downstream/provider.py",
+      "status": "M"
+    },
+    {
+      "additions": 104,
+      "deletions": 34,
+      "path": "manifest.json",
+      "status": "M"
+    },
+    {
+      "additions": 7,
+      "deletions": 0,
+      "path": "migrations/009_o7_outcome_group_identity.sql",
+      "status": "A"
+    },
+    {
+      "additions": 91,
+      "deletions": 0,
+      "path": "migrations/010_o7_normalized_value_revisions.sql",
+      "status": "A"
+    },
+    {
+      "additions": 27,
+      "deletions": 0,
+      "path": "src/ephi/application/storage.py",
+      "status": "M"
+    },
+    {
+      "additions": 80,
+      "deletions": 20,
+      "path": "src/ephi/application/transactions.py",
+      "status": "M"
+    },
+    {
+      "additions": 10,
+      "deletions": 0,
+      "path": "src/ephi/downstream/composition.py",
+      "status": "M"
+    },
+    {
+      "additions": 205,
+      "deletions": 0,
+      "path": "src/ephi/infrastructure/postgresql.py",
+      "status": "M"
+    },
+    {
+      "additions": 249,
+      "deletions": 0,
+      "path": "src/ephi/infrastructure/sqlite.py",
+      "status": "M"
+    },
+    {
+      "additions": 377,
+      "deletions": 2,
+      "path": "src/ephi/ui/app.py",
+      "status": "M"
+    },
+    {
+      "additions": 35,
+      "deletions": 2,
+      "path": "src/ephi/value/__init__.py",
+      "status": "M"
+    },
+    {
+      "additions": 292,
+      "deletions": 3,
+      "path": "src/ephi/value/model.py",
+      "status": "M"
+    },
+    {
+      "additions": 83,
+      "deletions": 1,
+      "path": "src/ephi/value/repository.py",
+      "status": "M"
+    },
+    {
+      "additions": 878,
+      "deletions": 3,
+      "path": "src/ephi/value/service.py",
+      "status": "M"
+    },
+    {
+      "additions": 3,
+      "deletions": 1,
+      "path": "tests/test_o9_operations.py",
+      "status": "M"
+    },
+    {
+      "additions": 357,
+      "deletions": 0,
+      "path": "tests/test_outcomes_postgresql.py",
+      "status": "A"
+    },
+    {
+      "additions": 473,
+      "deletions": 0,
+      "path": "tests/test_outcomes_workflow.py",
+      "status": "A"
+    },
+    {
+      "additions": 19,
+      "deletions": 0,
+      "path": "tests/test_value_integrity.py",
+      "status": "M"
+    },
+    {
+      "additions": 584,
+      "deletions": 0,
+      "path": "tools/o7_outcomes_browser_qualification.py",
+      "status": "A"
+    }
+  ],
+  "checks": [
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest tests.test_outcomes_workflow tests.test_value_integrity -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n '\"'^    def (get_outcome_group|list_outcome_groups|list_aggregates)'\"' src/ephi/infrastructure/postgresql.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '625,700p' src/ephi/infrastructure/sqlite.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk env EPHI_TEST_POSTGRES_DSN=postgresql:///ephi_test18 python3 -m unittest tests.test_outcomes_postgresql -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m compileall -q src tests && rtk python3 -m unittest tests.test_outcomes_workflow tests.test_value_integrity tests.test_o2_transactions -v && rtk env EPHI_TEST_POSTGRES_DSN=postgresql:///ephi_test18 python3 -m unittest tests.test_outcomes_postgresql -v'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk env EPHI_TEST_POSTGRES_DSN=postgresql:///ephi_test18 python3 -m unittest tests.test_outcomes_postgresql -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n 'ArgumentParser|add_argument|evidence|screenshot|qualification.json|postgres|main\\\\(' tools/o7_outcomes_browser_qualification.py && rtk sed -n '1,180p' tools/o7_outcomes_browser_qualification.py && rtk sed -n '500,575p' tools/o7_outcomes_browser_qualification.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '140,305p' tools/o7_outcomes_browser_qualification.py && rtk sed -n '305,455p' tools/o7_outcomes_browser_qualification.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n 'state\\\\[\\\"value_entries\\\"\\\\]|state\\\\.get\\\\(\\\"value_entries\\\"\\\\)' src tests tools examples\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk env EPHI_TEST_POSTGRES_DSN=postgresql:///ephi_test18 python3 tools/o7_outcomes_browser_qualification.py --output evidence/u2/chg-205-u2.2-o7.1/review-fix1/qualification.json --artifacts evidence/u2/chg-205-u2.2-o7.1/review-fix1/screenshots'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import json; p=json.load(open(\\\"evidence/u2/chg-205-u2.2-o7.1/review-fix1/qualification.json\\\")); print(json.dumps({\\\"status\\\":p[\\\"status\\\"],\\\"candidate_input_digest\\\":p[\\\"candidate_input_digest\\\"],\\\"postgres\\\":p[\\\"postgres\\\"],\\\"browser\\\":{k:{\\\"status\\\":v[\\\"status\\\"],\\\"missing_rendered_states\\\":v[\\\"missing_rendered_states\\\"],\\\"events\\\":v[\\\"events\\\"],\\\"no_horizontal_overflow\\\":v[\\\"geometry\\\"][\\\"no_horizontal_overflow\\\"]} for k,v in p[\\\"browser\\\"].items()},\\\"void\\\":p[\\\"synthetic_fixture_facts\\\"][\\\"state_facts\\\"][\\\"void_revision\\\"],\\\"screenshots\\\":p[\\\"screenshots\\\"]},indent=2))'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '254,285p' 13_Package_Review.md && rtk sed -n '113,139p' 11_Developer_Start.md && rtk sed -n '352,380p' README.md\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '254,290p' 13_Package_Review.md && rtk sed -n '352,395p' README.md && rtk sed -n '113,145p' 11_Developer_Start.md && rtk git status --short\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --check && rtk git diff --stat && rtk git diff -- src/ephi/value/service.py src/ephi/value/model.py src/ephi/value/repository.py src/ephi/application/transactions.py src/ephi/application/storage.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest tests.test_value_integrity tests.test_outcomes_workflow tests.test_o2_transactions -v && rtk env EPHI_TEST_POSTGRES_DSN=postgresql:///ephi_test18 python3 -m unittest tests.test_outcomes_postgresql tests.test_o2_postgresql -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk env EPHI_TEST_POSTGRES_DSN=postgresql:///ephi_test18 python3 tools/o7_outcomes_browser_qualification.py --output evidence/u2/chg-205-u2.2-o7.1/review-fix1/qualification.json --artifacts evidence/u2/chg-205-u2.2-o7.1/review-fix1/screenshots'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/w0_repo_baseline.py --help && rtk git status --short && rtk python3 -m unittest discover -s tests -v --help'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk mkdir -p evidence/u2/chg-205-u2.2-o7.1/review-fix1/validation && rtk python3 -m unittest tests.test_value_integrity tests.test_outcomes_workflow tests.test_o2_transactions -v > evidence/u2/chg-205-u2.2-o7.1/review-fix1/validation/focused-offline.log 2>&1 && rtk tail -n 5 evidence/u2/chg-205-u2.2-o7.1/review-fix1/validation/focused-offline.log'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk env EPHI_TEST_POSTGRES_DSN=postgresql:///ephi_test18 python3 -m unittest tests.test_outcomes_postgresql tests.test_o2_postgresql -v > evidence/u2/chg-205-u2.2-o7.1/review-fix1/validation/postgresql18-outcomes-o2.log 2>&1 && rtk tail -n 5 evidence/u2/chg-205-u2.2-o7.1/review-fix1/validation/postgresql18-outcomes-o2.log'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest discover -s tests -v > evidence/u2/chg-205-u2.2-o7.1/review-fix1/validation/full-offline.log 2>&1 && rtk tail -n 6 evidence/u2/chg-205-u2.2-o7.1/review-fix1/validation/full-offline.log'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk tail -n 80 evidence/u2/chg-205-u2.2-o7.1/review-fix1/validation/full-offline.log'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '75,110p' tests/test_o9_operations.py && rtk rg -n 'migration_count|migrations.*9|count.*9' tests/test_o9_operations.py tests\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest > evidence/u2/chg-205-u2.2-o7.1/review-fix1/validation/package-refresh.log 2>&1 && rtk tail -n 3 evidence/u2/chg-205-u2.2-o7.1/review-fix1/validation/package-refresh.log && rtk python3 tools/check_package.py'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk rm -rf evidence/u2/chg-205-u2.2-o7.1/review-fix1/validation && rtk git status --short'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk env EPHI_TEST_POSTGRES_DSN=postgresql:///ephi_test18 python3 tools/o7_outcomes_browser_qualification.py --output evidence/u2/chg-205-u2.2-o7.1/review-fix1/qualification.json --artifacts evidence/u2/chg-205-u2.2-o7.1/review-fix1/screenshots'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest && rtk python3 tools/check_package.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest discover -s tests -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short --branch && rtk git diff --check && rtk python3 -m unittest tests.test_value_integrity tests.test_outcomes_workflow tests.test_o2_transactions -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk env EPHI_TEST_POSTGRES_DSN=postgresql:///ephi_test18 python3 -m unittest tests.test_outcomes_postgresql tests.test_o2_postgresql -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest discover -s tests -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m compileall -q src tests tools'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk rg -n \"candidate_input_digest|candidate_digest\" tools/o7_outcomes_browser_qualification.py evidence/u2/chg-205-u2.2-o7.1/review-fix1/qualification.json'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --stat && rtk git status --short'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'from tools.o7_outcomes_browser_qualification import _candidate_digest; print(_candidate_digest())' && rtk git log --oneline --decorate -3 && rtk git merge-base HEAD main\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git show -s --format='%H%n%P%n%s' HEAD && rtk git show -s --format='%H%n%P%n%s' main && rtk git show -s --format='%H%n%P%n%s' 2ced91f0017631c2fce46822e0a06a3d1cb349da\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/w0_repo_baseline.py --help && rtk rg --files evidence/u2/chg-205-u2.2-o7.1/review-fix1'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git add -A && rtk git commit -m \"Fix CHG-205 Outcomes value revision semantics\"'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk rg -n \"argparse|no-tests|subprocess|status|baseline|test\" tools/w0_repo_baseline.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/w0_repo_baseline.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import json; p=\\\"evidence/u2/chg-205-u2.2-o7.1/review-fix1/qualification.json\\\"; d=json.load(open(p)); print(json.dumps({k:d.get(k) for k in [\\\"status\\\",\\\"scope\\\",\\\"candidate_input_digest\\\",\\\"target_resolution\\\",\\\"browser\\\",\\\"void_fixture\\\"]}, sort_keys=True))'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git show --check --oneline HEAD && rtk git status --short --branch'",
+      "exit_code": 128,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import json; d=json.load(open(\\\"evidence/u2/chg-205-u2.2-o7.1/review-fix1/qualification.json\\\")); print(\\\"status:\\\", d[\\\"status\\\"], \\\"digest:\\\", d[\\\"candidate_input_digest\\\"], \\\"route:\\\", d[\\\"browser\\\"][\\\"desktop_1440x900\\\"][\\\"route\\\"], \\\"/\\\", d[\\\"browser\\\"][\\\"phone_390x844\\\"][\\\"route\\\"], \\\"void_visible:\\\", d[\\\"browser\\\"][\\\"phone_390x844\\\"][\\\"required_rendered_states\\\"].get(\\\"VOID\\\"))'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff HEAD''^ HEAD --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short --branch && rtk git rev-parse HEAD && rtk git rev-parse HEAD''^'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git rev-parse '2ced91f0017631c2fce46822e0a06a3d1cb349da\"'^{tree}'\"' 'HEAD\"'^''^{tree}'\"' HEAD\"'^ HEAD'",
+      "exit_code": 0,
+      "type": "command_execution"
+    }
+  ],
+  "codex": {
+    "cli_version": "codex-cli 0.156.1",
+    "configured_model": "gpt-6-luna",
+    "event_count": 348,
+    "provider_reported_model": null,
+    "reasoning_effort": "xhigh",
+    "terminal_type": "turn.completed",
+    "usage": {
+      "cache_hit_percent": 98.56,
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 24394752,
+      "fresh_input_tokens": 355398,
+      "input_tokens": 24750150,
+      "non_reasoning_output_tokens": 41178,
+      "output_tokens": 104402,
+      "reasoning_output_tokens": 63224,
+      "total_processed_tokens": 24854552
+    },
+    "warnings": []
+  },
+  "commits": [
+    {
+      "sha": "2ad52c90bcc6b146de6dc03ac3f9bb002bbda6ed",
+      "subject": "Fix CHG-205 Outcomes value revision semantics"
+    },
+    {
+      "sha": "d0dcd118406030711f4d3d836e0770392653ab58",
+      "subject": "fabric: capture completed model changes [CF-967f6b86f26461033692924c]"
+    }
+  ],
+  "diff": {
+    "additions": 5432,
+    "changed_files": 32,
+    "commit_count": 2,
+    "deletions": 66
+  },
+  "error_code": null,
+  "evidence_manifest": {
+    "count": 12,
+    "items": [
+      {
+        "bytes": 8078,
+        "path": "11_Developer_Start.md",
+        "sha256": "5e4ee1722c17184434666bb0dc6fcf0a036cbb6349f335a9c8a2351f10bd12d9"
+      },
+      {
+        "bytes": 21773,
+        "path": "13_Package_Review.md",
+        "sha256": "1a2e6512b62da6f1d1e375c5a467e30c9466937a2dda6a29d5d26c0ed87d8a29"
+      },
+      {
+        "bytes": 24588,
+        "path": "README.md",
+        "sha256": "51fd1c83079b0d5909a5cda40db34e26bca23ff3ec8e0c06ef1bc19307ba33c3"
+      },
+      {
+        "bytes": 21687,
+        "path": "evidence/u2/chg-205-u2.2-o7.1/qualification.json",
+        "sha256": "9fbbac98f603f0df37fbca47b00fab38da4c076270c3954d3b7499ccdb14973d"
+      },
+      {
+        "bytes": 20853,
+        "path": "evidence/u2/chg-205-u2.2-o7.1/review-fix1/qualification.json",
+        "sha256": "483450e9965dff44bd60faf8fc71a01f5d18a3ca44ccb331ef622d7674ab727e"
+      },
+      {
+        "bytes": 144542,
+        "path": "evidence/u2/chg-205-u2.2-o7.1/review-fix1/screenshots/outcomes-1440x900-reviewed.png",
+        "sha256": "098f8aa48b26ce55450c9de4303914c950a6af2b6f48feb2b489df852023a505"
+      },
+      {
+        "bytes": 358353,
+        "path": "evidence/u2/chg-205-u2.2-o7.1/review-fix1/screenshots/outcomes-1440x900.png",
+        "sha256": "6d4f60b592ec4586bc6accff89cf9a70f5f943858e1f334c441cb120a4ef8cfc"
+      },
+      {
+        "bytes": 300797,
+        "path": "evidence/u2/chg-205-u2.2-o7.1/review-fix1/screenshots/outcomes-390x844.png",
+        "sha256": "ccbe5635dd4e88c1a8941ef353d834e885270473e986b63ce713dad711614a90"
+      },
+      {
+        "bytes": 145348,
+        "path": "evidence/u2/chg-205-u2.2-o7.1/screenshots/outcomes-1440x900-reviewed.png",
+        "sha256": "2f70fbb755dec68cf9e91cc8694f5f515fb67d016766bfeb42e05837b621576e"
+      },
+      {
+        "bytes": 351077,
+        "path": "evidence/u2/chg-205-u2.2-o7.1/screenshots/outcomes-1440x900.png",
+        "sha256": "97d2f5a437a9cf22b9e0310912bca8439a036189968d51efdd567ab40ea3bb78"
+      },
+      {
+        "bytes": 298050,
+        "path": "evidence/u2/chg-205-u2.2-o7.1/screenshots/outcomes-390x844.png",
+        "sha256": "5ec406ff7676f7ee0db8db7e7a8bf84667e787fd07e06aa1137149aa0c9fdc81"
+      },
+      {
+        "bytes": 61662,
+        "path": "manifest.json",
+        "sha256": "a63c3ba3e620cd1482fc8a1d82908001a0101483958c790b2ac1f0bb8d25a71f"
+      }
+    ],
+    "version": 1
+  },
+  "evidence_publisher_release": "1.2.5-dashboard-controls-candidate",
+  "fabric_capture": {
+    "applied": false,
+    "paths_before": 0,
+    "transient_untracked_removed": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "fabric_release": "1.2.5-dashboard-controls-candidate",
+  "failure_class": null,
+  "finished_at": "2026-09-24T23:30:44Z",
+  "git": {
+    "base_is_ancestor": true,
+    "base_sha": "8eb33a205f2f589b0f1510cd00fbe45dd78094e9",
+    "branch": "codex/ephi-u2-outcomes-value-review-fix1",
+    "detached_verify": false,
+    "head_sha": "2ad52c90bcc6b146de6dc03ac3f9bb002bbda6ed",
+    "remote_exact_head": true,
+    "remote_head_sha": "2ad52c90bcc6b146de6dc03ac3f9bb002bbda6ed",
+    "target_branch": "main",
+    "target_drifted_since_acceptance": false,
+    "target_head_observed_after_execution": "8eb33a205f2f589b0f1510cd00fbe45dd78094e9",
+    "work_branch": "codex/ephi-u2-outcomes-value-review-fix1",
+    "worktree_clean": true
+  },
+  "instructions": {
+    "files": [
+      {
+        "bytes": 1458,
+        "path": "AGENTS.md",
+        "sha256": "4349f387a79d886ed1264604ff48c582698e539e08ed8fb2f9d8ab8fbf6f804a"
+      }
+    ],
+    "total_bytes": 1458,
+    "warning": null
+  },
+  "job_id": "CF-0346757f0046dfb2c1ff9810",
+  "kind": "codex-fabric-audit-evidence",
+  "locator": {
+    "branch": "codex-fabric/evidence/ephi/ephi-u2-outcomes-value-review-fix1",
+    "path": ".codex-fabric/audit.json",
+    "ref": "refs/heads/codex-fabric/evidence/ephi/ephi-u2-outcomes-value-review-fix1"
+  },
+  "operation": "FIX",
+  "policy": {
+    "environment_policy_sha256": "e077daca74297b3c30bee8989f00f8ca5338f7610b4d016a6c48db524205d064",
+    "fabric_release": "1.2.5-dashboard-controls-candidate",
+    "policy_sha256": "123615bf2f6e57dcac197e49ca98ceac59ada86a55e2c84445ea5d00812c0833",
+    "registry_sha256": "af81b8552f9d6a33847310e3c6bcd2d48401782b963a58efd2993e93570cb4aa"
+  },
+  "project_id": "ephi",
+  "recovery": {
+    "model_rerun_safe": false,
+    "recovery_required": false,
+    "retry_safe": false,
+    "retry_scope": null,
+    "worktree_retained": true
+  },
+  "request": "ephi-u2-outcomes-value-review-fix1",
+  "schema_version": 1,
+  "started_at": "2026-09-24T22:50:55Z",
+  "status": "EXECUTED_CHANGE",
+  "timing": {
+    "execution_seconds": 2389,
+    "queue_seconds": 0,
+    "total_seconds": 2389
+  },
+  "transport": {
+    "bytes": 4379,
+    "envelope": "FABRIC/2",
+    "prompt_bytes": 4061,
+    "prompt_sha256": "feb2d882a90b85df7b1073ead738bb45201f93cc672db91f1be2aaae5d4b588f",
+    "sha256": "0346757f0046dfb2c1ff9810e1564eefbba051ef859fafce48e0714843f4b795"
+  }
+}
