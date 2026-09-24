@@ -18,6 +18,7 @@ from ephi.application.context import AccessScope
 from ephi.application.errors import StorageFailureError, ValidationFailureError
 from ephi.application.hashing import canonical_json, normalize_domain_payload
 from ephi.application.storage import (
+    AggregateAlreadyExistsError,
     AggregateSnapshot,
     CommandUnitOfWork,
     ReceiptAlreadyExistsError,
@@ -86,6 +87,7 @@ CREATE TABLE IF NOT EXISTS outbox_event (
 CREATE INDEX IF NOT EXISTS idx_receipt_scope_subject ON command_receipt(scope_key, subject);
 CREATE INDEX IF NOT EXISTS idx_audit_scope_aggregate ON audit_event(scope_key, aggregate_type, aggregate_id, aggregate_version);
 CREATE INDEX IF NOT EXISTS idx_outbox_status ON outbox_event(status, created_at);
+CREATE UNIQUE INDEX IF NOT EXISTS idx_outcome_economic_event ON aggregate_state(scope_key, json_extract(state_json, '$.economic_event_key')) WHERE aggregate_type = 'outcome_claim_group';
 
 CREATE TABLE IF NOT EXISTS decision_snapshot (
     snapshot_id TEXT PRIMARY KEY,
@@ -261,6 +263,25 @@ class _SQLiteCommandTransaction:
             ).rowcount)
         except sqlite3.Error as exc:
             raise StorageFailureError("durable SQLite storage failed while updating an aggregate") from exc
+
+    def insert_aggregate(
+        self,
+        scope_key: str,
+        aggregate_type: str,
+        aggregate_id: str,
+        *,
+        version: int,
+        state_json: str,
+    ) -> None:
+        try:
+            self.connection.execute(
+                "INSERT INTO aggregate_state(scope_key, aggregate_type, aggregate_id, version, state_json) VALUES (?, ?, ?, ?, ?)",
+                (scope_key, aggregate_type, aggregate_id, version, state_json),
+            )
+        except sqlite3.IntegrityError as exc:
+            raise AggregateAlreadyExistsError from exc
+        except sqlite3.Error as exc:
+            raise StorageFailureError("durable SQLite storage failed while creating an aggregate") from exc
 
     def append_audit(
         self,
@@ -485,6 +506,30 @@ class SQLiteReferenceTransactionAdapter:
         if not isinstance(state, dict):
             raise StorageFailureError("durable aggregate state is not a mapping")
         return AggregateSnapshot(row["scope_key"], row["aggregate_type"], row["aggregate_id"], row["version"], state)
+
+    def list_aggregates(self, scope: AccessScope, aggregate_type: str, *, limit: int) -> tuple[AggregateSnapshot, ...]:
+        if not isinstance(scope, AccessScope):
+            raise ValidationFailureError("scope must be an AccessScope")
+        aggregate_type = _validated_identity(aggregate_type, "aggregate_type")
+        if isinstance(limit, bool) or not isinstance(limit, int) or not 1 <= limit <= 5001:
+            raise ValidationFailureError("aggregate list limit must be between 1 and 5001")
+        try:
+            rows = self.connection.execute(
+                "SELECT scope_key, aggregate_type, aggregate_id, version, state_json FROM aggregate_state WHERE scope_key = ? AND aggregate_type = ? ORDER BY aggregate_id LIMIT ?",
+                (scope.canonical_key, aggregate_type, limit),
+            ).fetchall()
+        except sqlite3.Error as exc:
+            raise StorageFailureError("durable SQLite storage failed while listing aggregates") from exc
+        snapshots = []
+        for row in rows:
+            try:
+                state = json.loads(row["state_json"])
+            except (TypeError, json.JSONDecodeError) as exc:
+                raise StorageFailureError("durable aggregate state is not valid JSON") from exc
+            if not isinstance(state, dict):
+                raise StorageFailureError("durable aggregate state is not a mapping")
+            snapshots.append(AggregateSnapshot(row["scope_key"], row["aggregate_type"], row["aggregate_id"], row["version"], state))
+        return tuple(snapshots)
 
     def get_command_receipt(self, scope_key: str, subject: str, command_id: str) -> StoredCommandReceipt | None:
         scope_key = _validated_identity(scope_key, "scope_key")

@@ -4,7 +4,9 @@ from __future__ import annotations
 
 from collections.abc import Iterable
 from datetime import datetime
-from typing import Protocol
+from typing import Any, Protocol
+
+from ephi.application.context import AccessScope
 
 from .model import (
     SupersessionConflictError,
@@ -30,6 +32,50 @@ class ValueRepository(Protocol):
 
     def active_leaves_as_of(self, knowledge_cutoff: datetime) -> tuple[ValueEntry, ...]:
         ...
+
+
+class OutcomeAggregateStore(Protocol):
+    """Reader over the existing versioned O2 aggregate authority."""
+
+    def get_aggregate(self, scope: AccessScope, aggregate_type: str, aggregate_id: str) -> Any | None:
+        ...
+
+    def list_aggregates(
+        self,
+        scope: AccessScope,
+        aggregate_type: str,
+        *,
+        limit: int,
+    ) -> tuple[Any, ...]:
+        ...
+
+
+class OutcomeAggregateRepository:
+    """Read claim/value/review history from versioned O2 aggregate state.
+
+    Writes are deliberately executed through ``VersionedAggregateCommandExecutor``;
+    this repository does not introduce another receipt, audit or event ledger.
+    """
+
+    aggregate_type = "outcome_claim_group"
+
+    def __init__(self, store: OutcomeAggregateStore) -> None:
+        if not callable(getattr(store, "get_aggregate", None)) or not callable(getattr(store, "list_aggregates", None)):
+            raise TypeError("outcome repository requires an O2 aggregate reader")
+        self.store = store
+
+    def get_group(self, scope: AccessScope, group_id: str) -> Any | None:
+        snapshot = self.store.get_aggregate(scope, self.aggregate_type, group_id)
+        if snapshot is not None and snapshot.state.get("group_id") != group_id:
+            raise ValueValidationError("stored outcome aggregate identity is inconsistent")
+        return snapshot
+
+    def list_groups(self, scope: AccessScope, *, limit: int) -> tuple[Any, ...]:
+        snapshots = self.store.list_aggregates(scope, self.aggregate_type, limit=limit)
+        for snapshot in snapshots:
+            if snapshot.state.get("group_id") != snapshot.aggregate_id:
+                raise ValueValidationError("stored outcome aggregate identity is inconsistent")
+        return snapshots
 
 
 class InMemoryValueRepository:

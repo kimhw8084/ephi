@@ -250,3 +250,33 @@ Production. Company adapters/configuration are private deployment inputs; the
 released EPHI core and migrations remain unpatched. A generic incompatibility
 must be reproduced with sanitized generic facts and raised upstream without
 exporting company source, code, logs or artifacts.
+
+## CHG-205 U2.2 / O7.1 generic Outcomes candidate
+
+This candidate extends the existing F04 exact-value authority and active-leaf
+cutoff semantics with typed scoped economic-event identity, immutable claim
+and value revisions, attribution-only Episode/decision/action/contributor
+references, and a separate immutable reviewer revision bound to both exact
+claim and value revision identities. PostgreSQL persistence uses the existing
+O2 aggregate command executor and its receipt, audit and outbox transaction;
+migration 009 adds scoped economic-event uniqueness. There is no second value
+ledger or conversion path. Amounts remain exact `Decimal` values/JSON strings
+and summaries stay separate by recorded currency.
+
+The canonical `/ephi/outcomes` destination presents estimated opportunity,
+observed operational outcomes and independently reviewed benefit/net cost
+separately. Reviewer controls write only the independent review transition;
+they cannot edit evidence, amounts, event time or cost/rate policy identity.
+The only demonstration values and linked identities are synthetic. This
+candidate does not establish ROI/savings, company data/models/adapters,
+real-family qualification, W3–W5 pilot completion, Operations expansion,
+G12, Port Gate, release or Production.
+
+Candidate-bound browser evidence is in
+`evidence/u2/chg-205-u2.2-o7.1/qualification.json` with desktop 1440×900 and
+phone 390×844 screenshots. The browser qualification passed with no console,
+request-failure or HTTP-failure events; it also verifies that a later review
+remains pending at the earlier knowledge cutoff. The local persistence and
+browser server was PostgreSQL 17.11. The PostgreSQL 18.x lane is not qualified
+by this local result; the DSN-gated suite is added to CI's PostgreSQL 18.x
+job.
