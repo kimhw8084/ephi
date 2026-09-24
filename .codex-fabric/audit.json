@@ -1,0 +1,890 @@
+{
+  "accepted_at": "2026-09-24T12:13:05Z",
+  "changed_files": [
+    {
+      "additions": 8,
+      "deletions": 0,
+      "path": "evidence/u2/chg-189-u2.1-fix-o6.3/test_logs/chg189-fix-postgres18-focused.log",
+      "status": "A"
+    },
+    {
+      "additions": 244,
+      "deletions": 0,
+      "path": "evidence/u2/chg-189-u2.1-o6.3/artifact-inventory.json",
+      "status": "A"
+    },
+    {
+      "additions": 2,
+      "deletions": 0,
+      "path": "evidence/u2/chg-189-u2.1-o6.3/package_logs/chg189-package-py311.log",
+      "status": "A"
+    },
+    {
+      "additions": 2,
+      "deletions": 0,
+      "path": "evidence/u2/chg-189-u2.1-o6.3/package_logs/chg189-package-py312.log",
+      "status": "A"
+    },
+    {
+      "additions": 2,
+      "deletions": 0,
+      "path": "evidence/u2/chg-189-u2.1-o6.3/package_logs/chg189-package-py313.log",
+      "status": "A"
+    },
+    {
+      "additions": 2,
+      "deletions": 0,
+      "path": "evidence/u2/chg-189-u2.1-o6.3/package_logs/chg189-package-py314.log",
+      "status": "A"
+    },
+    {
+      "additions": 1,
+      "deletions": 0,
+      "path": "evidence/u2/chg-189-u2.1-o6.3/package_logs/chg189-self-check.json",
+      "status": "A"
+    },
+    {
+      "additions": 353,
+      "deletions": 0,
+      "path": "evidence/u2/chg-189-u2.1-o6.3/qualification.json",
+      "status": "A"
+    },
+    {
+      "additions": 1080,
+      "deletions": 0,
+      "path": "evidence/u2/chg-189-u2.1-o6.3/reports/chg189-o10.json",
+      "status": "A"
+    },
+    {
+      "additions": 1675,
+      "deletions": 0,
+      "path": "evidence/u2/chg-189-u2.1-o6.3/reports/chg189-o8.json",
+      "status": "A"
+    },
+    {
+      "additions": 317,
+      "deletions": 0,
+      "path": "evidence/u2/chg-189-u2.1-o6.3/reports/chg189-u1.json",
+      "status": "A"
+    },
+    {
+      "additions": 463,
+      "deletions": 0,
+      "path": "evidence/u2/chg-189-u2.1-o6.3/reports/chg189-u2-browser.json",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/flagship/attention-desktop-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/flagship/episode-desktop-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/flagship/episode-desktop-after-check-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/flagship/episode-desktop-work-after-check-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/flagship/episode-mobile-390x844.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/attention-1024x768.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/attention-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/attention-320x800.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/attention-390x844.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/attention-768x1024.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/attention-failure.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/attention-no-matching-rows-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/attention-no-permitted-rows.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/attention-offline.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/attention-permission.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/attention-populated-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/attention-stale.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/episode-1024x768.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/episode-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/episode-320x800.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/episode-390x844.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/episode-768x1024.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/episode-capability-states.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/episode-claimed-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/episode-coherent-conflict.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/episode-no-selection-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/episode-offline.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/episode-owner-changed.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/episode-permission.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/episode-populated-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/episode-version-conflict.png",
+      "status": "A"
+    },
+    {
+      "additions": 349,
+      "deletions": 0,
+      "path": "evidence/u2/chg-189-u2.1-o6.3/test_logs/chg189-final-python311-tests.log",
+      "status": "A"
+    },
+    {
+      "additions": 349,
+      "deletions": 0,
+      "path": "evidence/u2/chg-189-u2.1-o6.3/test_logs/chg189-final-python312-tests.log",
+      "status": "A"
+    },
+    {
+      "additions": 349,
+      "deletions": 0,
+      "path": "evidence/u2/chg-189-u2.1-o6.3/test_logs/chg189-final-python313-tests.log",
+      "status": "A"
+    },
+    {
+      "additions": 349,
+      "deletions": 0,
+      "path": "evidence/u2/chg-189-u2.1-o6.3/test_logs/chg189-final-python314-tests.log",
+      "status": "A"
+    },
+    {
+      "additions": 349,
+      "deletions": 0,
+      "path": "evidence/u2/chg-189-u2.1-o6.3/test_logs/chg189-python311-postgres18-tests.log",
+      "status": "A"
+    },
+    {
+      "additions": 106,
+      "deletions": 0,
+      "path": "evidence/u2/chg-189-u2.1-o6.3/validation/validation-summary.json",
+      "status": "A"
+    },
+    {
+      "additions": 33,
+      "deletions": 0,
+      "path": "evidence/u2/chg-189-u2.1-o6.3/validation/w0-baseline.json",
+      "status": "A"
+    },
+    {
+      "additions": 291,
+      "deletions": 0,
+      "path": "examples/synthetic_downstream/flagship.py",
+      "status": "A"
+    },
+    {
+      "additions": 144,
+      "deletions": 6,
+      "path": "examples/synthetic_downstream/provider.py",
+      "status": "M"
+    },
+    {
+      "additions": 301,
+      "deletions": 16,
+      "path": "manifest.json",
+      "status": "M"
+    },
+    {
+      "additions": 92,
+      "deletions": 0,
+      "path": "src/ephi/application/__init__.py",
+      "status": "M"
+    },
+    {
+      "additions": 769,
+      "deletions": 0,
+      "path": "src/ephi/application/investigation.py",
+      "status": "A"
+    },
+    {
+      "additions": 1,
+      "deletions": 1,
+      "path": "src/ephi/application/o10.py",
+      "status": "M"
+    },
+    {
+      "additions": 1040,
+      "deletions": 0,
+      "path": "src/ephi/application/rca.py",
+      "status": "A"
+    },
+    {
+      "additions": 344,
+      "deletions": 0,
+      "path": "src/ephi/application/rca_materialization.py",
+      "status": "A"
+    },
+    {
+      "additions": 41,
+      "deletions": 6,
+      "path": "src/ephi/downstream/composition.py",
+      "status": "M"
+    },
+    {
+      "additions": 447,
+      "deletions": 25,
+      "path": "src/ephi/ui/app.py",
+      "status": "M"
+    },
+    {
+      "additions": 697,
+      "deletions": 0,
+      "path": "tests/test_o6_rca.py",
+      "status": "A"
+    },
+    {
+      "additions": 209,
+      "deletions": 0,
+      "path": "tests/test_o6_rca_postgresql.py",
+      "status": "A"
+    },
+    {
+      "additions": 7,
+      "deletions": 7,
+      "path": "tools/o10_rendered_accessibility.py",
+      "status": "M"
+    },
+    {
+      "additions": 1,
+      "deletions": 1,
+      "path": "tools/o8_browser_qualification.py",
+      "status": "M"
+    },
+    {
+      "additions": 1,
+      "deletions": 1,
+      "path": "tools/u1_episode_geometry_qualification.py",
+      "status": "M"
+    },
+    {
+      "additions": 682,
+      "deletions": 0,
+      "path": "tools/u2_investigation_qualification.py",
+      "status": "A"
+    }
+  ],
+  "checks": [
+    {
+      "command": "/bin/zsh -lc \"pwd && git status --short --branch && git branch --show-current && git show -s --format='%H%n%T%n%P%n%s' HEAD && git remote -v\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'cat AGENTS.md && cat /Users/haewonkim/.codex/RTK.md && cat /Users/haewonkim/.codex/law.md && cat README.md && cat 13_Package_Review.md'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git merge-base --is-ancestor a9702ad3f990f379f902ebe43934e0d5fe589b7e 0f378d2de9aadb0ff2fec1429152afe5b51d0152'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git branch -a --contains 0f378d2de9aadb0ff2fec1429152afe5b51d0152'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short --branch'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git show -s --format='%H%n%T%n%P%n%s' a9702ad3f990f379f902ebe43934e0d5fe589b7e && rtk git show -s --format='%H%n%T%n%P%n%s' 0f378d2de9aadb0ff2fec1429152afe5b51d0152 && rtk git show -s --format='%H%n%T%n%P%n%s' 21634f5dc3e02c8fe35206125c6dce1f95bfd2c7\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git merge --ff-only 0f378d2de9aadb0ff2fec1429152afe5b51d0152'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg --files tests -g '*rca*' -g '*investig*' -g '*postgres*'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3.11 -c 'import os; print(\\\"EPHI_TEST_POSTGRES_DSN=\\\" + (\\\"set\\\" if os.environ.get(\\\"EPHI_TEST_POSTGRES_DSN\\\") else \\\"unset\\\"))'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git branch -avv'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git rev-parse refs/heads/main refs/remotes/origin/main refs/heads/fix/ephi-u2-rca-recovery-20260924'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n 'investigation|RCA|rca' tests/test_o6_rca.py tests/test_o6_rca_postgresql.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n '\"'^(class Test|class .*Test|def test_)|EPHI_TEST_POSTGRES_DSN|skipUnless|skipIf'\"' tests/test_o6_rca.py tests/test_o6_rca_postgresql.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3.11 tools/check_package.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3.11 -m unittest tests.test_o6_rca_postgresql -q'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3.11 -m unittest tests.test_o6_rca -q'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3.11 -m unittest discover -s tests -q'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git merge-base --is-ancestor a9702ad3f990f379f902ebe43934e0d5fe589b7e HEAD'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git rev-parse HEAD 'HEAD\"'^{tree}'\"' '0f378d2de9aadb0ff2fec1429152afe5b51d0152\"'^{tree}'\"' refs/remotes/origin/main refs/heads/main\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git show -s --format='%H%n%T%n%P%n%s' 21634f5dc3e02c8fe35206125c6dce1f95bfd2c7\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short --branch'",
+      "exit_code": 0,
+      "type": "command_execution"
+    }
+  ],
+  "codex": {
+    "cli_version": "codex-cli 0.155.1",
+    "configured_model": "gpt-6-luna",
+    "event_count": 51,
+    "provider_reported_model": null,
+    "reasoning_effort": "xhigh",
+    "terminal_type": "turn.completed",
+    "usage": {
+      "cache_hit_percent": 90.34,
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 331776,
+      "fresh_input_tokens": 35489,
+      "input_tokens": 367265,
+      "non_reasoning_output_tokens": 2103,
+      "output_tokens": 7011,
+      "reasoning_output_tokens": 4908,
+      "total_processed_tokens": 374276
+    },
+    "warnings": []
+  },
+  "commits": [
+    {
+      "sha": "0f378d2de9aadb0ff2fec1429152afe5b51d0152",
+      "subject": "Fix CHG-189 RCA cutoff and cycle coherence"
+    },
+    {
+      "sha": "2bb59169052c35b08b0adf0ea06aed51bd200114",
+      "subject": "Add CHG-189 U2.1 qualification evidence"
+    },
+    {
+      "sha": "f2d89196afc38af95837a58c1f628894f494f9e9",
+      "subject": "Add bounded Episode investigation workspace"
+    }
+  ],
+  "diff": {
+    "additions": 11100,
+    "changed_files": 66,
+    "commit_count": 3,
+    "deletions": 63
+  },
+  "error_code": null,
+  "evidence_manifest": {
+    "count": 51,
+    "items": [
+      {
+        "bytes": 690,
+        "path": "evidence/u2/chg-189-u2.1-fix-o6.3/test_logs/chg189-fix-postgres18-focused.log",
+        "sha256": "85cfe1b62278f0157076df941b4513fe597559fc6e6224c7f69982a6f00ff995"
+      },
+      {
+        "bytes": 8469,
+        "path": "evidence/u2/chg-189-u2.1-o6.3/artifact-inventory.json",
+        "sha256": "eda2bde15a50a272e617c10d6c6630f3d4940005eaf411caf1aeb87a0dbdc045"
+      },
+      {
+        "bytes": 209,
+        "path": "evidence/u2/chg-189-u2.1-o6.3/package_logs/chg189-package-py311.log",
+        "sha256": "3e8f4d69abe521be1aeafa8a9baff49a3dcb683a9fe71a14559cef163c3afa3d"
+      },
+      {
+        "bytes": 209,
+        "path": "evidence/u2/chg-189-u2.1-o6.3/package_logs/chg189-package-py312.log",
+        "sha256": "3e8f4d69abe521be1aeafa8a9baff49a3dcb683a9fe71a14559cef163c3afa3d"
+      },
+      {
+        "bytes": 209,
+        "path": "evidence/u2/chg-189-u2.1-o6.3/package_logs/chg189-package-py313.log",
+        "sha256": "3e8f4d69abe521be1aeafa8a9baff49a3dcb683a9fe71a14559cef163c3afa3d"
+      },
+      {
+        "bytes": 209,
+        "path": "evidence/u2/chg-189-u2.1-o6.3/package_logs/chg189-package-py314.log",
+        "sha256": "3e8f4d69abe521be1aeafa8a9baff49a3dcb683a9fe71a14559cef163c3afa3d"
+      },
+      {
+        "bytes": 1117,
+        "path": "evidence/u2/chg-189-u2.1-o6.3/package_logs/chg189-self-check.json",
+        "sha256": "922c49b6dce20fb67d29b126549a369bf55b199b893ae9cf0e1c986e0ef9320d"
+      },
+      {
+        "bytes": 11976,
+        "path": "evidence/u2/chg-189-u2.1-o6.3/qualification.json",
+        "sha256": "81c47311e9c4d44b1876cb86bb6edc31b64be96ed94a87b782d10083ed4f2dd5"
+      },
+      {
+        "bytes": 44562,
+        "path": "evidence/u2/chg-189-u2.1-o6.3/reports/chg189-o10.json",
+        "sha256": "5a80be8afea50cc55faa1a712a4fc8c0aca2ab1e58694913892e0d7c2818a5c4"
+      },
+      {
+        "bytes": 46453,
+        "path": "evidence/u2/chg-189-u2.1-o6.3/reports/chg189-o8.json",
+        "sha256": "1a135d6b57bdf8b89710b37bbbc5892231c2d68e53952543319b983890e835db"
+      },
+      {
+        "bytes": 57916,
+        "path": "evidence/u2/chg-189-u2.1-o6.3/reports/chg189-u1.json",
+        "sha256": "0afde0ab98c0af9ef447d6160be8745e4d7e47a548118f68d742c800a4440598"
+      },
+      {
+        "bytes": 15314,
+        "path": "evidence/u2/chg-189-u2.1-o6.3/reports/chg189-u2-browser.json",
+        "sha256": "7280a735c4f0a3111309564263b185963c007a57c894943db40ad23f9e252c2e"
+      },
+      {
+        "bytes": 76701,
+        "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/flagship/attention-desktop-1440x900.png",
+        "sha256": "c263c466688b5d160ac90285682661f8dbda0498bfcef688140697b108baafe4"
+      },
+      {
+        "bytes": 125296,
+        "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/flagship/episode-desktop-1440x900.png",
+        "sha256": "b58d0bf65b65337541bec94aa47998b4b9b2d7148da8f00e31bb0c1a7d25b338"
+      },
+      {
+        "bytes": 117808,
+        "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/flagship/episode-desktop-after-check-1440x900.png",
+        "sha256": "099c4a33b9404eede24351626f16e684ce9cdfbe7401091b92fd93b7210051c3"
+      },
+      {
+        "bytes": 138286,
+        "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/flagship/episode-desktop-work-after-check-1440x900.png",
+        "sha256": "a7ef8d208aa4928412fa24bf2ef0999fa3acc23190a4926d1b9d10e7d4f1ecc4"
+      },
+      {
+        "bytes": 63261,
+        "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/flagship/episode-mobile-390x844.png",
+        "sha256": "49b1e27a6fa1e10921f349c3b3ad02c0cffcac80a8dd10c3d0a1318dac53cd63"
+      },
+      {
+        "bytes": 83227,
+        "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/attention-1024x768.png",
+        "sha256": "e10d4d24ec9084ee715f1cf73bbd0e6e0940e9cd31edb41393ddcd2acb87b0fa"
+      },
+      {
+        "bytes": 75373,
+        "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/attention-1440x900.png",
+        "sha256": "b8d7dec3175e64f164eeeed076054829a89251889cad041ff4122b85de4fb324"
+      },
+      {
+        "bytes": 63192,
+        "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/attention-320x800.png",
+        "sha256": "0e43b7428cbfde03237ea910556fde1b4f1c45e5f5fd65a40ff88115fcd0259e"
+      },
+      {
+        "bytes": 63669,
+        "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/attention-390x844.png",
+        "sha256": "0eaf9399b73af838a88e7f043d072547d9048b34e7d4018d51dfa683ff549110"
+      },
+      {
+        "bytes": 79090,
+        "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/attention-768x1024.png",
+        "sha256": "b3b5bb5946f4ef32907ff01d3cd7ffe308cb392e7ec04944d04dfbee781734bc"
+      },
+      {
+        "bytes": 25371,
+        "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/attention-failure.png",
+        "sha256": "275e09a9b9baf5dde6a7939756f90ac72f494ab1293388d944299a761c8a0180"
+      },
+      {
+        "bytes": 89885,
+        "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/attention-no-matching-rows-1440x900.png",
+        "sha256": "a5ffad7bc70a030d4da2a7ecd383f4c6a4063b66d2d5b0ad4bc3f1766f26ae7f"
+      },
+      {
+        "bytes": 26541,
+        "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/attention-no-permitted-rows.png",
+        "sha256": "6ce1e9074dbf53dad714b2455f8054a5c525fb881071ce30dd3fff0acb34ea0f"
+      },
+      {
+        "bytes": 27680,
+        "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/attention-offline.png",
+        "sha256": "314678b7bde2ad56b19134ba5fc56709d8ec138228bf5651b29be88ecab168f0"
+      },
+      {
+        "bytes": 24829,
+        "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/attention-permission.png",
+        "sha256": "dbfe5026fe50e94933fbfb87829761c090c458e927c08c68d1d3138ff7fe2887"
+      },
+      {
+        "bytes": 75373,
+        "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/attention-populated-1440x900.png",
+        "sha256": "b8d7dec3175e64f164eeeed076054829a89251889cad041ff4122b85de4fb324"
+      },
+      {
+        "bytes": 27077,
+        "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/attention-stale.png",
+        "sha256": "11325811fc04416c3849c174897a94119c5a9d20459b7898372917675808d4cc"
+      },
+      {
+        "bytes": 94634,
+        "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/episode-1024x768.png",
+        "sha256": "5ef6d7c4a7c5df38e7c09df6453f2b25b530fc826c1aa9629eb7de1e9a134c04"
+      },
+      {
+        "bytes": 95755,
+        "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/episode-1440x900.png",
+        "sha256": "ea68164eac8bb14823aae56b045cdbbc793fd11c6671629fee3ed63d8b8d2591"
+      },
+      {
+        "bytes": 73424,
+        "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/episode-320x800.png",
+        "sha256": "01a2b016256827b07624ad1603e64a2dd2ae3f9c39340ed2e4da5676c8724115"
+      },
+      {
+        "bytes": 72325,
+        "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/episode-390x844.png",
+        "sha256": "6c4db218306f690ac2c5b352aacb25749a86b0dd1fc20acdd766713c6ffd52c4"
+      },
+      {
+        "bytes": 80881,
+        "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/episode-768x1024.png",
+        "sha256": "fbe745f4c94845712a1f43198d836a77d9c7dbb5f3bf3a9229f6e8f497a68a40"
+      },
+      {
+        "bytes": 47653,
+        "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/episode-capability-states.png",
+        "sha256": "8c99703f3b1a4dc9477dd6b98f04d60b721bfa03bb871fc3842879cd9aa4826d"
+      },
+      {
+        "bytes": 99220,
+        "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/episode-claimed-1440x900.png",
+        "sha256": "2480595824aded426c022fcbae245f1bf4150c6fae8a0a7d57dffd103cf65715"
+      },
+      {
+        "bytes": 29049,
+        "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/episode-coherent-conflict.png",
+        "sha256": "cba20fdc445f5dcbc460b9f80b4d21b6f84f0daffd181321b9a20c6657662035"
+      },
+      {
+        "bytes": 50004,
+        "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/episode-no-selection-1440x900.png",
+        "sha256": "0d287d426735cf27af84d2cdc785ef6c6dadd8bdcb75e8c64fc8a2bad5c73de6"
+      },
+      {
+        "bytes": 29274,
+        "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/episode-offline.png",
+        "sha256": "bde8919c3f492b620356513b5d2867aed558dfe0c6c71d44c52679ecc6588e2b"
+      },
+      {
+        "bytes": 28275,
+        "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/episode-owner-changed.png",
+        "sha256": "fe483369b2d36f7fd8d45eee82c272154c49872a62dd6bb590d844e41612a278"
+      },
+      {
+        "bytes": 27104,
+        "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/episode-permission.png",
+        "sha256": "4e6d07e5f21f3eee62d620b1bd8e3dc0dd4efb5b7c2a9106833c8cd44fad3904"
+      },
+      {
+        "bytes": 95840,
+        "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/episode-populated-1440x900.png",
+        "sha256": "8d618ea4021aee16b70c26795c25155961b1c8a5489bbc0e01f525ba3b498c1b"
+      },
+      {
+        "bytes": 29246,
+        "path": "evidence/u2/chg-189-u2.1-o6.3/screenshots/o10/episode-version-conflict.png",
+        "sha256": "6605fc14b9ce614e148f9172829e5a263aa6a7728c0747e7e98707c00ee4bb53"
+      },
+      {
+        "bytes": 69565,
+        "path": "evidence/u2/chg-189-u2.1-o6.3/test_logs/chg189-final-python311-tests.log",
+        "sha256": "2dd080ab5e48a3ebac391384189e59f09a2901d6b22a63091ddebb2b3e1e6c6f"
+      },
+      {
+        "bytes": 70558,
+        "path": "evidence/u2/chg-189-u2.1-o6.3/test_logs/chg189-final-python312-tests.log",
+        "sha256": "b4c830a3eb77e887acd5deb6e38db437b6c71d7816b1b971465f7141f4307813"
+      },
+      {
+        "bytes": 70558,
+        "path": "evidence/u2/chg-189-u2.1-o6.3/test_logs/chg189-final-python313-tests.log",
+        "sha256": "0b700cbdbeb17f3d84ee20eaa4477bdae1919456e00251cc3531706557c6aede"
+      },
+      {
+        "bytes": 70558,
+        "path": "evidence/u2/chg-189-u2.1-o6.3/test_logs/chg189-final-python314-tests.log",
+        "sha256": "ffe0a98c915e34846c573d2320af71ed4606dd1bac1544365ff6ad92b23cb2aa"
+      },
+      {
+        "bytes": 63417,
+        "path": "evidence/u2/chg-189-u2.1-o6.3/test_logs/chg189-python311-postgres18-tests.log",
+        "sha256": "72f6a0c590fc96eb437dc37c31c0724d2d0e9d8f035a7f84e9857a476d284232"
+      },
+      {
+        "bytes": 3268,
+        "path": "evidence/u2/chg-189-u2.1-o6.3/validation/validation-summary.json",
+        "sha256": "83d48b326d36db7586f2bd5782e5d1b8cfc1bdf844e2627cc920bec642d8b9fa"
+      },
+      {
+        "bytes": 913,
+        "path": "evidence/u2/chg-189-u2.1-o6.3/validation/w0-baseline.json",
+        "sha256": "622034b22e81846d87d2af2c2ad8f286ef2599b7822f19e59c8da0bcacb38bd5"
+      },
+      {
+        "bytes": 58974,
+        "path": "manifest.json",
+        "sha256": "2005ec5d5e1e8c0dde1a76fca478500e77768d9b70fe77be041ca66dde772fb9"
+      }
+    ],
+    "version": 1
+  },
+  "evidence_publisher_release": "1.2.5-dashboard-controls-candidate",
+  "fabric_capture": {
+    "applied": false,
+    "paths_before": 0,
+    "transient_untracked_removed": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "fabric_release": "1.2.5-dashboard-controls-candidate",
+  "failure_class": null,
+  "finished_at": "2026-09-24T12:15:37Z",
+  "git": {
+    "base_is_ancestor": true,
+    "base_sha": "a9702ad3f990f379f902ebe43934e0d5fe589b7e",
+    "branch": "fix/ephi-u2-rca-recovery-20260924",
+    "detached_verify": false,
+    "head_sha": "0f378d2de9aadb0ff2fec1429152afe5b51d0152",
+    "remote_exact_head": true,
+    "remote_head_sha": "0f378d2de9aadb0ff2fec1429152afe5b51d0152",
+    "target_branch": "main",
+    "target_drifted_since_acceptance": false,
+    "target_head_observed_after_execution": "a9702ad3f990f379f902ebe43934e0d5fe589b7e",
+    "work_branch": "fix/ephi-u2-rca-recovery-20260924",
+    "worktree_clean": true
+  },
+  "instructions": {
+    "files": [
+      {
+        "bytes": 1458,
+        "path": "AGENTS.md",
+        "sha256": "4349f387a79d886ed1264604ff48c582698e539e08ed8fb2f9d8ab8fbf6f804a"
+      }
+    ],
+    "total_bytes": 1458,
+    "warning": null
+  },
+  "job_id": "CF-f0e64dbdc4326c9df13c3bc4",
+  "kind": "codex-fabric-audit-evidence",
+  "locator": {
+    "branch": "codex-fabric/evidence/ephi/ephi-u2-rca-recovery-20260924",
+    "path": ".codex-fabric/audit.json",
+    "ref": "refs/heads/codex-fabric/evidence/ephi/ephi-u2-rca-recovery-20260924"
+  },
+  "operation": "FIX",
+  "policy": {
+    "environment_policy_sha256": "e077daca74297b3c30bee8989f00f8ca5338f7610b4d016a6c48db524205d064",
+    "fabric_release": "1.2.5-dashboard-controls-candidate",
+    "policy_sha256": "123615bf2f6e57dcac197e49ca98ceac59ada86a55e2c84445ea5d00812c0833",
+    "registry_sha256": "af81b8552f9d6a33847310e3c6bcd2d48401782b963a58efd2993e93570cb4aa"
+  },
+  "project_id": "ephi",
+  "recovery": {
+    "model_rerun_safe": false,
+    "recovery_required": false,
+    "retry_safe": false,
+    "retry_scope": null,
+    "worktree_retained": true
+  },
+  "request": "ephi-u2-rca-recovery-20260924",
+  "schema_version": 1,
+  "started_at": "2026-09-24T12:13:05Z",
+  "status": "EXECUTED_CHANGE",
+  "timing": {
+    "execution_seconds": 152,
+    "queue_seconds": 0,
+    "total_seconds": 152
+  },
+  "transport": {
+    "bytes": 2166,
+    "envelope": "FABRIC/2",
+    "prompt_bytes": 1859,
+    "prompt_sha256": "021008cf15137259cd2e1d17feca27d53a7b99dd5690e04e04184a9f5a30045f",
+    "sha256": "f0e64dbdc4326c9df13c3bc421b91c98af9ebeded47361e24c1ab07a53bb0eec"
+  }
+}
