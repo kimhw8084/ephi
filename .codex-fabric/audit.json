@@ -1,0 +1,1059 @@
+{
+  "accepted_at": "2026-09-25T15:08:30Z",
+  "changed_files": [
+    {
+      "additions": 47,
+      "deletions": 0,
+      "path": "README.md",
+      "status": "M"
+    },
+    {
+      "additions": 90,
+      "deletions": 0,
+      "path": "docs/CHG-234-U2.4-asset-360.md",
+      "status": "A"
+    },
+    {
+      "additions": 10,
+      "deletions": 0,
+      "path": "docs/Downstream_Integration_ABI.md",
+      "status": "M"
+    },
+    {
+      "additions": 11,
+      "deletions": 0,
+      "path": "evidence/README.md",
+      "status": "M"
+    },
+    {
+      "additions": 5046,
+      "deletions": 0,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/qualification.json",
+      "status": "A"
+    },
+    {
+      "additions": 6947,
+      "deletions": 0,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/qualification.json",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-360-compare-blocked-desktop-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-360-compare-blocked-mobile-390x844.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-360-episodes-desktop-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-360-episodes-desktop-stale-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-360-episodes-desktop-unavailable-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-360-episodes-mobile-390x844.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-360-episodes-mobile-stale-390x844.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-360-episodes-mobile-unavailable-390x844.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-360-gap-compatible-desktop-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-360-gap-compatible-desktop-stale-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-360-gap-compatible-desktop-unavailable-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-360-gap-compatible-mobile-390x844.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-360-gap-compatible-mobile-stale-390x844.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-360-gap-compatible-mobile-unavailable-390x844.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-360-stale-capability-desktop-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-360-stale-capability-mobile-390x844.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-list-desktop-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-list-desktop-keyboard-focus-stale.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-list-desktop-keyboard-focus-unavailable.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-list-desktop-keyboard-focus.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-list-desktop-stale-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-list-desktop-unavailable-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-list-mobile-390x844.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-list-mobile-stale-390x844.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-list-mobile-unavailable-390x844.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-compare-blocked-desktop-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-compare-blocked-desktop-stale-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-compare-blocked-mobile-390x844.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-compare-blocked-mobile-stale-390x844.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-episodes-desktop-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-episodes-desktop-stale-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-episodes-mobile-390x844.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-episodes-mobile-stale-390x844.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-gap-compatible-desktop-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-gap-compatible-desktop-stale-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-gap-compatible-mobile-390x844.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-gap-compatible-mobile-stale-390x844.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-stale-capability-desktop-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-stale-capability-mobile-390x844.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-list-desktop-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-list-desktop-keyboard-focus-stale.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-list-desktop-keyboard-focus.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-list-desktop-stale-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-list-mobile-390x844.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-list-mobile-stale-390x844.png",
+      "status": "A"
+    },
+    {
+      "additions": 354,
+      "deletions": 0,
+      "path": "examples/synthetic_downstream/assets.py",
+      "status": "A"
+    },
+    {
+      "additions": 2,
+      "deletions": 1,
+      "path": "examples/synthetic_downstream/flagship.py",
+      "status": "M"
+    },
+    {
+      "additions": 96,
+      "deletions": 3,
+      "path": "examples/synthetic_downstream/provider.py",
+      "status": "M"
+    },
+    {
+      "additions": 300,
+      "deletions": 30,
+      "path": "manifest.json",
+      "status": "M"
+    },
+    {
+      "additions": 7,
+      "deletions": 0,
+      "path": "migrations/011_o4_revision_pinned_asset_reads.sql",
+      "status": "A"
+    },
+    {
+      "additions": 7,
+      "deletions": 0,
+      "path": "src/ephi/application/__init__.py",
+      "status": "M"
+    },
+    {
+      "additions": 941,
+      "deletions": 0,
+      "path": "src/ephi/application/assets.py",
+      "status": "A"
+    },
+    {
+      "additions": 9,
+      "deletions": 2,
+      "path": "src/ephi/application/decision_loop.py",
+      "status": "M"
+    },
+    {
+      "additions": 49,
+      "deletions": 1,
+      "path": "src/ephi/application/source_ingress.py",
+      "status": "M"
+    },
+    {
+      "additions": 2,
+      "deletions": 0,
+      "path": "src/ephi/downstream/__init__.py",
+      "status": "M"
+    },
+    {
+      "additions": 17,
+      "deletions": 0,
+      "path": "src/ephi/downstream/contracts.py",
+      "status": "M"
+    },
+    {
+      "additions": 169,
+      "deletions": 0,
+      "path": "src/ephi/infrastructure/postgresql_o3.py",
+      "status": "M"
+    },
+    {
+      "additions": 67,
+      "deletions": 3,
+      "path": "src/ephi/infrastructure/postgresql_source.py",
+      "status": "M"
+    },
+    {
+      "additions": 19,
+      "deletions": 0,
+      "path": "src/ephi/ui/app.py",
+      "status": "M"
+    },
+    {
+      "additions": 524,
+      "deletions": 0,
+      "path": "src/ephi/ui/assets.py",
+      "status": "A"
+    },
+    {
+      "additions": 581,
+      "deletions": 0,
+      "path": "tests/test_assets_postgresql.py",
+      "status": "A"
+    },
+    {
+      "additions": 1,
+      "deletions": 0,
+      "path": "tests/test_o4_source_ingress.py",
+      "status": "M"
+    },
+    {
+      "additions": 2,
+      "deletions": 1,
+      "path": "tests/test_o9_operations.py",
+      "status": "M"
+    },
+    {
+      "additions": 438,
+      "deletions": 0,
+      "path": "tools/u2_asset_360_browser_qualification.py",
+      "status": "A"
+    }
+  ],
+  "checks": [
+    {
+      "command": "/bin/zsh -lc \"rtk proxy env EPHI_TEST_POSTGRES_DSN='postgresql:///ephi_chg234_u24_fix1_20260925?user=haewonkim' python3 -m unittest tests.test_o4_source_ingress_postgresql -v\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python -m unittest tests.test_downstream_abi -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy env EPHI_TEST_POSTGRES_DSN='postgresql:///ephi_chg234_u24_fix1_20260925?user=haewonkim' python3 -m unittest tests.test_downstream_postgresql -v\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy env EPHI_TEST_POSTGRES_DSN='postgresql:///ephi_chg234_u24_fix1_20260925?user=haewonkim' python3 tools/u2_asset_360_browser_qualification.py --output evidence/u2/chg-234-u2.4-asset-360/review-fix1/qualification.json --artifacts evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python -c 'import json; p=json.load(open(\\\"evidence/u2/chg-234-u2.4-asset-360/review-fix1/qualification.json\\\")); print(\\\"status\\\",p[\\\"status\\\"],\\\"postgres\\\",p[\\\"postgres\\\"][\\\"version\\\"],\\\"candidate\\\",p[\\\"candidate\\\"]); print({k:{\\\"status\\\":v[\\\"status\\\"],\\\"overflow\\\":v[\\\"no_horizontal_overflow\\\"],\\\"actions\\\":v[\\\"actions_reachable\\\"],\\\"deep_link\\\":v[\\\"episode_deep_link\\\"],\\\"clean\\\":v[\\\"inventories_clean\\\"],\\\"failures\\\":sum(len(v[\\\"inventories\\\"][name]) for name in (\\\"console_errors\\\",\\\"page_errors\\\",\\\"request_failures\\\",\\\"http_failures\\\")),\\\"missing\\\":v[\\\"missing_content\\\"]} for k,v in p[\\\"browser\\\"].items()})'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk mkdir -p evidence/u2/chg-234-u2.4-asset-360/review-fix1/test_logs'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy env EPHI_TEST_POSTGRES_DSN='postgresql:///ephi_chg234_u24_fix1_20260925?user=haewonkim' python3 -m unittest discover -s tests -v > evidence/u2/chg-234-u2.4-asset-360/review-fix1/test_logs/full-suite-postgresql18.log 2>&1\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk tail -n 80 evidence/u2/chg-234-u2.4-asset-360/review-fix1/test_logs/full-suite-postgresql18.log'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk nl -ba tests/test_package.py | rtk sed -n '1,55p' && rtk nl -ba tools/check_package.py | rtk sed -n '1,220p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk nl -ba tests/test_o9_operations.py | rtk sed -n '88,120p' && rtk rg -n \\\"migration_count|len\\\\(.*MIGRATION|migrations.*10|== 10\\\" tests tools src\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short && rtk git diff --stat'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk mkdir -p artifacts/chg234-u2.4-review-fix1 && rtk mv evidence/u2/chg-234-u2.4-asset-360/review-fix1/test_logs/full-suite-postgresql18.log artifacts/chg234-u2.4-review-fix1/full-suite-postgresql18-first-run-failed.log'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk rmdir evidence/u2/chg-234-u2.4-asset-360/review-fix1/test_logs'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy env EPHI_TEST_POSTGRES_DSN='postgresql:///ephi_chg234_u24_fix1_20260925?user=haewonkim' python3 -m unittest discover -s tests -v > artifacts/chg234-u2.4-review-fix1/full-suite-postgresql18.log 2>&1\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk tail -n 18 artifacts/chg234-u2.4-review-fix1/full-suite-postgresql18.log'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk tail -n 8 artifacts/chg234-u2.4-review-fix1/full-suite-postgresql18.log'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short && rtk git log -1 --oneline'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk rg -n \"u2_asset_360_browser_qualification|qualification.json|browser.*qualification\" README.md docs tools'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m compileall -q src examples tests tools'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/w0_repo_baseline.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk rg -n \"conformance|downstream --entrypoint|U1 ABI\" README.md docs/Downstream_Integration_ABI.md'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --stat && rtk git diff -- migrations/011_o4_revision_pinned_asset_reads.sql'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/u2_asset_360_browser_qualification.py --help'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy env EPHI_TEST_POSTGRES_DSN='postgresql:///ephi_chg234_u24_fix1_20260925?user=haewonkim' python3 -m ephi.downstream --entrypoint examples.synthetic_downstream.provider:build_bundle --json\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy env PYTHONPATH=src EPHI_TEST_POSTGRES_DSN='postgresql:///ephi_chg234_u24_fix1_20260925?user=haewonkim' python3 -m ephi.downstream --entrypoint examples.synthetic_downstream.provider:build_bundle --json\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy env EPHI_TEST_POSTGRES_DSN='postgresql:///ephi_chg234_u24_fix1_20260925?user=haewonkim' python3 tools/u2_asset_360_browser_qualification.py --dsn 'postgresql:///ephi_chg234_u24_fix1_20260925?user=haewonkim' --output evidence/u2/chg-234-u2.4-asset-360/review-fix1/qualification.json --artifacts artifacts/chg234-u2.4-review-fix1/browser\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import json; p=json.load(open(\\\"evidence/u2/chg-234-u2.4-asset-360/review-fix1/qualification.json\\\")); print(json.dumps({k:p.get(k) for k in (\\\"status\\\",\\\"candidate\\\",\\\"browser\\\",\\\"cases\\\",\\\"summary\\\",\\\"postgres\\\")},indent=2))'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import json; p=json.load(open(\\\"evidence/u2/chg-234-u2.4-asset-360/review-fix1/qualification.json\\\")); print(\\\"keys:\\\",sorted(p)); print(\\\"candidate:\\\",p[\\\"candidate\\\"]); print(\\\"postgres:\\\",p[\\\"postgres\\\"]); print(\\\"browser_cases:\\\",[(k,v.get(\\\"status\\\"),v.get(\\\"viewport\\\"),v.get(\\\"inventories_clean\\\"),v.get(\\\"no_horizontal_overflow\\\"),v.get(\\\"episode_deep_link\\\",{}).get(\\\"status\\\")) for k,v in p[\\\"browser\\\"].items()]); print(\\\"screenshots:\\\",sum(len(v.get(\\\"screenshots\\\",[])) for v in p[\\\"browser\\\"].values()))'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git add README.md docs/CHG-234-U2.4-asset-360.md docs/Downstream_Integration_ABI.md evidence/README.md examples/synthetic_downstream/provider.py src/ephi/application/__init__.py src/ephi/application/assets.py src/ephi/application/source_ingress.py src/ephi/downstream/__init__.py src/ephi/downstream/contracts.py src/ephi/infrastructure/postgresql_source.py src/ephi/ui/assets.py tests/test_assets_postgresql.py tests/test_o4_source_ingress.py tests/test_o9_operations.py tools/u2_asset_360_browser_qualification.py migrations/011_o4_revision_pinned_asset_reads.sql && rtk git status --short'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git commit -m 'Fix Asset 360 historical source revision pinning'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy env EPHI_TEST_POSTGRES_DSN='postgresql:///ephi_chg234_u24_fix1_20260925?user=haewonkim' python3 tools/u2_asset_360_browser_qualification.py --dsn 'postgresql:///ephi_chg234_u24_fix1_20260925?user=haewonkim' --output evidence/u2/chg-234-u2.4-asset-360/review-fix1/qualification.json --artifacts artifacts/chg234-u2.4-review-fix1/browser\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy env EPHI_TEST_POSTGRES_DSN='postgresql:///ephi_chg234_u24_fix1_20260925?user=haewonkim' python3 -m unittest discover -s tests -v > artifacts/chg234-u2.4-review-fix1/full-suite-postgresql18-final.log 2>&1\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m compileall -q src examples tests tools'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --check && rtk tail -n 5 artifacts/chg234-u2.4-review-fix1/full-suite-postgresql18-final.log'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short && rtk git rev-parse HEAD && rtk git rev-parse HEAD''^'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/w0_repo_baseline.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk find evidence/u2/chg-234-u2.4-asset-360/review-fix1/75aaa2a5a95199c1e7729e0ef6abb386b0dda47b -maxdepth 2 -type f -print'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk ls -la evidence/u2/chg-234-u2.4-asset-360/review-fix1'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short --untracked-files=all'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git add manifest.json evidence/u2/chg-234-u2.4-asset-360/review-fix1 && rtk git commit -m 'Add CHG-234 Asset 360 revision qualification evidence'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import json; p=json.load(open(\\\"evidence/u2/chg-234-u2.4-asset-360/review-fix1/qualification.json\\\")); print(json.dumps({\\\"status\\\":p[\\\"status\\\"],\\\"base_commit\\\":p[\\\"base_commit\\\"],\\\"target_ref\\\":p[\\\"target_ref\\\"],\\\"candidate\\\":p[\\\"candidate\\\"],\\\"postgres\\\":p[\\\"postgres\\\"],\\\"browser_cases\\\":{k:{\\\"status\\\":v[\\\"status\\\"],\\\"viewport\\\":v[\\\"viewport\\\"],\\\"inventories_clean\\\":v[\\\"inventories_clean\\\"],\\\"no_horizontal_overflow\\\":v[\\\"no_horizontal_overflow\\\"],\\\"episode_deep_link\\\":v[\\\"episode_deep_link\\\"][\\\"status\\\"] if v[\\\"episode_deep_link\\\"] else None} for k,v in p[\\\"browser\\\"].items()}},indent=2))'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m compileall -q src examples tests tools'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git diff --check && rtk git status --short && rtk git log -2 --format='%H%n%P%n%s'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/w0_repo_baseline.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    }
+  ],
+  "codex": {
+    "cli_version": "codex-cli 0.156.1",
+    "configured_model": "gpt-6-luna",
+    "event_count": 372,
+    "provider_reported_model": null,
+    "reasoning_effort": "xhigh",
+    "terminal_type": "turn.completed",
+    "usage": {
+      "cache_hit_percent": 98.12,
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 18076672,
+      "fresh_input_tokens": 347290,
+      "input_tokens": 18423962,
+      "non_reasoning_output_tokens": 37051,
+      "output_tokens": 103929,
+      "reasoning_output_tokens": 66878,
+      "total_processed_tokens": 18527891
+    },
+    "warnings": []
+  },
+  "commits": [
+    {
+      "sha": "de0b580f88cf12daa0cf117bdae943fa4ba4b894",
+      "subject": "Add CHG-234 Asset 360 revision qualification evidence"
+    },
+    {
+      "sha": "75aaa2a5a95199c1e7729e0ef6abb386b0dda47b",
+      "subject": "Fix Asset 360 historical source revision pinning"
+    },
+    {
+      "sha": "cb7f5493b9f117103b0c970df88a349884c8cb5c",
+      "subject": "fabric: capture completed model changes [CF-589da07d521650281e789426]"
+    }
+  ],
+  "diff": {
+    "additions": 15736,
+    "changed_files": 70,
+    "commit_count": 3,
+    "deletions": 41
+  },
+  "error_code": null,
+  "evidence_manifest": {
+    "count": 52,
+    "items": [
+      {
+        "bytes": 27259,
+        "path": "README.md",
+        "sha256": "398cfe71f20fee5a78e6c54d1874fb7ec05b3f437b78e66848ae835378bdfb0c"
+      },
+      {
+        "bytes": 5028,
+        "path": "docs/CHG-234-U2.4-asset-360.md",
+        "sha256": "cfeb619b2249671e77a942e68cb30e789a3b7a1d81284035d294336b08b77017"
+      },
+      {
+        "bytes": 13591,
+        "path": "docs/Downstream_Integration_ABI.md",
+        "sha256": "28facc0ce55b531045baba94cbc0cdc82f3ae762d8fe654696e8b37321c26d29"
+      },
+      {
+        "bytes": 3102,
+        "path": "evidence/README.md",
+        "sha256": "caf8e25713380c9ad3a6edb5dc589b3e753a86f1555bb9f89024cc79dd705c15"
+      },
+      {
+        "bytes": 182839,
+        "path": "evidence/u2/chg-234-u2.4-asset-360/qualification.json",
+        "sha256": "ac4f0abe5b1044f85df63fb6f46a7004ef504b93ad040ad3e34daccd5c3d8773"
+      },
+      {
+        "bytes": 250784,
+        "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/qualification.json",
+        "sha256": "75f35e89b2d6e86ad93a8b2585089c262d4cee1b3661103e51022122e091a8c3"
+      },
+      {
+        "bytes": 388353,
+        "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-360-compare-blocked-desktop-1440x900.png",
+        "sha256": "d269287d9f30b1f4d0a00713f66ea15c791a184addf53813168a67204ab232d4"
+      },
+      {
+        "bytes": 361843,
+        "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-360-compare-blocked-mobile-390x844.png",
+        "sha256": "7a5cb9651cefa714db61d0f0bd00b46b91da55b9a6739cde1b88dc77fe408f52"
+      },
+      {
+        "bytes": 448498,
+        "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-360-episodes-desktop-1440x900.png",
+        "sha256": "5df461a4f50e36d50cc9f95a1b13e86dfe493d0b1b19fb13ca80f7f5531f1669"
+      },
+      {
+        "bytes": 458327,
+        "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-360-episodes-desktop-stale-1440x900.png",
+        "sha256": "50bffe7432d2de6c60b23b6f0c29131707a8aa28deeba1ff94b46d4e6571f58f"
+      },
+      {
+        "bytes": 457627,
+        "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-360-episodes-desktop-unavailable-1440x900.png",
+        "sha256": "f8635fcf482282b4dfd77bc9c86fe3b4b45ed2c9818796387672b4f858900ed5"
+      },
+      {
+        "bytes": 409277,
+        "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-360-episodes-mobile-390x844.png",
+        "sha256": "13baf3c0f5315a31d958aa9411f89d32100435b256e913527d519a32ab2ace17"
+      },
+      {
+        "bytes": 417343,
+        "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-360-episodes-mobile-stale-390x844.png",
+        "sha256": "4625e5702504fb4f2da8bcf1b455847a181430df76f2974ad3303b9f7958c6ef"
+      },
+      {
+        "bytes": 418394,
+        "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-360-episodes-mobile-unavailable-390x844.png",
+        "sha256": "a6b9008ca9655fb35e03b3ebf31d572e8cba3726d8b2596c595b9fe2abcb72c1"
+      },
+      {
+        "bytes": 387833,
+        "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-360-gap-compatible-desktop-1440x900.png",
+        "sha256": "481371ead5ac1c72a1a8da6f189f6964440b6f092a9a48d667e95ac348745de7"
+      },
+      {
+        "bytes": 387538,
+        "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-360-gap-compatible-desktop-stale-1440x900.png",
+        "sha256": "cff50b3331e3da0987450d99ce4c1aea4b4d542e91cc599cffaa2426c89493cf"
+      },
+      {
+        "bytes": 353433,
+        "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-360-gap-compatible-desktop-unavailable-1440x900.png",
+        "sha256": "155c08cb47c5f1173541329a8f21ee3e83a81699151c6cca8ca74409a5e66f26"
+      },
+      {
+        "bytes": 361854,
+        "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-360-gap-compatible-mobile-390x844.png",
+        "sha256": "42bceb26fa052ad9eeca4eba74f541d640a7b11dc6917d9810945ad7d13d5f4c"
+      },
+      {
+        "bytes": 359698,
+        "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-360-gap-compatible-mobile-stale-390x844.png",
+        "sha256": "9d8b6e2b695776ff4aeea9f46d14a7005059a5f05e88e7a9263fbcff3524bcb8"
+      },
+      {
+        "bytes": 314046,
+        "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-360-gap-compatible-mobile-unavailable-390x844.png",
+        "sha256": "16656816c01a45507b4fe08eeae8097f9600df3b7a9d4f9c48bd5723767fba3b"
+      },
+      {
+        "bytes": 386754,
+        "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-360-stale-capability-desktop-1440x900.png",
+        "sha256": "af8165c6217f0aebe5d707c95e01d4d9204e50d6fd6ca390c692edaca179e42e"
+      },
+      {
+        "bytes": 358465,
+        "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-360-stale-capability-mobile-390x844.png",
+        "sha256": "44bc31aa188285f451b85437e8e3169fc1bdc271ba7e0a7ec3f45edd5d0db0bc"
+      },
+      {
+        "bytes": 121158,
+        "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-list-desktop-1440x900.png",
+        "sha256": "6ea841729caddfe24e439ae8849666c744c186a38832ed8064c493e6e2ce61dc"
+      },
+      {
+        "bytes": 124285,
+        "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-list-desktop-keyboard-focus-stale.png",
+        "sha256": "a52a6505d1a8dbf925686798ba289822fc77363a0a48365e5f7c868016c8ce01"
+      },
+      {
+        "bytes": 124665,
+        "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-list-desktop-keyboard-focus-unavailable.png",
+        "sha256": "eabf7e1e4270729035be5c3599edec914c72ea5ac27e1fdeb8de859ee36819d6"
+      },
+      {
+        "bytes": 121557,
+        "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-list-desktop-keyboard-focus.png",
+        "sha256": "484f65c923cc629c21aa962cadc987378e6e811580bebdd2b30149cc722d1c62"
+      },
+      {
+        "bytes": 124022,
+        "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-list-desktop-stale-1440x900.png",
+        "sha256": "0ff328baf040d4e9f4105562f78e7ca200c416a1173a3cb0cc6e6214580743f7"
+      },
+      {
+        "bytes": 124399,
+        "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-list-desktop-unavailable-1440x900.png",
+        "sha256": "ad76baf3eaa700339cf3a4fb73660013fdc901d367b1efead8bed0e4c1026f96"
+      },
+      {
+        "bytes": 138819,
+        "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-list-mobile-390x844.png",
+        "sha256": "2eb7f8c1f1c465dba2de70049ca5eee1b7fc14a22abb42d2f503e11e017176d7"
+      },
+      {
+        "bytes": 141063,
+        "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-list-mobile-stale-390x844.png",
+        "sha256": "16412c04d86b7273c69f2a6fbd1df39b3f0735531890d6fd212d518a3542bf40"
+      },
+      {
+        "bytes": 142807,
+        "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-list-mobile-unavailable-390x844.png",
+        "sha256": "0d364734626badd6bb4889e0d36c968d934869366a530e07ea6e4cb693a01b0b"
+      },
+      {
+        "bytes": 356012,
+        "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-compare-blocked-desktop-1440x900.png",
+        "sha256": "759701b732f21f6d56245cd6b977cd29c5b622aaac1db384f2d987ef1eb21c8d"
+      },
+      {
+        "bytes": 333587,
+        "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-compare-blocked-desktop-stale-1440x900.png",
+        "sha256": "40cbd0c86a16527650237372a119c6e61e25e414fd0ecd430df4e5c6c76d93a2"
+      },
+      {
+        "bytes": 334484,
+        "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-compare-blocked-mobile-390x844.png",
+        "sha256": "e97e1e23a71579d054c7929b53ef0f7b3e57a93313f3bcc47d0abf31d1eb0d0c"
+      },
+      {
+        "bytes": 267958,
+        "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-compare-blocked-mobile-stale-390x844.png",
+        "sha256": "635e43023fe0c0dee088117691939f25b767296ce66287221355d144d70876e3"
+      },
+      {
+        "bytes": 427403,
+        "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-episodes-desktop-1440x900.png",
+        "sha256": "897e856de82296221d15d620f762638b89fbeb86e309616797c080a19aa0dbd7"
+      },
+      {
+        "bytes": 432901,
+        "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-episodes-desktop-stale-1440x900.png",
+        "sha256": "9ca3639c7c00d9736945296ea7074a9cf9458ecd8247301cf64ea3f088fd899f"
+      },
+      {
+        "bytes": 390845,
+        "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-episodes-mobile-390x844.png",
+        "sha256": "bc01fb655263453d1cdd56cd2a265f6dfbed3a5515dd80d6af6e55cec3bbe36a"
+      },
+      {
+        "bytes": 395069,
+        "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-episodes-mobile-stale-390x844.png",
+        "sha256": "5d59784386e339351ae6d319d44e0c212aa76c52b9413ffbb63e47b426ebbb21"
+      },
+      {
+        "bytes": 356788,
+        "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-gap-compatible-desktop-1440x900.png",
+        "sha256": "c6b5c2533461f0374ab77b61ef26f84e917a96237c107b9baeb72d53f1e6324c"
+      },
+      {
+        "bytes": 352104,
+        "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-gap-compatible-desktop-stale-1440x900.png",
+        "sha256": "40cb03095b484819ed16c2147c86f18ad3bb42cb6ba9e7e8d2d222ba06706533"
+      },
+      {
+        "bytes": 333776,
+        "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-gap-compatible-mobile-390x844.png",
+        "sha256": "78f185c9d9e4a8d9e35d58ea37d848c9e278013ebbf5f4f598781301b005b0ec"
+      },
+      {
+        "bytes": 325027,
+        "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-gap-compatible-mobile-stale-390x844.png",
+        "sha256": "c07320096f1c98cd2bcfc91aecda29b525836cc1348ce9eba38646d94a3272dd"
+      },
+      {
+        "bytes": 352146,
+        "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-stale-capability-desktop-1440x900.png",
+        "sha256": "01e62b0720859c473c55c3ffc90b6a7bf865168b01b938f7d78e9c6eaf457ce0"
+      },
+      {
+        "bytes": 326451,
+        "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-stale-capability-mobile-390x844.png",
+        "sha256": "05c8060aacf6e6f9c715d9af94049d9aea3ed18331fa8436d74ce0eac11f2836"
+      },
+      {
+        "bytes": 120752,
+        "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-list-desktop-1440x900.png",
+        "sha256": "e69f3bbd95cca91d13e2549c8e8212d2ac3dcb229f95f0c2aaa05688e5156829"
+      },
+      {
+        "bytes": 124225,
+        "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-list-desktop-keyboard-focus-stale.png",
+        "sha256": "24f7b7948a5f43663a578d8da26dacf2d7bfd0b8a3df783df4ac73cecf434f6b"
+      },
+      {
+        "bytes": 121154,
+        "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-list-desktop-keyboard-focus.png",
+        "sha256": "c9c94b8b1a98ffe40f8e3ebddda0fbe31f56f1ce57f42ac54c73eed5c3f46455"
+      },
+      {
+        "bytes": 123963,
+        "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-list-desktop-stale-1440x900.png",
+        "sha256": "49614604cbd9b03ea12150c615a7eeab257ad170a958ee8b4dc2e5b732da17f0"
+      },
+      {
+        "bytes": 139038,
+        "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-list-mobile-390x844.png",
+        "sha256": "1532b233bd70a92b0b0af89f120cd0bd1d2e0c37ffa7e4f40ee415f2a9d25ad4"
+      },
+      {
+        "bytes": 141284,
+        "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-list-mobile-stale-390x844.png",
+        "sha256": "c231744944d6ea6603c42931b2a12d8cd900a2318fb4f1401eed782639b12ba4"
+      },
+      {
+        "bytes": 78341,
+        "path": "manifest.json",
+        "sha256": "db5f5074ac2c50b338466180af40bb147ea1363915a43b94cd2e5d97c45cfc03"
+      }
+    ],
+    "version": 1
+  },
+  "evidence_publisher_release": "1.2.5-dashboard-controls-candidate",
+  "fabric_capture": {
+    "applied": false,
+    "paths_before": 0,
+    "transient_untracked_removed": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "fabric_release": "1.2.5-dashboard-controls-candidate",
+  "failure_class": null,
+  "finished_at": "2026-09-25T15:50:49Z",
+  "git": {
+    "base_is_ancestor": true,
+    "base_sha": "4482233202ff2667262ff0d47ff390e72d398d3c",
+    "branch": "codex/ephi-u2-asset-360-history-fix1",
+    "detached_verify": false,
+    "head_sha": "de0b580f88cf12daa0cf117bdae943fa4ba4b894",
+    "remote_exact_head": true,
+    "remote_head_sha": "de0b580f88cf12daa0cf117bdae943fa4ba4b894",
+    "target_branch": "main",
+    "target_drifted_since_acceptance": false,
+    "target_head_observed_after_execution": "4482233202ff2667262ff0d47ff390e72d398d3c",
+    "work_branch": "codex/ephi-u2-asset-360-history-fix1",
+    "worktree_clean": true
+  },
+  "instructions": {
+    "files": [
+      {
+        "bytes": 1458,
+        "path": "AGENTS.md",
+        "sha256": "4349f387a79d886ed1264604ff48c582698e539e08ed8fb2f9d8ab8fbf6f804a"
+      }
+    ],
+    "total_bytes": 1458,
+    "warning": null
+  },
+  "job_id": "CF-bcfc6a3bc35027f706fadde9",
+  "kind": "codex-fabric-audit-evidence",
+  "locator": {
+    "branch": "codex-fabric/evidence/ephi/ephi-u2-asset-360-history-fix1",
+    "path": ".codex-fabric/audit.json",
+    "ref": "refs/heads/codex-fabric/evidence/ephi/ephi-u2-asset-360-history-fix1"
+  },
+  "operation": "FIX",
+  "policy": {
+    "environment_policy_sha256": "e077daca74297b3c30bee8989f00f8ca5338f7610b4d016a6c48db524205d064",
+    "fabric_release": "1.2.5-dashboard-controls-candidate",
+    "policy_sha256": "123615bf2f6e57dcac197e49ca98ceac59ada86a55e2c84445ea5d00812c0833",
+    "registry_sha256": "af81b8552f9d6a33847310e3c6bcd2d48401782b963a58efd2993e93570cb4aa"
+  },
+  "project_id": "ephi",
+  "recovery": {
+    "model_rerun_safe": false,
+    "recovery_required": false,
+    "retry_safe": false,
+    "retry_scope": null,
+    "worktree_retained": true
+  },
+  "request": "ephi-u2-asset-360-history-fix1",
+  "schema_version": 1,
+  "started_at": "2026-09-25T15:08:30Z",
+  "status": "EXECUTED_CHANGE",
+  "timing": {
+    "execution_seconds": 2539,
+    "queue_seconds": 0,
+    "total_seconds": 2539
+  },
+  "transport": {
+    "bytes": 6381,
+    "envelope": "FABRIC/2",
+    "prompt_bytes": 6071,
+    "prompt_sha256": "57a250ec315c48c9f66e44100a89d02013698727433d488d129531756d0f8198",
+    "sha256": "bcfc6a3bc35027f706fadde9d562583bc791047b4ab14a373b643f4158d73e04"
+  }
+}
