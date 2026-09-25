@@ -45,6 +45,7 @@ from ephi.downstream import (
     ABI_VERSION,
     ArtifactProvider,
     FamilyContextConfiguration,
+    FamilyQualificationTarget,
     PolicyConfiguration,
     PolicySchemaMetadata,
     ProviderBinding,
@@ -105,6 +106,12 @@ _CAPABILITIES = frozenset(
         "handoff.read",
         "handoff.delivery.dispatch",
         "handoff.delivery.reconcile",
+        "ephi.family_qualification.read",
+        "ephi.family_qualification.evidence.write",
+        "ephi.family_qualification.promote",
+        "ephi.family_qualification.judge",
+        "ephi.family_qualification.policy",
+        "ephi.family_qualification.artifact.read",
     }
 )
 
@@ -252,7 +259,54 @@ class SyntheticPolicy:
             CheckTemplateCatalog("synthetic-checks", "1.0.0", (template,)),
             PlannerPolicy("synthetic-planner", "1.0.0", (PairWeight("synthetic-pair", 1),)),
             RecoveryPolicy.deterministic_w0_regression(),
-            (FamilyContextConfiguration(_FAMILY_ID, "1.0.0", (context,)),),
+            (
+                FamilyContextConfiguration(
+                    _FAMILY_ID,
+                    "1.0.0",
+                    (context,),
+                    (
+                        FamilyQualificationTarget(
+                            "synthetic-capability",
+                            "synthetic-product",
+                            "synthetic-release-1",
+                            "synthetic-target",
+                            not_applicable_stages=("SHADOW",),
+                            independent_judgment_stages=("GOLDEN", "QUALIFY"),
+                            synthetic_fixture=True,
+                        ),
+                        FamilyQualificationTarget(
+                            "synthetic-capability", "synthetic-product", "synthetic-release-ambiguous",
+                            "synthetic-target", not_applicable_stages=("SHADOW",),
+                            independent_judgment_stages=("GOLDEN", "QUALIFY"), synthetic_fixture=True,
+                        ),
+                        FamilyQualificationTarget(
+                            "synthetic-capability", "synthetic-product", "synthetic-release-expired",
+                            "synthetic-target", not_applicable_stages=("SHADOW",),
+                            independent_judgment_stages=("GOLDEN", "QUALIFY"), synthetic_fixture=True,
+                        ),
+                        FamilyQualificationTarget(
+                            "synthetic-capability", "synthetic-product", "synthetic-release-failed",
+                            "synthetic-target", not_applicable_stages=("SHADOW",),
+                            independent_judgment_stages=("GOLDEN", "QUALIFY"), synthetic_fixture=True,
+                        ),
+                        FamilyQualificationTarget(
+                            "synthetic-capability", "synthetic-product", "synthetic-release-future",
+                            "synthetic-target", not_applicable_stages=("SHADOW",),
+                            independent_judgment_stages=("GOLDEN", "QUALIFY"), synthetic_fixture=True,
+                        ),
+                        FamilyQualificationTarget(
+                            "synthetic-capability", "synthetic-product", "synthetic-release-pending",
+                            "synthetic-target", not_applicable_stages=("SHADOW",),
+                            independent_judgment_stages=("GOLDEN", "QUALIFY"), synthetic_fixture=True,
+                        ),
+                        FamilyQualificationTarget(
+                            "synthetic-capability", "synthetic-product", "synthetic-release-stale",
+                            "synthetic-target", not_applicable_stages=("SHADOW",),
+                            independent_judgment_stages=("GOLDEN", "QUALIFY"), synthetic_fixture=True,
+                        ),
+                    ),
+                ),
+            ),
         )
 
     @property

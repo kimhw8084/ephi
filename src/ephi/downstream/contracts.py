@@ -167,12 +167,68 @@ class ProviderBinding:
 
 
 @dataclass(frozen=True, slots=True)
+class FamilyQualificationTarget:
+    """One policy-owned generic family/capability release target.
+
+    This is configuration identity for Family Center qualification only.  It
+    does not represent a G12, production-release or manufacturing approval.
+    """
+
+    capability_id: str
+    product_id: str
+    release_id: str
+    context_target_identity: str
+    required_stages: tuple[str, ...] = (
+        "DISCOVER_MAP",
+        "DATA_REALITY",
+        "REPLAY",
+        "GOLDEN",
+        "SHADOW",
+        "QUALIFY",
+    )
+    not_applicable_stages: tuple[str, ...] = ()
+    independent_judgment_stages: tuple[str, ...] = ()
+    synthetic_fixture: bool = False
+
+    def __post_init__(self) -> None:
+        for field in ("capability_id", "product_id", "release_id", "context_target_identity"):
+            _generic_identity(getattr(self, field), field)
+        allowed = {"DISCOVER_MAP", "DATA_REALITY", "REPLAY", "GOLDEN", "SHADOW", "QUALIFY"}
+        for field in ("required_stages", "not_applicable_stages", "independent_judgment_stages"):
+            values = getattr(self, field)
+            if not isinstance(values, (tuple, list, frozenset)):
+                raise TypeError(f"{field} must be a sequence of stage IDs")
+            if any(value not in allowed for value in values):
+                raise ValueError(f"{field} contains an unsupported stage ID")
+            stage_order = ("DISCOVER_MAP", "DATA_REALITY", "REPLAY", "GOLDEN", "SHADOW", "QUALIFY")
+            normalized = tuple(sorted(set(values), key=stage_order.index))
+            if len(normalized) != len(values):
+                raise ValueError(f"{field} contains an unsupported stage ID")
+            object.__setattr__(self, field, normalized)
+        if not isinstance(self.synthetic_fixture, bool):
+            raise TypeError("synthetic_fixture must be a boolean")
+        if "DATA_REALITY" in self.not_applicable_stages:
+            raise ValueError("DATA_REALITY cannot be policy-authorized as not applicable")
+        if "DATA_REALITY" in self.independent_judgment_stages:
+            raise ValueError("DATA_REALITY is derived from O4 and cannot use independent judgment")
+        if set(self.not_applicable_stages) & set(self.independent_judgment_stages):
+            raise ValueError("a NOT_APPLICABLE stage cannot also require independent evidence judgment")
+        if not {"DISCOVER_MAP", "DATA_REALITY"} <= set(self.required_stages):
+            raise ValueError("DISCOVER_MAP and DATA_REALITY must be required qualification gates")
+        if not set(self.not_applicable_stages) <= set(self.required_stages):
+            raise ValueError("NOT_APPLICABLE stages must be required stages")
+        if not set(self.independent_judgment_stages) <= set(self.required_stages):
+            raise ValueError("independent-judgment stages must be required stages")
+
+
+@dataclass(frozen=True, slots=True)
 class FamilyContextConfiguration:
     """Family-owned context identities passed through existing generic types."""
 
     family_id: str
     version: str
     contexts: tuple[TargetContext, ...]
+    qualification_targets: tuple[FamilyQualificationTarget, ...] = ()
 
     def __post_init__(self) -> None:
         _generic_identity(self.family_id, "family_id")
@@ -183,6 +239,17 @@ class FamilyContextConfiguration:
         if len({item.target_identity for item in contexts}) != len(contexts):
             raise ValueError("context target identities must be unique")
         object.__setattr__(self, "contexts", contexts)
+        targets = self.qualification_targets
+        if not isinstance(targets, (tuple, list)) or any(not isinstance(item, FamilyQualificationTarget) for item in targets):
+            raise TypeError("qualification_targets must contain FamilyQualificationTarget values")
+        targets = tuple(sorted(targets, key=lambda item: (item.capability_id, item.product_id, item.release_id)))
+        context_ids = {item.target_identity for item in contexts}
+        if any(item.context_target_identity not in context_ids for item in targets):
+            raise ValueError("qualification target must refer to one configured family context")
+        target_keys = {(item.capability_id, item.product_id, item.release_id, item.context_target_identity) for item in targets}
+        if len(target_keys) != len(targets):
+            raise ValueError("qualification target identities must be unique")
+        object.__setattr__(self, "qualification_targets", targets)
 
 
 @dataclass(frozen=True, slots=True)
@@ -399,6 +466,7 @@ __all__ = [
     "PolicySchemaMetadata",
     "PolicyConfiguration",
     "FamilyContextConfiguration",
+    "FamilyQualificationTarget",
     "IdentityProvider",
     "BoundedMetrologyObserver",
     "ArtifactProvider",
