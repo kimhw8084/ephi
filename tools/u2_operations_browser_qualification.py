@@ -147,6 +147,11 @@ def _enqueue_fixture_jobs(composition: Any) -> dict[str, str]:
         "UPDATE job SET lease_expires_at = clock_timestamp() - INTERVAL '1 second' WHERE job_id = %s",
         (expired_lease.job_id,),
     )
+    succeeded = enqueue("succeeded")
+    succeeded_lease = worker.claim(scope, "synthetic-success-owner", job_type="SyntheticOperationsFixture.succeeded")
+    worker.complete(succeeded_lease.lease)
+    canceled = enqueue("canceled")
+    worker.cancel(scope, canceled.job_id)
     return records
 
 
@@ -169,7 +174,7 @@ def _seed(dsn: str, artifact_root: Path, case: str, *, unbound: bool = False) ->
             "case": case,
             "postgres_version": version,
             "source_snapshot_seeded": bool(binding_snapshot),
-            "worker_states_seeded": ["QUEUED", "RUNNING", "DEFERRED", "FAILED", "DEAD_LETTER", "EXPIRED_LEASE"],
+            "worker_states_seeded": ["QUEUED", "RUNNING", "DEFERRED", "SUCCEEDED", "FAILED", "DEAD_LETTER", "CANCELED", "EXPIRED_LEASE"],
             "job_ids": jobs,
             "synthetic": True,
             "production_operator_capability_bound": False,
@@ -323,6 +328,56 @@ def _keyboard_focus(page: Any) -> dict[str, object]:
     return {"target_reached": False, "focus_visible": False, "focus_after_refresh": False}
 
 
+def _worker_filter_geometry(page: Any, width: int, height: int) -> dict[str, object]:
+    controls = (
+        page.locator(".ephi-operations-filter-controls .q-select"),
+        page.get_by_role("textbox", name="Exact worker job type"),
+        page.get_by_role("button", name="Refresh"),
+    )
+    boxes = [control.bounding_box() for control in controls]
+    present = all(box is not None for box in boxes)
+    bounded = bool(present and all(
+        box["x"] >= 0 and box["x"] + box["width"] <= width + 1
+        and box["y"] >= 0 and box["y"] + box["height"] <= height + 1
+        for box in boxes
+    ))
+    non_overlapping = bool(present and all(
+        left["x"] + left["width"] <= right["x"] or right["x"] + right["width"] <= left["x"]
+        or left["y"] + left["height"] <= right["y"] or right["y"] + right["height"] <= left["y"]
+        for index, left in enumerate(boxes)
+        for right in boxes[index + 1:]
+    ))
+    return {
+        "all_visible": all(control.is_visible() for control in controls),
+        "within_viewport": bounded,
+        "non_overlapping": non_overlapping,
+    }
+
+
+def _filter_worker_rows(page: Any, status: str, job_type: str, width: int, height: int) -> dict[str, object]:
+    page.locator(".ephi-operations-filter-controls .q-select").click()
+    page.get_by_role("option", name=status, exact=True).click()
+    page.get_by_role("textbox", name="Exact worker job type").fill(job_type)
+    page.get_by_role("button", name="Refresh").click()
+    expected_filter = f"Worker detail filters · {status} · {job_type}"
+    page.get_by_text(expected_filter, exact=True).wait_for(timeout=15000)
+    rows = (
+        page.locator(".ephi-operations-job-card:visible")
+        if width <= 600
+        else page.locator(".ephi-operations-table tbody tr")
+    )
+    row_text = [rows.nth(index).inner_text() for index in range(rows.count())]
+    worker_axis = page.locator(".ephi-operations-axis").filter(has_text="Durable worker and job state").inner_text()
+    return {
+        "status": status,
+        "job_type": job_type,
+        "visible_rows": len(row_text),
+        "matching_row_visible": len(row_text) == 1 and job_type in row_text[0] and status in row_text[0],
+        "worker_axis_state_error": "ERROR" in worker_axis,
+        "controls_geometry": _worker_filter_geometry(page, width, height),
+    }
+
+
 def _browser_view(base: str, case: str, width: int, height: int, artifact_dir: Path, expected: tuple[str, ...]) -> dict[str, object]:
     from playwright.sync_api import sync_playwright
 
@@ -358,6 +413,13 @@ def _browser_view(base: str, case: str, width: int, height: int, artifact_dir: P
             mobile_detail_alternative = True
             desktop_worker_table = page.get_by_role("table", name="Bounded durable worker jobs").is_visible()
             worker_presentation_ok = desktop_worker_table
+        keyboard = _keyboard_focus(page)
+        status_control_visible = page.locator(".ephi-operations-filter-controls .q-select").is_visible()
+        job_type_control_visible = page.get_by_role("textbox", name="Exact worker job type").is_visible()
+        filter_checks = [
+            _filter_worker_rows(page, "SUCCEEDED", "SyntheticOperationsFixture.succeeded", width, height),
+            _filter_worker_rows(page, "CANCELED", "SyntheticOperationsFixture.canceled", width, height),
+        ]
         expected_control_names = (
             "Retry eligible job", "Pause source/family processing", "Request projection repair", "Start approved restore rehearsal",
         )
@@ -370,22 +432,39 @@ def _browser_view(base: str, case: str, width: int, height: int, artifact_dir: P
             and box["x"] + box["width"] <= width + 1
             and box["y"] >= 0 and box["y"] + box["height"] <= height + 1
         )
-        keyboard = _keyboard_focus(page)
         page.evaluate("window.scrollTo(0, 0)")
+        filter_geometry = _worker_filter_geometry(page, width, height)
+        filtered_geometry = page.evaluate("() => ({viewport_width:innerWidth, document_width:document.documentElement.scrollWidth, body_width:document.body.scrollWidth, no_horizontal_overflow:document.documentElement.scrollWidth <= innerWidth + 1})")
         screenshot_name = f"operations-{case}-{'desktop' if width > 600 else 'phone'}-{width}x{height}.png"
         screenshot_path = artifact_dir / screenshot_name
         page.screenshot(path=str(screenshot_path), full_page=True)
-        body_digest = _sha(body)
+        default_body_digest = _sha(body)
+        filtered_body = page.locator("body").inner_text()
+        body_digest = _sha(filtered_body)
+        filtered_secret_markers = [item for item in secret_markers if item in filtered_body]
         aria_digest = _sha(page.locator("body").aria_snapshot())
         page.close()
         context.close()
         browser.close()
 
     clean = not any(events[key] for key in ("console_errors", "page_errors", "request_failures", "http_failures"))
-    no_horizontal_overflow = bool(geometry["no_horizontal_overflow"])
+    no_horizontal_overflow = bool(geometry["no_horizontal_overflow"] and filtered_geometry["no_horizontal_overflow"])
+    filters_pass = (
+        status_control_visible and job_type_control_visible and not filtered_secret_markers
+        and filter_geometry["all_visible"] and filter_geometry["within_viewport"]
+        and filter_geometry["non_overlapping"]
+        and all(
+            item["matching_row_visible"] and item["worker_axis_state_error"]
+            and item["controls_geometry"]["all_visible"]
+            and item["controls_geometry"]["within_viewport"]
+            and item["controls_geometry"]["non_overlapping"]
+            for item in filter_checks
+        )
+    )
     passed = (
         not missing and not leaked and page_error_free and clean and no_horizontal_overflow
         and mobile_detail_alternative and worker_presentation_ok and all(controls.values())
+        and filters_pass
         and action_reachable and keyboard["target_reached"] and keyboard["focus_visible"]
         and keyboard["focus_after_refresh"]
     )
@@ -396,12 +475,18 @@ def _browser_view(base: str, case: str, width: int, height: int, artifact_dir: P
         "missing_content": missing,
         "private_markers_in_browser_text": leaked,
         "geometry": geometry,
+        "filtered_geometry": filtered_geometry,
         "disabled_controls": controls,
         "restore_control_reachable": action_reachable,
         "accessible_worker_detail_alternative": mobile_detail_alternative,
         "worker_table_visible_on_desktop": desktop_worker_table,
+        "worker_filters_visible": status_control_visible and job_type_control_visible,
+        "worker_filter_checks": filter_checks,
+        "worker_filter_controls_geometry": filter_geometry,
+        "private_markers_after_filtering": filtered_secret_markers,
         "keyboard_focus": keyboard,
         "body_digest": body_digest,
+        "default_body_digest": default_body_digest,
         "accessibility_snapshot_digest": aria_digest,
         "inventories": events,
         "inventories_clean": clean,
@@ -417,13 +502,13 @@ def qualify(dsn: str, output: Path, artifact_dir: Path) -> dict[str, object]:
     artifact_dir = artifact_dir.resolve()
     artifact_dir.mkdir(parents=True, exist_ok=True)
     cases = (
-        ("mixed_axes", ("PostgreSQL readiness and durability", "FAILED", "DEAD_LETTER", "READY", "Operator controls")),
-        ("source_stale", ("Source freshness detail", "STALE", "OPERATIONS_QUERY_PATH_RESPONDED", "FAILED")),
-        ("source_unavailable", ("Source freshness detail", "UNAVAILABLE", "CAPABILITY_RECORD_MISSING", "FAILED")),
-        ("qualification_expired", ("Qualification and evidence freshness", "EXPIRED", "EVIDENCE_EXPIRED", "FAILED")),
-        ("qualification_pending", ("Qualification and evidence freshness", "PENDING", "SYNTHETIC_REPLAY_PENDING", "FAILED")),
-        ("artifact_missing", ("Artifact integrity detail", "MISSING_ARTIFACT_BYTES", "1", "FAILED")),
-        ("artifact_corrupt", ("Artifact integrity detail", "CORRUPT_ARTIFACT_BYTES", "1", "FAILED")),
+        ("mixed_axes", ("PostgreSQL readiness and durability", "FAILED", "DEAD_LETTER", "SUCCEEDED", "CANCELED", "READY", "Operator controls")),
+        ("source_stale", ("Source freshness detail", "STALE", "OPERATIONS_QUERY_PATH_RESPONDED", "FAILED", "DEAD_LETTER", "SUCCEEDED", "CANCELED")),
+        ("source_unavailable", ("Source freshness detail", "UNAVAILABLE", "CAPABILITY_RECORD_MISSING", "FAILED", "DEAD_LETTER", "SUCCEEDED", "CANCELED")),
+        ("qualification_expired", ("Qualification and evidence freshness", "EXPIRED", "EVIDENCE_EXPIRED", "FAILED", "DEAD_LETTER", "SUCCEEDED", "CANCELED")),
+        ("qualification_pending", ("Qualification and evidence freshness", "PENDING", "SYNTHETIC_REPLAY_PENDING", "FAILED", "DEAD_LETTER", "SUCCEEDED", "CANCELED")),
+        ("artifact_missing", ("Artifact integrity detail", "MISSING_ARTIFACT_BYTES", "1", "FAILED", "DEAD_LETTER", "SUCCEEDED", "CANCELED")),
+        ("artifact_corrupt", ("Artifact integrity detail", "CORRUPT_ARTIFACT_BYTES", "1", "FAILED", "DEAD_LETTER", "SUCCEEDED", "CANCELED")),
     )
     browsers: dict[str, dict[str, object]] = {}
     fixtures: dict[str, dict[str, object]] = {}
@@ -452,7 +537,7 @@ def qualify(dsn: str, output: Path, artifact_dir: Path) -> dict[str, object]:
         fixtures["qualification_unbound"] = unbound_fixture
         process, log_file, base = _start_server(dsn, temp, artifact_root, unbound=True)
         try:
-            expected_unbound = ("Qualification and evidence freshness", "NOT_QUALIFIED", "QUALIFICATION_AUTHORITY_NOT_BOUND")
+            expected_unbound = ("Qualification and evidence freshness", "NOT_QUALIFIED", "QUALIFICATION_AUTHORITY_NOT_BOUND", "FAILED", "DEAD_LETTER", "SUCCEEDED", "CANCELED")
             browsers["qualification_unbound_desktop_1440x900"] = _browser_view(base, "qualification_unbound", 1440, 900, artifact_dir, expected_unbound)
             browsers["qualification_unbound_phone_390x844"] = _browser_view(base, "qualification_unbound", 390, 844, artifact_dir, expected_unbound)
         finally:

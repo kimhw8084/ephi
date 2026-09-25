@@ -34,6 +34,8 @@ from ephi.application.worker import (
     LocalEffect,
     WorkerLease,
     WorkerLeaseConfig,
+    validate_worker_job_type,
+    validate_worker_statuses,
 )
 from ephi.application.operations import WorkerHealthFacts
 
@@ -506,6 +508,7 @@ class PostgreSQLWorkerStore:
         *,
         job_id: str | None = None,
         statuses: Sequence[str] | None = None,
+        job_type: str | None = None,
         limit: int = 100,
     ) -> tuple[JobRecord, ...]:
         if not isinstance(scope, AccessScope):
@@ -514,11 +517,8 @@ class PostgreSQLWorkerStore:
             job_id = _validated_identity(job_id, "job_id")
         if isinstance(limit, bool) or not isinstance(limit, int) or not 1 <= limit <= 1000:
             raise ValidationFailureError("inspect limit must be between 1 and 1000")
-        status_values = None
-        if statuses is not None:
-            status_values = [_validated_identity(status, "status") for status in statuses]
-            if not status_values:
-                raise ValidationFailureError("statuses must not be empty")
+        status_values = validate_worker_statuses(statuses)
+        job_type = validate_worker_job_type(job_type)
         clauses = ["scope_key = %s"]
         params: list[Any] = [scope.canonical_key]
         if job_id is not None:
@@ -526,7 +526,10 @@ class PostgreSQLWorkerStore:
             params.append(job_id)
         if status_values is not None:
             clauses.append("status = ANY(%s)")
-            params.append(status_values)
+            params.append(list(status_values))
+        if job_type is not None:
+            clauses.append("job_type = %s")
+            params.append(job_type)
         params.append(limit)
         try:
             rows = self.adapter.connection.execute(

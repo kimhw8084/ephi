@@ -75,12 +75,13 @@ class OperationsPostgreSQLIntegrationTests(unittest.TestCase):
             artifact_service=ArtifactService(self.blob_store, current.artifact_catalog(), self.authorization),
         )
 
-    def _job(self, worker, name, *, max_attempts=3):
+    def _job(self, worker, name, *, max_attempts=3, job_type=None, priority=0):
         return worker.enqueue(
             self.scope,
-            f"SyntheticOperationsFixture.{name}",
+            job_type or f"SyntheticOperationsFixture.{name}",
             f"operations-fixture-{name}-{uuid4()}",
             {"fixture": "synthetic", "private_source_row": "SAMPLE-ROW-MUST-NOT-LEAK"},
+            priority=priority,
             max_attempts=max_attempts,
         )
 
@@ -120,6 +121,20 @@ class OperationsPostgreSQLIntegrationTests(unittest.TestCase):
             error_code="SYNTHETIC_RETRY_EXHAUSTED",
             error_message="fixture dead-letter failure",
         )
+        succeeded = self._job(
+            worker, "succeeded", job_type="SyntheticOperationsFixture.succeeded", priority=1,
+        )
+        succeeded_high = self._job(
+            worker, "succeeded-high", job_type="SyntheticOperationsFixture.succeeded", priority=8,
+        )
+        succeeded_claim = worker.claim(self.scope, "synthetic-success-owner", job_type="SyntheticOperationsFixture.succeeded")
+        self.assertEqual(succeeded_claim.job_id, succeeded_high.job_id)
+        worker.complete(succeeded_claim.lease)
+        succeeded_claim = worker.claim(self.scope, "synthetic-success-owner", job_type="SyntheticOperationsFixture.succeeded")
+        self.assertEqual(succeeded_claim.job_id, succeeded.job_id)
+        worker.complete(succeeded_claim.lease)
+        canceled = self._job(worker, "canceled")
+        self.assertEqual(worker.cancel(self.scope, canceled.job_id).status, "CANCELED")
         expired = self._job(worker, "expired")
         expired_claim = worker.claim(self.scope, "synthetic-expired-owner", job_type="SyntheticOperationsFixture.expired")
         self.assertEqual(expired_claim.job_id, expired.job_id)
@@ -155,6 +170,8 @@ class OperationsPostgreSQLIntegrationTests(unittest.TestCase):
         self.assertEqual(jobs[deferred.job_id].status, "DEFERRED")
         self.assertEqual(jobs[failed.job_id].status, "FAILED")
         self.assertEqual(jobs[dead.job_id].status, "DEAD_LETTER")
+        self.assertEqual(jobs[succeeded.job_id].status, "SUCCEEDED")
+        self.assertEqual(jobs[canceled.job_id].status, "CANCELED")
         self.assertEqual(jobs[expired.job_id].lease_state, "EXPIRED")
         self.assertTrue(jobs[running.job_id].committed_local_effect_receipt)
         self.assertEqual(jobs[failed.job_id].failure_reason, "Failure detail withheld; review the owning worker authority.")
@@ -163,6 +180,23 @@ class OperationsPostgreSQLIntegrationTests(unittest.TestCase):
         self.assertNotIn("fixture-secret", encoded)
         self.assertNotIn("/private/customer", encoded)
         self.assertNotIn("private effect payload", encoded)
+
+        filtered = query.read(
+            self.principal,
+            self.scope,
+            worker_statuses=("SUCCEEDED",),
+            worker_job_type="SyntheticOperationsFixture.succeeded",
+        )
+        self.assertEqual([item.job_id for item in filtered.jobs], [succeeded_high.job_id, succeeded.job_id])
+        self.assertEqual([item.status for item in filtered.jobs], ["SUCCEEDED", "SUCCEEDED"])
+        self.assertEqual(
+            filtered.as_dict()["worker_filters"],
+            {"statuses": ["SUCCEEDED"], "job_type": "SyntheticOperationsFixture.succeeded"},
+        )
+        filtered_axis = filtered.health.as_dict()["axes"]["durable_worker_job_state"]
+        self.assertEqual(filtered_axis["state"], "ERROR")
+        self.assertEqual(filtered_axis["facts"]["failed_count"], 1)
+        self.assertEqual(filtered_axis["facts"]["dead_letter_count"], 1)
 
         missing_path = artifact_blob_path(self.artifact_directory.name + "/blobs", reference.sha256)
         missing_path.unlink()
@@ -179,6 +213,7 @@ class OperationsPostgreSQLIntegrationTests(unittest.TestCase):
         self.assertEqual(corrupt.artifacts.corrupt_count, 1)
 
         expected_jobs = [item.as_dict() for item in corrupt.jobs]
+        expected_filtered_jobs = [item.as_dict() for item in filtered.jobs]
         restart_data_dir = os.environ.get("EPHI_TEST_POSTGRES_RESTART_DATA_DIR")
         pg_ctl = os.environ.get("EPHI_TEST_POSTGRES_PG_CTL")
         if restart_data_dir or pg_ctl:
@@ -203,9 +238,17 @@ class OperationsPostgreSQLIntegrationTests(unittest.TestCase):
             expected_jobs,
             [item.as_dict() for item in restarted.jobs],
         )
+        restarted_filtered = self._query(self.adapter).read(
+            self.principal,
+            self.scope,
+            worker_statuses=("SUCCEEDED",),
+            worker_job_type="SyntheticOperationsFixture.succeeded",
+        )
+        self.assertEqual(expected_filtered_jobs, [item.as_dict() for item in restarted_filtered.jobs])
         restarted_axes = restarted.health.as_dict()["axes"]
         self.assertEqual(restarted_axes["postgres_readiness_durability"]["state"], "READY")
         self.assertEqual(restarted_axes["durable_worker_job_state"]["state"], "ERROR")
+        self.assertEqual(restarted_filtered.health.as_dict()["axes"]["durable_worker_job_state"]["state"], "ERROR")
         self.assertEqual(restarted.jobs_truncated, False)
 
 

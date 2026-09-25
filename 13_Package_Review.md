@@ -300,3 +300,12 @@ browser inventory and screenshots are recorded in
 `evidence/u2/chg-252-u2.5-o9.2/qualification.json`. Qualification remains
 synthetic only: no real-family G02/G06, production capacity/G10, production
 RPO/RTO, G12, Port Gate or Production claim is made.
+
+The R2 FIX continuation preserves the predecessor qualification and corrects
+only the worker status projection and bounded worker-detail filters. Operations
+now carries the exact canonical O2 status values, and server-side scope,
+status, job-type and optional job-ID filtering keeps the durable worker health
+facts independent from visible detail rows. The refreshed regression, real
+PostgreSQL 18 and desktop/phone browser record is
+`evidence/u2/chg-252-u2.5-o9.2/review-fix1/qualification.json`; no production
+capacity, RPO/RTO, real-family, G12, Port Gate or Production claim follows.

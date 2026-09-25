@@ -34,3 +34,8 @@ The final generic U2 breadth slice, CHG-252 U2.5/O9.2, has separate
 with synthetic PostgreSQL 18 fixtures and desktop/phone screenshots. It keeps
 the six O9 axes independent, reports disabled H6 controls without an audited
 runtime capability, and leaves production RPO/RTO `NOT_ESTABLISHED`.
+The R2 FIX continuation is preserved separately at
+[review-fix1](u2/chg-252-u2.5-o9.2/review-fix1/qualification.json); it carries
+the predecessor forward, verifies all canonical O2 worker statuses, and
+qualifies authorized exact worker status/type filtering without changing
+scope-wide worker health facts.

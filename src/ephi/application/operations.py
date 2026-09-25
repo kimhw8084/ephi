@@ -32,7 +32,13 @@ from .source_ingress import (
     SourceSnapshotRepository,
     SourceSnapshotStatus,
 )
-from .worker import JobRecord, WorkerJobPort
+from .worker import (
+    WORKER_JOB_STATUSES,
+    JobRecord,
+    WorkerJobPort,
+    validate_worker_job_type,
+    validate_worker_statuses,
+)
 
 
 class OperationalState(StrEnum):
@@ -369,6 +375,8 @@ class OperationsCockpitSnapshot:
     artifacts: OperationsArtifactDetail
     jobs: tuple[OperationsJob, ...]
     jobs_truncated: bool
+    worker_statuses: tuple[str, ...]
+    worker_job_type: str | None
     qualification: OperationsQualificationDetail
     backup_restore: OperationsBackupStatus
 
@@ -380,6 +388,10 @@ class OperationsCockpitSnapshot:
             "artifacts": self.artifacts.as_dict(),
             "jobs": [job.as_dict() for job in self.jobs],
             "jobs_truncated": self.jobs_truncated,
+            "worker_filters": {
+                "statuses": list(self.worker_statuses),
+                "job_type": _safe_job_type(self.worker_job_type) if self.worker_job_type is not None else None,
+            },
             "qualification": self.qualification.as_dict(),
             "backup_restore": self.backup_restore.as_dict(),
         }
@@ -471,8 +483,7 @@ def _worker_job_summary(job: JobRecord, *, database_now: datetime, effect_receip
     owner = None
     if job.lease_owner is not None:
         owner = "worker-" + hashlib.sha256(job.lease_owner.encode("utf-8")).hexdigest()[:10]
-    known_statuses = {"QUEUED", "RUNNING", "DEFERRED", "FAILED", "DEAD_LETTER", "COMPLETED", "CANCELLED"}
-    status = job.status if job.status in known_statuses else "UNKNOWN"
+    status = job.status if isinstance(job.status, str) and job.status in WORKER_JOB_STATUSES else "UNKNOWN"
     return OperationsJob(
         _safe_job_id(job.job_id),
         _safe_job_type(job.job_type),
@@ -541,14 +552,28 @@ class OperationsQueryService:
         self.family_center = family_center
         self.qualification_workspace_provider = qualification_workspace_provider
 
-    def read(self, principal: Principal, scope: AccessScope) -> OperationsCockpitSnapshot:
+    def read(
+        self,
+        principal: Principal,
+        scope: AccessScope,
+        *,
+        worker_statuses: Sequence[str] | None = None,
+        worker_job_type: str | None = None,
+    ) -> OperationsCockpitSnapshot:
         """Read bounded operational facts after the current O8 permission check."""
 
         self.current_authorization.authorize(principal, scope, OPERATIONS_READ_CAPABILITY)
+        selected_statuses = validate_worker_statuses(worker_statuses)
+        selected_job_type = validate_worker_job_type(worker_job_type)
         observed_at = datetime.now(timezone.utc)
 
         postgres_axis, postgres_facts = self._postgres_axis()
-        worker_axis, jobs, jobs_truncated = self._worker_axis(principal, scope)
+        worker_axis, jobs, jobs_truncated = self._worker_axis(
+            principal,
+            scope,
+            worker_statuses=selected_statuses,
+            worker_job_type=selected_job_type,
+        )
         source_axis, source_detail = self._source_axis(principal, scope, postgres_facts)
         artifact_axis, artifact_detail = self._artifact_axis(principal, scope)
         evidence_axis, qualification = self._qualification_axis(principal, scope)
@@ -575,6 +600,8 @@ class OperationsQueryService:
             artifact_detail,
             jobs,
             jobs_truncated,
+            selected_statuses or (),
+            selected_job_type,
             qualification,
             OperationsBackupStatus(),
         )
@@ -604,7 +631,12 @@ class OperationsQueryService:
         ), facts
 
     def _worker_axis(
-        self, principal: Principal, scope: AccessScope
+        self,
+        principal: Principal,
+        scope: AccessScope,
+        *,
+        worker_statuses: Sequence[str] | None,
+        worker_job_type: str | None,
     ) -> tuple[OperationsAxis, tuple[OperationsJob, ...], bool]:
         try:
             self.current_authorization.authorize(principal, scope, OPERATIONS_READ_CAPABILITY)
@@ -616,7 +648,12 @@ class OperationsQueryService:
                     False,
                 )
             facts: WorkerHealthFacts = health_method(scope)
-            inspected = self.worker_jobs.inspect(scope, limit=MAX_OPERATIONS_JOBS + 1)
+            inspected = self.worker_jobs.inspect(
+                scope,
+                statuses=worker_statuses,
+                job_type=worker_job_type,
+                limit=MAX_OPERATIONS_JOBS + 1,
+            )
             jobs_truncated = len(inspected) > MAX_OPERATIONS_JOBS
             visible = inspected[:MAX_OPERATIONS_JOBS]
             has_effect = getattr(self.worker_jobs, "has_committed_local_effect", None)
@@ -638,7 +675,7 @@ class OperationsQueryService:
         terminal = facts.failed_count + facts.dead_letter_count
         if terminal:
             state, reason = "ERROR", "DURABLE_WORKER_TERMINAL_FAILURE"
-        elif facts.expired_running_count or any(item.lease_state in {"EXPIRED", "STALE"} for item in summaries):
+        elif facts.expired_running_count:
             state, reason = "STALE", "DURABLE_WORKER_EXPIRED_OR_STALE_LEASE"
         else:
             state, reason = "READY", "DURABLE_WORKER_STATE_REACHABLE"

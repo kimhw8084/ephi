@@ -494,6 +494,14 @@ production disaster recovery. Focused query regressions are in
 `tests.test_operations_application` and real PostgreSQL evidence is in
 `tests.test_operations_postgresql`.
 
+The R2 FIX continuation preserves that candidate and repairs the Operations
+worker presentation to use the exact O2 status vocabulary, including
+`SUCCEEDED` and `CANCELED`. Authorized exact-status and exact-job-type filters
+are pushed into the bounded PostgreSQL detail query; active filters are shown
+with the table, while worker health facts remain scope-wide. Refreshed desktop,
+phone and PostgreSQL evidence is recorded separately at
+`evidence/u2/chg-252-u2.5-o9.2/review-fix1/qualification.json`.
+
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for evidence preservation and validation. No project license has been selected.

@@ -23,6 +23,7 @@ from ephi.application import (  # noqa: E402
     Principal,
     StaleLeaseError,
     WorkerJobPort,
+    ValidationFailureError,
     WorkerLeaseConfig,
 )
 from ephi.infrastructure import (  # noqa: E402
@@ -126,6 +127,44 @@ class PostgreSQLWorkerTests(unittest.TestCase):
         self.assertEqual(self.worker.inspect(self.scope, statuses=("SUCCEEDED",))[0].job_id, claimed.job_id)
         with self.assertRaises(InvalidTransitionError):
             self.worker.complete(renewed.lease)
+
+    def test_inspect_accepts_exact_bounded_status_and_job_type_filters(self):
+        lower = self.worker.enqueue(self.scope, "Fixture.TypeA", "filter-lower", {"value": 1}, priority=2)
+        higher = self.worker.enqueue(self.scope, "Fixture.TypeA", "filter-higher", {"value": 2}, priority=9)
+        other_type = self.worker.enqueue(self.scope, "Fixture.TypeB", "filter-other", {"value": 3}, priority=10)
+        for _ in range(2):
+            claimed = self.worker.claim(self.scope, "worker-filter", job_type="Fixture.TypeA")
+            self.assertIsNotNone(claimed)
+            self.worker.complete(claimed.lease)
+        other_claimed = self.worker.claim(self.scope, "worker-other", job_type="Fixture.TypeB")
+        self.worker.complete(other_claimed.lease)
+
+        filtered = self.worker.inspect(self.scope, statuses=("SUCCEEDED",), job_type="Fixture.TypeA")
+        self.assertEqual([job.job_id for job in filtered], [higher.job_id, lower.job_id])
+        self.assertEqual({job.status for job in filtered}, {"SUCCEEDED"})
+        self.assertNotIn(other_type.job_id, {job.job_id for job in filtered})
+        by_job_id = self.worker.inspect(
+            self.scope,
+            job_id=higher.job_id,
+            statuses=("SUCCEEDED",),
+            job_type="Fixture.TypeA",
+        )
+        self.assertEqual([job.job_id for job in by_job_id], [higher.job_id])
+        # Existing callers remain valid because both filters are optional.
+        self.assertEqual(len(self.worker.inspect(self.scope)), 3)
+
+    def test_inspect_rejects_noncanonical_status_and_job_type_filters(self):
+        for statuses, job_type in (
+            ((), None),
+            (("COMPLETED",), None),
+            (("failed",), None),
+            (("FAILED", "FAILED"), None),
+            (None, "not a canonical identity"),
+            (None, "x" * 97),
+        ):
+            with self.subTest(statuses=statuses, job_type=job_type):
+                with self.assertRaises(ValidationFailureError):
+                    self.worker.inspect(self.scope, statuses=statuses, job_type=job_type)
 
     def test_bounded_retry_and_terminal_failure_metadata(self):
         first = self._enqueue("retry", max_attempts=2)

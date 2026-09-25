@@ -170,6 +170,7 @@ from .workflow import (
 from .worker import (
     DEFAULT_HEARTBEAT_INTERVAL,
     DEFAULT_LEASE_DURATION,
+    WORKER_JOB_STATUSES,
     AppliedEffectReceipt,
     JobRecord,
     WorkerJobPort,
@@ -521,6 +522,7 @@ __all__ = [
     "AppliedEffectReceipt",
     "DEFAULT_HEARTBEAT_INTERVAL",
     "DEFAULT_LEASE_DURATION",
+    "WORKER_JOB_STATUSES",
     "WorkerJobPort",
     "WorkerLease",
     "WorkerLeaseConfig",

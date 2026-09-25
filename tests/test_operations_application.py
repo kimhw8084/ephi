@@ -27,9 +27,10 @@ from ephi.application import (  # noqa: E402
     SourceSnapshotRecord,
     SourceSnapshotStatus,
     ScopedArtifactReference,
+    ValidationFailureError,
 )
 from ephi.application.operations import PostgreSQLHealthFacts, WorkerHealthFacts  # noqa: E402
-from ephi.application.worker import JobRecord  # noqa: E402
+from ephi.application.worker import JobRecord, WORKER_JOB_STATUSES  # noqa: E402
 
 
 NOW = datetime(2026, 9, 25, 12, 0, tzinfo=timezone.utc)
@@ -81,13 +82,15 @@ class _Workers:
         # methods; WorkerJobPort's other commands are deliberately unused.
         return lambda *_args, **_kwargs: None
 
-    def inspect(self, scope, *, job_id=None, statuses=None, limit=100):
+    def inspect(self, scope, *, job_id=None, statuses=None, job_type=None, limit=100):
         self.calls += 1
         rows = [item for item in self.jobs if item.scope_key == scope.canonical_key]
         if job_id is not None:
             rows = [item for item in rows if item.job_id == job_id]
         if statuses is not None:
             rows = [item for item in rows if item.status in statuses]
+        if job_type is not None:
+            rows = [item for item in rows if item.job_type == job_type]
         rows.sort(key=lambda item: (-item.priority, item.available_at, item.created_at, item.job_id))
         return tuple(rows[:limit])
 
@@ -169,9 +172,9 @@ def _identity(binding):
     )
 
 
-def _job(scope, job_id, status="QUEUED", *, priority=0, expiry=None, message=None, code=None):
+def _job(scope, job_id, status="QUEUED", *, priority=0, expiry=None, message=None, code=None, job_type="fixture.work"):
     return JobRecord(
-        job_id, scope.canonical_key, "fixture.work", "semantic", "0" * 64,
+        job_id, scope.canonical_key, job_type, "semantic", "0" * 64,
         {"private_row": "SERIAL-992", "dsn": "postgresql://user:secret@host/db"},
         status, priority, NOW, 1, 3, "private-worker-owner" if status == "RUNNING" else None,
         4 if status == "RUNNING" else 0, expiry, code, message, NOW if message else None,
@@ -209,7 +212,7 @@ class OperationsApplicationTests(unittest.TestCase):
     def test_o8_denial_precedes_every_protected_existence_or_count_read(self):
         self.authorization.set_principal(replace(self.principal, capabilities=()))
         with self.assertRaises(Exception):
-            self.service.read(self.principal, self.scope)
+            self.service.read(self.principal, self.scope, worker_statuses=("INVALID",))
         self.assertEqual(self.postgres.calls, 0)
         self.assertEqual(self.workers.calls, 0)
         self.assertEqual(self.workers.facts_calls, 0)
@@ -257,6 +260,105 @@ class OperationsApplicationTests(unittest.TestCase):
                 axes = self.service.read(self.principal, self.scope).health.as_dict()["axes"]
                 self.assertEqual(axes["postgres_readiness_durability"]["state"], "READY")
                 self.assertEqual(axes["durable_worker_job_state"]["state"], "ERROR")
+
+    def test_worker_status_projection_matches_every_canonical_o2_status(self):
+        jobs = tuple(_job(self.scope, f"job-{status.lower()}", status) for status in WORKER_JOB_STATUSES)
+        jobs += (_job(self.scope, "job-corrupt", "COMPLETED"),)
+        self.workers = _Workers(jobs)
+        result = self._service(worker_jobs=self.workers).read(self.principal, self.scope)
+        statuses = {item.job_id: item.status for item in result.jobs}
+        for status in WORKER_JOB_STATUSES:
+            self.assertEqual(statuses[f"job-{status.lower()}"], status)
+        self.assertEqual(statuses["job-corrupt"], "UNKNOWN")
+        self.assertEqual(result.health.as_dict()["axes"]["durable_worker_job_state"]["state"], "ERROR")
+
+    def test_succeeded_and_canceled_rows_are_terminal_history_not_worker_health_failures(self):
+        self.workers = _Workers((
+            _job(self.scope, "success", "SUCCEEDED"),
+            _job(self.scope, "canceled", "CANCELED"),
+        ))
+        result = self._service(worker_jobs=self.workers).read(self.principal, self.scope)
+        self.assertEqual({item.job_id: item.status for item in result.jobs}, {"success": "SUCCEEDED", "canceled": "CANCELED"})
+        self.assertEqual(result.health.as_dict()["axes"]["durable_worker_job_state"]["state"], "READY")
+
+    def test_worker_detail_filters_are_exact_deterministic_and_do_not_change_global_health(self):
+        jobs = (
+            _job(self.scope, "alpha-low", "SUCCEEDED", priority=2, job_type="fixture.alpha"),
+            _job(self.scope, "alpha-high", "SUCCEEDED", priority=9, job_type="fixture.alpha"),
+            _job(self.scope, "beta-high", "SUCCEEDED", priority=10, job_type="fixture.beta"),
+            _job(self.scope, "alpha-failed", "FAILED", priority=11, job_type="fixture.alpha"),
+            _job(self.scope, "alpha-canceled", "CANCELED", priority=1, job_type="fixture.alpha"),
+            _job(AccessScope("other-scope"), "other-scope", "FAILED", priority=100, job_type="fixture.alpha"),
+        )
+        self.workers = _Workers(jobs)
+        service = self._service(worker_jobs=self.workers)
+        all_rows = service.read(self.principal, self.scope)
+        all_axis = all_rows.health.as_dict()["axes"]["durable_worker_job_state"]
+        self.assertEqual(all_axis["state"], "ERROR")
+        self.assertEqual(all_axis["facts"]["job_count"], 5)
+        by_status = service.read(self.principal, self.scope, worker_statuses=("SUCCEEDED",))
+        self.assertEqual({item.status for item in by_status.jobs}, {"SUCCEEDED"})
+        by_type = service.read(self.principal, self.scope, worker_job_type="fixture.alpha")
+        self.assertEqual({item.job_type for item in by_type.jobs}, {"fixture.alpha"})
+        filtered = service.read(
+            self.principal,
+            self.scope,
+            worker_statuses=("SUCCEEDED",),
+            worker_job_type="fixture.alpha",
+        )
+        restarted = self._service(worker_jobs=_Workers(jobs)).read(
+            self.principal,
+            self.scope,
+            worker_statuses=("SUCCEEDED",),
+            worker_job_type="fixture.alpha",
+        )
+        self.assertEqual([item.job_id for item in filtered.jobs], ["alpha-high", "alpha-low"])
+        self.assertEqual([item.as_dict() for item in filtered.jobs], [item.as_dict() for item in restarted.jobs])
+        self.assertEqual(filtered.as_dict()["worker_filters"], {"statuses": ["SUCCEEDED"], "job_type": "fixture.alpha"})
+        filtered_axis = filtered.health.as_dict()["axes"]["durable_worker_job_state"]
+        self.assertEqual(filtered_axis["state"], "ERROR")
+        self.assertEqual(filtered_axis["facts"]["job_count"], all_axis["facts"]["job_count"])
+        self.assertEqual(filtered_axis["facts"]["failed_count"], all_axis["facts"]["failed_count"])
+        self.assertEqual(filtered_axis["facts"]["visible_job_count"], 2)
+
+    def test_failed_job_hidden_by_filter_still_keeps_worker_axis_error(self):
+        self.workers = _Workers((
+            _job(self.scope, "failed", "FAILED", job_type="fixture.failed"),
+            _job(self.scope, "success", "SUCCEEDED", job_type="fixture.success"),
+        ))
+        result = self._service(worker_jobs=self.workers).read(
+            self.principal,
+            self.scope,
+            worker_statuses=("SUCCEEDED",),
+            worker_job_type="fixture.success",
+        )
+        self.assertEqual([item.status for item in result.jobs], ["SUCCEEDED"])
+        axis = result.health.as_dict()["axes"]["durable_worker_job_state"]
+        self.assertEqual(axis["state"], "ERROR")
+        self.assertEqual(axis["facts"]["failed_count"], 1)
+        self.assertEqual(axis["facts"]["job_count"], 2)
+
+    def test_invalid_worker_filters_fail_closed_after_authorization_before_worker_reads(self):
+        for kwargs in (
+            {"worker_statuses": ()},
+            {"worker_statuses": ("COMPLETED",)},
+            {"worker_statuses": ("failed",)},
+            {"worker_statuses": ("FAILED", "FAILED")},
+            {"worker_job_type": "not a canonical identity"},
+            {"worker_job_type": "x" * 97},
+        ):
+            with self.subTest(kwargs=kwargs):
+                self.workers.calls = 0
+                self.workers.facts_calls = 0
+                with self.assertRaises(ValidationFailureError):
+                    self.service.read(self.principal, self.scope, **kwargs)
+                self.assertEqual(self.workers.calls, 0)
+                self.assertEqual(self.workers.facts_calls, 0)
+        self.authorization.set_principal(replace(self.principal, capabilities=()))
+        with self.assertRaises(Exception):
+            self.service.read(self.principal, self.scope, worker_statuses=("INVALID",))
+        self.assertEqual(self.workers.calls, 0)
+        self.assertEqual(self.workers.facts_calls, 0)
 
     def test_source_ready_partial_stale_unavailable_and_snapshot_truth_are_preserved(self):
         cases = (
@@ -357,6 +459,22 @@ class OperationsApplicationTests(unittest.TestCase):
         self.assertEqual(result.health.as_dict()["axes"]["durable_worker_job_state"]["state"], "STALE")
         states = {item.job_id: item.lease_state for item in result.jobs}
         self.assertEqual(states, {"expired": "EXPIRED", "active": "ACTIVE", "stale": "STALE"})
+
+    def test_worker_status_filter_cannot_hide_scope_wide_expired_lease_facts(self):
+        self.workers = _Workers((
+            _job(self.scope, "expired", "RUNNING", expiry=NOW - timedelta(seconds=1)),
+            _job(self.scope, "success", "SUCCEEDED", job_type="fixture.success"),
+        ))
+        result = self._service(worker_jobs=self.workers).read(
+            self.principal,
+            self.scope,
+            worker_statuses=("SUCCEEDED",),
+            worker_job_type="fixture.success",
+        )
+        self.assertEqual([item.job_id for item in result.jobs], ["success"])
+        axis = result.health.as_dict()["axes"]["durable_worker_job_state"]
+        self.assertEqual(axis["state"], "STALE")
+        self.assertEqual(axis["facts"]["expired_running_count"], 1)
 
     def test_qualification_pending_expired_current_and_unbound_states_are_truthful(self):
         identity = _identity(self.binding)

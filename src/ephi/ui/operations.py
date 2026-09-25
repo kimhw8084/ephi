@@ -22,6 +22,7 @@ from nicegui_base import (
 
 from ephi.application.errors import AuthorizationDeniedError, VersionConflictError
 from ephi.application.operations import OperationsCockpitSnapshot, OperationsQueryService
+from ephi.application.worker import MAX_WORKER_JOB_TYPE_LENGTH, WORKER_JOB_STATUSES
 
 
 _CSS = """
@@ -42,6 +43,8 @@ _CSS = """
 .ephi-operations-fact dt { color: var(--cui-text-secondary); font-size: .85rem; }
 .ephi-operations-fact dd { margin: .2rem 0 0; overflow-wrap: anywhere; }
 .ephi-operations-links, .ephi-operations-actions { display: flex; flex-wrap: wrap; gap: var(--cui-space-2); align-items: center; }
+.ephi-operations-filter-controls { display: grid; grid-template-columns: minmax(12rem, 1fr) minmax(16rem, 2fr); gap: var(--cui-space-2); width: 100%; max-width: 52rem; }
+.ephi-operations-filter-note { margin: 0; color: var(--cui-text-secondary); overflow-wrap: anywhere; }
 .ephi-operations-table-wrap { width: 100%; max-width: 100%; overflow-x: auto; }
 .ephi-operations-table { width: 100%; table-layout: fixed; border-collapse: collapse; }
 .ephi-operations-table th, .ephi-operations-table td { padding: .65rem .5rem; border-bottom: 1px solid var(--cui-border-subtle); text-align: left; vertical-align: top; overflow-wrap: anywhere; }
@@ -61,6 +64,7 @@ _CSS = """
 .ephi-operations .is-disabled-control { opacity: .68; }
 @media (max-width: 760px) {
   .ephi-operations-grid { grid-template-columns: minmax(0, 1fr); }
+  .ephi-operations-filter-controls { grid-template-columns: minmax(0, 1fr); }
 }
 @media (max-width: 600px) {
   .ephi-operations-table-wrap { display: none; }
@@ -250,6 +254,11 @@ def _render_snapshot(ui: Any, container: Any, snapshot: OperationsCockpitSnapsho
             worker_card.element.props('id="operations-durable-worker-job-state-details"')
             ui.label("Durable worker queue and jobs").classes("ephi-operations-section-title")
             ui.label("Raw job payloads are withheld. Failure diagnostics and owner references are bounded and redacted.")
+            filters = data["worker_filters"]
+            status_filter = ", ".join(filters["statuses"]) if filters["statuses"] else "All statuses"
+            type_filter = filters["job_type"] or "All job types"
+            ui.label(f"Worker detail filters · {status_filter} · {type_filter}").classes("ephi-operations-truth")
+            ui.label("Filters narrow these detail rows only. Worker health counts cover the full authorized scope.")
             _render_jobs(ui, data)
 
         artifacts = data["artifacts"]
@@ -362,6 +371,17 @@ async def build_operations_page(composition: Any, navigation: NavigationModel) -
             with page.slot(LayoutSlot.PRIMARY):
                 with ui.element("div").classes("ephi-operations-status").props('role="status" aria-live="polite"') as status:
                     ui.label("Loading operational observations…")
+                with ui.element("div").classes("ephi-operations-filter-controls").props('aria-label="Worker detail filters"'):
+                    worker_status_filter = ui.select(
+                        {status: status for status in WORKER_JOB_STATUSES},
+                        value=None,
+                        label="Worker status",
+                        clearable=True,
+                    )
+                    worker_job_type_filter = ui.input("Exact worker job type", value="").props(
+                        f'maxlength="{MAX_WORKER_JOB_TYPE_LENGTH}" autocomplete="off"'
+                    )
+                ui.label("Worker filters apply when you refresh. They do not change the six health axes.").classes("ephi-operations-filter-note")
                 with ui.element("div").classes("ephi-operations-actions"):
                     refresh_button = ui.button("Refresh")
                 container = ui.column().classes("ephi-operations")
@@ -384,7 +404,15 @@ async def build_operations_page(composition: Any, navigation: NavigationModel) -
                         service: OperationsQueryService | None = getattr(composition, "operations", None)
                         if service is None or principal is None:
                             raise AuthorizationDeniedError("Operations query authority is unavailable")
-                        result = service.read(principal, composition.scope_provider())
+                        selected_status = worker_status_filter.value
+                        worker_statuses = (selected_status,) if selected_status else None
+                        selected_job_type = worker_job_type_filter.value or None
+                        result = service.read(
+                            principal,
+                            composition.scope_provider(),
+                            worker_statuses=worker_statuses,
+                            worker_job_type=selected_job_type,
+                        )
                     except Exception as error:
                         if current_request != request_number:
                             return

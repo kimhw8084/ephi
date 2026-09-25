@@ -11,13 +11,58 @@ from __future__ import annotations
 from collections.abc import Callable, Mapping, Sequence
 from dataclasses import dataclass
 from datetime import datetime, timedelta
+import re
 from typing import Any, Protocol, runtime_checkable
 
 from .context import AccessScope
+from .errors import ValidationFailureError
 
 
 DEFAULT_LEASE_DURATION = timedelta(seconds=120)
 DEFAULT_HEARTBEAT_INTERVAL = timedelta(seconds=30)
+WORKER_JOB_STATUSES = (
+    "QUEUED",
+    "RUNNING",
+    "DEFERRED",
+    "SUCCEEDED",
+    "FAILED",
+    "DEAD_LETTER",
+    "CANCELED",
+)
+MAX_WORKER_JOB_TYPE_LENGTH = 96
+_WORKER_JOB_TYPE_PATTERN = re.compile(r"[A-Za-z][A-Za-z0-9_.:-]{0,95}\Z")
+
+
+def validate_worker_statuses(statuses: Sequence[str] | None) -> tuple[str, ...] | None:
+    """Validate and canonically order a bounded exact O2 status filter."""
+
+    if statuses is None:
+        return None
+    if isinstance(statuses, (str, bytes)) or not isinstance(statuses, Sequence):
+        raise ValidationFailureError("worker statuses must be a bounded sequence")
+    values = tuple(statuses)
+    if not values or len(values) > len(WORKER_JOB_STATUSES):
+        raise ValidationFailureError("worker statuses must contain one or more canonical statuses")
+    if any(not isinstance(value, str) or value not in WORKER_JOB_STATUSES for value in values):
+        raise ValidationFailureError("worker statuses must use the canonical O2 vocabulary")
+    if len(set(values)) != len(values):
+        raise ValidationFailureError("worker statuses must be unique")
+    selected = set(values)
+    return tuple(status for status in WORKER_JOB_STATUSES if status in selected)
+
+
+def validate_worker_job_type(job_type: str | None) -> str | None:
+    """Validate one bounded canonical O2 job-type identity."""
+
+    if job_type is None:
+        return None
+    if (
+        not isinstance(job_type, str)
+        or len(job_type) > MAX_WORKER_JOB_TYPE_LENGTH
+        or _WORKER_JOB_TYPE_PATTERN.fullmatch(job_type) is None
+    ):
+        raise ValidationFailureError("worker job type must be a bounded canonical identity")
+    return job_type
 
 
 @dataclass(frozen=True, slots=True)
@@ -128,6 +173,7 @@ class WorkerJobPort(Protocol):
         *,
         job_id: str | None = None,
         statuses: Sequence[str] | None = None,
+        job_type: str | None = None,
         limit: int = 100,
     ) -> tuple[JobRecord, ...]: ...
 
