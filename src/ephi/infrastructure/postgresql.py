@@ -8,6 +8,8 @@ from __future__ import annotations
 
 from collections.abc import Mapping
 from collections.abc import Iterator
+from datetime import datetime, timezone
+from decimal import Decimal, InvalidOperation
 import hashlib
 import json
 from pathlib import Path
@@ -19,6 +21,7 @@ from ephi.application.errors import StorageFailureError, ValidationFailureError
 from ephi.application.hashing import canonical_json, normalize_domain_payload
 from ephi.application.worker import WorkerLeaseConfig
 from ephi.application.storage import (
+    AggregateAlreadyExistsError,
     AggregateSnapshot,
     CommandEventAlreadyExistsError,
     CommandUnitOfWork,
@@ -52,6 +55,7 @@ _REQUIRED_SCHEMA_TABLES = (
     "handoff_intent",
     "handoff_delivery_status",
     "handoff_delivery_attempt",
+    "outcome_value_revision",
 )
 
 
@@ -150,6 +154,54 @@ def _json_text(value: object, field: str) -> str:
         raise StorageFailureError(f"durable PostgreSQL {field} is not valid JSON") from exc
     except Exception as exc:
         raise StorageFailureError(f"durable PostgreSQL {field} is not valid JSON") from exc
+
+
+def _outcome_revision_from_row(row: Mapping[str, object]) -> dict[str, object]:
+    amount = row["amount"]
+    event_at = row["event_at"]
+    known_at = row["known_at"]
+    return {
+        "entry_id": row["entry_id"],
+        "scope": row["scope_key"],
+        "group_id": row["group_id"],
+        "category": row["category"],
+        "amount": str(amount) if amount is not None else None,
+        "currency": row["currency"].strip(),
+        "event_at": event_at.astimezone(timezone.utc).isoformat() if isinstance(event_at, datetime) else str(event_at),
+        "known_at": known_at.astimezone(timezone.utc).isoformat() if isinstance(known_at, datetime) else str(known_at),
+        "supersedes": row["supersedes"],
+        "claim_revision_id": row["claim_revision_id"],
+        "evidence_identity": row["evidence_identity"],
+        "cost_model_identity": row["cost_model_identity"],
+        "rate_policy_identity": row["rate_policy_identity"],
+        "maturity": row["maturity"],
+        "revision_kind": row["revision_kind"],
+    }
+
+
+def _revision_datetime(value: object, field: str) -> datetime:
+    if not isinstance(value, str):
+        raise ValidationFailureError(f"outcome value revision {field} must be a timestamp")
+    try:
+        result = datetime.fromisoformat(value.replace("Z", "+00:00"))
+    except ValueError as exc:
+        raise ValidationFailureError(f"outcome value revision {field} must be a timestamp") from exc
+    if result.tzinfo is None or result.utcoffset() is None:
+        raise ValidationFailureError(f"outcome value revision {field} must be timezone-aware")
+    return result
+
+
+def _outcome_snapshot(connection: Any, row: Mapping[str, object]) -> AggregateSnapshot:
+    state = _json_object(row["state_json"], "aggregate state")
+    revisions = connection.execute(
+        "SELECT * FROM outcome_value_revision WHERE scope_key = %s AND group_id = %s "
+        "ORDER BY known_at, entry_id",
+        (row["scope_key"], row["aggregate_id"]),
+    ).fetchall()
+    state["value_entries"] = [_outcome_revision_from_row(item) for item in revisions]
+    return AggregateSnapshot(
+        row["scope_key"], row["aggregate_type"], row["aggregate_id"], row["version"], state,
+    )
 
 
 def _deterministic_event_id(kind: str, scope_key: str, subject: str, command_id: str) -> str:
@@ -257,6 +309,76 @@ class _PostgreSQLCommandTransaction:
             ).rowcount)
         except Exception as exc:
             raise StorageFailureError("durable PostgreSQL storage failed while updating an aggregate") from exc
+
+    def insert_aggregate(
+        self,
+        scope_key: str,
+        aggregate_type: str,
+        aggregate_id: str,
+        *,
+        version: int,
+        state_json: str,
+    ) -> None:
+        try:
+            self.connection.execute(
+                "INSERT INTO aggregate_state(scope_key, aggregate_type, aggregate_id, version, state_json) VALUES (%s, %s, %s, %s, %s::jsonb)",
+                (scope_key, aggregate_type, aggregate_id, version, state_json),
+            )
+        except Exception as exc:
+            if getattr(exc, "sqlstate", None) == "23505":
+                raise AggregateAlreadyExistsError from exc
+            raise StorageFailureError("durable PostgreSQL storage failed while creating an aggregate") from exc
+
+    def list_outcome_value_revisions(self, scope_key: str, group_id: str) -> tuple[dict[str, object], ...]:
+        try:
+            rows = self.connection.execute(
+                "SELECT * FROM outcome_value_revision WHERE scope_key = %s AND group_id = %s "
+                "ORDER BY known_at, entry_id",
+                (scope_key, group_id),
+            ).fetchall()
+        except Exception as exc:
+            raise StorageFailureError("durable PostgreSQL outcome values could not be read") from exc
+        return tuple(_outcome_revision_from_row(row) for row in rows)
+
+    def append_outcome_value_revision(
+        self,
+        scope_key: str,
+        group_id: str,
+        revision: Mapping[str, object],
+    ) -> None:
+        if revision.get("scope") != scope_key or revision.get("group_id") != group_id:
+            raise ValidationFailureError("outcome value revision scope and group must match its command")
+        raw_amount = revision.get("amount")
+        if raw_amount is None:
+            amount = None
+        elif isinstance(raw_amount, (bool, float)):
+            raise ValidationFailureError("outcome value revision amount must be exact decimal text")
+        else:
+            try:
+                amount = Decimal(str(raw_amount))
+            except (InvalidOperation, ValueError) as exc:
+                raise ValidationFailureError("outcome value revision amount must be exact decimal text") from exc
+            if not amount.is_finite():
+                raise ValidationFailureError("outcome value revision amount must be finite")
+        try:
+            self.connection.execute(
+                "INSERT INTO outcome_value_revision "
+                "(scope_key, group_id, entry_id, category, amount, currency, event_at, known_at, supersedes, "
+                "revision_kind, claim_revision_id, evidence_identity, cost_model_identity, rate_policy_identity, maturity) "
+                "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+                (
+                    scope_key, group_id, revision["entry_id"], revision["category"], amount,
+                    revision["currency"], _revision_datetime(revision["event_at"], "event_at"),
+                    _revision_datetime(revision["known_at"], "known_at"), revision.get("supersedes"),
+                    revision["revision_kind"], revision["claim_revision_id"],
+                    revision.get("evidence_identity"), revision.get("cost_model_identity"),
+                    revision.get("rate_policy_identity"), revision["maturity"],
+                ),
+            )
+        except ValidationFailureError:
+            raise
+        except Exception as exc:
+            raise StorageFailureError("durable PostgreSQL outcome value could not be appended") from exc
 
     def append_audit(
         self,
@@ -625,6 +747,89 @@ class PostgreSQLReferenceTransactionAdapter:
         if row is None:
             return None
         return AggregateSnapshot(row["scope_key"], row["aggregate_type"], row["aggregate_id"], row["version"], _json_object(row["state_json"], "aggregate state"))
+
+    def list_aggregates(self, scope: AccessScope, aggregate_type: str, *, limit: int) -> tuple[AggregateSnapshot, ...]:
+        if not isinstance(scope, AccessScope):
+            raise ValidationFailureError("scope must be an AccessScope")
+        aggregate_type = _validated_identity(aggregate_type, "aggregate_type")
+        if isinstance(limit, bool) or not isinstance(limit, int) or not 1 <= limit <= 5001:
+            raise ValidationFailureError("aggregate list limit must be between 1 and 5001")
+        try:
+            rows = self.connection.execute(
+                "SELECT scope_key, aggregate_type, aggregate_id, version, state_json FROM aggregate_state WHERE scope_key = %s AND aggregate_type = %s ORDER BY aggregate_id LIMIT %s",
+                (scope.canonical_key, aggregate_type, limit),
+            ).fetchall()
+        except Exception as exc:
+            raise StorageFailureError("durable PostgreSQL storage failed while listing aggregates") from exc
+        return tuple(
+            AggregateSnapshot(
+                row["scope_key"],
+                row["aggregate_type"],
+                row["aggregate_id"],
+                row["version"],
+                _json_object(row["state_json"], "aggregate state"),
+            )
+            for row in rows
+        )
+
+    def get_outcome_group(self, scope: AccessScope, group_id: str) -> AggregateSnapshot | None:
+        if not isinstance(scope, AccessScope):
+            raise ValidationFailureError("scope must be an AccessScope")
+        group_id = _validated_identity(group_id, "group_id")
+        connection = self.connection
+        try:
+            connection.execute("BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY")
+            row = connection.execute(
+                "SELECT scope_key, aggregate_type, aggregate_id, version, state_json FROM aggregate_state "
+                "WHERE scope_key = %s AND aggregate_type = 'outcome_claim_group' AND aggregate_id = %s",
+                (scope.canonical_key, group_id),
+            ).fetchone()
+            result = _outcome_snapshot(connection, row) if row is not None else None
+            connection.commit()
+            return result
+        except Exception as exc:
+            try:
+                connection.rollback()
+            except Exception:
+                pass
+            raise StorageFailureError("durable PostgreSQL outcome group could not be read coherently") from exc
+
+    def list_outcome_groups(self, scope: AccessScope, *, limit: int) -> tuple[AggregateSnapshot, ...]:
+        if not isinstance(scope, AccessScope):
+            raise ValidationFailureError("scope must be an AccessScope")
+        if isinstance(limit, bool) or not isinstance(limit, int) or not 1 <= limit <= 5001:
+            raise ValidationFailureError("outcome group list limit must be between 1 and 5001")
+        connection = self.connection
+        try:
+            connection.execute("BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY")
+            rows = connection.execute(
+                "SELECT scope_key, aggregate_type, aggregate_id, version, state_json FROM aggregate_state "
+                "WHERE scope_key = %s AND aggregate_type = 'outcome_claim_group' "
+                "ORDER BY aggregate_id LIMIT %s",
+                (scope.canonical_key, limit),
+            ).fetchall()
+            result = tuple(_outcome_snapshot(connection, row) for row in rows)
+            connection.commit()
+            return result
+        except Exception as exc:
+            try:
+                connection.rollback()
+            except Exception:
+                pass
+            raise StorageFailureError("durable PostgreSQL outcome groups could not be read coherently") from exc
+
+    def list_outcome_value_revisions(self, scope_key: str, group_id: str) -> tuple[dict[str, object], ...]:
+        scope_key = _validated_identity(scope_key, "scope_key")
+        group_id = _validated_identity(group_id, "group_id")
+        try:
+            rows = self.connection.execute(
+                "SELECT * FROM outcome_value_revision WHERE scope_key = %s AND group_id = %s "
+                "ORDER BY known_at, entry_id",
+                (scope_key, group_id),
+            ).fetchall()
+        except Exception as exc:
+            raise StorageFailureError("durable PostgreSQL outcome values could not be read") from exc
+        return tuple(_outcome_revision_from_row(row) for row in rows)
 
     def get_command_receipt(self, scope_key: str, subject: str, command_id: str) -> StoredCommandReceipt | None:
         scope_key = _validated_identity(scope_key, "scope_key")

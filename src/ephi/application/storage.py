@@ -37,6 +37,10 @@ class ReceiptAlreadyExistsError(Exception):
     """A durable unique receipt key was won by another transaction."""
 
 
+class AggregateAlreadyExistsError(Exception):
+    """A create-if-missing command lost the unique aggregate insertion race."""
+
+
 class CommandEventAlreadyExistsError(Exception):
     """A durable audit/outbox command event key was won by another transaction."""
 
@@ -65,6 +69,29 @@ class CommandUnitOfWork(Protocol):
         next_version: int,
         state_json: str,
     ) -> int: ...
+
+    def insert_aggregate(
+        self,
+        scope_key: str,
+        aggregate_type: str,
+        aggregate_id: str,
+        *,
+        version: int,
+        state_json: str,
+    ) -> None: ...
+
+    def list_outcome_value_revisions(
+        self,
+        scope_key: str,
+        group_id: str,
+    ) -> tuple[Mapping[str, object], ...]: ...
+
+    def append_outcome_value_revision(
+        self,
+        scope_key: str,
+        group_id: str,
+        revision: Mapping[str, object],
+    ) -> None: ...
 
     def append_audit(
         self,

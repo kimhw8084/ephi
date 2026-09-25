@@ -20,14 +20,17 @@ from .errors import (
 )
 from .hashing import canonical_command_payload_hash, canonical_json, normalize_domain_payload
 from .storage import (
+    AggregateAlreadyExistsError,
     CommandEventAlreadyExistsError,
     CommandStorage,
+    CommandUnitOfWork,
     ReceiptAlreadyExistsError,
     StoredCommandReceipt,
 )
 
 
 Effect = Callable[[Mapping[str, Any], Mapping[str, Any]], Mapping[str, Any]]
+TransactionalEffect = Callable[[CommandUnitOfWork, Mapping[str, Any], Mapping[str, Any]], Mapping[str, Any]]
 
 
 @dataclass(frozen=True, slots=True)
@@ -129,6 +132,9 @@ class VersionedAggregateCommandExecutor:
         payload: Mapping[str, object],
         required_capability: str,
         effect: Effect | None = None,
+        transactional_effect: TransactionalEffect | None = None,
+        create_if_missing: bool = False,
+        initial_state: Mapping[str, object] | None = None,
     ) -> CommandResult:
         if not isinstance(context, CommandContext):
             raise ValidationFailureError("context must be a CommandContext")
@@ -140,22 +146,38 @@ class VersionedAggregateCommandExecutor:
             raise ValidationFailureError("domain payload must be a mapping")
         if effect is not None and not callable(effect):
             raise ValidationFailureError("effect must be callable or None")
+        if transactional_effect is not None and not callable(transactional_effect):
+            raise ValidationFailureError("transactional_effect must be callable or None")
+        if effect is not None and transactional_effect is not None:
+            raise ValidationFailureError("supply either effect or transactional_effect, not both")
+        if not isinstance(create_if_missing, bool):
+            raise ValidationFailureError("create_if_missing must be a boolean")
+        if initial_state is not None and not isinstance(initial_state, Mapping):
+            raise ValidationFailureError("initial_state must be a mapping or None")
+        if initial_state is not None and not create_if_missing:
+            raise ValidationFailureError("initial_state requires create_if_missing")
 
         # Authorization is intentionally before receipt lookup so a revoked
         # principal cannot learn or disclose a prior command result.
         self._authorize(context, required_capability)
-        if context.expected_workflow_version is None:
+        if context.expected_workflow_version is None or (create_if_missing and context.expected_workflow_version != 0):
             raise ValidationFailureError("existing-aggregate commands require expected_workflow_version")
         normalized_payload = normalize_domain_payload(payload)
         if not isinstance(normalized_payload, dict):
             raise ValidationFailureError("domain payload must normalize to an object")
+        normalized_initial_state = normalize_domain_payload(initial_state or {})
+        if not isinstance(normalized_initial_state, dict):
+            raise ValidationFailureError("initial_state must normalize to an object")
+        hash_payload = normalized_payload
+        if create_if_missing:
+            hash_payload = {**normalized_payload, "$create_if_missing": True}
         target = {"aggregate_type": aggregate_type, "aggregate_id": aggregate_id}
         payload_hash = canonical_command_payload_hash(
             command_type,
             context.scope,
             context.expected_workflow_version,
             context.viewed_revisions,
-            normalized_payload,
+            hash_payload,
             target=target,
             reason=context.reason,
         )
@@ -178,9 +200,9 @@ class VersionedAggregateCommandExecutor:
                     aggregate_id,
                     for_update=True,
                 )
-                if aggregate is None:
+                if aggregate is None and not create_if_missing:
                     raise AggregateNotFoundError("aggregate is not available in the requested scope")
-                current_version = aggregate.version
+                current_version = aggregate.version if aggregate is not None else 0
                 if current_version != context.expected_workflow_version:
                     # A competing first attempt may have won the aggregate lock
                     # after the initial receipt read. Reconcile its committed
@@ -189,13 +211,14 @@ class VersionedAggregateCommandExecutor:
                     if receipt is not None:
                         return self._replay_or_conflict(context, required_capability, receipt, payload_hash)
                     raise VersionConflictError(aggregate_id, context.expected_workflow_version, current_version)
-                current_state = aggregate.state
+                current_state = aggregate.state if aggregate is not None else normalized_initial_state
                 try:
-                    next_state_raw = (
-                        effect(current_state, normalized_payload)
-                        if effect is not None
-                        else _default_effect(current_state, normalized_payload, command_type)
-                    )
+                    if transactional_effect is not None:
+                        next_state_raw = transactional_effect(transaction, current_state, normalized_payload)
+                    elif effect is not None:
+                        next_state_raw = effect(current_state, normalized_payload)
+                    else:
+                        next_state_raw = _default_effect(current_state, normalized_payload, command_type)
                 except CommandError:
                     raise
                 except Exception as exc:
@@ -205,16 +228,25 @@ class VersionedAggregateCommandExecutor:
                     raise ValidationFailureError("local aggregate effect must return a mapping")
                 next_version = current_version + 1
                 state_json = canonical_json(next_state)
-                changed = transaction.update_aggregate(
-                    scope_key,
-                    aggregate_type,
-                    aggregate_id,
-                    expected_version=current_version,
-                    next_version=next_version,
-                    state_json=state_json,
-                )
-                if changed != 1:
-                    raise VersionConflictError(aggregate_id, context.expected_workflow_version, current_version)
+                if aggregate is None:
+                    transaction.insert_aggregate(
+                        scope_key,
+                        aggregate_type,
+                        aggregate_id,
+                        version=next_version,
+                        state_json=state_json,
+                    )
+                else:
+                    changed = transaction.update_aggregate(
+                        scope_key,
+                        aggregate_type,
+                        aggregate_id,
+                        expected_version=current_version,
+                        next_version=next_version,
+                        state_json=state_json,
+                    )
+                    if changed != 1:
+                        raise VersionConflictError(aggregate_id, context.expected_workflow_version, current_version)
 
                 result_identity = _event_identity("result", scope_key, subject, context.command_id)
                 result = CommandResult("COMMITTED", result_identity, aggregate_type, aggregate_id, next_version, next_state, payload_hash)
@@ -286,6 +318,8 @@ class VersionedAggregateCommandExecutor:
             # The command winner committed independently. The losing
             # transaction has already rolled back all of its local writes.
             return self._reconcile_committed_receipt(context, required_capability, payload_hash)
+        except AggregateAlreadyExistsError:
+            return self._reconcile_create_race(context, required_capability, payload_hash, aggregate_type, aggregate_id)
 
     def _authorize(self, context: CommandContext, required_capability: str) -> None:
         self.current_authorization.authorize(context.principal, context.scope, required_capability)
@@ -318,6 +352,32 @@ class VersionedAggregateCommandExecutor:
                 return self._replay_or_conflict(context, required_capability, receipt, payload_hash)
         except ReceiptAlreadyExistsError as exc:  # pragma: no cover - reconciliation has no insert path
             raise StorageFailureError("durable receipt reconciliation failed") from exc
+
+    def _reconcile_create_race(
+        self,
+        context: CommandContext,
+        required_capability: str,
+        payload_hash: str,
+        aggregate_type: str,
+        aggregate_id: str,
+    ) -> CommandResult:
+        self._authorize(context, required_capability)
+        with self.store.command_transaction() as transaction:
+            receipt = transaction.get_command_receipt(
+                context.scope.canonical_key,
+                context.principal.subject,
+                context.command_id,
+            )
+            if receipt is not None:
+                return self._replay_or_conflict(context, required_capability, receipt, payload_hash)
+            aggregate = transaction.get_aggregate(
+                context.scope.canonical_key,
+                aggregate_type,
+                aggregate_id,
+            )
+            if aggregate is None:
+                raise StorageFailureError("aggregate creation race could not be reconciled; retry the same command")
+            raise VersionConflictError(aggregate_id, 0, aggregate.version)
 
 
 SQLiteCommandExecutor = VersionedAggregateCommandExecutor

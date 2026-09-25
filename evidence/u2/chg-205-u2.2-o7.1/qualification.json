@@ -1,0 +1,702 @@
+{
+  "base_commit": "8eb33a205f2f589b0f1510cd00fbe45dd78094e9",
+  "browser": {
+    "desktop_1440x900": {
+      "accessibility_snapshot_digest": "74f3e0d71cd1b6a4061d4a34622f7da5494c7977ec9e312146c2dd093fa6c1a4",
+      "action_occlusion": {
+        "height": 44,
+        "unoccluded": true,
+        "within_viewport": true
+      },
+      "events": {
+        "console_errors": [],
+        "http_failures": [],
+        "page_errors": [],
+        "request_failures": []
+      },
+      "geometry": {
+        "controls": {
+          "height": 124,
+          "width": 712.65625,
+          "x": 297,
+          "y": 235.796875
+        },
+        "document_scroll_width": 1440,
+        "no_horizontal_overflow": true,
+        "refresh_action": {
+          "height": 38,
+          "width": 229.546875,
+          "x": 780.09375,
+          "y": 321.796875
+        },
+        "viewport_width": 1440
+      },
+      "keyboard_focus": {
+        "focus_visible": true,
+        "tab_count": 27,
+        "target_reached": true
+      },
+      "missing_rendered_states": [],
+      "request_inventory": {
+        "headers_or_bodies_recorded": false,
+        "query_strings_recorded": false,
+        "requests": [
+          {
+            "method": "GET",
+            "path": "/ephi/outcomes"
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/static/fonts.css"
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/static/quasar.unimportant.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/static/quasar.important.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/static/nicegui.css"
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/static/vue.esm-browser.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/components/573d0129acaebad907d825007cd6fa02/query.js"
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/components/7416ad0839166372589af103d2dac97f/link.js"
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/components/50808f343f9d39efb70f4fe21b9a193b/html.js"
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/components/64c866455daa2383bf6d88c437b23510/input.js"
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/components/20e90839167eb30dba12722e0d4b24bb/select.js"
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/components/4cd8f5dc71f02312671ee4e68c4ac55f/aggrid.js"
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/components/b6e72e98507a6256b493148a7e8c8d30/dialog.js"
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/static/socket.io.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/static/tailwindcss.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/static/quasar.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/static/nicegui.js"
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/static/lang/en-US.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/static/dompurify.mjs"
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/esm/ce781217513f674f11796076012a375d/index.js"
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/static/utils/dynamic_properties.js"
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/static/fonts/2474057f3040a08c.woff2"
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/static/fonts/0c19a63c7528cc1a.woff2"
+          }
+        ],
+        "responses": [
+          {
+            "method": "GET",
+            "path": "/ephi/outcomes",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/static/fonts.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/static/nicegui.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/static/quasar.unimportant.prod.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/static/quasar.important.prod.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/components/573d0129acaebad907d825007cd6fa02/query.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/components/7416ad0839166372589af103d2dac97f/link.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/static/vue.esm-browser.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/components/20e90839167eb30dba12722e0d4b24bb/select.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/components/64c866455daa2383bf6d88c437b23510/input.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/components/50808f343f9d39efb70f4fe21b9a193b/html.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/components/4cd8f5dc71f02312671ee4e68c4ac55f/aggrid.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/components/b6e72e98507a6256b493148a7e8c8d30/dialog.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/static/lang/en-US.umd.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/static/nicegui.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/static/socket.io.min.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/static/dompurify.mjs",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/static/utils/dynamic_properties.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/static/tailwindcss.min.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/static/quasar.umd.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/static/fonts/2474057f3040a08c.woff2",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/esm/ce781217513f674f11796076012a375d/index.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/static/fonts/0c19a63c7528cc1a.woff2",
+            "status": 200
+          }
+        ]
+      },
+      "required_rendered_states": {
+        "NEGATIVE": true,
+        "OBSERVED_NOT_VALIDATED": true,
+        "Observed operational outcome": true,
+        "PENDING": true,
+        "RESTATED": true,
+        "VALIDATED": true,
+        "Validated benefit / net cost": true,
+        "ZERO": true,
+        "synthetic-period-moving-correction": true,
+        "synthetic-shared-event-once": true
+      },
+      "review_action": {
+        "approved": true,
+        "available": true,
+        "earlier_cutoff_excluded": true,
+        "reachable": true
+      },
+      "route": "/ephi/outcomes",
+      "status": "PASS",
+      "viewport": {
+        "height": 900,
+        "width": 1440
+      }
+    },
+    "phone_390x844": {
+      "accessibility_snapshot_digest": "74b5a38317d3f6d0df30f0fdf87dc1523db78aced88023fa7e26855c60537d12",
+      "action_occlusion": {
+        "height": 44,
+        "unoccluded": true,
+        "within_viewport": true
+      },
+      "events": {
+        "console_errors": [],
+        "http_failures": [],
+        "page_errors": [],
+        "request_failures": []
+      },
+      "geometry": {
+        "controls": {
+          "height": 384,
+          "width": 324,
+          "x": 33,
+          "y": 246
+        },
+        "document_scroll_width": 390,
+        "no_horizontal_overflow": true,
+        "refresh_action": {
+          "height": 44,
+          "width": 324,
+          "x": 33,
+          "y": 586
+        },
+        "viewport_width": 390
+      },
+      "keyboard_focus": {
+        "focus_visible": true,
+        "tab_count": 24,
+        "target_reached": true
+      },
+      "missing_rendered_states": [],
+      "request_inventory": {
+        "headers_or_bodies_recorded": false,
+        "query_strings_recorded": false,
+        "requests": [
+          {
+            "method": "GET",
+            "path": "/ephi/outcomes"
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/static/fonts.css"
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/static/quasar.unimportant.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/static/quasar.important.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/static/nicegui.css"
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/static/vue.esm-browser.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/components/573d0129acaebad907d825007cd6fa02/query.js"
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/components/7416ad0839166372589af103d2dac97f/link.js"
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/components/50808f343f9d39efb70f4fe21b9a193b/html.js"
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/components/64c866455daa2383bf6d88c437b23510/input.js"
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/components/20e90839167eb30dba12722e0d4b24bb/select.js"
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/components/4cd8f5dc71f02312671ee4e68c4ac55f/aggrid.js"
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/components/b6e72e98507a6256b493148a7e8c8d30/dialog.js"
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/static/socket.io.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/static/tailwindcss.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/static/quasar.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/static/nicegui.js"
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/static/lang/en-US.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/static/dompurify.mjs"
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/esm/ce781217513f674f11796076012a375d/index.js"
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/static/utils/dynamic_properties.js"
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/static/fonts/2474057f3040a08c.woff2"
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/static/fonts/0c19a63c7528cc1a.woff2"
+          }
+        ],
+        "responses": [
+          {
+            "method": "GET",
+            "path": "/ephi/outcomes",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/static/fonts.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/static/nicegui.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/static/quasar.unimportant.prod.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/static/quasar.important.prod.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/components/573d0129acaebad907d825007cd6fa02/query.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/static/vue.esm-browser.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/components/7416ad0839166372589af103d2dac97f/link.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/components/64c866455daa2383bf6d88c437b23510/input.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/components/50808f343f9d39efb70f4fe21b9a193b/html.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/components/20e90839167eb30dba12722e0d4b24bb/select.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/components/4cd8f5dc71f02312671ee4e68c4ac55f/aggrid.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/components/b6e72e98507a6256b493148a7e8c8d30/dialog.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/static/lang/en-US.umd.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/static/nicegui.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/static/socket.io.min.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/static/dompurify.mjs",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/static/tailwindcss.min.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/static/utils/dynamic_properties.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/static/quasar.umd.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/static/fonts/2474057f3040a08c.woff2",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/esm/ce781217513f674f11796076012a375d/index.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/_nicegui/3.15.0/static/fonts/0c19a63c7528cc1a.woff2",
+            "status": 200
+          }
+        ]
+      },
+      "required_rendered_states": {
+        "NEGATIVE": true,
+        "OBSERVED_NOT_VALIDATED": true,
+        "Observed operational outcome": true,
+        "PENDING": true,
+        "RESTATED": true,
+        "VALIDATED": true,
+        "Validated benefit / net cost": true,
+        "ZERO": true,
+        "synthetic-period-moving-correction": true,
+        "synthetic-shared-event-once": true
+      },
+      "review_action": {
+        "approved": false,
+        "available": true,
+        "earlier_cutoff_excluded": false,
+        "reachable": true
+      },
+      "route": "/ephi/outcomes",
+      "status": "PASS",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    }
+  },
+  "candidate_input_digest": "a673d4ed56b7de004040f1e70960eecbab80766b63c730e732228063862ade97",
+  "change": "CHG-205",
+  "postgres": {
+    "restart_preservation": "tests.test_outcomes_postgresql",
+    "version": "17.11 (Homebrew)",
+    "version_18_qualification": "NOT_RUN_LOCAL_POSTGRES_VERSION_17"
+  },
+  "project": "ephi",
+  "schema_version": 1,
+  "scope": "U2.2 / O7.1 generic synthetic Outcomes and independent value review",
+  "screenshots": [
+    {
+      "bytes": 145348,
+      "path": "evidence/u2/chg-205-u2.2-o7.1/screenshots/outcomes-1440x900-reviewed.png",
+      "sha256": "2f70fbb755dec68cf9e91cc8694f5f515fb67d016766bfeb42e05837b621576e"
+    },
+    {
+      "bytes": 351077,
+      "path": "evidence/u2/chg-205-u2.2-o7.1/screenshots/outcomes-1440x900.png",
+      "sha256": "97d2f5a437a9cf22b9e0310912bca8439a036189968d51efdd567ab40ea3bb78"
+    },
+    {
+      "bytes": 298050,
+      "path": "evidence/u2/chg-205-u2.2-o7.1/screenshots/outcomes-390x844.png",
+      "sha256": "5ec406ff7676f7ee0db8db7e7a8bf84667e787fd07e06aa1137149aa0c9fdc81"
+    }
+  ],
+  "security": {
+    "authorization_headers_recorded": false,
+    "cookies_recorded": false,
+    "raw_browser_requests_recorded": false,
+    "secrets_recorded": false
+  },
+  "status": "PASS",
+  "synthetic_fixture_facts": {
+    "audit_event_count": 13,
+    "browser_review_entry": "value-bcb32e8bae194577fe76a40ae70de92d3546192821cdcde6ca59cbd98a576a27",
+    "browser_review_event": "synthetic-browser-review-action",
+    "command_receipt_count": 13,
+    "episode_id": "episode-o7-browser",
+    "outbox_event_count": 13,
+    "postgres_version": "17.11 (Homebrew)",
+    "scope_id": "o7-browser-scope",
+    "state_facts": {
+      "currency_summaries": {
+        "EUR": "0",
+        "USD": "13.25"
+      },
+      "deduplicated_attribution": {
+        "episode_ids": [
+          "synthetic-episode-a",
+          "synthetic-episode-b"
+        ],
+        "one_group_count": 1
+      },
+      "independent_review": {
+        "aggregate_version": 2,
+        "group_id": "323391bf9b807777c84c43a2b8dbd4bd2e232d45bd1debb63a1d4b015ed06b69",
+        "review_entry": "value-be53a7817016a5b4e795e6db99d8a05899ef542ed1b7068ac93b03df914f4347",
+        "state": "VALIDATED"
+      },
+      "later_approval": {
+        "early_cutoff": "2026-09-24T18:02:04+00:00",
+        "group_id": "b2b5ecfb77634915a296b12202dcc396dc186d8fe894175a131b21f18e028a1d",
+        "review_aggregate_version": 2,
+        "review_known_at": "2026-09-24T18:03:04+00:00",
+        "state_after_approval": "VALIDATED",
+        "state_at_earlier_cutoff": "PENDING",
+        "value_entry_id": "value-e62c773cfa8789d2f4da431e34dfed84504d8b8b6f1bfb6d6aa65f222ec2aae1"
+      },
+      "period_moving_correction": {
+        "after_value": "20.00",
+        "before_value": "10.00",
+        "corrected_entry": "value-aa197eed6cbbbe7f732879b5b792ff7c4c436125e404fd558712b2d18e8168d0",
+        "cutoff_before_correction": "2026-09-24T18:03:24+00:00",
+        "group_id": "769a8a556c84f3352f3c0d354ade3f12f80b4f561693cc77b0a0f6e3f0ffa519",
+        "original_entry": "value-9238198395a07523d0d22046c666552e920529c835aeaebc53495ff55344bdf5",
+        "restated": true
+      },
+      "review_action": {
+        "group_id": "cf96a0319fdc0289e7337095191cbf43b0b9fce1dc67f0f482b322ab04316783",
+        "value_entry_id": "value-bcb32e8bae194577fe76a40ae70de92d3546192821cdcde6ca59cbd98a576a27"
+      }
+    }
+  },
+  "synthetic_only": true,
+  "verification": {
+    "package": {
+      "refresh_manifest": "PASS",
+      "check_package": "PASS"
+    },
+    "full_offline_suite": {
+      "command": "python3 -m unittest discover -s tests -v",
+      "status": "PASS",
+      "run": 363,
+      "skipped": 85
+    },
+    "focused_f04_o2_outcomes": {
+      "command": "python3 -m unittest tests.test_value_integrity tests.test_outcomes_workflow tests.test_o2_transactions -v",
+      "status": "PASS",
+      "run": 28
+    },
+    "postgresql_17_11_homebrew": {
+      "status": "PASS",
+      "outcomes_restart_concurrency_idempotency": {
+        "suite": "tests.test_outcomes_postgresql",
+        "run": 3,
+        "status": "PASS"
+      },
+      "o3": {
+        "suite": "tests.test_o3_postgresql",
+        "run": 5,
+        "status": "PASS"
+      },
+      "o8": {
+        "suite": "tests.test_o8_postgresql",
+        "run": 4,
+        "status": "PASS"
+      },
+      "o9": {
+        "suite": "tests.test_o9_operations",
+        "run": 17,
+        "status": "PASS"
+      },
+      "postgresql_18_qualification": "NOT_RUN_LOCAL_POSTGRES_VERSION_17"
+    },
+    "w0": {
+      "command": "python3 tools/w0_repo_baseline.py --no-tests",
+      "status": "BASELINE_PASS",
+      "scope": "Git, package and runtime facts only",
+      "tests": "NOT_RUN"
+    },
+    "compileall": "PASS",
+    "git_diff_check": "PASS",
+    "offline_regression_scope": [
+      "O2",
+      "O3",
+      "O5",
+      "O6",
+      "O8",
+      "O9",
+      "U1",
+      "CHG-189"
+    ]
+  }
+}

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import asyncio
 from dataclasses import dataclass
+from datetime import datetime, timedelta, timezone
 import hashlib
 import json
 import os
@@ -16,6 +17,7 @@ from nicegui_base import (
     ApplicationRuntime,
     ButtonIntent,
     Card,
+    DataTable,
     DataSourceTable,
     DescriptionList,
     EntityHeader,
@@ -23,6 +25,8 @@ from nicegui_base import (
     KeyValueItem,
     LayoutSlot,
     MasterDetailPage,
+    MetricCard,
+    MetricStrip,
     NavItem,
     NavSection,
     NavigationModel,
@@ -50,6 +54,8 @@ from nicegui_base import (
 
 from ephi.application.attention import AttentionQueryService
 from ephi.application.context import AccessScope, CommandContext, CurrentAuthorizationAuthority, Principal
+from ephi.application.errors import AuthorizationDeniedError, VersionConflictError
+from ephi.application.transactions import VersionedAggregateCommandExecutor
 from ephi.application.episodes import EpisodeBrief, EpisodeBriefQueryService
 from ephi.application.investigation import (
     ComponentState,
@@ -71,6 +77,8 @@ from ephi.application.source_reality import require_runtime_source_binding
 from ephi.config import RuntimeSettings, downstream_entrypoint_from_environment
 from ephi.downstream import DownstreamComposition, compose_downstream, load_provider_bundle
 from ephi.infrastructure.postgresql import PostgreSQLReferenceTransactionAdapter
+from ephi.value import EventPeriod, OutcomesQueryResult, OutcomeRecord, OutcomesService, ReviewDecision
+from ephi.value.repository import OutcomeAggregateRepository
 from ephi.transport import (
     build_runtime_security_contract,
     install_browser_transport_stack,
@@ -218,6 +226,27 @@ html body button.ephi-o10-focus-target:focus-visible,
 }
 """
 
+_OUTCOMES_CSS = """
+.ephi-outcomes, .ephi-outcomes * { min-width: 0; }
+.ephi-outcomes-page-heading { font-size: clamp(1.875rem, 4vw, 3rem) !important; line-height: 1.1 !important; white-space: nowrap; }
+.ephi-outcomes-controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: var(--cui-space-3); align-items: end; }
+.ephi-outcomes-summaries { width: 100%; overflow: hidden; }
+.ephi-outcomes-summaries .cui-metric-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: var(--cui-space-3); }
+.ephi-outcomes-table { width: 100%; overflow-x: auto; }
+.ephi-outcomes-detail { overflow-wrap: anywhere; }
+.ephi-outcomes-banner { border: 1px solid var(--cui-border-subtle); border-radius: var(--cui-radius-md); background: var(--cui-surface-secondary); padding: var(--cui-space-3); overflow-wrap: anywhere; }
+.ephi-outcomes-action-row { display: flex; flex-wrap: wrap; gap: var(--cui-space-2); align-items: center; }
+.ephi-outcomes-action-row .cui-button,
+.ephi-outcomes-action-row .q-btn,
+.ephi-outcomes-action-row button { min-height: 44px !important; min-width: 44px !important; }
+.ephi-outcomes-focus:focus, .ephi-outcomes-focus:focus-visible { outline: 3px solid var(--cui-focus-ring, rgb(0 94 168)) !important; outline-offset: 2px !important; }
+.ephi-outcomes-controls .q-field:focus-within { outline: 3px solid var(--cui-focus-ring, rgb(0 94 168)) !important; outline-offset: 2px !important; border-radius: var(--cui-radius-sm); }
+@media (max-width: 600px) {
+    .ephi-outcomes-controls, .ephi-outcomes-summaries .cui-metric-strip { grid-template-columns: minmax(0, 1fr); }
+    .ephi-outcomes-action-row > * { min-width: min(100%, 15rem); }
+}
+"""
+
 
 class _StaleResponseError(RuntimeError):
     """A superseded async response was intentionally discarded."""
@@ -290,6 +319,7 @@ class EphiUiComposition:
     workspace: object
     downstream: DownstreamComposition | None = None
     investigations: EpisodeInvestigationQueryService | None = None
+    outcomes: OutcomesService | None = None
 
     def close(self) -> None:
         self.adapter.close()
@@ -344,6 +374,7 @@ def build_composition_from_environment() -> EphiUiComposition:
             workspace,
             downstream,
             downstream.episode_investigations,
+            downstream.outcomes,
         )
     dsn = _required_environment("EPHI_POSTGRES_DSN")
     metrology_source_adapter, metrology_source_binding = require_runtime_source_binding()
@@ -360,6 +391,11 @@ def build_composition_from_environment() -> EphiUiComposition:
     attention = AttentionQueryService(o3_store, adapter.read_store(), current_authorization)
     briefs = EpisodeBriefQueryService(adapter.read_store(), current_authorization)
     workflow = EpisodeWorkflowCommandService(adapter, current_authorization)
+    outcomes = OutcomesService(
+        OutcomeAggregateRepository(adapter),
+        VersionedAggregateCommandExecutor(adapter, current_authorization),
+        current_authorization,
+    )
     source = EphiReadDataSource(attention, principal_provider, scope_provider)
     runtime = ApplicationRuntime()
     runtime.data.register_source(source)
@@ -378,11 +414,12 @@ def build_composition_from_environment() -> EphiUiComposition:
         metrology_source_binding,
         runtime,
         workspace,
+        outcomes=outcomes,
     )
 
 
 def _navigation() -> NavigationModel:
-    return NavigationModel((NavSection("work", "Work", (NavItem("attention", "Attention", "/"), NavItem("episode", "Episode", "/episode"))),))
+    return NavigationModel((NavSection("work", "Work", (NavItem("attention", "Attention", "/"), NavItem("episode", "Episode", "/episode"), NavItem("outcomes", "Outcomes", "/ephi/outcomes"))),))
 
 
 def _intent_for_capability(state: object) -> StatusIntent:
@@ -500,6 +537,13 @@ def _mark_focus_target(element: object, marker: str) -> None:
         "outline-style: solid !important; outline-width: 3px !important; "
         "outline-offset: 2px !important;"
     )
+
+
+def _ensure_outcomes_action_target(button: ActionButton) -> ActionButton:
+    """Keep the reviewer action and sign-off targets at least 44 CSS pixels."""
+
+    button.element.style("min-height:44px !important; min-width:44px !important;")
+    return button
 
 
 def _semantic_heading(title: str, description: str, *, autofocus: bool = False) -> object:
@@ -1418,6 +1462,334 @@ async def build_episode_page(composition: EphiUiComposition) -> None:
                     workspace.state.set(FOCUS_KEY, None, source="ephi.episode.focus")
 
 
+def _outcomes_datetime_text(value: datetime) -> str:
+    return value.astimezone(timezone.utc).replace(second=0, microsecond=0).strftime("%Y-%m-%dT%H:%M")
+
+
+def _outcomes_parse_datetime(value: object, field: str) -> datetime:
+    if not isinstance(value, str) or not value.strip():
+        raise ValueError(f"{field} is required")
+    parsed = datetime.fromisoformat(value.strip().replace("Z", "+00:00"))
+    if parsed.tzinfo is None:
+        parsed = parsed.replace(tzinfo=timezone.utc)
+    return parsed.astimezone(timezone.utc)
+
+
+def _outcomes_amount(value: object, currency: str) -> str:
+    if value is None:
+        return f"VOID · no amount ({currency})"
+    return f"{value} {currency}"
+
+
+async def _render_outcomes_content(composition: EphiUiComposition) -> None:
+    """Render the bounded Outcomes controls, summaries and claim review panel."""
+
+    if composition.outcomes is None:
+        raise RuntimeError("Outcomes service is unavailable")
+    from nicegui import ui
+
+    ui.add_css(_OUTCOMES_CSS, shared=True)
+    initial_now = datetime.now(timezone.utc).replace(second=0, microsecond=0)
+    with Card():
+        with ui.element("div").classes("ephi-outcomes-controls"):
+            start_input = ui.input("Period start (UTC)", value=_outcomes_datetime_text(initial_now - timedelta(days=30))).props('type="datetime-local"')
+            end_input = ui.input("Period end (UTC)", value=_outcomes_datetime_text(initial_now + timedelta(minutes=1))).props('type="datetime-local"')
+            cutoff_input = ui.input("Knowledge cutoff (UTC)", value=_outcomes_datetime_text(initial_now)).props('type="datetime-local"')
+            currency_select = ui.select({"ALL": "Separate by currency"}, value="ALL", label="Currency")
+            maturity_select = ui.select(
+                {
+                    "ALL": "All evidence states",
+                    "PENDING": "Pending",
+                    "OBSERVED_NOT_VALIDATED": "Observed, not validated",
+                    "VALIDATED": "Independently validated",
+                    "REJECTED": "Rejected",
+                    "CENSORED": "Censored",
+                    "INSUFFICIENT_EVIDENCE": "Insufficient evidence",
+                    "VOID": "Voided value revisions",
+                    "ZERO": "Zero outcomes",
+                    "NEGATIVE": "Negative outcomes",
+                },
+                value="ALL",
+                label="Evidence maturity",
+            )
+            ActionButton("Refresh Outcomes", intent=ButtonIntent.PRIMARY, on_click=lambda: asyncio.create_task(load()))
+        ui.label("Period and knowledge cutoff are always applied. Amounts stay in their recorded currency; no conversion policy is configured.").classes("ephi-o10-truth-note")
+    content = ui.element("div").classes("ephi-outcomes")
+    load_status = ui.label("Loading Outcomes…").props('role="status" aria-live="polite"')
+    last_good_result: OutcomesQueryResult | None = None
+    stale = False
+    review_action_buttons: list[ActionButton] = []
+
+    def show_error(error: BaseException) -> None:
+        content.clear()
+        with content:
+            if isinstance(error, AuthorizationDeniedError):
+                StateView(StateViewSpec(StateKind.PERMISSION, "Outcomes unavailable", "Current authorization does not permit this Outcomes query."))
+            elif isinstance(error, VersionConflictError):
+                StatusBadge("CONFLICT", intent=StatusIntent.WARNING)
+                StateView(StateViewSpec(StateKind.ERROR, "Outcome changed", "A newer value revision committed. Refresh and review the current revision."))
+            elif isinstance(error, ValueError):
+                StateView(StateViewSpec(StateKind.ERROR, "Check the Outcomes filters", str(error)))
+            else:
+                StateView(StateViewSpec(StateKind.ERROR, "Outcomes could not be loaded", "The bounded request failed. Retry the query; no partial amount is shown."))
+
+    async def load() -> None:
+        nonlocal last_good_result, stale
+        if last_good_result is None:
+            content.clear()
+            with content:
+                with Card():
+                    ui.label("Loading Outcomes…").props('role="status" aria-live="polite"')
+                    ui.element("div").classes("ephi-o10-live-status")
+        else:
+            load_status.set_text("Refreshing Outcomes… the last coherent AS_KNOWN result remains visible until this query completes.")
+            for button in review_action_buttons:
+                button.element.disable()
+        await asyncio.sleep(0)
+        try:
+            period = EventPeriod(
+                _outcomes_parse_datetime(start_input.value, "Period start"),
+                _outcomes_parse_datetime(end_input.value, "Period end"),
+            )
+            cutoff = _outcomes_parse_datetime(cutoff_input.value, "Knowledge cutoff")
+            principal = composition.principal_provider()
+            scope = composition.scope_provider()
+            result = composition.outcomes.query(
+                principal,
+                scope,
+                event_period=period,
+                knowledge_cutoff=cutoff,
+                currency=None if currency_select.value in (None, "ALL") else str(currency_select.value),
+                maturity=None if maturity_select.value in (None, "ALL") else str(maturity_select.value),
+            )
+            available = {"ALL": "Separate by currency", **{item: item for item in result.currencies}}
+            currency_select.options = available
+            if currency_select.value not in available:
+                currency_select.value = "ALL"
+            render_result(result, principal)
+            last_good_result = result
+            stale = False
+            load_status.set_text("")
+        except Exception as error:
+            if isinstance(error, AuthorizationDeniedError):
+                last_good_result = None
+                stale = False
+                load_status.set_text("")
+                show_error(error)
+            elif last_good_result is not None:
+                stale = True
+                load_status.set_text("STALE: Refresh failed. The previously authorized result remains labeled with its own period and knowledge cutoff; reviewer actions are disabled until refresh succeeds.")
+                for button in review_action_buttons:
+                    button.element.disable()
+            else:
+                load_status.set_text("")
+                show_error(error)
+
+    def render_result(result: OutcomesQueryResult, principal: Principal) -> None:
+        nonlocal stale
+        stale = False
+        review_action_buttons.clear()
+        content.clear()
+        with content:
+            if result.state == "PARTIAL":
+                StatusBadge("PARTIAL", intent=StatusIntent.WARNING)
+                StateView(StateViewSpec(StateKind.ERROR, "Outcomes are partial", "The bounded query limit was reached. No partial amounts are presented; narrow the period or choose a currency."))
+                return
+            with ui.element("div").classes("ephi-outcomes-banner").props('role="status" aria-live="polite"'):
+                ui.label(f"AS_KNOWN through {result.knowledge_cutoff.isoformat()} · event period {result.event_period.start.isoformat()} to {result.event_period.end.isoformat()}.")
+            if result.restated:
+                with ui.element("div").classes("ephi-outcomes-banner").props('role="status" aria-live="polite"'):
+                    ui.label("RESTATED: A later-known correction changed the active value or its event period at this cutoff.")
+
+            summaries = result.summaries
+            if summaries:
+                for summary in summaries:
+                    with ui.element("section").classes("ephi-outcomes-summaries").props(f'aria-label="{summary.currency} outcome summaries"'):
+                        with MetricStrip():
+                            MetricCard("Estimated opportunity", _outcomes_amount(summary.estimated_opportunity, summary.currency), description="Estimate only; not realized savings.")
+                            MetricCard("Observed operational outcome", _outcomes_amount(summary.observed_operational_outcome, summary.currency), description="Observed outcomes remain separate from validated benefit.")
+                            validated_text = (
+                                "No validated claims in this covered period"
+                                if summary.validated_record_count == 0
+                                else _outcomes_amount(summary.validated_net, summary.currency)
+                            )
+                            MetricCard("Validated benefit / net cost", validated_text, description=f"Benefit {summary.validated_benefit} − eligible operating cost {summary.validated_operating_cost} {summary.currency}.")
+                    ui.label(
+                        f"{summary.currency} coverage: {summary.coverage_group_count} of {summary.claim_group_count} claim groups include a denominator · "
+                        f"pending records {summary.pending_record_count} · independently validated records {summary.validated_record_count}"
+                    ).classes("ephi-o10-truth-note")
+            elif result.state == "EMPTY":
+                with MetricStrip():
+                    MetricCard("Estimated opportunity", "—", description="No matching claims in this covered period.")
+                    MetricCard("Observed operational outcome", "—", description="No matching observed outcomes.")
+                    MetricCard("Validated benefit / net cost", "No validated claims in this covered period")
+
+            if result.state == "EMPTY":
+                StateView(StateViewSpec(StateKind.EMPTY, "No matching Outcomes", "No claims match the selected event period, knowledge cutoff, currency and evidence maturity. This does not mean EPHI created no value."))
+            if result.excluded_count:
+                ui.label(f"Excluded by the selected period, currency or evidence filter: {result.excluded_count} value revision(s). Open a claim for its correction and attribution history.").classes("ephi-o10-truth-note")
+
+            rows = []
+            by_entry: dict[str, OutcomeRecord] = {}
+            for record in result.rows:
+                entry_id = record.value.entry_id
+                by_entry[entry_id] = record
+                rows.append({
+                    "entry_id": entry_id,
+                    "event": f"{record.economic_event_key} · {record.value.category.replace('_', ' ').title()}",
+                    "event_at": record.value.event_at.isoformat(),
+                    "evidence_state": record.state,
+                    "amount": f"{_outcomes_amount(record.value.amount, record.value.currency)} · {record.amount_state}",
+                    "owner": record.claim.owner,
+                    "validator": record.review.reviewer if record.review and record.state in {"VALIDATED", "REJECTED"} else "—",
+                    "validation_time": record.review.known_at.isoformat() if record.review and record.state in {"VALIDATED", "REJECTED"} else "—",
+                    "correction": "Corrected" if record.corrected else "Original",
+                })
+            with Card():
+                ui.label("Outcome claims").classes("text-h6")
+                ui.label("One economic event group contributes each value revision once. Linked Episodes, decisions and actions provide attribution only.").classes("ephi-o10-truth-note")
+                with ui.element("div").classes("ephi-outcomes-table"):
+                    DataTable(
+                        rows=rows,
+                        columns=(
+                            TableColumn("event", "Economic event · value type", min_width=210, priority="high"),
+                            TableColumn("evidence_state", "Evidence / review", ColumnKind.STATUS, min_width=150),
+                            TableColumn("amount", "Value · amount state", min_width=150, align="right"),
+                            TableColumn("correction", "Revision", ColumnKind.STATUS, min_width=115),
+                        ),
+                        row_key="entry_id",
+                        density=TableDensity.COMPACT,
+                        show_toolbar=False,
+                    )
+                if rows:
+                    select_options = {
+                        record.value.entry_id: f"{record.economic_event_key} · {record.value.category.replace('_', ' ').title()} · {_outcomes_amount(record.value.amount, record.value.currency)}"
+                        for record in result.rows
+                    }
+                    selected_entry = ui.select(select_options, value=next(iter(select_options)), label="Claim drilldown")
+                    detail = ui.element("div").classes("ephi-outcomes-detail")
+
+                    def render_detail(_event: object = None) -> None:
+                        record = by_entry.get(str(selected_entry.value))
+                        detail.clear()
+                        if record is None:
+                            return
+                        with detail:
+                            with Card():
+                                ui.label("Claim and correction history").classes("text-subtitle1")
+                                ui.label(f"Economic event {record.economic_event_key} · group {record.group_id}")
+                                ui.label(f"Value revision {record.value.entry_id} · claim revision {record.claim.claim_revision_id} · aggregate version {record.aggregate_version}")
+                                ui.label(f"Event {record.value.event_at.isoformat()} · known {record.value.known_at.isoformat()} · category {record.value.category} · amount {_outcomes_amount(record.value.amount, record.value.currency)} ({record.amount_state.lower()})")
+                                ui.label(f"Owner {record.claim.owner} · claimant {record.claim.claimant} · pending age {record.pending_age_seconds if record.pending_age_seconds is not None else 'not pending'} seconds")
+                                ui.label(f"Evidence IDs: {', '.join(record.claim.evidence_ids) or 'none'} · evidence identity {record.value.evidence_identity or 'unavailable'}")
+                                ui.label(f"Cost model {record.value.cost_model_identity or 'unavailable'} · rate policy {record.value.rate_policy_identity or 'none; no conversion applied'}")
+                                ui.label(f"Linked Episodes {', '.join(record.claim.attribution.episode_ids) or 'none'} · decisions {', '.join(record.claim.attribution.decision_ids) or 'none'} · actions {', '.join(record.claim.attribution.action_ids) or 'none'}")
+                                ui.label(f"Contributors {', '.join(record.claim.attribution.contributor_ids) or 'none'} · affected material scope {', '.join(record.claim.attribution.material_scope) or 'not supplied'}")
+                                ui.label(f"Coverage numerator / denominator {record.claim.coverage_numerator if record.claim.coverage_numerator is not None else 'not supplied'} / {record.claim.coverage_denominator if record.claim.coverage_denominator is not None else 'not supplied'}")
+                                revision_state = "active void leaf; predecessor is not restored" if record.value.revision_kind.value == "VOID" else "corrected active leaf" if record.corrected else "original active leaf"
+                                ui.label(f"Correction identity: supersedes {record.value.supersedes or 'none'} · state {revision_state}")
+                                ui.label("Deduplication: the economic event key identifies one group. Episode, decision, action and contributor links are deduplicated references and never multiply the group amount.")
+                                ui.label("Cutoff rule: select the active value and review leaves known by the displayed cutoff, then filter by event period. Later-known corrections and approvals remain excluded from earlier AS_KNOWN results.")
+                                if record.review is not None:
+                                    ui.label(f"Independent review {record.review.decision.value} · validator {record.review.reviewer} · known {record.review.known_at.isoformat()} · reviewed cutoff {record.review.knowledge_cutoff.isoformat()} · rationale {record.review.rationale}")
+                                elif record.state == "PENDING":
+                                    ui.label("Review state: pending; no qualifying independent sign-off exists for this exact value revision at this cutoff.")
+
+                                may_review = (
+                                    principal.has_capability("value.validate")
+                                    and principal.subject != record.claim.claimant
+                                    and record.value.revision_kind.value == "VALUE"
+                                    and record.value.category in {"benefit", "operating_cost"}
+                                    and record.value.maturity.value == "OBSERVED"
+                                )
+                                if may_review:
+                                    with ui.dialog() as review_dialog, ui.card():
+                                        ui.label("Independent value review").classes("text-h6")
+                                        ui.label(f"Sign-off binds value revision {record.value.entry_id}, claim revision {record.claim.claim_revision_id}, evidence {record.value.evidence_identity}, cost model {record.value.cost_model_identity}, rate policy {record.value.rate_policy_identity or 'none'}, and cutoff {result.knowledge_cutoff.isoformat()}.")
+                                        rationale = ui.textarea("Reviewer rationale", value="Evidence and cost-model bindings reviewed.")
+                                        review_status = ui.label("").props('role="status" aria-live="polite"')
+
+                                        def commit_review(decision: ReviewDecision) -> None:
+                                            try:
+                                                reason = str(rationale.value or "").strip()
+                                                if not reason:
+                                                    raise ValueError("A reviewer rationale is required.")
+                                                command_seed = f"{record.group_id}:{record.value.entry_id}:{decision.value}:{result.knowledge_cutoff.isoformat()}:{datetime.now(timezone.utc).isoformat()}"
+                                                command_id = "outcome-review-" + hashlib.sha256(command_seed.encode("utf-8")).hexdigest()
+                                                review_context = CommandContext(command_id, composition.principal_provider(), composition.scope_provider(), record.aggregate_version, reason=reason)
+                                                composition.outcomes.review_value(
+                                                    review_context,
+                                                    group_id=record.group_id,
+                                                    value_entry_id=record.value.entry_id,
+                                                    decision=decision,
+                                                    knowledge_cutoff=result.knowledge_cutoff,
+                                                    rationale=reason,
+                                                    supersedes_review_id=record.review.review_id if record.review else None,
+                                                )
+                                                review_dialog.close()
+                                                review_status.set_text("Review recorded through the O2 command receipt. Refreshing at the selected knowledge cutoff.")
+                                                asyncio.create_task(load())
+                                            except VersionConflictError:
+                                                load_status.set_text("CONFLICT: A newer value revision committed. Reviewer action is disabled while the current group is refreshed.")
+                                                review_button.element.disable()
+                                                asyncio.create_task(load())
+                                                review_status.set_text("Conflict: a newer claim revision is current. Refresh and review the current revision.")
+                                            except AuthorizationDeniedError:
+                                                review_status.set_text("Permission denied: current reviewer authorization is required.")
+                                            except Exception:
+                                                review_status.set_text("Review was not recorded. Check the current revision and reviewer rationale, then retry.")
+
+                                        with ui.element("div").classes("ephi-outcomes-action-row"):
+                                            _ensure_outcomes_action_target(ActionButton("Approve value", intent=ButtonIntent.PRIMARY, on_click=lambda: commit_review(ReviewDecision.APPROVED)))
+                                            _ensure_outcomes_action_target(ActionButton("Reject value", intent=ButtonIntent.DANGER, on_click=lambda: commit_review(ReviewDecision.REJECTED)))
+                                    review_button = _ensure_outcomes_action_target(ActionButton("Review evidence and sign off", intent=ButtonIntent.SECONDARY, on_click=review_dialog.open))
+                                    review_action_buttons.append(review_button)
+                                elif record.value.category in {"benefit", "operating_cost"}:
+                                    message = (
+                                        "Voided revisions remain in history and cannot be reviewed."
+                                        if record.value.revision_kind.value == "VOID"
+                                        else "Self-validation is blocked for the claimant."
+                                        if principal.subject == record.claim.claimant
+                                        else "Current reviewer authorization or observed evidence is required for sign-off."
+                                    )
+                                    ui.label(message).classes("ephi-o10-truth-note")
+
+                    selected_entry.on_value_change(render_detail)
+                    render_detail()
+
+    await load()
+
+
+async def build_outcomes_page(composition: EphiUiComposition) -> None:
+    """Canonical /ephi/outcomes destination on the pinned public Base shell."""
+
+    principal = composition.principal_provider()
+    with AppShell(
+        "EPHI",
+        _navigation(),
+        active_route="/ephi/outcomes",
+        environment=os.environ.get("EPHI_ENV", "development"),
+        subtitle="Outcomes",
+        user_name=principal.subject,
+        user_role="Value reviewer" if principal.has_capability("value.validate") else "Engineer",
+        debugger=False,
+    ):
+        from nicegui import ui
+
+        ui.query("main").props('role="region" aria-label="EPHI application content"')
+        with AnalysisWorkspacePage("", None) as page:
+            with page.slot(LayoutSlot.HEADER):
+                heading = _semantic_heading(
+                    "Outcomes",
+                    "Estimated opportunity, observed outcomes and independently reviewed benefit use separate value and knowledge-time rules.",
+                    autofocus=False,
+                )
+                heading.classes("ephi-outcomes-page-heading")
+                heading.style("font-size: clamp(1.875rem, 4vw, 3rem) !important; line-height: 1.1 !important; white-space: nowrap;")
+            with page.slot(LayoutSlot.PRIMARY):
+                await _render_outcomes_content(composition)
+
+
 def build_page() -> None:
     """Base scaffold page; missing bindings render an explicit fail-closed state."""
 
@@ -1453,5 +1825,8 @@ def run_ephi() -> None:
     install_browser_transport_stack(nicegui_app, runtime_adapter, policy)
     runtime_adapter.run(
         root=lambda: build_attention_page(composition),
-        pages={"/episode": lambda: build_episode_page(composition)},
+        pages={
+            "/episode": lambda: build_episode_page(composition),
+            "/ephi/outcomes": lambda: build_outcomes_page(composition),
+        },
     )

@@ -18,6 +18,7 @@ from ephi.application.context import AccessScope
 from ephi.application.errors import StorageFailureError, ValidationFailureError
 from ephi.application.hashing import canonical_json, normalize_domain_payload
 from ephi.application.storage import (
+    AggregateAlreadyExistsError,
     AggregateSnapshot,
     CommandUnitOfWork,
     ReceiptAlreadyExistsError,
@@ -86,6 +87,37 @@ CREATE TABLE IF NOT EXISTS outbox_event (
 CREATE INDEX IF NOT EXISTS idx_receipt_scope_subject ON command_receipt(scope_key, subject);
 CREATE INDEX IF NOT EXISTS idx_audit_scope_aggregate ON audit_event(scope_key, aggregate_type, aggregate_id, aggregate_version);
 CREATE INDEX IF NOT EXISTS idx_outbox_status ON outbox_event(status, created_at);
+CREATE UNIQUE INDEX IF NOT EXISTS idx_outcome_economic_event ON aggregate_state(scope_key, json_extract(state_json, '$.economic_event_key')) WHERE aggregate_type = 'outcome_claim_group';
+
+CREATE TABLE IF NOT EXISTS outcome_value_revision (
+    scope_key TEXT NOT NULL,
+    group_id TEXT NOT NULL,
+    entry_id TEXT NOT NULL,
+    category TEXT NOT NULL,
+    amount TEXT,
+    currency TEXT NOT NULL CHECK (currency GLOB '[A-Z][A-Z][A-Z]'),
+    event_at TEXT NOT NULL,
+    known_at TEXT NOT NULL,
+    supersedes TEXT,
+    revision_kind TEXT NOT NULL CHECK (revision_kind IN ('VALUE', 'VOID')),
+    claim_revision_id TEXT NOT NULL,
+    evidence_identity TEXT,
+    cost_model_identity TEXT,
+    rate_policy_identity TEXT,
+    maturity TEXT NOT NULL,
+    CHECK ((revision_kind = 'VALUE' AND amount IS NOT NULL) OR (revision_kind = 'VOID' AND amount IS NULL)),
+    PRIMARY KEY (scope_key, group_id, entry_id)
+);
+CREATE UNIQUE INDEX IF NOT EXISTS idx_outcome_value_one_successor
+    ON outcome_value_revision(scope_key, group_id, supersedes) WHERE supersedes IS NOT NULL;
+CREATE INDEX IF NOT EXISTS idx_outcome_value_group_known
+    ON outcome_value_revision(scope_key, group_id, known_at, entry_id);
+CREATE TRIGGER IF NOT EXISTS outcome_value_revision_immutable_update
+    BEFORE UPDATE ON outcome_value_revision
+    BEGIN SELECT RAISE(ABORT, 'outcome value revisions are append-only'); END;
+CREATE TRIGGER IF NOT EXISTS outcome_value_revision_immutable_delete
+    BEFORE DELETE ON outcome_value_revision
+    BEGIN SELECT RAISE(ABORT, 'outcome value revisions are append-only'); END;
 
 CREATE TABLE IF NOT EXISTS decision_snapshot (
     snapshot_id TEXT PRIMARY KEY,
@@ -176,6 +208,42 @@ def _validated_identity(value: object, field: str) -> str:
     return value
 
 
+def _outcome_revision_from_row(row: Mapping[str, object]) -> dict[str, object]:
+    amount = row["amount"]
+    return {
+        "entry_id": row["entry_id"],
+        "scope": row["scope_key"],
+        "group_id": row["group_id"],
+        "category": row["category"],
+        "amount": str(amount) if amount is not None else None,
+        "currency": row["currency"],
+        "event_at": row["event_at"],
+        "known_at": row["known_at"],
+        "supersedes": row["supersedes"],
+        "claim_revision_id": row["claim_revision_id"],
+        "evidence_identity": row["evidence_identity"],
+        "cost_model_identity": row["cost_model_identity"],
+        "rate_policy_identity": row["rate_policy_identity"],
+        "maturity": row["maturity"],
+        "revision_kind": row["revision_kind"],
+    }
+
+
+def _outcome_snapshot(connection: sqlite3.Connection, row: sqlite3.Row) -> AggregateSnapshot:
+    state = json.loads(row["state_json"])
+    if not isinstance(state, dict):
+        raise StorageFailureError("durable SQLite aggregate state is not a mapping")
+    revisions = connection.execute(
+        "SELECT * FROM outcome_value_revision WHERE scope_key = ? AND group_id = ? "
+        "ORDER BY known_at, entry_id",
+        (row["scope_key"], row["aggregate_id"]),
+    ).fetchall()
+    state["value_entries"] = [_outcome_revision_from_row(item) for item in revisions]
+    return AggregateSnapshot(
+        row["scope_key"], row["aggregate_type"], row["aggregate_id"], row["version"], state,
+    )
+
+
 class _SQLiteCommandTransaction:
     """One SQLite transaction implementing the application UoW contract."""
 
@@ -261,6 +329,63 @@ class _SQLiteCommandTransaction:
             ).rowcount)
         except sqlite3.Error as exc:
             raise StorageFailureError("durable SQLite storage failed while updating an aggregate") from exc
+
+    def insert_aggregate(
+        self,
+        scope_key: str,
+        aggregate_type: str,
+        aggregate_id: str,
+        *,
+        version: int,
+        state_json: str,
+    ) -> None:
+        try:
+            self.connection.execute(
+                "INSERT INTO aggregate_state(scope_key, aggregate_type, aggregate_id, version, state_json) VALUES (?, ?, ?, ?, ?)",
+                (scope_key, aggregate_type, aggregate_id, version, state_json),
+            )
+        except sqlite3.IntegrityError as exc:
+            raise AggregateAlreadyExistsError from exc
+        except sqlite3.Error as exc:
+            raise StorageFailureError("durable SQLite storage failed while creating an aggregate") from exc
+
+    def list_outcome_value_revisions(self, scope_key: str, group_id: str) -> tuple[dict[str, object], ...]:
+        try:
+            rows = self.connection.execute(
+                "SELECT * FROM outcome_value_revision WHERE scope_key = ? AND group_id = ? "
+                "ORDER BY known_at, entry_id",
+                (scope_key, group_id),
+            ).fetchall()
+        except sqlite3.Error as exc:
+            raise StorageFailureError("durable SQLite outcome values could not be read") from exc
+        return tuple(_outcome_revision_from_row(row) for row in rows)
+
+    def append_outcome_value_revision(
+        self,
+        scope_key: str,
+        group_id: str,
+        revision: Mapping[str, object],
+    ) -> None:
+        if revision.get("scope") != scope_key or revision.get("group_id") != group_id:
+            raise ValidationFailureError("outcome value revision scope and group must match its command")
+        amount = revision.get("amount")
+        try:
+            self.connection.execute(
+                "INSERT INTO outcome_value_revision "
+                "(scope_key, group_id, entry_id, category, amount, currency, event_at, known_at, supersedes, "
+                "revision_kind, claim_revision_id, evidence_identity, cost_model_identity, rate_policy_identity, maturity) "
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                (
+                    scope_key, group_id, revision["entry_id"], revision["category"],
+                    str(amount) if amount is not None else None, revision["currency"],
+                    revision["event_at"], revision["known_at"], revision.get("supersedes"),
+                    revision["revision_kind"], revision["claim_revision_id"],
+                    revision.get("evidence_identity"), revision.get("cost_model_identity"),
+                    revision.get("rate_policy_identity"), revision["maturity"],
+                ),
+            )
+        except sqlite3.Error as exc:
+            raise StorageFailureError("durable SQLite outcome value could not be appended") from exc
 
     def append_audit(
         self,
@@ -380,6 +505,7 @@ class SQLiteReferenceTransactionAdapter:
                 raise sqlite3.DatabaseError("SQLite WAL mode was not enabled")
             self._connection.execute("PRAGMA synchronous = FULL")
             self._connection.executescript(SCHEMA)
+            self._migrate_embedded_outcome_values()
             audit_columns = {row[1] for row in self._connection.execute("PRAGMA table_info(audit_event)").fetchall()}
             for column in ("auth_session_revision_json", "security_revision_json"):
                 if column not in audit_columns:
@@ -392,6 +518,52 @@ class SQLiteReferenceTransactionAdapter:
             except Exception:
                 pass
             raise StorageFailureError("durable SQLite storage could not be opened") from exc
+
+    def _migrate_embedded_outcome_values(self) -> None:
+        """Move predecessor JSON value rows to the immutable revision table."""
+
+        connection = self._connection
+        if connection is None:
+            return
+        try:
+            connection.execute("BEGIN IMMEDIATE")
+            rows = connection.execute(
+                "SELECT scope_key, aggregate_id, state_json FROM aggregate_state "
+                "WHERE aggregate_type = 'outcome_claim_group'"
+            ).fetchall()
+            for row in rows:
+                state = json.loads(row["state_json"])
+                revisions = state.pop("value_entries", [])
+                if not isinstance(revisions, list):
+                    raise sqlite3.DatabaseError("embedded outcome values are not a list")
+                for revision in revisions:
+                    if not isinstance(revision, dict):
+                        raise sqlite3.DatabaseError("embedded outcome value is not an object")
+                    connection.execute(
+                        "INSERT OR IGNORE INTO outcome_value_revision "
+                        "(scope_key, group_id, entry_id, category, amount, currency, event_at, known_at, "
+                        "supersedes, revision_kind, claim_revision_id, evidence_identity, cost_model_identity, "
+                        "rate_policy_identity, maturity) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                        (
+                            row["scope_key"], row["aggregate_id"], revision["entry_id"], revision["category"],
+                            str(revision["amount"]) if revision.get("amount") is not None else None,
+                            revision["currency"], revision["event_at"], revision["known_at"],
+                            revision.get("supersedes"), revision.get("revision_kind", "VALUE"),
+                            revision["claim_revision_id"], revision.get("evidence_identity"),
+                            revision.get("cost_model_identity"), revision.get("rate_policy_identity"),
+                            revision.get("maturity", "OBSERVED"),
+                        ),
+                    )
+                if len(revisions) or "value_entries" in json.loads(row["state_json"]):
+                    connection.execute(
+                        "UPDATE aggregate_state SET state_json = ? WHERE scope_key = ? "
+                        "AND aggregate_type = 'outcome_claim_group' AND aggregate_id = ?",
+                        (canonical_json(state), row["scope_key"], row["aggregate_id"]),
+                    )
+            connection.commit()
+        except (sqlite3.Error, KeyError, TypeError, json.JSONDecodeError) as exc:
+            connection.rollback()
+            raise StorageFailureError("durable SQLite outcome-value migration failed") from exc
 
     @property
     def connection(self) -> sqlite3.Connection:
@@ -485,6 +657,83 @@ class SQLiteReferenceTransactionAdapter:
         if not isinstance(state, dict):
             raise StorageFailureError("durable aggregate state is not a mapping")
         return AggregateSnapshot(row["scope_key"], row["aggregate_type"], row["aggregate_id"], row["version"], state)
+
+    def list_aggregates(self, scope: AccessScope, aggregate_type: str, *, limit: int) -> tuple[AggregateSnapshot, ...]:
+        if not isinstance(scope, AccessScope):
+            raise ValidationFailureError("scope must be an AccessScope")
+        aggregate_type = _validated_identity(aggregate_type, "aggregate_type")
+        if isinstance(limit, bool) or not isinstance(limit, int) or not 1 <= limit <= 5001:
+            raise ValidationFailureError("aggregate list limit must be between 1 and 5001")
+        try:
+            rows = self.connection.execute(
+                "SELECT scope_key, aggregate_type, aggregate_id, version, state_json FROM aggregate_state WHERE scope_key = ? AND aggregate_type = ? ORDER BY aggregate_id LIMIT ?",
+                (scope.canonical_key, aggregate_type, limit),
+            ).fetchall()
+        except sqlite3.Error as exc:
+            raise StorageFailureError("durable SQLite storage failed while listing aggregates") from exc
+        snapshots = []
+        for row in rows:
+            try:
+                state = json.loads(row["state_json"])
+            except (TypeError, json.JSONDecodeError) as exc:
+                raise StorageFailureError("durable aggregate state is not valid JSON") from exc
+            if not isinstance(state, dict):
+                raise StorageFailureError("durable aggregate state is not a mapping")
+            snapshots.append(AggregateSnapshot(row["scope_key"], row["aggregate_type"], row["aggregate_id"], row["version"], state))
+        return tuple(snapshots)
+
+    def get_outcome_group(self, scope: AccessScope, group_id: str) -> AggregateSnapshot | None:
+        if not isinstance(scope, AccessScope):
+            raise ValidationFailureError("scope must be an AccessScope")
+        group_id = _validated_identity(group_id, "group_id")
+        connection = self.connection
+        with self._lock:
+            try:
+                connection.execute("BEGIN")
+                row = connection.execute(
+                    "SELECT scope_key, aggregate_type, aggregate_id, version, state_json FROM aggregate_state "
+                    "WHERE scope_key = ? AND aggregate_type = 'outcome_claim_group' AND aggregate_id = ?",
+                    (scope.canonical_key, group_id),
+                ).fetchone()
+                result = _outcome_snapshot(connection, row) if row is not None else None
+                connection.commit()
+                return result
+            except (sqlite3.Error, TypeError, json.JSONDecodeError) as exc:
+                connection.rollback()
+                raise StorageFailureError("durable SQLite outcome group could not be read coherently") from exc
+
+    def list_outcome_groups(self, scope: AccessScope, *, limit: int) -> tuple[AggregateSnapshot, ...]:
+        if not isinstance(scope, AccessScope):
+            raise ValidationFailureError("scope must be an AccessScope")
+        if isinstance(limit, bool) or not isinstance(limit, int) or not 1 <= limit <= 5001:
+            raise ValidationFailureError("outcome group list limit must be between 1 and 5001")
+        connection = self.connection
+        with self._lock:
+            try:
+                connection.execute("BEGIN")
+                rows = connection.execute(
+                    "SELECT scope_key, aggregate_type, aggregate_id, version, state_json FROM aggregate_state "
+                    "WHERE scope_key = ? AND aggregate_type = 'outcome_claim_group' "
+                    "ORDER BY aggregate_id LIMIT ?",
+                    (scope.canonical_key, limit),
+                ).fetchall()
+                result = tuple(_outcome_snapshot(connection, row) for row in rows)
+                connection.commit()
+                return result
+            except (sqlite3.Error, TypeError, json.JSONDecodeError) as exc:
+                connection.rollback()
+                raise StorageFailureError("durable SQLite outcome groups could not be read coherently") from exc
+
+    def list_outcome_value_revisions(self, scope_key: str, group_id: str) -> tuple[dict[str, object], ...]:
+        try:
+            rows = self.connection.execute(
+                "SELECT * FROM outcome_value_revision WHERE scope_key = ? AND group_id = ? "
+                "ORDER BY known_at, entry_id",
+                (scope_key, group_id),
+            ).fetchall()
+        except sqlite3.Error as exc:
+            raise StorageFailureError("durable SQLite outcome values could not be read") from exc
+        return tuple(_outcome_revision_from_row(row) for row in rows)
 
     def get_command_receipt(self, scope_key: str, subject: str, command_id: str) -> StoredCommandReceipt | None:
         scope_key = _validated_identity(scope_key, "scope_key")

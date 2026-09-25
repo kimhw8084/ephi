@@ -349,6 +349,44 @@ Local rehearsal timing is evidence only. The tooling always records
 `production_disaster_rpo_rto_claim = NOT_ESTABLISHED`; it does not claim the
 E7 target RPO/RTO or authenticate a real source family.
 
+## CHG-205 U2.2 / O7.1 generic Outcomes and value review
+
+The canonical `/ephi/outcomes` route adds a bounded, authorized view and
+revision-bound reviewer transition over the existing F04 value records and
+O2 PostgreSQL aggregate/receipt/audit/outbox authorities. One scoped
+economic-event key identifies one claim group; linked Episodes, decisions,
+actions and contributors are attribution references and never multiply its
+amount. Corrections remain append-only, select the active leaf at the
+knowledge cutoff before filtering the event period, and do not inherit review.
+PostgreSQL stores immutable value revisions in `outcome_value_revision` with
+`amount NUMERIC`; monetary amounts are not duplicated in aggregate JSONB. The
+revision insert and the O2 aggregate CAS, receipt, audit and outbox commit in
+one transaction. Reads return exact `Decimal` values and decimal strings in
+JSON. Explicit void revisions have no amount, supersede the active leaf, and
+remain visible after their known-at cutoff without restoring a predecessor.
+Currency summaries remain separate because no versioned conversion policy is
+configured.
+
+The route separates estimated opportunity, observed operational outcomes and
+independently reviewed benefit/net cost. Reviewers cannot edit claim science;
+approval binds the exact value revision, evidence identity, model identities
+and cutoff, and a later-known review remains absent from earlier `AS_KNOWN`
+results. Read results expose deterministic `query_identity` and
+`result_identity` values over canonical filters and ordered revision facts.
+The only demonstration facts are synthetic. This slice does not
+qualify ROI or savings, company monetary data/models/adapters, real-family
+qualification, W3–W5 human pilots, Operations expansion, G12, Port Gate,
+release or Production.
+
+Focused offline evidence is `tests.test_value_integrity`,
+`tests.test_outcomes_workflow` and `tests.test_o2_transactions`. PostgreSQL
+restart and concurrent successor evidence is DSN-gated in
+`tests.test_outcomes_postgresql`. The predecessor browser evidence remains
+under `evidence/u2/chg-205-u2.2-o7.1/`; the repair continuation report and
+1440×900 / 390×844 screenshots are under
+`evidence/u2/chg-205-u2.2-o7.1/review-fix1/`. The continuation was requalified
+against local PostgreSQL 18.6; CI keeps its PostgreSQL 18.x Outcomes lane.
+
 CHG-105 pins `nicegui-base` to Git commit `000298562d6bcbf6df304edbd41b98b30fe4bfcf`, framework version `3.0.0a8`, exactly `nicegui==3.15.0`, and Python `>=3.11,<3.14`. Application code uses public `from nicegui_base import ...` authorities only; it does not use direct `nicegui.ui` or private `nicegui_base.integrations.nicegui_*` APIs. The machine-readable runtime specification is [environment/nicegui_base_runtime.json](environment/nicegui_base_runtime.json).
 
 For an isolated dependency/bootstrap qualification, use the existing CHG-105 tool separately:
