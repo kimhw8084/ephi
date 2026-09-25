@@ -1,0 +1,935 @@
+{
+  "accepted_at": "2026-09-25T19:12:58Z",
+  "changed_files": [
+    {
+      "additions": 27,
+      "deletions": 0,
+      "path": "13_Package_Review.md",
+      "status": "M"
+    },
+    {
+      "additions": 32,
+      "deletions": 0,
+      "path": "README.md",
+      "status": "M"
+    },
+    {
+      "additions": 12,
+      "deletions": 0,
+      "path": "evidence/README.md",
+      "status": "M"
+    },
+    {
+      "additions": 2331,
+      "deletions": 0,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/qualification.json",
+      "status": "A"
+    },
+    {
+      "additions": 3139,
+      "deletions": 0,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/qualification.json",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/screenshots/operations-artifact_corrupt-desktop-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/screenshots/operations-artifact_corrupt-phone-390x844.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/screenshots/operations-artifact_missing-desktop-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/screenshots/operations-artifact_missing-phone-390x844.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/screenshots/operations-mixed_axes-desktop-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/screenshots/operations-mixed_axes-phone-390x844.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/screenshots/operations-qualification_expired-desktop-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/screenshots/operations-qualification_expired-phone-390x844.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/screenshots/operations-qualification_pending-desktop-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/screenshots/operations-qualification_pending-phone-390x844.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/screenshots/operations-qualification_unbound-desktop-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/screenshots/operations-qualification_unbound-phone-390x844.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/screenshots/operations-source_stale-desktop-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/screenshots/operations-source_stale-phone-390x844.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/screenshots/operations-source_unavailable-desktop-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/screenshots/operations-source_unavailable-phone-390x844.png",
+      "status": "A"
+    },
+    {
+      "additions": 427,
+      "deletions": 0,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/test_logs/full-suite-postgresql18.log",
+      "status": "A"
+    },
+    {
+      "additions": 64,
+      "deletions": 0,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/validation/final-verification.json",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-artifact_corrupt-desktop-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-artifact_corrupt-phone-390x844.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-artifact_missing-desktop-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-artifact_missing-phone-390x844.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-mixed_axes-desktop-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-mixed_axes-phone-390x844.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-qualification_expired-desktop-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-qualification_expired-phone-390x844.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-qualification_pending-desktop-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-qualification_pending-phone-390x844.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-qualification_unbound-desktop-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-qualification_unbound-phone-390x844.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-source_stale-desktop-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-source_stale-phone-390x844.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-source_unavailable-desktop-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-source_unavailable-phone-390x844.png",
+      "status": "A"
+    },
+    {
+      "additions": 419,
+      "deletions": 0,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/test_logs/full-suite-postgresql18.log",
+      "status": "A"
+    },
+    {
+      "additions": 56,
+      "deletions": 0,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/validation/final-verification.json",
+      "status": "A"
+    },
+    {
+      "additions": 11,
+      "deletions": 0,
+      "path": "examples/synthetic_downstream/provider.py",
+      "status": "M"
+    },
+    {
+      "additions": 234,
+      "deletions": 24,
+      "path": "manifest.json",
+      "status": "M"
+    },
+    {
+      "additions": 30,
+      "deletions": 0,
+      "path": "src/ephi/application/__init__.py",
+      "status": "M"
+    },
+    {
+      "additions": 61,
+      "deletions": 0,
+      "path": "src/ephi/application/artifacts.py",
+      "status": "M"
+    },
+    {
+      "additions": 752,
+      "deletions": 2,
+      "path": "src/ephi/application/operations.py",
+      "status": "M"
+    },
+    {
+      "additions": 46,
+      "deletions": 0,
+      "path": "src/ephi/application/worker.py",
+      "status": "M"
+    },
+    {
+      "additions": 36,
+      "deletions": 0,
+      "path": "src/ephi/infrastructure/artifacts/catalog.py",
+      "status": "M"
+    },
+    {
+      "additions": 43,
+      "deletions": 1,
+      "path": "src/ephi/infrastructure/postgresql.py",
+      "status": "M"
+    },
+    {
+      "additions": 68,
+      "deletions": 6,
+      "path": "src/ephi/infrastructure/postgresql_worker.py",
+      "status": "M"
+    },
+    {
+      "additions": 35,
+      "deletions": 0,
+      "path": "src/ephi/ui/app.py",
+      "status": "M"
+    },
+    {
+      "additions": 439,
+      "deletions": 0,
+      "path": "src/ephi/ui/operations.py",
+      "status": "A"
+    },
+    {
+      "additions": 39,
+      "deletions": 0,
+      "path": "tests/test_o2_worker_postgresql.py",
+      "status": "M"
+    },
+    {
+      "additions": 546,
+      "deletions": 0,
+      "path": "tests/test_operations_application.py",
+      "status": "A"
+    },
+    {
+      "additions": 256,
+      "deletions": 0,
+      "path": "tests/test_operations_postgresql.py",
+      "status": "A"
+    },
+    {
+      "additions": 614,
+      "deletions": 0,
+      "path": "tools/u2_operations_browser_qualification.py",
+      "status": "A"
+    }
+  ],
+  "checks": [
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m compileall -q src/ephi tests tools/u2_operations_browser_qualification.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest tests.test_operations_application -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk env EPHI_TEST_POSTGRES_DSN=postgresql://haewonkim@127.0.0.1:58281/postgres python3 -m unittest tests.test_operations_postgresql -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk env EPHI_TEST_POSTGRES_DSN=postgresql://haewonkim@127.0.0.1:58281/postgres python3 -m unittest tests.test_o2_worker_postgresql -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk env EPHI_TEST_POSTGRES_DSN=postgresql://haewonkim@127.0.0.1:58281/postgres python3 -m unittest discover -s tests -v > /tmp/ephi-chg252-r2fix1.YQrrxp/full-suite-postgresql18-final.log 2>&1'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk tail -n 8 /tmp/ephi-chg252-r2fix1.YQrrxp/full-suite-postgresql18-final.log'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk cp /tmp/ephi-chg252-r2fix1.YQrrxp/full-suite-postgresql18-final.log evidence/u2/chg-252-u2.5-o9.2/review-fix1/test_logs/full-suite-postgresql18.log'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m compileall -q src/ephi tests tools/u2_operations_browser_qualification.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git add -A && rtk git diff --cached --stat && rtk git status --short --branch'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git commit -m 'Fix Operations worker status and filters'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk env EPHI_TEST_POSTGRES_DSN=postgresql://haewonkim@127.0.0.1:58281/postgres python3 tools/u2_operations_browser_qualification.py --output evidence/u2/chg-252-u2.5-o9.2/review-fix1/qualification.json --artifacts evidence/u2/chg-252-u2.5-o9.2/review-fix1/screenshots'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import json; p=json.load(open(\\\"evidence/u2/chg-252-u2.5-o9.2/review-fix1/qualification.json\\\")); print(\\\"report_status=\\\"+p[\\\"status\\\"]); print(\\\"candidate_head=\\\"+p[\\\"candidate\\\"][\\\"head_commit\\\"]); print(\\\"postgres=\\\"+p[\\\"postgres\\\"][\\\"version\\\"]); print(\\\"views=\\\"+str(len(p[\\\"browser\\\"]))); print(\\\"all_views_pass=\\\"+str(all(v[\\\"status\\\"]==\\\"PASS\\\" for v in p[\\\"browser\\\"].values()))); print(\\\"inventories_clean=\\\"+str(p[\\\"inventories_clean\\\"])); print(\\\"digest=\\\"+p[\\\"candidate\\\"][\\\"source_test_tool_digest\\\"])'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m compileall -q src/ephi tests tools/u2_operations_browser_qualification.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk env EPHI_TEST_POSTGRES_DSN=postgresql://haewonkim@127.0.0.1:58281/postgres python3 -m unittest discover -s tests -v > /tmp/ephi-chg252-r2fix1.YQrrxp/full-suite-postgresql18-candidate.log 2>&1'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk cp /tmp/ephi-chg252-r2fix1.YQrrxp/full-suite-postgresql18-candidate.log evidence/u2/chg-252-u2.5-o9.2/review-fix1/test_logs/full-suite-postgresql18.log && rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m compileall -q src/ephi tests tools/u2_operations_browser_qualification.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/w0_repo_baseline.py > /tmp/ephi-chg252-r2fix1.YQrrxp/w0-repo-baseline.json'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import json; p=json.load(open(\\\"/tmp/ephi-chg252-r2fix1.YQrrxp/w0-repo-baseline.json\\\")); print(\\\"status=\\\"+p[\\\"status\\\"]); print(\\\"git_status=\\\"+p[\\\"git\\\"][\\\"status\\\"]); print(\\\"package_integrity=\\\"+p[\\\"package_integrity\\\"][\\\"status\\\"]); print(\\\"baseline_test_result=\\\"+p[\\\"tests\\\"][\\\"status\\\"]+\\\" \\\"+str(p[\\\"tests\\\"][\\\"passed\\\"])+\\\" passed, \\\"+str(p[\\\"tests\\\"][\\\"skipped\\\"])+\\\" skipped\\\" )' \"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m compileall -q src/ephi tests tools/u2_operations_browser_qualification.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/w0_repo_baseline.py > /tmp/ephi-chg252-r2fix1.YQrrxp/w0-pre-evidence-commit.json'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n 'COMPLETED|CANCELLED' src/ephi/application/operations.py src/ephi/ui/operations.py src/ephi/application/worker.py src/ephi/infrastructure/postgresql_worker.py tests/test_operations_application.py tests/test_operations_postgresql.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import json; p=json.load(open(\\\"evidence/u2/chg-252-u2.5-o9.2/review-fix1/qualification.json\\\")); print(p[\\\"status\\\"],p[\\\"candidate\\\"][\\\"head_commit\\\"],p[\\\"candidate\\\"][\\\"source_test_tool_digest\\\"],p[\\\"postgres\\\"][\\\"version\\\"],len(p[\\\"screenshots\\\"]),len(p[\\\"browser\\\"]))'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import json; p=json.load(open(\\\"/tmp/ephi-chg252-r2fix1.YQrrxp/w0-pre-evidence-commit.json\\\")); print(p[\\\"status\\\"],p[\\\"git\\\"][\\\"status\\\"],p[\\\"package_integrity\\\"][\\\"status\\\"])'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short --branch'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git add -A && rtk git diff --cached --stat && rtk git commit -m 'Record Operations worker filter qualification'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m compileall -q src/ephi tests tools/u2_operations_browser_qualification.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short --branch && rtk git log -3 --oneline --decorate'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/w0_repo_baseline.py > /tmp/ephi-chg252-r2fix1.YQrrxp/w0-final-clean.json'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk env EPHI_TEST_POSTGRES_DSN=postgresql://haewonkim@127.0.0.1:58281/postgres python3 -m unittest discover -s tests -v > /tmp/ephi-chg252-r2fix1.YQrrxp/full-suite-postgresql18-final-head.log 2>&1'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk /opt/homebrew/opt/postgresql@18/bin/pg_ctl -D /tmp/ephi-chg252-r2fix1.YQrrxp/data -m fast -w stop'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk rm -rf /tmp/ephi-chg252-r2fix1.YQrrxp'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git rev-parse HEAD'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git show -s --format='%H%n%P%n%s' HEAD\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n '\"'^(Ran |OK|FAILED)'\"' evidence/u2/chg-252-u2.5-o9.2/review-fix1/test_logs/full-suite-postgresql18.log\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import json; q=json.load(open(\\\"evidence/u2/chg-252-u2.5-o9.2/review-fix1/qualification.json\\\")); f=json.load(open(\\\"evidence/u2/chg-252-u2.5-o9.2/review-fix1/validation/final-verification.json\\\")); print(\\\"browser=\\\"+q[\\\"status\\\"]+\\\" views=\\\"+str(len(q[\\\"browser\\\"]))+\\\" clean=\\\"+str(q[\\\"inventories_clean\\\"])); print(\\\"code_candidate=\\\"+q[\\\"candidate\\\"][\\\"head_commit\\\"]); print(\\\"verification=\\\"+f[\\\"status\\\"]); print(\\\"rpo_rto=\\\"+f[\\\"scope_limits\\\"][\\\"production_rpo_rto\\\"])'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short --branch'",
+      "exit_code": 0,
+      "type": "command_execution"
+    }
+  ],
+  "codex": {
+    "cli_version": "codex-cli 0.156.1",
+    "configured_model": "gpt-6-luna",
+    "event_count": 321,
+    "provider_reported_model": null,
+    "reasoning_effort": "xhigh",
+    "terminal_type": "turn.completed",
+    "usage": {
+      "cache_hit_percent": 98.26,
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 13734016,
+      "fresh_input_tokens": 242679,
+      "input_tokens": 13976695,
+      "non_reasoning_output_tokens": 26617,
+      "output_tokens": 72790,
+      "reasoning_output_tokens": 46173,
+      "total_processed_tokens": 14049485
+    },
+    "warnings": []
+  },
+  "commits": [
+    {
+      "sha": "dab01c3c5c1f3a00b599a0c708674347dcb45d1b",
+      "subject": "Record Operations worker filter qualification"
+    },
+    {
+      "sha": "292935028cf35fdb9b870270752c994c8921ed8a",
+      "subject": "Fix Operations worker status and filters"
+    },
+    {
+      "sha": "802e6be2e7f1f0d86dd8e4e5ab97ea540bcf23e3",
+      "subject": "fabric: capture completed model changes [CF-15138207737d209fdf764a92]"
+    }
+  ],
+  "diff": {
+    "additions": 9717,
+    "changed_files": 56,
+    "commit_count": 3,
+    "deletions": 33
+  },
+  "error_code": null,
+  "evidence_manifest": {
+    "count": 44,
+    "items": [
+      {
+        "bytes": 23357,
+        "path": "13_Package_Review.md",
+        "sha256": "3a23c7cf5429f4608de297b36c5971058b44bc4805efd01f00e2c1d5c66fed83"
+      },
+      {
+        "bytes": 29148,
+        "path": "README.md",
+        "sha256": "6bb8f53e3e332e68d730d8a7f4095248f847fe5b8ea025b4bdc0ea8b72a1c070"
+      },
+      {
+        "bytes": 3943,
+        "path": "evidence/README.md",
+        "sha256": "c7462b6303761b94a53aa3cd849964a3484bd242567750b2c37421e7dce230ab"
+      },
+      {
+        "bytes": 82304,
+        "path": "evidence/u2/chg-252-u2.5-o9.2/qualification.json",
+        "sha256": "9d899e3b5ed841c39d551d166eb769c652a20680047d9e669b428681ea9a5fbc"
+      },
+      {
+        "bytes": 110287,
+        "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/qualification.json",
+        "sha256": "8381dd12807a9b6107d64f24bd491442ca58458dc7efc79c9985440c4830a3bf"
+      },
+      {
+        "bytes": 460342,
+        "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/screenshots/operations-artifact_corrupt-desktop-1440x900.png",
+        "sha256": "aa17d708c549c0ded03d581db2c19eadb10ab28b2aa4422ddd2a2a6314b780e7"
+      },
+      {
+        "bytes": 425384,
+        "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/screenshots/operations-artifact_corrupt-phone-390x844.png",
+        "sha256": "62030942acf7a88de79154258841a0cf1ec71ef57198d7c77be79e0d74a06627"
+      },
+      {
+        "bytes": 459315,
+        "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/screenshots/operations-artifact_missing-desktop-1440x900.png",
+        "sha256": "47f719b9b70e7472d59d864a5d59c7bb59021b546e8723f86572b8d79edc73ad"
+      },
+      {
+        "bytes": 426065,
+        "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/screenshots/operations-artifact_missing-phone-390x844.png",
+        "sha256": "611a834d6fab58ade87d4d520cc7597c8ac0bd62fbb55cacc6b3665f982b5a53"
+      },
+      {
+        "bytes": 457518,
+        "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/screenshots/operations-mixed_axes-desktop-1440x900.png",
+        "sha256": "bcf7ce3d9ac84ff9d67703109661e3c3dd217433ec5858632277db15de57d788"
+      },
+      {
+        "bytes": 423862,
+        "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/screenshots/operations-mixed_axes-phone-390x844.png",
+        "sha256": "49622336c78e89cbc69b533338358a03aae20438389a90517ba38eeb17dc2e92"
+      },
+      {
+        "bytes": 451662,
+        "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/screenshots/operations-qualification_expired-desktop-1440x900.png",
+        "sha256": "2ee730d75b2c8eb9a7df874149b752ee0d465790566c137857c924e3f81b1b19"
+      },
+      {
+        "bytes": 415280,
+        "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/screenshots/operations-qualification_expired-phone-390x844.png",
+        "sha256": "d5024421ec8836ab6fe291f31022989b73f4d7d26364ad8e3bc9714f557cae40"
+      },
+      {
+        "bytes": 454760,
+        "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/screenshots/operations-qualification_pending-desktop-1440x900.png",
+        "sha256": "23935bd59b21a2dda8f3bf6e283e92de3e6e596d368623e6b981d5db5338174f"
+      },
+      {
+        "bytes": 418743,
+        "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/screenshots/operations-qualification_pending-phone-390x844.png",
+        "sha256": "c269e8c9df3629396fc98abee57c54c11e1093abc7bfa6a2b66dd768e3f832d9"
+      },
+      {
+        "bytes": 411458,
+        "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/screenshots/operations-qualification_unbound-desktop-1440x900.png",
+        "sha256": "8e48b2633774dd06c866a2bd1cdd6b0447f93e6280f2ec2e7cdf3795883a66b7"
+      },
+      {
+        "bytes": 369952,
+        "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/screenshots/operations-qualification_unbound-phone-390x844.png",
+        "sha256": "3896ac3b37ffd59a8a7935093df56a3c536aaf15bfa6d7ce4780220c5777c911"
+      },
+      {
+        "bytes": 471304,
+        "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/screenshots/operations-source_stale-desktop-1440x900.png",
+        "sha256": "3f4fa1f761e1576bfdc1fd4d23ad15dc040f1aefe459fbce5fb300e850919492"
+      },
+      {
+        "bytes": 437946,
+        "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/screenshots/operations-source_stale-phone-390x844.png",
+        "sha256": "7f85b769613e38381b3a09fe74352434262c9627bcf7c21c58800d83aa39b7de"
+      },
+      {
+        "bytes": 411499,
+        "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/screenshots/operations-source_unavailable-desktop-1440x900.png",
+        "sha256": "93f40b075e4986bd5d50f445b23eeb0c98c9658f0a661a57e5bfa6373014504c"
+      },
+      {
+        "bytes": 371254,
+        "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/screenshots/operations-source_unavailable-phone-390x844.png",
+        "sha256": "9934e7a6391b51a7649822c177977b5845b82262767cfd26830e18f483594c62"
+      },
+      {
+        "bytes": 78306,
+        "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/test_logs/full-suite-postgresql18.log",
+        "sha256": "c20adb5c1be71c474a80a7071fc7fa4f96d662831b5a4275dfe01feb8c6e68d5"
+      },
+      {
+        "bytes": 2131,
+        "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/validation/final-verification.json",
+        "sha256": "50a8db64b6b3924368bce60317cdeedf1686259ecdb3f570ffe3d73e6abf9c99"
+      },
+      {
+        "bytes": 497278,
+        "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-artifact_corrupt-desktop-1440x900.png",
+        "sha256": "ee48f39f5e4590664904918d0a21ce19312c63f5b1833a15de784c79d92c4097"
+      },
+      {
+        "bytes": 440412,
+        "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-artifact_corrupt-phone-390x844.png",
+        "sha256": "0d1d6eda84b39eaf73808ae9a1287db1c760bdb1adad5e86c1a55132875bf3ce"
+      },
+      {
+        "bytes": 496691,
+        "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-artifact_missing-desktop-1440x900.png",
+        "sha256": "b0d965fbebccc533283e883f6aace9c235cb715dfb072eb3ed7eba7e98d9cc09"
+      },
+      {
+        "bytes": 439939,
+        "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-artifact_missing-phone-390x844.png",
+        "sha256": "d9236af53a68348ad46228000c0cc8e17f9744ad547a6b7f51f0ca112c0d2460"
+      },
+      {
+        "bytes": 496784,
+        "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-mixed_axes-desktop-1440x900.png",
+        "sha256": "c59e9821ccd1f7b1ff98a4ece64b9d5612abfe36bd3a628169f51cdc39a359ec"
+      },
+      {
+        "bytes": 439531,
+        "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-mixed_axes-phone-390x844.png",
+        "sha256": "873cd3ad59ad5bebe767e2c08ea70c24f5a9230f0370ff9ee50cafd5ff00c8fc"
+      },
+      {
+        "bytes": 492137,
+        "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-qualification_expired-desktop-1440x900.png",
+        "sha256": "3e81bae38529f27cee2a5e4be3d41a4aa6e120673f7f4ef25ef64403dd158ea0"
+      },
+      {
+        "bytes": 429760,
+        "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-qualification_expired-phone-390x844.png",
+        "sha256": "4851946dcbc8e669904235b501a26f4479d5786bbf2ee4fa43e67403d09c21eb"
+      },
+      {
+        "bytes": 504628,
+        "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-qualification_pending-desktop-1440x900.png",
+        "sha256": "235167c894dca56250fa85a50023bacb02a45e1dfcf60ba40713b2f18ccf5b26"
+      },
+      {
+        "bytes": 441289,
+        "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-qualification_pending-phone-390x844.png",
+        "sha256": "f42b75d719dfd185d2b5f69d3563b239f431bac31cf46ac1a6a70578c1aa2ebe"
+      },
+      {
+        "bytes": 448135,
+        "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-qualification_unbound-desktop-1440x900.png",
+        "sha256": "be1871b40f78de194cbba430121cdfe7785f5d235a9411787fadb35504f65bed"
+      },
+      {
+        "bytes": 384222,
+        "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-qualification_unbound-phone-390x844.png",
+        "sha256": "131fe186a1412387215941f4ad16c7688c896ebffa2f847f737e6877254fd862"
+      },
+      {
+        "bytes": 509868,
+        "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-source_stale-desktop-1440x900.png",
+        "sha256": "b488c77b3ae2266ea166ed0cb50908e779338d2cf3f32adb018f8cd0f8beb147"
+      },
+      {
+        "bytes": 450867,
+        "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-source_stale-phone-390x844.png",
+        "sha256": "b3f45377fa26bfb37e6bbf7d4fe95a4cba3083f940be4d68f8a24711aae56474"
+      },
+      {
+        "bytes": 451364,
+        "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-source_unavailable-desktop-1440x900.png",
+        "sha256": "d45bd600a1b766ebacb454e540c232bc32a1c705c97dac38c71c1d0931490fb6"
+      },
+      {
+        "bytes": 385927,
+        "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-source_unavailable-phone-390x844.png",
+        "sha256": "9fedea7b3c42b954f07617094cb3848741478244ec5f73d90d80e7174a61b7b1"
+      },
+      {
+        "bytes": 76678,
+        "path": "evidence/u2/chg-252-u2.5-o9.2/test_logs/full-suite-postgresql18.log",
+        "sha256": "63a285d96f67266aad921bbd8f0ac651006da6161f026ebaf41aeaaeb425bd30"
+      },
+      {
+        "bytes": 1752,
+        "path": "evidence/u2/chg-252-u2.5-o9.2/validation/final-verification.json",
+        "sha256": "ff4467f5fb109caa08f74f0b9671583c07b2dd162119b0af0ee1319826363fe0"
+      },
+      {
+        "bytes": 87670,
+        "path": "manifest.json",
+        "sha256": "130a8135ff424d0a32524cdd2d92eb1bb4176e4cdbe7133652264247fbf50eee"
+      },
+      {
+        "bytes": 18415,
+        "path": "src/ephi/application/artifacts.py",
+        "sha256": "a3dfe65957791c74a00e6f186903dc317960738c2c085f6380e5e4d4df058ce1"
+      },
+      {
+        "bytes": 19977,
+        "path": "src/ephi/infrastructure/artifacts/catalog.py",
+        "sha256": "aded374407d157e73c59bf3d5540fe67de0b96a39083a04c88fc068e6a2a92b4"
+      }
+    ],
+    "version": 1
+  },
+  "evidence_publisher_release": "1.2.5-dashboard-controls-candidate",
+  "fabric_capture": {
+    "applied": false,
+    "paths_before": 0,
+    "transient_untracked_removed": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "fabric_release": "1.2.5-dashboard-controls-candidate",
+  "failure_class": null,
+  "finished_at": "2026-09-25T19:45:25Z",
+  "git": {
+    "base_is_ancestor": true,
+    "base_sha": "705aca4d86095e5be6e80538a9bd7bd5bd05faa6",
+    "branch": "codex/ephi-u2-operations-cockpit-fix1",
+    "detached_verify": false,
+    "head_sha": "dab01c3c5c1f3a00b599a0c708674347dcb45d1b",
+    "remote_exact_head": true,
+    "remote_head_sha": "dab01c3c5c1f3a00b599a0c708674347dcb45d1b",
+    "target_branch": "main",
+    "target_drifted_since_acceptance": false,
+    "target_head_observed_after_execution": "705aca4d86095e5be6e80538a9bd7bd5bd05faa6",
+    "work_branch": "codex/ephi-u2-operations-cockpit-fix1",
+    "worktree_clean": true
+  },
+  "instructions": {
+    "files": [
+      {
+        "bytes": 1458,
+        "path": "AGENTS.md",
+        "sha256": "4349f387a79d886ed1264604ff48c582698e539e08ed8fb2f9d8ab8fbf6f804a"
+      }
+    ],
+    "total_bytes": 1458,
+    "warning": null
+  },
+  "job_id": "CF-52fa3786941dbbe562bbb3a8",
+  "kind": "codex-fabric-audit-evidence",
+  "locator": {
+    "branch": "codex-fabric/evidence/ephi/ephi-u2-operations-cockpit-fix1",
+    "path": ".codex-fabric/audit.json",
+    "ref": "refs/heads/codex-fabric/evidence/ephi/ephi-u2-operations-cockpit-fix1"
+  },
+  "operation": "FIX",
+  "policy": {
+    "environment_policy_sha256": "e077daca74297b3c30bee8989f00f8ca5338f7610b4d016a6c48db524205d064",
+    "fabric_release": "1.2.5-dashboard-controls-candidate",
+    "policy_sha256": "123615bf2f6e57dcac197e49ca98ceac59ada86a55e2c84445ea5d00812c0833",
+    "registry_sha256": "af81b8552f9d6a33847310e3c6bcd2d48401782b963a58efd2993e93570cb4aa"
+  },
+  "project_id": "ephi",
+  "recovery": {
+    "model_rerun_safe": false,
+    "recovery_required": false,
+    "retry_safe": false,
+    "retry_scope": null,
+    "worktree_retained": true
+  },
+  "request": "ephi-u2-operations-cockpit-fix1",
+  "schema_version": 1,
+  "started_at": "2026-09-25T19:12:59Z",
+  "status": "EXECUTED_CHANGE",
+  "timing": {
+    "execution_seconds": 1946,
+    "queue_seconds": 1,
+    "total_seconds": 1947
+  },
+  "transport": {
+    "bytes": 5983,
+    "envelope": "FABRIC/2",
+    "prompt_bytes": 5671,
+    "prompt_sha256": "d1e9cbe4a0360a0d512f5ef7e259e1c2b2f19ae2a7f69e0f39513d6c2e6bbd2f",
+    "sha256": "52fa3786941dbbe562bbb3a8fba2c094ec24e06da4e285e8006c832d28cae54c"
+  }
+}
