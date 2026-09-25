@@ -6,7 +6,7 @@ source schema, endpoint, secret, workflow implementation, or production SDK.
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from datetime import datetime, timedelta, timezone
 from decimal import Decimal
 import os
@@ -33,6 +33,7 @@ from ephi.application import (
     EffortBand,
     MetrologyObservation,
     MetrologySourceBinding,
+    RevisionPinnedObservationBatch,
     PairDiscrimination,
     PairWeight,
     PlannerPolicy,
@@ -183,6 +184,9 @@ class SyntheticObserver:
 class SyntheticAssetObserver(SyntheticObserver):
     """Bounded, visibly synthetic multi-asset history for CHG-234 evidence."""
 
+    _revision_overrides: dict[tuple[str, str], tuple[MetrologyObservation, ...]] = {}
+    _live_override: tuple[MetrologyObservation, ...] | None = None
+
     def __init__(self, binding: MetrologySourceBinding):
         super().__init__(binding)
         anchor_text = os.environ.get("EPHI_SYNTHETIC_ASSET_OBSERVATION_ANCHOR")
@@ -207,7 +211,7 @@ class SyntheticAssetObserver(SyntheticObserver):
                 value=value,
                 event_at=event_at,
                 source_available_at=available_at,
-                comparable_population_id=population if context == "synthetic-recipe-r47" and unit == "nm" else None,
+                comparable_population_id=population if unit == "nm" else None,
             ))
 
         primary = "synthetic-cd-asset-primary"
@@ -228,13 +232,44 @@ class SyntheticAssetObserver(SyntheticObserver):
         add("synthetic-asset-wrong-unit", primary, 2, 0.052, unit="um")
         add("synthetic-asset-future-event", primary, -1, 55.0)
         self._observations = tuple(sorted(rows, key=lambda item: (item.event_at, item.source_available_at, item.source_row_id)))
+        self._live_observations = self._observations
+        if os.environ.get("EPHI_SYNTHETIC_ASSET_LIVE_REVISION") == "synthetic-asset-360-ready-v2":
+            self._live_observations = tuple(replace(item, value=float(item.value) + 10.0) for item in self._observations)
+        self._known_revisions = {
+            ("synthetic-asset-360-partition", f"synthetic-asset-360-{case}-v1"): self._observations
+            for case in ("ready", "stale", "partial")
+        }
+        self._known_revisions[("synthetic-asset-360-partition", "synthetic-asset-360-ready-v2")] = tuple(
+            replace(item, value=float(item.value) + 10.0) for item in self._observations
+        )
+        self._known_revisions[("synthetic-asset-360-partition", "synthetic-asset-360-unavailable-v1")] = ()
 
     def read_partition(self, *, start_at: object, end_at: object, limit: int) -> tuple[MetrologyObservation, ...]:
         if not isinstance(start_at, datetime) or not isinstance(end_at, datetime):
             raise ValueError("bounded interval required")
         if start_at.tzinfo is None or end_at.tzinfo is None or start_at > end_at or isinstance(limit, bool) or not 1 <= limit <= 100_000:
             raise ValueError("bounded interval required")
-        return tuple(item for item in self._observations if start_at <= item.event_at <= end_at)[:limit]
+        rows = self._live_override if self._live_override is not None else self._live_observations
+        return tuple(item for item in rows if start_at <= item.event_at <= end_at)[:limit]
+
+    def read_partition_revision(
+        self,
+        *,
+        source_partition: str,
+        source_revision: str,
+        start_at: datetime,
+        end_at: datetime,
+        limit: int,
+    ) -> RevisionPinnedObservationBatch:
+        if start_at.tzinfo is None or end_at.tzinfo is None or start_at > end_at or isinstance(limit, bool) or not 1 <= limit <= 100_000:
+            raise ValueError("bounded revision-pinned interval required")
+        rows = self._revision_overrides.get((source_partition, source_revision))
+        if rows is None:
+            rows = self._known_revisions.get((source_partition, source_revision))
+        if rows is None:
+            raise ValueError("exact synthetic source revision is unavailable")
+        bounded = tuple(item for item in rows if start_at <= item.event_at <= end_at)[:limit]
+        return RevisionPinnedObservationBatch(source_partition, source_revision, self._binding, bounded)
 
 
 class SyntheticRecipientResolver:

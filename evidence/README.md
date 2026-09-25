@@ -24,3 +24,7 @@ binds its screenshots and browser inventories to a working-tree candidate
 based on the registered `main@4482233202ff2667262ff0d47ff390e72d398d3c`
 target. Its fixture is synthetic and its non-claims are recorded in the
 report; it does not change or extend the historical audit records above.
+The R2 determinism repair is recorded separately at
+[the CHG-234 review-fix1 continuation](u2/chg-234-u2.4-asset-360/review-fix1/qualification.json);
+it preserves the predecessor report and qualifies cutoff-pinned O4 source
+revisions, unavailable reads, and the refreshed source labels.

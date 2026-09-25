@@ -103,6 +103,7 @@ def _source_record(row: Mapping[str, Any]) -> SourceSnapshotRecord:
             _db_time(row["published_at"], "published_at"),
             _db_time(row["created_at"], "created_at"),
             row["schema_version"],
+            None if row.get("freshness_age_seconds") is None else int(row["freshness_age_seconds"]),
         )
     except SourceSnapshotConflictError:
         raise
@@ -135,7 +136,7 @@ _SOURCE_COLUMNS = (
     "mapping_version, mapping_hash, unit, reference_population_id, comparable_population_id, "
     "required_identifiers_json, source_partition, source_revision, event_start, event_end, available_cutoff, "
     "manifest_artifact_sha256, manifest_artifact_byte_size, manifest_artifact_object_key, row_count, status, "
-    "manifest_hash, ingested_at, published_at, created_at"
+    "manifest_hash, ingested_at, published_at, created_at, freshness_age_seconds"
 )
 
 _CAPABILITY_COLUMNS = (
@@ -220,11 +221,19 @@ class PostgreSQLSourceSnapshotStore:
             draft.status.value,
             draft.manifest_hash,
             _timestamp(ingested_at, "ingested_at"),
+            draft.freshness_age_seconds,
         )
 
     @staticmethod
     def _ensure_same(existing: SourceSnapshotRecord, draft: SourceSnapshotDraft) -> None:
-        if existing.immutable_identity != draft.immutable_identity():
+        existing_identity = existing.immutable_identity
+        draft_identity = draft.immutable_identity()
+        if existing.freshness_age_seconds is None:
+            # Pre-011 immutable rows have no declared freshness policy. An
+            # idempotent replay must not rewrite or conflict with that history.
+            existing_identity = existing_identity[:-1]
+            draft_identity = draft_identity[:-1]
+        if existing_identity != draft_identity:
             raise SourceSnapshotConflictError(draft.snapshot_id)
 
     @staticmethod
@@ -330,7 +339,8 @@ class PostgreSQLSourceSnapshotStore:
                         mapping_version, mapping_hash, unit, reference_population_id, comparable_population_id,
                         required_identifiers_json, source_partition, source_revision, event_start, event_end,
                         available_cutoff, manifest_artifact_sha256, manifest_artifact_byte_size,
-                        manifest_artifact_object_key, row_count, status, manifest_hash, ingested_at
+                        manifest_artifact_object_key, row_count, status, manifest_hash, ingested_at,
+                        freshness_age_seconds
                     ) VALUES ({', '.join(['%s'] * len(values))})
                     RETURNING {_SOURCE_COLUMNS}
                     """,
@@ -375,6 +385,60 @@ class PostgreSQLSourceSnapshotStore:
         if row is None:
             raise SourceSnapshotNotFoundError("source snapshot is unavailable")
         return _source_record(row)
+
+    def get_latest_snapshot_as_of(
+        self,
+        principal: Principal,
+        binding: MetrologySourceBinding,
+        knowledge_cutoff: datetime,
+    ) -> SourceSnapshotRecord | None:
+        """Resolve the exact binding's latest immutable snapshot known by cutoff."""
+
+        self._authorize(principal, binding.scope)
+        cutoff = _timestamp(knowledge_cutoff, "knowledge_cutoff")
+        try:
+            row = self.connection.execute(
+                f"""
+                SELECT {_SOURCE_COLUMNS}
+                FROM source_snapshot
+                WHERE scope_key = %s AND source_id = %s AND provider_id = %s
+                  AND family_id = %s AND capability_id = %s AND adapter_id = %s
+                  AND schema_id = %s AND mapping_version = %s AND mapping_hash = %s
+                  AND unit = %s
+                  AND reference_population_id IS NOT DISTINCT FROM %s
+                  AND comparable_population_id IS NOT DISTINCT FROM %s
+                  AND required_identifiers_json = %s::jsonb
+                  AND published_at <= %s AND available_cutoff <= %s
+                ORDER BY published_at DESC, available_cutoff DESC, event_end DESC,
+                         created_at DESC, snapshot_id DESC
+                LIMIT 1
+                """,
+                (
+                    binding.scope_key,
+                    binding.source_id,
+                    binding.provider_id,
+                    binding.family_id,
+                    binding.capability_id,
+                    binding.adapter_id,
+                    binding.schema_id,
+                    binding.mapping_version,
+                    binding.mapping_hash,
+                    binding.unit,
+                    binding.reference_population_id,
+                    binding.comparable_population_id,
+                    _json(binding.required_identifiers),
+                    cutoff,
+                    cutoff,
+                ),
+            ).fetchone()
+        except Exception as exc:
+            raise StorageFailureError("PostgreSQL as-of source snapshot lookup failed") from exc
+        if row is None:
+            return None
+        record = _source_record(row)
+        if record.binding != binding:
+            raise StorageFailureError("PostgreSQL as-of source snapshot binding identity is invalid")
+        return record
 
     def get_capability(self, principal: Principal, binding: MetrologySourceBinding) -> SourceCapabilityRecord:
         self._authorize(principal, binding.scope)

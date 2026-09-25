@@ -8,7 +8,7 @@ immutable manifest and the bounded capability projection.
 from __future__ import annotations
 
 from collections.abc import Callable, Mapping
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from datetime import datetime, timedelta, timezone
 from enum import StrEnum
 import hashlib
@@ -262,6 +262,28 @@ class MetrologyObservation:
 
 
 @dataclass(frozen=True, slots=True)
+class RevisionPinnedObservationBatch:
+    """Bounded proof envelope for rows read from one exact O4 revision."""
+
+    source_partition: str
+    source_revision: str
+    binding: MetrologySourceBinding
+    observations: tuple[MetrologyObservation, ...]
+
+    def __post_init__(self) -> None:
+        object.__setattr__(self, "source_partition", _canonical_id(self.source_partition, "source_partition"))
+        object.__setattr__(self, "source_revision", _canonical_id(self.source_revision, "source_revision"))
+        if not isinstance(self.binding, MetrologySourceBinding):
+            raise SourceQuarantineError("revision-pinned observation batch requires its exact source binding")
+        if not isinstance(self.observations, (tuple, list)) or len(self.observations) > MAX_SOURCE_ROWS:
+            raise SourceQuarantineError("revision-pinned observation batch exceeds the bounded row contract")
+        observations = tuple(self.observations)
+        if any(not isinstance(item, MetrologyObservation) for item in observations):
+            raise SourceQuarantineError("revision-pinned observation batch contains a non-canonical row")
+        object.__setattr__(self, "observations", observations)
+
+
+@dataclass(frozen=True, slots=True)
 class SourceSnapshotDraft:
     """Bounded immutable-publication input; no raw rows cross the persistence port."""
 
@@ -274,6 +296,7 @@ class SourceSnapshotDraft:
     artifact_reference: ScopedArtifactReference
     observations: tuple[MetrologyObservation, ...]
     status: SourceSnapshotStatus = SourceSnapshotStatus.PUBLISHED
+    freshness_age_seconds: int | None = None
 
     def __post_init__(self) -> None:
         if not isinstance(self.binding, MetrologySourceBinding):
@@ -298,6 +321,12 @@ class SourceSnapshotDraft:
                 object.__setattr__(self, "status", SourceSnapshotStatus(self.status))
             except ValueError as exc:
                 raise SourceQuarantineError("source snapshot status is unsupported") from exc
+        if self.freshness_age_seconds is not None and (
+            isinstance(self.freshness_age_seconds, bool)
+            or not isinstance(self.freshness_age_seconds, int)
+            or self.freshness_age_seconds <= 0
+        ):
+            raise SourceQuarantineError("freshness_age_seconds must be a positive integer when declared")
         for observation in self.observations:
             self.binding.validate_observation(observation)
             if not self.event_start <= observation.event_at <= self.event_end:
@@ -361,6 +390,7 @@ class SourceSnapshotDraft:
             self.artifact_reference.content.byte_size,
             self.row_count,
             self.status.value,
+            self.freshness_age_seconds,
         )
 
 
@@ -398,6 +428,12 @@ class SourceSnapshotRecord:
     published_at: datetime
     created_at: datetime
     schema_version: str = SOURCE_SNAPSHOT_SCHEMA_VERSION
+    freshness_age_seconds: int | None = None
+
+    def __post_init__(self) -> None:
+        value = self.freshness_age_seconds
+        if value is not None and (isinstance(value, bool) or not isinstance(value, int) or value <= 0):
+            raise ValidationFailureError("freshness_age_seconds must be a positive integer when declared")
 
     @property
     def immutable_identity(self) -> tuple[object, ...]:
@@ -420,6 +456,7 @@ class SourceSnapshotRecord:
             self.artifact_reference.content.byte_size,
             self.row_count,
             self.status.value,
+            self.freshness_age_seconds,
         )
 
 
@@ -468,6 +505,13 @@ class SourceSnapshotRepository(Protocol):
     ) -> tuple[SourceSnapshotRecord, SourceCapabilityRecord]: ...
 
     def get_snapshot(self, principal: Principal, scope: AccessScope, snapshot_id: str) -> SourceSnapshotRecord: ...
+
+    def get_latest_snapshot_as_of(
+        self,
+        principal: Principal,
+        binding: MetrologySourceBinding,
+        knowledge_cutoff: datetime,
+    ) -> SourceSnapshotRecord | None: ...
 
     def get_capability(
         self,
@@ -518,6 +562,9 @@ class SourceSnapshotIngressService:
         except ArtifactError:
             raise
         state, reason = _capability_state(draft.status, draft.row_count, draft.available_cutoff, ingested_at, freshness_age_seconds)
+        if draft.freshness_age_seconds is not None and draft.freshness_age_seconds != freshness_age_seconds:
+            raise ValidationFailureError("snapshot freshness policy conflicts with the declared publication policy")
+        draft = replace(draft, freshness_age_seconds=freshness_age_seconds)
         capability = SourceCapabilityRecord(
             draft.binding,
             state,
@@ -590,6 +637,7 @@ __all__ = [
     "SUPPORTED_UNITS",
     "MetrologyObservation",
     "MetrologySourceBinding",
+    "RevisionPinnedObservationBatch",
     "SourceCapabilityRecord",
     "SourceCapabilityState",
     "SourceSnapshotDraft",

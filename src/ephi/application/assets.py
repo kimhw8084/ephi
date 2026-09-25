@@ -36,7 +36,9 @@ from .source_ingress import (
     SOURCE_READ_CAPABILITY,
     MetrologyObservation,
     MetrologySourceBinding,
-    SourceCapabilityState,
+    RevisionPinnedObservationBatch,
+    SourceSnapshotRecord,
+    SourceSnapshotStatus,
 )
 
 
@@ -419,7 +421,7 @@ class Asset360QueryService:
         if not compatible_target_rows:
             raise ValidationFailureError("selected characteristic and unit are not present in qualified Episode truth for this asset")
         latest_row, latest_profile = max(compatible_target_rows, key=lambda pair: (pair[0]["known_at"], pair[0]["published_at"], pair[0]["entity_id"], pair[0]["revision_id"]))
-        source_summary = self._source_summary(principal, scope, cutoff, authorize=True)
+        source_summary, source_snapshot = self._source_view(principal, scope, cutoff, authorize=True)
         workflow_history = tuple(self.row_source.fetch_asset_workflow_versions(
             principal, scope, tuple(sorted({row["entity_id"] for row, _ in profiles})), cutoff,
             limit=MAX_ASSET_WORKFLOW_RECEIPTS + 1,
@@ -455,7 +457,7 @@ class Asset360QueryService:
         }
         measurement = self._measure(
             principal, scope, asset_id, target["family_identity"], target["context_identity"],
-            selected_characteristic, selected_unit, start, end, cutoff,
+            selected_characteristic, selected_unit, start, end, cutoff, source_snapshot,
         )
         changes = self._changes(episodes)
         limitations = {
@@ -466,6 +468,7 @@ class Asset360QueryService:
         }
         if source_summary["state"] != "READY":
             limitations.add("SOURCE_CAPABILITY_NOT_READY")
+        limitations.update(source_summary.get("limitations", ()))
         if measurement["limitations"]:
             limitations.update(measurement["limitations"])
         compare = None
@@ -473,7 +476,7 @@ class Asset360QueryService:
             compare = self._compare(
                 principal, scope, asset_id, peer_asset_id, cutoff, start, end,
                 target["family_identity"], target["context_identity"], selected_characteristic,
-                selected_unit, measurement,
+                selected_unit, measurement, source_summary, source_snapshot,
             )
             if compare["state"] != "READY":
                 limitations.add("PEER_COMPARISON_UNAVAILABLE")
@@ -502,84 +505,98 @@ class Asset360QueryService:
         )
 
     def _source_summary(self, principal: Principal, scope: AccessScope, cutoff: datetime, *, authorize: bool) -> dict[str, Any]:
+        return self._source_view(principal, scope, cutoff, authorize=authorize)[0]
+
+    def _source_view(
+        self,
+        principal: Principal,
+        scope: AccessScope,
+        cutoff: datetime,
+        *,
+        authorize: bool,
+    ) -> tuple[dict[str, Any], SourceSnapshotRecord | None]:
+        unavailable = {
+            "state": "UNAVAILABLE",
+            "o4_state": "UNAVAILABLE",
+            "age_seconds": None,
+            "snapshot_id": None,
+            "source_partition": None,
+            "source_revision": None,
+            "latest_event_at": None,
+            "latest_available_at": None,
+            "binding_identity": self._binding_identity(),
+            "knowledge_cutoff": cutoff,
+        }
         if self.source_binding.scope != scope:
-            return {"state": "UNAVAILABLE", "o4_state": "UNAVAILABLE", "age_seconds": None, "snapshot_id": None, "latest_event_at": None, "latest_available_at": None, "limitations": ["SOURCE_BINDING_SCOPE_MISMATCH"]}
+            return ({**unavailable, "reason": "SOURCE_BINDING_SCOPE_MISMATCH", "limitations": ["SOURCE_BINDING_SCOPE_MISMATCH"]}, None)
         try:
             self.current_authorization.authorize(principal, scope, SOURCE_READ_CAPABILITY)
-            cap = self.source_store.get_capability(principal, self.source_binding)
-            if cap.checked_at <= cutoff:
-                snapshot = None
-                if cap.latest_available_at is not None and cap.latest_available_at > cutoff:
-                    return {
-                        "state": "UNAVAILABLE", "o4_state": "UNAVAILABLE", "age_seconds": None,
-                        "snapshot_id": None, "latest_event_at": None, "latest_available_at": None,
-                        "binding_identity": self._binding_identity(), "reason": "CAPABILITY_FACTS_AFTER_CUTOFF",
-                        "limitations": ["O4_CAPABILITY_FACTS_AFTER_CUTOFF"],
-                    }
-                if cap.latest_snapshot_id:
-                    candidate = self.source_store.get_snapshot(principal, scope, cap.latest_snapshot_id)
-                    if candidate.published_at <= cutoff and candidate.available_cutoff <= cutoff:
-                        snapshot = candidate
-                    else:
-                        return {
-                            "state": "UNAVAILABLE", "o4_state": "UNAVAILABLE", "age_seconds": None,
-                            "snapshot_id": None, "latest_event_at": None, "latest_available_at": None,
-                            "binding_identity": self._binding_identity(), "reason": "SOURCE_SNAPSHOT_NOT_KNOWN_BY_CUTOFF",
-                            "limitations": ["O4_SOURCE_SNAPSHOT_AFTER_CUTOFF"],
-                        }
-                state = cap.state.value
-                snapshot_issue = None
-                if cap.state is SourceCapabilityState.READY and (
-                    snapshot is None or snapshot.status.value != "PUBLISHED"
-                ):
-                    # An O4 READY flag alone is not enough to present live inputs
-                    # as healthy: it must point at an eligible published record.
-                    state = "UNAVAILABLE"
-                    snapshot_issue = "READY_CAPABILITY_WITHOUT_PUBLISHED_SNAPSHOT"
-                if cap.state is SourceCapabilityState.READY and not cap.fresh:
-                    state = "STALE"
-                if state in {"ERROR", "INSUFFICIENT", "NOT_QUALIFIED"}:
-                    state = "UNAVAILABLE"
-                age = max(0, int((cutoff - cap.latest_available_at).total_seconds())) if cap.latest_available_at else None
-                if cap.latest_available_at and age is not None and age > cap.freshness_age_seconds and state == "READY":
-                    state = "STALE"
-                return {
-                    "state": state,
-                    "o4_state": cap.state.value,
-                    "age_seconds": age,
-                    "snapshot_id": snapshot.snapshot_id if snapshot else None,
-                    "snapshot_manifest_hash": snapshot.manifest_hash if snapshot else None,
-                    "snapshot_status": snapshot.status.value if snapshot else None,
-                    "binding_identity": self._binding_identity(),
-                    "source_id": cap.binding.source_id,
-                    "provider_id": cap.binding.provider_id,
-                    "family_id": cap.binding.family_id,
-                    "capability_id": cap.binding.capability_id,
-                    "adapter_id": cap.binding.adapter_id,
-                    "schema_id": cap.binding.schema_id,
-                    "mapping_version": cap.binding.mapping_version,
-                    "mapping_hash": cap.binding.mapping_hash,
-                    "reference_population_id": cap.binding.reference_population_id,
-                    "comparable_population_id": cap.binding.comparable_population_id,
-                    "latest_event_at": snapshot.event_end if snapshot else None,
-                    "latest_available_at": snapshot.available_cutoff if snapshot else None,
-                    "checked_at": cap.checked_at,
-                    "freshness_limit_seconds": cap.freshness_age_seconds,
-                    "reason": snapshot_issue or cap.reason,
-                    "limitations": [] if state == "READY" else [snapshot_issue or "O4_CAPABILITY_NOT_READY"],
-                }
-            return {
-                "state": "UNAVAILABLE", "o4_state": "UNAVAILABLE", "age_seconds": None,
-                "snapshot_id": None, "latest_event_at": None, "latest_available_at": None,
-                "binding_identity": self._binding_identity(), "reason": "CAPABILITY_STATE_NOT_KNOWN_BY_CUTOFF",
-                "limitations": ["O4_CAPABILITY_STATE_AFTER_CUTOFF"],
-            }
+            lookup = getattr(self.source_store, "get_latest_snapshot_as_of", None)
+            if not callable(lookup):
+                return ({**unavailable, "reason": "O4_AS_OF_SNAPSHOT_READ_UNSUPPORTED", "limitations": ["O4_AS_OF_SNAPSHOT_READ_UNSUPPORTED"]}, None)
+            snapshot = lookup(principal, self.source_binding, cutoff)
+            if snapshot is None:
+                reason = "O4_NO_ELIGIBLE_SOURCE_SNAPSHOT"
+                return ({**unavailable, "reason": reason, "limitations": [reason]}, None)
+
+            if snapshot.binding != self.source_binding or snapshot.published_at > cutoff or snapshot.available_cutoff > cutoff:
+                return ({**unavailable, "reason": "O4_AS_OF_SNAPSHOT_IDENTITY_INVALID", "limitations": ["O4_AS_OF_SNAPSHOT_IDENTITY_INVALID"]}, None)
+
+            freshness_limit = snapshot.freshness_age_seconds
+            age = max(0, int((cutoff - snapshot.available_cutoff).total_seconds()))
+            reason = ""
+            limitations: list[str] = []
+            if snapshot.status is SourceSnapshotStatus.PARTIAL and snapshot.row_count > 0:
+                state, o4_state, reason = "PARTIAL", "PARTIAL", "PARTIAL_SNAPSHOT"
+            elif snapshot.status in {SourceSnapshotStatus.INSUFFICIENT, SourceSnapshotStatus.QUARANTINED} or snapshot.row_count <= 0:
+                state = "UNAVAILABLE"
+                o4_state = "INSUFFICIENT" if snapshot.status is SourceSnapshotStatus.INSUFFICIENT or snapshot.row_count <= 0 else "UNAVAILABLE"
+                reason = "NO_SUFFICIENT_SOURCE_ROWS" if o4_state == "INSUFFICIENT" else "SOURCE_QUARANTINED"
+            elif freshness_limit is None:
+                state, o4_state, reason = "UNAVAILABLE", "UNAVAILABLE", "O4_FRESHNESS_POLICY_NOT_RECONSTRUCTABLE"
+                limitations.append("O4_FRESHNESS_POLICY_NOT_RECONSTRUCTABLE")
+            else:
+                state = "STALE" if age > freshness_limit else "READY"
+                o4_state = state
+                reason = "SOURCE_AVAILABILITY_EXCEEDS_FRESHNESS_LIMIT" if state == "STALE" else "FRESH_PUBLISHED_SNAPSHOT"
+            if not limitations and state != "READY":
+                limitations.append(reason or "O4_CAPABILITY_NOT_READY")
+            return ({
+                "state": state,
+                "o4_state": o4_state,
+                "age_seconds": age,
+                "snapshot_id": snapshot.snapshot_id,
+                "snapshot_manifest_hash": snapshot.manifest_hash,
+                "snapshot_status": snapshot.status.value,
+                "snapshot_row_count": snapshot.row_count,
+                "source_partition": snapshot.source_partition,
+                "source_revision": snapshot.source_revision,
+                "binding_identity": self._binding_identity(),
+                "source_id": snapshot.binding.source_id,
+                "provider_id": snapshot.binding.provider_id,
+                "family_id": snapshot.binding.family_id,
+                "capability_id": snapshot.binding.capability_id,
+                "adapter_id": snapshot.binding.adapter_id,
+                "schema_id": snapshot.binding.schema_id,
+                "mapping_version": snapshot.binding.mapping_version,
+                "mapping_hash": snapshot.binding.mapping_hash,
+                "reference_population_id": snapshot.binding.reference_population_id,
+                "comparable_population_id": snapshot.binding.comparable_population_id,
+                "latest_event_at": snapshot.event_end,
+                "latest_available_at": snapshot.available_cutoff,
+                "published_at": snapshot.published_at,
+                "checked_at": None,
+                "freshness_limit_seconds": freshness_limit,
+                "reason": reason,
+                "limitations": limitations,
+                "knowledge_cutoff": cutoff,
+            }, snapshot)
         except AuthorizationDeniedError:
-            return {"state": "UNAVAILABLE", "o4_state": "UNAVAILABLE", "age_seconds": None, "snapshot_id": None, "latest_event_at": None, "latest_available_at": None, "binding_identity": self._binding_identity(), "reason": "SOURCE_READ_PERMISSION_REQUIRED", "limitations": ["SOURCE_READ_PERMISSION_REQUIRED"]}
+            return ({**unavailable, "reason": "SOURCE_READ_PERMISSION_REQUIRED", "limitations": ["SOURCE_READ_PERMISSION_REQUIRED"]}, None)
         except Exception:
             if authorize:
                 raise
-            return {"state": "UNAVAILABLE", "o4_state": "UNAVAILABLE", "age_seconds": None, "snapshot_id": None, "latest_event_at": None, "latest_available_at": None, "binding_identity": self._binding_identity(), "reason": "SOURCE_CAPABILITY_UNAVAILABLE", "limitations": ["SOURCE_CAPABILITY_UNAVAILABLE"]}
+            return ({**unavailable, "reason": "SOURCE_CAPABILITY_UNAVAILABLE", "limitations": ["SOURCE_CAPABILITY_UNAVAILABLE"]}, None)
 
     def _binding_identity(self) -> str:
         return _digest(self.source_binding.as_dict())
@@ -587,34 +604,88 @@ class Asset360QueryService:
     def _measure(
         self, principal: Principal, scope: AccessScope, asset_id: str, family_id: str, context_id: str,
         characteristic_id: str, unit: str, start: datetime, end: datetime, cutoff: datetime,
+        snapshot: SourceSnapshotRecord | None,
     ) -> dict[str, Any]:
         binding = self.source_binding
         if binding != self.source_observer.describe():
             raise SourceBindingUnavailableError("configured U1 observer does not exactly match the O4 source binding")
+        snapshot_facts = {
+            "snapshot_id": snapshot.snapshot_id,
+            "source_partition": snapshot.source_partition,
+            "source_revision": snapshot.source_revision,
+            "manifest_hash": snapshot.manifest_hash,
+            "binding_identity": self._binding_identity(),
+        } if snapshot is not None else {
+            "snapshot_id": None,
+            "source_partition": None,
+            "source_revision": None,
+            "manifest_hash": None,
+            "binding_identity": self._binding_identity(),
+        }
+
+        def unavailable(reason: str) -> dict[str, Any]:
+            return {
+                "state": "UNAVAILABLE",
+                "points": [],
+                **snapshot_facts,
+                "binding_identity": self._binding_identity(),
+                "limitations": [reason, "SOURCE_ROWS_NOT_PERSISTED_BY_EPHI"],
+                "identity_facts": {
+                    **snapshot_facts,
+                    "observation_identity_set": [],
+                    "window_start": start,
+                    "window_end": end,
+                    "knowledge_cutoff": cutoff,
+                    "reason": reason,
+                },
+            }
+
         if binding.scope != scope or binding.family_id != family_id or binding.unit != unit:
-            return {"state": "UNAVAILABLE", "points": [], "limitations": ["EXACT_SOURCE_BINDING_MISMATCH"], "identity_facts": {"binding": self._binding_identity(), "point_ids": []}}
+            return unavailable("EXACT_SOURCE_BINDING_MISMATCH")
         try:
             self.current_authorization.authorize(principal, scope, SOURCE_READ_CAPABILITY)
         except AuthorizationDeniedError:
-            return {
-                "state": "UNAVAILABLE", "points": [],
-                "binding_identity": self._binding_identity(),
-                "limitations": ["SOURCE_READ_PERMISSION_REQUIRED"],
-                "identity_facts": {"binding": self._binding_identity(), "point_ids": [], "reason": "SOURCE_READ_PERMISSION_REQUIRED"},
-            }
+            return unavailable("SOURCE_READ_PERMISSION_REQUIRED")
+        if snapshot is None:
+            return unavailable("O4_NO_ELIGIBLE_SOURCE_REVISION")
+        if snapshot.status is SourceSnapshotStatus.QUARANTINED:
+            return unavailable("O4_SOURCE_SNAPSHOT_QUARANTINED")
+        if snapshot.status is SourceSnapshotStatus.INSUFFICIENT or snapshot.row_count <= 0:
+            return unavailable("O4_SOURCE_SNAPSHOT_INSUFFICIENT")
+        reader = getattr(self.source_observer, "read_partition_revision", None)
+        if not callable(reader):
+            return unavailable("REVISION_PINNED_READ_UNSUPPORTED")
         try:
-            observations = self.source_observer.read_partition(start_at=start, end_at=end, limit=MAX_ASSET_OBSERVATION_POINTS + 1)
-        except Exception as exc:
-            raise StorageFailureError("bounded source observation request failed") from exc
-        if not isinstance(observations, (tuple, list)) or len(observations) > MAX_ASSET_OBSERVATION_POINTS:
+            batch = reader(
+                source_partition=snapshot.source_partition,
+                source_revision=snapshot.source_revision,
+                start_at=start,
+                end_at=end,
+                limit=MAX_ASSET_OBSERVATION_POINTS + 1,
+            )
+        except Exception:
+            return unavailable("REVISION_PINNED_READ_FAILED")
+        if not isinstance(batch, RevisionPinnedObservationBatch):
+            return unavailable("REVISION_PINNED_READ_UNPROVEN")
+        if batch.source_partition != snapshot.source_partition or batch.source_revision != snapshot.source_revision:
+            return unavailable("REVISION_PINNED_SOURCE_REVISION_MISMATCH")
+        if batch.binding != binding:
+            return unavailable("REVISION_PINNED_SOURCE_BINDING_MISMATCH")
+        observations = batch.observations
+        if len(observations) > MAX_ASSET_OBSERVATION_POINTS:
             raise QueryTooBroadError("bounded source observation result exceeds its point limit", limit=MAX_ASSET_OBSERVATION_POINTS)
         accepted: list[MetrologyObservation] = []
         for item in observations:
             if not isinstance(item, MetrologyObservation):
-                raise SourceQuarantineError("bounded observer returned a non-canonical observation")
+                return unavailable("REVISION_PINNED_OBSERVATION_INVALID")
+            try:
+                binding.validate_observation(item)
+            except SourceQuarantineError:
+                if item.unit != binding.unit:
+                    continue
+                return unavailable("REVISION_PINNED_OBSERVATION_BINDING_INVALID")
             if (item.asset_id, item.context_id, item.characteristic_id, item.unit) != (asset_id, context_id, characteristic_id, unit):
                 continue
-            binding.validate_observation(item)
             if start <= item.event_at <= end and item.event_at <= cutoff and item.source_available_at <= cutoff:
                 accepted.append(item)
         accepted.sort(key=lambda item: (item.event_at, item.source_available_at, item.source_row_id))
@@ -645,13 +716,20 @@ class Asset360QueryService:
                 for item in accepted
             ],
             "binding_identity": self._binding_identity(),
+            **snapshot_facts,
             "source_id": binding.source_id,
             "provider_id": binding.provider_id,
             "schema_id": binding.schema_id,
             "mapping_version": binding.mapping_version,
             "mapping_hash": binding.mapping_hash,
             "limitations": ["NO_INTERPOLATION_OR_SMOOTHING", "SOURCE_ROWS_NOT_PERSISTED_BY_EPHI"],
-            "identity_facts": {"binding": self._binding_identity(), "point_ids": point_ids, "window_start": start, "window_end": end, "knowledge_cutoff": cutoff},
+            "identity_facts": {
+                **snapshot_facts,
+                "observation_identity_set": point_ids,
+                "window_start": start,
+                "window_end": end,
+                "knowledge_cutoff": cutoff,
+            },
         }
 
     @staticmethod
@@ -794,11 +872,15 @@ class Asset360QueryService:
         self, principal: Principal, scope: AccessScope, primary_id: str, peer_id: str,
         cutoff: datetime, start: datetime, end: datetime, family_id: str, context_id: str,
         characteristic_id: str, unit: str, primary_measurement: Mapping[str, Any],
+        source_summary: Mapping[str, Any], source_snapshot: SourceSnapshotRecord | None,
     ) -> dict[str, Any]:
         if peer_id == primary_id:
             return {"state": "BLOCKED", "reason": "SAME_ASSET_SELECTED", "primary_asset_id": primary_id, "peer_asset_id": peer_id}
-        if self._source_summary(principal, scope, cutoff, authorize=True)["state"] != "READY":
+        if source_summary["state"] != "READY":
             return {"state": "BLOCKED", "reason": "SOURCE_CAPABILITY_NOT_READY", "primary_asset_id": primary_id, "peer_asset_id": peer_id}
+        if primary_measurement["state"] == "UNAVAILABLE":
+            reason = next(iter(primary_measurement.get("limitations", ())), "PRIMARY_SOURCE_OBSERVATIONS_UNAVAILABLE")
+            return {"state": "BLOCKED", "reason": reason, "primary_asset_id": primary_id, "peer_asset_id": peer_id}
         peer_history = tuple(self.row_source.fetch_asset_episode_history(principal, scope, peer_id, cutoff, limit=MAX_ASSET_HISTORY_REVISIONS + 1))
         if len(peer_history) > MAX_ASSET_HISTORY_REVISIONS:
             raise QueryTooBroadError("peer Episode history exceeds the bounded comparison read", limit=MAX_ASSET_HISTORY_REVISIONS)
@@ -815,9 +897,13 @@ class Asset360QueryService:
         population = self.source_binding.comparable_population_id or self.source_binding.reference_population_id
         if not population:
             return {"state": "BLOCKED", "reason": "QUALIFIED_REFERENCE_OR_COMPARABLE_IDENTITY_UNAVAILABLE", "primary_asset_id": primary_id, "peer_asset_id": peer_id}
-        peer_measurement = self._measure(principal, scope, peer_id, family_id, context_id, characteristic_id, unit, start, end, cutoff)
+        peer_measurement = self._measure(
+            principal, scope, peer_id, family_id, context_id, characteristic_id, unit,
+            start, end, cutoff, source_snapshot,
+        )
         if peer_measurement["state"] == "UNAVAILABLE":
-            return {"state": "BLOCKED", "reason": "PEER_SOURCE_OBSERVATIONS_UNAVAILABLE", "primary_asset_id": primary_id, "peer_asset_id": peer_id}
+            reason = next(iter(peer_measurement.get("limitations", ())), "PEER_SOURCE_OBSERVATIONS_UNAVAILABLE")
+            return {"state": "BLOCKED", "reason": reason, "primary_asset_id": primary_id, "peer_asset_id": peer_id}
         # Both asset series must actually carry the exact configured peer or
         # reference identity. No population broadening or conversion occurs.
         def qualified(points: Sequence[Mapping[str, Any]]) -> bool:
@@ -832,6 +918,12 @@ class Asset360QueryService:
             "family_identity": family_id, "context_identity": context_id,
             "characteristic_identity": characteristic_id, "unit_identity": unit,
             "population_identity": population,
+            "source_snapshot_identity": {
+                key: primary_measurement["identity_facts"][key]
+                for key in ("snapshot_id", "source_partition", "source_revision", "manifest_hash", "binding_identity")
+            },
+            "primary_observation_identity_set": primary_measurement["identity_facts"]["observation_identity_set"],
+            "peer_observation_identity_set": peer_measurement["identity_facts"]["observation_identity_set"],
             "primary_points": primary_measurement["points"], "peer_points": peer_measurement["points"],
             "interpretation": "Descriptive paired asset observations only; no causal or predictive inference.",
         }

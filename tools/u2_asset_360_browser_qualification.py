@@ -199,7 +199,7 @@ def _keyboard_focus(page: Any, artifacts: Path, name: str, suffix: str) -> dict[
     return {"target_reached": False, "focus_visible": False}
 
 
-def _browser_view(base: str, width: int, height: int, artifacts: Path, anchor: datetime, *, stale: bool) -> dict[str, object]:
+def _browser_view(base: str, width: int, height: int, artifacts: Path, anchor: datetime, *, stale: bool, unavailable: bool = False) -> dict[str, object]:
     from playwright.sync_api import sync_playwright
 
     name = "desktop" if width > 600 else "mobile"
@@ -210,7 +210,7 @@ def _browser_view(base: str, width: int, height: int, artifacts: Path, anchor: d
     screenshots: list[dict[str, str]] = []
     states: dict[str, object] = {}
     keyboard: dict[str, object] = {}
-    suffix = "-stale" if stale else ""
+    suffix = "-stale" if stale else "-unavailable" if unavailable else ""
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch(headless=True)
         context = browser.new_context(viewport={"width": width, "height": height}, device_scale_factor=1, reduced_motion="reduce")
@@ -256,9 +256,14 @@ def _browser_view(base: str, width: int, height: int, artifacts: Path, anchor: d
             expected=("Synthetic mean CD excursion", "Historical workflow snapshot", "Open engineering work", "company asset-master completeness"),
             action_label="Open Episode",
         )
+        trend_expected = (
+            ("HISTORICAL MEASUREMENT UNAVAILABLE", "O4_SOURCE_SNAPSHOT_INSUFFICIENT", "SOURCE UNAVAILABLE")
+            if unavailable else
+            ("Observation points are unconnected", "synthetic-asset-primary-p3", *( ("CAPABILITY STALE",) if stale else ("QUALIFIED DESCRIPTIVE COMPARE", "synthetic-qualified-peer-population") ))
+        )
         trend = capture(
-            f"360-gap-compatible-{name}{suffix}", asset_url=_url(PRIMARY_ASSET, anchor, peer=PEER_ASSET if not stale else None),
-            expected=("Observation points are unconnected", "synthetic-asset-primary-p3", *( ("CAPABILITY STALE",) if stale else ("QUALIFIED DESCRIPTIVE COMPARE", "synthetic-qualified-peer-population") )),
+            f"360-gap-compatible-{name}{suffix}", asset_url=_url(PRIMARY_ASSET, anchor, peer=PEER_ASSET if not stale and not unavailable else None),
+            expected=trend_expected,
             tab="Measurement/quality",
         )
         deep_link = {"status": "NOT_RUN"}
@@ -276,7 +281,7 @@ def _browser_view(base: str, width: int, height: int, artifacts: Path, anchor: d
             else:
                 deep_link["returned_to_asset"] = False
             deep_link["status"] = "PASS" if deep_link["origin_preserved"] and deep_link["returned_to_asset"] else "FAIL"
-        blocked = None if stale else capture(
+        blocked = None if stale or unavailable else capture(
             f"360-compare-blocked-{name}{suffix}", asset_url=_url(PRIMARY_ASSET, anchor, peer=INCOMPATIBLE_ASSET),
             expected=("COMPARE BLOCKED", "FAMILY_CONTEXT_CHARACTERISTIC_OR_UNIT_MISMATCH"),
             tab="Measurement/quality",
@@ -288,6 +293,9 @@ def _browser_view(base: str, width: int, height: int, artifacts: Path, anchor: d
                 expected=("SOURCE STALE", "CAPABILITY STALE", "CAPABILITY_NOT_READY"),
                 tab="Measurement/quality",
             )
+        unavailable_case = None
+        if unavailable:
+            unavailable_case = trend
         page.close()
         context.close()
         browser.close()
@@ -297,16 +305,20 @@ def _browser_view(base: str, width: int, height: int, artifacts: Path, anchor: d
         geometry_items.append(blocked["geometry"])
     if stale_case:
         geometry_items.append(stale_case["geometry"])
+    if unavailable_case:
+        geometry_items.append(unavailable_case["geometry"])
     no_overflow = all(bool(item["no_horizontal_overflow"]) for item in geometry_items)
     actions_reachable = bool(asset_list["geometry"]["action_reachable"] and episodes["geometry"]["action_reachable"])
     if trend["chart"]:
         expected_circles = 4 if stale else 6
         chart_ok = trend["chart"]["circle_count"] == expected_circles and trend["chart"]["polyline_count"] == 0 and trend["chart"]["path_count"] == 0
     else:
-        chart_ok = False
+        chart_ok = unavailable and trend["chart"] is None
     missing = asset_list["missing"] + episodes["missing"] + trend["missing"] + (blocked["missing"] if blocked else [])
     if stale_case:
         missing += stale_case["missing"]
+    if unavailable_case:
+        missing += unavailable_case["missing"]
     focus_ok = keyboard.get("target_reached", True) and keyboard.get("focus_visible", True)
     deep_link_ok = deep_link.get("status") in {"PASS", "NOT_RUN"}
     clean = not any(events[key] for key in ("console_errors", "page_errors", "request_failures", "http_failures"))
@@ -314,11 +326,11 @@ def _browser_view(base: str, width: int, height: int, artifacts: Path, anchor: d
     return {
         "status": "PASS" if passed else "FAIL",
         "viewport": {"width": width, "height": height},
-        "states": {"asset_list": asset_list, "asset_360_episodes": episodes, "history_gap_compatible_compare": trend, "blocked_compare": blocked, **({"stale_capability": stale_case} if stale_case else {})},
+        "states": {"asset_list": asset_list, "asset_360_episodes": episodes, "history_gap_compatible_compare": trend, "blocked_compare": blocked, **({"stale_capability": stale_case} if stale_case else {}), **({"unavailable_source": unavailable_case} if unavailable_case else {})},
         "missing_content": missing,
         "no_horizontal_overflow": no_overflow,
         "actions_reachable": actions_reachable,
-        "chart_gap_rendering": {"pass": chart_ok, "expected_separate_points": 4 if stale else 6, "actual": trend["chart"]},
+        "chart_gap_rendering": {"pass": chart_ok, "expected_separate_points": 0 if unavailable else 4 if stale else 6, "actual": trend["chart"]},
         "keyboard_focus": keyboard,
         "episode_deep_link": deep_link,
         "inventories": events,
@@ -351,6 +363,9 @@ def qualify(dsn: str, output: Path, artifact_dir: Path) -> dict[str, object]:
             stale_fixture = _seed(dsn, artifact_root, anchor, capability_case="STALE")
             stale_desktop = _browser_view(base, 1440, 900, artifact_dir, anchor, stale=True)
             stale_mobile = _browser_view(base, 390, 844, artifact_dir, anchor, stale=True)
+            unavailable_fixture = _seed(dsn, artifact_root, anchor, capability_case="UNAVAILABLE")
+            unavailable_desktop = _browser_view(base, 1440, 900, artifact_dir, anchor, stale=False, unavailable=True)
+            unavailable_mobile = _browser_view(base, 390, 844, artifact_dir, anchor, stale=False, unavailable=True)
         finally:
             process.terminate()
             try:
@@ -363,7 +378,7 @@ def qualify(dsn: str, output: Path, artifact_dir: Path) -> dict[str, object]:
         {"path": item.relative_to(ROOT).as_posix(), "bytes": item.stat().st_size, "sha256": _sha(item.read_bytes())}
         for item in sorted(artifact_dir.glob("*.png"))
     ]
-    browser_pass = all(item["status"] == "PASS" for item in (desktop, mobile, stale_desktop, stale_mobile))
+    browser_pass = all(item["status"] == "PASS" for item in (desktop, mobile, stale_desktop, stale_mobile, unavailable_desktop, unavailable_mobile))
     report = {
         "schema_version": 1,
         "project": "ephi",
@@ -377,7 +392,15 @@ def qualify(dsn: str, output: Path, artifact_dir: Path) -> dict[str, object]:
         "postgres": {"version": seed_facts["postgres_version"], "real_postgresql_18": seed_facts["postgres_version"].startswith("18."), "restart_and_identity_regression": "tests.test_assets_postgresql"},
         "fixture": seed_facts,
         "stale_capability_fixture": stale_fixture,
-        "browser": {"desktop_1440x900": desktop, "phone_390x844": mobile, "stale_capability_desktop": stale_desktop, "stale_capability_phone": stale_mobile},
+        "unavailable_capability_fixture": unavailable_fixture,
+        "browser": {
+            "desktop_1440x900": desktop,
+            "phone_390x844": mobile,
+            "stale_capability_desktop": stale_desktop,
+            "stale_capability_phone": stale_mobile,
+            "unavailable_source_desktop": unavailable_desktop,
+            "unavailable_source_phone": unavailable_mobile,
+        },
         "screenshots": screenshots,
         "security": {"credentials_recorded": False, "raw_source_rows_recorded": False, "browser_headers_recorded": False, "request_paths_only": True},
         "non_claims": {

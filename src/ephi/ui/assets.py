@@ -383,6 +383,7 @@ def build_asset_360_page(composition: Any, asset_id: str, navigation: Navigation
                             source_intent = StatusIntent.SUCCESS if result.source["state"] == "READY" else StatusIntent.WARNING if result.source["state"] in {"PARTIAL", "STALE"} else StatusIntent.DANGER
                             StatusBadge(f"SOURCE {result.source['state']}", intent=source_intent)
                             ui.label(f"Source age {result.source.get('age_seconds') if result.source.get('age_seconds') is not None else 'unknown'} seconds · snapshot {result.source.get('snapshot_id') or 'unavailable'}")
+                            ui.label(f"O4 revision {result.source.get('source_revision') or 'unavailable'} · available {_stamp(result.source.get('latest_available_at'))}").classes("ephi-assets-mono")
                             ui.label(f"Source {result.source.get('source_id') or 'unavailable'} · provider {result.source.get('provider_id') or 'unavailable'} · capability {result.source.get('capability_id') or 'unavailable'}").classes("ephi-assets-mono")
                         with Card():
                             ui.label(f"Open engineering work {result.asset['open_work_count']}")
@@ -458,9 +459,9 @@ def build_asset_360_page(composition: Any, asset_id: str, navigation: Navigation
                                         else:
                                             ui.label(f"{item.get('recovery_plan_id') or item.get('closure_identity') or item.get('reopen_identity')} · state {item.get('state') or item.get('status') or 'recorded'} · recorded {item.get('recorded_at') or item.get('closed_at') or item.get('reopened_at') or 'not separately recorded'}")
                     with tabs.panel("measurement"):
-                        ui.label(f"Exact source binding {result.measurement.get('binding_identity')} · configured O4 snapshot {result.source.get('snapshot_id') or 'unavailable'}").classes("ephi-assets-mono")
+                        ui.label(f"Exact source binding {result.measurement.get('binding_identity')} · O4 snapshot {result.source.get('snapshot_id') or 'unavailable'} · source revision {result.source.get('source_revision') or 'unavailable'}").classes("ephi-assets-mono")
                         ui.label(f"Source {result.measurement.get('source_id') or result.source.get('source_id') or 'unavailable'} · schema {result.measurement.get('schema_id') or result.source.get('schema_id') or 'unavailable'} · mapping {result.measurement.get('mapping_version') or result.source.get('mapping_version') or 'unavailable'} · hash {result.measurement.get('mapping_hash') or result.source.get('mapping_hash') or 'unavailable'}").classes("ephi-assets-mono")
-                        ui.label(f"Window {_stamp(start)} through {_stamp(end)} · cutoff {_stamp(cutoff)} · {len(result.measurement['points'])} bounded point(s) · no EPHI raw-row persistence").classes("ephi-assets-time")
+                        ui.label(f"Window {_stamp(start)} through {_stamp(end)} · knowledge cutoff {_stamp(cutoff)} · snapshot published {_stamp(result.source.get('published_at'))} · {len(result.measurement['points'])} bounded point(s) · no EPHI raw-row persistence").classes("ephi-assets-time")
                         ui.label("Observation points are unconnected; missing periods remain visible gaps. No interpolation or smoothing is applied.").classes("ephi-assets-note")
                         if result.measurement["points"]:
                             if result.compare and result.compare["state"] == "READY":
@@ -486,6 +487,10 @@ def build_asset_360_page(composition: Any, asset_id: str, navigation: Navigation
                                         ui.label(f"{observation['value']} {observation['unit']} · {observation['event_at'].isoformat()}").classes("text-subtitle1")
                                         ui.label(f"Source available {observation['source_available_at'].isoformat()}")
                                         ui.label(f"Source observation {observation['source_row_id']}").classes("ephi-assets-mono")
+                        elif result.measurement["state"] == "UNAVAILABLE":
+                            with Card():
+                                StatusBadge("HISTORICAL MEASUREMENT UNAVAILABLE", intent=StatusIntent.DANGER)
+                                ui.label(f"Exact revision read limitation: {result.measurement['limitations'][0]}").classes("ephi-assets-state")
                         else:
                             StateView(StateViewSpec(StateKind.EMPTY, "No observations in the selected window", "No exact asset/context/characteristic/unit observation was both event-time eligible and available by this knowledge cutoff."))
                         if result.compare is not None:
@@ -509,6 +514,7 @@ def build_asset_360_page(composition: Any, asset_id: str, navigation: Navigation
                         ui.label(f"Schema {result.source.get('schema_id') or 'unavailable'} · mapping {result.source.get('mapping_version') or 'unavailable'} · hash {result.source.get('mapping_hash') or 'unavailable'}").classes("ephi-assets-mono")
                         ui.label(f"Reference {result.source.get('reference_population_id') or 'unqualified'} · comparable {result.source.get('comparable_population_id') or 'unqualified'}")
                         ui.label(f"Latest event { _stamp(result.source.get('latest_event_at')) } · available { _stamp(result.source.get('latest_available_at')) } · reason {result.source.get('reason') or 'none'}")
+                        ui.label(f"As of knowledge cutoff {_stamp(result.knowledge_cutoff)} · snapshot published {_stamp(result.source.get('published_at'))}").classes("ephi-assets-time")
                     with Card():
                         ui.label("Query limitations").classes("text-subtitle1")
                         for limitation in result.limitations:

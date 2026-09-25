@@ -81,6 +81,7 @@ class _TestRepository:
             ingested_at,
             published,
             published,
+            freshness_age_seconds=draft.freshness_age_seconds,
         )
         return self.record, capability
 

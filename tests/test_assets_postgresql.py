@@ -2,12 +2,15 @@
 
 from datetime import datetime, timedelta, timezone
 from dataclasses import replace
+import hashlib
+import json
 import os
 from pathlib import Path
+import subprocess
 import sys
 import tempfile
 import unittest
-from unittest.mock import patch
+from unittest.mock import Mock, patch
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -22,6 +25,10 @@ from ephi.application import (  # noqa: E402
     EPISODE_READ_CAPABILITY,
     Principal,
     RevisionVector,
+    RevisionPinnedObservationBatch,
+    MetrologyObservation,
+    SourceSnapshotDraft,
+    SourceSnapshotStatus,
     SourceBindingUnavailableError,
     SourceCapabilityState,
 )
@@ -35,7 +42,7 @@ from examples.synthetic_downstream.assets import (  # noqa: E402
     PRIMARY_EPISODES,
     seed_asset_360_fixture,
 )
-from examples.synthetic_downstream.provider import build_flagship_bundle  # noqa: E402
+from examples.synthetic_downstream.provider import SyntheticAssetObserver, build_flagship_bundle  # noqa: E402
 
 
 UTC = timezone.utc
@@ -92,6 +99,75 @@ class Asset360PostgreSQLTests(unittest.TestCase):
             window_start=self.anchor - timedelta(days=30),
             window_end=cutoff,
             peer_asset_id=peer,
+        )
+
+    def _query_service(self, service, *, cutoff, peer=None):
+        return service.get_asset_360(
+            self.principal, self.scope, PRIMARY_ASSET,
+            knowledge_cutoff=cutoff,
+            window_start=self.anchor - timedelta(days=30),
+            window_end=cutoff,
+            peer_asset_id=peer,
+        )
+
+    def _publish_revision(self, revision: str, available_cutoff: datetime):
+        binding = self.composition.source_binding
+        observer = self.composition.source_observer
+        observation = next(item for item in observer._observations if item.asset_id == PRIMARY_ASSET and item.unit == binding.unit)
+        artifact = self.composition.artifact_service.write_and_register(
+            self.principal,
+            self.scope,
+            f'{{"synthetic":true,"revision":"{revision}"}}'.encode(),
+            media_type="application/json",
+            logical_purpose=f"synthetic-{revision}",
+            required_write_capability="synthetic.artifact.write",
+        )
+        return self.composition.source_ingress.publish(
+            self.principal,
+            SourceSnapshotDraft(
+                binding,
+                "synthetic-asset-360-partition",
+                revision,
+                observation.event_at,
+                observation.event_at,
+                available_cutoff,
+                artifact.metadata.reference,
+                (observation,),
+                SourceSnapshotStatus.PUBLISHED,
+            ),
+            freshness_age_seconds=3600,
+        )[0]
+
+    def _insert_cutoff_edge_snapshot(
+        self, record, *, snapshot_id, partition, revision, ingested_at,
+        published_at, available_cutoff, freshness_age_seconds=3600,
+    ):
+        binding = record.binding
+        self.composition.adapter.connection.execute(
+            """
+            INSERT INTO source_snapshot(
+                snapshot_id, schema_version, scope_key, source_id, provider_id, family_id, capability_id,
+                adapter_id, schema_id, mapping_version, mapping_hash, unit, reference_population_id,
+                comparable_population_id, required_identifiers_json, source_partition, source_revision,
+                event_start, event_end, available_cutoff, manifest_artifact_sha256,
+                manifest_artifact_byte_size, manifest_artifact_object_key, row_count, status,
+                manifest_hash, ingested_at, published_at, freshness_age_seconds
+            ) VALUES (
+                %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s::jsonb,
+                %s, %s, %s, %s, %s, %s, %s, %s, 1, 'PUBLISHED', %s, %s, %s, %s
+            )
+            """,
+            (
+                snapshot_id, record.schema_version, binding.scope_key, binding.source_id,
+                binding.provider_id, binding.family_id, binding.capability_id, binding.adapter_id,
+                binding.schema_id, binding.mapping_version, binding.mapping_hash, binding.unit,
+                binding.reference_population_id, binding.comparable_population_id,
+                json.dumps(binding.required_identifiers), partition, revision,
+                record.event_start, record.event_end, available_cutoff,
+                record.artifact_reference.content.sha256, record.artifact_reference.content.byte_size,
+                f"sha256/{record.artifact_reference.content.sha256}", hashlib.sha256(snapshot_id.encode()).hexdigest(),
+                ingested_at, published_at, freshness_age_seconds,
+            ),
         )
 
     def test_authorization_precedes_asset_existence_and_exact_asset_ids(self):
@@ -179,12 +255,29 @@ class Asset360PostgreSQLTests(unittest.TestCase):
         times = [item["event_at"] for item in result.measurement["points"]]
         self.assertGreaterEqual((times[-1] - times[-2]).total_seconds(), 20 * 24 * 3600)
         self.assertEqual(result.source["state"], "READY")
+        self.assertEqual(result.measurement["source_revision"], result.source["source_revision"])
+        self.assertEqual(result.measurement["snapshot_id"], result.source["snapshot_id"])
+        self.assertEqual(result.measurement["manifest_hash"], result.source["snapshot_manifest_hash"])
+        self.assertEqual(len(result.measurement["identity_facts"]["observation_identity_set"]), 4)
 
         compatible = self._query(cutoff=cutoff, peer=PEER_ASSET)
         self.assertEqual(compatible.compare["state"], "READY")
         self.assertEqual(compatible.compare["population_identity"], self.composition.source_binding.comparable_population_id)
         self.assertEqual(compatible.compare["context_identity"], "synthetic-recipe-r47")
         self.assertEqual(compatible.compare["unit_identity"], "nm")
+        self.assertEqual(
+            compatible.compare["source_snapshot_identity"]["source_revision"],
+            compatible.source["source_revision"],
+        )
+        self.assertEqual(
+            compatible.compare["source_snapshot_identity"]["snapshot_id"],
+            compatible.source["snapshot_id"],
+        )
+        self.assertEqual(
+            compatible.compare["source_snapshot_identity"]["binding_identity"],
+            compatible.measurement["binding_identity"],
+        )
+        self.assertTrue(compatible.compare["peer_observation_identity_set"])
 
         blocked = self._query(cutoff=cutoff, peer=INCOMPATIBLE_ASSET)
         self.assertEqual(blocked.compare["state"], "BLOCKED")
@@ -203,6 +296,233 @@ class Asset360PostgreSQLTests(unittest.TestCase):
                 self.principal, self.scope, PRIMARY_ASSET,
                 knowledge_cutoff=cutoff, window_start=self.anchor - timedelta(days=30), window_end=cutoff,
             )
+
+    def test_measurements_are_pinned_to_immutable_o4_revision_after_refresh_and_restart(self):
+        source_store = self.composition.adapter.source_store()
+        s1 = source_store.get_latest_snapshot_as_of(
+            self.principal, self.composition.source_binding, datetime.now(UTC) + timedelta(seconds=2),
+        )
+        self.assertIsNotNone(s1)
+        cutoff = s1.published_at + timedelta(microseconds=1)
+        before = self._query(cutoff=cutoff)
+        self.assertEqual(before.source["snapshot_id"], s1.snapshot_id)
+        self.assertEqual(before.source["source_revision"], s1.source_revision)
+        s1_point_ids = tuple(item["source_row_id"] for item in before.measurement["points"])
+        s1_query_identity = before.query_identity
+        s1_result_identity = before.result_identity
+        s1_observation_ids = before.measurement["identity_facts"]["observation_identity_set"]
+
+        observer = self.composition.source_observer
+        s1_rows = tuple(observer._observations)
+        s2_rows = tuple(replace(item, value=float(item.value) + 10.0) for item in s1_rows)
+        s1_key = ("synthetic-asset-360-partition", s1.source_revision)
+        s2_revision = "synthetic-asset-360-ready-v2"
+        s2_key = ("synthetic-asset-360-partition", s2_revision)
+        prior_overrides = dict(SyntheticAssetObserver._revision_overrides)
+        prior_live = SyntheticAssetObserver._live_override
+        self.addCleanup(lambda: (SyntheticAssetObserver._revision_overrides.clear(), SyntheticAssetObserver._revision_overrides.update(prior_overrides)))
+        self.addCleanup(setattr, SyntheticAssetObserver, "_live_override", prior_live)
+        SyntheticAssetObserver._revision_overrides[s1_key] = s1_rows
+        SyntheticAssetObserver._revision_overrides[s2_key] = s2_rows
+        SyntheticAssetObserver._live_override = s2_rows
+        live_rows = observer.read_partition(
+            start_at=self.anchor - timedelta(days=30), end_at=datetime.now(UTC) + timedelta(seconds=1), limit=500,
+        )
+        self.assertNotEqual(live_rows[0].value, s1_rows[0].value)
+
+        later_availability = datetime.now(UTC) - timedelta(seconds=1)
+        s2 = self._publish_revision(s2_revision, later_availability)
+        current_capability = source_store.get_capability(self.principal, self.composition.source_binding)
+        self.assertEqual(current_capability.latest_snapshot_id, s2.snapshot_id)
+        self.assertEqual(current_capability.latest_source_revision, s2.source_revision)
+
+        still_before_restart = self._query(cutoff=cutoff)
+        self.assertEqual(still_before_restart.source["snapshot_id"], s1.snapshot_id)
+        self.assertEqual(still_before_restart.measurement["identity_facts"]["observation_identity_set"], s1_observation_ids)
+        self.assertEqual(still_before_restart.query_identity, s1_query_identity)
+        self.assertEqual(still_before_restart.result_identity, s1_result_identity)
+
+        self._close()
+        self._compose()
+        self.service = self._service(self.composition)
+        self.scope = self.composition.scope_provider()
+        self.principal = self.composition.principal_provider()
+        after_restart = self._query(cutoff=cutoff)
+        self.assertEqual(after_restart.source["snapshot_id"], s1.snapshot_id)
+        self.assertEqual(after_restart.source["source_revision"], s1.source_revision)
+        self.assertEqual(tuple(item["source_row_id"] for item in after_restart.measurement["points"]), s1_point_ids)
+        self.assertEqual(after_restart.measurement["identity_facts"]["observation_identity_set"], s1_observation_ids)
+        self.assertEqual(after_restart.query_identity, s1_query_identity)
+        self.assertEqual(after_restart.result_identity, s1_result_identity)
+
+        child_env = dict(os.environ)
+        child_env.update({
+            "EPHI_SYNTHETIC_ASSET_LIVE_REVISION": s2_revision,
+            "EPHI_SYNTHETIC_ASSET_TEST_CUTOFF": cutoff.isoformat(),
+            "EPHI_SYNTHETIC_ASSET_OBSERVATION_ANCHOR": self.anchor.isoformat(),
+            "PYTHONPATH": os.pathsep.join((str(ROOT / "src"), str(ROOT), child_env.get("PYTHONPATH", ""))),
+        })
+        child_code = """
+import json, os, sys
+from datetime import datetime, timedelta
+sys.path.insert(0, os.environ["PYTHONPATH"].split(os.pathsep)[0])
+from ephi.application.assets import Asset360QueryService
+from ephi.config import RuntimeSettings
+from ephi.downstream import compose_downstream
+from examples.synthetic_downstream.provider import build_flagship_bundle
+anchor = datetime.fromisoformat(os.environ["EPHI_SYNTHETIC_ASSET_OBSERVATION_ANCHOR"])
+cutoff = datetime.fromisoformat(os.environ["EPHI_SYNTHETIC_ASSET_TEST_CUTOFF"])
+bundle = build_flagship_bundle()
+composition = compose_downstream(bundle, runtime_settings=RuntimeSettings(environment=bundle.runtime.public_metadata.target_environment_class))
+try:
+    service = Asset360QueryService(composition.adapter.o3_store(), composition.adapter.read_store(), composition.current_authorization, composition.source_observer, composition.source_binding, composition.adapter.source_store())
+    result = service.get_asset_360(composition.principal_provider(), composition.scope_provider(), "synthetic-cd-asset-primary", knowledge_cutoff=cutoff, window_start=anchor - timedelta(days=30), window_end=cutoff)
+    print(json.dumps({"query_identity": result.query_identity, "result_identity": result.result_identity, "snapshot_id": result.source["snapshot_id"], "source_revision": result.source["source_revision"], "point_ids": result.measurement["identity_facts"]["observation_identity_set"]}, sort_keys=True))
+finally:
+    composition.close()
+"""
+        child = subprocess.run(
+            [sys.executable, "-c", child_code],
+            cwd=ROOT,
+            env=child_env,
+            capture_output=True,
+            text=True,
+            timeout=45,
+        )
+        self.assertEqual(child.returncode, 0, child.stderr)
+        child_result = json.loads(child.stdout.strip().splitlines()[-1])
+        self.assertEqual(child_result["snapshot_id"], s1.snapshot_id)
+        self.assertEqual(child_result["source_revision"], s1.source_revision)
+        self.assertEqual(child_result["point_ids"], s1_observation_ids)
+        self.assertEqual(child_result["query_identity"], s1_query_identity)
+        self.assertEqual(child_result["result_identity"], s1_result_identity)
+
+        later_cutoff = datetime.now(UTC) + timedelta(seconds=30)
+        later = self._query(cutoff=later_cutoff)
+        self.assertEqual(later.source["snapshot_id"], s2.snapshot_id)
+        self.assertEqual(later.source["source_revision"], s2.source_revision)
+        self.assertNotEqual(later.measurement["identity_facts"]["observation_identity_set"], s1_observation_ids)
+        self.assertNotEqual(later.query_identity, s1_query_identity)
+        self.assertNotEqual(later.result_identity, s1_result_identity)
+
+    def test_as_of_o4_snapshot_read_excludes_future_publication_and_availability(self):
+        store = self.composition.adapter.source_store()
+        cutoff = datetime.now(UTC) + timedelta(seconds=3)
+        s1 = store.get_latest_snapshot_as_of(self.principal, self.composition.source_binding, cutoff)
+        self.assertIsNotNone(s1)
+        now = datetime.now(UTC)
+        self._insert_cutoff_edge_snapshot(
+            s1,
+            snapshot_id="synthetic-future-publication-snapshot",
+            partition="synthetic-future-publication-partition",
+            revision="synthetic-future-publication-revision",
+            ingested_at=cutoff,
+            published_at=cutoff + timedelta(seconds=1),
+            available_cutoff=cutoff - timedelta(seconds=1),
+        )
+        self._insert_cutoff_edge_snapshot(
+            s1,
+            snapshot_id="synthetic-future-availability-snapshot",
+            partition="synthetic-future-availability-partition",
+            revision="synthetic-future-availability-revision",
+            ingested_at=now - timedelta(seconds=1),
+            published_at=now,
+            available_cutoff=cutoff + timedelta(seconds=1),
+        )
+        self.composition.adapter.connection.commit()
+        selected = store.get_latest_snapshot_as_of(self.principal, self.composition.source_binding, cutoff)
+        self.assertEqual(selected.snapshot_id, s1.snapshot_id)
+
+    def test_legacy_o4_snapshot_without_immutable_freshness_policy_is_explicitly_unavailable(self):
+        store = self.composition.adapter.source_store()
+        current = datetime.now(UTC)
+        s1 = store.get_latest_snapshot_as_of(
+            self.principal, self.composition.source_binding, current + timedelta(seconds=5),
+        )
+        self._insert_cutoff_edge_snapshot(
+            s1,
+            snapshot_id="synthetic-legacy-no-freshness-snapshot",
+            partition="synthetic-legacy-partition",
+            revision="synthetic-legacy-revision",
+            ingested_at=current - timedelta(seconds=2),
+            published_at=current,
+            available_cutoff=current - timedelta(seconds=3),
+            freshness_age_seconds=None,
+        )
+        self.composition.adapter.connection.commit()
+        result = self._query(cutoff=current + timedelta(seconds=5))
+        self.assertEqual(result.source["snapshot_id"], "synthetic-legacy-no-freshness-snapshot")
+        self.assertEqual(result.source["state"], "UNAVAILABLE")
+        self.assertEqual(result.source["reason"], "O4_FRESHNESS_POLICY_NOT_RECONSTRUCTABLE")
+        self.assertIn("O4_FRESHNESS_POLICY_NOT_RECONSTRUCTABLE", result.limitations)
+
+    def test_revision_pinned_provider_absence_and_mismatches_fail_closed_without_live_fallback(self):
+        cutoff = datetime.now(UTC) + timedelta(seconds=5)
+        delegate = self.composition.source_observer
+        live_read = Mock(wraps=delegate.read_partition)
+
+        class LegacyObserver:
+            def describe(inner_self):
+                return delegate.describe()
+
+            def read_partition(inner_self, **kwargs):
+                return live_read(**kwargs)
+
+        legacy_service = self._service(self.composition)
+        legacy_service.source_observer = LegacyObserver()
+        legacy = self._query_service(legacy_service, cutoff=cutoff, peer=PEER_ASSET)
+        self.assertEqual(legacy.measurement["state"], "UNAVAILABLE")
+        self.assertEqual(legacy.measurement["limitations"][0], "REVISION_PINNED_READ_UNSUPPORTED")
+        self.assertEqual(legacy.compare["state"], "BLOCKED")
+        self.assertEqual(legacy.compare["reason"], "REVISION_PINNED_READ_UNSUPPORTED")
+        live_read.assert_not_called()
+
+        class WrongRevisionObserver:
+            def describe(inner_self):
+                return delegate.describe()
+
+            def read_partition(inner_self, **kwargs):
+                return live_read(**kwargs)
+
+            def read_partition_revision(inner_self, **kwargs):
+                batch = delegate.read_partition_revision(**kwargs)
+                return replace(batch, source_revision="synthetic-wrong-source-revision")
+
+        class WrongBindingObserver(WrongRevisionObserver):
+            def read_partition_revision(inner_self, **kwargs):
+                batch = delegate.read_partition_revision(**kwargs)
+                return replace(batch, binding=replace(batch.binding, mapping_version="synthetic-wrong-mapping"))
+
+        for observer, expected in (
+            (WrongRevisionObserver(), "REVISION_PINNED_SOURCE_REVISION_MISMATCH"),
+            (WrongBindingObserver(), "REVISION_PINNED_SOURCE_BINDING_MISMATCH"),
+        ):
+            with self.subTest(expected=expected):
+                service = self._service(self.composition)
+                service.source_observer = observer
+                result = self._query_service(service, cutoff=cutoff)
+                self.assertEqual(result.measurement["state"], "UNAVAILABLE")
+                self.assertEqual(result.measurement["limitations"][0], expected)
+                self.assertEqual(result.source["snapshot_id"], self.seed["source_snapshot_id"])
+        live_read.assert_not_called()
+
+    def test_compare_blocks_when_exact_revision_has_no_compatible_qualification(self):
+        observer = self.composition.source_observer
+        revision = self.seed["source_snapshot_id"]
+        snapshot = self.composition.adapter.source_store().get_snapshot(self.principal, self.scope, revision)
+        key = (snapshot.source_partition, snapshot.source_revision)
+        prior = SyntheticAssetObserver._revision_overrides.get(key)
+        self.addCleanup(
+            lambda: SyntheticAssetObserver._revision_overrides.pop(key, None)
+            if prior is None else SyntheticAssetObserver._revision_overrides.__setitem__(key, prior)
+        )
+        SyntheticAssetObserver._revision_overrides[key] = tuple(
+            replace(item, comparable_population_id=None) if item.asset_id in {PRIMARY_ASSET, PEER_ASSET} else item
+            for item in observer._observations
+        )
+        result = self._query(cutoff=datetime.now(UTC) + timedelta(seconds=5), peer=PEER_ASSET)
+        self.assertEqual(result.compare["state"], "BLOCKED")
+        self.assertEqual(result.compare["reason"], "REVISION_PINNED_OBSERVATION_BINDING_INVALID")
 
     def test_o4_capability_partial_stale_and_unavailable_are_never_ready(self):
         states = (

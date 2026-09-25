@@ -430,16 +430,23 @@ current Episode heads with a supported `InvestigationProfile`; it is not a
 company asset-master inventory. Exact family/site/context/characteristic
 filters and asset-ID tie-breaking use O8 scope and the existing retained O2
 query snapshots/cursors. `/ephi/assets/{id}` composes immutable O3 Episode
-read revisions, O5 workflow/action/recovery facts, O4 binding/capability and
-snapshot facts, and bounded read-only U1 observations. It adds no Asset table,
+read revisions, O5 workflow/action/recovery facts, and bounded read-only U1
+observations pinned to an immutable O4 source revision. It adds no Asset table,
 source adapter, raw telemetry persistence, material/WIP authority or workflow
 authority.
 
 The Asset 360 read binds one asset and knowledge cutoff to exact Episode/read
-revision IDs, workflow versions, O4 source identities, selected
-characteristic/unit, and the exact bounded source-observation identity set.
-Observation event time and source-available time must both qualify; exact
-binding and asset/context/characteristic/unit mismatches fail closed.
+revision IDs, workflow versions, the latest immutable exact-binding O4
+snapshot eligible at that cutoff, selected characteristic/unit, and the exact
+revision-pinned observation identity set. Observation event time and
+source-available time must both qualify; exact binding and
+asset/context/characteristic/unit mismatches fail closed. U1 v1 providers keep
+their existing live bounded-read ABI; the additive revision-pinned read is
+optional globally and required only for historical Asset measurements. Asset
+360 reports a typed unavailable limitation when it is missing and never falls
+back to live rows. O4 freshness policy is retained with each new immutable
+snapshot; legacy rows without it report that historical freshness cannot be
+reconstructed.
 Comparable history requires the existing explicitly qualified compatible
 population. Gaps remain unconnected in the trend, and O5 actions/recovery are
 shown as recorded observations without causal interpretation. Material
@@ -455,8 +462,10 @@ EPHI_TEST_POSTGRES_DSN='postgresql://user:password@host:5432/database' \
 ```
 
 Candidate-bound desktop/phone browser screenshots and clean console/page/
-request inventories, including stale and blocked states, are recorded in
-[evidence/u2/chg-234-u2.4-asset-360/qualification.json](evidence/u2/chg-234-u2.4-asset-360/qualification.json).
+request inventories, including READY, stale, unavailable, history-gap,
+compatible/blocked comparison and Episode origin-preservation states, are
+recorded in
+[the R2 continuation evidence](evidence/u2/chg-234-u2.4-asset-360/review-fix1/qualification.json).
 This slice does not claim company asset-master completeness, real-family
 G02/G06, causal/RCA or predictive health, production capacity/G10, Operations
 destination implementation, G12, Port Gate, or Production readiness.

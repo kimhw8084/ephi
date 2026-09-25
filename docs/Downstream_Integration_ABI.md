@@ -79,6 +79,16 @@ not returned.
 | `policy` | Supply schema `org.ephi.policy-configuration` v1 with existing `CheckTemplateCatalog`, `PlannerPolicy`, `RecoveryPolicy`, and typed family/context identities. | EPHI's generic validation, authorization, source qualification, temporal integrity, planner eligibility, evidence, recovery and workflow CAS. No policy callback or private detector is accepted. |
 | `runtime` | State public target environment class, PostgreSQL major and contract version; open the existing PostgreSQL reference adapter using deployment-owned configuration. | `RuntimeSettings`, O8 transport/security, and the existing PostgreSQL command/read/source/artifact/workflow authorities. Metadata is preflight information, not readiness evidence. |
 
+The U1 v1 `read_partition()` contract remains unchanged. Providers may
+additionally implement the optional public
+`RevisionPinnedBoundedMetrologyObserver.read_partition_revision()` protocol
+and return a `RevisionPinnedObservationBatch` carrying the exact O4 binding,
+source partition and source revision with its bounded canonical rows. This
+capability is not added to the required source-provider capabilities or the
+safe manifest. Asset 360 requires the optional method for historical
+measurements and fails closed with a typed limitation when it is absent; it
+never falls back to the ordinary live read.
+
 The provider bundle may hold secrets and private paths in implementation-owned
 objects. Those values must never be copied into `ProviderContract`,
 `RuntimeCapabilities`, errors, or application logs. Contract fields accept
