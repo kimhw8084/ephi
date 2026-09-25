@@ -802,10 +802,11 @@ class DecisionLoopCommandService:
                 "requested_at": domain["requested_at"],
                 "authorized_at": domain["authorized_at"],
                 "observed_at": domain["observed_at"],
+                "recorded_at": _now(),
                 "reconciliation_state": domain["reconciliation_state"],
                 "evidence_refs": list(domain["evidence_refs"]),
                 "effect_boundary_at": domain["observed_at"] if reconciliation_value == ActionReconciliationState.SUCCEEDED.value else None,
-                "history": [_history(domain["reconciliation_state"], actor=context.principal.subject, at=at)],
+                "history": [{**_history(domain["reconciliation_state"], actor=context.principal.subject, at=at), "recorded_at": _now()}],
             }
             _loop_state(state)["last_viewed_revisions"] = _post_commit_revision(domain["viewed_revisions"])
             return state
@@ -854,9 +855,13 @@ class DecisionLoopCommandService:
             if domain["external_reference"] is not None:
                 action["external_reference"] = domain["external_reference"]
             action["observed_at"] = domain["observed_at"]
+            action["last_recorded_at"] = _now()
             action["evidence_refs"] = list(domain["evidence_refs"])
             action["effect_boundary_at"] = domain["observed_at"] if domain["reconciliation_state"] == ActionReconciliationState.SUCCEEDED.value else None
-            action["history"].append(_history(domain["reconciliation_state"], actor=context.principal.subject, at=domain["observed_at"]))
+            action["history"].append({
+                **_history(domain["reconciliation_state"], actor=context.principal.subject, at=domain["observed_at"]),
+                "recorded_at": action["last_recorded_at"],
+            })
             _loop_state(state)["last_viewed_revisions"] = _post_commit_revision(domain["viewed_revisions"])
             return state
 
@@ -928,6 +933,7 @@ class DecisionLoopCommandService:
                     raise ValidationFailureError("prior_action_id must resolve to an action in the active Episode cycle")
             plans[recovery_plan_id] = {
                 "recovery_plan_id": recovery_plan_id,
+                "recorded_at": _now(),
                 "episode_id": episode_id,
                 "cycle_id": cycle["cycle_id"],
                 "prior_action_id": domain["prior_action_id"],
@@ -1101,6 +1107,7 @@ class DecisionLoopCommandService:
             assessment = {
                 "observation": deepcopy(domain["observation"]),
                 "evaluated_at": domain["evaluated_at"],
+                "recorded_at": _now(),
                 "evidence_refs": list(domain["evidence_refs"]),
                 "eligibility": _eligibility_payload(eligibility),
                 "post_action": post_action,

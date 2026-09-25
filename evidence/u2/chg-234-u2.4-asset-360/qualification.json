@@ -1,0 +1,5046 @@
+{
+  "base_commit": "4482233202ff2667262ff0d47ff390e72d398d3c",
+  "browser": {
+    "desktop_1440x900": {
+      "actions_reachable": true,
+      "chart_gap_rendering": {
+        "actual": {
+          "aria_label": "4 primary and 2 peer measurement observations, plotted as separate points without connecting lines",
+          "circle_count": 6,
+          "path_count": 0,
+          "polyline_count": 0
+        },
+        "expected_separate_points": 6,
+        "pass": true
+      },
+      "episode_deep_link": {
+        "origin_preserved": true,
+        "returned_to_asset": true,
+        "status": "PASS"
+      },
+      "inventories": {
+        "console_errors": [],
+        "http_failures": [],
+        "page_errors": [],
+        "request_failures": [],
+        "requests": [
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/ephi/assets"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.unimportant.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.important.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/vue.esm-browser.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/573d0129acaebad907d825007cd6fa02/query.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/7416ad0839166372589af103d2dac97f/link.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/50808f343f9d39efb70f4fe21b9a193b/html.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/64c866455daa2383bf6d88c437b23510/input.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/4cd8f5dc71f02312671ee4e68c4ac55f/aggrid.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/b3fd268d934c6085e7dbfa4ba57f4b4b/dark_mode.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/socket.io.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/tailwindcss.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/lang/en-US.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/dompurify.mjs"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/esm/ce781217513f674f11796076012a375d/index.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/utils/dynamic_properties.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts/2474057f3040a08c.woff2"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/ephi/assets/synthetic-cd-asset-primary"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.unimportant.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.important.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/vue.esm-browser.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/573d0129acaebad907d825007cd6fa02/query.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/7416ad0839166372589af103d2dac97f/link.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/50808f343f9d39efb70f4fe21b9a193b/html.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/64c866455daa2383bf6d88c437b23510/input.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/4cd8f5dc71f02312671ee4e68c4ac55f/aggrid.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/b3fd268d934c6085e7dbfa4ba57f4b4b/dark_mode.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/socket.io.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/tailwindcss.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/lang/en-US.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/dompurify.mjs"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts/2474057f3040a08c.woff2"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/esm/ce781217513f674f11796076012a375d/index.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/utils/dynamic_properties.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/ephi/assets/synthetic-cd-asset-primary"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.unimportant.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.important.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/vue.esm-browser.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/573d0129acaebad907d825007cd6fa02/query.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/7416ad0839166372589af103d2dac97f/link.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/50808f343f9d39efb70f4fe21b9a193b/html.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/64c866455daa2383bf6d88c437b23510/input.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/4cd8f5dc71f02312671ee4e68c4ac55f/aggrid.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/b3fd268d934c6085e7dbfa4ba57f4b4b/dark_mode.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/socket.io.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/tailwindcss.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/lang/en-US.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/dompurify.mjs"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts/2474057f3040a08c.woff2"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/esm/ce781217513f674f11796076012a375d/index.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/utils/dynamic_properties.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/ephi/assets/synthetic-cd-asset-primary"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.unimportant.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.important.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/vue.esm-browser.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/573d0129acaebad907d825007cd6fa02/query.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/7416ad0839166372589af103d2dac97f/link.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/50808f343f9d39efb70f4fe21b9a193b/html.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/64c866455daa2383bf6d88c437b23510/input.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/4cd8f5dc71f02312671ee4e68c4ac55f/aggrid.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/b3fd268d934c6085e7dbfa4ba57f4b4b/dark_mode.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/socket.io.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/tailwindcss.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/lang/en-US.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/dompurify.mjs"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts/2474057f3040a08c.woff2"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/esm/ce781217513f674f11796076012a375d/index.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/utils/dynamic_properties.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/episode"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.unimportant.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.important.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/vue.esm-browser.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/573d0129acaebad907d825007cd6fa02/query.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/7416ad0839166372589af103d2dac97f/link.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/50808f343f9d39efb70f4fe21b9a193b/html.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/socket.io.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/tailwindcss.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/lang/en-US.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/dompurify.mjs"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts/2474057f3040a08c.woff2"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/ephi/assets/synthetic-cd-asset-primary"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.unimportant.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.important.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/vue.esm-browser.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/573d0129acaebad907d825007cd6fa02/query.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/7416ad0839166372589af103d2dac97f/link.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/50808f343f9d39efb70f4fe21b9a193b/html.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/64c866455daa2383bf6d88c437b23510/input.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/4cd8f5dc71f02312671ee4e68c4ac55f/aggrid.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/b3fd268d934c6085e7dbfa4ba57f4b4b/dark_mode.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/socket.io.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/tailwindcss.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/lang/en-US.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/dompurify.mjs"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts/2474057f3040a08c.woff2"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/esm/ce781217513f674f11796076012a375d/index.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/utils/dynamic_properties.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/ephi/assets/synthetic-cd-asset-primary"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.unimportant.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.important.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/vue.esm-browser.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/573d0129acaebad907d825007cd6fa02/query.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/7416ad0839166372589af103d2dac97f/link.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/50808f343f9d39efb70f4fe21b9a193b/html.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/64c866455daa2383bf6d88c437b23510/input.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/4cd8f5dc71f02312671ee4e68c4ac55f/aggrid.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/b3fd268d934c6085e7dbfa4ba57f4b4b/dark_mode.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/socket.io.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/tailwindcss.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/lang/en-US.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/dompurify.mjs"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts/2474057f3040a08c.woff2"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/esm/ce781217513f674f11796076012a375d/index.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/utils/dynamic_properties.js"
+          }
+        ],
+        "responses": [
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/ephi/assets",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.important.prod.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.unimportant.prod.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/573d0129acaebad907d825007cd6fa02/query.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/50808f343f9d39efb70f4fe21b9a193b/html.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/7416ad0839166372589af103d2dac97f/link.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/vue.esm-browser.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/4cd8f5dc71f02312671ee4e68c4ac55f/aggrid.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/64c866455daa2383bf6d88c437b23510/input.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/b3fd268d934c6085e7dbfa4ba57f4b4b/dark_mode.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/socket.io.min.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/tailwindcss.min.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/lang/en-US.umd.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/dompurify.mjs",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.umd.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts/2474057f3040a08c.woff2",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/utils/dynamic_properties.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/esm/ce781217513f674f11796076012a375d/index.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/ephi/assets/synthetic-cd-asset-primary",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.unimportant.prod.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.important.prod.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/vue.esm-browser.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/573d0129acaebad907d825007cd6fa02/query.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/7416ad0839166372589af103d2dac97f/link.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/50808f343f9d39efb70f4fe21b9a193b/html.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/64c866455daa2383bf6d88c437b23510/input.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/4cd8f5dc71f02312671ee4e68c4ac55f/aggrid.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/b3fd268d934c6085e7dbfa4ba57f4b4b/dark_mode.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/socket.io.min.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/tailwindcss.min.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.umd.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/lang/en-US.umd.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/dompurify.mjs",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts/2474057f3040a08c.woff2",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/esm/ce781217513f674f11796076012a375d/index.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/utils/dynamic_properties.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/ephi/assets/synthetic-cd-asset-primary",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.unimportant.prod.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.important.prod.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/vue.esm-browser.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/573d0129acaebad907d825007cd6fa02/query.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/7416ad0839166372589af103d2dac97f/link.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/50808f343f9d39efb70f4fe21b9a193b/html.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/64c866455daa2383bf6d88c437b23510/input.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/4cd8f5dc71f02312671ee4e68c4ac55f/aggrid.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/b3fd268d934c6085e7dbfa4ba57f4b4b/dark_mode.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/socket.io.min.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/tailwindcss.min.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.umd.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/lang/en-US.umd.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/dompurify.mjs",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts/2474057f3040a08c.woff2",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/esm/ce781217513f674f11796076012a375d/index.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/utils/dynamic_properties.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/ephi/assets/synthetic-cd-asset-primary",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.unimportant.prod.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.important.prod.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/vue.esm-browser.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/573d0129acaebad907d825007cd6fa02/query.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/7416ad0839166372589af103d2dac97f/link.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/50808f343f9d39efb70f4fe21b9a193b/html.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/64c866455daa2383bf6d88c437b23510/input.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/4cd8f5dc71f02312671ee4e68c4ac55f/aggrid.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/b3fd268d934c6085e7dbfa4ba57f4b4b/dark_mode.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/socket.io.min.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/tailwindcss.min.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.umd.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/lang/en-US.umd.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/dompurify.mjs",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts/2474057f3040a08c.woff2",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/esm/ce781217513f674f11796076012a375d/index.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/utils/dynamic_properties.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/episode",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.unimportant.prod.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.important.prod.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/vue.esm-browser.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/573d0129acaebad907d825007cd6fa02/query.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/7416ad0839166372589af103d2dac97f/link.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/50808f343f9d39efb70f4fe21b9a193b/html.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/socket.io.min.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/tailwindcss.min.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.umd.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/lang/en-US.umd.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/dompurify.mjs",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts/2474057f3040a08c.woff2",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/ephi/assets/synthetic-cd-asset-primary",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.unimportant.prod.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.important.prod.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/vue.esm-browser.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/573d0129acaebad907d825007cd6fa02/query.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/7416ad0839166372589af103d2dac97f/link.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/50808f343f9d39efb70f4fe21b9a193b/html.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/64c866455daa2383bf6d88c437b23510/input.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/4cd8f5dc71f02312671ee4e68c4ac55f/aggrid.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/b3fd268d934c6085e7dbfa4ba57f4b4b/dark_mode.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/socket.io.min.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/tailwindcss.min.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.umd.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/lang/en-US.umd.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/dompurify.mjs",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts/2474057f3040a08c.woff2",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/esm/ce781217513f674f11796076012a375d/index.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/utils/dynamic_properties.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/ephi/assets/synthetic-cd-asset-primary",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.unimportant.prod.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.important.prod.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/vue.esm-browser.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/573d0129acaebad907d825007cd6fa02/query.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/7416ad0839166372589af103d2dac97f/link.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/50808f343f9d39efb70f4fe21b9a193b/html.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/64c866455daa2383bf6d88c437b23510/input.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/4cd8f5dc71f02312671ee4e68c4ac55f/aggrid.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/b3fd268d934c6085e7dbfa4ba57f4b4b/dark_mode.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/socket.io.min.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/tailwindcss.min.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.umd.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/lang/en-US.umd.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/dompurify.mjs",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts/2474057f3040a08c.woff2",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/esm/ce781217513f674f11796076012a375d/index.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/utils/dynamic_properties.js",
+            "status": 200
+          }
+        ]
+      },
+      "inventories_clean": true,
+      "keyboard_focus": {
+        "focus_style": {
+          "active": true,
+          "before_outline": "rgb(255, 255, 255) none 3px",
+          "before_shadow": "none",
+          "box_shadow": "rgb(0, 94, 168) 0px 0px 0px 3px",
+          "box_shadow_transparent": false,
+          "classes": "q-btn q-btn-item non-selectable no-outline q-btn--unelevated q-btn--rectangle q-btn--actionable q-focusable q-hoverable q-btn--no-uppercase cui-button cui-button--primary cui-control--medium",
+          "focus_visible": true,
+          "helper_background": "rgb(255, 255, 255)",
+          "helper_opacity": "0.22",
+          "outline": "none",
+          "outline_width": "0px",
+          "screenshot": "asset-list-desktop-keyboard-focus.png",
+          "screenshot_sha256": "c9c94b8b1a98ffe40f8e3ebddda0fbe31f56f1ce57f42ac54c73eed5c3f46455",
+          "tag": "BUTTON"
+        },
+        "focus_visible": true,
+        "tab_count": 14,
+        "target_reached": true
+      },
+      "missing_content": [],
+      "no_horizontal_overflow": true,
+      "screenshots": [
+        {
+          "path": "asset-list-desktop-1440x900.png",
+          "sha256": "e69f3bbd95cca91d13e2549c8e8212d2ac3dcb229f95f0c2aaa05688e5156829"
+        },
+        {
+          "path": "asset-360-episodes-desktop-1440x900.png",
+          "sha256": "897e856de82296221d15d620f762638b89fbeb86e309616797c080a19aa0dbd7"
+        },
+        {
+          "path": "asset-360-gap-compatible-desktop-1440x900.png",
+          "sha256": "c6b5c2533461f0374ab77b61ef26f84e917a96237c107b9baeb72d53f1e6324c"
+        },
+        {
+          "path": "asset-360-compare-blocked-desktop-1440x900.png",
+          "sha256": "759701b732f21f6d56245cd6b977cd29c5b622aaac1db384f2d987ef1eb21c8d"
+        }
+      ],
+      "states": {
+        "asset_360_episodes": {
+          "body_digest": "3b97fa2f9ac983526474e6cc7277ebe589bca7eb869447750baf2c45bde4ddf8",
+          "chart": null,
+          "geometry": {
+            "action_box": {
+              "height": 44,
+              "width": 107.59375,
+              "x": 291,
+              "y": 427.796875
+            },
+            "action_reachable": true,
+            "body_width": 1440,
+            "document_height": 2337,
+            "document_width": 1440,
+            "no_horizontal_overflow": true,
+            "viewport": {
+              "height": 900,
+              "width": 1440
+            },
+            "viewport_height": 900,
+            "viewport_width": 1440
+          },
+          "missing": [],
+          "screenshot": "asset-360-episodes-desktop-1440x900.png"
+        },
+        "asset_list": {
+          "body_digest": "748db3b6fe940c0220c8007ddc108b64be9f81d068b16533dbf0293ba4f4b461",
+          "chart": null,
+          "geometry": {
+            "action_box": {
+              "height": 44,
+              "width": 68.3125,
+              "x": 1328.34375,
+              "y": 605.296875
+            },
+            "action_reachable": true,
+            "body_width": 1440,
+            "document_height": 900,
+            "document_width": 1440,
+            "no_horizontal_overflow": true,
+            "viewport": {
+              "height": 900,
+              "width": 1440
+            },
+            "viewport_height": 900,
+            "viewport_width": 1440
+          },
+          "missing": [],
+          "screenshot": "asset-list-desktop-1440x900.png"
+        },
+        "blocked_compare": {
+          "body_digest": "5fd3b4c4afcf42c8106ac7cd983e5fcf9dfdd456539caaa487788a047a60f3ca",
+          "chart": {
+            "aria_label": "4 primary and 0 peer measurement observations, plotted as separate points without connecting lines",
+            "circle_count": 4,
+            "path_count": 0,
+            "polyline_count": 0
+          },
+          "geometry": {
+            "action_box": null,
+            "action_reachable": null,
+            "body_width": 1440,
+            "document_height": 2222,
+            "document_width": 1440,
+            "no_horizontal_overflow": true,
+            "viewport": {
+              "height": 900,
+              "width": 1440
+            },
+            "viewport_height": 900,
+            "viewport_width": 1440
+          },
+          "missing": [],
+          "screenshot": "asset-360-compare-blocked-desktop-1440x900.png"
+        },
+        "history_gap_compatible_compare": {
+          "body_digest": "68ad7d17a1dc4facf6f041822109731a4393918df1fe258ae17f06e9e503c985",
+          "chart": {
+            "aria_label": "4 primary and 2 peer measurement observations, plotted as separate points without connecting lines",
+            "circle_count": 6,
+            "path_count": 0,
+            "polyline_count": 0
+          },
+          "geometry": {
+            "action_box": null,
+            "action_reachable": null,
+            "body_width": 1440,
+            "document_height": 2222,
+            "document_width": 1440,
+            "no_horizontal_overflow": true,
+            "viewport": {
+              "height": 900,
+              "width": 1440
+            },
+            "viewport_height": 900,
+            "viewport_width": 1440
+          },
+          "missing": [],
+          "screenshot": "asset-360-gap-compatible-desktop-1440x900.png"
+        }
+      },
+      "status": "PASS",
+      "viewport": {
+        "height": 900,
+        "width": 1440
+      }
+    },
+    "phone_390x844": {
+      "actions_reachable": true,
+      "chart_gap_rendering": {
+        "actual": {
+          "aria_label": "4 primary and 2 peer measurement observations, plotted as separate points without connecting lines",
+          "circle_count": 6,
+          "path_count": 0,
+          "polyline_count": 0
+        },
+        "expected_separate_points": 6,
+        "pass": true
+      },
+      "episode_deep_link": {
+        "status": "NOT_RUN"
+      },
+      "inventories": {
+        "console_errors": [],
+        "http_failures": [],
+        "page_errors": [],
+        "request_failures": [],
+        "requests": [
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/ephi/assets"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.unimportant.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.important.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/vue.esm-browser.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/573d0129acaebad907d825007cd6fa02/query.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/7416ad0839166372589af103d2dac97f/link.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/50808f343f9d39efb70f4fe21b9a193b/html.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/64c866455daa2383bf6d88c437b23510/input.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/4cd8f5dc71f02312671ee4e68c4ac55f/aggrid.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/b3fd268d934c6085e7dbfa4ba57f4b4b/dark_mode.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/socket.io.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/tailwindcss.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/lang/en-US.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/dompurify.mjs"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/esm/ce781217513f674f11796076012a375d/index.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/utils/dynamic_properties.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts/2474057f3040a08c.woff2"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/ephi/assets/synthetic-cd-asset-primary"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.unimportant.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.important.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/vue.esm-browser.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/573d0129acaebad907d825007cd6fa02/query.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/7416ad0839166372589af103d2dac97f/link.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/50808f343f9d39efb70f4fe21b9a193b/html.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/64c866455daa2383bf6d88c437b23510/input.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/4cd8f5dc71f02312671ee4e68c4ac55f/aggrid.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/b3fd268d934c6085e7dbfa4ba57f4b4b/dark_mode.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/socket.io.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/tailwindcss.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/lang/en-US.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/dompurify.mjs"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts/2474057f3040a08c.woff2"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/esm/ce781217513f674f11796076012a375d/index.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/utils/dynamic_properties.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/ephi/assets/synthetic-cd-asset-primary"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.unimportant.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.important.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/vue.esm-browser.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/573d0129acaebad907d825007cd6fa02/query.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/7416ad0839166372589af103d2dac97f/link.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/50808f343f9d39efb70f4fe21b9a193b/html.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/64c866455daa2383bf6d88c437b23510/input.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/4cd8f5dc71f02312671ee4e68c4ac55f/aggrid.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/b3fd268d934c6085e7dbfa4ba57f4b4b/dark_mode.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/socket.io.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/tailwindcss.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/lang/en-US.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/dompurify.mjs"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts/2474057f3040a08c.woff2"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/esm/ce781217513f674f11796076012a375d/index.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/utils/dynamic_properties.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/ephi/assets/synthetic-cd-asset-primary"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.unimportant.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.important.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/vue.esm-browser.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/573d0129acaebad907d825007cd6fa02/query.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/7416ad0839166372589af103d2dac97f/link.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/50808f343f9d39efb70f4fe21b9a193b/html.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/64c866455daa2383bf6d88c437b23510/input.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/4cd8f5dc71f02312671ee4e68c4ac55f/aggrid.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/b3fd268d934c6085e7dbfa4ba57f4b4b/dark_mode.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/socket.io.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/tailwindcss.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/lang/en-US.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/dompurify.mjs"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts/2474057f3040a08c.woff2"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/esm/ce781217513f674f11796076012a375d/index.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/utils/dynamic_properties.js"
+          }
+        ],
+        "responses": [
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/ephi/assets",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.important.prod.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.unimportant.prod.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/573d0129acaebad907d825007cd6fa02/query.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/vue.esm-browser.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/7416ad0839166372589af103d2dac97f/link.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/64c866455daa2383bf6d88c437b23510/input.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/4cd8f5dc71f02312671ee4e68c4ac55f/aggrid.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/50808f343f9d39efb70f4fe21b9a193b/html.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/b3fd268d934c6085e7dbfa4ba57f4b4b/dark_mode.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/lang/en-US.umd.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/socket.io.min.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/dompurify.mjs",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/tailwindcss.min.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/utils/dynamic_properties.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.umd.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts/2474057f3040a08c.woff2",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/esm/ce781217513f674f11796076012a375d/index.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/ephi/assets/synthetic-cd-asset-primary",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.unimportant.prod.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.important.prod.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/vue.esm-browser.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/573d0129acaebad907d825007cd6fa02/query.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/7416ad0839166372589af103d2dac97f/link.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/50808f343f9d39efb70f4fe21b9a193b/html.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/64c866455daa2383bf6d88c437b23510/input.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/4cd8f5dc71f02312671ee4e68c4ac55f/aggrid.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/b3fd268d934c6085e7dbfa4ba57f4b4b/dark_mode.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/socket.io.min.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/tailwindcss.min.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.umd.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/lang/en-US.umd.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/dompurify.mjs",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts/2474057f3040a08c.woff2",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/esm/ce781217513f674f11796076012a375d/index.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/utils/dynamic_properties.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/ephi/assets/synthetic-cd-asset-primary",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.unimportant.prod.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.important.prod.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/vue.esm-browser.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/573d0129acaebad907d825007cd6fa02/query.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/7416ad0839166372589af103d2dac97f/link.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/50808f343f9d39efb70f4fe21b9a193b/html.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/64c866455daa2383bf6d88c437b23510/input.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/4cd8f5dc71f02312671ee4e68c4ac55f/aggrid.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/b3fd268d934c6085e7dbfa4ba57f4b4b/dark_mode.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/socket.io.min.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/tailwindcss.min.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.umd.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/lang/en-US.umd.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/dompurify.mjs",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts/2474057f3040a08c.woff2",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/esm/ce781217513f674f11796076012a375d/index.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/utils/dynamic_properties.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/ephi/assets/synthetic-cd-asset-primary",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.unimportant.prod.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.important.prod.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/vue.esm-browser.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/573d0129acaebad907d825007cd6fa02/query.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/7416ad0839166372589af103d2dac97f/link.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/50808f343f9d39efb70f4fe21b9a193b/html.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/64c866455daa2383bf6d88c437b23510/input.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/4cd8f5dc71f02312671ee4e68c4ac55f/aggrid.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/b3fd268d934c6085e7dbfa4ba57f4b4b/dark_mode.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/socket.io.min.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/tailwindcss.min.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.umd.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/lang/en-US.umd.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/dompurify.mjs",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts/2474057f3040a08c.woff2",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/esm/ce781217513f674f11796076012a375d/index.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/utils/dynamic_properties.js",
+            "status": 200
+          }
+        ]
+      },
+      "inventories_clean": true,
+      "keyboard_focus": {},
+      "missing_content": [],
+      "no_horizontal_overflow": true,
+      "screenshots": [
+        {
+          "path": "asset-list-mobile-390x844.png",
+          "sha256": "1532b233bd70a92b0b0af89f120cd0bd1d2e0c37ffa7e4f40ee415f2a9d25ad4"
+        },
+        {
+          "path": "asset-360-episodes-mobile-390x844.png",
+          "sha256": "bc01fb655263453d1cdd56cd2a265f6dfbed3a5515dd80d6af6e55cec3bbe36a"
+        },
+        {
+          "path": "asset-360-gap-compatible-mobile-390x844.png",
+          "sha256": "78f185c9d9e4a8d9e35d58ea37d848c9e278013ebbf5f4f598781301b005b0ec"
+        },
+        {
+          "path": "asset-360-compare-blocked-mobile-390x844.png",
+          "sha256": "e97e1e23a71579d054c7929b53ef0f7b3e57a93313f3bcc47d0abf31d1eb0d0c"
+        }
+      ],
+      "states": {
+        "asset_360_episodes": {
+          "body_digest": "302c762f5054ced54e4277366960c95356bf6f55976fc12f9dc94a8f16171dd1",
+          "chart": null,
+          "geometry": {
+            "action_box": {
+              "height": 44,
+              "width": 107.59375,
+              "x": 31,
+              "y": 399.90625
+            },
+            "action_reachable": true,
+            "body_width": 390,
+            "document_height": 4181,
+            "document_width": 390,
+            "no_horizontal_overflow": true,
+            "viewport": {
+              "height": 844,
+              "width": 390
+            },
+            "viewport_height": 844,
+            "viewport_width": 390
+          },
+          "missing": [],
+          "screenshot": "asset-360-episodes-mobile-390x844.png"
+        },
+        "asset_list": {
+          "body_digest": "d2e570f2e028bdfb2f391399ced018db792e7f30e6b52a3921da0b7930a43eab",
+          "chart": null,
+          "geometry": {
+            "action_box": {
+              "height": 44,
+              "width": 44,
+              "x": 297,
+              "y": 7.5
+            },
+            "action_reachable": true,
+            "body_width": 390,
+            "document_height": 2022,
+            "document_width": 390,
+            "no_horizontal_overflow": true,
+            "viewport": {
+              "height": 844,
+              "width": 390
+            },
+            "viewport_height": 844,
+            "viewport_width": 390
+          },
+          "missing": [],
+          "screenshot": "asset-list-mobile-390x844.png"
+        },
+        "blocked_compare": {
+          "body_digest": "25c21a7b3255db0e07ec5adacef8aa45edab19a2a6eea47f3c0de3ac3291dd24",
+          "chart": {
+            "aria_label": "4 primary and 0 peer measurement observations, plotted as separate points without connecting lines",
+            "circle_count": 4,
+            "path_count": 0,
+            "polyline_count": 0
+          },
+          "geometry": {
+            "action_box": null,
+            "action_reachable": null,
+            "body_width": 390,
+            "document_height": 3886,
+            "document_width": 390,
+            "no_horizontal_overflow": true,
+            "viewport": {
+              "height": 844,
+              "width": 390
+            },
+            "viewport_height": 844,
+            "viewport_width": 390
+          },
+          "missing": [],
+          "screenshot": "asset-360-compare-blocked-mobile-390x844.png"
+        },
+        "history_gap_compatible_compare": {
+          "body_digest": "9379c307c58d458ddcaa1650a3dd4c017dbfacf1ddab94eb4861d3e34f5b730a",
+          "chart": {
+            "aria_label": "4 primary and 2 peer measurement observations, plotted as separate points without connecting lines",
+            "circle_count": 6,
+            "path_count": 0,
+            "polyline_count": 0
+          },
+          "geometry": {
+            "action_box": null,
+            "action_reachable": null,
+            "body_width": 390,
+            "document_height": 3870,
+            "document_width": 390,
+            "no_horizontal_overflow": true,
+            "viewport": {
+              "height": 844,
+              "width": 390
+            },
+            "viewport_height": 844,
+            "viewport_width": 390
+          },
+          "missing": [],
+          "screenshot": "asset-360-gap-compatible-mobile-390x844.png"
+        }
+      },
+      "status": "PASS",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    },
+    "stale_capability_desktop": {
+      "actions_reachable": true,
+      "chart_gap_rendering": {
+        "actual": {
+          "aria_label": "4 primary and 0 peer measurement observations, plotted as separate points without connecting lines",
+          "circle_count": 4,
+          "path_count": 0,
+          "polyline_count": 0
+        },
+        "expected_separate_points": 4,
+        "pass": true
+      },
+      "episode_deep_link": {
+        "origin_preserved": true,
+        "returned_to_asset": true,
+        "status": "PASS"
+      },
+      "inventories": {
+        "console_errors": [],
+        "http_failures": [],
+        "page_errors": [],
+        "request_failures": [],
+        "requests": [
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/ephi/assets"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.unimportant.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.important.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/vue.esm-browser.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/573d0129acaebad907d825007cd6fa02/query.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/7416ad0839166372589af103d2dac97f/link.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/50808f343f9d39efb70f4fe21b9a193b/html.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/64c866455daa2383bf6d88c437b23510/input.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/4cd8f5dc71f02312671ee4e68c4ac55f/aggrid.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/b3fd268d934c6085e7dbfa4ba57f4b4b/dark_mode.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/socket.io.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/tailwindcss.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/lang/en-US.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/dompurify.mjs"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/esm/ce781217513f674f11796076012a375d/index.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/utils/dynamic_properties.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts/2474057f3040a08c.woff2"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/ephi/assets/synthetic-cd-asset-primary"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.unimportant.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.important.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/vue.esm-browser.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/573d0129acaebad907d825007cd6fa02/query.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/7416ad0839166372589af103d2dac97f/link.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/50808f343f9d39efb70f4fe21b9a193b/html.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/64c866455daa2383bf6d88c437b23510/input.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/4cd8f5dc71f02312671ee4e68c4ac55f/aggrid.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/b3fd268d934c6085e7dbfa4ba57f4b4b/dark_mode.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/socket.io.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/tailwindcss.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/lang/en-US.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/dompurify.mjs"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts/2474057f3040a08c.woff2"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/esm/ce781217513f674f11796076012a375d/index.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/utils/dynamic_properties.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/ephi/assets/synthetic-cd-asset-primary"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.unimportant.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.important.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/vue.esm-browser.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/573d0129acaebad907d825007cd6fa02/query.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/7416ad0839166372589af103d2dac97f/link.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/50808f343f9d39efb70f4fe21b9a193b/html.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/64c866455daa2383bf6d88c437b23510/input.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/4cd8f5dc71f02312671ee4e68c4ac55f/aggrid.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/b3fd268d934c6085e7dbfa4ba57f4b4b/dark_mode.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/socket.io.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/tailwindcss.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/lang/en-US.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/dompurify.mjs"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts/2474057f3040a08c.woff2"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/esm/ce781217513f674f11796076012a375d/index.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/utils/dynamic_properties.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/ephi/assets/synthetic-cd-asset-primary"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.unimportant.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.important.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/vue.esm-browser.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/573d0129acaebad907d825007cd6fa02/query.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/7416ad0839166372589af103d2dac97f/link.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/50808f343f9d39efb70f4fe21b9a193b/html.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/64c866455daa2383bf6d88c437b23510/input.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/4cd8f5dc71f02312671ee4e68c4ac55f/aggrid.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/b3fd268d934c6085e7dbfa4ba57f4b4b/dark_mode.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/socket.io.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/tailwindcss.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/lang/en-US.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/dompurify.mjs"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts/2474057f3040a08c.woff2"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/esm/ce781217513f674f11796076012a375d/index.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/utils/dynamic_properties.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/episode"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.unimportant.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.important.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/vue.esm-browser.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/573d0129acaebad907d825007cd6fa02/query.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/7416ad0839166372589af103d2dac97f/link.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/50808f343f9d39efb70f4fe21b9a193b/html.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/socket.io.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/tailwindcss.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/lang/en-US.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/dompurify.mjs"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts/2474057f3040a08c.woff2"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/ephi/assets/synthetic-cd-asset-primary"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.unimportant.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.important.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/vue.esm-browser.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/573d0129acaebad907d825007cd6fa02/query.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/7416ad0839166372589af103d2dac97f/link.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/50808f343f9d39efb70f4fe21b9a193b/html.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/64c866455daa2383bf6d88c437b23510/input.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/4cd8f5dc71f02312671ee4e68c4ac55f/aggrid.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/b3fd268d934c6085e7dbfa4ba57f4b4b/dark_mode.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/socket.io.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/tailwindcss.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/lang/en-US.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/dompurify.mjs"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts/2474057f3040a08c.woff2"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/esm/ce781217513f674f11796076012a375d/index.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/utils/dynamic_properties.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/ephi/assets/synthetic-cd-asset-primary"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.unimportant.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.important.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/vue.esm-browser.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/573d0129acaebad907d825007cd6fa02/query.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/7416ad0839166372589af103d2dac97f/link.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/50808f343f9d39efb70f4fe21b9a193b/html.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/64c866455daa2383bf6d88c437b23510/input.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/4cd8f5dc71f02312671ee4e68c4ac55f/aggrid.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/b3fd268d934c6085e7dbfa4ba57f4b4b/dark_mode.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/socket.io.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/tailwindcss.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/lang/en-US.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/dompurify.mjs"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts/2474057f3040a08c.woff2"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/esm/ce781217513f674f11796076012a375d/index.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/utils/dynamic_properties.js"
+          }
+        ],
+        "responses": [
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/ephi/assets",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.unimportant.prod.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.important.prod.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/573d0129acaebad907d825007cd6fa02/query.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/vue.esm-browser.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/50808f343f9d39efb70f4fe21b9a193b/html.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/7416ad0839166372589af103d2dac97f/link.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/64c866455daa2383bf6d88c437b23510/input.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/4cd8f5dc71f02312671ee4e68c4ac55f/aggrid.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/b3fd268d934c6085e7dbfa4ba57f4b4b/dark_mode.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/lang/en-US.umd.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/socket.io.min.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/tailwindcss.min.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/dompurify.mjs",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/utils/dynamic_properties.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.umd.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts/2474057f3040a08c.woff2",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/esm/ce781217513f674f11796076012a375d/index.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/ephi/assets/synthetic-cd-asset-primary",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.unimportant.prod.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.important.prod.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/vue.esm-browser.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/573d0129acaebad907d825007cd6fa02/query.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/7416ad0839166372589af103d2dac97f/link.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/50808f343f9d39efb70f4fe21b9a193b/html.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/64c866455daa2383bf6d88c437b23510/input.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/4cd8f5dc71f02312671ee4e68c4ac55f/aggrid.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/b3fd268d934c6085e7dbfa4ba57f4b4b/dark_mode.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/socket.io.min.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/tailwindcss.min.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.umd.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/lang/en-US.umd.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/dompurify.mjs",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts/2474057f3040a08c.woff2",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/esm/ce781217513f674f11796076012a375d/index.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/utils/dynamic_properties.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/ephi/assets/synthetic-cd-asset-primary",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.unimportant.prod.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.important.prod.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/vue.esm-browser.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/573d0129acaebad907d825007cd6fa02/query.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/7416ad0839166372589af103d2dac97f/link.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/50808f343f9d39efb70f4fe21b9a193b/html.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/64c866455daa2383bf6d88c437b23510/input.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/4cd8f5dc71f02312671ee4e68c4ac55f/aggrid.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/b3fd268d934c6085e7dbfa4ba57f4b4b/dark_mode.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/socket.io.min.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/tailwindcss.min.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.umd.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/lang/en-US.umd.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/dompurify.mjs",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts/2474057f3040a08c.woff2",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/esm/ce781217513f674f11796076012a375d/index.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/utils/dynamic_properties.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/ephi/assets/synthetic-cd-asset-primary",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.unimportant.prod.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.important.prod.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/vue.esm-browser.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/573d0129acaebad907d825007cd6fa02/query.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/7416ad0839166372589af103d2dac97f/link.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/50808f343f9d39efb70f4fe21b9a193b/html.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/64c866455daa2383bf6d88c437b23510/input.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/4cd8f5dc71f02312671ee4e68c4ac55f/aggrid.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/b3fd268d934c6085e7dbfa4ba57f4b4b/dark_mode.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/socket.io.min.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/tailwindcss.min.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.umd.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/lang/en-US.umd.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/dompurify.mjs",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts/2474057f3040a08c.woff2",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/esm/ce781217513f674f11796076012a375d/index.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/utils/dynamic_properties.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/episode",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.unimportant.prod.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.important.prod.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/vue.esm-browser.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/573d0129acaebad907d825007cd6fa02/query.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/7416ad0839166372589af103d2dac97f/link.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/50808f343f9d39efb70f4fe21b9a193b/html.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/socket.io.min.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/tailwindcss.min.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.umd.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/lang/en-US.umd.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/dompurify.mjs",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts/2474057f3040a08c.woff2",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/ephi/assets/synthetic-cd-asset-primary",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.unimportant.prod.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.important.prod.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/vue.esm-browser.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/573d0129acaebad907d825007cd6fa02/query.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/7416ad0839166372589af103d2dac97f/link.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/50808f343f9d39efb70f4fe21b9a193b/html.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/64c866455daa2383bf6d88c437b23510/input.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/4cd8f5dc71f02312671ee4e68c4ac55f/aggrid.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/b3fd268d934c6085e7dbfa4ba57f4b4b/dark_mode.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/socket.io.min.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/tailwindcss.min.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.umd.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/lang/en-US.umd.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/dompurify.mjs",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts/2474057f3040a08c.woff2",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/esm/ce781217513f674f11796076012a375d/index.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/utils/dynamic_properties.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/ephi/assets/synthetic-cd-asset-primary",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.unimportant.prod.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.important.prod.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/vue.esm-browser.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/573d0129acaebad907d825007cd6fa02/query.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/7416ad0839166372589af103d2dac97f/link.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/50808f343f9d39efb70f4fe21b9a193b/html.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/64c866455daa2383bf6d88c437b23510/input.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/4cd8f5dc71f02312671ee4e68c4ac55f/aggrid.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/b3fd268d934c6085e7dbfa4ba57f4b4b/dark_mode.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/socket.io.min.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/tailwindcss.min.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.umd.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/lang/en-US.umd.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/dompurify.mjs",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts/2474057f3040a08c.woff2",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/esm/ce781217513f674f11796076012a375d/index.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/utils/dynamic_properties.js",
+            "status": 200
+          }
+        ]
+      },
+      "inventories_clean": true,
+      "keyboard_focus": {
+        "focus_style": {
+          "active": true,
+          "before_outline": "rgb(255, 255, 255) none 3px",
+          "before_shadow": "none",
+          "box_shadow": "rgb(0, 94, 168) 0px 0px 0px 3px",
+          "box_shadow_transparent": false,
+          "classes": "q-btn q-btn-item non-selectable no-outline q-btn--unelevated q-btn--rectangle q-btn--actionable q-focusable q-hoverable q-btn--no-uppercase cui-button cui-button--primary cui-control--medium",
+          "focus_visible": true,
+          "helper_background": "rgb(255, 255, 255)",
+          "helper_opacity": "0.22",
+          "outline": "none",
+          "outline_width": "0px",
+          "screenshot": "asset-list-desktop-keyboard-focus-stale.png",
+          "screenshot_sha256": "24f7b7948a5f43663a578d8da26dacf2d7bfd0b8a3df783df4ac73cecf434f6b",
+          "tag": "BUTTON"
+        },
+        "focus_visible": true,
+        "tab_count": 14,
+        "target_reached": true
+      },
+      "missing_content": [],
+      "no_horizontal_overflow": true,
+      "screenshots": [
+        {
+          "path": "asset-list-desktop-stale-1440x900.png",
+          "sha256": "49614604cbd9b03ea12150c615a7eeab257ad170a958ee8b4dc2e5b732da17f0"
+        },
+        {
+          "path": "asset-360-episodes-desktop-stale-1440x900.png",
+          "sha256": "9ca3639c7c00d9736945296ea7074a9cf9458ecd8247301cf64ea3f088fd899f"
+        },
+        {
+          "path": "asset-360-gap-compatible-desktop-stale-1440x900.png",
+          "sha256": "40cb03095b484819ed16c2147c86f18ad3bb42cb6ba9e7e8d2d222ba06706533"
+        },
+        {
+          "path": "asset-360-stale-capability-desktop-1440x900.png",
+          "sha256": "01e62b0720859c473c55c3ffc90b6a7bf865168b01b938f7d78e9c6eaf457ce0"
+        }
+      ],
+      "states": {
+        "asset_360_episodes": {
+          "body_digest": "97c2ed9254a8f0ffdcceb6d049d6c1b07b4aae17787d357be11e300a40701b0a",
+          "chart": null,
+          "geometry": {
+            "action_box": {
+              "height": 44,
+              "width": 107.59375,
+              "x": 291,
+              "y": 427.796875
+            },
+            "action_reachable": true,
+            "body_width": 1440,
+            "document_height": 2337,
+            "document_width": 1440,
+            "no_horizontal_overflow": true,
+            "viewport": {
+              "height": 900,
+              "width": 1440
+            },
+            "viewport_height": 900,
+            "viewport_width": 1440
+          },
+          "missing": [],
+          "screenshot": "asset-360-episodes-desktop-stale-1440x900.png"
+        },
+        "asset_list": {
+          "body_digest": "7d7227a7a7ddcdb04a472880476a292feb61d1c9dcbd38010aa5226787e2e582",
+          "chart": null,
+          "geometry": {
+            "action_box": {
+              "height": 44,
+              "width": 68.3125,
+              "x": 1328.34375,
+              "y": 629.296875
+            },
+            "action_reachable": true,
+            "body_width": 1440,
+            "document_height": 911,
+            "document_width": 1440,
+            "no_horizontal_overflow": true,
+            "viewport": {
+              "height": 900,
+              "width": 1440
+            },
+            "viewport_height": 900,
+            "viewport_width": 1440
+          },
+          "missing": [],
+          "screenshot": "asset-list-desktop-stale-1440x900.png"
+        },
+        "blocked_compare": null,
+        "history_gap_compatible_compare": {
+          "body_digest": "70eb6fa22e5322387371a6bbc42c6348bf067696c95c3596e5d9a0e36ee80e48",
+          "chart": {
+            "aria_label": "4 primary and 0 peer measurement observations, plotted as separate points without connecting lines",
+            "circle_count": 4,
+            "path_count": 0,
+            "polyline_count": 0
+          },
+          "geometry": {
+            "action_box": null,
+            "action_reachable": null,
+            "body_width": 1440,
+            "document_height": 2165,
+            "document_width": 1440,
+            "no_horizontal_overflow": true,
+            "viewport": {
+              "height": 900,
+              "width": 1440
+            },
+            "viewport_height": 900,
+            "viewport_width": 1440
+          },
+          "missing": [],
+          "screenshot": "asset-360-gap-compatible-desktop-stale-1440x900.png"
+        },
+        "stale_capability": {
+          "body_digest": "94f507df20b6c3f2ba8c8158a33af00dc3f9dcf25fecfb5392dd7a9274fdf1b3",
+          "chart": {
+            "aria_label": "4 primary and 0 peer measurement observations, plotted as separate points without connecting lines",
+            "circle_count": 4,
+            "path_count": 0,
+            "polyline_count": 0
+          },
+          "geometry": {
+            "action_box": null,
+            "action_reachable": null,
+            "body_width": 1440,
+            "document_height": 2165,
+            "document_width": 1440,
+            "no_horizontal_overflow": true,
+            "viewport": {
+              "height": 900,
+              "width": 1440
+            },
+            "viewport_height": 900,
+            "viewport_width": 1440
+          },
+          "missing": [],
+          "screenshot": "asset-360-stale-capability-desktop-1440x900.png"
+        }
+      },
+      "status": "PASS",
+      "viewport": {
+        "height": 900,
+        "width": 1440
+      }
+    },
+    "stale_capability_phone": {
+      "actions_reachable": true,
+      "chart_gap_rendering": {
+        "actual": {
+          "aria_label": "4 primary and 0 peer measurement observations, plotted as separate points without connecting lines",
+          "circle_count": 4,
+          "path_count": 0,
+          "polyline_count": 0
+        },
+        "expected_separate_points": 4,
+        "pass": true
+      },
+      "episode_deep_link": {
+        "status": "NOT_RUN"
+      },
+      "inventories": {
+        "console_errors": [],
+        "http_failures": [],
+        "page_errors": [],
+        "request_failures": [],
+        "requests": [
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/ephi/assets"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.unimportant.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.important.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/vue.esm-browser.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/573d0129acaebad907d825007cd6fa02/query.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/7416ad0839166372589af103d2dac97f/link.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/50808f343f9d39efb70f4fe21b9a193b/html.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/64c866455daa2383bf6d88c437b23510/input.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/4cd8f5dc71f02312671ee4e68c4ac55f/aggrid.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/b3fd268d934c6085e7dbfa4ba57f4b4b/dark_mode.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/socket.io.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/tailwindcss.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/lang/en-US.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/dompurify.mjs"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/esm/ce781217513f674f11796076012a375d/index.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/utils/dynamic_properties.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts/2474057f3040a08c.woff2"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/ephi/assets/synthetic-cd-asset-primary"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.unimportant.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.important.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/vue.esm-browser.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/573d0129acaebad907d825007cd6fa02/query.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/7416ad0839166372589af103d2dac97f/link.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/50808f343f9d39efb70f4fe21b9a193b/html.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/64c866455daa2383bf6d88c437b23510/input.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/4cd8f5dc71f02312671ee4e68c4ac55f/aggrid.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/b3fd268d934c6085e7dbfa4ba57f4b4b/dark_mode.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/socket.io.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/tailwindcss.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/lang/en-US.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/dompurify.mjs"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts/2474057f3040a08c.woff2"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/esm/ce781217513f674f11796076012a375d/index.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/utils/dynamic_properties.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/ephi/assets/synthetic-cd-asset-primary"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.unimportant.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.important.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/vue.esm-browser.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/573d0129acaebad907d825007cd6fa02/query.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/7416ad0839166372589af103d2dac97f/link.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/50808f343f9d39efb70f4fe21b9a193b/html.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/64c866455daa2383bf6d88c437b23510/input.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/4cd8f5dc71f02312671ee4e68c4ac55f/aggrid.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/b3fd268d934c6085e7dbfa4ba57f4b4b/dark_mode.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/socket.io.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/tailwindcss.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/lang/en-US.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/dompurify.mjs"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts/2474057f3040a08c.woff2"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/esm/ce781217513f674f11796076012a375d/index.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/utils/dynamic_properties.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/ephi/assets/synthetic-cd-asset-primary"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.unimportant.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.important.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/vue.esm-browser.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/573d0129acaebad907d825007cd6fa02/query.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/7416ad0839166372589af103d2dac97f/link.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/50808f343f9d39efb70f4fe21b9a193b/html.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/64c866455daa2383bf6d88c437b23510/input.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/4cd8f5dc71f02312671ee4e68c4ac55f/aggrid.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/b3fd268d934c6085e7dbfa4ba57f4b4b/dark_mode.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/socket.io.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/tailwindcss.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/lang/en-US.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/dompurify.mjs"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts/2474057f3040a08c.woff2"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/esm/ce781217513f674f11796076012a375d/index.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/utils/dynamic_properties.js"
+          }
+        ],
+        "responses": [
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/ephi/assets",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.unimportant.prod.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.important.prod.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/573d0129acaebad907d825007cd6fa02/query.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/vue.esm-browser.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/64c866455daa2383bf6d88c437b23510/input.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/50808f343f9d39efb70f4fe21b9a193b/html.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/7416ad0839166372589af103d2dac97f/link.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/4cd8f5dc71f02312671ee4e68c4ac55f/aggrid.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/b3fd268d934c6085e7dbfa4ba57f4b4b/dark_mode.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/lang/en-US.umd.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/socket.io.min.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/tailwindcss.min.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/dompurify.mjs",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/utils/dynamic_properties.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.umd.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts/2474057f3040a08c.woff2",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/esm/ce781217513f674f11796076012a375d/index.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/ephi/assets/synthetic-cd-asset-primary",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.unimportant.prod.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.important.prod.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/vue.esm-browser.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/573d0129acaebad907d825007cd6fa02/query.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/7416ad0839166372589af103d2dac97f/link.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/50808f343f9d39efb70f4fe21b9a193b/html.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/64c866455daa2383bf6d88c437b23510/input.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/4cd8f5dc71f02312671ee4e68c4ac55f/aggrid.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/b3fd268d934c6085e7dbfa4ba57f4b4b/dark_mode.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/socket.io.min.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/tailwindcss.min.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.umd.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/lang/en-US.umd.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/dompurify.mjs",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts/2474057f3040a08c.woff2",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/esm/ce781217513f674f11796076012a375d/index.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/utils/dynamic_properties.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/ephi/assets/synthetic-cd-asset-primary",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.unimportant.prod.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.important.prod.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/vue.esm-browser.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/573d0129acaebad907d825007cd6fa02/query.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/7416ad0839166372589af103d2dac97f/link.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/50808f343f9d39efb70f4fe21b9a193b/html.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/64c866455daa2383bf6d88c437b23510/input.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/4cd8f5dc71f02312671ee4e68c4ac55f/aggrid.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/b3fd268d934c6085e7dbfa4ba57f4b4b/dark_mode.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/socket.io.min.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/tailwindcss.min.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.umd.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/lang/en-US.umd.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/dompurify.mjs",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts/2474057f3040a08c.woff2",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/esm/ce781217513f674f11796076012a375d/index.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/utils/dynamic_properties.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/ephi/assets/synthetic-cd-asset-primary",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.unimportant.prod.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.important.prod.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.css",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/vue.esm-browser.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/573d0129acaebad907d825007cd6fa02/query.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/7416ad0839166372589af103d2dac97f/link.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/50808f343f9d39efb70f4fe21b9a193b/html.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/64c866455daa2383bf6d88c437b23510/input.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/4cd8f5dc71f02312671ee4e68c4ac55f/aggrid.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/components/b3fd268d934c6085e7dbfa4ba57f4b4b/dark_mode.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/socket.io.min.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/tailwindcss.min.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/quasar.umd.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/nicegui.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/lang/en-US.umd.prod.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/dompurify.mjs",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/fonts/2474057f3040a08c.woff2",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/esm/ce781217513f674f11796076012a375d/index.js",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:54199/_nicegui/3.15.0/static/utils/dynamic_properties.js",
+            "status": 200
+          }
+        ]
+      },
+      "inventories_clean": true,
+      "keyboard_focus": {},
+      "missing_content": [],
+      "no_horizontal_overflow": true,
+      "screenshots": [
+        {
+          "path": "asset-list-mobile-stale-390x844.png",
+          "sha256": "c231744944d6ea6603c42931b2a12d8cd900a2318fb4f1401eed782639b12ba4"
+        },
+        {
+          "path": "asset-360-episodes-mobile-stale-390x844.png",
+          "sha256": "5d59784386e339351ae6d319d44e0c212aa76c52b9413ffbb63e47b426ebbb21"
+        },
+        {
+          "path": "asset-360-gap-compatible-mobile-stale-390x844.png",
+          "sha256": "c07320096f1c98cd2bcfc91aecda29b525836cc1348ce9eba38646d94a3272dd"
+        },
+        {
+          "path": "asset-360-stale-capability-mobile-390x844.png",
+          "sha256": "05c8060aacf6e6f9c715d9af94049d9aea3ed18331fa8436d74ce0eac11f2836"
+        }
+      ],
+      "states": {
+        "asset_360_episodes": {
+          "body_digest": "4fd6a659d45f5b83d00ff04842feb3ce7e222742795689ae1ae2aef0a36d47de",
+          "chart": null,
+          "geometry": {
+            "action_box": {
+              "height": 44,
+              "width": 107.59375,
+              "x": 31,
+              "y": 399.90625
+            },
+            "action_reachable": true,
+            "body_width": 390,
+            "document_height": 4235,
+            "document_width": 390,
+            "no_horizontal_overflow": true,
+            "viewport": {
+              "height": 844,
+              "width": 390
+            },
+            "viewport_height": 844,
+            "viewport_width": 390
+          },
+          "missing": [],
+          "screenshot": "asset-360-episodes-mobile-stale-390x844.png"
+        },
+        "asset_list": {
+          "body_digest": "712c78f7926ff25a2dfb6bfd83710d9cb7a30de30d5ec60e573e272516a56f32",
+          "chart": null,
+          "geometry": {
+            "action_box": {
+              "height": 44,
+              "width": 44,
+              "x": 297,
+              "y": 7.5
+            },
+            "action_reachable": true,
+            "body_width": 390,
+            "document_height": 2046,
+            "document_width": 390,
+            "no_horizontal_overflow": true,
+            "viewport": {
+              "height": 844,
+              "width": 390
+            },
+            "viewport_height": 844,
+            "viewport_width": 390
+          },
+          "missing": [],
+          "screenshot": "asset-list-mobile-stale-390x844.png"
+        },
+        "blocked_compare": null,
+        "history_gap_compatible_compare": {
+          "body_digest": "b78216762faec85b2a8481a5f668168c7cc158086c60b435697ae8dcddb64161",
+          "chart": {
+            "aria_label": "4 primary and 0 peer measurement observations, plotted as separate points without connecting lines",
+            "circle_count": 4,
+            "path_count": 0,
+            "polyline_count": 0
+          },
+          "geometry": {
+            "action_box": null,
+            "action_reachable": null,
+            "body_width": 390,
+            "document_height": 3810,
+            "document_width": 390,
+            "no_horizontal_overflow": true,
+            "viewport": {
+              "height": 844,
+              "width": 390
+            },
+            "viewport_height": 844,
+            "viewport_width": 390
+          },
+          "missing": [],
+          "screenshot": "asset-360-gap-compatible-mobile-stale-390x844.png"
+        },
+        "stale_capability": {
+          "body_digest": "8c347e1b4ac25a1fdd0f4057a8eef9e562c75ad174afb8a6cb89719c45cb0aac",
+          "chart": {
+            "aria_label": "4 primary and 0 peer measurement observations, plotted as separate points without connecting lines",
+            "circle_count": 4,
+            "path_count": 0,
+            "polyline_count": 0
+          },
+          "geometry": {
+            "action_box": null,
+            "action_reachable": null,
+            "body_width": 390,
+            "document_height": 3810,
+            "document_width": 390,
+            "no_horizontal_overflow": true,
+            "viewport": {
+              "height": 844,
+              "width": 390
+            },
+            "viewport_height": 844,
+            "viewport_width": 390
+          },
+          "missing": [],
+          "screenshot": "asset-360-stale-capability-mobile-390x844.png"
+        }
+      },
+      "status": "PASS",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    }
+  },
+  "candidate": {
+    "head_commit": "4482233202ff2667262ff0d47ff390e72d398d3c",
+    "source_test_tool_digest": "4e3ae16577096e25ed206cb9937d3849a6bf1b2387a816c07d8b893dd934e1e5",
+    "state": "working-tree candidate based on registered target"
+  },
+  "change": "CHG-234 U2.4",
+  "fixture": {
+    "action_version": 2,
+    "disclaimer": "Synthetic demonstration only: every identifier, measurement, timestamp, qualification, policy and relationship is fictional. CHG-234 Asset 360 fixture.",
+    "future_episode": {
+      "episode_id": "synthetic-cd-primary-future-episode",
+      "known_at": "2026-09-26T14:42:39+00:00",
+      "revision_id": "synthetic-cd-primary-future-revision",
+      "workflow_version": 1
+    },
+    "incompatible_asset_id": "synthetic-cd-asset-incompatible",
+    "incompatible_episode": {
+      "episode_id": "synthetic-cd-incompatible-episode-01",
+      "known_at": "2025-02-15T00:00:00+00:00",
+      "revision_id": "synthetic-cd-incompatible-revision-01",
+      "workflow_version": 1
+    },
+    "observation_anchor": "2026-09-25T14:42:39+00:00",
+    "peer_asset_id": "synthetic-cd-asset-peer",
+    "peer_episode": {
+      "episode_id": "synthetic-cd-peer-episode-01",
+      "known_at": "2025-02-14T00:00:00+00:00",
+      "revision_id": "synthetic-cd-peer-revision-01",
+      "workflow_version": 1
+    },
+    "postgres_version": "18.6 (Homebrew)",
+    "primary_asset_id": "synthetic-cd-asset-primary",
+    "primary_episodes": [
+      {
+        "episode_id": "synthetic-cd-primary-episode-01",
+        "known_at": "2025-01-18T00:00:00+00:00",
+        "revision_id": "synthetic-cd-primary-revision-01",
+        "workflow_version": 1
+      },
+      {
+        "episode_id": "synthetic-cd-primary-episode-02",
+        "known_at": "2025-01-25T00:00:00+00:00",
+        "revision_id": "synthetic-cd-primary-revision-02",
+        "workflow_version": 1
+      },
+      {
+        "episode_id": "synthetic-cd-primary-episode-03",
+        "known_at": "2025-02-12T00:00:00+00:00",
+        "revision_id": "synthetic-cd-primary-revision-03",
+        "workflow_version": 1
+      },
+      {
+        "episode_id": "synthetic-cd-primary-episode-03",
+        "known_at": "2025-02-13T00:00:00+00:00",
+        "revision_id": "synthetic-cd-primary-revision-03b",
+        "workflow_version": 1
+      }
+    ],
+    "production": false,
+    "recovery_version": 3,
+    "scope": {
+      "area_id": null,
+      "family_id": "synthetic-cd-metrology-family",
+      "project_ids": [],
+      "scope_id": "synthetic-cd-investigation-scope",
+      "site_id": "synthetic-site"
+    },
+    "source_binding_identity": {
+      "adapter_id": "examples.synthetic_downstream.provider:SyntheticObserver",
+      "capability_id": "synthetic-cd-measurement",
+      "comparable_population_id": "synthetic-qualified-peer-population",
+      "family_id": "synthetic-cd-metrology-family",
+      "mapping_hash": "1111111111111111111111111111111111111111111111111111111111111111",
+      "mapping_version": "1.0.0",
+      "provider_id": "synthetic-cd-observer",
+      "reference_population_id": null,
+      "required_identifiers": [
+        "asset_id",
+        "characteristic_id",
+        "context_id"
+      ],
+      "schema_id": "synthetic-cd-canonical-observation.v1",
+      "scope_key": "{\"area_id\":null,\"family_id\":\"synthetic-cd-metrology-family\",\"project_ids\":[],\"scope_id\":\"synthetic-cd-investigation-scope\",\"site_id\":\"synthetic-site\"}",
+      "source_id": "synthetic-cd-source",
+      "unit": "nm"
+    },
+    "source_capability_case": "READY",
+    "source_capability_state": "READY",
+    "source_ready_at": "2026-09-25T14:42:39+00:00",
+    "source_snapshot_id": "60f2431ccac39d4731706d1f54372aa3bff81e053bebaf8f426900d0d02942a3",
+    "synthetic": true
+  },
+  "fixture_disclaimer": "Synthetic demonstration only: every identifier, measurement, timestamp, qualification, policy and relationship is fictional. CHG-234 Asset 360 fixture.",
+  "non_claims": {
+    "causal_rca_or_predictive_composite_health": "NOT_CLAIMED",
+    "company_asset_master_completeness": "NOT_CLAIMED",
+    "historical_application_source_identity_or_equivalence": "NOT_CLAIMED",
+    "operations_destination": "NOT_CLAIMED",
+    "port_gate_g12_or_production": "NOT_CLAIMED",
+    "production_capacity_g10": "NOT_CLAIMED",
+    "real_family_g02_g06": "NOT_CLAIMED"
+  },
+  "postgres": {
+    "real_postgresql_18": true,
+    "restart_and_identity_regression": "tests.test_assets_postgresql",
+    "version": "18.6 (Homebrew)"
+  },
+  "project": "ephi",
+  "schema_version": 1,
+  "scope": "synthetic upstream Asset list and Asset 360/history only",
+  "screenshots": [
+    {
+      "bytes": 356012,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-compare-blocked-desktop-1440x900.png",
+      "sha256": "759701b732f21f6d56245cd6b977cd29c5b622aaac1db384f2d987ef1eb21c8d"
+    },
+    {
+      "bytes": 333587,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-compare-blocked-desktop-stale-1440x900.png",
+      "sha256": "40cbd0c86a16527650237372a119c6e61e25e414fd0ecd430df4e5c6c76d93a2"
+    },
+    {
+      "bytes": 334484,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-compare-blocked-mobile-390x844.png",
+      "sha256": "e97e1e23a71579d054c7929b53ef0f7b3e57a93313f3bcc47d0abf31d1eb0d0c"
+    },
+    {
+      "bytes": 267958,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-compare-blocked-mobile-stale-390x844.png",
+      "sha256": "635e43023fe0c0dee088117691939f25b767296ce66287221355d144d70876e3"
+    },
+    {
+      "bytes": 427403,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-episodes-desktop-1440x900.png",
+      "sha256": "897e856de82296221d15d620f762638b89fbeb86e309616797c080a19aa0dbd7"
+    },
+    {
+      "bytes": 432901,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-episodes-desktop-stale-1440x900.png",
+      "sha256": "9ca3639c7c00d9736945296ea7074a9cf9458ecd8247301cf64ea3f088fd899f"
+    },
+    {
+      "bytes": 390845,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-episodes-mobile-390x844.png",
+      "sha256": "bc01fb655263453d1cdd56cd2a265f6dfbed3a5515dd80d6af6e55cec3bbe36a"
+    },
+    {
+      "bytes": 395069,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-episodes-mobile-stale-390x844.png",
+      "sha256": "5d59784386e339351ae6d319d44e0c212aa76c52b9413ffbb63e47b426ebbb21"
+    },
+    {
+      "bytes": 356788,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-gap-compatible-desktop-1440x900.png",
+      "sha256": "c6b5c2533461f0374ab77b61ef26f84e917a96237c107b9baeb72d53f1e6324c"
+    },
+    {
+      "bytes": 352104,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-gap-compatible-desktop-stale-1440x900.png",
+      "sha256": "40cb03095b484819ed16c2147c86f18ad3bb42cb6ba9e7e8d2d222ba06706533"
+    },
+    {
+      "bytes": 333776,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-gap-compatible-mobile-390x844.png",
+      "sha256": "78f185c9d9e4a8d9e35d58ea37d848c9e278013ebbf5f4f598781301b005b0ec"
+    },
+    {
+      "bytes": 325027,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-gap-compatible-mobile-stale-390x844.png",
+      "sha256": "c07320096f1c98cd2bcfc91aecda29b525836cc1348ce9eba38646d94a3272dd"
+    },
+    {
+      "bytes": 352146,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-stale-capability-desktop-1440x900.png",
+      "sha256": "01e62b0720859c473c55c3ffc90b6a7bf865168b01b938f7d78e9c6eaf457ce0"
+    },
+    {
+      "bytes": 326451,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-stale-capability-mobile-390x844.png",
+      "sha256": "05c8060aacf6e6f9c715d9af94049d9aea3ed18331fa8436d74ce0eac11f2836"
+    },
+    {
+      "bytes": 120752,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-list-desktop-1440x900.png",
+      "sha256": "e69f3bbd95cca91d13e2549c8e8212d2ac3dcb229f95f0c2aaa05688e5156829"
+    },
+    {
+      "bytes": 124225,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-list-desktop-keyboard-focus-stale.png",
+      "sha256": "24f7b7948a5f43663a578d8da26dacf2d7bfd0b8a3df783df4ac73cecf434f6b"
+    },
+    {
+      "bytes": 121154,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-list-desktop-keyboard-focus.png",
+      "sha256": "c9c94b8b1a98ffe40f8e3ebddda0fbe31f56f1ce57f42ac54c73eed5c3f46455"
+    },
+    {
+      "bytes": 123963,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-list-desktop-stale-1440x900.png",
+      "sha256": "49614604cbd9b03ea12150c615a7eeab257ad170a958ee8b4dc2e5b732da17f0"
+    },
+    {
+      "bytes": 139038,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-list-mobile-390x844.png",
+      "sha256": "1532b233bd70a92b0b0af89f120cd0bd1d2e0c37ffa7e4f40ee415f2a9d25ad4"
+    },
+    {
+      "bytes": 141284,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-list-mobile-stale-390x844.png",
+      "sha256": "c231744944d6ea6603c42931b2a12d8cd900a2318fb4f1401eed782639b12ba4"
+    }
+  ],
+  "security": {
+    "browser_headers_recorded": false,
+    "credentials_recorded": false,
+    "raw_source_rows_recorded": false,
+    "request_paths_only": true
+  },
+  "stale_capability_fixture": {
+    "action_version": 2,
+    "disclaimer": "Synthetic demonstration only: every identifier, measurement, timestamp, qualification, policy and relationship is fictional. CHG-234 Asset 360 fixture.",
+    "future_episode": {
+      "episode_id": "synthetic-cd-primary-future-episode",
+      "known_at": "2026-09-26T14:42:39+00:00",
+      "revision_id": "synthetic-cd-primary-future-revision",
+      "workflow_version": 1
+    },
+    "incompatible_asset_id": "synthetic-cd-asset-incompatible",
+    "incompatible_episode": {
+      "episode_id": "synthetic-cd-incompatible-episode-01",
+      "known_at": "2025-02-15T00:00:00+00:00",
+      "revision_id": "synthetic-cd-incompatible-revision-01",
+      "workflow_version": 1
+    },
+    "observation_anchor": "2026-09-25T14:42:39+00:00",
+    "peer_asset_id": "synthetic-cd-asset-peer",
+    "peer_episode": {
+      "episode_id": "synthetic-cd-peer-episode-01",
+      "known_at": "2025-02-14T00:00:00+00:00",
+      "revision_id": "synthetic-cd-peer-revision-01",
+      "workflow_version": 1
+    },
+    "postgres_version": "18.6 (Homebrew)",
+    "primary_asset_id": "synthetic-cd-asset-primary",
+    "primary_episodes": [
+      {
+        "episode_id": "synthetic-cd-primary-episode-01",
+        "known_at": "2025-01-18T00:00:00+00:00",
+        "revision_id": "synthetic-cd-primary-revision-01",
+        "workflow_version": 1
+      },
+      {
+        "episode_id": "synthetic-cd-primary-episode-02",
+        "known_at": "2025-01-25T00:00:00+00:00",
+        "revision_id": "synthetic-cd-primary-revision-02",
+        "workflow_version": 1
+      },
+      {
+        "episode_id": "synthetic-cd-primary-episode-03",
+        "known_at": "2025-02-12T00:00:00+00:00",
+        "revision_id": "synthetic-cd-primary-revision-03",
+        "workflow_version": 1
+      },
+      {
+        "episode_id": "synthetic-cd-primary-episode-03",
+        "known_at": "2025-02-13T00:00:00+00:00",
+        "revision_id": "synthetic-cd-primary-revision-03b",
+        "workflow_version": 1
+      }
+    ],
+    "production": false,
+    "recovery_version": 3,
+    "scope": {
+      "area_id": null,
+      "family_id": "synthetic-cd-metrology-family",
+      "project_ids": [],
+      "scope_id": "synthetic-cd-investigation-scope",
+      "site_id": "synthetic-site"
+    },
+    "source_binding_identity": {
+      "adapter_id": "examples.synthetic_downstream.provider:SyntheticObserver",
+      "capability_id": "synthetic-cd-measurement",
+      "comparable_population_id": "synthetic-qualified-peer-population",
+      "family_id": "synthetic-cd-metrology-family",
+      "mapping_hash": "1111111111111111111111111111111111111111111111111111111111111111",
+      "mapping_version": "1.0.0",
+      "provider_id": "synthetic-cd-observer",
+      "reference_population_id": null,
+      "required_identifiers": [
+        "asset_id",
+        "characteristic_id",
+        "context_id"
+      ],
+      "schema_id": "synthetic-cd-canonical-observation.v1",
+      "scope_key": "{\"area_id\":null,\"family_id\":\"synthetic-cd-metrology-family\",\"project_ids\":[],\"scope_id\":\"synthetic-cd-investigation-scope\",\"site_id\":\"synthetic-site\"}",
+      "source_id": "synthetic-cd-source",
+      "unit": "nm"
+    },
+    "source_capability_case": "STALE",
+    "source_capability_state": "STALE",
+    "source_ready_at": "2026-09-25T14:42:39+00:00",
+    "source_snapshot_id": "f8e48f90126e69ea298ef7d34273b1c1f2f6d9547d98c6d529551db268aa3552",
+    "synthetic": true
+  },
+  "status": "PASS",
+  "synthetic_only": true,
+  "target_ref": "main@4482233202ff2667262ff0d47ff390e72d398d3c"
+}

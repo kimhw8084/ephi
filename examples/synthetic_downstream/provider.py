@@ -7,7 +7,7 @@ source schema, endpoint, secret, workflow implementation, or production SDK.
 from __future__ import annotations
 
 from dataclasses import dataclass
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from decimal import Decimal
 import os
 import tempfile
@@ -178,6 +178,63 @@ class SyntheticObserver:
                 source_available_at=event_at,
             ),
         )[:limit]
+
+
+class SyntheticAssetObserver(SyntheticObserver):
+    """Bounded, visibly synthetic multi-asset history for CHG-234 evidence."""
+
+    def __init__(self, binding: MetrologySourceBinding):
+        super().__init__(binding)
+        anchor_text = os.environ.get("EPHI_SYNTHETIC_ASSET_OBSERVATION_ANCHOR")
+        now = datetime.fromisoformat(anchor_text.replace("Z", "+00:00")) if anchor_text else datetime.now(timezone.utc)
+        if now.tzinfo is None or now.utcoffset() is None:
+            raise ValueError("synthetic Asset observation anchor must be timezone-aware")
+        now = now.astimezone(timezone.utc).replace(second=0, microsecond=0)
+        population = binding.comparable_population_id or "synthetic-qualified-peer-population"
+        rows = []
+
+        def add(row_id: str, asset: str, day: int, value: float, *, context: str = "synthetic-recipe-r47", characteristic: str = "Mean CD", unit: str = "nm", available_delay_minutes: int = 5, available_offset_days: int = 0) -> None:
+            event_at = now - timedelta(days=day)
+            available_at = event_at + timedelta(minutes=available_delay_minutes, days=available_offset_days)
+            rows.append(MetrologyObservation(
+                source_row_id=row_id,
+                asset_id=asset,
+                tool_id=None,
+                head_id=None,
+                context_id=context,
+                characteristic_id=characteristic,
+                unit=unit,
+                value=value,
+                event_at=event_at,
+                source_available_at=available_at,
+                comparable_population_id=population if context == "synthetic-recipe-r47" and unit == "nm" else None,
+            ))
+
+        primary = "synthetic-cd-asset-primary"
+        peer = "synthetic-cd-asset-peer"
+        incompatible = "synthetic-cd-asset-incompatible"
+        add("synthetic-asset-primary-p0", primary, 26, 49.8)
+        add("synthetic-asset-primary-p1", primary, 25, 50.1)
+        add("synthetic-asset-primary-p2", primary, 23, 50.0)
+        # The next primary points follow a deliberate empty interval; the UI
+        # plots unconnected observations and never fills the missing period.
+        add("synthetic-asset-primary-p3", primary, 3, 53.8)
+        add("synthetic-asset-primary-late-available", primary, 2, 54.1, available_delay_minutes=5, available_offset_days=4)
+        add("synthetic-asset-peer-p0", peer, 26, 50.2)
+        add("synthetic-asset-peer-p1", peer, 3, 50.3)
+        add("synthetic-asset-incompatible-p0", incompatible, 3, 12.4, context="synthetic-recipe-r48", characteristic="Edge CD", unit="um")
+        add("synthetic-asset-wrong-context", primary, 2, 52.0, context="synthetic-recipe-r48")
+        add("synthetic-asset-wrong-characteristic", primary, 2, 50.5, characteristic="Sidewall angle")
+        add("synthetic-asset-wrong-unit", primary, 2, 0.052, unit="um")
+        add("synthetic-asset-future-event", primary, -1, 55.0)
+        self._observations = tuple(sorted(rows, key=lambda item: (item.event_at, item.source_available_at, item.source_row_id)))
+
+    def read_partition(self, *, start_at: object, end_at: object, limit: int) -> tuple[MetrologyObservation, ...]:
+        if not isinstance(start_at, datetime) or not isinstance(end_at, datetime):
+            raise ValueError("bounded interval required")
+        if start_at.tzinfo is None or end_at.tzinfo is None or start_at > end_at or isinstance(limit, bool) or not 1 <= limit <= 100_000:
+            raise ValueError("bounded interval required")
+        return tuple(item for item in self._observations if start_at <= item.event_at <= end_at)[:limit]
 
 
 class SyntheticRecipientResolver:
@@ -459,6 +516,7 @@ def build_flagship_bundle() -> ProviderBundle:
         mapping_version="1.0.0",
         mapping_hash="1" * 64,
         unit="nm",
+        comparable_population_id="synthetic-qualified-peer-population",
         required_identifiers=("asset_id", "context_id", "characteristic_id"),
     )
     identity = SyntheticIdentityProvider(
@@ -469,7 +527,7 @@ def build_flagship_bundle() -> ProviderBundle:
             "synthetic.measurement.approve",
         ),
     )
-    source = SourceProviderBinding(binding, SyntheticObserver(binding))
+    source = SourceProviderBinding(binding, SyntheticAssetObserver(binding))
     artifacts = SyntheticArtifacts()
     notifications = SyntheticNotifications(SyntheticRecipientResolver(), SyntheticDeliveryChannel())
     policy = SyntheticFlagshipPolicy()
