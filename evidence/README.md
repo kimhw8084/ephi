@@ -28,3 +28,9 @@ The R2 determinism repair is recorded separately at
 [the CHG-234 review-fix1 continuation](u2/chg-234-u2.4-asset-360/review-fix1/qualification.json);
 it preserves the predecessor report and qualifies cutoff-pinned O4 source
 revisions, unavailable reads, and the refreshed source labels.
+
+The final generic U2 breadth slice, CHG-252 U2.5/O9.2, has separate
+[candidate-bound Operations evidence](u2/chg-252-u2.5-o9.2/qualification.json)
+with synthetic PostgreSQL 18 fixtures and desktop/phone screenshots. It keeps
+the six O9 axes independent, reports disabled H6 controls without an audited
+runtime capability, and leaves production RPO/RTO `NOT_ESTABLISHED`.

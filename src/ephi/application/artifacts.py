@@ -208,6 +208,18 @@ class PublishPreconditionResult:
     metadata: tuple[ArtifactMetadata, ...]
 
 
+@dataclass(frozen=True, slots=True)
+class ArtifactScopeVerification:
+    """Bounded integrity summary for catalog references in one authorized scope."""
+
+    inspected_count: int
+    missing_count: int
+    corrupt_count: int
+    other_unavailable_count: int
+    truncated: bool
+    safe_reasons: tuple[tuple[str, int], ...]
+
+
 @runtime_checkable
 class ArtifactBlobStore(Protocol):
     """Immutable content store addressed only by content identity."""
@@ -361,6 +373,54 @@ class ArtifactService:
         content = self.blob_store.read(reference.content)
         return VerifiedArtifactRead(metadata, content)
 
+    def inspect_scope(
+        self,
+        principal: Principal,
+        scope: AccessScope,
+        required_read_capability: str,
+        *,
+        limit: int = 500,
+    ) -> ArtifactScopeVerification:
+        """Verify server-configured catalog references without returning bytes or keys."""
+
+        if isinstance(limit, bool) or not isinstance(limit, int) or not 1 <= limit <= 500:
+            raise ValidationFailureError("artifact inspection limit must be between 1 and 500")
+        self._authorize(principal, scope, required_read_capability)
+        list_for_scope = getattr(self.catalog, "list_for_scope", None)
+        if not callable(list_for_scope):
+            raise ArtifactStorageConfigurationError("artifact catalog does not provide bounded scope inspection")
+        # O8 authorization is complete before the catalog reveals whether any
+        # artifact reference exists in this scope.
+        rows = list_for_scope(scope, limit=limit + 1)
+        truncated = len(rows) > limit
+        inspected = rows[:limit]
+        failures = {
+            "MISSING_ARTIFACT_BYTES": 0,
+            "CORRUPT_ARTIFACT_BYTES": 0,
+            "ARTIFACT_VERIFICATION_UNAVAILABLE": 0,
+        }
+        for metadata in inspected:
+            try:
+                # Reuse the ordinary scoped metadata/blob verifier. This does
+                # not call read() and never materializes private content.
+                self.get_metadata(principal, metadata.reference, required_read_capability)
+            except ArtifactNotFoundError:
+                failures["MISSING_ARTIFACT_BYTES"] += 1
+            except ArtifactIntegrityError:
+                failures["CORRUPT_ARTIFACT_BYTES"] += 1
+            except AuthorizationDeniedError:
+                raise
+            except Exception:
+                failures["ARTIFACT_VERIFICATION_UNAVAILABLE"] += 1
+        return ArtifactScopeVerification(
+            len(inspected),
+            failures["MISSING_ARTIFACT_BYTES"],
+            failures["CORRUPT_ARTIFACT_BYTES"],
+            failures["ARTIFACT_VERIFICATION_UNAVAILABLE"],
+            truncated,
+            tuple((key, value) for key, value in sorted(failures.items()) if value),
+        )
+
     read = retrieve
 
     def verify_publish_preconditions(
@@ -405,6 +465,7 @@ __all__ = [
     "ArtifactMetadata",
     "ArtifactService",
     "ArtifactServicePort",
+    "ArtifactScopeVerification",
     "ArtifactWriteResult",
     "PublishPreconditionResult",
     "ScopedArtifactReference",
