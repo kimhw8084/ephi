@@ -1,0 +1,659 @@
+{
+  "accepted_at": "2026-09-25T02:02:18Z",
+  "changed_files": [
+    {
+      "additions": 269,
+      "deletions": 0,
+      "path": "evidence/u2/chg-233-u2.3-o7.2/qualification.json",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-233-u2.3-o7.2/screenshots/family-center-ambiguous-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-233-u2.3-o7.2/screenshots/family-center-ambiguous-390x844.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-233-u2.3-o7.2/screenshots/family-center-blocked-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-233-u2.3-o7.2/screenshots/family-center-blocked-390x844.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-233-u2.3-o7.2/screenshots/family-center-expired-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-233-u2.3-o7.2/screenshots/family-center-expired-390x844.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-233-u2.3-o7.2/screenshots/family-center-failed-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-233-u2.3-o7.2/screenshots/family-center-failed-390x844.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-233-u2.3-o7.2/screenshots/family-center-green-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-233-u2.3-o7.2/screenshots/family-center-green-390x844.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-233-u2.3-o7.2/screenshots/family-center-pending-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-233-u2.3-o7.2/screenshots/family-center-pending-390x844.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-233-u2.3-o7.2/screenshots/family-center-stale-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": 387,
+      "deletions": 0,
+      "path": "evidence/u2/chg-233-u2.3-o7.2/test_logs/full-suite-postgresql18.log",
+      "status": "A"
+    },
+    {
+      "additions": 98,
+      "deletions": 0,
+      "path": "evidence/u2/chg-233-u2.3-o7.2/test_logs/w0-baseline.json",
+      "status": "A"
+    },
+    {
+      "additions": 65,
+      "deletions": 0,
+      "path": "evidence/u2/chg-233-u2.3-o7.2/validation/final-verification.json",
+      "status": "A"
+    },
+    {
+      "additions": 373,
+      "deletions": 0,
+      "path": "examples/synthetic_downstream/family_center.py",
+      "status": "A"
+    },
+    {
+      "additions": 50,
+      "deletions": 1,
+      "path": "examples/synthetic_downstream/provider.py",
+      "status": "M"
+    },
+    {
+      "additions": 127,
+      "deletions": 12,
+      "path": "manifest.json",
+      "status": "M"
+    },
+    {
+      "additions": 37,
+      "deletions": 0,
+      "path": "src/ephi/application/__init__.py",
+      "status": "M"
+    },
+    {
+      "additions": 1357,
+      "deletions": 0,
+      "path": "src/ephi/application/family_center.py",
+      "status": "A"
+    },
+    {
+      "additions": 2,
+      "deletions": 0,
+      "path": "src/ephi/downstream/__init__.py",
+      "status": "M"
+    },
+    {
+      "additions": 124,
+      "deletions": 0,
+      "path": "src/ephi/downstream/composition.py",
+      "status": "M"
+    },
+    {
+      "additions": 68,
+      "deletions": 0,
+      "path": "src/ephi/downstream/contracts.py",
+      "status": "M"
+    },
+    {
+      "additions": 11,
+      "deletions": 1,
+      "path": "src/ephi/ui/app.py",
+      "status": "M"
+    },
+    {
+      "additions": 499,
+      "deletions": 0,
+      "path": "src/ephi/ui/family_center.py",
+      "status": "A"
+    },
+    {
+      "additions": 577,
+      "deletions": 0,
+      "path": "tests/test_family_center.py",
+      "status": "A"
+    },
+    {
+      "additions": 143,
+      "deletions": 0,
+      "path": "tests/test_family_center_postgresql.py",
+      "status": "A"
+    },
+    {
+      "additions": 377,
+      "deletions": 0,
+      "path": "tools/u2_family_center_browser_qualification.py",
+      "status": "A"
+    }
+  ],
+  "checks": [
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '125,190p' src/ephi/downstream/composition.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,95p' tests/test_o2_worker_postgresql.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,230p' tools/u2_family_center_browser_qualification.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '410,480p' src/ephi/ui/family_center.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1085,1145p' src/ephi/application/family_center.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '915,950p' src/ephi/application/family_center.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n 'synthetic-bounded-replay-job|REPLAY:PENDING|job_id' tests/test_family_center*\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '225,340p' tools/u2_family_center_browser_qualification.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,260p' AGENTS.md\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,280p' tests/test_family_center_postgresql.py && rtk rg -n 'def _access_scope|class AccessScope|scope_provider' examples/synthetic_downstream/provider.py\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '475,535p' src/ephi/ui/family_center.py && rtk sed -n '200,240p' examples/synthetic_downstream/family_center.py && rtk sed -n '195,220p' tools/u2_family_center_browser_qualification.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,260p' tools/w0_repo_baseline.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n 'Fabric|native|evidence' 11_Developer_Start.md 13_Package_Review.md README.md tools evidence/u2 -g '*.py' -g '*.md' -g '*.json'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/w0_repo_baseline.py --help'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '260,470p' tools/w0_repo_baseline.py && rtk rg -n 'u2_family_center|chg-233-u2.3-o7.2' evidence/u2/chg-233-u2.3-o7.2/qualification.json\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk mkdir -p evidence/u2/chg-233-u2.3-o7.2/test_logs evidence/u2/chg-233-u2.3-o7.2/validation && rtk python3 tools/check_package.py --refresh-manifest > evidence/u2/chg-233-u2.3-o7.2/test_logs/package-check.log 2>&1 && rtk cat evidence/u2/chg-233-u2.3-o7.2/test_logs/package-check.log'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk env EPHI_TEST_POSTGRES_DSN='postgresql:///postgres' EPHI_POSTGRES_DSN='postgresql:///postgres' python3 -m unittest discover -s tests -v > evidence/u2/chg-233-u2.3-o7.2/test_logs/full-suite-postgresql18.log 2>&1\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk tail -n 100 evidence/u2/chg-233-u2.3-o7.2/test_logs/full-suite-postgresql18.log'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '335,410p' tools/u2_family_center_browser_qualification.py && rtk rm -f evidence/u2/chg-233-u2.3-o7.2/test_logs/package-check.log evidence/u2/chg-233-u2.3-o7.2/test_logs/full-suite-postgresql18.log evidence/u2/chg-233-u2.3-o7.2/screenshots/family-center-startup-error-1440x900.png\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk env EPHI_TEST_POSTGRES_DSN='postgresql:///postgres' EPHI_POSTGRES_DSN='postgresql:///postgres' python3 tools/u2_family_center_browser_qualification.py --output evidence/u2/chg-233-u2.3-o7.2/qualification.json --artifacts evidence/u2/chg-233-u2.3-o7.2/screenshots\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest && rtk python3 -m compileall -q src tests examples tools'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk mkdir -p /tmp/ephi-chg233-u2.3-o7.2 && rtk env EPHI_TEST_POSTGRES_DSN='postgresql:///postgres' EPHI_POSTGRES_DSN='postgresql:///postgres' python3 -m unittest discover -s tests -v > /tmp/ephi-chg233-u2.3-o7.2/full-suite-postgresql18.log 2>&1\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk env EPHI_TEST_POSTGRES_DSN='postgresql:///postgres' EPHI_POSTGRES_DSN='postgresql:///postgres' python3 tools/w0_repo_baseline.py > /tmp/ephi-chg233-u2.3-o7.2/w0-baseline.json\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk tail -n 4 /tmp/ephi-chg233-u2.3-o7.2/full-suite-postgresql18.log'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import json; p=json.load(open(\\\"/tmp/ephi-chg233-u2.3-o7.2/w0-baseline.json\\\")); print(json.dumps({\\\"status\\\":p[\\\"status\\\"],\\\"package_integrity\\\":p[\\\"package_integrity\\\"],\\\"tests\\\":p[\\\"tests\\\"],\\\"git\\\":{k:p[\\\"git\\\"][k] for k in (\\\"commit\\\",\\\"worktree_clean\\\")}},sort_keys=True))'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import json; p=json.load(open(\\\"evidence/u2/chg-233-u2.3-o7.2/qualification.json\\\")); print(json.dumps({\\\"status\\\":p[\\\"status\\\"],\\\"desktop\\\":p[\\\"browser\\\"][\\\"desktop_1440x900\\\"][\\\"status\\\"],\\\"phone\\\":p[\\\"browser\\\"][\\\"phone_390x844\\\"][\\\"status\\\"],\\\"stale\\\":p[\\\"browser\\\"][\\\"stale_invalidation\\\"][\\\"status\\\"],\\\"postgres\\\":p[\\\"postgres\\\"],\\\"screenshots\\\":[x[\\\"path\\\"] for x in p[\\\"screenshots\\\"]]},sort_keys=True))'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk cp /tmp/ephi-chg233-u2.3-o7.2/full-suite-postgresql18.log evidence/u2/chg-233-u2.3-o7.2/test_logs/full-suite-postgresql18.log && rtk cp /tmp/ephi-chg233-u2.3-o7.2/w0-baseline.json evidence/u2/chg-233-u2.3-o7.2/test_logs/w0-baseline.json && rtk wc -c evidence/u2/chg-233-u2.3-o7.2/test_logs/full-suite-postgresql18.log evidence/u2/chg-233-u2.3-o7.2/test_logs/w0-baseline.json'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import json; p=json.load(open(\\\"evidence/u2/chg-233-u2.3-o7.2/test_logs/w0-baseline.json\\\")); print(json.dumps({\\\"status\\\":p[\\\"status\\\"],\\\"test_status\\\":p[\\\"tests\\\"][\\\"status\\\"],\\\"passed\\\":p[\\\"tests\\\"][\\\"passed\\\"],\\\"skipped\\\":p[\\\"tests\\\"][\\\"skipped\\\"],\\\"failed\\\":p[\\\"tests\\\"][\\\"failed\\\"],\\\"errors\\\":p[\\\"tests\\\"][\\\"errors\\\"],\\\"postgres_version18\\\":True},sort_keys=True))'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk shasum -a 256 evidence/u2/chg-233-u2.3-o7.2/test_logs/full-suite-postgresql18.log evidence/u2/chg-233-u2.3-o7.2/test_logs/w0-baseline.json evidence/u2/chg-233-u2.3-o7.2/qualification.json'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest && rtk python3 tools/check_package.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk env EPHI_TEST_POSTGRES_DSN='postgresql:///postgres' EPHI_POSTGRES_DSN='postgresql:///postgres' python3 -m unittest discover -s tests -v > /tmp/ephi-chg233-u2.3-o7.2/final-suite.log 2>&1\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk env EPHI_TEST_POSTGRES_DSN='postgresql:///postgres' EPHI_POSTGRES_DSN='postgresql:///postgres' python3 tools/w0_repo_baseline.py > /tmp/ephi-chg233-u2.3-o7.2/final-w0.json\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk tail -n 4 /tmp/ephi-chg233-u2.3-o7.2/final-suite.log'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import json; p=json.load(open(\\\"/tmp/ephi-chg233-u2.3-o7.2/final-w0.json\\\")); print(json.dumps({\\\"status\\\":p[\\\"status\\\"],\\\"package_integrity\\\":p[\\\"package_integrity\\\"],\\\"tests\\\":p[\\\"tests\\\"],\\\"git\\\":{\\\"commit\\\":p[\\\"git\\\"][\\\"commit\\\"],\\\"worktree_clean\\\":p[\\\"git\\\"][\\\"worktree_clean\\\"]}},sort_keys=True))'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m compileall -q src tests examples tools'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk cp /tmp/ephi-chg233-u2.3-o7.2/final-w0.json evidence/u2/chg-233-u2.3-o7.2/test_logs/w0-baseline.json && rtk python3 tools/check_package.py --refresh-manifest && rtk python3 tools/check_package.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk env EPHI_TEST_POSTGRES_DSN='postgresql:///postgres' EPHI_POSTGRES_DSN='postgresql:///postgres' python3 -m unittest discover -s tests -v > /tmp/ephi-chg233-u2.3-o7.2/manifest-final-suite.log 2>&1\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk env EPHI_TEST_POSTGRES_DSN='postgresql:///postgres' EPHI_POSTGRES_DSN='postgresql:///postgres' python3 tools/w0_repo_baseline.py > /tmp/ephi-chg233-u2.3-o7.2/manifest-final-w0.json\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk tail -n 4 /tmp/ephi-chg233-u2.3-o7.2/manifest-final-suite.log'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import json; p=json.load(open(\\\"/tmp/ephi-chg233-u2.3-o7.2/manifest-final-w0.json\\\")); print(json.dumps({\\\"status\\\":p[\\\"status\\\"],\\\"package_integrity\\\":p[\\\"package_integrity\\\"],\\\"tests\\\":p[\\\"tests\\\"],\\\"commit\\\":p[\\\"git\\\"][\\\"commit\\\"]},sort_keys=True))'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import json; p=json.load(open(\\\"evidence/u2/chg-233-u2.3-o7.2/qualification.json\\\")); b=p[\\\"browser\\\"]; print(json.dumps({\\\"status\\\":p[\\\"status\\\"],\\\"desktop\\\":b[\\\"desktop_1440x900\\\"][\\\"status\\\"],\\\"phone\\\":b[\\\"phone_390x844\\\"][\\\"status\\\"],\\\"pending_job_status\\\":b[\\\"desktop_1440x900\\\"][\\\"required_rendered_states\\\"][\\\"pending\\\"],\\\"stale_invalidation\\\":b[\\\"stale_invalidation\\\"]},sort_keys=True))'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m compileall -q src tests examples tools'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    }
+  ],
+  "codex": {
+    "cli_version": "codex-cli 0.156.1",
+    "configured_model": "gpt-6-luna",
+    "event_count": 539,
+    "provider_reported_model": null,
+    "reasoning_effort": "xhigh",
+    "terminal_type": "turn.completed",
+    "usage": {
+      "cache_hit_percent": 98.09,
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 39111424,
+      "fresh_input_tokens": 761372,
+      "input_tokens": 39872796,
+      "non_reasoning_output_tokens": 104869,
+      "output_tokens": 220901,
+      "reasoning_output_tokens": 116032,
+      "total_processed_tokens": 40093697
+    },
+    "warnings": []
+  },
+  "commits": [
+    {
+      "sha": "b88ba496da38c3e598a2fb5e838b54c7007c5e4b",
+      "subject": "fabric: capture completed model changes [CF-309b651384b00c183c727bad]"
+    }
+  ],
+  "diff": {
+    "additions": 4564,
+    "changed_files": 30,
+    "commit_count": 1,
+    "deletions": 14
+  },
+  "error_code": null,
+  "evidence_manifest": {
+    "count": 18,
+    "items": [
+      {
+        "bytes": 8803,
+        "path": "evidence/u2/chg-233-u2.3-o7.2/qualification.json",
+        "sha256": "34a728cf51b8db1cde31e92cdc46a4cbf39a1c4b0d81b4af713a337a6d13be67"
+      },
+      {
+        "bytes": 377763,
+        "path": "evidence/u2/chg-233-u2.3-o7.2/screenshots/family-center-ambiguous-1440x900.png",
+        "sha256": "df97ccf644c537006d8bde1d8dbdd8136a3a201a8285e2d86a0f3abbf7a49821"
+      },
+      {
+        "bytes": 389409,
+        "path": "evidence/u2/chg-233-u2.3-o7.2/screenshots/family-center-ambiguous-390x844.png",
+        "sha256": "13b1ae9581ea753fbc4559bdd039f46afbbb304ac91c2b765262ae5255998676"
+      },
+      {
+        "bytes": 377737,
+        "path": "evidence/u2/chg-233-u2.3-o7.2/screenshots/family-center-blocked-1440x900.png",
+        "sha256": "26fa70c9bd4a28662b32fc38a9b5494fb52bff142481d0fe4df30e34dba3c3c1"
+      },
+      {
+        "bytes": 389464,
+        "path": "evidence/u2/chg-233-u2.3-o7.2/screenshots/family-center-blocked-390x844.png",
+        "sha256": "ea86acfbc91d6b475bd715afbd61aa88838ac58084bad3b04cf18bf62bfb36b9"
+      },
+      {
+        "bytes": 389418,
+        "path": "evidence/u2/chg-233-u2.3-o7.2/screenshots/family-center-expired-1440x900.png",
+        "sha256": "49bb4324391896278ee1feae4f2bcaaaffb6ec0049904eeabe9c857c5604aa01"
+      },
+      {
+        "bytes": 403192,
+        "path": "evidence/u2/chg-233-u2.3-o7.2/screenshots/family-center-expired-390x844.png",
+        "sha256": "bdeb92be33336a5eeb093ce75bb37d511e928bb1104c6998303b41b10c5a151f"
+      },
+      {
+        "bytes": 370580,
+        "path": "evidence/u2/chg-233-u2.3-o7.2/screenshots/family-center-failed-1440x900.png",
+        "sha256": "7e4103a341866e021b226766278d580705806715190d3c16a3af2ec49df387f7"
+      },
+      {
+        "bytes": 382929,
+        "path": "evidence/u2/chg-233-u2.3-o7.2/screenshots/family-center-failed-390x844.png",
+        "sha256": "d7869a83295a1fcf1e0e3f61881a26acf0a23fc44dd7780e8cabed53c67135de"
+      },
+      {
+        "bytes": 456229,
+        "path": "evidence/u2/chg-233-u2.3-o7.2/screenshots/family-center-green-1440x900.png",
+        "sha256": "1d7e9424b41b1f242cc8695316d7c49843aff162c8c7d9fc3475febb0e189860"
+      },
+      {
+        "bytes": 497370,
+        "path": "evidence/u2/chg-233-u2.3-o7.2/screenshots/family-center-green-390x844.png",
+        "sha256": "2c434840db53707312735230007967e004a12522db601a711d42c181fc53076f"
+      },
+      {
+        "bytes": 420290,
+        "path": "evidence/u2/chg-233-u2.3-o7.2/screenshots/family-center-pending-1440x900.png",
+        "sha256": "226461ce159697374bbdfa5cd2e5685567da9b7944d9298a1d317b09a388b14b"
+      },
+      {
+        "bytes": 439984,
+        "path": "evidence/u2/chg-233-u2.3-o7.2/screenshots/family-center-pending-390x844.png",
+        "sha256": "d214ce361aaae4c84c43f195466c799a53667c6f7f7185f49a687a3adab950e7"
+      },
+      {
+        "bytes": 466631,
+        "path": "evidence/u2/chg-233-u2.3-o7.2/screenshots/family-center-stale-1440x900.png",
+        "sha256": "2e46b1678a8934ba109ce96b022aaa21af7bd311d217079ee6e753595b144b08"
+      },
+      {
+        "bytes": 70432,
+        "path": "evidence/u2/chg-233-u2.3-o7.2/test_logs/full-suite-postgresql18.log",
+        "sha256": "dd821201125d7f2dae2c1bd58f589020aafcd5bffe09b779560f8b7f61d10b4c"
+      },
+      {
+        "bytes": 4497,
+        "path": "evidence/u2/chg-233-u2.3-o7.2/test_logs/w0-baseline.json",
+        "sha256": "da52f54a352ca309158f401edde1380cc61b13e93f1501ebb22d96969f8b27ba"
+      },
+      {
+        "bytes": 2251,
+        "path": "evidence/u2/chg-233-u2.3-o7.2/validation/final-verification.json",
+        "sha256": "3b35b7020d0a2d861f47c77e2705f2ebe1adcdcf35c229392772409261c1be1f"
+      },
+      {
+        "bytes": 66235,
+        "path": "manifest.json",
+        "sha256": "f2a1536cf321157b8450f7e4ce42733f14365570f1433a6f2a9de0aa56dbd286"
+      }
+    ],
+    "version": 1
+  },
+  "evidence_publisher_release": "1.2.5-dashboard-controls-candidate",
+  "fabric_capture": {
+    "applied": true,
+    "commit_message": "fabric: capture completed model changes [CF-309b651384b00c183c727bad]",
+    "commit_sha": "b88ba496da38c3e598a2fb5e838b54c7007c5e4b",
+    "paths_before": 14,
+    "status_before": [
+      " M examples/synthetic_downstream/provider.py",
+      " M manifest.json",
+      " M src/ephi/application/__init__.py",
+      " M src/ephi/downstream/__init__.py",
+      " M src/ephi/downstream/composition.py",
+      " M src/ephi/downstream/contracts.py",
+      " M src/ephi/ui/app.py",
+      "?? evidence/u2/chg-233-u2.3-o7.2/",
+      "?? examples/synthetic_downstream/family_center.py",
+      "?? src/ephi/application/family_center.py",
+      "?? src/ephi/ui/family_center.py",
+      "?? tests/test_family_center.py",
+      "?? tests/test_family_center_postgresql.py",
+      "?? tools/u2_family_center_browser_qualification.py"
+    ],
+    "transient_untracked_removed": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "fabric_release": "1.2.5-dashboard-controls-candidate",
+  "failure_class": null,
+  "finished_at": "2026-09-25T04:11:46Z",
+  "git": {
+    "base_is_ancestor": true,
+    "base_sha": "de61d564b4aa9d70f17e3ab375bf867f034677f0",
+    "branch": "codex/ephi-u2-family-center-qualification-v1",
+    "detached_verify": false,
+    "head_sha": "b88ba496da38c3e598a2fb5e838b54c7007c5e4b",
+    "remote_exact_head": true,
+    "remote_head_sha": "b88ba496da38c3e598a2fb5e838b54c7007c5e4b",
+    "target_branch": "main",
+    "target_drifted_since_acceptance": false,
+    "target_head_observed_after_execution": "de61d564b4aa9d70f17e3ab375bf867f034677f0",
+    "work_branch": "codex/ephi-u2-family-center-qualification-v1",
+    "worktree_clean": true
+  },
+  "instructions": {
+    "files": [
+      {
+        "bytes": 1458,
+        "path": "AGENTS.md",
+        "sha256": "4349f387a79d886ed1264604ff48c582698e539e08ed8fb2f9d8ab8fbf6f804a"
+      }
+    ],
+    "total_bytes": 1458,
+    "warning": null
+  },
+  "job_id": "CF-309b651384b00c183c727bad",
+  "kind": "codex-fabric-audit-evidence",
+  "locator": {
+    "branch": "codex-fabric/evidence/ephi/ephi-u2-family-center-qualification-v1",
+    "path": ".codex-fabric/audit.json",
+    "ref": "refs/heads/codex-fabric/evidence/ephi/ephi-u2-family-center-qualification-v1"
+  },
+  "operation": "BUILD",
+  "policy": {
+    "environment_policy_sha256": "e077daca74297b3c30bee8989f00f8ca5338f7610b4d016a6c48db524205d064",
+    "fabric_release": "1.2.5-dashboard-controls-candidate",
+    "policy_sha256": "123615bf2f6e57dcac197e49ca98ceac59ada86a55e2c84445ea5d00812c0833",
+    "registry_sha256": "af81b8552f9d6a33847310e3c6bcd2d48401782b963a58efd2993e93570cb4aa"
+  },
+  "project_id": "ephi",
+  "recovery": {
+    "model_rerun_safe": false,
+    "recovery_required": false,
+    "retry_safe": false,
+    "retry_scope": null,
+    "worktree_retained": true
+  },
+  "request": "ephi-u2-family-center-qualification-v1",
+  "schema_version": 1,
+  "started_at": "2026-09-25T02:48:46Z",
+  "status": "EXECUTED_CHANGE",
+  "timing": {
+    "execution_seconds": 4980,
+    "queue_seconds": 2788,
+    "total_seconds": 7768
+  },
+  "transport": {
+    "bytes": 7322,
+    "envelope": "FABRIC/2",
+    "prompt_bytes": 6994,
+    "prompt_sha256": "4f9bde7f1a68effee32ed69dfca342611086eaacd28c9ef94daaf261437564ba",
+    "sha256": "309b651384b00c183c727bad3e869078f8ffc75bf5d8acad16a84dd14828ff75"
+  }
+}
