@@ -945,6 +945,91 @@
       "sha256": "5ec406ff7676f7ee0db8db7e7a8bf84667e787fd07e06aa1137149aa0c9fdc81"
     },
     {
+      "path": "evidence/u2/chg-233-u2.3-o7.2/qualification.json",
+      "bytes": 8803,
+      "sha256": "34a728cf51b8db1cde31e92cdc46a4cbf39a1c4b0d81b4af713a337a6d13be67"
+    },
+    {
+      "path": "evidence/u2/chg-233-u2.3-o7.2/screenshots/family-center-ambiguous-1440x900.png",
+      "bytes": 377763,
+      "sha256": "df97ccf644c537006d8bde1d8dbdd8136a3a201a8285e2d86a0f3abbf7a49821"
+    },
+    {
+      "path": "evidence/u2/chg-233-u2.3-o7.2/screenshots/family-center-ambiguous-390x844.png",
+      "bytes": 389409,
+      "sha256": "13b1ae9581ea753fbc4559bdd039f46afbbb304ac91c2b765262ae5255998676"
+    },
+    {
+      "path": "evidence/u2/chg-233-u2.3-o7.2/screenshots/family-center-blocked-1440x900.png",
+      "bytes": 377737,
+      "sha256": "26fa70c9bd4a28662b32fc38a9b5494fb52bff142481d0fe4df30e34dba3c3c1"
+    },
+    {
+      "path": "evidence/u2/chg-233-u2.3-o7.2/screenshots/family-center-blocked-390x844.png",
+      "bytes": 389464,
+      "sha256": "ea86acfbc91d6b475bd715afbd61aa88838ac58084bad3b04cf18bf62bfb36b9"
+    },
+    {
+      "path": "evidence/u2/chg-233-u2.3-o7.2/screenshots/family-center-expired-1440x900.png",
+      "bytes": 389418,
+      "sha256": "49bb4324391896278ee1feae4f2bcaaaffb6ec0049904eeabe9c857c5604aa01"
+    },
+    {
+      "path": "evidence/u2/chg-233-u2.3-o7.2/screenshots/family-center-expired-390x844.png",
+      "bytes": 403192,
+      "sha256": "bdeb92be33336a5eeb093ce75bb37d511e928bb1104c6998303b41b10c5a151f"
+    },
+    {
+      "path": "evidence/u2/chg-233-u2.3-o7.2/screenshots/family-center-failed-1440x900.png",
+      "bytes": 370580,
+      "sha256": "7e4103a341866e021b226766278d580705806715190d3c16a3af2ec49df387f7"
+    },
+    {
+      "path": "evidence/u2/chg-233-u2.3-o7.2/screenshots/family-center-failed-390x844.png",
+      "bytes": 382929,
+      "sha256": "d7869a83295a1fcf1e0e3f61881a26acf0a23fc44dd7780e8cabed53c67135de"
+    },
+    {
+      "path": "evidence/u2/chg-233-u2.3-o7.2/screenshots/family-center-green-1440x900.png",
+      "bytes": 456229,
+      "sha256": "1d7e9424b41b1f242cc8695316d7c49843aff162c8c7d9fc3475febb0e189860"
+    },
+    {
+      "path": "evidence/u2/chg-233-u2.3-o7.2/screenshots/family-center-green-390x844.png",
+      "bytes": 497370,
+      "sha256": "2c434840db53707312735230007967e004a12522db601a711d42c181fc53076f"
+    },
+    {
+      "path": "evidence/u2/chg-233-u2.3-o7.2/screenshots/family-center-pending-1440x900.png",
+      "bytes": 420290,
+      "sha256": "226461ce159697374bbdfa5cd2e5685567da9b7944d9298a1d317b09a388b14b"
+    },
+    {
+      "path": "evidence/u2/chg-233-u2.3-o7.2/screenshots/family-center-pending-390x844.png",
+      "bytes": 439984,
+      "sha256": "d214ce361aaae4c84c43f195466c799a53667c6f7f7185f49a687a3adab950e7"
+    },
+    {
+      "path": "evidence/u2/chg-233-u2.3-o7.2/screenshots/family-center-stale-1440x900.png",
+      "bytes": 466631,
+      "sha256": "2e46b1678a8934ba109ce96b022aaa21af7bd311d217079ee6e753595b144b08"
+    },
+    {
+      "path": "evidence/u2/chg-233-u2.3-o7.2/test_logs/full-suite-postgresql18.log",
+      "bytes": 70432,
+      "sha256": "dd821201125d7f2dae2c1bd58f589020aafcd5bffe09b779560f8b7f61d10b4c"
+    },
+    {
+      "path": "evidence/u2/chg-233-u2.3-o7.2/test_logs/w0-baseline.json",
+      "bytes": 4497,
+      "sha256": "da52f54a352ca309158f401edde1380cc61b13e93f1501ebb22d96969f8b27ba"
+    },
+    {
+      "path": "evidence/u2/chg-233-u2.3-o7.2/validation/final-verification.json",
+      "bytes": 2251,
+      "sha256": "3b35b7020d0a2d861f47c77e2705f2ebe1adcdcf35c229392772409261c1be1f"
+    },
+    {
       "path": "examples/__init__.py",
       "bytes": 61,
       "sha256": "b060d41e6705cac80caacb622fc737209d85f878bc0a4a6d976adc651b26d7f1"
@@ -980,6 +1065,11 @@
       "sha256": "de9996707b14c26d73a5bffe85ab6e92a88eeee694c3e18bca97913b340a7b30"
     },
     {
+      "path": "examples/synthetic_downstream/family_center.py",
+      "bytes": 17421,
+      "sha256": "03feacce64915b6325d242158c068f1583b596b5077497987add2f673721ef94"
+    },
+    {
       "path": "examples/synthetic_downstream/flagship.py",
       "bytes": 13216,
       "sha256": "0f9d586b6935eec88b0021b2955d4a6d4e854a7fe9315f59f5f8ff80fc9adac0"
@@ -991,8 +1081,8 @@
     },
     {
       "path": "examples/synthetic_downstream/provider.py",
-      "bytes": 17649,
-      "sha256": "60be47b870917dbb67af9da6ed5ca410e0a7ec87b8a564016dcc1b14c037f06d"
+      "bytes": 20412,
+      "sha256": "e4777a9584fb4c678e029c47e261a09c0a0d05c40ff4509ccc207809cde29b25"
     },
     {
       "path": "migrations/001_o2_command_core.sql",
@@ -1146,8 +1236,8 @@
     },
     {
       "path": "src/ephi/application/__init__.py",
-      "bytes": 16792,
-      "sha256": "ab76ba66d6e646f19ac79c5a467bb7e4c05005c7794052f96f050a8372c4267f"
+      "bytes": 17760,
+      "sha256": "22655e4cddcf2ff87b83fe0362c19bc9c2f0a0ee01502f52dc1e1bbbb09ac418"
     },
     {
       "path": "src/ephi/application/artifacts.py",
@@ -1183,6 +1273,11 @@
       "path": "src/ephi/application/errors.py",
       "bytes": 7681,
       "sha256": "627b90adc9807c42940796384a0446c0742a82572936c2f832856d9a05e25433"
+    },
+    {
+      "path": "src/ephi/application/family_center.py",
+      "bytes": 67768,
+      "sha256": "cdcf9f31a55bbe14ce139ccb991dbcff88da70a776779bc75086b315d8d6e9eb"
     },
     {
       "path": "src/ephi/application/handoff.py",
@@ -1266,8 +1361,8 @@
     },
     {
       "path": "src/ephi/downstream/__init__.py",
-      "bytes": 1620,
-      "sha256": "2833bb9d7219d232ea9c1c2e95a1847771e9417acb2f3af3b65a6f42b88d68c2"
+      "bytes": 1684,
+      "sha256": "097e2c0c4b6ad6f377350fc5ef654dd75d3ee1c8e09754e6b75722c19b579ad2"
     },
     {
       "path": "src/ephi/downstream/__main__.py",
@@ -1281,13 +1376,13 @@
     },
     {
       "path": "src/ephi/downstream/composition.py",
-      "bytes": 10667,
-      "sha256": "8ff05b346761b710289a988d9285b45cd90bce9c29ae49a9256eba6b6ed84806"
+      "bytes": 17544,
+      "sha256": "0cc4bc22c60df53d9b9b54bb270b66f8f5fb56caab578487af68e8f3c406d8a6"
     },
     {
       "path": "src/ephi/downstream/contracts.py",
-      "bytes": 14576,
-      "sha256": "d34ef29315d48c435249df3f982d40cc2cf15959f94d31c5885427f488a1c4a8"
+      "bytes": 18518,
+      "sha256": "1888842e0bb9d5a456d60948d75fdba885c42d78b6981f679c93085c2d782672"
     },
     {
       "path": "src/ephi/downstream/preflight.py",
@@ -1371,8 +1466,13 @@
     },
     {
       "path": "src/ephi/ui/app.py",
-      "bytes": 102573,
-      "sha256": "47f0ae51fe83a2c5842fae8bf4aa56bcb075f3ad432d8d2020715730ed8a5312"
+      "bytes": 103009,
+      "sha256": "2beacf0661f78c7e31fdc732af9f537d7beb36f837dedd70ffa3546f94f63faa"
+    },
+    {
+      "path": "src/ephi/ui/family_center.py",
+      "bytes": 31801,
+      "sha256": "08d5e3d8e2c5307081d190213f0613a5922abc248f6fe51de2d44a4b9778cbd8"
     },
     {
       "path": "src/ephi/ui/provider.py",
@@ -1423,6 +1523,16 @@
       "path": "tests/test_episode_workspace_geometry.py",
       "bytes": 3161,
       "sha256": "f638b1baad7adf1fa801b36c46e85e73ff2949fd27ddbb30d458f57785208df4"
+    },
+    {
+      "path": "tests/test_family_center.py",
+      "bytes": 30560,
+      "sha256": "dedd1c6165f9dbc306c557d58bdb95330ba544ddfd4cd10ab8fa9aad7b822967"
+    },
+    {
+      "path": "tests/test_family_center_postgresql.py",
+      "bytes": 7710,
+      "sha256": "77d8dcb56744cc4dfe1530e27ca5c4d0847ed59c9c933a5e5029c7f2086c2a39"
     },
     {
       "path": "tests/test_o10_rendered_accessibility.py",
@@ -1668,6 +1778,11 @@
       "path": "tools/u1_episode_geometry_qualification.py",
       "bytes": 31620,
       "sha256": "e8c700843846f373ec4010889e1e6b80953facf04859cfeddb6e2c88ec00788f"
+    },
+    {
+      "path": "tools/u2_family_center_browser_qualification.py",
+      "bytes": 19077,
+      "sha256": "583da5e4a5d3572dfb42f31b98514b74ead75b167a108b043099118df2bfa917"
     },
     {
       "path": "tools/u2_investigation_qualification.py",

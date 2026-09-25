@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "project": "ephi",
+  "change": "CHG-233 U2.3 / O7.2",
+  "classification": "newly executed canonical repository candidate validation",
+  "status": "PASS",
+  "target_ref": "main@de61d564b4aa9d70f17e3ab375bf867f034677f0",
+  "base_commit": "de61d564b4aa9d70f17e3ab375bf867f034677f0",
+  "candidate": {
+    "head_commit": "de61d564b4aa9d70f17e3ab375bf867f034677f0",
+    "state": "working-tree candidate based on the registered target",
+    "source_identity_claimed": false,
+    "historical_test_equivalence_claimed": false
+  },
+  "checks": {
+    "package": {
+      "status": "PASS",
+      "command": "python3 tools/check_package.py --refresh-manifest",
+      "manifest_refreshed_after_evidence_generation": true
+    },
+    "unit_and_postgresql18_integration": {
+      "status": "PASS",
+      "command": "EPHI_TEST_POSTGRES_DSN=postgresql:///postgres EPHI_POSTGRES_DSN=postgresql:///postgres python3 -m unittest discover -s tests -v",
+      "passed": 381,
+      "skipped": 0,
+      "failed": 0,
+      "errors": 0,
+      "postgresql_version": "18.6 (Homebrew)",
+      "log": "evidence/u2/chg-233-u2.3-o7.2/test_logs/full-suite-postgresql18.log",
+      "log_sha256": "dd821201125d7f2dae2c1bd58f589020aafcd5bffe09b779560f8b7f61d10b4c"
+    },
+    "w0_repo_baseline": {
+      "status": "BASELINE_PASS",
+      "path": "evidence/u2/chg-233-u2.3-o7.2/test_logs/w0-baseline.json",
+      "executed_tests": 381,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "compileall": {
+      "status": "PASS",
+      "command": "python3 -m compileall -q src tests examples tools"
+    },
+    "git_diff_check": {
+      "status": "PASS",
+      "command": "git diff --check"
+    },
+    "browser_qualification": {
+      "status": "PASS",
+      "report": "evidence/u2/chg-233-u2.3-o7.2/qualification.json",
+      "desktop_viewport": "1440x900",
+      "phone_viewport": "390x844",
+      "postgresql_version": "18.6 (Homebrew)"
+    }
+  },
+  "scope_limits": {
+    "synthetic_fixture_only": true,
+    "real_company_mapping_claimed": false,
+    "real_family_g02_g06_claimed": false,
+    "w3_w4_w5_human_pilot_claimed": false,
+    "second_real_family_portability_claimed": false,
+    "g12_release_approval": false,
+    "production": false
+  }
+}
