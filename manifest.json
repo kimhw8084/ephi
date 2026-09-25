@@ -356,8 +356,8 @@
     },
     {
       "path": "evidence/README.md",
-      "bytes": 3781,
-      "sha256": "31af24962538fdc935eaa1a529663fda39824b8981baf53777d448ad11c5d1ea"
+      "bytes": 3943,
+      "sha256": "c7462b6303761b94a53aa3cd849964a3484bd242567750b2c37421e7dce230ab"
     },
     {
       "path": "evidence/audit_environment.json",
@@ -1277,92 +1277,97 @@
     {
       "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/qualification.json",
       "bytes": 110287,
-      "sha256": "591bbf6ed927cd3ea19560ff82c0c88f338f75d2e142b8df1c6185994331ea6b"
+      "sha256": "8381dd12807a9b6107d64f24bd491442ca58458dc7efc79c9985440c4830a3bf"
     },
     {
       "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/screenshots/operations-artifact_corrupt-desktop-1440x900.png",
-      "bytes": 460136,
-      "sha256": "b3166e0a1883a8c2b57eac0346a7fde913c42ca2829976f40c6dd6545eedb646"
+      "bytes": 460342,
+      "sha256": "aa17d708c549c0ded03d581db2c19eadb10ab28b2aa4422ddd2a2a6314b780e7"
     },
     {
       "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/screenshots/operations-artifact_corrupt-phone-390x844.png",
-      "bytes": 424965,
-      "sha256": "28ad9a6378884294bdc649e624333976486445ed804745b36249a1352b166a91"
+      "bytes": 425384,
+      "sha256": "62030942acf7a88de79154258841a0cf1ec71ef57198d7c77be79e0d74a06627"
     },
     {
       "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/screenshots/operations-artifact_missing-desktop-1440x900.png",
-      "bytes": 457978,
-      "sha256": "2fc09100a3a26fd4eed752aadf3bbdf4c124e05de9e02ad0ea75876154e7313e"
+      "bytes": 459315,
+      "sha256": "47f719b9b70e7472d59d864a5d59c7bb59021b546e8723f86572b8d79edc73ad"
     },
     {
       "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/screenshots/operations-artifact_missing-phone-390x844.png",
-      "bytes": 424412,
-      "sha256": "002e9d279e324a2f1929eb4a9f471165e0894d41d96fa89fea9135929073caa4"
+      "bytes": 426065,
+      "sha256": "611a834d6fab58ade87d4d520cc7597c8ac0bd62fbb55cacc6b3665f982b5a53"
     },
     {
       "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/screenshots/operations-mixed_axes-desktop-1440x900.png",
-      "bytes": 456174,
-      "sha256": "8459ce33caffce1cdcfa8b4a5694a3cbe340581d9ce3ef3bb053317cffe64974"
+      "bytes": 457518,
+      "sha256": "bcf7ce3d9ac84ff9d67703109661e3c3dd217433ec5858632277db15de57d788"
     },
     {
       "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/screenshots/operations-mixed_axes-phone-390x844.png",
-      "bytes": 421424,
-      "sha256": "eb8865c1370fde8a60ebe3eb943e2b6b180f7064f766d381eefea48590dc6baf"
+      "bytes": 423862,
+      "sha256": "49622336c78e89cbc69b533338358a03aae20438389a90517ba38eeb17dc2e92"
     },
     {
       "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/screenshots/operations-qualification_expired-desktop-1440x900.png",
-      "bytes": 452695,
-      "sha256": "3be32c75ca6fcfef5314e47101d7d9c1a6297e88b3c6edc40dab61a22f11a82c"
+      "bytes": 451662,
+      "sha256": "2ee730d75b2c8eb9a7df874149b752ee0d465790566c137857c924e3f81b1b19"
     },
     {
       "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/screenshots/operations-qualification_expired-phone-390x844.png",
-      "bytes": 415133,
-      "sha256": "d1501e96a1bfd639b9e755329464b7b75e6512a6bdd8b428aea342d507a0f600"
+      "bytes": 415280,
+      "sha256": "d5024421ec8836ab6fe291f31022989b73f4d7d26364ad8e3bc9714f557cae40"
     },
     {
       "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/screenshots/operations-qualification_pending-desktop-1440x900.png",
-      "bytes": 454542,
-      "sha256": "d8df58eef581725e380b014b48709aa53734c06863b861514bd4db7dd8f7c7a1"
+      "bytes": 454760,
+      "sha256": "23935bd59b21a2dda8f3bf6e283e92de3e6e596d368623e6b981d5db5338174f"
     },
     {
       "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/screenshots/operations-qualification_pending-phone-390x844.png",
-      "bytes": 417403,
-      "sha256": "eeb26c3105669afba79596cca3bc3898831c4d52fd18d1965b81fa683e9c1a28"
+      "bytes": 418743,
+      "sha256": "c269e8c9df3629396fc98abee57c54c11e1093abc7bfa6a2b66dd768e3f832d9"
     },
     {
       "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/screenshots/operations-qualification_unbound-desktop-1440x900.png",
-      "bytes": 410605,
-      "sha256": "a8e674e09eea6637204645bcdc0fdebd19dea870851c79a590e88eabb1157633"
+      "bytes": 411458,
+      "sha256": "8e48b2633774dd06c866a2bd1cdd6b0447f93e6280f2ec2e7cdf3795883a66b7"
     },
     {
       "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/screenshots/operations-qualification_unbound-phone-390x844.png",
-      "bytes": 369156,
-      "sha256": "fa7537e66e0961fce6e66579ba68812e77848911d3c057ed26ce36f8717f8a84"
+      "bytes": 369952,
+      "sha256": "3896ac3b37ffd59a8a7935093df56a3c536aaf15bfa6d7ce4780220c5777c911"
     },
     {
       "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/screenshots/operations-source_stale-desktop-1440x900.png",
-      "bytes": 470738,
-      "sha256": "1f3bb67fde9461dac952b475470336649657921d58ee40589b50a7dde0ea1348"
+      "bytes": 471304,
+      "sha256": "3f4fa1f761e1576bfdc1fd4d23ad15dc040f1aefe459fbce5fb300e850919492"
     },
     {
       "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/screenshots/operations-source_stale-phone-390x844.png",
-      "bytes": 436863,
-      "sha256": "ea4bb3f40629b64ffaf7bb597a61a7c054393d2238c5b102bfe850d7137520fb"
+      "bytes": 437946,
+      "sha256": "7f85b769613e38381b3a09fe74352434262c9627bcf7c21c58800d83aa39b7de"
     },
     {
       "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/screenshots/operations-source_unavailable-desktop-1440x900.png",
-      "bytes": 410188,
-      "sha256": "7bc5d68e9a1c06df28be8199926e429ab3ad513b0424de4b3c5ea92863bd2874"
+      "bytes": 411499,
+      "sha256": "93f40b075e4986bd5d50f445b23eeb0c98c9658f0a661a57e5bfa6373014504c"
     },
     {
       "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/screenshots/operations-source_unavailable-phone-390x844.png",
-      "bytes": 371322,
-      "sha256": "45d94b139d2d1571cbcf5cf61545cafede3cee4c477f46b59cf0abb7ec8fcd54"
+      "bytes": 371254,
+      "sha256": "9934e7a6391b51a7649822c177977b5845b82262767cfd26830e18f483594c62"
     },
     {
       "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/test_logs/full-suite-postgresql18.log",
       "bytes": 78306,
-      "sha256": "2a7d99d5c38a049bceee4b169af97f85b0ed38c5010c700d2a8bbda9d7b5f672"
+      "sha256": "c20adb5c1be71c474a80a7071fc7fa4f96d662831b5a4275dfe01feb8c6e68d5"
+    },
+    {
+      "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/validation/final-verification.json",
+      "bytes": 2131,
+      "sha256": "50a8db64b6b3924368bce60317cdeedf1686259ecdb3f570ffe3d73e6abf9c99"
     },
     {
       "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-artifact_corrupt-desktop-1440x900.png",

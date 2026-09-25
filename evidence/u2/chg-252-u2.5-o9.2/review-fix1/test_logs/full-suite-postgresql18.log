@@ -421,7 +421,7 @@ test_wrong_commit_fails_closed (test_w0_runtime.W0RuntimeIdentityTests.test_wron
 test_wrong_nicegui_version_fails_closed (test_w0_runtime.W0RuntimeIdentityTests.test_wrong_nicegui_version_fails_closed) ... ok
 
 ----------------------------------------------------------------------
-Ran 421 tests in 40.827s
+Ran 421 tests in 40.585s
 
 OK
 {"application": {"distribution": "ephi", "historical_identity_claimed": false, "implementation": "canonical-repository", "source_authority": "kimhw8084/ephi", "version": "0.1.0"}, "behavioral_checks": {"F02": {"execution": "NOT_RUN", "reason": "canonical checkpoint API is exercised by the CHG-109 runner", "status": "IMPLEMENTED"}, "F03": {"execution": "NOT_RUN", "reason": "canonical workflow API is exercised by the CHG-109 runner", "status": "IMPLEMENTED"}, "F04": {"execution": "NOT_RUN", "reason": "canonical temporal value API is exercised by the CHG-116 runner", "status": "IMPLEMENTED"}, "F05": {"execution": "NOT_RUN", "reason": "canonical qualified recovery API is exercised by the CHG-118 runner", "status": "IMPLEMENTED"}}, "entrypoint": "ephi.app:main", "framework": {"distribution": "nicegui-base", "git_commit": "000298562d6bcbf6df304edbd41b98b30fe4bfcf", "nicegui": "3.15.0", "version": "3.0.0a8"}, "python_requires": ">=3.11,<3.14", "runtime": {"application_name": "ephi", "environment": "development", "host": "127.0.0.1", "port": 8080}, "scope": "canonical-repository-baseline", "status": "PASS"}

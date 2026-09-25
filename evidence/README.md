@@ -38,4 +38,5 @@ The R2 FIX continuation is preserved separately at
 [review-fix1](u2/chg-252-u2.5-o9.2/review-fix1/qualification.json); it carries
 the predecessor forward, verifies all canonical O2 worker statuses, and
 qualifies authorized exact worker status/type filtering without changing
-scope-wide worker health facts.
+scope-wide worker health facts. Its test, package, W0 and browser results are
+summarized in the [final verification record](u2/chg-252-u2.5-o9.2/review-fix1/validation/final-verification.json).
