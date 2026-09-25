@@ -79,12 +79,13 @@ def comparable_profile(
     feature_values: dict[str, str],
     case_identity: str,
     limitations: tuple[str, ...] = (),
+    context_identity: str = CONTEXT_ID,
 ) -> dict[str, object]:
     """Build one bounded exact-fingerprint profile with no raw values."""
 
     typed = ComparableCaseProfile(
         FAMILY_ID,
-        CONTEXT_ID,
+        context_identity,
         source,
         ExactStructuredFingerprint(
             "exact-structured.v1",

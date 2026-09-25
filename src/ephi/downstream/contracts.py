@@ -20,6 +20,7 @@ from ephi.application import (
     CheckTemplateCatalog,
     MetrologyObservation,
     MetrologySourceBinding,
+    RevisionPinnedObservationBatch,
     PlannerPolicy,
     Principal,
     RecipientResolver,
@@ -353,6 +354,21 @@ class BoundedMetrologyObserver(Protocol):
 
 
 @runtime_checkable
+class RevisionPinnedBoundedMetrologyObserver(Protocol):
+    """Optional additive capability for immutable historical source reads."""
+
+    def read_partition_revision(
+        self,
+        *,
+        source_partition: str,
+        source_revision: str,
+        start_at: datetime,
+        end_at: datetime,
+        limit: int,
+    ) -> RevisionPinnedObservationBatch: ...
+
+
+@runtime_checkable
 class ArtifactProvider(Protocol):
     def blob_store(self) -> ArtifactBlobStore: ...
 
@@ -469,6 +485,7 @@ __all__ = [
     "FamilyQualificationTarget",
     "IdentityProvider",
     "BoundedMetrologyObserver",
+    "RevisionPinnedBoundedMetrologyObserver",
     "ArtifactProvider",
     "NotificationProvider",
     "PolicyProvider",

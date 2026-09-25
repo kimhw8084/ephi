@@ -17,3 +17,14 @@ They describe the **earlier source audit**, not an application run in this repos
 [review/w0_integrity_regression_contract.json](review/w0_integrity_regression_contract.json) is the CHG-109 W0 contract for canonical F02/F03/F04 and out-of-scope F05 regression evaluation. Its historical observations remain reference-only; the runner's fresh canonical results belong under ignored `artifacts/` runtime output.
 
 Use the commands in [the README](../README.md) for current package checks; consult GitHub Actions for checks on a particular published commit. Do not overwrite these historical results when running a new audit.
+
+New implementation evidence is kept separately under `evidence/u2/`. The
+[CHG-234 U2.4 Asset 360 report](u2/chg-234-u2.4-asset-360/qualification.json)
+binds its screenshots and browser inventories to a working-tree candidate
+based on the registered `main@4482233202ff2667262ff0d47ff390e72d398d3c`
+target. Its fixture is synthetic and its non-claims are recorded in the
+report; it does not change or extend the historical audit records above.
+The R2 determinism repair is recorded separately at
+[the CHG-234 review-fix1 continuation](u2/chg-234-u2.4-asset-360/review-fix1/qualification.json);
+it preserves the predecessor report and qualifies cutoff-pinned O4 source
+revisions, unavailable reads, and the refreshed source labels.

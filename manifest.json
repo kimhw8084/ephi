@@ -156,8 +156,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 24588,
-      "sha256": "51fd1c83079b0d5909a5cda40db34e26bca23ff3ec8e0c06ef1bc19307ba33c3"
+      "bytes": 27259,
+      "sha256": "398cfe71f20fee5a78e6c54d1874fb7ec05b3f437b78e66848ae835378bdfb0c"
     },
     {
       "path": "app.py",
@@ -175,9 +175,14 @@
       "sha256": "0520a045b2641cbd63a6f7d97a8e01dc94e8e171fe58108d391b7fe789867a49"
     },
     {
+      "path": "docs/CHG-234-U2.4-asset-360.md",
+      "bytes": 5028,
+      "sha256": "cfeb619b2249671e77a942e68cb30e789a3b7a1d81284035d294336b08b77017"
+    },
+    {
       "path": "docs/Downstream_Integration_ABI.md",
-      "bytes": 12983,
-      "sha256": "cf889b4476f8fac3ee9401b44a2ecfdd9224320c122edf683a8500550e126776"
+      "bytes": 13591,
+      "sha256": "28facc0ce55b531045baba94cbc0cdc82f3ae762d8fe654696e8b37321c26d29"
     },
     {
       "path": "docs/nicegui_base/AGENT_WORKFLOW.md",
@@ -351,8 +356,8 @@
     },
     {
       "path": "evidence/README.md",
-      "bytes": 2372,
-      "sha256": "cb9848dcdac24ce860004689917df9d48945363ad0b78a2b00f37b4e10209bb4"
+      "bytes": 3102,
+      "sha256": "caf8e25713380c9ad3a6edb5dc589b3e753a86f1555bb9f89024cc79dd705c15"
     },
     {
       "path": "evidence/audit_environment.json",
@@ -1030,6 +1035,241 @@
       "sha256": "3b35b7020d0a2d861f47c77e2705f2ebe1adcdcf35c229392772409261c1be1f"
     },
     {
+      "path": "evidence/u2/chg-234-u2.4-asset-360/qualification.json",
+      "bytes": 182839,
+      "sha256": "ac4f0abe5b1044f85df63fb6f46a7004ef504b93ad040ad3e34daccd5c3d8773"
+    },
+    {
+      "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/qualification.json",
+      "bytes": 250784,
+      "sha256": "75f35e89b2d6e86ad93a8b2585089c262d4cee1b3661103e51022122e091a8c3"
+    },
+    {
+      "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-360-compare-blocked-desktop-1440x900.png",
+      "bytes": 388353,
+      "sha256": "d269287d9f30b1f4d0a00713f66ea15c791a184addf53813168a67204ab232d4"
+    },
+    {
+      "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-360-compare-blocked-mobile-390x844.png",
+      "bytes": 361843,
+      "sha256": "7a5cb9651cefa714db61d0f0bd00b46b91da55b9a6739cde1b88dc77fe408f52"
+    },
+    {
+      "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-360-episodes-desktop-1440x900.png",
+      "bytes": 448498,
+      "sha256": "5df461a4f50e36d50cc9f95a1b13e86dfe493d0b1b19fb13ca80f7f5531f1669"
+    },
+    {
+      "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-360-episodes-desktop-stale-1440x900.png",
+      "bytes": 458327,
+      "sha256": "50bffe7432d2de6c60b23b6f0c29131707a8aa28deeba1ff94b46d4e6571f58f"
+    },
+    {
+      "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-360-episodes-desktop-unavailable-1440x900.png",
+      "bytes": 457627,
+      "sha256": "f8635fcf482282b4dfd77bc9c86fe3b4b45ed2c9818796387672b4f858900ed5"
+    },
+    {
+      "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-360-episodes-mobile-390x844.png",
+      "bytes": 409277,
+      "sha256": "13baf3c0f5315a31d958aa9411f89d32100435b256e913527d519a32ab2ace17"
+    },
+    {
+      "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-360-episodes-mobile-stale-390x844.png",
+      "bytes": 417343,
+      "sha256": "4625e5702504fb4f2da8bcf1b455847a181430df76f2974ad3303b9f7958c6ef"
+    },
+    {
+      "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-360-episodes-mobile-unavailable-390x844.png",
+      "bytes": 418394,
+      "sha256": "a6b9008ca9655fb35e03b3ebf31d572e8cba3726d8b2596c595b9fe2abcb72c1"
+    },
+    {
+      "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-360-gap-compatible-desktop-1440x900.png",
+      "bytes": 387833,
+      "sha256": "481371ead5ac1c72a1a8da6f189f6964440b6f092a9a48d667e95ac348745de7"
+    },
+    {
+      "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-360-gap-compatible-desktop-stale-1440x900.png",
+      "bytes": 387538,
+      "sha256": "cff50b3331e3da0987450d99ce4c1aea4b4d542e91cc599cffaa2426c89493cf"
+    },
+    {
+      "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-360-gap-compatible-desktop-unavailable-1440x900.png",
+      "bytes": 353433,
+      "sha256": "155c08cb47c5f1173541329a8f21ee3e83a81699151c6cca8ca74409a5e66f26"
+    },
+    {
+      "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-360-gap-compatible-mobile-390x844.png",
+      "bytes": 361854,
+      "sha256": "42bceb26fa052ad9eeca4eba74f541d640a7b11dc6917d9810945ad7d13d5f4c"
+    },
+    {
+      "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-360-gap-compatible-mobile-stale-390x844.png",
+      "bytes": 359698,
+      "sha256": "9d8b6e2b695776ff4aeea9f46d14a7005059a5f05e88e7a9263fbcff3524bcb8"
+    },
+    {
+      "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-360-gap-compatible-mobile-unavailable-390x844.png",
+      "bytes": 314046,
+      "sha256": "16656816c01a45507b4fe08eeae8097f9600df3b7a9d4f9c48bd5723767fba3b"
+    },
+    {
+      "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-360-stale-capability-desktop-1440x900.png",
+      "bytes": 386754,
+      "sha256": "af8165c6217f0aebe5d707c95e01d4d9204e50d6fd6ca390c692edaca179e42e"
+    },
+    {
+      "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-360-stale-capability-mobile-390x844.png",
+      "bytes": 358465,
+      "sha256": "44bc31aa188285f451b85437e8e3169fc1bdc271ba7e0a7ec3f45edd5d0db0bc"
+    },
+    {
+      "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-list-desktop-1440x900.png",
+      "bytes": 121158,
+      "sha256": "6ea841729caddfe24e439ae8849666c744c186a38832ed8064c493e6e2ce61dc"
+    },
+    {
+      "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-list-desktop-keyboard-focus-stale.png",
+      "bytes": 124285,
+      "sha256": "a52a6505d1a8dbf925686798ba289822fc77363a0a48365e5f7c868016c8ce01"
+    },
+    {
+      "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-list-desktop-keyboard-focus-unavailable.png",
+      "bytes": 124665,
+      "sha256": "eabf7e1e4270729035be5c3599edec914c72ea5ac27e1fdeb8de859ee36819d6"
+    },
+    {
+      "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-list-desktop-keyboard-focus.png",
+      "bytes": 121557,
+      "sha256": "484f65c923cc629c21aa962cadc987378e6e811580bebdd2b30149cc722d1c62"
+    },
+    {
+      "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-list-desktop-stale-1440x900.png",
+      "bytes": 124022,
+      "sha256": "0ff328baf040d4e9f4105562f78e7ca200c416a1173a3cb0cc6e6214580743f7"
+    },
+    {
+      "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-list-desktop-unavailable-1440x900.png",
+      "bytes": 124399,
+      "sha256": "ad76baf3eaa700339cf3a4fb73660013fdc901d367b1efead8bed0e4c1026f96"
+    },
+    {
+      "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-list-mobile-390x844.png",
+      "bytes": 138819,
+      "sha256": "2eb7f8c1f1c465dba2de70049ca5eee1b7fc14a22abb42d2f503e11e017176d7"
+    },
+    {
+      "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-list-mobile-stale-390x844.png",
+      "bytes": 141063,
+      "sha256": "16412c04d86b7273c69f2a6fbd1df39b3f0735531890d6fd212d518a3542bf40"
+    },
+    {
+      "path": "evidence/u2/chg-234-u2.4-asset-360/review-fix1/screenshots/asset-list-mobile-unavailable-390x844.png",
+      "bytes": 142807,
+      "sha256": "0d364734626badd6bb4889e0d36c968d934869366a530e07ea6e4cb693a01b0b"
+    },
+    {
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-compare-blocked-desktop-1440x900.png",
+      "bytes": 356012,
+      "sha256": "759701b732f21f6d56245cd6b977cd29c5b622aaac1db384f2d987ef1eb21c8d"
+    },
+    {
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-compare-blocked-desktop-stale-1440x900.png",
+      "bytes": 333587,
+      "sha256": "40cbd0c86a16527650237372a119c6e61e25e414fd0ecd430df4e5c6c76d93a2"
+    },
+    {
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-compare-blocked-mobile-390x844.png",
+      "bytes": 334484,
+      "sha256": "e97e1e23a71579d054c7929b53ef0f7b3e57a93313f3bcc47d0abf31d1eb0d0c"
+    },
+    {
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-compare-blocked-mobile-stale-390x844.png",
+      "bytes": 267958,
+      "sha256": "635e43023fe0c0dee088117691939f25b767296ce66287221355d144d70876e3"
+    },
+    {
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-episodes-desktop-1440x900.png",
+      "bytes": 427403,
+      "sha256": "897e856de82296221d15d620f762638b89fbeb86e309616797c080a19aa0dbd7"
+    },
+    {
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-episodes-desktop-stale-1440x900.png",
+      "bytes": 432901,
+      "sha256": "9ca3639c7c00d9736945296ea7074a9cf9458ecd8247301cf64ea3f088fd899f"
+    },
+    {
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-episodes-mobile-390x844.png",
+      "bytes": 390845,
+      "sha256": "bc01fb655263453d1cdd56cd2a265f6dfbed3a5515dd80d6af6e55cec3bbe36a"
+    },
+    {
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-episodes-mobile-stale-390x844.png",
+      "bytes": 395069,
+      "sha256": "5d59784386e339351ae6d319d44e0c212aa76c52b9413ffbb63e47b426ebbb21"
+    },
+    {
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-gap-compatible-desktop-1440x900.png",
+      "bytes": 356788,
+      "sha256": "c6b5c2533461f0374ab77b61ef26f84e917a96237c107b9baeb72d53f1e6324c"
+    },
+    {
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-gap-compatible-desktop-stale-1440x900.png",
+      "bytes": 352104,
+      "sha256": "40cb03095b484819ed16c2147c86f18ad3bb42cb6ba9e7e8d2d222ba06706533"
+    },
+    {
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-gap-compatible-mobile-390x844.png",
+      "bytes": 333776,
+      "sha256": "78f185c9d9e4a8d9e35d58ea37d848c9e278013ebbf5f4f598781301b005b0ec"
+    },
+    {
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-gap-compatible-mobile-stale-390x844.png",
+      "bytes": 325027,
+      "sha256": "c07320096f1c98cd2bcfc91aecda29b525836cc1348ce9eba38646d94a3272dd"
+    },
+    {
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-stale-capability-desktop-1440x900.png",
+      "bytes": 352146,
+      "sha256": "01e62b0720859c473c55c3ffc90b6a7bf865168b01b938f7d78e9c6eaf457ce0"
+    },
+    {
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-stale-capability-mobile-390x844.png",
+      "bytes": 326451,
+      "sha256": "05c8060aacf6e6f9c715d9af94049d9aea3ed18331fa8436d74ce0eac11f2836"
+    },
+    {
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-list-desktop-1440x900.png",
+      "bytes": 120752,
+      "sha256": "e69f3bbd95cca91d13e2549c8e8212d2ac3dcb229f95f0c2aaa05688e5156829"
+    },
+    {
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-list-desktop-keyboard-focus-stale.png",
+      "bytes": 124225,
+      "sha256": "24f7b7948a5f43663a578d8da26dacf2d7bfd0b8a3df783df4ac73cecf434f6b"
+    },
+    {
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-list-desktop-keyboard-focus.png",
+      "bytes": 121154,
+      "sha256": "c9c94b8b1a98ffe40f8e3ebddda0fbe31f56f1ce57f42ac54c73eed5c3f46455"
+    },
+    {
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-list-desktop-stale-1440x900.png",
+      "bytes": 123963,
+      "sha256": "49614604cbd9b03ea12150c615a7eeab257ad170a958ee8b4dc2e5b732da17f0"
+    },
+    {
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-list-mobile-390x844.png",
+      "bytes": 139038,
+      "sha256": "1532b233bd70a92b0b0af89f120cd0bd1d2e0c37ffa7e4f40ee415f2a9d25ad4"
+    },
+    {
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-list-mobile-stale-390x844.png",
+      "bytes": 141284,
+      "sha256": "c231744944d6ea6603c42931b2a12d8cd900a2318fb4f1401eed782639b12ba4"
+    },
+    {
       "path": "examples/__init__.py",
       "bytes": 61,
       "sha256": "b060d41e6705cac80caacb622fc737209d85f878bc0a4a6d976adc651b26d7f1"
@@ -1065,14 +1305,19 @@
       "sha256": "de9996707b14c26d73a5bffe85ab6e92a88eeee694c3e18bca97913b340a7b30"
     },
     {
+      "path": "examples/synthetic_downstream/assets.py",
+      "bytes": 16059,
+      "sha256": "6233c0d8921b96b6fa6b47100145f98eea6b4fcd001a11aff113fe6de79969fc"
+    },
+    {
       "path": "examples/synthetic_downstream/family_center.py",
       "bytes": 17596,
       "sha256": "2957ccdda5ac9939d2e6d46986fb0d6665edf88ca144a3dee0e69a726fa546a7"
     },
     {
       "path": "examples/synthetic_downstream/flagship.py",
-      "bytes": 13216,
-      "sha256": "0f9d586b6935eec88b0021b2955d4a6d4e854a7fe9315f59f5f8ff80fc9adac0"
+      "bytes": 13262,
+      "sha256": "75506e191f7d21ec65475f65837aaeba509b89c4482dd895289ddeb8c09a5aeb"
     },
     {
       "path": "examples/synthetic_downstream/outcomes.py",
@@ -1081,8 +1326,8 @@
     },
     {
       "path": "examples/synthetic_downstream/provider.py",
-      "bytes": 20777,
-      "sha256": "6cf9b8f329fdbe097a2ee89bf555619a40d551df8587cf32cca1902d090053a7"
+      "bytes": 26455,
+      "sha256": "40852596430bea49c661081c058afd5e6dc312e46ca6850a47e496f568cb3cff"
     },
     {
       "path": "migrations/001_o2_command_core.sql",
@@ -1133,6 +1378,11 @@
       "path": "migrations/010_o7_normalized_value_revisions.sql",
       "bytes": 3371,
       "sha256": "a46043e5f91deeefa9ce8e78f0dcc439bcf2610005aa7d17c5ce200cbba590f5"
+    },
+    {
+      "path": "migrations/011_o4_revision_pinned_asset_reads.sql",
+      "bytes": 461,
+      "sha256": "003a2aa7fe6c0a0ded039990d76c840101d6a22270a5a97eaf0ee65fa54e22c3"
     },
     {
       "path": "nicegui_base.toml",
@@ -1236,13 +1486,18 @@
     },
     {
       "path": "src/ephi/application/__init__.py",
-      "bytes": 17760,
-      "sha256": "22655e4cddcf2ff87b83fe0362c19bc9c2f0a0ee01502f52dc1e1bbbb09ac418"
+      "bytes": 18021,
+      "sha256": "11b358c38fa4ce9c19cebfc01555e3e6db8e76c85741a10721e3c438e732cc43"
     },
     {
       "path": "src/ephi/application/artifacts.py",
       "bytes": 15857,
       "sha256": "b0f1a4c9c809e36c3dd90506c461b22753add81aaafcc3198e3eeac6b6c6514e"
+    },
+    {
+      "path": "src/ephi/application/assets.py",
+      "bytes": 51743,
+      "sha256": "f9e46e66b192dd6003b376687fa70c5966d7322aa7a63818ef8e291655f6ee02"
     },
     {
       "path": "src/ephi/application/attention.py",
@@ -1261,8 +1516,8 @@
     },
     {
       "path": "src/ephi/application/decision_loop.py",
-      "bytes": 69499,
-      "sha256": "92825c35ba0446b7a4087696cac16b639526ae4970fcf4f83f9adcc52b10adc1"
+      "bytes": 69785,
+      "sha256": "a2da020372f4d8f2221feb1049e46f875a4f1f4f8b27e00631da7865bc4d3a39"
     },
     {
       "path": "src/ephi/application/episodes.py",
@@ -1326,8 +1581,8 @@
     },
     {
       "path": "src/ephi/application/source_ingress.py",
-      "bytes": 24781,
-      "sha256": "6d53d9737b772b377b540a4bea569405a98834f753e0c9390e8eba800ee329b5"
+      "bytes": 27371,
+      "sha256": "e3e7e796160d8e48a84fe47a2570db3cac837633ea9922b31185423953f5181f"
     },
     {
       "path": "src/ephi/application/source_reality.py",
@@ -1361,8 +1616,8 @@
     },
     {
       "path": "src/ephi/downstream/__init__.py",
-      "bytes": 1684,
-      "sha256": "097e2c0c4b6ad6f377350fc5ef654dd75d3ee1c8e09754e6b75722c19b579ad2"
+      "bytes": 1774,
+      "sha256": "2506c399a2e42df6953a9985889b923f57e0ec29dc4888322e537974c8172f40"
     },
     {
       "path": "src/ephi/downstream/__main__.py",
@@ -1381,8 +1636,8 @@
     },
     {
       "path": "src/ephi/downstream/contracts.py",
-      "bytes": 18518,
-      "sha256": "1888842e0bb9d5a456d60948d75fdba885c42d78b6981f679c93085c2d782672"
+      "bytes": 18994,
+      "sha256": "be5084b13ff2aec08ed04d3eb749d9a2ea0d53e634242da779c23b46809ff101"
     },
     {
       "path": "src/ephi/downstream/preflight.py",
@@ -1421,8 +1676,8 @@
     },
     {
       "path": "src/ephi/infrastructure/postgresql_o3.py",
-      "bytes": 9926,
-      "sha256": "814d1f5c3af5fcda9cede47f9e52d66073045845a4aa590be8bcbdf67e7fef51"
+      "bytes": 19182,
+      "sha256": "7b5f2a6a9ecd6fe47810fe1f36312d5c9ff17e0c38337032c7959dce747c1b02"
     },
     {
       "path": "src/ephi/infrastructure/postgresql_reads.py",
@@ -1431,8 +1686,8 @@
     },
     {
       "path": "src/ephi/infrastructure/postgresql_source.py",
-      "bytes": 18608,
-      "sha256": "616112dd6accd801004c58d94978690f96c48bcebbe95371f1b677f39ee4528e"
+      "bytes": 21557,
+      "sha256": "922f41074e2027b6bd467fc9c35eb0297021690759022ffab32c5a1b026b0ebc"
     },
     {
       "path": "src/ephi/infrastructure/postgresql_worker.py",
@@ -1466,8 +1721,13 @@
     },
     {
       "path": "src/ephi/ui/app.py",
-      "bytes": 103009,
-      "sha256": "2beacf0661f78c7e31fdc732af9f537d7beb36f837dedd70ffa3546f94f63faa"
+      "bytes": 104233,
+      "sha256": "4fe2d058755046b745955f09e5f949a914a747291d37c418ec6cfe98bdd727b5"
+    },
+    {
+      "path": "src/ephi/ui/assets.py",
+      "bytes": 39101,
+      "sha256": "7651f016bdc6b751a50cce6deab7c2fa956a7ee88cf919c8038ccf65ca0b7d4e"
     },
     {
       "path": "src/ephi/ui/family_center.py",
@@ -1503,6 +1763,11 @@
       "path": "tests/test_advisory_integrity.py",
       "bytes": 7684,
       "sha256": "3025f70a03352eb092e6eec1ee1d9acf7b091e9518334e993b9f5dba688cf527"
+    },
+    {
+      "path": "tests/test_assets_postgresql.py",
+      "bytes": 31091,
+      "sha256": "c354e33688b0c7cb811f5f7de699d66c1f6feef0210085c41f7794d1ca7a1a0f"
     },
     {
       "path": "tests/test_downstream_abi.py",
@@ -1591,8 +1856,8 @@
     },
     {
       "path": "tests/test_o4_source_ingress.py",
-      "bytes": 9944,
-      "sha256": "922f698a40ca776fbd799f925af772d075f64f85815c3e194045fd5a973f513c"
+      "bytes": 10007,
+      "sha256": "ca396d8e8ac29984571c455dae9f5a87fb4dbcc028ec27d4c37de09ca07077cc"
     },
     {
       "path": "tests/test_o4_source_ingress_postgresql.py",
@@ -1666,8 +1931,8 @@
     },
     {
       "path": "tests/test_o9_operations.py",
-      "bytes": 23760,
-      "sha256": "50a04649b04b7c704a484129cf057bfc743823897e15eb0040cd47668f648c78"
+      "bytes": 23878,
+      "sha256": "6d3c7e2ab7020cfdb0e5e9ad2efd8afa886df71c16aa262f6f8f9a6cb59e2bec"
     },
     {
       "path": "tests/test_outcomes_postgresql.py",
@@ -1778,6 +2043,11 @@
       "path": "tools/u1_episode_geometry_qualification.py",
       "bytes": 31620,
       "sha256": "e8c700843846f373ec4010889e1e6b80953facf04859cfeddb6e2c88ec00788f"
+    },
+    {
+      "path": "tools/u2_asset_360_browser_qualification.py",
+      "bytes": 23038,
+      "sha256": "2cc74de09e0d3658f2cfb1a621b3c6111eae387f72e252d50e6db7ddf6425a1d"
     },
     {
       "path": "tools/u2_family_center_browser_qualification.py",
