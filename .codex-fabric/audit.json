@@ -1,0 +1,732 @@
+{
+  "accepted_at": "2026-09-25T13:08:47Z",
+  "changed_files": [
+    {
+      "additions": 38,
+      "deletions": 0,
+      "path": "README.md",
+      "status": "M"
+    },
+    {
+      "additions": 75,
+      "deletions": 0,
+      "path": "docs/CHG-234-U2.4-asset-360.md",
+      "status": "A"
+    },
+    {
+      "additions": 7,
+      "deletions": 0,
+      "path": "evidence/README.md",
+      "status": "M"
+    },
+    {
+      "additions": 5046,
+      "deletions": 0,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/qualification.json",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-compare-blocked-desktop-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-compare-blocked-desktop-stale-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-compare-blocked-mobile-390x844.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-compare-blocked-mobile-stale-390x844.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-episodes-desktop-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-episodes-desktop-stale-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-episodes-mobile-390x844.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-episodes-mobile-stale-390x844.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-gap-compatible-desktop-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-gap-compatible-desktop-stale-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-gap-compatible-mobile-390x844.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-gap-compatible-mobile-stale-390x844.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-stale-capability-desktop-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-stale-capability-mobile-390x844.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-list-desktop-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-list-desktop-keyboard-focus-stale.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-list-desktop-keyboard-focus.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-list-desktop-stale-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-list-mobile-390x844.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-list-mobile-stale-390x844.png",
+      "status": "A"
+    },
+    {
+      "additions": 354,
+      "deletions": 0,
+      "path": "examples/synthetic_downstream/assets.py",
+      "status": "A"
+    },
+    {
+      "additions": 2,
+      "deletions": 1,
+      "path": "examples/synthetic_downstream/flagship.py",
+      "status": "M"
+    },
+    {
+      "additions": 60,
+      "deletions": 2,
+      "path": "examples/synthetic_downstream/provider.py",
+      "status": "M"
+    },
+    {
+      "additions": 151,
+      "deletions": 16,
+      "path": "manifest.json",
+      "status": "M"
+    },
+    {
+      "additions": 5,
+      "deletions": 0,
+      "path": "src/ephi/application/__init__.py",
+      "status": "M"
+    },
+    {
+      "additions": 849,
+      "deletions": 0,
+      "path": "src/ephi/application/assets.py",
+      "status": "A"
+    },
+    {
+      "additions": 9,
+      "deletions": 2,
+      "path": "src/ephi/application/decision_loop.py",
+      "status": "M"
+    },
+    {
+      "additions": 169,
+      "deletions": 0,
+      "path": "src/ephi/infrastructure/postgresql_o3.py",
+      "status": "M"
+    },
+    {
+      "additions": 19,
+      "deletions": 0,
+      "path": "src/ephi/ui/app.py",
+      "status": "M"
+    },
+    {
+      "additions": 518,
+      "deletions": 0,
+      "path": "src/ephi/ui/assets.py",
+      "status": "A"
+    },
+    {
+      "additions": 261,
+      "deletions": 0,
+      "path": "tests/test_assets_postgresql.py",
+      "status": "A"
+    },
+    {
+      "additions": 415,
+      "deletions": 0,
+      "path": "tools/u2_asset_360_browser_qualification.py",
+      "status": "A"
+    }
+  ],
+  "checks": [
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import json; p=json.load(open(\\\"evidence/u2/chg-234-u2.4-asset-360/qualification.json\\\")); print(json.dumps(p[\\\"browser\\\"][\\\"desktop_1440x900\\\"][\\\"keyboard_focus\\\"],indent=2))'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '330,430p' README.md\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,260p' src/ephi/application/assets.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk rg -n \"''^## CHG-\" README.md | tail -20'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --stat'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import json; p=json.load(open(\\\"evidence/u2/chg-234-u2.4-asset-360/qualification.json\\\")); print(json.dumps({k:v for k,v in p.items() if k\"'!=\"browser\"},indent=2)[:8000])'\"'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,280p' tests/test_assets_postgresql.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk tail -42 README.md'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk tail -18 evidence/README.md'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '180,202p' tools/u2_asset_360_browser_qualification.py && rtk rg -n \\\"ephi-assets.*focus|Open\\\\\\\", intent|ActionButton\\\\(\\\" src/ephi/ui/assets.py | head -10\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '235,365p' src/ephi/application/assets.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '455,720p' src/ephi/application/assets.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '480,535p' src/ephi/infrastructure/postgresql_o3.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk rg -n \"fetch_asset_episode|fetch_asset_workflow\" src/ephi/infrastructure/postgresql_o3.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '640,820p' src/ephi/application/assets.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '820,890p' src/ephi/application/assets.py && rtk sed -n '180,340p' src/ephi/infrastructure/postgresql_o3.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk env EPHI_TEST_POSTGRES_DSN=postgresql:///ephi_chg234_u24_test python3 tools/u2_asset_360_browser_qualification.py --output evidence/u2/chg-234-u2.4-asset-360/qualification.json --artifacts evidence/u2/chg-234-u2.4-asset-360/screenshots'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import json; p=json.load(open(\\\"evidence/u2/chg-234-u2.4-asset-360/qualification.json\\\")); print(p[\\\"browser\\\"][\\\"desktop_1440x900\\\"][\\\"keyboard_focus\\\"]); print([(k,v[\\\"status\\\"],v[\\\"missing_content\\\"],v[\\\"actions_reachable\\\"],v[\\\"inventories_clean\\\"]) for k,v in p[\\\"browser\\\"].items()])'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk env EPHI_TEST_POSTGRES_DSN=postgresql:///ephi_chg234_u24_test python3 tools/u2_asset_360_browser_qualification.py --output evidence/u2/chg-234-u2.4-asset-360/qualification.json --artifacts evidence/u2/chg-234-u2.4-asset-360/screenshots'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import json; p=json.load(open(\\\"evidence/u2/chg-234-u2.4-asset-360/qualification.json\\\")); print(p[\\\"status\\\"]); print(json.dumps({k:{\\\"status\\\":v[\\\"status\\\"],\\\"actions\\\":v[\\\"actions_reachable\\\"],\\\"overflow\\\":v[\\\"no_horizontal_overflow\\\"],\\\"clean\\\":v[\\\"inventories_clean\\\"],\\\"focus\\\":v.get(\\\"keyboard_focus\\\")} for k,v in p[\\\"browser\\\"].items()},indent=2)[:6500])'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk env EPHI_TEST_POSTGRES_DSN=postgresql:///ephi_chg234_u24_test python3 -m unittest discover -s tests -v'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n \\\"ephi\\\\.application\\\\.episodes\\\" examples/synthetic_downstream/assets.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk rg -n \"EPISODE_WORKFLOW_AGGREGATE_TYPE\" src/ephi/application/__init__.py src/ephi/__init__.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,70p' examples/synthetic_downstream/assets.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest tests.test_downstream_abi.DiscoveryAndPreflightTests.test_synthetic_package_uses_public_imports_and_stays_outside_product -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk env EPHI_TEST_POSTGRES_DSN=postgresql:///ephi_chg234_u24_test python3 -m unittest discover -s tests -v'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk env EPHI_TEST_POSTGRES_DSN=postgresql:///ephi_chg234_u24_test python3 -m unittest discover -s tests -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m compileall -q src/ephi'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/w0_repo_baseline.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk env EPHI_TEST_POSTGRES_DSN=postgresql:///ephi_chg234_u24_test python3 tools/u2_asset_360_browser_qualification.py --output evidence/u2/chg-234-u2.4-asset-360/qualification.json --artifacts evidence/u2/chg-234-u2.4-asset-360/screenshots'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --stat'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import json; p=json.load(open(\\\"evidence/u2/chg-234-u2.4-asset-360/qualification.json\\\")); print(json.dumps({\\\"status\\\":p[\\\"status\\\"],\\\"base_commit\\\":p[\\\"base_commit\\\"],\\\"candidate\\\":p[\\\"candidate\\\"],\\\"postgres\\\":p[\\\"postgres\\\"],\\\"fixture_disclaimer\\\":p[\\\"fixture_disclaimer\\\"],\\\"screenshots\\\":len(p[\\\"screenshots\\\"]),\\\"browser\\\":{k:{\\\"status\\\":v[\\\"status\\\"],\\\"actions_reachable\\\":v[\\\"actions_reachable\\\"],\\\"no_horizontal_overflow\\\":v[\\\"no_horizontal_overflow\\\"],\\\"inventories_clean\\\":v[\\\"inventories_clean\\\"],\\\"keyboard_focus\\\":v.get(\\\"keyboard_focus\\\",{}).get(\\\"focus_visible\\\"),\\\"chart_gap\\\":v.get(\\\"chart_gap_rendering\\\",{}).get(\\\"pass\\\"),\\\"deep_link\\\":v.get(\\\"episode_deep_link\\\",{}).get(\\\"status\\\")} for k,v in p[\\\"browser\\\"].items()}},indent=2))'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import json,pathlib; root=pathlib.Path(\\\"evidence/u2/chg-234-u2.4-asset-360/screenshots\\\"); p=json.load(open(\\\"evidence/u2/chg-234-u2.4-asset-360/qualification.json\\\")); listed={pathlib.Path(x[\\\"path\\\"]).name for x in p[\\\"screenshots\\\"]}; files={x.name for x in root.glob(\\\"*.png\\\")}; print(\\\"unlisted\\\",sorted(files-listed)); print(\\\"missing\\\",sorted(listed-files)); print(\\\"files\\\",len(files),\\\"listed\\\",len(listed))' && rtk ls evidence/u2/chg-234-u2.4-asset-360/screenshots\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n \\\"screenshots\\\\] =|screenshots.*glob|screenshot_records|artifacts.glob|screenshots =\\\" tools/u2_asset_360_browser_qualification.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '352,374p' tools/u2_asset_360_browser_qualification.py && rtk rg -n 'asset-list-desktop-1440x900-startup' evidence/u2/chg-234-u2.4-asset-360/qualification.json\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk rm evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-list-desktop-1440x900-startup.png'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk env EPHI_TEST_POSTGRES_DSN=postgresql:///ephi_chg234_u24_test python3 tools/u2_asset_360_browser_qualification.py --output evidence/u2/chg-234-u2.4-asset-360/qualification.json --artifacts evidence/u2/chg-234-u2.4-asset-360/screenshots'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk env EPHI_TEST_POSTGRES_DSN=postgresql:///ephi_chg234_u24_test python3 -m unittest discover -s tests -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m compileall -q src/ephi'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/w0_repo_baseline.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import json,pathlib; p=json.load(open(\\\"evidence/u2/chg-234-u2.4-asset-360/qualification.json\\\")); print({\\\"status\\\":p[\\\"status\\\"],\\\"screenshots\\\":len(p[\\\"screenshots\\\"]),\\\"synthetic\\\":p[\\\"fixture\\\"].get(\\\"synthetic\\\"),\\\"postgres\\\":p[\\\"postgres\\\"][\\\"version\\\"],\\\"browser_pass\\\":{k:v[\\\"status\\\"] for k,v in p[\\\"browser\\\"].items()},\\\"clean_inventory\\\":all(v[\\\"inventories_clean\\\"] for v in p[\\\"browser\\\"].values()),\\\"startup_images\\\":list(pathlib.Path(\\\"evidence/u2/chg-234-u2.4-asset-360/screenshots\\\").glob(\\\"*startup*\\\"))})'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    }
+  ],
+  "codex": {
+    "cli_version": "codex-cli 0.156.1",
+    "configured_model": "gpt-6-luna",
+    "event_count": 719,
+    "provider_reported_model": null,
+    "reasoning_effort": "xhigh",
+    "terminal_type": "turn.completed",
+    "usage": {
+      "cache_hit_percent": 98.01,
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 39623808,
+      "fresh_input_tokens": 802775,
+      "input_tokens": 40426583,
+      "non_reasoning_output_tokens": 103983,
+      "output_tokens": 228822,
+      "reasoning_output_tokens": 124839,
+      "total_processed_tokens": 40655405
+    },
+    "warnings": []
+  },
+  "commits": [
+    {
+      "sha": "b60931ff0abcec6e5b760cdfd850e57fc1d0243a",
+      "subject": "fabric: capture completed model changes [CF-589da07d521650281e789426]"
+    }
+  ],
+  "diff": {
+    "additions": 7978,
+    "changed_files": 36,
+    "commit_count": 1,
+    "deletions": 21
+  },
+  "error_code": null,
+  "evidence_manifest": {
+    "count": 25,
+    "items": [
+      {
+        "bytes": 26720,
+        "path": "README.md",
+        "sha256": "a35fa0c9c9144168117dc38abd960a78bf3239bff31e652d2b66e2a2b2eba851"
+      },
+      {
+        "bytes": 4102,
+        "path": "docs/CHG-234-U2.4-asset-360.md",
+        "sha256": "eb0b258fc2fe0f72f915d0ffe7fdfd43a5f622851edc7a4cf41d4dff59c3a4db"
+      },
+      {
+        "bytes": 2815,
+        "path": "evidence/README.md",
+        "sha256": "4d8c6d3f8a0b9d578cc5005d685a641ce36920a2c3f88d0d1f22f8b01cb7b070"
+      },
+      {
+        "bytes": 182839,
+        "path": "evidence/u2/chg-234-u2.4-asset-360/qualification.json",
+        "sha256": "ac4f0abe5b1044f85df63fb6f46a7004ef504b93ad040ad3e34daccd5c3d8773"
+      },
+      {
+        "bytes": 356012,
+        "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-compare-blocked-desktop-1440x900.png",
+        "sha256": "759701b732f21f6d56245cd6b977cd29c5b622aaac1db384f2d987ef1eb21c8d"
+      },
+      {
+        "bytes": 333587,
+        "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-compare-blocked-desktop-stale-1440x900.png",
+        "sha256": "40cbd0c86a16527650237372a119c6e61e25e414fd0ecd430df4e5c6c76d93a2"
+      },
+      {
+        "bytes": 334484,
+        "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-compare-blocked-mobile-390x844.png",
+        "sha256": "e97e1e23a71579d054c7929b53ef0f7b3e57a93313f3bcc47d0abf31d1eb0d0c"
+      },
+      {
+        "bytes": 267958,
+        "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-compare-blocked-mobile-stale-390x844.png",
+        "sha256": "635e43023fe0c0dee088117691939f25b767296ce66287221355d144d70876e3"
+      },
+      {
+        "bytes": 427403,
+        "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-episodes-desktop-1440x900.png",
+        "sha256": "897e856de82296221d15d620f762638b89fbeb86e309616797c080a19aa0dbd7"
+      },
+      {
+        "bytes": 432901,
+        "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-episodes-desktop-stale-1440x900.png",
+        "sha256": "9ca3639c7c00d9736945296ea7074a9cf9458ecd8247301cf64ea3f088fd899f"
+      },
+      {
+        "bytes": 390845,
+        "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-episodes-mobile-390x844.png",
+        "sha256": "bc01fb655263453d1cdd56cd2a265f6dfbed3a5515dd80d6af6e55cec3bbe36a"
+      },
+      {
+        "bytes": 395069,
+        "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-episodes-mobile-stale-390x844.png",
+        "sha256": "5d59784386e339351ae6d319d44e0c212aa76c52b9413ffbb63e47b426ebbb21"
+      },
+      {
+        "bytes": 356788,
+        "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-gap-compatible-desktop-1440x900.png",
+        "sha256": "c6b5c2533461f0374ab77b61ef26f84e917a96237c107b9baeb72d53f1e6324c"
+      },
+      {
+        "bytes": 352104,
+        "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-gap-compatible-desktop-stale-1440x900.png",
+        "sha256": "40cb03095b484819ed16c2147c86f18ad3bb42cb6ba9e7e8d2d222ba06706533"
+      },
+      {
+        "bytes": 333776,
+        "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-gap-compatible-mobile-390x844.png",
+        "sha256": "78f185c9d9e4a8d9e35d58ea37d848c9e278013ebbf5f4f598781301b005b0ec"
+      },
+      {
+        "bytes": 325027,
+        "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-gap-compatible-mobile-stale-390x844.png",
+        "sha256": "c07320096f1c98cd2bcfc91aecda29b525836cc1348ce9eba38646d94a3272dd"
+      },
+      {
+        "bytes": 352146,
+        "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-stale-capability-desktop-1440x900.png",
+        "sha256": "01e62b0720859c473c55c3ffc90b6a7bf865168b01b938f7d78e9c6eaf457ce0"
+      },
+      {
+        "bytes": 326451,
+        "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-stale-capability-mobile-390x844.png",
+        "sha256": "05c8060aacf6e6f9c715d9af94049d9aea3ed18331fa8436d74ce0eac11f2836"
+      },
+      {
+        "bytes": 120752,
+        "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-list-desktop-1440x900.png",
+        "sha256": "e69f3bbd95cca91d13e2549c8e8212d2ac3dcb229f95f0c2aaa05688e5156829"
+      },
+      {
+        "bytes": 124225,
+        "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-list-desktop-keyboard-focus-stale.png",
+        "sha256": "24f7b7948a5f43663a578d8da26dacf2d7bfd0b8a3df783df4ac73cecf434f6b"
+      },
+      {
+        "bytes": 121154,
+        "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-list-desktop-keyboard-focus.png",
+        "sha256": "c9c94b8b1a98ffe40f8e3ebddda0fbe31f56f1ce57f42ac54c73eed5c3f46455"
+      },
+      {
+        "bytes": 123963,
+        "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-list-desktop-stale-1440x900.png",
+        "sha256": "49614604cbd9b03ea12150c615a7eeab257ad170a958ee8b4dc2e5b732da17f0"
+      },
+      {
+        "bytes": 139038,
+        "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-list-mobile-390x844.png",
+        "sha256": "1532b233bd70a92b0b0af89f120cd0bd1d2e0c37ffa7e4f40ee415f2a9d25ad4"
+      },
+      {
+        "bytes": 141284,
+        "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-list-mobile-stale-390x844.png",
+        "sha256": "c231744944d6ea6603c42931b2a12d8cd900a2318fb4f1401eed782639b12ba4"
+      },
+      {
+        "bytes": 71964,
+        "path": "manifest.json",
+        "sha256": "adbdfee6073d1bee13e9de94afbcd3228badb302afc46dc9057302a5fff02a2d"
+      }
+    ],
+    "version": 1
+  },
+  "evidence_publisher_release": "1.2.5-dashboard-controls-candidate",
+  "fabric_capture": {
+    "applied": true,
+    "commit_message": "fabric: capture completed model changes [CF-589da07d521650281e789426]",
+    "commit_sha": "b60931ff0abcec6e5b760cdfd850e57fc1d0243a",
+    "paths_before": 16,
+    "status_before": [
+      " M README.md",
+      " M evidence/README.md",
+      " M examples/synthetic_downstream/flagship.py",
+      " M examples/synthetic_downstream/provider.py",
+      " M manifest.json",
+      " M src/ephi/application/__init__.py",
+      " M src/ephi/application/decision_loop.py",
+      " M src/ephi/infrastructure/postgresql_o3.py",
+      " M src/ephi/ui/app.py",
+      "?? docs/CHG-234-U2.4-asset-360.md",
+      "?? evidence/u2/chg-234-u2.4-asset-360/",
+      "?? examples/synthetic_downstream/assets.py",
+      "?? src/ephi/application/assets.py",
+      "?? src/ephi/ui/assets.py",
+      "?? tests/test_assets_postgresql.py",
+      "?? tools/u2_asset_360_browser_qualification.py"
+    ],
+    "transient_untracked_removed": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "fabric_release": "1.2.5-dashboard-controls-candidate",
+  "failure_class": null,
+  "finished_at": "2026-09-25T14:45:42Z",
+  "git": {
+    "base_is_ancestor": true,
+    "base_sha": "4482233202ff2667262ff0d47ff390e72d398d3c",
+    "branch": "codex/ephi-u2-asset-360-history-v1",
+    "detached_verify": false,
+    "head_sha": "b60931ff0abcec6e5b760cdfd850e57fc1d0243a",
+    "remote_exact_head": true,
+    "remote_head_sha": "b60931ff0abcec6e5b760cdfd850e57fc1d0243a",
+    "target_branch": "main",
+    "target_drifted_since_acceptance": false,
+    "target_head_observed_after_execution": "4482233202ff2667262ff0d47ff390e72d398d3c",
+    "work_branch": "codex/ephi-u2-asset-360-history-v1",
+    "worktree_clean": true
+  },
+  "instructions": {
+    "files": [
+      {
+        "bytes": 1458,
+        "path": "AGENTS.md",
+        "sha256": "4349f387a79d886ed1264604ff48c582698e539e08ed8fb2f9d8ab8fbf6f804a"
+      }
+    ],
+    "total_bytes": 1458,
+    "warning": null
+  },
+  "job_id": "CF-589da07d521650281e789426",
+  "kind": "codex-fabric-audit-evidence",
+  "locator": {
+    "branch": "codex-fabric/evidence/ephi/ephi-u2-asset-360-history-v1",
+    "path": ".codex-fabric/audit.json",
+    "ref": "refs/heads/codex-fabric/evidence/ephi/ephi-u2-asset-360-history-v1"
+  },
+  "operation": "BUILD",
+  "policy": {
+    "environment_policy_sha256": "e077daca74297b3c30bee8989f00f8ca5338f7610b4d016a6c48db524205d064",
+    "fabric_release": "1.2.5-dashboard-controls-candidate",
+    "policy_sha256": "123615bf2f6e57dcac197e49ca98ceac59ada86a55e2c84445ea5d00812c0833",
+    "registry_sha256": "af81b8552f9d6a33847310e3c6bcd2d48401782b963a58efd2993e93570cb4aa"
+  },
+  "project_id": "ephi",
+  "recovery": {
+    "model_rerun_safe": false,
+    "recovery_required": false,
+    "retry_safe": false,
+    "retry_scope": null,
+    "worktree_retained": true
+  },
+  "request": "ephi-u2-asset-360-history-v1",
+  "schema_version": 1,
+  "started_at": "2026-09-25T13:08:47Z",
+  "status": "EXECUTED_CHANGE",
+  "timing": {
+    "execution_seconds": 5815,
+    "queue_seconds": 0,
+    "total_seconds": 5815
+  },
+  "transport": {
+    "bytes": 8482,
+    "envelope": "FABRIC/2",
+    "prompt_bytes": 8174,
+    "prompt_sha256": "19c661b39f0872caaed2d3315b98137d39927e800303f2dad611ba0a0efec621",
+    "sha256": "589da07d521650281e78942609db1902ecb22e31837f440a0d6c65d1f1a9a84b"
+  }
+}
