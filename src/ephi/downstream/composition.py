@@ -4,6 +4,8 @@ from __future__ import annotations
 
 from collections.abc import Callable
 from dataclasses import dataclass
+import hashlib
+import json
 
 from ephi.application import (
     AccessScope,
@@ -16,12 +18,15 @@ from ephi.application import (
     EpisodeBriefQueryService,
     EpisodeInvestigationQueryService,
     EpisodeWorkflowCommandService,
+    FamilyCenterService,
     MetrologySourceBinding,
     NextCheckPlannerService,
     Principal,
     RcaAnalysisService,
     RcaMaterializationCoordinator,
     RcaMaterializationView,
+    ProviderIdentity,
+    QualificationWorkspaceIdentity,
     DeliveryChannelAdapter,
     SourceSnapshotIngressService,
 )
@@ -36,8 +41,10 @@ from .contracts import (
     DownstreamFailure,
     DownstreamReasonCode,
     PolicyConfiguration,
+    PolicySchemaMetadata,
     ProviderBundle,
     ProviderCategory,
+    RuntimeCapabilities,
 )
 from .validation import validate_provider_bundle
 
@@ -64,8 +71,65 @@ class DownstreamComposition:
     source_observer: BoundedMetrologyObserver
     source_binding: MetrologySourceBinding
     policy_configuration: PolicyConfiguration
+    policy_schema_metadata: PolicySchemaMetadata
+    runtime_capabilities: RuntimeCapabilities
+    provider_abi_id: str
+    provider_abi_version: str
+    provider_contract_identities: tuple[ProviderIdentity, ...]
+    policy_configuration_identity: str
+    family_center: FamilyCenterService
     notification_channel: DeliveryChannelAdapter
     outcomes: OutcomesService
+
+    def family_workspace_identity(self, family_id: str, target: object) -> QualificationWorkspaceIdentity:
+        """Build one workspace key from the exact composed U1/O4 identities."""
+
+        from .contracts import FamilyQualificationTarget
+
+        if not isinstance(target, FamilyQualificationTarget):
+            raise ValueError("Family Center target must be configured in U1 PolicyConfiguration")
+        family = next((item for item in self.policy_configuration.family_contexts if item.family_id == family_id), None)
+        if family is None or target not in family.qualification_targets:
+            raise ValueError("Family Center target is not present in current U1 family configuration")
+        context = next((item for item in family.contexts if item.target_identity == target.context_target_identity), None)
+        if context is None:
+            raise ValueError("Family Center context identity is unavailable")
+        if self.source_binding.family_id != family_id or self.source_binding.capability_id != target.capability_id:
+            raise ValueError("exact U1 source provider binding does not match this family/capability")
+        stage_policies = (
+            ("REPLAY", hashlib.sha256(f"{self.policy_configuration_identity}:replay".encode()).hexdigest()),
+            ("GOLDEN", self.policy_configuration.check_catalog.identity),
+            ("SHADOW", hashlib.sha256(f"{self.policy_configuration_identity}:shadow".encode()).hexdigest()),
+            ("QUALIFY", _recovery_identity(self.policy_configuration.recovery_policy)),
+        )
+        return QualificationWorkspaceIdentity(
+            scope=self.scope_provider(),
+            family_id=family.family_id,
+            family_context_version=family.version,
+            target_identity=context.target_identity,
+            context_identity=context.context_identity or "UNBOUND_CONTEXT",
+            unit_identity=context.unit_identity or "UNBOUND_UNIT",
+            characteristic_identity=context.characteristic_identity or "UNBOUND_CHARACTERISTIC",
+            capability_id=target.capability_id,
+            product_id=target.product_id,
+            release_id=target.release_id,
+            provider_abi_id=self.provider_abi_id,
+            provider_abi_version=self.provider_abi_version,
+            provider_contracts=self.provider_contract_identities,
+            policy_schema_id=self.policy_schema_metadata.schema_id,
+            policy_schema_version=self.policy_schema_metadata.version,
+            policy_configuration_version=self.policy_schema_metadata.configuration_version,
+            policy_configuration_identity=self.policy_configuration_identity,
+            source_binding=self.source_binding,
+            runtime_environment_class=self.runtime_capabilities.target_environment_class,
+            postgresql_major_version=self.runtime_capabilities.postgresql_major_version,
+            runtime_contract_version=self.runtime_capabilities.postgresql_contract_version,
+            stage_policy_identities=stage_policies,
+            required_stages=target.required_stages,
+            not_applicable_stages=target.not_applicable_stages,
+            independent_judgment_stages=target.independent_judgment_stages,
+            synthetic_fixture=target.synthetic_fixture,
+        )
 
     def process_rca_materialization(self, scope: AccessScope, owner: str) -> RcaMaterializationView | None:
         """Run one queued bounded RCA job through the existing worker authority."""
@@ -204,6 +268,23 @@ def compose_downstream(
             VersionedAggregateCommandExecutor(adapter, current_authorization),
             current_authorization,
         )
+        policy_metadata = validated.policy.public_metadata
+        runtime_capabilities = validated.runtime.public_metadata
+        if not isinstance(policy_metadata, PolicySchemaMetadata) or not isinstance(runtime_capabilities, RuntimeCapabilities):
+            raise DownstreamFailure(DownstreamReasonCode.COMPOSITION_FAIL_CLOSED, categories=(ProviderCategory.POLICY.value, ProviderCategory.RUNTIME.value))
+        provider_contract_identities = tuple(
+            ProviderIdentity(category.value, binding.contract.contract_id, binding.contract.version)
+            for category in ProviderCategory
+            if (binding := validated.binding(category)) is not None
+        )
+        policy_configuration_identity = _policy_configuration_identity(policy_configuration)
+        family_center = FamilyCenterService(
+            adapter,
+            current_authorization,
+            adapter.source_store(),
+            artifact_service,
+            adapter.worker_store(),
+        )
         return DownstreamComposition(
             adapter=adapter,
             runtime_settings=settings,
@@ -223,6 +304,13 @@ def compose_downstream(
             source_observer=source.observer,
             source_binding=source.expected_binding,
             policy_configuration=policy_configuration,
+            policy_schema_metadata=policy_metadata,
+            runtime_capabilities=runtime_capabilities,
+            provider_abi_id=validated.abi_id,
+            provider_abi_version=validated.abi_version,
+            provider_contract_identities=provider_contract_identities,
+            policy_configuration_identity=policy_configuration_identity,
+            family_center=family_center,
             notification_channel=notifications.channel,
             outcomes=outcomes,
         )
@@ -240,6 +328,42 @@ def compose_downstream(
             except Exception:
                 pass
         raise DownstreamFailure(DownstreamReasonCode.COMPOSITION_FAIL_CLOSED) from None
+
+
+def _recovery_identity(policy: object) -> str:
+    payload = {
+        "policy_id": policy.policy_id,
+        "confidence_floor": format(policy.confidence_floor, ".17g"),
+        "minimum_eligible_independent_samples": policy.minimum_eligible_independent_samples,
+        "expected_context": policy.expected_context,
+        "expected_characteristic": policy.expected_characteristic,
+        "expected_unit": policy.expected_unit,
+        "affirmative_outcome": policy.affirmative_outcome.value,
+        "require_reference_valid": policy.require_reference_valid,
+        "require_capability_valid": policy.require_capability_valid,
+        "max_observation_age_microseconds": int(policy.max_observation_age.total_seconds() * 1_000_000),
+        "max_availability_delay_microseconds": int(policy.max_availability_delay.total_seconds() * 1_000_000),
+    }
+    return hashlib.sha256(json.dumps(payload, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
+
+
+def _policy_configuration_identity(policy: PolicyConfiguration) -> str:
+    payload = {
+        "schema_id": policy.schema_id,
+        "version": policy.version,
+        "check_catalog_identity": policy.check_catalog.identity,
+        "planner_policy_identity": policy.planner_policy.identity,
+        "recovery_policy_identity": _recovery_identity(policy.recovery_policy),
+        "family_contexts": [
+            {
+                "family_id": family.family_id,
+                "version": family.version,
+                "contexts": [context.as_dict() for context in family.contexts],
+            }
+            for family in policy.family_contexts
+        ],
+    }
+    return hashlib.sha256(json.dumps(payload, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode()).hexdigest()
 
 
 __all__ = ["DownstreamComposition", "compose_downstream"]

@@ -1,0 +1,269 @@
+{
+  "base_commit": "de61d564b4aa9d70f17e3ab375bf867f034677f0",
+  "browser": {
+    "desktop_1440x900": {
+      "accessibility_snapshot_digest": "8ca72ea49fbe86e46e20c10aebd4fa7b037fc38c0c30814d8edddd7d4397c880",
+      "events": {
+        "console_errors": [],
+        "http_failures": [],
+        "page_errors": [],
+        "request_failures": []
+      },
+      "geometry": {
+        "document_scroll_width": 1440,
+        "no_horizontal_overflow": true,
+        "viewport": {
+          "height": 900,
+          "width": 1440
+        }
+      },
+      "keyboard_focus": {
+        "focus_continuity_after_refresh": true,
+        "focus_visible": true,
+        "tab_count": 9,
+        "target_reached": true
+      },
+      "missing_rendered_states": [],
+      "promotion_disabled_when_blocked": true,
+      "promotion_enabled_when_ready": true,
+      "required_rendered_states": {
+        "ambiguous": {
+          "precise_blocker_visible": true,
+          "visible": true
+        },
+        "expired": {
+          "precise_blocker_visible": true,
+          "visible": true
+        },
+        "failed": {
+          "precise_blocker_visible": true,
+          "visible": true
+        },
+        "pending": {
+          "durable_job_queued": true,
+          "precise_blocker_visible": true,
+          "visible": true
+        }
+      },
+      "status": "PASS",
+      "viewport": {
+        "height": 900,
+        "width": 1440
+      }
+    },
+    "phone_390x844": {
+      "accessibility_snapshot_digest": "9b4c36a89882dc5b32b91b5c50c454ec7f2f14a9364373c7f48ee4ed6df2351a",
+      "events": {
+        "console_errors": [],
+        "http_failures": [],
+        "page_errors": [],
+        "request_failures": []
+      },
+      "geometry": {
+        "document_scroll_width": 390,
+        "no_horizontal_overflow": true,
+        "viewport": {
+          "height": 844,
+          "width": 390
+        }
+      },
+      "keyboard_focus": {
+        "focus_continuity_after_refresh": true,
+        "focus_visible": true,
+        "tab_count": 5,
+        "target_reached": true
+      },
+      "missing_rendered_states": [],
+      "promotion_disabled_when_blocked": true,
+      "promotion_enabled_when_ready": true,
+      "required_rendered_states": {
+        "ambiguous": {
+          "precise_blocker_visible": true,
+          "visible": true
+        },
+        "expired": {
+          "precise_blocker_visible": true,
+          "visible": true
+        },
+        "failed": {
+          "precise_blocker_visible": true,
+          "visible": true
+        },
+        "pending": {
+          "durable_job_queued": true,
+          "precise_blocker_visible": true,
+          "visible": true
+        }
+      },
+      "status": "PASS",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    },
+    "stale_invalidation": {
+      "missing": [],
+      "status": "PASS"
+    }
+  },
+  "candidate": {
+    "head_commit": "de61d564b4aa9d70f17e3ab375bf867f034677f0",
+    "source_test_tool_digest": "5f5868fdd36e2685b04f97583fad917780a57f513c1532923e61465c03109f5a",
+    "state": "working-tree candidate based on registered target"
+  },
+  "change": "CHG-233 U2.3 / O7.2",
+  "dependency_invalidation_fixture": {
+    "gate_revision_count": 8,
+    "mode": "stale",
+    "production_approval": false,
+    "promotion_ready": false,
+    "promotion_state": "STALE",
+    "synthetic": true,
+    "version": 10,
+    "workspace_id": "bc9473ce13a78b86a4afb9c4ec4db9ecb0272ea51875493d17070e6027a0278f"
+  },
+  "fixture": {
+    "family_id": "synthetic-u1-family",
+    "green_release": "synthetic-release-1",
+    "postgres_version": "18.6 (Homebrew)",
+    "production_approval": false,
+    "states": {
+      "synthetic-release-1": {
+        "gate_revision_count": 8,
+        "mode": "green",
+        "production_approval": false,
+        "promotion_ready": true,
+        "promotion_state": null,
+        "synthetic": true,
+        "version": 9,
+        "workspace_id": "2f655344489ed1f7480c000720e6b4663610303c64d3fa5f789d36bbf0365ee6"
+      },
+      "synthetic-release-ambiguous": {
+        "mode": "ambiguous",
+        "production_approval": false,
+        "promotion_ready": false,
+        "synthetic": true,
+        "version": 2,
+        "workspace_id": "3f49182e89a00ba2c4c94cc5b45dfdd13c7da4fe751ce23e59977785154857b5"
+      },
+      "synthetic-release-expired": {
+        "mode": "expired",
+        "production_approval": false,
+        "promotion_ready": false,
+        "synthetic": true,
+        "version": 2,
+        "workspace_id": "4cad5c64204adaa24e4046a82fef1a9293194d93ea71ccc2985b56d470daf94b"
+      },
+      "synthetic-release-failed": {
+        "mode": "failed",
+        "production_approval": false,
+        "promotion_ready": false,
+        "synthetic": true,
+        "version": 2,
+        "workspace_id": "d5c27348bc7f9203f1920c1583ce4cafeee1070bdb4fff10eed183bd4458b04f"
+      },
+      "synthetic-release-pending": {
+        "mode": "pending",
+        "production_approval": false,
+        "promotion_ready": false,
+        "synthetic": true,
+        "version": 4,
+        "workspace_id": "32dd6c00309e1883fd21c17b31a8bae83a528b9e3d61d176b48343854575ed89"
+      }
+    },
+    "synthetic": true
+  },
+  "g12_production_approval": false,
+  "non_claims": {
+    "g12_release_approval": "NOT_CLAIMED",
+    "production": "NOT_CLAIMED",
+    "real_company_mapping": "NOT_CLAIMED",
+    "real_family_g02_g06": "NOT_CLAIMED",
+    "second_real_family_portability": "NOT_CLAIMED",
+    "w3_w4_w5_human_pilot": "NOT_CLAIMED"
+  },
+  "postgres": {
+    "restart_history_test": "tests.test_family_center_postgresql",
+    "version": "18.6 (Homebrew)",
+    "version_18": true
+  },
+  "project": "ephi",
+  "schema_version": 1,
+  "scope": "synthetic Family Center qualification only",
+  "screenshots": [
+    {
+      "bytes": 377763,
+      "path": "evidence/u2/chg-233-u2.3-o7.2/screenshots/family-center-ambiguous-1440x900.png",
+      "sha256": "df97ccf644c537006d8bde1d8dbdd8136a3a201a8285e2d86a0f3abbf7a49821"
+    },
+    {
+      "bytes": 389409,
+      "path": "evidence/u2/chg-233-u2.3-o7.2/screenshots/family-center-ambiguous-390x844.png",
+      "sha256": "13b1ae9581ea753fbc4559bdd039f46afbbb304ac91c2b765262ae5255998676"
+    },
+    {
+      "bytes": 377737,
+      "path": "evidence/u2/chg-233-u2.3-o7.2/screenshots/family-center-blocked-1440x900.png",
+      "sha256": "26fa70c9bd4a28662b32fc38a9b5494fb52bff142481d0fe4df30e34dba3c3c1"
+    },
+    {
+      "bytes": 389464,
+      "path": "evidence/u2/chg-233-u2.3-o7.2/screenshots/family-center-blocked-390x844.png",
+      "sha256": "ea86acfbc91d6b475bd715afbd61aa88838ac58084bad3b04cf18bf62bfb36b9"
+    },
+    {
+      "bytes": 389418,
+      "path": "evidence/u2/chg-233-u2.3-o7.2/screenshots/family-center-expired-1440x900.png",
+      "sha256": "49bb4324391896278ee1feae4f2bcaaaffb6ec0049904eeabe9c857c5604aa01"
+    },
+    {
+      "bytes": 403192,
+      "path": "evidence/u2/chg-233-u2.3-o7.2/screenshots/family-center-expired-390x844.png",
+      "sha256": "bdeb92be33336a5eeb093ce75bb37d511e928bb1104c6998303b41b10c5a151f"
+    },
+    {
+      "bytes": 370580,
+      "path": "evidence/u2/chg-233-u2.3-o7.2/screenshots/family-center-failed-1440x900.png",
+      "sha256": "7e4103a341866e021b226766278d580705806715190d3c16a3af2ec49df387f7"
+    },
+    {
+      "bytes": 382929,
+      "path": "evidence/u2/chg-233-u2.3-o7.2/screenshots/family-center-failed-390x844.png",
+      "sha256": "d7869a83295a1fcf1e0e3f61881a26acf0a23fc44dd7780e8cabed53c67135de"
+    },
+    {
+      "bytes": 456229,
+      "path": "evidence/u2/chg-233-u2.3-o7.2/screenshots/family-center-green-1440x900.png",
+      "sha256": "1d7e9424b41b1f242cc8695316d7c49843aff162c8c7d9fc3475febb0e189860"
+    },
+    {
+      "bytes": 497370,
+      "path": "evidence/u2/chg-233-u2.3-o7.2/screenshots/family-center-green-390x844.png",
+      "sha256": "2c434840db53707312735230007967e004a12522db601a711d42c181fc53076f"
+    },
+    {
+      "bytes": 420290,
+      "path": "evidence/u2/chg-233-u2.3-o7.2/screenshots/family-center-pending-1440x900.png",
+      "sha256": "226461ce159697374bbdfa5cd2e5685567da9b7944d9298a1d317b09a388b14b"
+    },
+    {
+      "bytes": 439984,
+      "path": "evidence/u2/chg-233-u2.3-o7.2/screenshots/family-center-pending-390x844.png",
+      "sha256": "d214ce361aaae4c84c43f195466c799a53667c6f7f7185f49a687a3adab950e7"
+    },
+    {
+      "bytes": 466631,
+      "path": "evidence/u2/chg-233-u2.3-o7.2/screenshots/family-center-stale-1440x900.png",
+      "sha256": "2e46b1678a8934ba109ce96b022aaa21af7bd311d217079ee6e753595b144b08"
+    }
+  ],
+  "security": {
+    "artifact_bytes_recorded": false,
+    "browser_headers_recorded": false,
+    "credentials_recorded": false,
+    "raw_source_rows_recorded": false
+  },
+  "status": "PASS",
+  "synthetic_only": true,
+  "target_ref": "main@de61d564b4aa9d70f17e3ab375bf867f034677f0"
+}

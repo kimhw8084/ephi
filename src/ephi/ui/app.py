@@ -419,7 +419,12 @@ def build_composition_from_environment() -> EphiUiComposition:
 
 
 def _navigation() -> NavigationModel:
-    return NavigationModel((NavSection("work", "Work", (NavItem("attention", "Attention", "/"), NavItem("episode", "Episode", "/episode"), NavItem("outcomes", "Outcomes", "/ephi/outcomes"))),))
+    return NavigationModel((NavSection("work", "Work", (
+        NavItem("attention", "Attention", "/"),
+        NavItem("episode", "Episode", "/episode"),
+        NavItem("outcomes", "Outcomes", "/ephi/outcomes"),
+        NavItem("families", "Family Center", "/ephi/families"),
+    )),))
 
 
 def _intent_for_capability(state: object) -> StatusIntent:
@@ -1821,6 +1826,7 @@ def run_ephi() -> None:
     composition = build_composition_from_environment()
     runtime_adapter = NiceGUIRuntimeAdapter(config)
     from nicegui import app as nicegui_app
+    from .family_center import build_family_center_index_page, build_family_center_page
 
     install_browser_transport_stack(nicegui_app, runtime_adapter, policy)
     runtime_adapter.run(
@@ -1828,5 +1834,9 @@ def run_ephi() -> None:
         pages={
             "/episode": lambda: build_episode_page(composition),
             "/ephi/outcomes": lambda: build_outcomes_page(composition),
+            "/ephi/families": lambda: build_family_center_index_page(composition, _navigation()),
+            "/ephi/families/{family_id}": lambda family_id: build_family_center_page(
+                composition, family_id, _navigation()
+            ),
         },
     )
