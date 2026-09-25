@@ -423,6 +423,44 @@ arbitrary private code. Successful U1 conformance does not imply real family
 source/science G02/G06, company identity/TLS, performance G10, G12, Port Gate
 or Production qualification.
 
+## CHG-234 U2.4 bounded Asset 360 and history
+
+The generic `/ephi/assets` list projects only assets present in authorized
+current Episode heads with a supported `InvestigationProfile`; it is not a
+company asset-master inventory. Exact family/site/context/characteristic
+filters and asset-ID tie-breaking use O8 scope and the existing retained O2
+query snapshots/cursors. `/ephi/assets/{id}` composes immutable O3 Episode
+read revisions, O5 workflow/action/recovery facts, O4 binding/capability and
+snapshot facts, and bounded read-only U1 observations. It adds no Asset table,
+source adapter, raw telemetry persistence, material/WIP authority or workflow
+authority.
+
+The Asset 360 read binds one asset and knowledge cutoff to exact Episode/read
+revision IDs, workflow versions, O4 source identities, selected
+characteristic/unit, and the exact bounded source-observation identity set.
+Observation event time and source-available time must both qualify; exact
+binding and asset/context/characteristic/unit mismatches fail closed.
+Comparable history requires the existing explicitly qualified compatible
+population. Gaps remain unconnected in the trend, and O5 actions/recovery are
+shown as recorded observations without causal interpretation. Material
+context is explicitly unavailable without a qualified source. The synthetic
+fixture and exercised limits are documented in
+[the CHG-234 slice note](docs/CHG-234-U2.4-asset-360.md).
+
+Focused reference integration evidence requires a real PostgreSQL 18 service:
+
+```bash
+EPHI_TEST_POSTGRES_DSN='postgresql://user:password@host:5432/database' \
+  python3 -m unittest tests.test_assets_postgresql -v
+```
+
+Candidate-bound desktop/phone browser screenshots and clean console/page/
+request inventories, including stale and blocked states, are recorded in
+[evidence/u2/chg-234-u2.4-asset-360/qualification.json](evidence/u2/chg-234-u2.4-asset-360/qualification.json).
+This slice does not claim company asset-master completeness, real-family
+G02/G06, causal/RCA or predictive health, production capacity/G10, Operations
+destination implementation, G12, Port Gate, or Production readiness.
+
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for evidence preservation and validation. No project license has been selected.

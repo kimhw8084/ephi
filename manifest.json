@@ -156,8 +156,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 24588,
-      "sha256": "51fd1c83079b0d5909a5cda40db34e26bca23ff3ec8e0c06ef1bc19307ba33c3"
+      "bytes": 26720,
+      "sha256": "a35fa0c9c9144168117dc38abd960a78bf3239bff31e652d2b66e2a2b2eba851"
     },
     {
       "path": "app.py",
@@ -173,6 +173,11 @@
       "path": "certification_output/runtime_smoke/RUNTIME_SMOKE_SERVER.log",
       "bytes": 1863,
       "sha256": "0520a045b2641cbd63a6f7d97a8e01dc94e8e171fe58108d391b7fe789867a49"
+    },
+    {
+      "path": "docs/CHG-234-U2.4-asset-360.md",
+      "bytes": 4102,
+      "sha256": "eb0b258fc2fe0f72f915d0ffe7fdfd43a5f622851edc7a4cf41d4dff59c3a4db"
     },
     {
       "path": "docs/Downstream_Integration_ABI.md",
@@ -351,8 +356,8 @@
     },
     {
       "path": "evidence/README.md",
-      "bytes": 2372,
-      "sha256": "cb9848dcdac24ce860004689917df9d48945363ad0b78a2b00f37b4e10209bb4"
+      "bytes": 2815,
+      "sha256": "4d8c6d3f8a0b9d578cc5005d685a641ce36920a2c3f88d0d1f22f8b01cb7b070"
     },
     {
       "path": "evidence/audit_environment.json",
@@ -1030,6 +1035,111 @@
       "sha256": "3b35b7020d0a2d861f47c77e2705f2ebe1adcdcf35c229392772409261c1be1f"
     },
     {
+      "path": "evidence/u2/chg-234-u2.4-asset-360/qualification.json",
+      "bytes": 182839,
+      "sha256": "ac4f0abe5b1044f85df63fb6f46a7004ef504b93ad040ad3e34daccd5c3d8773"
+    },
+    {
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-compare-blocked-desktop-1440x900.png",
+      "bytes": 356012,
+      "sha256": "759701b732f21f6d56245cd6b977cd29c5b622aaac1db384f2d987ef1eb21c8d"
+    },
+    {
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-compare-blocked-desktop-stale-1440x900.png",
+      "bytes": 333587,
+      "sha256": "40cbd0c86a16527650237372a119c6e61e25e414fd0ecd430df4e5c6c76d93a2"
+    },
+    {
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-compare-blocked-mobile-390x844.png",
+      "bytes": 334484,
+      "sha256": "e97e1e23a71579d054c7929b53ef0f7b3e57a93313f3bcc47d0abf31d1eb0d0c"
+    },
+    {
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-compare-blocked-mobile-stale-390x844.png",
+      "bytes": 267958,
+      "sha256": "635e43023fe0c0dee088117691939f25b767296ce66287221355d144d70876e3"
+    },
+    {
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-episodes-desktop-1440x900.png",
+      "bytes": 427403,
+      "sha256": "897e856de82296221d15d620f762638b89fbeb86e309616797c080a19aa0dbd7"
+    },
+    {
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-episodes-desktop-stale-1440x900.png",
+      "bytes": 432901,
+      "sha256": "9ca3639c7c00d9736945296ea7074a9cf9458ecd8247301cf64ea3f088fd899f"
+    },
+    {
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-episodes-mobile-390x844.png",
+      "bytes": 390845,
+      "sha256": "bc01fb655263453d1cdd56cd2a265f6dfbed3a5515dd80d6af6e55cec3bbe36a"
+    },
+    {
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-episodes-mobile-stale-390x844.png",
+      "bytes": 395069,
+      "sha256": "5d59784386e339351ae6d319d44e0c212aa76c52b9413ffbb63e47b426ebbb21"
+    },
+    {
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-gap-compatible-desktop-1440x900.png",
+      "bytes": 356788,
+      "sha256": "c6b5c2533461f0374ab77b61ef26f84e917a96237c107b9baeb72d53f1e6324c"
+    },
+    {
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-gap-compatible-desktop-stale-1440x900.png",
+      "bytes": 352104,
+      "sha256": "40cb03095b484819ed16c2147c86f18ad3bb42cb6ba9e7e8d2d222ba06706533"
+    },
+    {
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-gap-compatible-mobile-390x844.png",
+      "bytes": 333776,
+      "sha256": "78f185c9d9e4a8d9e35d58ea37d848c9e278013ebbf5f4f598781301b005b0ec"
+    },
+    {
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-gap-compatible-mobile-stale-390x844.png",
+      "bytes": 325027,
+      "sha256": "c07320096f1c98cd2bcfc91aecda29b525836cc1348ce9eba38646d94a3272dd"
+    },
+    {
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-stale-capability-desktop-1440x900.png",
+      "bytes": 352146,
+      "sha256": "01e62b0720859c473c55c3ffc90b6a7bf865168b01b938f7d78e9c6eaf457ce0"
+    },
+    {
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-360-stale-capability-mobile-390x844.png",
+      "bytes": 326451,
+      "sha256": "05c8060aacf6e6f9c715d9af94049d9aea3ed18331fa8436d74ce0eac11f2836"
+    },
+    {
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-list-desktop-1440x900.png",
+      "bytes": 120752,
+      "sha256": "e69f3bbd95cca91d13e2549c8e8212d2ac3dcb229f95f0c2aaa05688e5156829"
+    },
+    {
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-list-desktop-keyboard-focus-stale.png",
+      "bytes": 124225,
+      "sha256": "24f7b7948a5f43663a578d8da26dacf2d7bfd0b8a3df783df4ac73cecf434f6b"
+    },
+    {
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-list-desktop-keyboard-focus.png",
+      "bytes": 121154,
+      "sha256": "c9c94b8b1a98ffe40f8e3ebddda0fbe31f56f1ce57f42ac54c73eed5c3f46455"
+    },
+    {
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-list-desktop-stale-1440x900.png",
+      "bytes": 123963,
+      "sha256": "49614604cbd9b03ea12150c615a7eeab257ad170a958ee8b4dc2e5b732da17f0"
+    },
+    {
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-list-mobile-390x844.png",
+      "bytes": 139038,
+      "sha256": "1532b233bd70a92b0b0af89f120cd0bd1d2e0c37ffa7e4f40ee415f2a9d25ad4"
+    },
+    {
+      "path": "evidence/u2/chg-234-u2.4-asset-360/screenshots/asset-list-mobile-stale-390x844.png",
+      "bytes": 141284,
+      "sha256": "c231744944d6ea6603c42931b2a12d8cd900a2318fb4f1401eed782639b12ba4"
+    },
+    {
       "path": "examples/__init__.py",
       "bytes": 61,
       "sha256": "b060d41e6705cac80caacb622fc737209d85f878bc0a4a6d976adc651b26d7f1"
@@ -1065,14 +1175,19 @@
       "sha256": "de9996707b14c26d73a5bffe85ab6e92a88eeee694c3e18bca97913b340a7b30"
     },
     {
+      "path": "examples/synthetic_downstream/assets.py",
+      "bytes": 16059,
+      "sha256": "6233c0d8921b96b6fa6b47100145f98eea6b4fcd001a11aff113fe6de79969fc"
+    },
+    {
       "path": "examples/synthetic_downstream/family_center.py",
       "bytes": 17596,
       "sha256": "2957ccdda5ac9939d2e6d46986fb0d6665edf88ca144a3dee0e69a726fa546a7"
     },
     {
       "path": "examples/synthetic_downstream/flagship.py",
-      "bytes": 13216,
-      "sha256": "0f9d586b6935eec88b0021b2955d4a6d4e854a7fe9315f59f5f8ff80fc9adac0"
+      "bytes": 13262,
+      "sha256": "75506e191f7d21ec65475f65837aaeba509b89c4482dd895289ddeb8c09a5aeb"
     },
     {
       "path": "examples/synthetic_downstream/outcomes.py",
@@ -1081,8 +1196,8 @@
     },
     {
       "path": "examples/synthetic_downstream/provider.py",
-      "bytes": 20777,
-      "sha256": "6cf9b8f329fdbe097a2ee89bf555619a40d551df8587cf32cca1902d090053a7"
+      "bytes": 24486,
+      "sha256": "39f15e4bbed90f37156089eb27d3c3cab5e591caac024a05268c991aa1757a8a"
     },
     {
       "path": "migrations/001_o2_command_core.sql",
@@ -1236,13 +1351,18 @@
     },
     {
       "path": "src/ephi/application/__init__.py",
-      "bytes": 17760,
-      "sha256": "22655e4cddcf2ff87b83fe0362c19bc9c2f0a0ee01502f52dc1e1bbbb09ac418"
+      "bytes": 17947,
+      "sha256": "9c9c521791f117ad0e57b17fefabdd0ec1e90fd4e37edd83269f14e1b0db92ba"
     },
     {
       "path": "src/ephi/application/artifacts.py",
       "bytes": 15857,
       "sha256": "b0f1a4c9c809e36c3dd90506c461b22753add81aaafcc3198e3eeac6b6c6514e"
+    },
+    {
+      "path": "src/ephi/application/assets.py",
+      "bytes": 48723,
+      "sha256": "cb6bcfc19e50ed0d89c042b525a69dacf43520870a3a913dba9ec1384d7f36f5"
     },
     {
       "path": "src/ephi/application/attention.py",
@@ -1261,8 +1381,8 @@
     },
     {
       "path": "src/ephi/application/decision_loop.py",
-      "bytes": 69499,
-      "sha256": "92825c35ba0446b7a4087696cac16b639526ae4970fcf4f83f9adcc52b10adc1"
+      "bytes": 69785,
+      "sha256": "a2da020372f4d8f2221feb1049e46f875a4f1f4f8b27e00631da7865bc4d3a39"
     },
     {
       "path": "src/ephi/application/episodes.py",
@@ -1421,8 +1541,8 @@
     },
     {
       "path": "src/ephi/infrastructure/postgresql_o3.py",
-      "bytes": 9926,
-      "sha256": "814d1f5c3af5fcda9cede47f9e52d66073045845a4aa590be8bcbdf67e7fef51"
+      "bytes": 19182,
+      "sha256": "7b5f2a6a9ecd6fe47810fe1f36312d5c9ff17e0c38337032c7959dce747c1b02"
     },
     {
       "path": "src/ephi/infrastructure/postgresql_reads.py",
@@ -1466,8 +1586,13 @@
     },
     {
       "path": "src/ephi/ui/app.py",
-      "bytes": 103009,
-      "sha256": "2beacf0661f78c7e31fdc732af9f537d7beb36f837dedd70ffa3546f94f63faa"
+      "bytes": 104233,
+      "sha256": "4fe2d058755046b745955f09e5f949a914a747291d37c418ec6cfe98bdd727b5"
+    },
+    {
+      "path": "src/ephi/ui/assets.py",
+      "bytes": 38201,
+      "sha256": "c376dc821ce6222bfdd534ca3de69d899ee60a9e818181b81fde6aa231e5ae80"
     },
     {
       "path": "src/ephi/ui/family_center.py",
@@ -1503,6 +1628,11 @@
       "path": "tests/test_advisory_integrity.py",
       "bytes": 7684,
       "sha256": "3025f70a03352eb092e6eec1ee1d9acf7b091e9518334e993b9f5dba688cf527"
+    },
+    {
+      "path": "tests/test_assets_postgresql.py",
+      "bytes": 13282,
+      "sha256": "ba18b020b59063ed0aaa7ee565804d49c3bc24341ffe8e534172de8153905c42"
     },
     {
       "path": "tests/test_downstream_abi.py",
@@ -1778,6 +1908,11 @@
       "path": "tools/u1_episode_geometry_qualification.py",
       "bytes": 31620,
       "sha256": "e8c700843846f373ec4010889e1e6b80953facf04859cfeddb6e2c88ec00788f"
+    },
+    {
+      "path": "tools/u2_asset_360_browser_qualification.py",
+      "bytes": 21739,
+      "sha256": "13ab24075bfb77d3cabbfc2062b539651b574a1c639c208a043a1f59b0d738e7"
     },
     {
       "path": "tools/u2_family_center_browser_qualification.py",

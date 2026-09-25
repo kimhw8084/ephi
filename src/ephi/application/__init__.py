@@ -129,6 +129,7 @@ from .episodes import (
     EpisodeBriefQueryService,
     GetEpisodeBrief,
 )
+from .assets import ASSET_READ_CAPABILITY, Asset360QueryService, Asset360Result, AssetPage
 from .comparable_history import (
     COMPARABLE_FINGERPRINT_VERSION,
     COMPARABLE_HISTORY_READ_CAPABILITY,
@@ -378,6 +379,10 @@ __all__ = [
     "AttentionQueryService",
     "AttentionRow",
     "ATTENTION_READ_CAPABILITY",
+    "ASSET_READ_CAPABILITY",
+    "Asset360QueryService",
+    "Asset360Result",
+    "AssetPage",
     "COMPARABLE_FINGERPRINT_VERSION",
     "COMPARABLE_HISTORY_READ_CAPABILITY",
     "COMPARABLE_POLICY_ID",
