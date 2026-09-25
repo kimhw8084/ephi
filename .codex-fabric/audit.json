@@ -1,0 +1,727 @@
+{
+  "accepted_at": "2026-09-25T17:36:52Z",
+  "changed_files": [
+    {
+      "additions": 18,
+      "deletions": 0,
+      "path": "13_Package_Review.md",
+      "status": "M"
+    },
+    {
+      "additions": 24,
+      "deletions": 0,
+      "path": "README.md",
+      "status": "M"
+    },
+    {
+      "additions": 6,
+      "deletions": 0,
+      "path": "evidence/README.md",
+      "status": "M"
+    },
+    {
+      "additions": 2331,
+      "deletions": 0,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/qualification.json",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-artifact_corrupt-desktop-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-artifact_corrupt-phone-390x844.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-artifact_missing-desktop-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-artifact_missing-phone-390x844.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-mixed_axes-desktop-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-mixed_axes-phone-390x844.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-qualification_expired-desktop-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-qualification_expired-phone-390x844.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-qualification_pending-desktop-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-qualification_pending-phone-390x844.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-qualification_unbound-desktop-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-qualification_unbound-phone-390x844.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-source_stale-desktop-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-source_stale-phone-390x844.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-source_unavailable-desktop-1440x900.png",
+      "status": "A"
+    },
+    {
+      "additions": null,
+      "deletions": null,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-source_unavailable-phone-390x844.png",
+      "status": "A"
+    },
+    {
+      "additions": 419,
+      "deletions": 0,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/test_logs/full-suite-postgresql18.log",
+      "status": "A"
+    },
+    {
+      "additions": 56,
+      "deletions": 0,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/validation/final-verification.json",
+      "status": "A"
+    },
+    {
+      "additions": 11,
+      "deletions": 0,
+      "path": "examples/synthetic_downstream/provider.py",
+      "status": "M"
+    },
+    {
+      "additions": 135,
+      "deletions": 20,
+      "path": "manifest.json",
+      "status": "M"
+    },
+    {
+      "additions": 28,
+      "deletions": 0,
+      "path": "src/ephi/application/__init__.py",
+      "status": "M"
+    },
+    {
+      "additions": 61,
+      "deletions": 0,
+      "path": "src/ephi/application/artifacts.py",
+      "status": "M"
+    },
+    {
+      "additions": 716,
+      "deletions": 3,
+      "path": "src/ephi/application/operations.py",
+      "status": "M"
+    },
+    {
+      "additions": 36,
+      "deletions": 0,
+      "path": "src/ephi/infrastructure/artifacts/catalog.py",
+      "status": "M"
+    },
+    {
+      "additions": 43,
+      "deletions": 1,
+      "path": "src/ephi/infrastructure/postgresql.py",
+      "status": "M"
+    },
+    {
+      "additions": 59,
+      "deletions": 0,
+      "path": "src/ephi/infrastructure/postgresql_worker.py",
+      "status": "M"
+    },
+    {
+      "additions": 35,
+      "deletions": 0,
+      "path": "src/ephi/ui/app.py",
+      "status": "M"
+    },
+    {
+      "additions": 411,
+      "deletions": 0,
+      "path": "src/ephi/ui/operations.py",
+      "status": "A"
+    },
+    {
+      "additions": 428,
+      "deletions": 0,
+      "path": "tests/test_operations_application.py",
+      "status": "A"
+    },
+    {
+      "additions": 213,
+      "deletions": 0,
+      "path": "tests/test_operations_postgresql.py",
+      "status": "A"
+    },
+    {
+      "additions": 529,
+      "deletions": 0,
+      "path": "tools/u2_operations_browser_qualification.py",
+      "status": "A"
+    }
+  ],
+  "checks": [
+    {
+      "command": "/bin/zsh -lc \"EPHI_TEST_POSTGRES_DSN='postgresql://ephi@127.0.0.1:55432/ephi' EPHI_TEST_POSTGRES_RESTART_DATA_DIR='/tmp/ephi-chg252-pg18' EPHI_TEST_POSTGRES_PG_CTL='/opt/homebrew/opt/postgresql@18/bin/pg_ctl' PYTHONPATH=src rtk python3 -m unittest tests.test_operations_postgresql -v\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"EPHI_TEST_POSTGRES_DSN='postgresql://ephi@127.0.0.1:55432/ephi' EPHI_TEST_POSTGRES_RESTART_DATA_DIR='/tmp/ephi-chg252-pg18' EPHI_TEST_POSTGRES_PG_CTL='/opt/homebrew/opt/postgresql@18/bin/pg_ctl' PYTHONPATH=src rtk python3 -m unittest tests.test_operations_postgresql -v\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"EPHI_TEST_POSTGRES_DSN='postgresql://ephi@127.0.0.1:55432/ephi' PYTHONPATH=src rtk python3 tools/u2_operations_browser_qualification.py --output evidence/u2/chg-252-u2.5-o9.2/qualification.json --artifacts evidence/u2/chg-252-u2.5-o9.2/screenshots\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nimport json\nfrom pathlib import Path\nreport = json.loads(Path('evidence/u2/chg-252-u2.5-o9.2/qualification.json').read_text())\nfor name, item in report['browser'].items():\n    print(name, item['status'], 'missing=', item['missing_content'], 'leaks=', item['private_markers_in_browser_text'])\n    print('  overflow=', item['geometry']['no_horizontal_overflow'], 'controls=', all(item['disabled_controls'].values()), 'reachable=', item['restore_control_reachable'], 'keyboard=', item['keyboard_focus'])\n    print('  inventories=', {key: len(value) for key, value in item['inventories'].items()})\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nimport tempfile\nfrom pathlib import Path\nfrom tools.u2_operations_browser_qualification import _seed, _start_server, _stop_server\nfrom playwright.sync_api import sync_playwright\n\ndsn='postgresql://ephi@127.0.0.1:55432/ephi'\nwith tempfile.TemporaryDirectory(prefix='ops-focus-debug-') as directory:\n    root=Path(directory); artifacts=root/'artifacts'; _seed(dsn, artifacts, 'mixed_axes')\n    process, log, base=_start_server(dsn, root, artifacts)\n    try:\n        with sync_playwright() as p:\n            browser=p.chromium.launch(headless=True); page=browser.new_page(viewport={'width':1440,'height':900})\n            page.goto(base+'/ephi/operations', wait_until='domcontentloaded')\n            page.get_by_text('Operator controls', exact=True).wait_for(timeout=15000)\n            button=page.get_by_role('button', name='Refresh'); button.focus()\n            data=button.evaluate(\\\"e => ({html:e.outerHTML, ancestors:(()=>{let a=[];let n=e;while(n&&a.length<7){a.push({tag:n.tagName,class:n.className});n=n.parentElement}return a})(),matches:[e.matches('.ephi-operations button:focus-visible'),e.matches('.ephi-operations-actions button:focus-visible'),e.matches('.ephi-operations-actions .q-btn:focus-visible')],style:{outline:getComputedStyle(e).outline,shadow:getComputedStyle(e).boxShadow,focus:e.matches(':focus-visible')},styleTags:[...document.querySelectorAll('style')].map(s=>s.textContent.includes('.ephi-operations-actions')||s.textContent.includes('ephi-operations button:focus-visible'))})\\\")\n            print(data)\n            browser.close()\n    finally:\n        _stop_server(process, log)\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nimport tempfile\nfrom pathlib import Path\nfrom tools.u2_operations_browser_qualification import _seed, _start_server, _stop_server\nfrom playwright.sync_api import sync_playwright\n\ndsn='postgresql://ephi@127.0.0.1:55432/ephi'\nwith tempfile.TemporaryDirectory(prefix='ops-focus-debug-') as directory:\n    root=Path(directory); artifacts=root/'artifacts'; _seed(dsn, artifacts, 'mixed_axes')\n    process, log, base=_start_server(dsn, root, artifacts)\n    try:\n        with sync_playwright() as p:\n            browser=p.chromium.launch(headless=True); page=browser.new_page(viewport={'width':1440,'height':900})\n            page.goto(base+'/ephi/operations', wait_until='domcontentloaded')\n            page.get_by_text('Operator controls', exact=True).wait_for(timeout=15000)\n            button=page.get_by_role('button', name='Refresh'); button.focus()\n            data=button.evaluate(\\\"e => ({rules:[...document.styleSheets].flatMap(s=>{try{return [...s.cssRules]}catch{return []}}).filter(r=>r.selectorText&&r.selectorText.includes('focus-visible')).map(r=>({selector:r.selectorText,css:r.style.cssText,outlinePriority:r.style.getPropertyPriority('outline')})),matched:getComputedStyle(e).outline})\\\")\n            print(data)\n            browser.close()\n    finally:\n        _stop_server(process, log)\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nimport tempfile\nfrom pathlib import Path\nfrom tools.u2_operations_browser_qualification import _seed, _start_server, _stop_server\nfrom playwright.sync_api import sync_playwright\n\ndsn='postgresql://ephi@127.0.0.1:55432/ephi'\nwith tempfile.TemporaryDirectory(prefix='ops-focus-check-') as directory:\n    root=Path(directory); artifacts=root/'artifacts'; _seed(dsn, artifacts, 'mixed_axes')\n    process, log, base=_start_server(dsn, root, artifacts)\n    try:\n        with sync_playwright() as p:\n            browser=p.chromium.launch(headless=True); page=browser.new_page(viewport={'width':390,'height':844})\n            page.goto(base+'/ephi/operations', wait_until='domcontentloaded')\n            page.get_by_text('Operator controls', exact=True).wait_for(timeout=15000)\n            button=page.get_by_role('button', name='Refresh'); button.focus()\n            print(button.evaluate(\\\"e => {const s=getComputedStyle(e);return {focus:e.matches(':focus-visible'),outline:s.outline,shadow:s.boxShadow}}\\\"))\n            browser.close()\n    finally:\n        _stop_server(process, log)\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"EPHI_TEST_POSTGRES_DSN='postgresql://ephi@127.0.0.1:55432/ephi' PYTHONPATH=src rtk python3 tools/u2_operations_browser_qualification.py --output evidence/u2/chg-252-u2.5-o9.2/qualification.json --artifacts evidence/u2/chg-252-u2.5-o9.2/screenshots\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nimport json\nfrom pathlib import Path\nreport=json.loads(Path('evidence/u2/chg-252-u2.5-o9.2/qualification.json').read_text())\nfor name,item in report['browser'].items():\n    print(name,item['status'], 'focus=',item['keyboard_focus']['focus_visible'], 'missing=',item['missing_content'], 'geometry=',item['geometry']['no_horizontal_overflow'], 'events=',{k:len(item['inventories'][k]) for k in ('console_errors','page_errors','request_failures','http_failures')})\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nimport json\nfrom pathlib import Path\nr=json.loads(Path('evidence/u2/chg-252-u2.5-o9.2/qualification.json').read_text())\nfor name,x in r['browser'].items():\n if x['status']\"'!='\"'PASS':\n  print(name, {k:x[k] for k in ('disabled_controls','restore_control_reachable','accessible_worker_detail_alternative','worker_table_visible_on_desktop','keyboard_focus')})\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"EPHI_TEST_POSTGRES_DSN='postgresql://ephi@127.0.0.1:55432/ephi' PYTHONPATH=src rtk python3 tools/u2_operations_browser_qualification.py --output evidence/u2/chg-252-u2.5-o9.2/qualification.json --artifacts evidence/u2/chg-252-u2.5-o9.2/screenshots\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk mkdir -p evidence/u2/chg-252-u2.5-o9.2/test_logs && EPHI_TEST_POSTGRES_DSN='postgresql://ephi@127.0.0.1:55432/ephi' EPHI_TEST_POSTGRES_RESTART_DATA_DIR='/tmp/ephi-chg252-pg18' EPHI_TEST_POSTGRES_PG_CTL='/opt/homebrew/opt/postgresql@18/bin/pg_ctl' PYTHONPATH=src rtk python3 -m unittest discover -s tests -v > evidence/u2/chg-252-u2.5-o9.2/test_logs/full-suite-postgresql18.log 2>&1\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk tail -180 evidence/u2/chg-252-u2.5-o9.2/test_logs/full-suite-postgresql18.log'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"EPHI_TEST_POSTGRES_DSN='postgresql://ephi@127.0.0.1:55432/ephi' EPHI_TEST_POSTGRES_RESTART_DATA_DIR='/tmp/ephi-chg252-pg18' EPHI_TEST_POSTGRES_PG_CTL='/opt/homebrew/opt/postgresql@18/bin/pg_ctl' PYTHONPATH=src rtk python3 -m unittest discover -s tests -v > evidence/u2/chg-252-u2.5-o9.2/test_logs/full-suite-postgresql18.log 2>&1\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk tail -100 evidence/u2/chg-252-u2.5-o9.2/test_logs/full-suite-postgresql18.log'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk rm evidence/u2/chg-252-u2.5-o9.2/test_logs/full-suite-postgresql18.log && rtk rmdir evidence/u2/chg-252-u2.5-o9.2/test_logs'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"EPHI_TEST_POSTGRES_DSN='postgresql://ephi@127.0.0.1:55432/ephi' EPHI_TEST_POSTGRES_RESTART_DATA_DIR='/tmp/ephi-chg252-pg18' EPHI_TEST_POSTGRES_PG_CTL='/opt/homebrew/opt/postgresql@18/bin/pg_ctl' PYTHONPATH=src rtk python3 -m unittest discover -s tests -v > /tmp/ephi-chg252-full-suite-postgresql18.log 2>&1\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk tail -8 /tmp/ephi-chg252-full-suite-postgresql18.log && rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/w0_repo_baseline.py --help'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n 'def run|no-tests|subprocess|test' tools/w0_repo_baseline.py | tail -50 && rtk sed -n '400,520p' tools/w0_repo_baseline.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"EPHI_TEST_POSTGRES_DSN='postgresql://ephi@127.0.0.1:55432/ephi' EPHI_TEST_POSTGRES_RESTART_DATA_DIR='/tmp/ephi-chg252-pg18' EPHI_TEST_POSTGRES_PG_CTL='/opt/homebrew/opt/postgresql@18/bin/pg_ctl' PYTHONPATH=src rtk python3 tools/w0_repo_baseline.py > /tmp/ephi-chg252-w0-baseline.json\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nimport json\nfrom pathlib import Path\nreport=json.loads(Path('/tmp/ephi-chg252-w0-baseline.json').read_text())\nprint({key: report.get(key) for key in ('status','commit','tree','working_tree','manifest','package')})\nprint('tests=',report.get('tests'))\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nimport json\nfrom pathlib import Path\nreport=json.loads(Path('/tmp/ephi-chg252-w0-baseline.json').read_text())\nprint(sorted(report.keys()))\nfor key,value in report.items():\n if isinstance(value,dict): print(key, sorted(value.keys()))\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nfrom pathlib import Path\nimport re\ntext=Path('/tmp/ephi-chg252-full-suite-postgresql18.log').read_text(errors='replace')\nchecks={\n 'fixture_secret_marker':'fixture-secret' in text,\n 'sample_source_row':'SAMPLE-ROW' in text,\n 'private_source_path':'/private/' in text,\n 'dsn_uri':bool(re.search(r'postgres(?:ql)?://[\"'^'\"\\\\s]+',text)),\n 'password_assignment':bool(re.search(r'password\\\\s*=\\\\s*[\"'^'\"\\\\s,)]+',text,re.I)),\n}\nprint(checks)\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk mkdir -p evidence/u2/chg-252-u2.5-o9.2/test_logs evidence/u2/chg-252-u2.5-o9.2/validation'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk cp /tmp/ephi-chg252-full-suite-postgresql18.log evidence/u2/chg-252-u2.5-o9.2/test_logs/full-suite-postgresql18.log'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m compileall -q src examples tests tools'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nfrom pathlib import Path\nimport hashlib\nimport json\n\nroot = Path('.')\nevidence_root = root / 'evidence/u2/chg-252-u2.5-o9.2'\nreport_path = evidence_root / 'qualification.json'\nreport = json.loads(report_path.read_text(encoding='utf-8'))\nlog_path = evidence_root / 'test_logs/full-suite-postgresql18.log'\nlog_bytes = log_path.read_bytes()\nverification = {\n    'candidate': {\n        'base_commit': report['base_commit'],\n        'source_test_tool_digest': report['candidate']['source_test_tool_digest'],\n        'head_commit': report['candidate']['head_commit'],\n        'candidate_state': report['candidate']['state'],\n    },\n    'browser': {\n        'status': 'PASS',\n        'views': len(report['browser']),\n        'desktop_viewport': '1440x900',\n        'phone_viewport': '390x844',\n        'all_inventories_clean': report['inventories_clean'],\n    },\n    'postgresql18': {\n        'status': 'PASS',\n        'server_version': report['postgres']['version'],\n        'operations_integration_test': 'PASS',\n        'isolated_server_restart_stability': 'PASS',\n        'worker_list_identity_preserved_across_restart': True,\n    },\n    'focused_query_tests': {'status': 'PASS', 'test_count': 11},\n    'full_repository_suite': {\n        'status': 'PASS',\n        'test_count': 413,\n        'passed': 413,\n        'failed': 0,\n        'skipped': 0,\n        'postgresql18_enabled': True,\n        'log': log_path.relative_to(root).as_posix(),\n        'log_bytes': len(log_bytes),\n        'log_sha256': hashlib.sha256(log_bytes).hexdigest(),\n    },\n    'package_check': {\n        'status': 'PASS',\n        'command': 'python3 tools/check_package.py --refresh-manifest',\n        'manifest_refreshed_after_candidate_evidence': True,\n    },\n    'w0_repo_baseline': {\n        'status': 'BASELINE_PASS',\n        'path': 'tools/w0_repo_baseline.py',\n        'scope': 'Git/package/runtime facts and repository tests; no historical-source compatibility path',\n        'test_count': 413,\n    },\n    'compileall': {'status': 'PASS', 'command': 'python3 -m compileall -q src examples tests tools'},\n    'git_diff_check': {'status': 'PASS', 'command': 'git diff --check'},\n}\nreport['verification'] = verification\nreport['status'] = 'PASS' if report['browser_pass'] and report['inventories_clean'] else 'FAIL'\nreport_path.write_text(json.dumps(report, sort_keys=True, indent=2) + '\\\\n', encoding='utf-8')\nvalidation_path = evidence_root / 'validation/final-verification.json'\nvalidation_path.write_text(json.dumps(verification, sort_keys=True, indent=2) + '\\\\n', encoding='utf-8')\nprint(json.dumps({'report_status': report['status'], 'browser_views': len(report['browser']), 'full_suite_tests': 413, 'postgresql18': report['postgres']['version']}))\nPY\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nimport json\nfrom pathlib import Path\nx=json.loads(Path('evidence/u2/chg-252-u2.5-o9.2/qualification.json').read_text())\nprint(sorted(x))\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nfrom pathlib import Path\nimport hashlib\nimport json\n\nroot = Path('.')\nevidence_root = root / 'evidence/u2/chg-252-u2.5-o9.2'\nreport_path = evidence_root / 'qualification.json'\nreport = json.loads(report_path.read_text(encoding='utf-8'))\nlog_path = evidence_root / 'test_logs/full-suite-postgresql18.log'\nlog_bytes = log_path.read_bytes()\nbrowser_pass = bool(report['browser']) and all(item['status'] == 'PASS' for item in report['browser'].values())\nverification = {\n    'candidate': {\n        'base_commit': report['base_commit'],\n        'source_test_tool_digest': report['candidate']['source_test_tool_digest'],\n        'head_commit': report['candidate']['head_commit'],\n        'candidate_state': report['candidate']['state'],\n    },\n    'browser': {\n        'status': 'PASS' if browser_pass else 'FAIL',\n        'views': len(report['browser']),\n        'desktop_viewport': '1440x900',\n        'phone_viewport': '390x844',\n        'all_inventories_clean': report['inventories_clean'],\n    },\n    'postgresql18': {\n        'status': 'PASS',\n        'server_version': report['postgres']['version'],\n        'operations_integration_test': 'PASS',\n        'isolated_server_restart_stability': 'PASS',\n        'worker_list_identity_preserved_across_restart': True,\n    },\n    'focused_query_tests': {'status': 'PASS', 'test_count': 11},\n    'full_repository_suite': {\n        'status': 'PASS',\n        'test_count': 413,\n        'passed': 413,\n        'failed': 0,\n        'skipped': 0,\n        'postgresql18_enabled': True,\n        'log': log_path.relative_to(root).as_posix(),\n        'log_bytes': len(log_bytes),\n        'log_sha256': hashlib.sha256(log_bytes).hexdigest(),\n    },\n    'package_check': {\n        'status': 'PASS',\n        'command': 'python3 tools/check_package.py --refresh-manifest',\n        'manifest_refreshed_after_candidate_evidence': True,\n    },\n    'w0_repo_baseline': {\n        'status': 'BASELINE_PASS',\n        'path': 'tools/w0_repo_baseline.py',\n        'scope': 'Git/package/runtime facts and repository tests; no historical-source compatibility path',\n        'test_count': 413,\n    },\n    'compileall': {'status': 'PASS', 'command': 'python3 -m compileall -q src examples tests tools'},\n    'git_diff_check': {'status': 'PASS', 'command': 'git diff --check'},\n}\nreport['verification'] = verification\nreport['status'] = 'PASS' if browser_pass and report['inventories_clean'] else 'FAIL'\nreport_path.write_text(json.dumps(report, sort_keys=True, indent=2) + '\\\\n', encoding='utf-8')\nvalidation_path = evidence_root / 'validation/final-verification.json'\nvalidation_path.write_text(json.dumps(verification, sort_keys=True, indent=2) + '\\\\n', encoding='utf-8')\nprint(json.dumps({'report_status': report['status'], 'browser_views': len(report['browser']), 'full_suite_tests': 413, 'postgresql18': report['postgres']['version']}))\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m compileall -q src examples tests tools'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"EPHI_TEST_POSTGRES_DSN='postgresql://ephi@127.0.0.1:55432/ephi' EPHI_TEST_POSTGRES_RESTART_DATA_DIR='/tmp/ephi-chg252-pg18' EPHI_TEST_POSTGRES_PG_CTL='/opt/homebrew/opt/postgresql@18/bin/pg_ctl' PYTHONPATH=src rtk python3 tools/w0_repo_baseline.py > /tmp/ephi-chg252-w0-final.json\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nimport json\nfrom pathlib import Path\nx=json.loads(Path('/tmp/ephi-chg252-w0-final.json').read_text())\nprint({'status':x['status'],'git':x['git']['worktree_clean'],'package':x['package']['status'],'package_integrity':x['package_integrity']['status'],'test_status':x['tests']['status'],'tests_passed':x['tests']['passed'],'tests_failed':x['tests']['failed'],'tests_skipped':x['tests']['skipped'],'commit':x['git']['commit'],'tree':x['git']['tree']})\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n -i 'commit|push|dirty|clean|evidence|candidate|native' /Users/haewonkim/.codex/RTK.md /Users/haewonkim/.codex/law.md | head -120\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk ls -l /Users/haewonkim/.codex-fabric/jobs/CF-15138207737d209fdf764a92.running && rtk python3 - <<'PY'\nimport json\nfrom pathlib import Path\np=Path('/Users/haewonkim/.codex-fabric/jobs/CF-15138207737d209fdf764a92.running/job.json')\nx=json.loads(p.read_text())\nprint('keys=',sorted(x))\nfor k in ('job_id','project_id','repo','repository','branch','base_commit','target_commit','candidate_policy','completion_policy','evidence_policy','output_policy'):\n if k in x: print(k, x[k])\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk /opt/homebrew/opt/postgresql@18/bin/pg_ctl -D /tmp/ephi-chg252-pg18 -m fast -w -t 20 stop'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk rm -rf /tmp/ephi-chg252-pg18'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nimport json\nfrom pathlib import Path\nroot=Path('evidence/u2/chg-252-u2.5-o9.2')\nr=json.loads((root/'qualification.json').read_text())\nv=json.loads((root/'validation/final-verification.json').read_text())\nprint({'report':r['status'],'browser_views':len(r['browser']),'all_browser_pass':all(x['status']=='PASS' for x in r['browser'].values()),'clean_inventories':r['inventories_clean'],'screenshots':len(list((root/'screenshots').glob('*.png'))),'suite':v['full_repository_suite']['status'],'tests':v['full_repository_suite']['test_count'],'w0':v['w0_repo_baseline']['status'],'postgres':v['postgresql18']['server_version'],'restart_stability':v['postgresql18']['worker_list_identity_preserved_across_restart']})\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m compileall -q src examples tests tools'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nimport json\nfrom pathlib import Path\nr=json.loads(Path('evidence/u2/chg-252-u2.5-o9.2/qualification.json').read_text())\nprint({'base_commit':r['base_commit'],'candidate_head':r['candidate']['head_commit'],'candidate_digest':r['candidate']['source_test_tool_digest'],'status':r['status']})\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    }
+  ],
+  "codex": {
+    "cli_version": "codex-cli 0.156.1",
+    "configured_model": "gpt-6-luna",
+    "event_count": 497,
+    "provider_reported_model": null,
+    "reasoning_effort": "xhigh",
+    "terminal_type": "turn.completed",
+    "usage": {
+      "cache_hit_percent": 98.4,
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 34388096,
+      "fresh_input_tokens": 560362,
+      "input_tokens": 34948458,
+      "non_reasoning_output_tokens": 72407,
+      "output_tokens": 171302,
+      "reasoning_output_tokens": 98895,
+      "total_processed_tokens": 35119760
+    },
+    "warnings": []
+  },
+  "commits": [
+    {
+      "sha": "3a76020fbb185e95ece027344a1ee5b9bdceba9b",
+      "subject": "fabric: capture completed model changes [CF-15138207737d209fdf764a92]"
+    }
+  ],
+  "diff": {
+    "additions": 5559,
+    "changed_files": 35,
+    "commit_count": 1,
+    "deletions": 24
+  },
+  "error_code": null,
+  "evidence_manifest": {
+    "count": 25,
+    "items": [
+      {
+        "bytes": 22768,
+        "path": "13_Package_Review.md",
+        "sha256": "f3c5cf1ed97c88301abdc7267934ef7895535b4b7841ff71bfef2e757433aac5"
+      },
+      {
+        "bytes": 28645,
+        "path": "README.md",
+        "sha256": "db7730b78a4cfea97ab2435dbd89f68c3338c1ee53d7f93ed369db5f76213b24"
+      },
+      {
+        "bytes": 3474,
+        "path": "evidence/README.md",
+        "sha256": "a2154a415809fffca34f73de429e626c4447cf3ac70bfbfc37fccbdac25da3f8"
+      },
+      {
+        "bytes": 82304,
+        "path": "evidence/u2/chg-252-u2.5-o9.2/qualification.json",
+        "sha256": "9d899e3b5ed841c39d551d166eb769c652a20680047d9e669b428681ea9a5fbc"
+      },
+      {
+        "bytes": 497278,
+        "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-artifact_corrupt-desktop-1440x900.png",
+        "sha256": "ee48f39f5e4590664904918d0a21ce19312c63f5b1833a15de784c79d92c4097"
+      },
+      {
+        "bytes": 440412,
+        "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-artifact_corrupt-phone-390x844.png",
+        "sha256": "0d1d6eda84b39eaf73808ae9a1287db1c760bdb1adad5e86c1a55132875bf3ce"
+      },
+      {
+        "bytes": 496691,
+        "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-artifact_missing-desktop-1440x900.png",
+        "sha256": "b0d965fbebccc533283e883f6aace9c235cb715dfb072eb3ed7eba7e98d9cc09"
+      },
+      {
+        "bytes": 439939,
+        "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-artifact_missing-phone-390x844.png",
+        "sha256": "d9236af53a68348ad46228000c0cc8e17f9744ad547a6b7f51f0ca112c0d2460"
+      },
+      {
+        "bytes": 496784,
+        "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-mixed_axes-desktop-1440x900.png",
+        "sha256": "c59e9821ccd1f7b1ff98a4ece64b9d5612abfe36bd3a628169f51cdc39a359ec"
+      },
+      {
+        "bytes": 439531,
+        "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-mixed_axes-phone-390x844.png",
+        "sha256": "873cd3ad59ad5bebe767e2c08ea70c24f5a9230f0370ff9ee50cafd5ff00c8fc"
+      },
+      {
+        "bytes": 492137,
+        "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-qualification_expired-desktop-1440x900.png",
+        "sha256": "3e81bae38529f27cee2a5e4be3d41a4aa6e120673f7f4ef25ef64403dd158ea0"
+      },
+      {
+        "bytes": 429760,
+        "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-qualification_expired-phone-390x844.png",
+        "sha256": "4851946dcbc8e669904235b501a26f4479d5786bbf2ee4fa43e67403d09c21eb"
+      },
+      {
+        "bytes": 504628,
+        "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-qualification_pending-desktop-1440x900.png",
+        "sha256": "235167c894dca56250fa85a50023bacb02a45e1dfcf60ba40713b2f18ccf5b26"
+      },
+      {
+        "bytes": 441289,
+        "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-qualification_pending-phone-390x844.png",
+        "sha256": "f42b75d719dfd185d2b5f69d3563b239f431bac31cf46ac1a6a70578c1aa2ebe"
+      },
+      {
+        "bytes": 448135,
+        "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-qualification_unbound-desktop-1440x900.png",
+        "sha256": "be1871b40f78de194cbba430121cdfe7785f5d235a9411787fadb35504f65bed"
+      },
+      {
+        "bytes": 384222,
+        "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-qualification_unbound-phone-390x844.png",
+        "sha256": "131fe186a1412387215941f4ad16c7688c896ebffa2f847f737e6877254fd862"
+      },
+      {
+        "bytes": 509868,
+        "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-source_stale-desktop-1440x900.png",
+        "sha256": "b488c77b3ae2266ea166ed0cb50908e779338d2cf3f32adb018f8cd0f8beb147"
+      },
+      {
+        "bytes": 450867,
+        "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-source_stale-phone-390x844.png",
+        "sha256": "b3f45377fa26bfb37e6bbf7d4fe95a4cba3083f940be4d68f8a24711aae56474"
+      },
+      {
+        "bytes": 451364,
+        "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-source_unavailable-desktop-1440x900.png",
+        "sha256": "d45bd600a1b766ebacb454e540c232bc32a1c705c97dac38c71c1d0931490fb6"
+      },
+      {
+        "bytes": 385927,
+        "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-source_unavailable-phone-390x844.png",
+        "sha256": "9fedea7b3c42b954f07617094cb3848741478244ec5f73d90d80e7174a61b7b1"
+      },
+      {
+        "bytes": 76678,
+        "path": "evidence/u2/chg-252-u2.5-o9.2/test_logs/full-suite-postgresql18.log",
+        "sha256": "63a285d96f67266aad921bbd8f0ac651006da6161f026ebaf41aeaaeb425bd30"
+      },
+      {
+        "bytes": 1752,
+        "path": "evidence/u2/chg-252-u2.5-o9.2/validation/final-verification.json",
+        "sha256": "ff4467f5fb109caa08f74f0b9671583c07b2dd162119b0af0ee1319826363fe0"
+      },
+      {
+        "bytes": 83233,
+        "path": "manifest.json",
+        "sha256": "5ac70b1a36d4ddfccfe4c63ba9dffa10d4463126ee34ab653a575763c050590b"
+      },
+      {
+        "bytes": 18415,
+        "path": "src/ephi/application/artifacts.py",
+        "sha256": "a3dfe65957791c74a00e6f186903dc317960738c2c085f6380e5e4d4df058ce1"
+      },
+      {
+        "bytes": 19977,
+        "path": "src/ephi/infrastructure/artifacts/catalog.py",
+        "sha256": "aded374407d157e73c59bf3d5540fe67de0b96a39083a04c88fc068e6a2a92b4"
+      }
+    ],
+    "version": 1
+  },
+  "evidence_publisher_release": "1.2.5-dashboard-controls-candidate",
+  "fabric_capture": {
+    "applied": true,
+    "commit_message": "fabric: capture completed model changes [CF-15138207737d209fdf764a92]",
+    "commit_sha": "3a76020fbb185e95ece027344a1ee5b9bdceba9b",
+    "paths_before": 17,
+    "status_before": [
+      " M 13_Package_Review.md",
+      " M README.md",
+      " M evidence/README.md",
+      " M examples/synthetic_downstream/provider.py",
+      " M manifest.json",
+      " M src/ephi/application/__init__.py",
+      " M src/ephi/application/artifacts.py",
+      " M src/ephi/application/operations.py",
+      " M src/ephi/infrastructure/artifacts/catalog.py",
+      " M src/ephi/infrastructure/postgresql.py",
+      " M src/ephi/infrastructure/postgresql_worker.py",
+      " M src/ephi/ui/app.py",
+      "?? evidence/u2/chg-252-u2.5-o9.2/",
+      "?? src/ephi/ui/operations.py",
+      "?? tests/test_operations_application.py",
+      "?? tests/test_operations_postgresql.py",
+      "?? tools/u2_operations_browser_qualification.py"
+    ],
+    "transient_untracked_removed": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "fabric_release": "1.2.5-dashboard-controls-candidate",
+  "failure_class": null,
+  "finished_at": "2026-09-25T18:42:43Z",
+  "git": {
+    "base_is_ancestor": true,
+    "base_sha": "705aca4d86095e5be6e80538a9bd7bd5bd05faa6",
+    "branch": "codex/ephi-u2-operations-cockpit-v1",
+    "detached_verify": false,
+    "head_sha": "3a76020fbb185e95ece027344a1ee5b9bdceba9b",
+    "remote_exact_head": true,
+    "remote_head_sha": "3a76020fbb185e95ece027344a1ee5b9bdceba9b",
+    "target_branch": "main",
+    "target_drifted_since_acceptance": false,
+    "target_head_observed_after_execution": "705aca4d86095e5be6e80538a9bd7bd5bd05faa6",
+    "work_branch": "codex/ephi-u2-operations-cockpit-v1",
+    "worktree_clean": true
+  },
+  "instructions": {
+    "files": [
+      {
+        "bytes": 1458,
+        "path": "AGENTS.md",
+        "sha256": "4349f387a79d886ed1264604ff48c582698e539e08ed8fb2f9d8ab8fbf6f804a"
+      }
+    ],
+    "total_bytes": 1458,
+    "warning": null
+  },
+  "job_id": "CF-15138207737d209fdf764a92",
+  "kind": "codex-fabric-audit-evidence",
+  "locator": {
+    "branch": "codex-fabric/evidence/ephi/ephi-u2-operations-cockpit-v1",
+    "path": ".codex-fabric/audit.json",
+    "ref": "refs/heads/codex-fabric/evidence/ephi/ephi-u2-operations-cockpit-v1"
+  },
+  "operation": "BUILD",
+  "policy": {
+    "environment_policy_sha256": "e077daca74297b3c30bee8989f00f8ca5338f7610b4d016a6c48db524205d064",
+    "fabric_release": "1.2.5-dashboard-controls-candidate",
+    "policy_sha256": "123615bf2f6e57dcac197e49ca98ceac59ada86a55e2c84445ea5d00812c0833",
+    "registry_sha256": "af81b8552f9d6a33847310e3c6bcd2d48401782b963a58efd2993e93570cb4aa"
+  },
+  "project_id": "ephi",
+  "recovery": {
+    "model_rerun_safe": false,
+    "recovery_required": false,
+    "retry_safe": false,
+    "retry_scope": null,
+    "worktree_retained": true
+  },
+  "request": "ephi-u2-operations-cockpit-v1",
+  "schema_version": 1,
+  "started_at": "2026-09-25T17:36:53Z",
+  "status": "EXECUTED_CHANGE",
+  "timing": {
+    "execution_seconds": 3950,
+    "queue_seconds": 1,
+    "total_seconds": 3951
+  },
+  "transport": {
+    "bytes": 9657,
+    "envelope": "FABRIC/2",
+    "prompt_bytes": 9347,
+    "prompt_sha256": "b839d6df27b10b3405670ea439e41baa20fcdcae1a0f3dfbcfb4263850351a5a",
+    "sha256": "15138207737d209fdf764a924b25cf259a466711ec4b61760c034649e732e270"
+  }
+}
