@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from datetime import datetime, timedelta, timezone
+import json
 import os
 from pathlib import Path
 import sys
@@ -137,6 +139,43 @@ class FamilyCenterPostgreSQLTests(unittest.TestCase):
         self.assertFalse(stale_seed["promotion_ready"])
         self.assertEqual(stale_seed["promotion_state"], "STALE")
         self.assertEqual(view("synthetic-release-1").promotions[-1].state, "STALE")
+
+    def test_future_corrupt_gate_revision_stays_blocked_after_postgresql_restart(self):
+        seeded = seed_synthetic_workspace(self.composition, "synthetic-release-future", "future")
+        scope = self.composition.scope_provider()
+        workspace_id = seeded["workspace_id"]
+        aggregate = self.composition.adapter.get_aggregate(scope, "family_qualification_workspace", workspace_id)
+        revision_ids = tuple(item["revision_id"] for item in aggregate.state["gate_revisions"])
+        state = aggregate.state
+        future_time = datetime.now(timezone.utc) + timedelta(days=1)
+        discovery = next(item for item in reversed(state["gate_revisions"]) if item["stage_id"] == "DISCOVER_MAP")
+        discovery["known_at"] = future_time.isoformat()
+        discovery["published_at"] = future_time.isoformat()
+        discovery["expires_at"] = (future_time + timedelta(days=1)).isoformat()
+        self.composition.adapter.connection.execute(
+            "UPDATE aggregate_state SET state_json = %s::jsonb WHERE scope_key = %s "
+            "AND aggregate_type = 'family_qualification_workspace' AND aggregate_id = %s",
+            (json.dumps(state, sort_keys=True, separators=(",", ":")), scope.canonical_key, workspace_id),
+        )
+
+        self.composition.close()
+        bundle = build_bundle()
+        self.composition = compose_downstream(bundle, runtime_settings=RuntimeSettings(environment=self.runtime_class))
+        self.assertTrue(self.composition.adapter.server_version().startswith("18."))
+        principal = self.composition.principal_provider()
+        scope = self.composition.scope_provider()
+        family = next(item for item in self.composition.policy_configuration.family_contexts if item.family_id == FAMILY_ID)
+        target = next(item for item in family.qualification_targets if item.release_id == "synthetic-release-future")
+        identity = self.composition.family_workspace_identity(FAMILY_ID, target)
+        view = self.composition.family_center.get_workspace(principal, scope, workspace_id, current_identity=identity)
+
+        discovery_view = next(item for item in view.gates if item.stage_id == "DISCOVER_MAP")
+        self.assertEqual(discovery_view.state.value, "BLOCKED")
+        self.assertEqual(discovery_view.invalidation_reason, "FUTURE_EVIDENCE_TIME")
+        self.assertFalse(view.promotion_ready)
+        self.assertIn("DISCOVER_MAP:FUTURE_EVIDENCE_TIME", view.promotion_blockers)
+        restored = self.composition.adapter.get_aggregate(scope, "family_qualification_workspace", workspace_id)
+        self.assertEqual(tuple(item["revision_id"] for item in restored.state["gate_revisions"]), revision_ids)
 
 
 if __name__ == "__main__":

@@ -73,13 +73,15 @@ def publish_current_synthetic_source(composition: Any, *, now: datetime | None =
 def seed_synthetic_workspace(composition: Any, release_id: str, mode: str) -> dict[str, object]:
     """Seed one fixture workspace using only U1/O2/O4/O8 and O2 artifacts.
 
-    Modes are ``green``, ``ambiguous``, ``expired``, ``failed``, ``pending`` and
-    ``stale``. The stale mode first records a promoted green state and then
+    Modes are ``green``, ``ambiguous``, ``expired``, ``failed``, ``pending``,
+    ``future`` and ``stale``. The future mode leaves a complete synthetic
+    workspace available for a qualification harness to inject a corrupt
+    future-dated persisted revision. The stale mode first records a promoted green state and then
     publishes a new O4 snapshot so historical evidence and promotion remain
     present while current readiness is invalidated.
     """
 
-    if mode not in {"green", "ambiguous", "expired", "failed", "pending", "stale"}:
+    if mode not in {"green", "ambiguous", "expired", "failed", "pending", "future", "stale"}:
         raise ValueError("unsupported synthetic Family Center fixture mode")
     family = next(item for item in composition.policy_configuration.family_contexts if item.family_id == FAMILY_ID)
     target = next(item for item in family.qualification_targets if item.release_id == release_id)

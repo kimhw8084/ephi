@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 from contextlib import closing
+from datetime import datetime, timedelta, timezone
 import hashlib
 import json
 import os
@@ -109,13 +110,54 @@ def _seed(dsn: str, artifact_root: Path) -> dict[str, object]:
             ("synthetic-release-expired", "expired"),
             ("synthetic-release-failed", "failed"),
             ("synthetic-release-pending", "pending"),
+            ("synthetic-release-future", "future"),
         ):
             facts[release] = seed_synthetic_workspace(composition, release, mode)
+        future_workspace_id = str(facts["synthetic-release-future"]["workspace_id"])
+        future_aggregate = adapter.get_aggregate(
+            composition.scope_provider(), "family_qualification_workspace", future_workspace_id,
+        )
+        future_state = future_aggregate.state
+        future_revision = next(
+            item for item in reversed(future_state["gate_revisions"])
+            if item["stage_id"] == "DISCOVER_MAP"
+        )
+        future_known = datetime.now(timezone.utc) + timedelta(days=1)
+        future_revision["known_at"] = future_known.isoformat()
+        future_revision["published_at"] = future_known.isoformat()
+        future_revision["expires_at"] = (future_known + timedelta(days=1)).isoformat()
+        adapter.connection.execute(
+            "UPDATE aggregate_state SET state_json = %s::jsonb WHERE scope_key = %s "
+            "AND aggregate_type = 'family_qualification_workspace' AND aggregate_id = %s",
+            (json.dumps(future_state, sort_keys=True, separators=(",", ":")),
+             composition.scope_provider().canonical_key, future_workspace_id),
+        )
+        configured_family = next(
+            item for item in composition.policy_configuration.family_contexts if item.family_id == FAMILY_ID
+        )
+        future_target = next(
+            item for item in configured_family.qualification_targets
+            if item.release_id == "synthetic-release-future"
+        )
+        future_identity = composition.family_workspace_identity(FAMILY_ID, future_target)
+        future_view = composition.family_center.get_workspace(
+            composition.principal_provider(), composition.scope_provider(), future_workspace_id,
+            current_identity=future_identity,
+        )
+        facts["synthetic-release-future"] = {
+            **facts["synthetic-release-future"],
+            "promotion_ready": future_view.promotion_ready,
+            "promotion_blockers": list(future_view.promotion_blockers),
+            "legacy_corrupt_revision_injected": True,
+            "future_known_at": future_known.isoformat(),
+            "future_published_at": future_known.isoformat(),
+        }
         return {
             "postgres_version": version,
             "family_id": FAMILY_ID,
             "green_release": GREEN_RELEASE,
             "states": facts,
+            "future_temporal_fixture": facts["synthetic-release-future"],
             "synthetic": True,
             "production_approval": False,
         }
@@ -204,21 +246,26 @@ def _browser_page(base: str, width: int, height: int, artifacts: Path, *, expect
             ("synthetic-release-expired", "expired", "EXPIRED", "DISCOVER_MAP:EXPIRED"),
             ("synthetic-release-failed", "failed", "FAIL", "DISCOVER_MAP:FAIL"),
             ("synthetic-release-pending", "pending", "PENDING", "REPLAY:PENDING"),
+            ("synthetic-release-future", "future", "BLOCKED", "DISCOVER_MAP:FUTURE_EVIDENCE_TIME"),
         ):
             _select_release(page, release)
             state_locator = page.get_by_text(state, exact=True)
             visible = state_locator.count() > 0
             blocker = page.get_by_text(blocker_text, exact=False).count() > 0
             pending_job_queued = " · QUEUED" in page.locator("body").inner_text() if label == "pending" else None
+            future_promotion_disabled = page.get_by_role("button", name="Promote generic qualification").is_disabled() if label == "future" else None
             status_views[label] = {
                 "visible": visible,
                 "precise_blocker_visible": blocker,
                 **({"durable_job_queued": pending_job_queued} if label == "pending" else {}),
+                **({"promotion_disabled": future_promotion_disabled} if label == "future" else {}),
             }
             if not visible or not blocker:
                 missing.append(f"{label}:{state}:blocker")
             if label == "pending" and not pending_job_queued:
                 missing.append("pending:durable-job-status")
+            if label == "future" and not future_promotion_disabled:
+                missing.append("future:promotion-not-disabled")
             page.screenshot(path=str(artifacts / f"family-center-{label}-{width}x{height}.png"), full_page=True)
         green = page.get_by_label("Capability and target release")
         green.click()
@@ -231,6 +278,13 @@ def _browser_page(base: str, width: int, height: int, artifacts: Path, *, expect
         _select_release(page, "synthetic-release-ambiguous")
         blocked_action_disabled = page.get_by_role("button", name="Promote generic qualification").is_disabled()
         page.screenshot(path=str(artifacts / f"family-center-blocked-{width}x{height}.png"), full_page=True)
+        _select_release(page, "synthetic-release-future")
+        future_action_disabled = page.get_by_role("button", name="Promote generic qualification").is_disabled()
+        future_body = page.locator("body").inner_text()
+        future_reason_visible = "FUTURE_EVIDENCE_TIME" in future_body
+        if not future_action_disabled or not future_reason_visible:
+            missing.append("future:truthful-blocker-or-disabled-promotion")
+        page.screenshot(path=str(artifacts / f"family-center-future-{width}x{height}.png"), full_page=True)
         body = page.locator("body").inner_text()
         accessibility_digest = _sha(page.locator("body").aria_snapshot())
         geometry = {"viewport": {"width": width, "height": height}, "document_scroll_width": scroll["document"], "no_horizontal_overflow": no_overflow}
@@ -249,6 +303,8 @@ def _browser_page(base: str, width: int, height: int, artifacts: Path, *, expect
         "missing_rendered_states": missing,
         "promotion_enabled_when_ready": enabled_when_green,
         "promotion_disabled_when_blocked": blocked_action_disabled,
+        "promotion_disabled_when_future_evidence_blocked": future_action_disabled,
+        "future_evidence_reason_visible": future_reason_visible,
         "keyboard_focus": keyboard,
         "accessibility_snapshot_digest": accessibility_digest,
         "events": events,
@@ -347,6 +403,17 @@ def qualify(dsn: str, output: Path, artifact_dir: Path) -> dict[str, object]:
             "desktop_1440x900": desktop,
             "phone_390x844": mobile,
             "stale_invalidation": {"status": "PASS" if not stale_missing else "FAIL", "missing": stale_missing},
+            "future_evidence_blocker": {
+                "status": "PASS" if (
+                    desktop["promotion_disabled_when_future_evidence_blocked"]
+                    and mobile["promotion_disabled_when_future_evidence_blocked"]
+                    and desktop["future_evidence_reason_visible"]
+                    and mobile["future_evidence_reason_visible"]
+                ) else "FAIL",
+                "desktop_viewport": "1440x900",
+                "phone_viewport": "390x844",
+                "reason": "FUTURE_EVIDENCE_TIME",
+            },
         },
         "screenshots": screenshots,
         "security": {"credentials_recorded": False, "raw_source_rows_recorded": False, "artifact_bytes_recorded": False, "browser_headers_recorded": False},

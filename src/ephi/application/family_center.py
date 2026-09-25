@@ -87,6 +87,20 @@ def _time(value: datetime, field: str) -> datetime:
     return value.astimezone(timezone.utc)
 
 
+def _future_gate_evidence_reason(item: Mapping[str, Any], now: datetime) -> str | None:
+    for field in ("known_at", "published_at"):
+        value = item.get(field)
+        if value is None:
+            continue
+        try:
+            timestamp = _time(datetime.fromisoformat(value), field)
+        except (TypeError, ValueError, ValidationFailureError):
+            return "INVALID_EVIDENCE_TIME"
+        if timestamp > now:
+            return "FUTURE_EVIDENCE_TIME"
+    return None
+
+
 def _gate_state(value: object) -> GateState:
     try:
         return GateState(value)
@@ -549,8 +563,9 @@ class FamilyCenterService:
         self._validate_context_scope(context, identity)
         if result_state is GateState.NOT_APPLICABLE and not policy_basis_id:
             raise ValidationFailureError("NOT_APPLICABLE requires a versioned policy basis")
-        captured_known = known_at or self.clock()
-        captured_published = published_at or self.clock()
+        server_now = _time(self.clock(), "now")
+        captured_known = _time(known_at if known_at is not None else server_now, "known_at")
+        captured_published = _time(published_at if published_at is not None else server_now, "published_at")
         payload = {
             "workspace_identity_id": identity.identity,
             "stage_id": stage,
@@ -560,8 +575,8 @@ class FamilyCenterService:
             "engine_identity": _identity(engine_identity, "engine_identity"),
             "input_identities": list(input_identities),
             "artifact_reference": _artifact_dict(artifact_reference),
-            "known_at": _time(captured_known, "known_at").isoformat(),
-            "published_at": _time(captured_published, "published_at").isoformat(),
+            "known_at": captured_known.isoformat(),
+            "published_at": captured_published.isoformat(),
             "expires_at": _time(expires_at, "expires_at").isoformat() if expires_at is not None else None,
             "requalification_policy_id": _identity(requalification_policy_id, "requalification_policy_id"),
             "requalification_policy_version": _identity(requalification_policy_version, "requalification_policy_version"),
@@ -570,6 +585,10 @@ class FamilyCenterService:
         }
 
         def build_evidence(aggregate: AggregateSnapshot, request: Mapping[str, Any]) -> Mapping[str, object]:
+            if datetime.fromisoformat(str(request["known_at"])) > server_now:
+                raise ValidationFailureError("known_at cannot be later than Family Center server time")
+            if datetime.fromisoformat(str(request["published_at"])) > server_now:
+                raise ValidationFailureError("published_at cannot be later than Family Center server time")
             artifact = _artifact_from(request.get("artifact_reference"))
             if result_state in {GateState.PENDING, GateState.PASS, GateState.NOT_APPLICABLE}:
                 self._require_predecessors_ready(context.principal, aggregate.state, identity, stage)
@@ -616,6 +635,7 @@ class FamilyCenterService:
                 request.get("job_id"),
                 request.get("reason_code"),
                 source_reality_id,
+                server_now=server_now,
                 policy_authorized=result_state is GateState.NOT_APPLICABLE,
                 judgment_identity=None,
             )
@@ -632,6 +652,7 @@ class FamilyCenterService:
     ) -> FamilyCenterMutationResult:
         context.require_existing_aggregate_version()
         self._validate_context_scope(context, identity)
+        server_now = _time(self.clock(), "now")
         payload = {
             "workspace_identity_id": identity.identity,
             "stage_id": "DATA_REALITY",
@@ -648,7 +669,7 @@ class FamilyCenterService:
             if result_state is GateState.PASS:
                 self._verify_artifact(context.principal, identity.scope, reality.artifact_reference)
             known_at = reality.checked_at
-            published_at = _time(self.clock(), "published_at")
+            published_at = server_now
             expires_at = (
                 reality.latest_available_at + timedelta(seconds=reality.freshness_age_seconds)
                 if reality.latest_available_at and result_state is GateState.PASS else None
@@ -672,6 +693,7 @@ class FamilyCenterService:
                 None,
                 None if result_state is GateState.PASS else reality.reason_code,
                 reality.reality_identity,
+                server_now=server_now,
                 policy_authorized=False,
                 judgment_identity=None,
             )
@@ -718,8 +740,12 @@ class FamilyCenterService:
                 raise ValidationFailureError("only an unresolved, failed or blocked revision can be independently judged")
             if prior.get("created_by") == context.principal.subject:
                 raise AuthorizationDeniedError("independent judgment requires a different subject from the evidence author")
+            server_now = _time(self.clock(), "now")
+            temporal_reason = _future_gate_evidence_reason(prior, server_now)
+            if temporal_reason:
+                raise ValidationFailureError(f"independent judgment requires current evidence: {temporal_reason}")
             expiry = datetime.fromisoformat(prior["expires_at"]) if prior.get("expires_at") else None
-            if expiry is None or expiry <= _time(self.clock(), "now"):
+            if expiry is None or expiry <= server_now:
                 raise ValidationFailureError("independent judgment requires current, unexpired evidence")
             reality_id = None
             if GATE_STAGES.index(stage) >= GATE_STAGES.index("DATA_REALITY"):
@@ -742,8 +768,8 @@ class FamilyCenterService:
                 "judgment_basis_version": request["judgment_basis_version"],
                 "state": result_state.value,
                 "reason_code": request["reason_code"],
-                "known_at": _time(self.clock(), "known_at").isoformat(),
-                "published_at": _time(self.clock(), "published_at").isoformat(),
+                "known_at": server_now.isoformat(),
+                "published_at": server_now.isoformat(),
                 "previous_revision_id": prior["revision_id"],
                 "source_reality_identity": reality_id,
                 "revision_sequence": 1 + len(aggregate.state.get("gate_revisions", ())),
@@ -791,6 +817,15 @@ class FamilyCenterService:
             reality = self.current_source_reality(context.principal, context.scope, identity)
             view = self._view(aggregate, identity, reality, context.principal)
             if not view.promotion_ready:
+                temporal_blockers = tuple(
+                    blocker for blocker in view.promotion_blockers
+                    if blocker.endswith(":FUTURE_EVIDENCE_TIME")
+                )
+                if temporal_blockers:
+                    raise ValidationFailureError(
+                        "promotion is blocked by future-dated qualification evidence: "
+                        + ", ".join(temporal_blockers)
+                    )
                 raise ValidationFailureError("promotion is blocked by current qualification gates")
             if reality.reality_identity != requested_reality_id:
                 raise ValidationFailureError("O4 Data Reality changed before promotion")
@@ -847,18 +882,36 @@ class FamilyCenterService:
                 if snapshot.binding != identity.source_binding or snapshot.snapshot_id != capability.latest_snapshot_id:
                     raise ValidationFailureError("O4 returned a source snapshot for a different binding")
             now = _time(self.clock(), "now")
-            age = max(0, int((now - capability.latest_available_at).total_seconds())) if capability.latest_available_at else None
+            source_times = (
+                capability.checked_at,
+                capability.latest_available_at,
+                capability.latest_event_at,
+                snapshot.event_start if snapshot else None,
+                snapshot.event_end if snapshot else None,
+                snapshot.available_cutoff if snapshot else None,
+                snapshot.ingested_at if snapshot else None,
+                snapshot.published_at if snapshot else None,
+                snapshot.created_at if snapshot else None,
+            )
+            future_source_time = any(
+                timestamp is not None and _time(timestamp, "source_time") > now
+                for timestamp in source_times
+            )
+            age = (
+                max(0, int((now - capability.latest_available_at).total_seconds()))
+                if capability.latest_available_at and not future_source_time else None
+            )
             fresh = age is not None and age <= capability.freshness_age_seconds
             published = snapshot is not None and snapshot.status is SourceSnapshotStatus.PUBLISHED
-            ready = capability.state is SourceCapabilityState.READY and fresh and published
-            state = "READY" if ready else (
+            ready = not future_source_time and capability.state is SourceCapabilityState.READY and fresh and published
+            state = "BLOCKED" if future_source_time else "READY" if ready else (
                 "STALE" if capability.state is SourceCapabilityState.STALE or (capability.state is SourceCapabilityState.READY and not fresh)
                 else "UNAVAILABLE" if capability.state is SourceCapabilityState.UNAVAILABLE
                 else "PARTIAL" if capability.state is SourceCapabilityState.PARTIAL
                 else "INSUFFICIENT" if capability.state is SourceCapabilityState.INSUFFICIENT
                 else "BLOCKED"
             )
-            reason = capability.reason if capability.reason in {
+            reason = "FUTURE_SOURCE_REALITY_TIME" if future_source_time else capability.reason if capability.reason in {
                 "CAPABILITY_RECORD_MISSING", "PARTIAL_SNAPSHOT", "NO_SUFFICIENT_SOURCE_ROWS",
                 "SOURCE_QUARANTINED", "SOURCE_AVAILABILITY_EXCEEDS_FRESHNESS_LIMIT", "FRESH_PUBLISHED_SNAPSHOT",
             } else "SOURCE_STATE_UNAVAILABLE"
@@ -962,12 +1015,18 @@ class FamilyCenterService:
         reason_code: str | None,
         source_reality_identity: str | None,
         *,
+        server_now: datetime,
         policy_authorized: bool,
         judgment_identity: str | None,
     ) -> dict[str, object]:
         known = _time(known_at, "known_at")
         published = _time(published_at, "published_at")
         expires = _time(expires_at, "expires_at") if expires_at is not None else None
+        now = _time(server_now, "now")
+        if known > now:
+            raise ValidationFailureError("known_at cannot be later than Family Center server time")
+        if published > now:
+            raise ValidationFailureError("published_at cannot be later than Family Center server time")
         if published < known:
             raise ValidationFailureError("published_at cannot precede known_at")
         if expires is not None and expires <= published:
@@ -1068,6 +1127,7 @@ class FamilyCenterService:
         reality: SourceReality,
         principal: Principal,
     ) -> WorkspaceView:
+        now = _time(self.clock(), "now")
         stored = aggregate.state.get("workspace_identity")
         stored_identity = self._identity_from_stored(stored)
         identity_match = stored_identity.identity == current_identity.identity
@@ -1097,7 +1157,7 @@ class FamilyCenterService:
                 if data_reality is None or item.get("source_reality_identity") != reality.reality_identity:
                     state, reason = GateState.STALE, "DATA_REALITY_DEPENDENCY_CHANGED"
             expiry = datetime.fromisoformat(item["expires_at"]) if item.get("expires_at") else None
-            if state in {GateState.PENDING, GateState.PASS, GateState.NOT_APPLICABLE} and expiry is not None and expiry <= _time(self.clock(), "now"):
+            if state in {GateState.PENDING, GateState.PASS, GateState.NOT_APPLICABLE} and expiry is not None and expiry <= now:
                 state, reason = GateState.EXPIRED, "EVIDENCE_EXPIRED"
             artifact = _artifact_from(item.get("artifact_reference"))
             artifact_status = "NONE"
@@ -1113,6 +1173,9 @@ class FamilyCenterService:
                     artifact_status = "UNAVAILABLE"
                     if state is GateState.PASS:
                         state, reason = GateState.BLOCKED, "EVIDENCE_ARTIFACT_UNAVAILABLE"
+            temporal_reason = _future_gate_evidence_reason(item, now)
+            if temporal_reason:
+                state, reason = GateState.BLOCKED, temporal_reason
             job_id = item.get("job_id")
             job_status, _failure_code = jobs.get(job_id, (None, None)) if job_id else (None, None)
             gate_views.append(GateView(
@@ -1154,7 +1217,8 @@ class FamilyCenterService:
                     continue
                 blockers.append(f"{stage}:NOT_APPLICABLE_NOT_POLICY_AUTHORIZED")
             elif gate.state is not GateState.PASS:
-                blockers.append(f"{stage}:{gate.state.value}")
+                temporal_reason = _future_gate_evidence_reason(latest[stage], now) if latest[stage] else None
+                blockers.append(f"{stage}:{temporal_reason or gate.state.value}")
         if reality.state != "READY":
             blockers.append(f"DATA_REALITY:{reality.capability_state}/{reality.state}")
         ready = identity_match and not blockers
@@ -1218,10 +1282,14 @@ class FamilyCenterService:
         stage: str,
     ) -> None:
         position = GATE_STAGES.index(stage)
+        now = _time(self.clock(), "now")
         for predecessor in GATE_STAGES[:position]:
             if predecessor not in identity.required_stages:
                 continue
             item = self._latest_gate(state, predecessor)
+            temporal_reason = _future_gate_evidence_reason(item, now) if item is not None else None
+            if temporal_reason:
+                raise ValidationFailureError(f"{stage} is blocked by {temporal_reason} predecessor evidence: {predecessor}")
             if item is None or item.get("state") not in {GateState.PASS.value, GateState.NOT_APPLICABLE.value}:
                 raise ValidationFailureError(f"{stage} is blocked by current gate {predecessor}")
             if item.get("state") == GateState.NOT_APPLICABLE.value and not (
@@ -1231,7 +1299,7 @@ class FamilyCenterService:
             if item.get("dependency_fingerprint") != identity.dependency_fingerprint(predecessor):
                 raise ValidationFailureError(f"{stage} is blocked by stale gate {predecessor}")
             expiry = datetime.fromisoformat(item["expires_at"]) if item.get("expires_at") else None
-            if expiry is not None and expiry <= _time(self.clock(), "now"):
+            if expiry is not None and expiry <= now:
                 raise ValidationFailureError(f"{stage} is blocked by expired gate {predecessor}")
         if position > GATE_STAGES.index("DATA_REALITY"):
             item = self._latest_gate(state, "DATA_REALITY")

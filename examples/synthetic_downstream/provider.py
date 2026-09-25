@@ -290,6 +290,11 @@ class SyntheticPolicy:
                             independent_judgment_stages=("GOLDEN", "QUALIFY"), synthetic_fixture=True,
                         ),
                         FamilyQualificationTarget(
+                            "synthetic-capability", "synthetic-product", "synthetic-release-future",
+                            "synthetic-target", not_applicable_stages=("SHADOW",),
+                            independent_judgment_stages=("GOLDEN", "QUALIFY"), synthetic_fixture=True,
+                        ),
+                        FamilyQualificationTarget(
                             "synthetic-capability", "synthetic-product", "synthetic-release-pending",
                             "synthetic-target", not_applicable_stages=("SHADOW",),
                             independent_judgment_stages=("GOLDEN", "QUALIFY"), synthetic_fixture=True,

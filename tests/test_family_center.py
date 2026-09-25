@@ -5,6 +5,7 @@ from __future__ import annotations
 from dataclasses import replace
 from datetime import datetime, timedelta, timezone
 import hashlib
+import json
 from pathlib import Path
 import sys
 import tempfile
@@ -282,6 +283,35 @@ class FamilyCenterTests(unittest.TestCase):
     def open_workspace(self):
         return self.service.ensure_workspace(self.context("open-family-workspace", 0), self.identity)
 
+    def _inject_gate_times(self, stage: str, **timestamps: datetime):
+        row = self.store.connection.execute(
+            "SELECT version, state_json FROM aggregate_state WHERE scope_key = ? AND aggregate_type = ? AND aggregate_id = ?",
+            (self.scope.canonical_key, "family_qualification_workspace", self.identity.identity),
+        ).fetchone()
+        state = json.loads(row["state_json"])
+        revision = next(item for item in reversed(state["gate_revisions"]) if item["stage_id"] == stage)
+        for field, value in timestamps.items():
+            revision[field] = value.isoformat()
+        self.store.connection.execute(
+            "UPDATE aggregate_state SET state_json = ? WHERE scope_key = ? AND aggregate_type = ? AND aggregate_id = ?",
+            (json.dumps(state, sort_keys=True, separators=(",", ":")), self.scope.canonical_key,
+             "family_qualification_workspace", self.identity.identity),
+        )
+        return revision
+
+    def _prepare_pending_golden(self):
+        view = self.open_workspace()
+        self.record("DISCOVER_MAP", view.version, body="synthetic map")
+        view = self.service.get_workspace(self.engineer, self.scope, self.identity.identity)
+        self.service.record_current_data_reality(self.context("data-reality-for-future-judgment", view.version), self.identity)
+        view = self.service.get_workspace(self.engineer, self.scope, self.identity.identity)
+        self.record("REPLAY", view.version, body="synthetic replay")
+        view = self.service.get_workspace(self.engineer, self.scope, self.identity.identity)
+        self.record("GOLDEN", view.version, state=GateState.PENDING, body="synthetic golden")
+        aggregate = self.store.get_aggregate(self.scope, "family_qualification_workspace", self.identity.identity)
+        golden = next(item for item in aggregate.state["gate_revisions"] if item["stage_id"] == "GOLDEN")
+        return aggregate, golden
+
     def record(self, stage: str, version: int, *, state: GateState = GateState.PASS, body: str | None = None, command_id: str | None = None, expires_in: int = 3600, principal: Principal | None = None, policy_id: str | None = None):
         now = self.clock.now
         artifact = self.write_artifact(body or f"synthetic {stage.lower()} evidence", principal) if body is not None or state in {GateState.PASS, GateState.PENDING} else None
@@ -428,6 +458,10 @@ class FamilyCenterTests(unittest.TestCase):
         first = self.service.record_gate_evidence(context, self.identity, **pass_args)
         replay = self.service.record_gate_evidence(context, self.identity, **pass_args)
         self.assertEqual(first.result_identity, replay.result_identity)
+        self.clock.now -= timedelta(seconds=1)
+        replay_after_server_clock_rollback = self.service.record_gate_evidence(context, self.identity, **pass_args)
+        self.assertEqual(first.result_identity, replay_after_server_clock_rollback.result_identity)
+        self.clock.now = fixed_now
         with self.assertRaises(IdempotencyConflictError):
             self.service.record_gate_evidence(context, self.identity, **{**pass_args, "state": GateState.FAIL})
         aggregate = self.store.get_aggregate(self.scope, "family_qualification_workspace", self.identity.identity)
@@ -530,6 +564,138 @@ class FamilyCenterTests(unittest.TestCase):
                 engine_identity="synthetic-map.v1", expires_at=self.clock.now + timedelta(hours=1),
                 requalification_policy_id="synthetic-requalify", requalification_policy_version="1.0.0",
             )
+
+    def test_record_gate_evidence_rejects_future_known_at(self):
+        view = self.open_workspace()
+        now = self.clock.now
+        with self.assertRaisesRegex(ValidationFailureError, "known_at cannot be later than Family Center server time"):
+            self.service.record_gate_evidence(
+                self.context("future-known-at", view.version), self.identity,
+                stage_id="DISCOVER_MAP", state=GateState.FAIL,
+                policy_basis_id="synthetic-map", policy_basis_version="1.0.0",
+                engine_identity="synthetic-map.v1", known_at=now + timedelta(seconds=1),
+                published_at=now, requalification_policy_id="synthetic-requalify",
+                requalification_policy_version="1.0.0",
+            )
+        self.assertEqual(self.store.get_aggregate(self.scope, "family_qualification_workspace", self.identity.identity).state["gate_revisions"], [])
+
+    def test_record_gate_evidence_rejects_future_published_at(self):
+        view = self.open_workspace()
+        now = self.clock.now
+        with self.assertRaisesRegex(ValidationFailureError, "published_at cannot be later than Family Center server time"):
+            self.service.record_gate_evidence(
+                self.context("future-published-at", view.version), self.identity,
+                stage_id="DISCOVER_MAP", state=GateState.FAIL,
+                policy_basis_id="synthetic-map", policy_basis_version="1.0.0",
+                engine_identity="synthetic-map.v1", known_at=now,
+                published_at=now + timedelta(seconds=1), requalification_policy_id="synthetic-requalify",
+                requalification_policy_version="1.0.0",
+            )
+        self.assertEqual(self.store.get_aggregate(self.scope, "family_qualification_workspace", self.identity.identity).state["gate_revisions"], [])
+
+    def test_record_gate_evidence_still_rejects_published_before_known(self):
+        view = self.open_workspace()
+        now = self.clock.now
+        with self.assertRaisesRegex(ValidationFailureError, "published_at cannot precede known_at"):
+            self.service.record_gate_evidence(
+                self.context("published-before-known", view.version), self.identity,
+                stage_id="DISCOVER_MAP", state=GateState.FAIL,
+                policy_basis_id="synthetic-map", policy_basis_version="1.0.0",
+                engine_identity="synthetic-map.v1", known_at=now - timedelta(seconds=1),
+                published_at=now - timedelta(seconds=2), requalification_policy_id="synthetic-requalify",
+                requalification_policy_version="1.0.0",
+            )
+
+    def test_future_gate_revision_blocks_view_readiness_and_promotion_with_reason(self):
+        ready = self.complete_workspace()
+        self.assertTrue(ready.promotion_ready)
+        future_time = self.clock.now + timedelta(seconds=1)
+        self._inject_gate_times("DISCOVER_MAP", known_at=future_time, published_at=future_time)
+
+        blocked = self.service.get_workspace(self.reviewer, self.scope, self.identity.identity)
+        gate = next(item for item in blocked.gates if item.stage_id == "DISCOVER_MAP")
+        self.assertEqual(gate.state, GateState.BLOCKED)
+        self.assertEqual(gate.invalidation_reason, "FUTURE_EVIDENCE_TIME")
+        self.assertFalse(blocked.promotion_ready)
+        self.assertIn("DISCOVER_MAP:FUTURE_EVIDENCE_TIME", blocked.promotion_blockers)
+        gate_ids = tuple(next(item.revision_id for item in blocked.gates if item.stage_id == stage) for stage in self.identity.required_stages)
+        with self.assertRaisesRegex(ValidationFailureError, "DISCOVER_MAP:FUTURE_EVIDENCE_TIME"):
+            self.service.promote(
+                self.context("promote-future-gate", blocked.version, self.reviewer), self.identity,
+                gate_identity_set=gate_ids, source_reality_identity=blocked.source_reality.reality_identity,
+            )
+
+    def test_future_policy_authorized_not_applicable_cannot_satisfy_required_stage(self):
+        self.complete_workspace()
+        future_time = self.clock.now + timedelta(seconds=1)
+        self._inject_gate_times("SHADOW", known_at=self.clock.now, published_at=future_time)
+
+        blocked = self.service.get_workspace(self.reviewer, self.scope, self.identity.identity)
+        gate = next(item for item in blocked.gates if item.stage_id == "SHADOW")
+        self.assertEqual(gate.state, GateState.BLOCKED)
+        self.assertEqual(gate.invalidation_reason, "FUTURE_EVIDENCE_TIME")
+        self.assertFalse(blocked.promotion_ready)
+        self.assertIn("SHADOW:FUTURE_EVIDENCE_TIME", blocked.promotion_blockers)
+        gate_ids = tuple(next(item.revision_id for item in blocked.gates if item.stage_id == stage) for stage in self.identity.required_stages)
+        with self.assertRaisesRegex(ValidationFailureError, "SHADOW:FUTURE_EVIDENCE_TIME"):
+            self.service.promote(
+                self.context("promote-future-not-applicable", blocked.version, self.reviewer), self.identity,
+                gate_identity_set=gate_ids, source_reality_identity=blocked.source_reality.reality_identity,
+            )
+
+    def test_future_predecessor_evidence_cannot_unlock_data_reality(self):
+        view = self.open_workspace()
+        self.record("DISCOVER_MAP", view.version, body="synthetic map")
+        self._inject_gate_times("DISCOVER_MAP", known_at=self.clock.now + timedelta(seconds=1))
+        view = self.service.get_workspace(self.engineer, self.scope, self.identity.identity)
+        with self.assertRaisesRegex(ValidationFailureError, "FUTURE_EVIDENCE_TIME predecessor evidence: DISCOVER_MAP"):
+            self.service.record_current_data_reality(self.context("future-predecessor-reality", view.version), self.identity)
+
+    def test_independent_judgment_rejects_future_dated_prior_revision(self):
+        aggregate, golden = self._prepare_pending_golden()
+        future_time = self.clock.now + timedelta(seconds=1)
+        self._inject_gate_times("GOLDEN", known_at=self.clock.now, published_at=future_time)
+        self.current.set_principal(self.reviewer)
+        with self.assertRaisesRegex(ValidationFailureError, "FUTURE_EVIDENCE_TIME"):
+            self.service.adjudicate_gate(
+                self.context("judge-future-golden", aggregate.version, self.reviewer), self.identity,
+                stage_id="GOLDEN", expected_evidence_revision_id=golden["revision_id"],
+                decision=GateState.PASS, judgment_basis_id="synthetic-independent-review",
+                judgment_basis_version="1.0.0", reason_code="INDEPENDENT_REVIEW_PASS",
+            )
+        after = self.store.get_aggregate(self.scope, "family_qualification_workspace", self.identity.identity)
+        self.assertEqual(len(after.state["gate_revisions"]), len(aggregate.state["gate_revisions"]))
+
+    def test_historical_gate_timestamp_is_reeligible_when_server_clock_reaches_it(self):
+        view = self.open_workspace()
+        revision_time = self.clock.now
+        self.record("DISCOVER_MAP", view.version, body="synthetic map")
+        aggregate_before = self.store.get_aggregate(self.scope, "family_qualification_workspace", self.identity.identity)
+        revision_before = next(item for item in aggregate_before.state["gate_revisions"] if item["stage_id"] == "DISCOVER_MAP")
+
+        self.clock.now = revision_time - timedelta(seconds=1)
+        behind = self.service.get_workspace(self.engineer, self.scope, self.identity.identity)
+        gate = next(item for item in behind.gates if item.stage_id == "DISCOVER_MAP")
+        self.assertEqual(gate.state, GateState.BLOCKED)
+        self.assertEqual(gate.invalidation_reason, "FUTURE_EVIDENCE_TIME")
+
+        self.clock.now = revision_time
+        reached = self.service.get_workspace(self.engineer, self.scope, self.identity.identity)
+        gate = next(item for item in reached.gates if item.stage_id == "DISCOVER_MAP")
+        self.assertEqual(gate.state, GateState.PASS)
+        self.assertEqual(gate.evidence_status, "AVAILABLE")
+        aggregate_after = self.store.get_aggregate(self.scope, "family_qualification_workspace", self.identity.identity)
+        revision_after = next(item for item in aggregate_after.state["gate_revisions"] if item["stage_id"] == "DISCOVER_MAP")
+        self.assertEqual(revision_after, revision_before)
+
+    def test_future_o4_source_fact_blocks_data_reality_instead_of_appearing_fresh(self):
+        capability = self.source.get_capability(self.engineer, self.binding)
+        self.source.capabilities[_SourceRepository._key(self.binding)] = replace(
+            capability, latest_available_at=self.clock.now + timedelta(seconds=1),
+        )
+        reality = self.service.current_source_reality(self.engineer, self.scope, self.identity)
+        self.assertEqual(reality.state, "BLOCKED")
+        self.assertEqual(reality.reason_code, "FUTURE_SOURCE_REALITY_TIME")
 
     def test_independent_judgment_cannot_be_self_satisfied(self):
         view = self.open_workspace()
