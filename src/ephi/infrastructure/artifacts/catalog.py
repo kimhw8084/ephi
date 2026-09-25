@@ -17,6 +17,7 @@ from ephi.application.artifacts import (
     ScopedArtifactReference,
     internal_artifact_object_key,
 )
+from ephi.application.context import AccessScope
 from ephi.application.errors import (
     ArtifactError,
     ArtifactIntegrityError,
@@ -204,6 +205,23 @@ class PostgreSQLArtifactCatalog:
             raise ArtifactIntegrityError("catalog content identity does not match its scoped lookup key")
         return metadata
 
+    def list_for_scope(self, scope: Any, *, limit: int) -> tuple[ArtifactMetadata, ...]:
+        """Return a bounded, deterministic catalog page for an already-authorized scope."""
+
+        if not isinstance(scope, AccessScope):
+            raise ValidationFailureError("scope must be an AccessScope")
+        if isinstance(limit, bool) or not isinstance(limit, int) or not 1 <= limit <= 501:
+            raise ValidationFailureError("artifact catalog limit must be between 1 and 501")
+        try:
+            rows = self.connection.execute(
+                "SELECT scope_key, sha256, byte_size, media_type, logical_purpose, object_key, producing_job_id, revision_id, created_at "
+                "FROM artifact_catalog WHERE scope_key = %s ORDER BY sha256 ASC LIMIT %s",
+                (scope.canonical_key, limit),
+            ).fetchall()
+        except Exception as exc:
+            raise StorageFailureError("PostgreSQL artifact catalog scope query failed") from exc
+        return tuple(self._from_row(row) for row in rows)
+
     def count(self) -> int:
         try:
             return int(self.connection.execute("SELECT COUNT(*) AS count FROM artifact_catalog").fetchone()["count"])
@@ -354,6 +372,24 @@ class SQLiteArtifactCatalog:
         if metadata.reference != reference:
             raise ArtifactIntegrityError("catalog content identity does not match its scoped lookup key")
         return metadata
+
+    def list_for_scope(self, scope: Any, *, limit: int) -> tuple[ArtifactMetadata, ...]:
+        """Return a bounded, deterministic catalog page for an authorized scope."""
+
+        if not isinstance(scope, AccessScope):
+            raise ValidationFailureError("scope must be an AccessScope")
+        if isinstance(limit, bool) or not isinstance(limit, int) or not 1 <= limit <= 501:
+            raise ValidationFailureError("artifact catalog limit must be between 1 and 501")
+        with self._lock:
+            try:
+                rows = self.connection.execute(
+                    "SELECT scope_key, sha256, byte_size, media_type, logical_purpose, object_key, producing_job_id, revision_id, created_at "
+                    "FROM artifact_catalog WHERE scope_key = ? ORDER BY sha256 ASC LIMIT ?",
+                    (scope.canonical_key, limit),
+                ).fetchall()
+            except sqlite3.Error as exc:
+                raise StorageFailureError("SQLite artifact catalog scope query failed") from exc
+        return tuple(self._from_row(row) for row in rows)
 
     def count(self) -> int:
         try:

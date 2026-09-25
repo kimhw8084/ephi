@@ -80,6 +80,8 @@ _SOURCE_BINDING = MetrologySourceBinding(
 )
 _CAPABILITIES = frozenset(
     {
+        "ephi.operations.read",
+        "ephi.artifact.read",
         "ephi.attention.read",
         "ephi.episode.read",
         "ephi.episode.claim",
@@ -535,6 +537,15 @@ def build_bundle() -> ProviderBundle:
             public_metadata=runtime.capabilities,
         ),
     )
+
+
+def build_operations_unbound_bundle() -> ProviderBundle:
+    """Build the non-production query fixture with no qualification target configured."""
+
+    bundle = build_bundle()
+    policy = bundle.policy.implementation
+    policy._configuration = replace(policy.configuration, family_contexts=())
+    return bundle
 
 
 def build_flagship_bundle() -> ProviderBundle:

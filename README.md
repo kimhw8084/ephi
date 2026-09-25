@@ -470,6 +470,30 @@ This slice does not claim company asset-master completeness, real-family
 G02/G06, causal/RCA or predictive health, production capacity/G10, Operations
 destination implementation, G12, Port Gate, or Production readiness.
 
+## CHG-252 U2.5 / O9.2 Operations cockpit
+
+The authorized `/ephi/operations` destination reports six independent O9
+platform axes through a small query layer over the existing PostgreSQL,
+WorkerJobPort, O4 source, immutable-artifact and O7 qualification authorities.
+`process_transport=READY` means only that the application/query path responded;
+the UI exposes no overall health score. Source freshness, bounded worker
+details, artifact integrity, evidence expiration and the generic/local O9.1
+rehearsal contract remain separate. Production RPO/RTO is always
+`NOT_ESTABLISHED` without deployment-owned qualified evidence. Consequential
+controls stay disabled unless a future approved runtime binds an explicitly
+authorized, auditable capability.
+
+Candidate-bound synthetic PostgreSQL 18 and desktop/phone browser evidence is
+recorded in
+[the CHG-252 qualification](evidence/u2/chg-252-u2.5-o9.2/qualification.json).
+The fixture covers mixed axes, stale/unavailable source, qualification
+expiration and unbound authority, missing/corrupt artifact bytes, worker queue
+and failure states, and disabled controls. It does not qualify production,
+manufacturing/tool health, real-family G02/G06, G10, G12, Port Gate, or
+production disaster recovery. Focused query regressions are in
+`tests.test_operations_application` and real PostgreSQL evidence is in
+`tests.test_operations_postgresql`.
+
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for evidence preservation and validation. No project license has been selected.

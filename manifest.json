@@ -141,8 +141,8 @@
     },
     {
       "path": "13_Package_Review.md",
-      "bytes": 21773,
-      "sha256": "1a2e6512b62da6f1d1e375c5a467e30c9466937a2dda6a29d5d26c0ed87d8a29"
+      "bytes": 22768,
+      "sha256": "f3c5cf1ed97c88301abdc7267934ef7895535b4b7841ff71bfef2e757433aac5"
     },
     {
       "path": "AGENTS.md",
@@ -156,8 +156,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 27259,
-      "sha256": "398cfe71f20fee5a78e6c54d1874fb7ec05b3f437b78e66848ae835378bdfb0c"
+      "bytes": 28645,
+      "sha256": "db7730b78a4cfea97ab2435dbd89f68c3338c1ee53d7f93ed369db5f76213b24"
     },
     {
       "path": "app.py",
@@ -356,8 +356,8 @@
     },
     {
       "path": "evidence/README.md",
-      "bytes": 3102,
-      "sha256": "caf8e25713380c9ad3a6edb5dc589b3e753a86f1555bb9f89024cc79dd705c15"
+      "bytes": 3474,
+      "sha256": "a2154a415809fffca34f73de429e626c4447cf3ac70bfbfc37fccbdac25da3f8"
     },
     {
       "path": "evidence/audit_environment.json",
@@ -1270,6 +1270,101 @@
       "sha256": "c231744944d6ea6603c42931b2a12d8cd900a2318fb4f1401eed782639b12ba4"
     },
     {
+      "path": "evidence/u2/chg-252-u2.5-o9.2/qualification.json",
+      "bytes": 82304,
+      "sha256": "9d899e3b5ed841c39d551d166eb769c652a20680047d9e669b428681ea9a5fbc"
+    },
+    {
+      "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-artifact_corrupt-desktop-1440x900.png",
+      "bytes": 497278,
+      "sha256": "ee48f39f5e4590664904918d0a21ce19312c63f5b1833a15de784c79d92c4097"
+    },
+    {
+      "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-artifact_corrupt-phone-390x844.png",
+      "bytes": 440412,
+      "sha256": "0d1d6eda84b39eaf73808ae9a1287db1c760bdb1adad5e86c1a55132875bf3ce"
+    },
+    {
+      "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-artifact_missing-desktop-1440x900.png",
+      "bytes": 496691,
+      "sha256": "b0d965fbebccc533283e883f6aace9c235cb715dfb072eb3ed7eba7e98d9cc09"
+    },
+    {
+      "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-artifact_missing-phone-390x844.png",
+      "bytes": 439939,
+      "sha256": "d9236af53a68348ad46228000c0cc8e17f9744ad547a6b7f51f0ca112c0d2460"
+    },
+    {
+      "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-mixed_axes-desktop-1440x900.png",
+      "bytes": 496784,
+      "sha256": "c59e9821ccd1f7b1ff98a4ece64b9d5612abfe36bd3a628169f51cdc39a359ec"
+    },
+    {
+      "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-mixed_axes-phone-390x844.png",
+      "bytes": 439531,
+      "sha256": "873cd3ad59ad5bebe767e2c08ea70c24f5a9230f0370ff9ee50cafd5ff00c8fc"
+    },
+    {
+      "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-qualification_expired-desktop-1440x900.png",
+      "bytes": 492137,
+      "sha256": "3e81bae38529f27cee2a5e4be3d41a4aa6e120673f7f4ef25ef64403dd158ea0"
+    },
+    {
+      "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-qualification_expired-phone-390x844.png",
+      "bytes": 429760,
+      "sha256": "4851946dcbc8e669904235b501a26f4479d5786bbf2ee4fa43e67403d09c21eb"
+    },
+    {
+      "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-qualification_pending-desktop-1440x900.png",
+      "bytes": 504628,
+      "sha256": "235167c894dca56250fa85a50023bacb02a45e1dfcf60ba40713b2f18ccf5b26"
+    },
+    {
+      "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-qualification_pending-phone-390x844.png",
+      "bytes": 441289,
+      "sha256": "f42b75d719dfd185d2b5f69d3563b239f431bac31cf46ac1a6a70578c1aa2ebe"
+    },
+    {
+      "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-qualification_unbound-desktop-1440x900.png",
+      "bytes": 448135,
+      "sha256": "be1871b40f78de194cbba430121cdfe7785f5d235a9411787fadb35504f65bed"
+    },
+    {
+      "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-qualification_unbound-phone-390x844.png",
+      "bytes": 384222,
+      "sha256": "131fe186a1412387215941f4ad16c7688c896ebffa2f847f737e6877254fd862"
+    },
+    {
+      "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-source_stale-desktop-1440x900.png",
+      "bytes": 509868,
+      "sha256": "b488c77b3ae2266ea166ed0cb50908e779338d2cf3f32adb018f8cd0f8beb147"
+    },
+    {
+      "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-source_stale-phone-390x844.png",
+      "bytes": 450867,
+      "sha256": "b3f45377fa26bfb37e6bbf7d4fe95a4cba3083f940be4d68f8a24711aae56474"
+    },
+    {
+      "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-source_unavailable-desktop-1440x900.png",
+      "bytes": 451364,
+      "sha256": "d45bd600a1b766ebacb454e540c232bc32a1c705c97dac38c71c1d0931490fb6"
+    },
+    {
+      "path": "evidence/u2/chg-252-u2.5-o9.2/screenshots/operations-source_unavailable-phone-390x844.png",
+      "bytes": 385927,
+      "sha256": "9fedea7b3c42b954f07617094cb3848741478244ec5f73d90d80e7174a61b7b1"
+    },
+    {
+      "path": "evidence/u2/chg-252-u2.5-o9.2/test_logs/full-suite-postgresql18.log",
+      "bytes": 76678,
+      "sha256": "63a285d96f67266aad921bbd8f0ac651006da6161f026ebaf41aeaaeb425bd30"
+    },
+    {
+      "path": "evidence/u2/chg-252-u2.5-o9.2/validation/final-verification.json",
+      "bytes": 1752,
+      "sha256": "ff4467f5fb109caa08f74f0b9671583c07b2dd162119b0af0ee1319826363fe0"
+    },
+    {
       "path": "examples/__init__.py",
       "bytes": 61,
       "sha256": "b060d41e6705cac80caacb622fc737209d85f878bc0a4a6d976adc651b26d7f1"
@@ -1326,8 +1421,8 @@
     },
     {
       "path": "examples/synthetic_downstream/provider.py",
-      "bytes": 26455,
-      "sha256": "40852596430bea49c661081c058afd5e6dc312e46ca6850a47e496f568cb3cff"
+      "bytes": 26833,
+      "sha256": "c1ec3193dacb7b6ae237378ce3c40b1739ecca4a57f93533f9eede21cef95b6f"
     },
     {
       "path": "migrations/001_o2_command_core.sql",
@@ -1486,13 +1581,13 @@
     },
     {
       "path": "src/ephi/application/__init__.py",
-      "bytes": 18021,
-      "sha256": "11b358c38fa4ce9c19cebfc01555e3e6db8e76c85741a10721e3c438e732cc43"
+      "bytes": 18845,
+      "sha256": "31e1794078958c587a32eb1fa1f3d74b535990bb436af3fdaac6a8f8ed92c095"
     },
     {
       "path": "src/ephi/application/artifacts.py",
-      "bytes": 15857,
-      "sha256": "b0f1a4c9c809e36c3dd90506c461b22753add81aaafcc3198e3eeac6b6c6514e"
+      "bytes": 18415,
+      "sha256": "a3dfe65957791c74a00e6f186903dc317960738c2c085f6380e5e4d4df058ce1"
     },
     {
       "path": "src/ephi/application/assets.py",
@@ -1556,8 +1651,8 @@
     },
     {
       "path": "src/ephi/application/operations.py",
-      "bytes": 11596,
-      "sha256": "0b36b24017bc9bbbfe682f21f79dc68bc3dd4392f3d05a83bf38fa3eec16f22f"
+      "bytes": 42224,
+      "sha256": "b6e6ec23f1a5468973893ed596fa78cb96ff35cd41f5c3bf4cced78f00070967"
     },
     {
       "path": "src/ephi/application/planner.py",
@@ -1671,8 +1766,8 @@
     },
     {
       "path": "src/ephi/infrastructure/postgresql.py",
-      "bytes": 39141,
-      "sha256": "81f6dfd09f2ae0f133e80801a0b653f9e58b80912c592644616bbecc164d2e6c"
+      "bytes": 41209,
+      "sha256": "8f2fde895468f84873dcd0176624fba10d221537a20d64cdd6496a84751beea8"
     },
     {
       "path": "src/ephi/infrastructure/postgresql_o3.py",
@@ -1691,8 +1786,8 @@
     },
     {
       "path": "src/ephi/infrastructure/postgresql_worker.py",
-      "bytes": 32494,
-      "sha256": "d18f91eb8bcb75878145cff4cf935f3f2481e5f312fb6d50e2aae885ba519ffd"
+      "bytes": 35483,
+      "sha256": "4671eb0d34203a9713ffe8b5aba873eefbfe63339b567e0a108ac27285a0afd5"
     },
     {
       "path": "src/ephi/infrastructure/sqlite.py",
@@ -1721,8 +1816,8 @@
     },
     {
       "path": "src/ephi/ui/app.py",
-      "bytes": 104233,
-      "sha256": "4fe2d058755046b745955f09e5f949a914a747291d37c418ec6cfe98bdd727b5"
+      "bytes": 105899,
+      "sha256": "745a77b048654dc4f6f599552b5da9b2b31c679450babaa5cf15bcb6a051bb1d"
     },
     {
       "path": "src/ephi/ui/assets.py",
@@ -1733,6 +1828,11 @@
       "path": "src/ephi/ui/family_center.py",
       "bytes": 31801,
       "sha256": "08d5e3d8e2c5307081d190213f0613a5922abc248f6fe51de2d44a4b9778cbd8"
+    },
+    {
+      "path": "src/ephi/ui/operations.py",
+      "bytes": 22848,
+      "sha256": "47920fdab2ac4444a6b4bcd73964563e4408a652552493d7fcef5ef2815f5d05"
     },
     {
       "path": "src/ephi/ui/provider.py",
@@ -1935,6 +2035,16 @@
       "sha256": "6d3c7e2ab7020cfdb0e5e9ad2efd8afa886df71c16aa262f6f8f9a6cb59e2bec"
     },
     {
+      "path": "tests/test_operations_application.py",
+      "bytes": 22068,
+      "sha256": "3e215cd521b71a0570c363ebd8bfa16040af7c86eb458dcfa2fec9ff1f06abc3"
+    },
+    {
+      "path": "tests/test_operations_postgresql.py",
+      "bytes": 10520,
+      "sha256": "623e4b904a9a95ed9432cd7ad58dcdd3dd996aafe9d1d1d96b70f30f4328aa30"
+    },
+    {
       "path": "tests/test_outcomes_postgresql.py",
       "bytes": 18379,
       "sha256": "0468c1f2b924de5388592c6273469bf653dc1d0166a336cfadc2508c601d99e3"
@@ -2058,6 +2168,11 @@
       "path": "tools/u2_investigation_qualification.py",
       "bytes": 37947,
       "sha256": "cb5022e55440c4faaf14886be5412de699991076ead46e76015096a0f02faf86"
+    },
+    {
+      "path": "tools/u2_operations_browser_qualification.py",
+      "bytes": 25396,
+      "sha256": "b0f46fe4de186983a12a09c6b03157b1d8f6baf1bb8bd7cf53c382a8515c2b5b"
     },
     {
       "path": "tools/w0_baseline.py",

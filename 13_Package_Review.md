@@ -282,3 +282,21 @@ with desktop 1440×900 and phone 390×844 screenshots. Both viewport runs passed
 with no browser errors or horizontal overflow; the continuation visibly
 qualifies the VOID row and records PostgreSQL 18.6. The existing CI PostgreSQL
 18.x Outcomes lane remains intact.
+
+## CHG-252 U2.5 / O9.2 Operations candidate
+
+The authorized `/ephi/operations` page reuses the existing O9 six-axis
+snapshot, O2 PostgreSQL/worker authorities, exact O4 source binding and
+snapshot, artifact catalog/blob verifier, O7 generic qualification workspace,
+and O8 current authorization. Each axis keeps its own state and bounded
+reason; process response cannot upgrade stale source or failed worker state.
+The UI exposes no restore execution or worker/source mutation. All H6 controls
+remain unavailable without an explicit authorized audit-capable runtime
+binding. Target backup evidence is unbound and production RPO/RTO remains
+`NOT_ESTABLISHED`.
+
+The synthetic PostgreSQL 18 integration and candidate-bound 1440×900 / 390×844
+browser inventory and screenshots are recorded in
+`evidence/u2/chg-252-u2.5-o9.2/qualification.json`. Qualification remains
+synthetic only: no real-family G02/G06, production capacity/G10, production
+RPO/RTO, G12, Port Gate or Production claim is made.

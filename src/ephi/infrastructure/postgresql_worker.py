@@ -35,6 +35,7 @@ from ephi.application.worker import (
     WorkerLease,
     WorkerLeaseConfig,
 )
+from ephi.application.operations import WorkerHealthFacts
 
 if TYPE_CHECKING:
     from .postgresql import PostgreSQLReferenceTransactionAdapter
@@ -535,6 +536,64 @@ class PostgreSQLWorkerStore:
         except Exception as exc:
             raise StorageFailureError("durable PostgreSQL storage failed while inspecting jobs") from exc
         return tuple(self._job_from_row(row) for row in rows)
+
+    def operations_health_facts(self, scope: AccessScope) -> WorkerHealthFacts:
+        """Return scoped queue counts and lease classification at PostgreSQL time."""
+
+        if not isinstance(scope, AccessScope):
+            raise ValidationFailureError("scope must be an AccessScope")
+        try:
+            row = self.adapter.connection.execute(
+                """
+                WITH authoritative_clock AS MATERIALIZED (
+                    SELECT clock_timestamp() AS now
+                )
+                SELECT
+                    authoritative_clock.now AS observed_at,
+                    COUNT(job.job_id)::int AS job_count,
+                    COUNT(job.job_id) FILTER (WHERE job.status = 'FAILED')::int AS failed_count,
+                    COUNT(job.job_id) FILTER (WHERE job.status = 'DEAD_LETTER')::int AS dead_letter_count,
+                    COUNT(job.job_id) FILTER (WHERE job.status = 'RUNNING')::int AS running_count,
+                    COUNT(job.job_id) FILTER (
+                        WHERE job.status = 'RUNNING'
+                          AND (job.lease_expires_at IS NULL OR job.lease_expires_at <= authoritative_clock.now)
+                    )::int AS expired_running_count
+                FROM authoritative_clock
+                LEFT JOIN job ON job.scope_key = %s
+                GROUP BY authoritative_clock.now
+                """,
+                (scope.canonical_key,),
+            ).fetchone()
+            if row is None:
+                raise ValueError("worker health query returned no row")
+            return WorkerHealthFacts(
+                int(row["job_count"]),
+                int(row["failed_count"]),
+                int(row["dead_letter_count"]),
+                int(row["running_count"]),
+                int(row["expired_running_count"]),
+                row["observed_at"],
+            )
+        except Exception as exc:
+            raise StorageFailureError("durable PostgreSQL worker health facts are unavailable") from exc
+
+    def has_committed_local_effect(self, scope: AccessScope, job_id: str) -> bool:
+        """Prove only receipt existence for one already-inspected scoped job."""
+
+        if not isinstance(scope, AccessScope):
+            raise ValidationFailureError("scope must be an AccessScope")
+        job_id = _validated_identity(job_id, "job_id")
+        try:
+            row = self.adapter.connection.execute(
+                "SELECT EXISTS (SELECT 1 FROM job j JOIN applied_effect e ON e.job_id = j.job_id "
+                "WHERE j.scope_key = %s AND j.job_id = %s) AS receipt_exists",
+                (scope.canonical_key, job_id),
+            ).fetchone()
+            if row is None:
+                raise ValueError("effect receipt query returned no row")
+            return bool(row["receipt_exists"])
+        except Exception as exc:
+            raise StorageFailureError("durable PostgreSQL local-effect receipt check is unavailable") from exc
 
     def commit_local_effect(
         self,
