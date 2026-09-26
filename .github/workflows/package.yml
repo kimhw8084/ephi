@@ -97,7 +97,7 @@ jobs:
           EPHI_ALLOWED_BROWSER_ORIGINS: https://ephi.example.invalid
           NICEGUI_BASE_STORAGE_SECRET: candidate-config-preflight-placeholder
           NICEGUI_BASE_SECURE_SESSION_COOKIE: "true"
-        run: "$RUNNER_TEMP/ephi-u3-venv/bin/ephi-config-preflight" --json
+        run: '"$RUNNER_TEMP/ephi-u3-venv/bin/ephi-config-preflight" --json'
 
   canonical-baseline:
     name: Canonical repository baseline
