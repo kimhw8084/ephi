@@ -54,6 +54,7 @@ from nicegui_base import (
 
 from ephi.application.attention import AttentionQueryService
 from ephi.application.assets import Asset360QueryService
+from ephi.application.operations import OperationsQueryService
 from ephi.application.context import AccessScope, CommandContext, CurrentAuthorizationAuthority, Principal
 from ephi.application.errors import AuthorizationDeniedError, VersionConflictError
 from ephi.application.transactions import VersionedAggregateCommandExecutor
@@ -322,6 +323,7 @@ class EphiUiComposition:
     investigations: EpisodeInvestigationQueryService | None = None
     outcomes: OutcomesService | None = None
     asset_360: Asset360QueryService | None = None
+    operations: OperationsQueryService | None = None
 
     def close(self) -> None:
         self.adapter.close()
@@ -361,6 +363,26 @@ def build_composition_from_environment() -> EphiUiComposition:
             downstream.adapter.o3_store(), downstream.adapter.read_store(), downstream.current_authorization,
             downstream.source_observer, downstream.source_binding, downstream.adapter.source_store(),
         )
+        source_repository = downstream.adapter.source_store()
+        worker_jobs = downstream.adapter.worker_store()
+
+        def qualification_workspace_provider():
+            for family in downstream.policy_configuration.family_contexts:
+                if family.qualification_targets:
+                    target = family.qualification_targets[0]
+                    return family.family_id, downstream.family_workspace_identity(family.family_id, target)
+            return None
+
+        operations = OperationsQueryService(
+            current_authorization=downstream.current_authorization,
+            postgres=downstream.adapter,
+            worker_jobs=worker_jobs,
+            source_repository=source_repository,
+            source_binding=downstream.source_binding,
+            artifact_service=downstream.artifact_service,
+            family_center=downstream.family_center,
+            qualification_workspace_provider=qualification_workspace_provider,
+        )
         runtime = ApplicationRuntime()
         runtime.data.register_source(source)
         workspace = runtime.open_workspace("ephi-attention-episode-w1")
@@ -382,6 +404,7 @@ def build_composition_from_environment() -> EphiUiComposition:
             downstream.episode_investigations,
             downstream.outcomes,
             asset_360,
+            operations,
         )
     dsn = _required_environment("EPHI_POSTGRES_DSN")
     metrology_source_adapter, metrology_source_binding = require_runtime_source_binding()
@@ -407,6 +430,14 @@ def build_composition_from_environment() -> EphiUiComposition:
         adapter.o3_store(), adapter.read_store(), current_authorization,
         metrology_source_adapter, metrology_source_binding, adapter.source_store(),
     )
+    source_repository = adapter.source_store()
+    operations = OperationsQueryService(
+        current_authorization=current_authorization,
+        postgres=adapter,
+        worker_jobs=adapter.worker_store(),
+        source_repository=source_repository,
+        source_binding=metrology_source_binding,
+    )
     source = EphiReadDataSource(attention, principal_provider, scope_provider)
     runtime = ApplicationRuntime()
     runtime.data.register_source(source)
@@ -427,6 +458,7 @@ def build_composition_from_environment() -> EphiUiComposition:
         workspace,
         outcomes=outcomes,
         asset_360=asset_360,
+        operations=operations,
     )
 
 
@@ -436,6 +468,7 @@ def _navigation() -> NavigationModel:
         NavItem("episode", "Episode", "/episode"),
         NavItem("assets", "Assets", "/ephi/assets"),
         NavItem("outcomes", "Outcomes", "/ephi/outcomes"),
+        NavItem("operations", "Operations", "/ephi/operations"),
         NavItem("families", "Family Center", "/ephi/families"),
     )),))
 
@@ -1844,6 +1877,7 @@ def run_ephi() -> None:
     from nicegui import app as nicegui_app
     from .family_center import build_family_center_index_page, build_family_center_page
     from .assets import build_asset_360_page, build_asset_index_page
+    from .operations import build_operations_page
 
     install_browser_transport_stack(nicegui_app, runtime_adapter, policy)
     runtime_adapter.run(
@@ -1857,5 +1891,6 @@ def run_ephi() -> None:
             "/ephi/families/{family_id}": lambda family_id: build_family_center_page(
                 composition, family_id, _navigation()
             ),
+            "/ephi/operations": lambda: build_operations_page(composition, _navigation()),
         },
     )

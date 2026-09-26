@@ -19,6 +19,7 @@ from typing import Any
 from ephi.application.context import AccessScope
 from ephi.application.errors import StorageFailureError, ValidationFailureError
 from ephi.application.hashing import canonical_json, normalize_domain_payload
+from ephi.application.operations import PostgreSQLHealthFacts, canonical_sha256
 from ephi.application.worker import WorkerLeaseConfig
 from ephi.application.storage import (
     AggregateAlreadyExistsError,
@@ -691,9 +692,50 @@ class PostgreSQLReferenceTransactionAdapter:
 
     def server_version(self) -> str:
         try:
-            return str(self.connection.execute("SHOW server_version").fetchone()["server_version"])
+            value = self.connection.execute("SHOW server_version").fetchone()["server_version"]
+            return value.decode("utf-8", errors="replace") if isinstance(value, bytes) else str(value)
         except Exception as exc:
             raise StorageFailureError("durable PostgreSQL storage failed while reading server version") from exc
+
+    def operations_health_facts(self) -> PostgreSQLHealthFacts:
+        """Return bounded server/schema facts through the bound reference adapter."""
+
+        connection = self.connection
+        try:
+            row = connection.execute(
+                "SELECT current_setting('server_version') AS server_version, clock_timestamp() AS observed_at"
+            ).fetchone()
+            present_rows = connection.execute(
+                "SELECT table_name FROM information_schema.tables "
+                "WHERE table_schema = current_schema() AND table_name = ANY(%s)",
+                (list(_REQUIRED_SCHEMA_TABLES),),
+            ).fetchall()
+            present = {str(item["table_name"]) for item in present_rows}
+            migrations = []
+            for path in MIGRATION_PATHS:
+                content = path.read_bytes()
+                migrations.append({
+                    "name": path.name,
+                    "sha256": hashlib.sha256(content).hexdigest(),
+                    "byte_size": len(content),
+                })
+            if row is None or not migrations:
+                raise ValueError("incomplete bounded health facts")
+            missing = len(set(_REQUIRED_SCHEMA_TABLES) - present)
+            raw_version = row["server_version"]
+            server_version = raw_version.decode("utf-8", errors="replace") if isinstance(raw_version, bytes) else str(raw_version)
+            return PostgreSQLHealthFacts(
+                server_version,
+                len(present),
+                len(_REQUIRED_SCHEMA_TABLES),
+                missing,
+                len(migrations),
+                canonical_sha256(migrations),
+                "NOT_BOUND_NO_MIGRATION_LEDGER",
+                row["observed_at"],
+            )
+        except Exception as exc:
+            raise StorageFailureError("durable PostgreSQL operations facts are unavailable") from exc
 
     def seed_aggregate(
         self,

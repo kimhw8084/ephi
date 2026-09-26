@@ -1,0 +1,56 @@
+{
+  "browser": {
+    "all_inventories_clean": true,
+    "desktop_viewport": "1440x900",
+    "phone_viewport": "390x844",
+    "status": "PASS",
+    "views": 16
+  },
+  "candidate": {
+    "base_commit": "705aca4d86095e5be6e80538a9bd7bd5bd05faa6",
+    "candidate_state": "working-tree candidate based on registered target",
+    "head_commit": "705aca4d86095e5be6e80538a9bd7bd5bd05faa6",
+    "source_test_tool_digest": "4d7b1ccbdf41713794c111b3764313d29cb2935dd5f8dac5e0b1cf130f44418b"
+  },
+  "compileall": {
+    "command": "python3 -m compileall -q src examples tests tools",
+    "status": "PASS"
+  },
+  "focused_query_tests": {
+    "status": "PASS",
+    "test_count": 11
+  },
+  "full_repository_suite": {
+    "failed": 0,
+    "log": "evidence/u2/chg-252-u2.5-o9.2/test_logs/full-suite-postgresql18.log",
+    "log_bytes": 76678,
+    "log_sha256": "63a285d96f67266aad921bbd8f0ac651006da6161f026ebaf41aeaaeb425bd30",
+    "passed": 413,
+    "postgresql18_enabled": true,
+    "skipped": 0,
+    "status": "PASS",
+    "test_count": 413
+  },
+  "git_diff_check": {
+    "command": "git diff --check",
+    "status": "PASS"
+  },
+  "package_check": {
+    "command": "python3 tools/check_package.py --refresh-manifest",
+    "manifest_refreshed_after_candidate_evidence": true,
+    "status": "PASS"
+  },
+  "postgresql18": {
+    "isolated_server_restart_stability": "PASS",
+    "operations_integration_test": "PASS",
+    "server_version": "18.6 (Homebrew)",
+    "status": "PASS",
+    "worker_list_identity_preserved_across_restart": true
+  },
+  "w0_repo_baseline": {
+    "path": "tools/w0_repo_baseline.py",
+    "scope": "Git/package/runtime facts and repository tests; no historical-source compatibility path",
+    "status": "BASELINE_PASS",
+    "test_count": 413
+  }
+}

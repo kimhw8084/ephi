@@ -1,0 +1,3139 @@
+{
+  "base_commit": "705aca4d86095e5be6e80538a9bd7bd5bd05faa6",
+  "browser": {
+    "artifact_corrupt_desktop_1440x900": {
+      "accessibility_snapshot_digest": "e789ebb975b51be745ecb3c1f648f7f3c1fc614553721b28e80732acb432b72b",
+      "accessible_worker_detail_alternative": true,
+      "body_digest": "86caa3f630d623d83236a01119fcb68c9ed4dcb210c909657407422920b79218",
+      "case": "artifact_corrupt",
+      "default_body_digest": "71bca788a5ade96f41ae2a6236cbe98b9d1d5b76686d2c243df672f053958848",
+      "disabled_controls": {
+        "Pause source/family processing": true,
+        "Request projection repair": true,
+        "Retry eligible job": true,
+        "Start approved restore rehearsal": true
+      },
+      "filtered_geometry": {
+        "body_width": 1440,
+        "document_width": 1440,
+        "no_horizontal_overflow": true,
+        "viewport_width": 1440
+      },
+      "geometry": {
+        "body_width": 1440,
+        "document_width": 1440,
+        "no_horizontal_overflow": true,
+        "viewport_height": 900,
+        "viewport_width": 1440
+      },
+      "inventories": {
+        "console_errors": [],
+        "http_failures": [],
+        "page_errors": [],
+        "request_failures": [],
+        "requests": [
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/ephi/operations"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/fonts.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/quasar.unimportant.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/quasar.important.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/nicegui.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/vue.esm-browser.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/573d0129acaebad907d825007cd6fa02/query.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/7416ad0839166372589af103d2dac97f/link.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/50808f343f9d39efb70f4fe21b9a193b/html.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/20e90839167eb30dba12722e0d4b24bb/select.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/64c866455daa2383bf6d88c437b23510/input.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/ab5d3884c9432c02cbce45d47d75c721/timer.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/socket.io.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/tailwindcss.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/quasar.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/nicegui.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/lang/en-US.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/dompurify.mjs"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/fonts/2474057f3040a08c.woff2"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/fonts/0c19a63c7528cc1a.woff2"
+          }
+        ]
+      },
+      "inventories_clean": true,
+      "keyboard_focus": {
+        "focus_after_refresh": true,
+        "focus_visible": true,
+        "style": {
+          "boxShadow": "rgb(0, 94, 168) 0px 0px 0px 3px",
+          "focusVisible": true,
+          "outline": "none",
+          "outlineColor": "rgb(255, 255, 255)",
+          "outlineWidth": "0px"
+        },
+        "tab_count": 12,
+        "target_reached": true
+      },
+      "missing_content": [],
+      "private_markers_after_filtering": [],
+      "private_markers_in_browser_text": [],
+      "restore_control_reachable": true,
+      "screenshot": "operations-artifact_corrupt-desktop-1440x900.png",
+      "screenshot_sha256": "aa17d708c549c0ded03d581db2c19eadb10ab28b2aa4422ddd2a2a6314b780e7",
+      "status": "PASS",
+      "viewport": {
+        "height": 900,
+        "width": 1440
+      },
+      "worker_filter_checks": [
+        {
+          "controls_geometry": {
+            "all_visible": true,
+            "non_overlapping": true,
+            "within_viewport": true
+          },
+          "job_type": "SyntheticOperationsFixture.succeeded",
+          "matching_row_visible": true,
+          "status": "SUCCEEDED",
+          "visible_rows": 1,
+          "worker_axis_state_error": true
+        },
+        {
+          "controls_geometry": {
+            "all_visible": true,
+            "non_overlapping": true,
+            "within_viewport": true
+          },
+          "job_type": "SyntheticOperationsFixture.canceled",
+          "matching_row_visible": true,
+          "status": "CANCELED",
+          "visible_rows": 1,
+          "worker_axis_state_error": true
+        }
+      ],
+      "worker_filter_controls_geometry": {
+        "all_visible": true,
+        "non_overlapping": true,
+        "within_viewport": true
+      },
+      "worker_filters_visible": true,
+      "worker_table_visible_on_desktop": true
+    },
+    "artifact_corrupt_phone_390x844": {
+      "accessibility_snapshot_digest": "3c5eaa39aa946d4e5bd365b7e29c0c80988704ba663ebc4eac8ea38d3fb34e1b",
+      "accessible_worker_detail_alternative": true,
+      "body_digest": "1093ca66e66996150d069d1897bfd2e5c4a055ec8641fff41654e9f43d1e6c83",
+      "case": "artifact_corrupt",
+      "default_body_digest": "67ff514e3dd388c6ac140dd84bb8361c0d9ca8e74551db544397a9be4cea8b3d",
+      "disabled_controls": {
+        "Pause source/family processing": true,
+        "Request projection repair": true,
+        "Retry eligible job": true,
+        "Start approved restore rehearsal": true
+      },
+      "filtered_geometry": {
+        "body_width": 390,
+        "document_width": 390,
+        "no_horizontal_overflow": true,
+        "viewport_width": 390
+      },
+      "geometry": {
+        "body_width": 390,
+        "document_width": 390,
+        "no_horizontal_overflow": true,
+        "viewport_height": 844,
+        "viewport_width": 390
+      },
+      "inventories": {
+        "console_errors": [],
+        "http_failures": [],
+        "page_errors": [],
+        "request_failures": [],
+        "requests": [
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/ephi/operations"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/fonts.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/quasar.unimportant.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/quasar.important.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/nicegui.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/vue.esm-browser.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/573d0129acaebad907d825007cd6fa02/query.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/7416ad0839166372589af103d2dac97f/link.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/50808f343f9d39efb70f4fe21b9a193b/html.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/20e90839167eb30dba12722e0d4b24bb/select.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/64c866455daa2383bf6d88c437b23510/input.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/ab5d3884c9432c02cbce45d47d75c721/timer.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/socket.io.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/tailwindcss.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/quasar.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/nicegui.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/lang/en-US.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/dompurify.mjs"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/fonts/2474057f3040a08c.woff2"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/fonts/0c19a63c7528cc1a.woff2"
+          }
+        ]
+      },
+      "inventories_clean": true,
+      "keyboard_focus": {
+        "focus_after_refresh": true,
+        "focus_visible": true,
+        "style": {
+          "boxShadow": "rgb(0, 94, 168) 0px 0px 0px 3px",
+          "focusVisible": true,
+          "outline": "none",
+          "outlineColor": "rgb(255, 255, 255)",
+          "outlineWidth": "0px"
+        },
+        "tab_count": 6,
+        "target_reached": true
+      },
+      "missing_content": [],
+      "private_markers_after_filtering": [],
+      "private_markers_in_browser_text": [],
+      "restore_control_reachable": true,
+      "screenshot": "operations-artifact_corrupt-phone-390x844.png",
+      "screenshot_sha256": "62030942acf7a88de79154258841a0cf1ec71ef57198d7c77be79e0d74a06627",
+      "status": "PASS",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "worker_filter_checks": [
+        {
+          "controls_geometry": {
+            "all_visible": true,
+            "non_overlapping": true,
+            "within_viewport": true
+          },
+          "job_type": "SyntheticOperationsFixture.succeeded",
+          "matching_row_visible": true,
+          "status": "SUCCEEDED",
+          "visible_rows": 1,
+          "worker_axis_state_error": true
+        },
+        {
+          "controls_geometry": {
+            "all_visible": true,
+            "non_overlapping": true,
+            "within_viewport": true
+          },
+          "job_type": "SyntheticOperationsFixture.canceled",
+          "matching_row_visible": true,
+          "status": "CANCELED",
+          "visible_rows": 1,
+          "worker_axis_state_error": true
+        }
+      ],
+      "worker_filter_controls_geometry": {
+        "all_visible": true,
+        "non_overlapping": true,
+        "within_viewport": true
+      },
+      "worker_filters_visible": true,
+      "worker_table_visible_on_desktop": null
+    },
+    "artifact_missing_desktop_1440x900": {
+      "accessibility_snapshot_digest": "749cb5a33cc10588e115f0246b0b7ee1c4736a168b5a2bac5c29e8207ca327b3",
+      "accessible_worker_detail_alternative": true,
+      "body_digest": "ca005cf822be307d830dea103084d33068e9d4098b6457cd1aeedc6e62739f7f",
+      "case": "artifact_missing",
+      "default_body_digest": "9229decf33076f3bac6abde078d34d43eafed57acf3730c7df20bfe2a7056695",
+      "disabled_controls": {
+        "Pause source/family processing": true,
+        "Request projection repair": true,
+        "Retry eligible job": true,
+        "Start approved restore rehearsal": true
+      },
+      "filtered_geometry": {
+        "body_width": 1440,
+        "document_width": 1440,
+        "no_horizontal_overflow": true,
+        "viewport_width": 1440
+      },
+      "geometry": {
+        "body_width": 1440,
+        "document_width": 1440,
+        "no_horizontal_overflow": true,
+        "viewport_height": 900,
+        "viewport_width": 1440
+      },
+      "inventories": {
+        "console_errors": [],
+        "http_failures": [],
+        "page_errors": [],
+        "request_failures": [],
+        "requests": [
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/ephi/operations"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/fonts.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/quasar.unimportant.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/quasar.important.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/nicegui.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/vue.esm-browser.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/573d0129acaebad907d825007cd6fa02/query.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/7416ad0839166372589af103d2dac97f/link.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/50808f343f9d39efb70f4fe21b9a193b/html.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/20e90839167eb30dba12722e0d4b24bb/select.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/64c866455daa2383bf6d88c437b23510/input.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/ab5d3884c9432c02cbce45d47d75c721/timer.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/socket.io.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/tailwindcss.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/quasar.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/nicegui.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/lang/en-US.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/dompurify.mjs"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/fonts/2474057f3040a08c.woff2"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/fonts/0c19a63c7528cc1a.woff2"
+          }
+        ]
+      },
+      "inventories_clean": true,
+      "keyboard_focus": {
+        "focus_after_refresh": true,
+        "focus_visible": true,
+        "style": {
+          "boxShadow": "rgb(0, 94, 168) 0px 0px 0px 3px",
+          "focusVisible": true,
+          "outline": "none",
+          "outlineColor": "rgb(255, 255, 255)",
+          "outlineWidth": "0px"
+        },
+        "tab_count": 12,
+        "target_reached": true
+      },
+      "missing_content": [],
+      "private_markers_after_filtering": [],
+      "private_markers_in_browser_text": [],
+      "restore_control_reachable": true,
+      "screenshot": "operations-artifact_missing-desktop-1440x900.png",
+      "screenshot_sha256": "47f719b9b70e7472d59d864a5d59c7bb59021b546e8723f86572b8d79edc73ad",
+      "status": "PASS",
+      "viewport": {
+        "height": 900,
+        "width": 1440
+      },
+      "worker_filter_checks": [
+        {
+          "controls_geometry": {
+            "all_visible": true,
+            "non_overlapping": true,
+            "within_viewport": true
+          },
+          "job_type": "SyntheticOperationsFixture.succeeded",
+          "matching_row_visible": true,
+          "status": "SUCCEEDED",
+          "visible_rows": 1,
+          "worker_axis_state_error": true
+        },
+        {
+          "controls_geometry": {
+            "all_visible": true,
+            "non_overlapping": true,
+            "within_viewport": true
+          },
+          "job_type": "SyntheticOperationsFixture.canceled",
+          "matching_row_visible": true,
+          "status": "CANCELED",
+          "visible_rows": 1,
+          "worker_axis_state_error": true
+        }
+      ],
+      "worker_filter_controls_geometry": {
+        "all_visible": true,
+        "non_overlapping": true,
+        "within_viewport": true
+      },
+      "worker_filters_visible": true,
+      "worker_table_visible_on_desktop": true
+    },
+    "artifact_missing_phone_390x844": {
+      "accessibility_snapshot_digest": "39336003d2d1a2cfed92dd915c3b0e4c8aa9a435895e04af967f96d36f0efad3",
+      "accessible_worker_detail_alternative": true,
+      "body_digest": "6b0b0f621632cc6bebf067648258dc39c39b2b60867c3556ecc4aa71c75defb3",
+      "case": "artifact_missing",
+      "default_body_digest": "c6dc5bcdb578dba7ca5c2fbe191d9c7232154dde6fd98d9bd8b57745c2671c64",
+      "disabled_controls": {
+        "Pause source/family processing": true,
+        "Request projection repair": true,
+        "Retry eligible job": true,
+        "Start approved restore rehearsal": true
+      },
+      "filtered_geometry": {
+        "body_width": 390,
+        "document_width": 390,
+        "no_horizontal_overflow": true,
+        "viewport_width": 390
+      },
+      "geometry": {
+        "body_width": 390,
+        "document_width": 390,
+        "no_horizontal_overflow": true,
+        "viewport_height": 844,
+        "viewport_width": 390
+      },
+      "inventories": {
+        "console_errors": [],
+        "http_failures": [],
+        "page_errors": [],
+        "request_failures": [],
+        "requests": [
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/ephi/operations"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/fonts.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/quasar.unimportant.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/quasar.important.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/nicegui.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/vue.esm-browser.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/573d0129acaebad907d825007cd6fa02/query.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/7416ad0839166372589af103d2dac97f/link.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/50808f343f9d39efb70f4fe21b9a193b/html.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/20e90839167eb30dba12722e0d4b24bb/select.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/64c866455daa2383bf6d88c437b23510/input.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/ab5d3884c9432c02cbce45d47d75c721/timer.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/socket.io.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/tailwindcss.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/quasar.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/nicegui.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/lang/en-US.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/dompurify.mjs"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/fonts/2474057f3040a08c.woff2"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/fonts/0c19a63c7528cc1a.woff2"
+          }
+        ]
+      },
+      "inventories_clean": true,
+      "keyboard_focus": {
+        "focus_after_refresh": true,
+        "focus_visible": true,
+        "style": {
+          "boxShadow": "rgb(0, 94, 168) 0px 0px 0px 3px",
+          "focusVisible": true,
+          "outline": "none",
+          "outlineColor": "rgb(255, 255, 255)",
+          "outlineWidth": "0px"
+        },
+        "tab_count": 6,
+        "target_reached": true
+      },
+      "missing_content": [],
+      "private_markers_after_filtering": [],
+      "private_markers_in_browser_text": [],
+      "restore_control_reachable": true,
+      "screenshot": "operations-artifact_missing-phone-390x844.png",
+      "screenshot_sha256": "611a834d6fab58ade87d4d520cc7597c8ac0bd62fbb55cacc6b3665f982b5a53",
+      "status": "PASS",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "worker_filter_checks": [
+        {
+          "controls_geometry": {
+            "all_visible": true,
+            "non_overlapping": true,
+            "within_viewport": true
+          },
+          "job_type": "SyntheticOperationsFixture.succeeded",
+          "matching_row_visible": true,
+          "status": "SUCCEEDED",
+          "visible_rows": 1,
+          "worker_axis_state_error": true
+        },
+        {
+          "controls_geometry": {
+            "all_visible": true,
+            "non_overlapping": true,
+            "within_viewport": true
+          },
+          "job_type": "SyntheticOperationsFixture.canceled",
+          "matching_row_visible": true,
+          "status": "CANCELED",
+          "visible_rows": 1,
+          "worker_axis_state_error": true
+        }
+      ],
+      "worker_filter_controls_geometry": {
+        "all_visible": true,
+        "non_overlapping": true,
+        "within_viewport": true
+      },
+      "worker_filters_visible": true,
+      "worker_table_visible_on_desktop": null
+    },
+    "mixed_axes_desktop_1440x900": {
+      "accessibility_snapshot_digest": "ae951e7615c017d59713c8404714bbf28bcd72e040eadb5902d29cfaa6f5536a",
+      "accessible_worker_detail_alternative": true,
+      "body_digest": "ea4ecda41aba77de778a5c91bcbf2933b538f750534d55b4adda1ba975a83b72",
+      "case": "mixed_axes",
+      "default_body_digest": "f5bc01351d5731c9b54b80b9b0cff88fa9f6706e4267d46f56547fdffafb006a",
+      "disabled_controls": {
+        "Pause source/family processing": true,
+        "Request projection repair": true,
+        "Retry eligible job": true,
+        "Start approved restore rehearsal": true
+      },
+      "filtered_geometry": {
+        "body_width": 1440,
+        "document_width": 1440,
+        "no_horizontal_overflow": true,
+        "viewport_width": 1440
+      },
+      "geometry": {
+        "body_width": 1440,
+        "document_width": 1440,
+        "no_horizontal_overflow": true,
+        "viewport_height": 900,
+        "viewport_width": 1440
+      },
+      "inventories": {
+        "console_errors": [],
+        "http_failures": [],
+        "page_errors": [],
+        "request_failures": [],
+        "requests": [
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/ephi/operations"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/fonts.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/quasar.unimportant.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/quasar.important.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/nicegui.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/vue.esm-browser.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/573d0129acaebad907d825007cd6fa02/query.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/7416ad0839166372589af103d2dac97f/link.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/50808f343f9d39efb70f4fe21b9a193b/html.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/20e90839167eb30dba12722e0d4b24bb/select.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/64c866455daa2383bf6d88c437b23510/input.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/ab5d3884c9432c02cbce45d47d75c721/timer.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/socket.io.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/tailwindcss.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/quasar.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/nicegui.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/lang/en-US.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/dompurify.mjs"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/fonts/2474057f3040a08c.woff2"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/fonts/0c19a63c7528cc1a.woff2"
+          }
+        ]
+      },
+      "inventories_clean": true,
+      "keyboard_focus": {
+        "focus_after_refresh": true,
+        "focus_visible": true,
+        "style": {
+          "boxShadow": "rgb(0, 94, 168) 0px 0px 0px 3px",
+          "focusVisible": true,
+          "outline": "none",
+          "outlineColor": "rgb(255, 255, 255)",
+          "outlineWidth": "0px"
+        },
+        "tab_count": 12,
+        "target_reached": true
+      },
+      "missing_content": [],
+      "private_markers_after_filtering": [],
+      "private_markers_in_browser_text": [],
+      "restore_control_reachable": true,
+      "screenshot": "operations-mixed_axes-desktop-1440x900.png",
+      "screenshot_sha256": "bcf7ce3d9ac84ff9d67703109661e3c3dd217433ec5858632277db15de57d788",
+      "status": "PASS",
+      "viewport": {
+        "height": 900,
+        "width": 1440
+      },
+      "worker_filter_checks": [
+        {
+          "controls_geometry": {
+            "all_visible": true,
+            "non_overlapping": true,
+            "within_viewport": true
+          },
+          "job_type": "SyntheticOperationsFixture.succeeded",
+          "matching_row_visible": true,
+          "status": "SUCCEEDED",
+          "visible_rows": 1,
+          "worker_axis_state_error": true
+        },
+        {
+          "controls_geometry": {
+            "all_visible": true,
+            "non_overlapping": true,
+            "within_viewport": true
+          },
+          "job_type": "SyntheticOperationsFixture.canceled",
+          "matching_row_visible": true,
+          "status": "CANCELED",
+          "visible_rows": 1,
+          "worker_axis_state_error": true
+        }
+      ],
+      "worker_filter_controls_geometry": {
+        "all_visible": true,
+        "non_overlapping": true,
+        "within_viewport": true
+      },
+      "worker_filters_visible": true,
+      "worker_table_visible_on_desktop": true
+    },
+    "mixed_axes_phone_390x844": {
+      "accessibility_snapshot_digest": "213191870731b011f133f31cb3e155756b399d489e028285cb2b3b486503c186",
+      "accessible_worker_detail_alternative": true,
+      "body_digest": "57d88cf9d75e211371f7b9f30c92bf19547dd5a4a252db85548fcbf9ced3f76a",
+      "case": "mixed_axes",
+      "default_body_digest": "8fc4bbd26620bac091fbe407875eb4e3ebebcfaf6e4312705eb885d89d6e13be",
+      "disabled_controls": {
+        "Pause source/family processing": true,
+        "Request projection repair": true,
+        "Retry eligible job": true,
+        "Start approved restore rehearsal": true
+      },
+      "filtered_geometry": {
+        "body_width": 390,
+        "document_width": 390,
+        "no_horizontal_overflow": true,
+        "viewport_width": 390
+      },
+      "geometry": {
+        "body_width": 390,
+        "document_width": 390,
+        "no_horizontal_overflow": true,
+        "viewport_height": 844,
+        "viewport_width": 390
+      },
+      "inventories": {
+        "console_errors": [],
+        "http_failures": [],
+        "page_errors": [],
+        "request_failures": [],
+        "requests": [
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/ephi/operations"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/fonts.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/quasar.unimportant.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/quasar.important.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/nicegui.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/vue.esm-browser.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/573d0129acaebad907d825007cd6fa02/query.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/7416ad0839166372589af103d2dac97f/link.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/50808f343f9d39efb70f4fe21b9a193b/html.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/20e90839167eb30dba12722e0d4b24bb/select.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/64c866455daa2383bf6d88c437b23510/input.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/ab5d3884c9432c02cbce45d47d75c721/timer.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/socket.io.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/tailwindcss.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/quasar.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/nicegui.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/lang/en-US.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/dompurify.mjs"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/fonts/2474057f3040a08c.woff2"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/fonts/0c19a63c7528cc1a.woff2"
+          }
+        ]
+      },
+      "inventories_clean": true,
+      "keyboard_focus": {
+        "focus_after_refresh": true,
+        "focus_visible": true,
+        "style": {
+          "boxShadow": "rgb(0, 94, 168) 0px 0px 0px 3px",
+          "focusVisible": true,
+          "outline": "none",
+          "outlineColor": "rgb(255, 255, 255)",
+          "outlineWidth": "0px"
+        },
+        "tab_count": 6,
+        "target_reached": true
+      },
+      "missing_content": [],
+      "private_markers_after_filtering": [],
+      "private_markers_in_browser_text": [],
+      "restore_control_reachable": true,
+      "screenshot": "operations-mixed_axes-phone-390x844.png",
+      "screenshot_sha256": "49622336c78e89cbc69b533338358a03aae20438389a90517ba38eeb17dc2e92",
+      "status": "PASS",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "worker_filter_checks": [
+        {
+          "controls_geometry": {
+            "all_visible": true,
+            "non_overlapping": true,
+            "within_viewport": true
+          },
+          "job_type": "SyntheticOperationsFixture.succeeded",
+          "matching_row_visible": true,
+          "status": "SUCCEEDED",
+          "visible_rows": 1,
+          "worker_axis_state_error": true
+        },
+        {
+          "controls_geometry": {
+            "all_visible": true,
+            "non_overlapping": true,
+            "within_viewport": true
+          },
+          "job_type": "SyntheticOperationsFixture.canceled",
+          "matching_row_visible": true,
+          "status": "CANCELED",
+          "visible_rows": 1,
+          "worker_axis_state_error": true
+        }
+      ],
+      "worker_filter_controls_geometry": {
+        "all_visible": true,
+        "non_overlapping": true,
+        "within_viewport": true
+      },
+      "worker_filters_visible": true,
+      "worker_table_visible_on_desktop": null
+    },
+    "qualification_expired_desktop_1440x900": {
+      "accessibility_snapshot_digest": "d51ce46d2643bfe42b006fa5fbb23b75c0c77033a20b5de3b85b49ade2e72cb7",
+      "accessible_worker_detail_alternative": true,
+      "body_digest": "bd93b18465f31b60c33e0db084fd123ac16724652c1b21776aed95dc6d2781d8",
+      "case": "qualification_expired",
+      "default_body_digest": "860522ebafe95f41cdb9164cc096dce75cb6a2f15edb986eccd4460df7cf59d8",
+      "disabled_controls": {
+        "Pause source/family processing": true,
+        "Request projection repair": true,
+        "Retry eligible job": true,
+        "Start approved restore rehearsal": true
+      },
+      "filtered_geometry": {
+        "body_width": 1440,
+        "document_width": 1440,
+        "no_horizontal_overflow": true,
+        "viewport_width": 1440
+      },
+      "geometry": {
+        "body_width": 1440,
+        "document_width": 1440,
+        "no_horizontal_overflow": true,
+        "viewport_height": 900,
+        "viewport_width": 1440
+      },
+      "inventories": {
+        "console_errors": [],
+        "http_failures": [],
+        "page_errors": [],
+        "request_failures": [],
+        "requests": [
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/ephi/operations"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/fonts.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/quasar.unimportant.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/quasar.important.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/nicegui.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/vue.esm-browser.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/573d0129acaebad907d825007cd6fa02/query.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/7416ad0839166372589af103d2dac97f/link.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/50808f343f9d39efb70f4fe21b9a193b/html.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/20e90839167eb30dba12722e0d4b24bb/select.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/64c866455daa2383bf6d88c437b23510/input.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/ab5d3884c9432c02cbce45d47d75c721/timer.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/socket.io.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/tailwindcss.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/quasar.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/nicegui.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/lang/en-US.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/dompurify.mjs"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/fonts/2474057f3040a08c.woff2"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/fonts/0c19a63c7528cc1a.woff2"
+          }
+        ]
+      },
+      "inventories_clean": true,
+      "keyboard_focus": {
+        "focus_after_refresh": true,
+        "focus_visible": true,
+        "style": {
+          "boxShadow": "rgb(0, 94, 168) 0px 0px 0px 3px",
+          "focusVisible": true,
+          "outline": "none",
+          "outlineColor": "rgb(255, 255, 255)",
+          "outlineWidth": "0px"
+        },
+        "tab_count": 12,
+        "target_reached": true
+      },
+      "missing_content": [],
+      "private_markers_after_filtering": [],
+      "private_markers_in_browser_text": [],
+      "restore_control_reachable": true,
+      "screenshot": "operations-qualification_expired-desktop-1440x900.png",
+      "screenshot_sha256": "2ee730d75b2c8eb9a7df874149b752ee0d465790566c137857c924e3f81b1b19",
+      "status": "PASS",
+      "viewport": {
+        "height": 900,
+        "width": 1440
+      },
+      "worker_filter_checks": [
+        {
+          "controls_geometry": {
+            "all_visible": true,
+            "non_overlapping": true,
+            "within_viewport": true
+          },
+          "job_type": "SyntheticOperationsFixture.succeeded",
+          "matching_row_visible": true,
+          "status": "SUCCEEDED",
+          "visible_rows": 1,
+          "worker_axis_state_error": true
+        },
+        {
+          "controls_geometry": {
+            "all_visible": true,
+            "non_overlapping": true,
+            "within_viewport": true
+          },
+          "job_type": "SyntheticOperationsFixture.canceled",
+          "matching_row_visible": true,
+          "status": "CANCELED",
+          "visible_rows": 1,
+          "worker_axis_state_error": true
+        }
+      ],
+      "worker_filter_controls_geometry": {
+        "all_visible": true,
+        "non_overlapping": true,
+        "within_viewport": true
+      },
+      "worker_filters_visible": true,
+      "worker_table_visible_on_desktop": true
+    },
+    "qualification_expired_phone_390x844": {
+      "accessibility_snapshot_digest": "f35565b92684f1562a64afea656ebb5b1135da16bb033bc6fe61e1408afb070e",
+      "accessible_worker_detail_alternative": true,
+      "body_digest": "7b0de78a613df61a0c9d9df79f00a029874bbb6b44c8d7d3e59f9d6d7c451d7b",
+      "case": "qualification_expired",
+      "default_body_digest": "4b6db866ddf69ab2b0ec0b60bcf477128708e3a27fa2cd7fa198237664bb285c",
+      "disabled_controls": {
+        "Pause source/family processing": true,
+        "Request projection repair": true,
+        "Retry eligible job": true,
+        "Start approved restore rehearsal": true
+      },
+      "filtered_geometry": {
+        "body_width": 390,
+        "document_width": 390,
+        "no_horizontal_overflow": true,
+        "viewport_width": 390
+      },
+      "geometry": {
+        "body_width": 390,
+        "document_width": 390,
+        "no_horizontal_overflow": true,
+        "viewport_height": 844,
+        "viewport_width": 390
+      },
+      "inventories": {
+        "console_errors": [],
+        "http_failures": [],
+        "page_errors": [],
+        "request_failures": [],
+        "requests": [
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/ephi/operations"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/fonts.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/quasar.unimportant.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/quasar.important.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/nicegui.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/vue.esm-browser.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/573d0129acaebad907d825007cd6fa02/query.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/7416ad0839166372589af103d2dac97f/link.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/50808f343f9d39efb70f4fe21b9a193b/html.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/20e90839167eb30dba12722e0d4b24bb/select.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/64c866455daa2383bf6d88c437b23510/input.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/ab5d3884c9432c02cbce45d47d75c721/timer.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/socket.io.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/tailwindcss.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/quasar.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/nicegui.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/lang/en-US.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/dompurify.mjs"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/fonts/2474057f3040a08c.woff2"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/fonts/0c19a63c7528cc1a.woff2"
+          }
+        ]
+      },
+      "inventories_clean": true,
+      "keyboard_focus": {
+        "focus_after_refresh": true,
+        "focus_visible": true,
+        "style": {
+          "boxShadow": "rgb(0, 94, 168) 0px 0px 0px 3px",
+          "focusVisible": true,
+          "outline": "none",
+          "outlineColor": "rgb(255, 255, 255)",
+          "outlineWidth": "0px"
+        },
+        "tab_count": 6,
+        "target_reached": true
+      },
+      "missing_content": [],
+      "private_markers_after_filtering": [],
+      "private_markers_in_browser_text": [],
+      "restore_control_reachable": true,
+      "screenshot": "operations-qualification_expired-phone-390x844.png",
+      "screenshot_sha256": "d5024421ec8836ab6fe291f31022989b73f4d7d26364ad8e3bc9714f557cae40",
+      "status": "PASS",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "worker_filter_checks": [
+        {
+          "controls_geometry": {
+            "all_visible": true,
+            "non_overlapping": true,
+            "within_viewport": true
+          },
+          "job_type": "SyntheticOperationsFixture.succeeded",
+          "matching_row_visible": true,
+          "status": "SUCCEEDED",
+          "visible_rows": 1,
+          "worker_axis_state_error": true
+        },
+        {
+          "controls_geometry": {
+            "all_visible": true,
+            "non_overlapping": true,
+            "within_viewport": true
+          },
+          "job_type": "SyntheticOperationsFixture.canceled",
+          "matching_row_visible": true,
+          "status": "CANCELED",
+          "visible_rows": 1,
+          "worker_axis_state_error": true
+        }
+      ],
+      "worker_filter_controls_geometry": {
+        "all_visible": true,
+        "non_overlapping": true,
+        "within_viewport": true
+      },
+      "worker_filters_visible": true,
+      "worker_table_visible_on_desktop": null
+    },
+    "qualification_pending_desktop_1440x900": {
+      "accessibility_snapshot_digest": "a38b644e26f756d510dec247e1b3a833a3afedbe1fe5486a44b40b339422084e",
+      "accessible_worker_detail_alternative": true,
+      "body_digest": "9b9279fad40f732e54a08ad396e12c41e0f2667946f8a72374cdd18e48d8095b",
+      "case": "qualification_pending",
+      "default_body_digest": "c5effba33ea921601dfa9ef45b876254602c283a94293970f7ce575c3e2f1c72",
+      "disabled_controls": {
+        "Pause source/family processing": true,
+        "Request projection repair": true,
+        "Retry eligible job": true,
+        "Start approved restore rehearsal": true
+      },
+      "filtered_geometry": {
+        "body_width": 1440,
+        "document_width": 1440,
+        "no_horizontal_overflow": true,
+        "viewport_width": 1440
+      },
+      "geometry": {
+        "body_width": 1440,
+        "document_width": 1440,
+        "no_horizontal_overflow": true,
+        "viewport_height": 900,
+        "viewport_width": 1440
+      },
+      "inventories": {
+        "console_errors": [],
+        "http_failures": [],
+        "page_errors": [],
+        "request_failures": [],
+        "requests": [
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/ephi/operations"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/fonts.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/quasar.unimportant.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/quasar.important.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/nicegui.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/vue.esm-browser.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/573d0129acaebad907d825007cd6fa02/query.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/7416ad0839166372589af103d2dac97f/link.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/50808f343f9d39efb70f4fe21b9a193b/html.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/20e90839167eb30dba12722e0d4b24bb/select.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/64c866455daa2383bf6d88c437b23510/input.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/ab5d3884c9432c02cbce45d47d75c721/timer.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/socket.io.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/tailwindcss.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/quasar.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/nicegui.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/lang/en-US.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/dompurify.mjs"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/fonts/2474057f3040a08c.woff2"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/fonts/0c19a63c7528cc1a.woff2"
+          }
+        ]
+      },
+      "inventories_clean": true,
+      "keyboard_focus": {
+        "focus_after_refresh": true,
+        "focus_visible": true,
+        "style": {
+          "boxShadow": "rgb(0, 94, 168) 0px 0px 0px 3px",
+          "focusVisible": true,
+          "outline": "none",
+          "outlineColor": "rgb(255, 255, 255)",
+          "outlineWidth": "0px"
+        },
+        "tab_count": 12,
+        "target_reached": true
+      },
+      "missing_content": [],
+      "private_markers_after_filtering": [],
+      "private_markers_in_browser_text": [],
+      "restore_control_reachable": true,
+      "screenshot": "operations-qualification_pending-desktop-1440x900.png",
+      "screenshot_sha256": "23935bd59b21a2dda8f3bf6e283e92de3e6e596d368623e6b981d5db5338174f",
+      "status": "PASS",
+      "viewport": {
+        "height": 900,
+        "width": 1440
+      },
+      "worker_filter_checks": [
+        {
+          "controls_geometry": {
+            "all_visible": true,
+            "non_overlapping": true,
+            "within_viewport": true
+          },
+          "job_type": "SyntheticOperationsFixture.succeeded",
+          "matching_row_visible": true,
+          "status": "SUCCEEDED",
+          "visible_rows": 1,
+          "worker_axis_state_error": true
+        },
+        {
+          "controls_geometry": {
+            "all_visible": true,
+            "non_overlapping": true,
+            "within_viewport": true
+          },
+          "job_type": "SyntheticOperationsFixture.canceled",
+          "matching_row_visible": true,
+          "status": "CANCELED",
+          "visible_rows": 1,
+          "worker_axis_state_error": true
+        }
+      ],
+      "worker_filter_controls_geometry": {
+        "all_visible": true,
+        "non_overlapping": true,
+        "within_viewport": true
+      },
+      "worker_filters_visible": true,
+      "worker_table_visible_on_desktop": true
+    },
+    "qualification_pending_phone_390x844": {
+      "accessibility_snapshot_digest": "991a92c5bb10e4eba3d9b1d12ccc5285c28a72a0c7b0aa3cfd0e4a45cd2a317b",
+      "accessible_worker_detail_alternative": true,
+      "body_digest": "f14430b45b2310d4b35431786747f9bdcf11c9aa40279d021e9b8c61dcdba6d8",
+      "case": "qualification_pending",
+      "default_body_digest": "4da87c5011464928da7e2dad4427b7c999c8d672fc8e83af68af1effce63b219",
+      "disabled_controls": {
+        "Pause source/family processing": true,
+        "Request projection repair": true,
+        "Retry eligible job": true,
+        "Start approved restore rehearsal": true
+      },
+      "filtered_geometry": {
+        "body_width": 390,
+        "document_width": 390,
+        "no_horizontal_overflow": true,
+        "viewport_width": 390
+      },
+      "geometry": {
+        "body_width": 390,
+        "document_width": 390,
+        "no_horizontal_overflow": true,
+        "viewport_height": 844,
+        "viewport_width": 390
+      },
+      "inventories": {
+        "console_errors": [],
+        "http_failures": [],
+        "page_errors": [],
+        "request_failures": [],
+        "requests": [
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/ephi/operations"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/fonts.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/quasar.unimportant.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/quasar.important.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/nicegui.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/vue.esm-browser.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/573d0129acaebad907d825007cd6fa02/query.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/7416ad0839166372589af103d2dac97f/link.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/50808f343f9d39efb70f4fe21b9a193b/html.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/20e90839167eb30dba12722e0d4b24bb/select.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/64c866455daa2383bf6d88c437b23510/input.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/ab5d3884c9432c02cbce45d47d75c721/timer.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/socket.io.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/tailwindcss.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/quasar.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/nicegui.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/lang/en-US.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/dompurify.mjs"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/fonts/2474057f3040a08c.woff2"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/fonts/0c19a63c7528cc1a.woff2"
+          }
+        ]
+      },
+      "inventories_clean": true,
+      "keyboard_focus": {
+        "focus_after_refresh": true,
+        "focus_visible": true,
+        "style": {
+          "boxShadow": "rgb(0, 94, 168) 0px 0px 0px 3px",
+          "focusVisible": true,
+          "outline": "none",
+          "outlineColor": "rgb(255, 255, 255)",
+          "outlineWidth": "0px"
+        },
+        "tab_count": 6,
+        "target_reached": true
+      },
+      "missing_content": [],
+      "private_markers_after_filtering": [],
+      "private_markers_in_browser_text": [],
+      "restore_control_reachable": true,
+      "screenshot": "operations-qualification_pending-phone-390x844.png",
+      "screenshot_sha256": "c269e8c9df3629396fc98abee57c54c11e1093abc7bfa6a2b66dd768e3f832d9",
+      "status": "PASS",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "worker_filter_checks": [
+        {
+          "controls_geometry": {
+            "all_visible": true,
+            "non_overlapping": true,
+            "within_viewport": true
+          },
+          "job_type": "SyntheticOperationsFixture.succeeded",
+          "matching_row_visible": true,
+          "status": "SUCCEEDED",
+          "visible_rows": 1,
+          "worker_axis_state_error": true
+        },
+        {
+          "controls_geometry": {
+            "all_visible": true,
+            "non_overlapping": true,
+            "within_viewport": true
+          },
+          "job_type": "SyntheticOperationsFixture.canceled",
+          "matching_row_visible": true,
+          "status": "CANCELED",
+          "visible_rows": 1,
+          "worker_axis_state_error": true
+        }
+      ],
+      "worker_filter_controls_geometry": {
+        "all_visible": true,
+        "non_overlapping": true,
+        "within_viewport": true
+      },
+      "worker_filters_visible": true,
+      "worker_table_visible_on_desktop": null
+    },
+    "qualification_unbound_desktop_1440x900": {
+      "accessibility_snapshot_digest": "7e1b5303dee795476eac18c4f7a5c0db07931165e36cd367a6634ad2bab16cf1",
+      "accessible_worker_detail_alternative": true,
+      "body_digest": "e3fbdd7d8e1e7d4089d0c7b9b0ceac8634c3f78530b3ef0c527154a2f15f9d17",
+      "case": "qualification_unbound",
+      "default_body_digest": "be4d4b7f0d6e2b130ba1e1715d8d024df7a7f8e9f04bb7218fe61fbb78e3ce91",
+      "disabled_controls": {
+        "Pause source/family processing": true,
+        "Request projection repair": true,
+        "Retry eligible job": true,
+        "Start approved restore rehearsal": true
+      },
+      "filtered_geometry": {
+        "body_width": 1440,
+        "document_width": 1440,
+        "no_horizontal_overflow": true,
+        "viewport_width": 1440
+      },
+      "geometry": {
+        "body_width": 1440,
+        "document_width": 1440,
+        "no_horizontal_overflow": true,
+        "viewport_height": 900,
+        "viewport_width": 1440
+      },
+      "inventories": {
+        "console_errors": [],
+        "http_failures": [],
+        "page_errors": [],
+        "request_failures": [],
+        "requests": [
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:61088/ephi/operations"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:61088/_nicegui/3.15.0/static/fonts.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:61088/_nicegui/3.15.0/static/quasar.unimportant.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:61088/_nicegui/3.15.0/static/quasar.important.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:61088/_nicegui/3.15.0/static/nicegui.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:61088/_nicegui/3.15.0/static/vue.esm-browser.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:61088/_nicegui/3.15.0/components/573d0129acaebad907d825007cd6fa02/query.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:61088/_nicegui/3.15.0/components/7416ad0839166372589af103d2dac97f/link.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:61088/_nicegui/3.15.0/components/50808f343f9d39efb70f4fe21b9a193b/html.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:61088/_nicegui/3.15.0/components/20e90839167eb30dba12722e0d4b24bb/select.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:61088/_nicegui/3.15.0/components/64c866455daa2383bf6d88c437b23510/input.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:61088/_nicegui/3.15.0/components/ab5d3884c9432c02cbce45d47d75c721/timer.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:61088/_nicegui/3.15.0/static/socket.io.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:61088/_nicegui/3.15.0/static/tailwindcss.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:61088/_nicegui/3.15.0/static/quasar.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:61088/_nicegui/3.15.0/static/nicegui.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:61088/_nicegui/3.15.0/static/lang/en-US.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:61088/_nicegui/3.15.0/static/dompurify.mjs"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:61088/_nicegui/3.15.0/static/fonts/2474057f3040a08c.woff2"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:61088/_nicegui/3.15.0/static/fonts/0c19a63c7528cc1a.woff2"
+          }
+        ]
+      },
+      "inventories_clean": true,
+      "keyboard_focus": {
+        "focus_after_refresh": true,
+        "focus_visible": true,
+        "style": {
+          "boxShadow": "rgb(0, 94, 168) 0px 0px 0px 3px",
+          "focusVisible": true,
+          "outline": "none",
+          "outlineColor": "rgb(255, 255, 255)",
+          "outlineWidth": "0px"
+        },
+        "tab_count": 12,
+        "target_reached": true
+      },
+      "missing_content": [],
+      "private_markers_after_filtering": [],
+      "private_markers_in_browser_text": [],
+      "restore_control_reachable": true,
+      "screenshot": "operations-qualification_unbound-desktop-1440x900.png",
+      "screenshot_sha256": "8e48b2633774dd06c866a2bd1cdd6b0447f93e6280f2ec2e7cdf3795883a66b7",
+      "status": "PASS",
+      "viewport": {
+        "height": 900,
+        "width": 1440
+      },
+      "worker_filter_checks": [
+        {
+          "controls_geometry": {
+            "all_visible": true,
+            "non_overlapping": true,
+            "within_viewport": true
+          },
+          "job_type": "SyntheticOperationsFixture.succeeded",
+          "matching_row_visible": true,
+          "status": "SUCCEEDED",
+          "visible_rows": 1,
+          "worker_axis_state_error": true
+        },
+        {
+          "controls_geometry": {
+            "all_visible": true,
+            "non_overlapping": true,
+            "within_viewport": true
+          },
+          "job_type": "SyntheticOperationsFixture.canceled",
+          "matching_row_visible": true,
+          "status": "CANCELED",
+          "visible_rows": 1,
+          "worker_axis_state_error": true
+        }
+      ],
+      "worker_filter_controls_geometry": {
+        "all_visible": true,
+        "non_overlapping": true,
+        "within_viewport": true
+      },
+      "worker_filters_visible": true,
+      "worker_table_visible_on_desktop": true
+    },
+    "qualification_unbound_phone_390x844": {
+      "accessibility_snapshot_digest": "9833b1dc4a8447966dcbde517354aec19b60589d56f3df36b47140405ef00012",
+      "accessible_worker_detail_alternative": true,
+      "body_digest": "bd8e0d9796b24b7713e324fd3b38cc84c236856108dd2d4670652a1af17b68db",
+      "case": "qualification_unbound",
+      "default_body_digest": "367a54e30e54794527180112e0a5ce78ac731e8c038f74dcd0ed094a950aa9b7",
+      "disabled_controls": {
+        "Pause source/family processing": true,
+        "Request projection repair": true,
+        "Retry eligible job": true,
+        "Start approved restore rehearsal": true
+      },
+      "filtered_geometry": {
+        "body_width": 390,
+        "document_width": 390,
+        "no_horizontal_overflow": true,
+        "viewport_width": 390
+      },
+      "geometry": {
+        "body_width": 390,
+        "document_width": 390,
+        "no_horizontal_overflow": true,
+        "viewport_height": 844,
+        "viewport_width": 390
+      },
+      "inventories": {
+        "console_errors": [],
+        "http_failures": [],
+        "page_errors": [],
+        "request_failures": [],
+        "requests": [
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:61088/ephi/operations"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:61088/_nicegui/3.15.0/static/fonts.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:61088/_nicegui/3.15.0/static/quasar.unimportant.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:61088/_nicegui/3.15.0/static/quasar.important.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:61088/_nicegui/3.15.0/static/nicegui.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:61088/_nicegui/3.15.0/static/vue.esm-browser.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:61088/_nicegui/3.15.0/components/573d0129acaebad907d825007cd6fa02/query.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:61088/_nicegui/3.15.0/components/7416ad0839166372589af103d2dac97f/link.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:61088/_nicegui/3.15.0/components/50808f343f9d39efb70f4fe21b9a193b/html.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:61088/_nicegui/3.15.0/components/20e90839167eb30dba12722e0d4b24bb/select.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:61088/_nicegui/3.15.0/components/64c866455daa2383bf6d88c437b23510/input.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:61088/_nicegui/3.15.0/components/ab5d3884c9432c02cbce45d47d75c721/timer.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:61088/_nicegui/3.15.0/static/socket.io.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:61088/_nicegui/3.15.0/static/tailwindcss.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:61088/_nicegui/3.15.0/static/quasar.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:61088/_nicegui/3.15.0/static/nicegui.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:61088/_nicegui/3.15.0/static/lang/en-US.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:61088/_nicegui/3.15.0/static/dompurify.mjs"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:61088/_nicegui/3.15.0/static/fonts/2474057f3040a08c.woff2"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:61088/_nicegui/3.15.0/static/fonts/0c19a63c7528cc1a.woff2"
+          }
+        ]
+      },
+      "inventories_clean": true,
+      "keyboard_focus": {
+        "focus_after_refresh": true,
+        "focus_visible": true,
+        "style": {
+          "boxShadow": "rgb(0, 94, 168) 0px 0px 0px 3px",
+          "focusVisible": true,
+          "outline": "none",
+          "outlineColor": "rgb(255, 255, 255)",
+          "outlineWidth": "0px"
+        },
+        "tab_count": 6,
+        "target_reached": true
+      },
+      "missing_content": [],
+      "private_markers_after_filtering": [],
+      "private_markers_in_browser_text": [],
+      "restore_control_reachable": true,
+      "screenshot": "operations-qualification_unbound-phone-390x844.png",
+      "screenshot_sha256": "3896ac3b37ffd59a8a7935093df56a3c536aaf15bfa6d7ce4780220c5777c911",
+      "status": "PASS",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "worker_filter_checks": [
+        {
+          "controls_geometry": {
+            "all_visible": true,
+            "non_overlapping": true,
+            "within_viewport": true
+          },
+          "job_type": "SyntheticOperationsFixture.succeeded",
+          "matching_row_visible": true,
+          "status": "SUCCEEDED",
+          "visible_rows": 1,
+          "worker_axis_state_error": true
+        },
+        {
+          "controls_geometry": {
+            "all_visible": true,
+            "non_overlapping": true,
+            "within_viewport": true
+          },
+          "job_type": "SyntheticOperationsFixture.canceled",
+          "matching_row_visible": true,
+          "status": "CANCELED",
+          "visible_rows": 1,
+          "worker_axis_state_error": true
+        }
+      ],
+      "worker_filter_controls_geometry": {
+        "all_visible": true,
+        "non_overlapping": true,
+        "within_viewport": true
+      },
+      "worker_filters_visible": true,
+      "worker_table_visible_on_desktop": null
+    },
+    "source_stale_desktop_1440x900": {
+      "accessibility_snapshot_digest": "36af29024d2ae317f268ffe4ad61f0e633dc02a920ec3574c91d8e9f0ecf272a",
+      "accessible_worker_detail_alternative": true,
+      "body_digest": "cbdc6a65bd2b47b3bea99db3192fbfbe0d7db98a3de55d12f1a01b1fdd09a40f",
+      "case": "source_stale",
+      "default_body_digest": "620c80388876ff71f0b75fccfaa31f755c97b98a049b212765c12c5d16ffc349",
+      "disabled_controls": {
+        "Pause source/family processing": true,
+        "Request projection repair": true,
+        "Retry eligible job": true,
+        "Start approved restore rehearsal": true
+      },
+      "filtered_geometry": {
+        "body_width": 1440,
+        "document_width": 1440,
+        "no_horizontal_overflow": true,
+        "viewport_width": 1440
+      },
+      "geometry": {
+        "body_width": 1440,
+        "document_width": 1440,
+        "no_horizontal_overflow": true,
+        "viewport_height": 900,
+        "viewport_width": 1440
+      },
+      "inventories": {
+        "console_errors": [],
+        "http_failures": [],
+        "page_errors": [],
+        "request_failures": [],
+        "requests": [
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/ephi/operations"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/fonts.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/quasar.unimportant.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/quasar.important.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/nicegui.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/vue.esm-browser.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/573d0129acaebad907d825007cd6fa02/query.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/7416ad0839166372589af103d2dac97f/link.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/50808f343f9d39efb70f4fe21b9a193b/html.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/20e90839167eb30dba12722e0d4b24bb/select.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/64c866455daa2383bf6d88c437b23510/input.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/ab5d3884c9432c02cbce45d47d75c721/timer.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/socket.io.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/tailwindcss.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/quasar.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/nicegui.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/lang/en-US.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/dompurify.mjs"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/fonts/2474057f3040a08c.woff2"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/fonts/0c19a63c7528cc1a.woff2"
+          }
+        ]
+      },
+      "inventories_clean": true,
+      "keyboard_focus": {
+        "focus_after_refresh": true,
+        "focus_visible": true,
+        "style": {
+          "boxShadow": "rgb(0, 94, 168) 0px 0px 0px 3px",
+          "focusVisible": true,
+          "outline": "none",
+          "outlineColor": "rgb(255, 255, 255)",
+          "outlineWidth": "0px"
+        },
+        "tab_count": 12,
+        "target_reached": true
+      },
+      "missing_content": [],
+      "private_markers_after_filtering": [],
+      "private_markers_in_browser_text": [],
+      "restore_control_reachable": true,
+      "screenshot": "operations-source_stale-desktop-1440x900.png",
+      "screenshot_sha256": "3f4fa1f761e1576bfdc1fd4d23ad15dc040f1aefe459fbce5fb300e850919492",
+      "status": "PASS",
+      "viewport": {
+        "height": 900,
+        "width": 1440
+      },
+      "worker_filter_checks": [
+        {
+          "controls_geometry": {
+            "all_visible": true,
+            "non_overlapping": true,
+            "within_viewport": true
+          },
+          "job_type": "SyntheticOperationsFixture.succeeded",
+          "matching_row_visible": true,
+          "status": "SUCCEEDED",
+          "visible_rows": 1,
+          "worker_axis_state_error": true
+        },
+        {
+          "controls_geometry": {
+            "all_visible": true,
+            "non_overlapping": true,
+            "within_viewport": true
+          },
+          "job_type": "SyntheticOperationsFixture.canceled",
+          "matching_row_visible": true,
+          "status": "CANCELED",
+          "visible_rows": 1,
+          "worker_axis_state_error": true
+        }
+      ],
+      "worker_filter_controls_geometry": {
+        "all_visible": true,
+        "non_overlapping": true,
+        "within_viewport": true
+      },
+      "worker_filters_visible": true,
+      "worker_table_visible_on_desktop": true
+    },
+    "source_stale_phone_390x844": {
+      "accessibility_snapshot_digest": "eb981fedfd7dc9a6c787c1e64316f35c7d429e4d16fc7a8bddc53fc95077b30b",
+      "accessible_worker_detail_alternative": true,
+      "body_digest": "0a5be929a6cee4ebc05c7246510c81fa49c7209c1e2759079b90c795e54e5a25",
+      "case": "source_stale",
+      "default_body_digest": "31af235d550912b316cafebfc173ad2b16248a2b652446b7ec02f858181e9fac",
+      "disabled_controls": {
+        "Pause source/family processing": true,
+        "Request projection repair": true,
+        "Retry eligible job": true,
+        "Start approved restore rehearsal": true
+      },
+      "filtered_geometry": {
+        "body_width": 390,
+        "document_width": 390,
+        "no_horizontal_overflow": true,
+        "viewport_width": 390
+      },
+      "geometry": {
+        "body_width": 390,
+        "document_width": 390,
+        "no_horizontal_overflow": true,
+        "viewport_height": 844,
+        "viewport_width": 390
+      },
+      "inventories": {
+        "console_errors": [],
+        "http_failures": [],
+        "page_errors": [],
+        "request_failures": [],
+        "requests": [
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/ephi/operations"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/fonts.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/quasar.unimportant.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/quasar.important.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/nicegui.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/vue.esm-browser.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/573d0129acaebad907d825007cd6fa02/query.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/7416ad0839166372589af103d2dac97f/link.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/50808f343f9d39efb70f4fe21b9a193b/html.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/20e90839167eb30dba12722e0d4b24bb/select.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/64c866455daa2383bf6d88c437b23510/input.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/ab5d3884c9432c02cbce45d47d75c721/timer.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/socket.io.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/tailwindcss.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/quasar.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/nicegui.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/lang/en-US.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/dompurify.mjs"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/fonts/2474057f3040a08c.woff2"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/fonts/0c19a63c7528cc1a.woff2"
+          }
+        ]
+      },
+      "inventories_clean": true,
+      "keyboard_focus": {
+        "focus_after_refresh": true,
+        "focus_visible": true,
+        "style": {
+          "boxShadow": "rgb(0, 94, 168) 0px 0px 0px 3px",
+          "focusVisible": true,
+          "outline": "none",
+          "outlineColor": "rgb(255, 255, 255)",
+          "outlineWidth": "0px"
+        },
+        "tab_count": 6,
+        "target_reached": true
+      },
+      "missing_content": [],
+      "private_markers_after_filtering": [],
+      "private_markers_in_browser_text": [],
+      "restore_control_reachable": true,
+      "screenshot": "operations-source_stale-phone-390x844.png",
+      "screenshot_sha256": "7f85b769613e38381b3a09fe74352434262c9627bcf7c21c58800d83aa39b7de",
+      "status": "PASS",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "worker_filter_checks": [
+        {
+          "controls_geometry": {
+            "all_visible": true,
+            "non_overlapping": true,
+            "within_viewport": true
+          },
+          "job_type": "SyntheticOperationsFixture.succeeded",
+          "matching_row_visible": true,
+          "status": "SUCCEEDED",
+          "visible_rows": 1,
+          "worker_axis_state_error": true
+        },
+        {
+          "controls_geometry": {
+            "all_visible": true,
+            "non_overlapping": true,
+            "within_viewport": true
+          },
+          "job_type": "SyntheticOperationsFixture.canceled",
+          "matching_row_visible": true,
+          "status": "CANCELED",
+          "visible_rows": 1,
+          "worker_axis_state_error": true
+        }
+      ],
+      "worker_filter_controls_geometry": {
+        "all_visible": true,
+        "non_overlapping": true,
+        "within_viewport": true
+      },
+      "worker_filters_visible": true,
+      "worker_table_visible_on_desktop": null
+    },
+    "source_unavailable_desktop_1440x900": {
+      "accessibility_snapshot_digest": "d0c5386ab1a0713ffbeed6155a97c9f7194e517adeb00bb70d98fde5069509a7",
+      "accessible_worker_detail_alternative": true,
+      "body_digest": "8a0a35807fabdabd88d0678b5774fda79fa1129ac22b014b4f7fd48c4cb19f93",
+      "case": "source_unavailable",
+      "default_body_digest": "3e69f1749fde5899fd878e7b77ed0850d9b76d9a15621ea4e26ebad83a219802",
+      "disabled_controls": {
+        "Pause source/family processing": true,
+        "Request projection repair": true,
+        "Retry eligible job": true,
+        "Start approved restore rehearsal": true
+      },
+      "filtered_geometry": {
+        "body_width": 1440,
+        "document_width": 1440,
+        "no_horizontal_overflow": true,
+        "viewport_width": 1440
+      },
+      "geometry": {
+        "body_width": 1440,
+        "document_width": 1440,
+        "no_horizontal_overflow": true,
+        "viewport_height": 900,
+        "viewport_width": 1440
+      },
+      "inventories": {
+        "console_errors": [],
+        "http_failures": [],
+        "page_errors": [],
+        "request_failures": [],
+        "requests": [
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/ephi/operations"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/fonts.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/quasar.unimportant.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/quasar.important.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/nicegui.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/vue.esm-browser.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/573d0129acaebad907d825007cd6fa02/query.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/7416ad0839166372589af103d2dac97f/link.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/50808f343f9d39efb70f4fe21b9a193b/html.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/20e90839167eb30dba12722e0d4b24bb/select.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/64c866455daa2383bf6d88c437b23510/input.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/ab5d3884c9432c02cbce45d47d75c721/timer.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/socket.io.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/tailwindcss.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/quasar.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/nicegui.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/lang/en-US.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/dompurify.mjs"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/fonts/2474057f3040a08c.woff2"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/fonts/0c19a63c7528cc1a.woff2"
+          }
+        ]
+      },
+      "inventories_clean": true,
+      "keyboard_focus": {
+        "focus_after_refresh": true,
+        "focus_visible": true,
+        "style": {
+          "boxShadow": "rgb(0, 94, 168) 0px 0px 0px 3px",
+          "focusVisible": true,
+          "outline": "none",
+          "outlineColor": "rgb(255, 255, 255)",
+          "outlineWidth": "0px"
+        },
+        "tab_count": 12,
+        "target_reached": true
+      },
+      "missing_content": [],
+      "private_markers_after_filtering": [],
+      "private_markers_in_browser_text": [],
+      "restore_control_reachable": true,
+      "screenshot": "operations-source_unavailable-desktop-1440x900.png",
+      "screenshot_sha256": "93f40b075e4986bd5d50f445b23eeb0c98c9658f0a661a57e5bfa6373014504c",
+      "status": "PASS",
+      "viewport": {
+        "height": 900,
+        "width": 1440
+      },
+      "worker_filter_checks": [
+        {
+          "controls_geometry": {
+            "all_visible": true,
+            "non_overlapping": true,
+            "within_viewport": true
+          },
+          "job_type": "SyntheticOperationsFixture.succeeded",
+          "matching_row_visible": true,
+          "status": "SUCCEEDED",
+          "visible_rows": 1,
+          "worker_axis_state_error": true
+        },
+        {
+          "controls_geometry": {
+            "all_visible": true,
+            "non_overlapping": true,
+            "within_viewport": true
+          },
+          "job_type": "SyntheticOperationsFixture.canceled",
+          "matching_row_visible": true,
+          "status": "CANCELED",
+          "visible_rows": 1,
+          "worker_axis_state_error": true
+        }
+      ],
+      "worker_filter_controls_geometry": {
+        "all_visible": true,
+        "non_overlapping": true,
+        "within_viewport": true
+      },
+      "worker_filters_visible": true,
+      "worker_table_visible_on_desktop": true
+    },
+    "source_unavailable_phone_390x844": {
+      "accessibility_snapshot_digest": "97757806852cfaefd8345c335adfa7050fb2153fbcb2885336c118bd1bede392",
+      "accessible_worker_detail_alternative": true,
+      "body_digest": "1eae01e9b9847f900db4a6468f48a89e7dbdb462768882ddae99da233b600314",
+      "case": "source_unavailable",
+      "default_body_digest": "b0ff93ea47751cd33026c414f75a99d6037f3eeca338ffb19c2fa7a65ba8f78f",
+      "disabled_controls": {
+        "Pause source/family processing": true,
+        "Request projection repair": true,
+        "Retry eligible job": true,
+        "Start approved restore rehearsal": true
+      },
+      "filtered_geometry": {
+        "body_width": 390,
+        "document_width": 390,
+        "no_horizontal_overflow": true,
+        "viewport_width": 390
+      },
+      "geometry": {
+        "body_width": 390,
+        "document_width": 390,
+        "no_horizontal_overflow": true,
+        "viewport_height": 844,
+        "viewport_width": 390
+      },
+      "inventories": {
+        "console_errors": [],
+        "http_failures": [],
+        "page_errors": [],
+        "request_failures": [],
+        "requests": [
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/ephi/operations"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/fonts.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/quasar.unimportant.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/quasar.important.prod.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/nicegui.css"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/vue.esm-browser.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/573d0129acaebad907d825007cd6fa02/query.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/7416ad0839166372589af103d2dac97f/link.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/50808f343f9d39efb70f4fe21b9a193b/html.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/20e90839167eb30dba12722e0d4b24bb/select.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/64c866455daa2383bf6d88c437b23510/input.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/components/ab5d3884c9432c02cbce45d47d75c721/timer.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/socket.io.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/tailwindcss.min.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/quasar.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/nicegui.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/lang/en-US.umd.prod.js"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/dompurify.mjs"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/fonts/2474057f3040a08c.woff2"
+          },
+          {
+            "method": "GET",
+            "path": "http://127.0.0.1:60910/_nicegui/3.15.0/static/fonts/0c19a63c7528cc1a.woff2"
+          }
+        ]
+      },
+      "inventories_clean": true,
+      "keyboard_focus": {
+        "focus_after_refresh": true,
+        "focus_visible": true,
+        "style": {
+          "boxShadow": "rgb(0, 94, 168) 0px 0px 0px 3px",
+          "focusVisible": true,
+          "outline": "none",
+          "outlineColor": "rgb(255, 255, 255)",
+          "outlineWidth": "0px"
+        },
+        "tab_count": 6,
+        "target_reached": true
+      },
+      "missing_content": [],
+      "private_markers_after_filtering": [],
+      "private_markers_in_browser_text": [],
+      "restore_control_reachable": true,
+      "screenshot": "operations-source_unavailable-phone-390x844.png",
+      "screenshot_sha256": "9934e7a6391b51a7649822c177977b5845b82262767cfd26830e18f483594c62",
+      "status": "PASS",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "worker_filter_checks": [
+        {
+          "controls_geometry": {
+            "all_visible": true,
+            "non_overlapping": true,
+            "within_viewport": true
+          },
+          "job_type": "SyntheticOperationsFixture.succeeded",
+          "matching_row_visible": true,
+          "status": "SUCCEEDED",
+          "visible_rows": 1,
+          "worker_axis_state_error": true
+        },
+        {
+          "controls_geometry": {
+            "all_visible": true,
+            "non_overlapping": true,
+            "within_viewport": true
+          },
+          "job_type": "SyntheticOperationsFixture.canceled",
+          "matching_row_visible": true,
+          "status": "CANCELED",
+          "visible_rows": 1,
+          "worker_axis_state_error": true
+        }
+      ],
+      "worker_filter_controls_geometry": {
+        "all_visible": true,
+        "non_overlapping": true,
+        "within_viewport": true
+      },
+      "worker_filters_visible": true,
+      "worker_table_visible_on_desktop": null
+    }
+  },
+  "candidate": {
+    "head_commit": "292935028cf35fdb9b870270752c994c8921ed8a",
+    "source_test_tool_digest": "1257385a4be9d976fa2a0351394e4e4ab0c86d6bc6f5f842523dd621317f2795",
+    "state": "working-tree candidate based on registered target"
+  },
+  "change": "CHG-252 U2.5/O9.2",
+  "fixtures": {
+    "artifact_corrupt": {
+      "artifact_case": "artifact_corrupt",
+      "artifact_catalog_referenced": true,
+      "artifact_private_bytes_recorded": false,
+      "case": "artifact_corrupt",
+      "job_ids": {
+        "canceled": "6a155a05bc10432ea4721182aaa509dd",
+        "dead-letter": "fb1be818e8594aa2ad8d489c752aebbf",
+        "deferred": "9c9d88f624c542b8ab1cb6989681caea",
+        "expired-lease": "7b5e09500657417bab0884ca2ceb61fc",
+        "failed": "d479d582c0364b359601e4dbc937b3a2",
+        "queued": "156e9dc37aee43719d039dfc8d5f2113",
+        "running": "7a969dbc5c8e4dd09c1434b062e74c8f",
+        "succeeded": "98c4e3ca932d4c42b83c3b4a8fd53a9f"
+      },
+      "postgres_version": "18.6 (Homebrew)",
+      "production_operator_capability_bound": false,
+      "qualification": {
+        "production_approval": false,
+        "state": "artifact_corrupt",
+        "synthetic": true
+      },
+      "source_snapshot_seeded": true,
+      "synthetic": true,
+      "worker_states_seeded": [
+        "QUEUED",
+        "RUNNING",
+        "DEFERRED",
+        "SUCCEEDED",
+        "FAILED",
+        "DEAD_LETTER",
+        "CANCELED",
+        "EXPIRED_LEASE"
+      ]
+    },
+    "artifact_missing": {
+      "artifact_case": "artifact_missing",
+      "artifact_catalog_referenced": true,
+      "artifact_private_bytes_recorded": false,
+      "case": "artifact_missing",
+      "job_ids": {
+        "canceled": "9ea17814733c42abbc0cc84cea25b15a",
+        "dead-letter": "92756bc01a204d12953634c6c799b5cc",
+        "deferred": "d8bb6f94863f4fadb73edf874d09dadb",
+        "expired-lease": "005c7e0a966744ba93d36a716beee08f",
+        "failed": "da3d48c219fa43719b6efe90186e70fc",
+        "queued": "c0185ea05df84af7836fb2068fc3a4ad",
+        "running": "114f4104a9a04576853abb65be343df0",
+        "succeeded": "3f037a21f5044d1c9b52d11fbb86eb6c"
+      },
+      "postgres_version": "18.6 (Homebrew)",
+      "production_operator_capability_bound": false,
+      "qualification": {
+        "production_approval": false,
+        "state": "artifact_missing",
+        "synthetic": true
+      },
+      "source_snapshot_seeded": true,
+      "synthetic": true,
+      "worker_states_seeded": [
+        "QUEUED",
+        "RUNNING",
+        "DEFERRED",
+        "SUCCEEDED",
+        "FAILED",
+        "DEAD_LETTER",
+        "CANCELED",
+        "EXPIRED_LEASE"
+      ]
+    },
+    "mixed_axes": {
+      "case": "mixed_axes",
+      "job_ids": {
+        "canceled": "2b2bf8f0e9244c82ba49be9085f6b930",
+        "dead-letter": "bddbd00a1ac14a809b6760117961cdd2",
+        "deferred": "b56f944537744f73baf2e36e84b08fae",
+        "expired-lease": "cd5a78c0691e439892865c195fc9d9c3",
+        "failed": "5cf492f0647a49be8a5e0b9246d4fdfe",
+        "queued": "87b4171862f34618adb6603c939ac98c",
+        "running": "6f0f29e23a9c46fd8d5fe6482f9657c0",
+        "succeeded": "5c84773d5a8b48b9abd82323b61f3f90"
+      },
+      "postgres_version": "18.6 (Homebrew)",
+      "production_operator_capability_bound": false,
+      "qualification": {
+        "production_approval": false,
+        "state": "mixed_axes",
+        "synthetic": true
+      },
+      "source_snapshot_seeded": true,
+      "synthetic": true,
+      "worker_states_seeded": [
+        "QUEUED",
+        "RUNNING",
+        "DEFERRED",
+        "SUCCEEDED",
+        "FAILED",
+        "DEAD_LETTER",
+        "CANCELED",
+        "EXPIRED_LEASE"
+      ]
+    },
+    "qualification_expired": {
+      "case": "qualification_expired",
+      "job_ids": {
+        "canceled": "085d9780cc264e22be6f17b85db19c16",
+        "dead-letter": "ca8dc40a781046aeadf957f7ab4c35d2",
+        "deferred": "6b0aa04de6fa4de395b8459b9164df69",
+        "expired-lease": "0ea0375d0b05460ba8b26c54824b882c",
+        "failed": "3202e3863ed74ab4aaafdf97013fc5c6",
+        "queued": "f54eb3708426473eacbbe1873db9dd92",
+        "running": "a00c512f16774b9bbe6a69fb3c5814d7",
+        "succeeded": "9103d9fd44dc4cc083cad8b2d53b05a9"
+      },
+      "postgres_version": "18.6 (Homebrew)",
+      "production_operator_capability_bound": false,
+      "qualification": {
+        "production_approval": false,
+        "state": "qualification_expired",
+        "synthetic": true
+      },
+      "source_snapshot_seeded": true,
+      "synthetic": true,
+      "worker_states_seeded": [
+        "QUEUED",
+        "RUNNING",
+        "DEFERRED",
+        "SUCCEEDED",
+        "FAILED",
+        "DEAD_LETTER",
+        "CANCELED",
+        "EXPIRED_LEASE"
+      ]
+    },
+    "qualification_pending": {
+      "case": "qualification_pending",
+      "job_ids": {
+        "canceled": "e1b804c6432c40f29b161cf0461cad87",
+        "dead-letter": "b30319d192ce409d81d130a9641fad10",
+        "deferred": "a1c5c4197f904f1ca38e6804aef31567",
+        "expired-lease": "ea1361866ec246108df75187057ec4f0",
+        "failed": "afba78618b974535a06d335ca579d6fa",
+        "queued": "692d4360c37f4a7b999e24fd8f55fa01",
+        "running": "77413e0823784c93a25d9794895538e3",
+        "succeeded": "ddccca3a64bf4df787d154a54ba630b4"
+      },
+      "postgres_version": "18.6 (Homebrew)",
+      "production_operator_capability_bound": false,
+      "qualification": {
+        "production_approval": false,
+        "state": "qualification_pending",
+        "synthetic": true
+      },
+      "source_snapshot_seeded": true,
+      "synthetic": true,
+      "worker_states_seeded": [
+        "QUEUED",
+        "RUNNING",
+        "DEFERRED",
+        "SUCCEEDED",
+        "FAILED",
+        "DEAD_LETTER",
+        "CANCELED",
+        "EXPIRED_LEASE"
+      ]
+    },
+    "qualification_unbound": {
+      "case": "qualification_unbound",
+      "job_ids": {
+        "canceled": "6f47264798274a5bb961cd18b9f2b15b",
+        "dead-letter": "a36fa9314b6544b1bb7055c21f6755be",
+        "deferred": "ffca703decd4406d85f38b5168cbcc45",
+        "expired-lease": "6559e08568224ee297f38f5f7c950a0e",
+        "failed": "05220853a5b84c698c87e69034112d0e",
+        "queued": "178a34f046a546dcbcf10682ca98a7f7",
+        "running": "1d8871c07d0f472d9028d4f3de536de5",
+        "succeeded": "d229247809674517ad4ce0b0e2e8c6d3"
+      },
+      "postgres_version": "18.6 (Homebrew)",
+      "production_operator_capability_bound": false,
+      "qualification": {
+        "authority": "NOT_BOUND",
+        "state": "NOT_QUALIFIED"
+      },
+      "source_snapshot_seeded": true,
+      "synthetic": true,
+      "worker_states_seeded": [
+        "QUEUED",
+        "RUNNING",
+        "DEFERRED",
+        "SUCCEEDED",
+        "FAILED",
+        "DEAD_LETTER",
+        "CANCELED",
+        "EXPIRED_LEASE"
+      ]
+    },
+    "source_stale": {
+      "case": "source_stale",
+      "job_ids": {
+        "canceled": "ae67c83b1ef94a519cfad8a650f08f89",
+        "dead-letter": "f2bc0ef2ac6b420ca53926cd58d286fc",
+        "deferred": "08ffaada0c49423b9256c11fa3f41b65",
+        "expired-lease": "015aaead2a6042fdbb74f3dd510becca",
+        "failed": "bb545e78c99f4554988374a1a281d233",
+        "queued": "61e9ea02bd434486b79048c64b206e23",
+        "running": "4634ac809fe04812bc46f30ac7fbe1d6",
+        "succeeded": "eb577c750bd642afa51f9bf17d9d5e50"
+      },
+      "postgres_version": "18.6 (Homebrew)",
+      "production_operator_capability_bound": false,
+      "qualification": {
+        "production_approval": false,
+        "state": "source_stale",
+        "synthetic": true
+      },
+      "source_snapshot_seeded": true,
+      "source_state_injected": "STALE",
+      "synthetic": true,
+      "worker_states_seeded": [
+        "QUEUED",
+        "RUNNING",
+        "DEFERRED",
+        "SUCCEEDED",
+        "FAILED",
+        "DEAD_LETTER",
+        "CANCELED",
+        "EXPIRED_LEASE"
+      ]
+    },
+    "source_unavailable": {
+      "case": "source_unavailable",
+      "job_ids": {
+        "canceled": "2f695f9e709c435d8041e8d386e06921",
+        "dead-letter": "ef9aaf173eb34bc789d1b93e7bb454e5",
+        "deferred": "e73e16d0d7704cb883d6aba53b4d1c57",
+        "expired-lease": "f14887e920e54671b09cdc561422021c",
+        "failed": "26673cf3619a432d9a4449db149beeb3",
+        "queued": "048361c33a364257a8fc1134aca4e000",
+        "running": "95f21fb211644a1199fbbdcd60e2f4ce",
+        "succeeded": "d5ba3e32412945c990603d5d99c305c2"
+      },
+      "postgres_version": "18.6 (Homebrew)",
+      "production_operator_capability_bound": false,
+      "qualification": {
+        "authority": "BOUND_FAMILY_CENTER",
+        "state": "NOT_QUALIFIED"
+      },
+      "source_snapshot_seeded": true,
+      "source_state_injected": "UNAVAILABLE",
+      "synthetic": true,
+      "worker_states_seeded": [
+        "QUEUED",
+        "RUNNING",
+        "DEFERRED",
+        "SUCCEEDED",
+        "FAILED",
+        "DEAD_LETTER",
+        "CANCELED",
+        "EXPIRED_LEASE"
+      ]
+    }
+  },
+  "inventories_clean": true,
+  "non_claims": {
+    "browser_restore_execution": "NOT_IMPLEMENTED",
+    "manufacturing_or_tool_health": "NOT_CLAIMED",
+    "port_gate_g12_or_production": "NOT_CLAIMED",
+    "production_capacity_g10": "NOT_CLAIMED",
+    "production_durability_or_slo": "NOT_CLAIMED",
+    "production_operator_power": "NOT_BOUND",
+    "production_rpo_rto": "NOT_ESTABLISHED",
+    "real_family_g02_g06": "NOT_CLAIMED"
+  },
+  "postgres": {
+    "integration": "tests.test_operations_postgresql",
+    "real_postgresql_18": true,
+    "version": "18.6 (Homebrew)"
+  },
+  "project": "ephi",
+  "schema_version": 1,
+  "scope": "synthetic authorized EPHI platform Operations cockpit",
+  "screenshots": [
+    {
+      "bytes": 460342,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/screenshots/operations-artifact_corrupt-desktop-1440x900.png",
+      "sha256": "aa17d708c549c0ded03d581db2c19eadb10ab28b2aa4422ddd2a2a6314b780e7"
+    },
+    {
+      "bytes": 425384,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/screenshots/operations-artifact_corrupt-phone-390x844.png",
+      "sha256": "62030942acf7a88de79154258841a0cf1ec71ef57198d7c77be79e0d74a06627"
+    },
+    {
+      "bytes": 459315,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/screenshots/operations-artifact_missing-desktop-1440x900.png",
+      "sha256": "47f719b9b70e7472d59d864a5d59c7bb59021b546e8723f86572b8d79edc73ad"
+    },
+    {
+      "bytes": 426065,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/screenshots/operations-artifact_missing-phone-390x844.png",
+      "sha256": "611a834d6fab58ade87d4d520cc7597c8ac0bd62fbb55cacc6b3665f982b5a53"
+    },
+    {
+      "bytes": 457518,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/screenshots/operations-mixed_axes-desktop-1440x900.png",
+      "sha256": "bcf7ce3d9ac84ff9d67703109661e3c3dd217433ec5858632277db15de57d788"
+    },
+    {
+      "bytes": 423862,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/screenshots/operations-mixed_axes-phone-390x844.png",
+      "sha256": "49622336c78e89cbc69b533338358a03aae20438389a90517ba38eeb17dc2e92"
+    },
+    {
+      "bytes": 451662,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/screenshots/operations-qualification_expired-desktop-1440x900.png",
+      "sha256": "2ee730d75b2c8eb9a7df874149b752ee0d465790566c137857c924e3f81b1b19"
+    },
+    {
+      "bytes": 415280,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/screenshots/operations-qualification_expired-phone-390x844.png",
+      "sha256": "d5024421ec8836ab6fe291f31022989b73f4d7d26364ad8e3bc9714f557cae40"
+    },
+    {
+      "bytes": 454760,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/screenshots/operations-qualification_pending-desktop-1440x900.png",
+      "sha256": "23935bd59b21a2dda8f3bf6e283e92de3e6e596d368623e6b981d5db5338174f"
+    },
+    {
+      "bytes": 418743,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/screenshots/operations-qualification_pending-phone-390x844.png",
+      "sha256": "c269e8c9df3629396fc98abee57c54c11e1093abc7bfa6a2b66dd768e3f832d9"
+    },
+    {
+      "bytes": 411458,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/screenshots/operations-qualification_unbound-desktop-1440x900.png",
+      "sha256": "8e48b2633774dd06c866a2bd1cdd6b0447f93e6280f2ec2e7cdf3795883a66b7"
+    },
+    {
+      "bytes": 369952,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/screenshots/operations-qualification_unbound-phone-390x844.png",
+      "sha256": "3896ac3b37ffd59a8a7935093df56a3c536aaf15bfa6d7ce4780220c5777c911"
+    },
+    {
+      "bytes": 471304,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/screenshots/operations-source_stale-desktop-1440x900.png",
+      "sha256": "3f4fa1f761e1576bfdc1fd4d23ad15dc040f1aefe459fbce5fb300e850919492"
+    },
+    {
+      "bytes": 437946,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/screenshots/operations-source_stale-phone-390x844.png",
+      "sha256": "7f85b769613e38381b3a09fe74352434262c9627bcf7c21c58800d83aa39b7de"
+    },
+    {
+      "bytes": 411499,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/screenshots/operations-source_unavailable-desktop-1440x900.png",
+      "sha256": "93f40b075e4986bd5d50f445b23eeb0c98c9658f0a661a57e5bfa6373014504c"
+    },
+    {
+      "bytes": 371254,
+      "path": "evidence/u2/chg-252-u2.5-o9.2/review-fix1/screenshots/operations-source_unavailable-phone-390x844.png",
+      "sha256": "9934e7a6391b51a7649822c177977b5845b82262767cfd26830e18f483594c62"
+    }
+  ],
+  "security": {
+    "DSN_or_path_browser_input": false,
+    "browser_headers_recorded": false,
+    "credentials_recorded": false,
+    "private_artifact_bytes_recorded": false,
+    "raw_source_rows_recorded": false,
+    "request_paths_only": true
+  },
+  "status": "PASS",
+  "synthetic_only": true,
+  "target_ref": "main@705aca4d86095e5be6e80538a9bd7bd5bd05faa6"
+}
