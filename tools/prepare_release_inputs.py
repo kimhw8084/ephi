@@ -260,10 +260,16 @@ def _prepare(destination: Path) -> dict[str, object]:
             "--no-index", "--no-deps", "--no-build-isolation", "--no-cache-dir", "--wheel-dir", str(build_dir),
             str(base_source),
         ], cwd=ROOT, env=base_env)
+        app_source = work / "ephi-source"
+        app_source.mkdir()
+        shutil.copy2(ROOT / "pyproject.toml", app_source / "pyproject.toml")
+        shutil.copy2(ROOT / "README.md", app_source / "README.md")
+        shutil.copytree(ROOT / "src", app_source / "src")
+        shutil.copytree(ROOT / "migrations", app_source / "migrations")
         _run([
             str(builder_python), "-m", "pip", "wheel", "--disable-pip-version-check", "--no-input",
             "--no-index", "--no-deps", "--no-build-isolation", "--no-cache-dir", "--wheel-dir", str(build_dir),
-            str(ROOT),
+            str(app_source),
         ], cwd=ROOT, env=env)
 
         expected = _expected_downloads(index, minor, sys.platform)
@@ -337,7 +343,7 @@ def _prepare(destination: Path) -> dict[str, object]:
             "locks": {
                 key: {
                     "path": value["path"],
-                    "file": f"locks/{key}-{Path(value['path']).name}",
+                    "file": f"locks/{Path(value['path']).name}",
                     "sha256": value["sha256"],
                 }
                 for key, value in lock_identities.items()

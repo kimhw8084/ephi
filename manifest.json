@@ -2306,8 +2306,8 @@
     },
     {
       "path": "tools/prepare_release_inputs.py",
-      "bytes": 15632,
-      "sha256": "596d13a5ef1bb6bd594d39a16103c11ae77aade0683f8b0c757841c0b3dbf74e"
+      "bytes": 15975,
+      "sha256": "f9700c8fe00580f8200f3d24582e9338307913eca7b8a4cfbe5ea923e1e3792a"
     },
     {
       "path": "tools/source_preflight.py",
