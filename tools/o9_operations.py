@@ -36,6 +36,7 @@ from ephi.application.operations import (  # noqa: E402
     canonical_sha256,
     file_sha256,
     json_bytes,
+    migration_schema_identity,
     operations_health_snapshot,
     safe_identity_hash,
     verify_artifact_inventory,
@@ -313,13 +314,10 @@ def _snapshot_connection(dsn: str) -> Iterator[tuple[Any, dict[str, object]]]:
 
 
 def _migration_identity(repo_root: Path = ROOT) -> dict[str, object]:
-    migrations = []
-    for path in sorted((repo_root / "migrations").glob("*.sql")):
-        digest, size = file_sha256(path)
-        migrations.append({"path": path.relative_to(repo_root).as_posix(), "sha256": digest, "byte_size": size})
-    if not migrations:
-        raise OperationsFailure("no numbered migrations were found")
-    return {"migration_count": len(migrations), "files": migrations, "identity_sha256": canonical_sha256(migrations)}
+    try:
+        return migration_schema_identity(repo_root / "migrations")
+    except ValueError as exc:
+        raise OperationsFailure(str(exc)) from exc
 
 
 def _git_identity(repo_root: Path = ROOT) -> dict[str, object]:

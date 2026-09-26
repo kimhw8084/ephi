@@ -935,6 +935,29 @@ def file_sha256(path: str | os.PathLike[str]) -> tuple[str, int]:
     return digest.hexdigest(), size
 
 
+def migration_schema_identity(migration_dir: str | os.PathLike[str]) -> dict[str, object]:
+    """Return O9's deterministic migration file-set identity for a directory.
+
+    The file selection, per-file SHA-256/byte-size records, path ordering, and
+    aggregate canonical hash are shared by release identity and O9 backup
+    verification. ``migration_dir`` is the directory containing the SQL
+    files; serialized paths retain the established ``migrations/`` prefix.
+    """
+
+    root = Path(migration_dir)
+    migrations = []
+    for path in sorted(root.glob("*.sql"), key=lambda item: item.name):
+        digest, size = file_sha256(path)
+        migrations.append({"path": f"migrations/{path.name}", "sha256": digest, "byte_size": size})
+    if not migrations:
+        raise ValueError("no numbered migrations were found")
+    return {
+        "migration_count": len(migrations),
+        "files": migrations,
+        "identity_sha256": canonical_sha256(migrations),
+    }
+
+
 def canonical_sha256(value: object) -> str:
     return hashlib.sha256(canonical_json(value).encode("utf-8")).hexdigest()
 

@@ -1,0 +1,117 @@
+{
+  "additional_checks": {
+    "migration_added_removed_modified_negative_controls": "PASS",
+    "postgres_optional_overlay_python_3_11": "PASS",
+    "python_3_14_release_inventory_check": "PASS",
+    "python_3_14_release_preflight": {
+      "reason_code": "UNSUPPORTED_PYTHON_VERSION",
+      "status": "REJECTED_AS_UNSUPPORTED"
+    },
+    "python_3_14_repository_package_compatibility": "PASS",
+    "secret_safe_inventory_lock_and_preflight_regressions": "PASS",
+    "synthetic_downstream_u1_conformance_suite": "PASS",
+    "tampered_transferred_runtime_lock": {
+      "reason_code": "INSTALL_INPUTS_TAMPERED",
+      "status": "REJECTED_AS_EXPECTED"
+    }
+  },
+  "candidate_source": {
+    "base_commit": "fd381d770c91442d2ed441787e8ad9e14c91c79e",
+    "branch": "codex/ephi-u3-release-install-identity-v1",
+    "commit": "c1160fbc5ae14f053d5cfa8926a5604176e40f34",
+    "tree": "616899771499fd6292ce096eeeb7995d59604e4e"
+  },
+  "change": "CHG-258 / U3.1",
+  "executor": {
+    "fabric_job_id": "NOT_EXPOSED_IN_EXECUTION_CONTEXT",
+    "platform": "macOS arm64",
+    "restricted_install_network_index": "NOT_USED"
+  },
+  "not_run_or_not_claimed": [
+    "real-family G02/G06",
+    "company identity/TLS",
+    "production-like G10 capacity",
+    "production RPO/RTO",
+    "G12",
+    "Port Gate",
+    "company deployment readiness",
+    "release promotion",
+    "Production"
+  ],
+  "project": "ephi",
+  "project_os_acceptance": "NOT_CLAIMED",
+  "project_os_artifact_bridge": {
+    "reason": "No callable Project OS Artifact Bridge tool was exposed in this execution context; no alternate upload convention was used.",
+    "status": "NOT_STAGED"
+  },
+  "provider_composition": {
+    "authority": "ephi-downstream-preflight",
+    "status": "NOT_RUN_BY_RELEASE_PREFLIGHT",
+    "synthetic_u1_tests": "PASS"
+  },
+  "qualification_date": "2026-09-26",
+  "qualification_scope": "candidate packaging and restricted-install qualification only",
+  "release": {
+    "distribution": "ephi",
+    "downstream_abi": "org.ephi.downstream@1.0.0",
+    "migration_count": 11,
+    "migration_identity_sha256": "c661c7a41eae8cd2b637778998bee77b8ebdec4a2ef78639d3ed7f69b23b1e8b",
+    "nicegui_base_commit": "000298562d6bcbf6df304edbd41b98b30fe4bfcf",
+    "nicegui_base_version": "3.0.0a8",
+    "nicegui_version": "3.15.0",
+    "provider_contract_version": "1.0.0",
+    "python_requires": ">=3.11,<3.14",
+    "required_provider_categories": [
+      "identity",
+      "source",
+      "artifacts",
+      "notifications",
+      "policy",
+      "runtime"
+    ],
+    "version": "0.1.0"
+  },
+  "release_identity_sha256": "db03afc6115e4c3bf88a3e1ab9fb379c241dffb6122e56e166da16a4b1cdd4a6",
+  "repository_qualification": {
+    "git_diff_check": "PASS",
+    "package_check_refresh_manifest": "PASS",
+    "release_inventory_check": "PASS",
+    "unittest_discover": {
+      "postgresql_environment": "EPHI_TEST_POSTGRES_DSN not set; PostgreSQL integration NOT_RUN",
+      "ran": 436,
+      "skipped": 105,
+      "status": "PASS"
+    }
+  },
+  "request": "ephi-u3-release-install-identity-v1",
+  "schema": "org.ephi.u3.release-install-qualification.v1",
+  "supported_interpreter_matrix": [
+    {
+      "fresh_virtual_environment": true,
+      "install_inputs_sha256": "27f83e7a575eb3a09cc93cd93bcd5fd14e7380d1a0430a6910780def139fa30e",
+      "offline_install": "PASS",
+      "python": "3.11.7",
+      "release_preflight": "PASS",
+      "status": "PASS",
+      "wheel_artifact_count": 55
+    },
+    {
+      "fresh_virtual_environment": true,
+      "install_inputs_sha256": "772293afaf88811fe607506ba1d6c0619ad6a0611b37c6f4d96fb8d2492a7992",
+      "offline_install": "PASS",
+      "python": "3.12.9",
+      "release_preflight": "PASS",
+      "status": "PASS",
+      "wheel_artifact_count": 55
+    },
+    {
+      "fresh_virtual_environment": true,
+      "install_inputs_sha256": "ed2f1482c8ca0cedbe1b747f96fe4fcb64b0959550204b9f7c1a816aed006e54",
+      "offline_install": "PASS",
+      "python": "3.13.13",
+      "release_preflight": "PASS",
+      "status": "PASS",
+      "wheel_artifact_count": 55
+    }
+  ]
+}

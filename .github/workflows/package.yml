@@ -26,12 +26,66 @@ jobs:
           python-version: ${{ matrix.python }}
       - name: Validate package and imported evidence
         run: python tools/check_package.py
+      - name: Check release/install inventory against its authorities
+        run: python tools/generate_release_inventory.py --check
       - name: Test checker failure detection
         run: python -m unittest discover -s tests -v
       - name: Check whitespace and unchanged checkout
         run: |
           git diff --check
           test -z "$(git status --porcelain)"
+
+  release-install-preflight:
+    name: Offline release/install preflight (Python ${{ matrix.python }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ['3.11', '3.12', '3.13']
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Verify generated release inventory
+        run: python tools/generate_release_inventory.py --check
+      - name: Prepare exact source wheels and hashed dependency inputs
+        run: python tools/prepare_release_inputs.py --output-dir "$RUNNER_TEMP/ephi-u3-inputs"
+      - name: Install from the prepared bundle without an index
+        run: |
+          python -m venv "$RUNNER_TEMP/ephi-u3-venv"
+          venv_python="$RUNNER_TEMP/ephi-u3-venv/bin/python"
+          inputs="$RUNNER_TEMP/ephi-u3-inputs"
+          suffix="${{ matrix.python }}"
+          suffix="${suffix/./}"
+          "$venv_python" -m pip install \
+            --no-index --find-links "$inputs/wheelhouse" --require-hashes \
+            -r "$inputs/locks/installer-py311.txt"
+          "$venv_python" -m pip uninstall -y setuptools wheel
+          "$venv_python" -m pip install \
+            --no-index --find-links "$inputs/wheelhouse" --require-hashes \
+            -r "$inputs/locks/runtime-py${suffix}.txt"
+          "$venv_python" -m pip install --no-index --no-deps \
+            "$inputs"/wheelhouse/ephi-*.whl \
+            "$inputs"/wheelhouse/nicegui_base-*.whl
+      - name: Run release/install preflight before provider composition
+        run: |
+          inputs="$RUNNER_TEMP/ephi-u3-inputs"
+          preflight="$RUNNER_TEMP/ephi-u3-preflight.json"
+          "$RUNNER_TEMP/ephi-u3-venv/bin/ephi-release-preflight" \
+            --inputs-dir "$inputs" --json > "$preflight"
+          python - "$preflight" <<'PY'
+          import json
+          import sys
+
+          report = json.loads(open(sys.argv[1], encoding="utf-8").read())
+          assert report["status"] == "PASS", report
+          assert report["provider_composition"]["status"] == "NOT_RUN", report
+          print("RELEASE_INSTALL_PREFLIGHT_PASS")
+          PY
 
   canonical-baseline:
     name: Canonical repository baseline

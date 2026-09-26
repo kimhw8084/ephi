@@ -51,8 +51,8 @@
     },
     {
       "path": ".github/workflows/package.yml",
-      "bytes": 14441,
-      "sha256": "a28af1a233b45ce28ea4dd0819f3410cfe82f18687c326998a5a16f0fe6671c7"
+      "bytes": 16926,
+      "sha256": "504108b130dfe28567a628075af2966e02f70a36c93eec847521367f3cdab890"
     },
     {
       "path": ".gitignore",
@@ -141,8 +141,8 @@
     },
     {
       "path": "13_Package_Review.md",
-      "bytes": 23357,
-      "sha256": "3a23c7cf5429f4608de297b36c5971058b44bc4805efd01f00e2c1d5c66fed83"
+      "bytes": 24296,
+      "sha256": "8236c51fd8a0ea739549cd8db1b6816f9ca75a31169a95ce12f655eb0f70766c"
     },
     {
       "path": "AGENTS.md",
@@ -156,8 +156,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 29148,
-      "sha256": "6bb8f53e3e332e68d730d8a7f4095248f847fe5b8ea025b4bdc0ea8b72a1c070"
+      "bytes": 29723,
+      "sha256": "7439ef03140332f6118b53793d8a26b6abca8874c155db1a59e9774dcdefdac1"
     },
     {
       "path": "app.py",
@@ -181,8 +181,13 @@
     },
     {
       "path": "docs/Downstream_Integration_ABI.md",
-      "bytes": 13591,
-      "sha256": "28facc0ce55b531045baba94cbc0cdc82f3ae762d8fe654696e8b37321c26d29"
+      "bytes": 13983,
+      "sha256": "66fbc87f3604159f146bf75626422598f1aad20707202afcbdea3d9592be9f33"
+    },
+    {
+      "path": "docs/Release_Install_Identity.md",
+      "bytes": 6706,
+      "sha256": "8a6d1a3fa2f4e5fd3ddc0a8b694341d937f874acfb8bf8ff4537d86fd48564c5"
     },
     {
       "path": "docs/nicegui_base/AGENT_WORKFLOW.md",
@@ -356,8 +361,8 @@
     },
     {
       "path": "evidence/README.md",
-      "bytes": 3943,
-      "sha256": "c7462b6303761b94a53aa3cd849964a3484bd242567750b2c37421e7dce230ab"
+      "bytes": 4322,
+      "sha256": "3d35963ef74d6395598b92d5048f74efd917d3f94abbd633d296c1c6cb0eec2a"
     },
     {
       "path": "evidence/audit_environment.json",
@@ -1460,6 +1465,11 @@
       "sha256": "ff4467f5fb109caa08f74f0b9671583c07b2dd162119b0af0ee1319826363fe0"
     },
     {
+      "path": "evidence/u3/chg-258-u3.1/qualification.json",
+      "bytes": 4066,
+      "sha256": "09d4660ca4229c0152ab45b8567aded91c24df99a4f2dc1634f1125c036b93d5"
+    },
+    {
       "path": "examples/__init__.py",
       "bytes": 61,
       "sha256": "b060d41e6705cac80caacb622fc737209d85f878bc0a4a6d976adc651b26d7f1"
@@ -1581,8 +1591,8 @@
     },
     {
       "path": "operations/README.md",
-      "bytes": 1884,
-      "sha256": "501fc602e0229530e5dc605e018fc346eb5399921bad33f3315b2b2c67018808"
+      "bytes": 2175,
+      "sha256": "156d4c225cf74b8e8d75175ef25289305ddd58f3d904d549fba794d94678b58d"
     },
     {
       "path": "operations/runbooks/README.md",
@@ -1626,8 +1636,8 @@
     },
     {
       "path": "pyproject.toml",
-      "bytes": 708,
-      "sha256": "918b594f13451e7be372178772b8803c0f4dbde5ab6c5385ab0ea0e10cecd5ae"
+      "bytes": 929,
+      "sha256": "efeef72958e739206047b1b219136eb3421c38d561f8a916826986f81f595687"
     },
     {
       "path": "requirements-dev.txt",
@@ -1746,8 +1756,8 @@
     },
     {
       "path": "src/ephi/application/operations.py",
-      "bytes": 43186,
-      "sha256": "c15614e2e4bde9ac7afddff9e6a4a152dd3d8f57cb4679a21f135762b1b6da1c"
+      "bytes": 44165,
+      "sha256": "229c05688b30f1683e109ba085f9ce85c263aca12e99f6a00306d3c2c58c0cd4"
     },
     {
       "path": "src/ephi/application/planner.py",
@@ -1898,6 +1908,61 @@
       "path": "src/ephi/recovery.py",
       "bytes": 24825,
       "sha256": "ef64f07215a7f7a885cc7073d4721937a488d0de0c9566c8deed52e4d89e294f"
+    },
+    {
+      "path": "src/ephi/release_identity.py",
+      "bytes": 44342,
+      "sha256": "9da4061a809218951948472126cfa8d79dd3a81ac83d3e304d0c22556e32ea48"
+    },
+    {
+      "path": "src/ephi/release_inventory.json",
+      "bytes": 15293,
+      "sha256": "6257443ea2b8e3c477a8bf4ea9d7708cb9d264921018208f04662867c64f569c"
+    },
+    {
+      "path": "src/ephi/release_locks/build-py311.txt",
+      "bytes": 653,
+      "sha256": "d91931ad26dbe20d7b91088ecc9409fa56f7aa9d8092e7e9d217159ef2014a87"
+    },
+    {
+      "path": "src/ephi/release_locks/index.json",
+      "bytes": 8165,
+      "sha256": "592d7315b43a9af58baf953a81fbd2eea0efa0dbb3040d15f06b1ec1e924c5fe"
+    },
+    {
+      "path": "src/ephi/release_locks/installer-py311.txt",
+      "bytes": 464,
+      "sha256": "c2b0033cbf8104f541b3189ec67beb22455a7b7613a6f34ba4207d538671cf3a"
+    },
+    {
+      "path": "src/ephi/release_locks/postgres-py311.txt",
+      "bytes": 6340,
+      "sha256": "075b10b824babe4efd85e9e91bdd4051583604ddeaf4b3fad1eb1f0c4420cce0"
+    },
+    {
+      "path": "src/ephi/release_locks/postgres-py312.txt",
+      "bytes": 6340,
+      "sha256": "56f55550f7cc4ff4ca834cd56072be313ec8750a663228d138f06c34c00f9700"
+    },
+    {
+      "path": "src/ephi/release_locks/postgres-py313.txt",
+      "bytes": 6126,
+      "sha256": "98c86159a1f58d296ce4d18ecb44db974bb3e8ee10ba82c93680634f39369049"
+    },
+    {
+      "path": "src/ephi/release_locks/runtime-py311.txt",
+      "bytes": 136547,
+      "sha256": "760781a3ebb7181356e2ab41af011db3d57ade39bd636beb0cc98b48a752c840"
+    },
+    {
+      "path": "src/ephi/release_locks/runtime-py312.txt",
+      "bytes": 136532,
+      "sha256": "e42d8c088b2d63613250ebde818e2dc28b1ea84360260fa3682e1ad1db61b4b7"
+    },
+    {
+      "path": "src/ephi/release_locks/runtime-py313.txt",
+      "bytes": 136480,
+      "sha256": "fb3347b40b8c4a88af5ecf237e746a485aeb8a6900c4336c1c708edc5ce2b43f"
     },
     {
       "path": "src/ephi/transport.py",
@@ -2165,6 +2230,11 @@
       "sha256": "1c6d0cfb68071cebe3a5d59780db6ef31bb2b6e89452ffae0d065832bda75812"
     },
     {
+      "path": "tests/test_release_identity.py",
+      "bytes": 12796,
+      "sha256": "2f4362bcd0afee9530f4091f31221fa617e1f2d4ed57399f86a5f53bf2f6109c"
+    },
+    {
       "path": "tests/test_source_preflight.py",
       "bytes": 6134,
       "sha256": "ce6af6dd40c15786c9e945cbee5e08796aede794cedff5f9cc5980df1848e153"
@@ -2200,6 +2270,11 @@
       "sha256": "a353043571493380c81a93a56d1426cb4b9e2f3a78eb620bc75a24ace8d55da0"
     },
     {
+      "path": "tools/generate_release_inventory.py",
+      "bytes": 2003,
+      "sha256": "292a492cd94c9a4f5efe635fc5c62fe6380080622f2b595c6c01bcbb1807c801"
+    },
+    {
       "path": "tools/o10_rendered_accessibility.py",
       "bytes": 47218,
       "sha256": "1b9ec53edf13bdcc2b3b71234d75304901a8b8b4716f73d51648ae18e3e1da4d"
@@ -2226,13 +2301,18 @@
     },
     {
       "path": "tools/o9_operations.py",
-      "bytes": 39374,
-      "sha256": "354ffce9ff0643fda03667dff39c2f4307b8e87ea2084f6061d3df5f25a09794"
+      "bytes": 39112,
+      "sha256": "d65863e88f53662d1e09152baec5505f7a9e944159cfd5c81cb70a5dd3bf4436"
     },
     {
       "path": "tools/o9_real_rehearsal.py",
       "bytes": 16303,
       "sha256": "9023d32d694608d6272289a5b3cc65de49813c6eeb5dc9121e52a31ccf9e50d9"
+    },
+    {
+      "path": "tools/prepare_release_inputs.py",
+      "bytes": 16250,
+      "sha256": "2da754c219854fe18e527135699ce5bce64af4a1f133c565edf81de4184b7a3d"
     },
     {
       "path": "tools/source_preflight.py",
