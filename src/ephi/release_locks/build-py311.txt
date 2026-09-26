@@ -1,0 +1,11 @@
+# EPHI U3 immutable hashed install inputs.
+# build py311; distribution versions and SHA-256 hashes are fixed.
+# EPHI and NiceGUI Base source wheels are separate artifacts in install_inputs.json.
+# No index URL, credential, endpoint, local path, or environment value is recorded.
+
+wheel==0.45.1 \
+    --hash=sha256:661e1abd9198507b1409a20c02106d9670b2576e916d58f520316666abca6729 \
+    --hash=sha256:708e7481cc80179af0e556bbf0cc00b8444c7321e2700b8d8580231d13017248
+setuptools==77.0.3 \
+    --hash=sha256:583b361c8da8de57403743e756609670de6fb2345920e36dc5c2d914c319c945 \
+    --hash=sha256:67122e78221da5cf550ddd04cf8742c8fe12094483749a792d56cd669d6cf58c

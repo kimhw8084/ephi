@@ -309,3 +309,19 @@ facts independent from visible detail rows. The refreshed regression, real
 PostgreSQL 18 and desktop/phone browser record is
 `evidence/u2/chg-252-u2.5-o9.2/review-fix1/qualification.json`; no production
 capacity, RPO/RTO, real-family, G12, Port Gate or Production claim follows.
+
+## CHG-258 U3.1 release/install identity candidate
+
+U3.1 adds the generated, versioned `org.ephi.release-install.v1` inventory,
+per-interpreter SHA-256 locked install inputs, exact Base source-wheel binding,
+the offline preparation workflow, and `ephi-release-preflight`. The preflight
+checks the installed EPHI package files, direct and locked dependencies, Base
+wheel identity, migration set, and downstream ABI before the separate U1
+provider-composition authority runs. O9 backup verification and release
+inventory now call the same migration identity helper.
+
+The declared install range remains `>=3.11,<3.14`; Python 3.14 remains a
+repository compatibility lane only. Candidate qualification is packaging and
+synthetic integration evidence. It does not claim real-family G02/G06, company
+identity/TLS, production-like G10 capacity, production RPO/RTO, G12, Port Gate,
+company deployment readiness, release promotion, or Production.

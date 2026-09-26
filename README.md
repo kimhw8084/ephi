@@ -33,6 +33,7 @@ EPHI's intended workflow is **Detect → Explain → Prioritize → Contain → 
 | [12 · Sources and evidence](12_Sources_and_Evidence.md) | Provenance and reproducibility limits |
 | [13 · Package review](13_Package_Review.md) | Repository preparation and corrections |
 | [Downstream Integration ABI v1](docs/Downstream_Integration_ABI.md) | One-way private integration and conformance boundary |
+| [Release/install identity](docs/Release_Install_Identity.md) | Immutable inputs, restricted installation, and pre-composition preflight |
 
 The numbered chapters are the maintained design. [manifest.json](manifest.json) records current file hashes. [Historical evidence](evidence/README.md) is preserved separately from [review evidence](evidence/review/package_review.json).
 
@@ -47,6 +48,14 @@ python3.11 -m venv .venv
 ```
 
 The self-check reports package identity, runtime/config identity, the pinned framework identity and F02–F05 capability availability. It does not claim historical source identity, byte identity, algorithm equivalence or historical-test equivalence; executed F02–F05 evidence comes only from the integrity runner below.
+
+For restricted downstream installation, prepare the immutable wheel and
+dependency bundle upstream, install it offline, and run
+`ephi-release-preflight` before separately running
+`ephi-downstream-preflight`. The exact transfer and install steps are in the
+[release/install identity guide](docs/Release_Install_Identity.md). Python
+3.14 remains a repository source/package compatibility lane and is outside the
+declared install range.
 
 ## Validate the repository offline
 

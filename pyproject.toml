@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=68,<80"]
+requires = ["setuptools==77.0.3", "wheel==0.45.1"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -21,10 +21,14 @@ postgres = [
 [project.scripts]
 ephi = "ephi.app:main"
 ephi-downstream-preflight = "ephi.downstream:main"
+ephi-release-preflight = "ephi.release_identity:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
 include = ["ephi*"]
 
 [tool.setuptools.package-data]
-ephi = ["py.typed"]
+ephi = ["py.typed", "release_inventory.json", "release_locks/*.json", "release_locks/*.txt"]
+
+[tool.setuptools.data-files]
+"share/ephi/migrations" = ["migrations/*.sql"]

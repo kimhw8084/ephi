@@ -33,6 +33,11 @@ directory; it never changes traffic routing. Reconciliation reports writes
 accepted after the cutoff and classifies local idempotent candidates separately
 from consequential/external handling.
 
+Release/install inventory uses the same shared migration file-set helper as
+O9 backup verification. It preserves the existing ordered file records,
+per-file SHA-256/byte-size facts and aggregate canonical SHA-256; there is no
+second migration identity algorithm or migration history store.
+
 All timing evidence is `LOCAL_RESTORE_REHEARSAL`. The production disaster
 claim is always `NOT_ESTABLISHED`; this change does not establish RPO/RTO.
 
