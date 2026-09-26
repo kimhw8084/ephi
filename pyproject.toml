@@ -23,6 +23,7 @@ ephi = "ephi.app:main"
 ephi-config-preflight = "ephi.config_preflight:main"
 ephi-downstream-preflight = "ephi.downstream:main"
 ephi-release-preflight = "ephi.release_identity:main"
+ephi-db-migrate = "ephi.db_migrate:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]

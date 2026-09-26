@@ -25,6 +25,22 @@ prefix can be supplied for a container or platform-managed PostgreSQL 18
 toolchain. Commands and JSON output never print DSNs, credentials, tokens,
 raw source rows, material identifiers, or private artifact contents.
 
+The installed EPHI release also provides `ephi-db-migrate` for its numbered
+PostgreSQL schema. Run `identity` to inspect the packaged plan without a
+database connection, `verify` to check a current schema without applying SQL,
+and `apply` to apply the idempotent set and verify required tables:
+
+```bash
+.venv/bin/ephi-db-migrate identity
+.venv/bin/ephi-db-migrate apply
+.venv/bin/ephi-db-migrate verify
+```
+
+`verify` and `apply` read `EPHI_POSTGRES_DSN` or accept `--dsn`. Run `apply`
+after release/configuration preflight and before provider composition or
+normal application startup. Results use fixed status and reason codes and do
+not disclose the DSN. The tool does not maintain migration history.
+
 The backup manifest records repository/source SHA and tree, migration identity,
 safe PostgreSQL identity, a server-time transaction cutoff/high-water, dump
 SHA-256/size, critical durable-state fingerprints, and the immutable artifact
