@@ -1,0 +1,601 @@
+{
+  "accepted_at": "2026-09-26T14:17:42Z",
+  "changed_files": [
+    {
+      "additions": 54,
+      "deletions": 0,
+      "path": ".github/workflows/package.yml",
+      "status": "M"
+    },
+    {
+      "additions": 16,
+      "deletions": 0,
+      "path": "13_Package_Review.md",
+      "status": "M"
+    },
+    {
+      "additions": 9,
+      "deletions": 0,
+      "path": "README.md",
+      "status": "M"
+    },
+    {
+      "additions": 7,
+      "deletions": 0,
+      "path": "docs/Downstream_Integration_ABI.md",
+      "status": "M"
+    },
+    {
+      "additions": 143,
+      "deletions": 0,
+      "path": "docs/Release_Install_Identity.md",
+      "status": "A"
+    },
+    {
+      "additions": 9,
+      "deletions": 1,
+      "path": "evidence/README.md",
+      "status": "M"
+    },
+    {
+      "additions": 117,
+      "deletions": 0,
+      "path": "evidence/u3/chg-258-u3.1/qualification.json",
+      "status": "A"
+    },
+    {
+      "additions": 98,
+      "deletions": 18,
+      "path": "manifest.json",
+      "status": "M"
+    },
+    {
+      "additions": 5,
+      "deletions": 0,
+      "path": "operations/README.md",
+      "status": "M"
+    },
+    {
+      "additions": 6,
+      "deletions": 2,
+      "path": "pyproject.toml",
+      "status": "M"
+    },
+    {
+      "additions": 23,
+      "deletions": 0,
+      "path": "src/ephi/application/operations.py",
+      "status": "M"
+    },
+    {
+      "additions": 973,
+      "deletions": 0,
+      "path": "src/ephi/release_identity.py",
+      "status": "A"
+    },
+    {
+      "additions": 1,
+      "deletions": 0,
+      "path": "src/ephi/release_inventory.json",
+      "status": "A"
+    },
+    {
+      "additions": 11,
+      "deletions": 0,
+      "path": "src/ephi/release_locks/build-py311.txt",
+      "status": "A"
+    },
+    {
+      "additions": 1,
+      "deletions": 0,
+      "path": "src/ephi/release_locks/index.json",
+      "status": "A"
+    },
+    {
+      "additions": 8,
+      "deletions": 0,
+      "path": "src/ephi/release_locks/installer-py311.txt",
+      "status": "A"
+    },
+    {
+      "additions": 80,
+      "deletions": 0,
+      "path": "src/ephi/release_locks/postgres-py311.txt",
+      "status": "A"
+    },
+    {
+      "additions": 80,
+      "deletions": 0,
+      "path": "src/ephi/release_locks/postgres-py312.txt",
+      "status": "A"
+    },
+    {
+      "additions": 76,
+      "deletions": 0,
+      "path": "src/ephi/release_locks/postgres-py313.txt",
+      "status": "A"
+    },
+    {
+      "additions": 1726,
+      "deletions": 0,
+      "path": "src/ephi/release_locks/runtime-py311.txt",
+      "status": "A"
+    },
+    {
+      "additions": 1725,
+      "deletions": 0,
+      "path": "src/ephi/release_locks/runtime-py312.txt",
+      "status": "A"
+    },
+    {
+      "additions": 1722,
+      "deletions": 0,
+      "path": "src/ephi/release_locks/runtime-py313.txt",
+      "status": "A"
+    },
+    {
+      "additions": 245,
+      "deletions": 0,
+      "path": "tests/test_release_identity.py",
+      "status": "A"
+    },
+    {
+      "additions": 50,
+      "deletions": 0,
+      "path": "tools/generate_release_inventory.py",
+      "status": "A"
+    },
+    {
+      "additions": 5,
+      "deletions": 7,
+      "path": "tools/o9_operations.py",
+      "status": "M"
+    },
+    {
+      "additions": 395,
+      "deletions": 0,
+      "path": "tools/prepare_release_inputs.py",
+      "status": "A"
+    }
+  ],
+  "checks": [
+    {
+      "command": "/bin/zsh -lc \"pwd && git status --short --branch && git rev-parse --show-toplevel && git branch --show-current && git log -1 --format='%H %T %s' && git remote -v\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"cat /Users/haewonkim/.codex/RTK.md /Users/haewonkim/.codex/law.md README.md 13_Package_Review.md && git cat-file -t 2453a086f62c61544f15067d4f4b3ca9e9bd58c0 && git merge-base --is-ancestor fd381d770c91442d2ed441787e8ad9e14c91c79e 2453a086f62c61544f15067d4f4b3ca9e9bd58c0; printf 'ancestor_exit=%s\\\\n' \\\"\"'$?\" && git show -s --format='\"'%H %T %P %s' 2453a086f62c61544f15067d4f4b3ca9e9bd58c0\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk --help'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk read 13_Package_Review.md'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk read README.md'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git merge --ff-only 2453a086f62c61544f15067d4f4b3ca9e9bd58c0'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk read --help'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk ls -la /Users/haewonkim/.codex-fabric'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy sh -lc 'command -v codex-fabric; command -v artifact-bridge; command -v fabric'\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk find /Users/haewonkim/.codex-fabric -maxdepth 4 -type f -iname '*bridge*'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk tree -L 3 /Users/haewonkim/.codex-fabric/project-os-artifacts'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk tree -L 3 /Users/haewonkim/.codex-fabric/libexec'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk tree -L 2 /Users/haewonkim/.codex-fabric/bin'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk tree -L 2 /Users/haewonkim/.codex-fabric/jobs'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk json --keys-only /Users/haewonkim/.codex-fabric/jobs/CF-863d4ef92401c80364719eb6.executed/job.json'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk read /Users/haewonkim/.codex-fabric/bin/fabricctl /Users/haewonkim/.codex-fabric/bin/projectos-integrate-stdin /Users/haewonkim/.codex-fabric/libexec/projectos_integrate.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk ls -la /Users/haewonkim/.codex-fabric/jobs/CF-863d4ef92401c80364719eb6.executed'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk proxy /Users/haewonkim/.codex-fabric/bin/fabricctl --help'",
+      "exit_code": 2,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk proxy /Users/haewonkim/.codex-fabric/bin/fabricctl status'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk grep -n -i 'artifact.bridge|artifact_bridge|projectos_artifact|artifact run' /Users/haewonkim/.codex-fabric/current/fabric.py\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk proxy /Users/haewonkim/.codex-fabric/bin/fabricctl status CF-863d4ef92401c80364719eb6'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk find /Users/haewonkim/.codex-fabric -maxdepth 5 -type f -iname '*artifact*bridge*'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk find /Users/haewonkim/.codex-fabric/current -maxdepth 3 -type f -iname '*artifact*'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk grep -n 'artifact|stage' /Users/haewonkim/.codex-fabric/current/fabric.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk find /Users/haewonkim/.codex-fabric/jobs -maxdepth 1 -name '*863d4ef*'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git ls-remote origin refs/heads/codex/ephi-u3-release-install-identity-v1'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk gh run view 36222813191 --repo kimhw8084/ephi --json headSha,status,conclusion,headBranch,workflowName,createdAt,updatedAt,event'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk find /Users/haewonkim/.codex-fabric/current -maxdepth 2 -type f'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk ls -la /Users/haewonkim/.codex-fabric/jobs/CF-79d92e3276f0fbf81edb5502.executed'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk grep -n 'artifact-bridge-status|project_os_artifact_bridge|artifact_bridge|Artifact Bridge' /Users/haewonkim/.codex-fabric/current /Users/haewonkim/.codex-fabric/libexec /Users/haewonkim/.codex-fabric/config\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk find /Users/haewonkim/.codex-fabric -maxdepth 4 -type f -iname '*projectos*'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk json --keys-only src/ephi/release_inventory.json src/ephi/release_locks/index.json evidence/u3/chg-258-u3.1/qualification.json'",
+      "exit_code": 2,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk grep -n -i 'artifact bridge|artifact-bridge|Project OS|stage receipt|Artifact Run|publish-evidence' /Users/haewonkim/.codex-fabric/jobs/CF-79d92e3276f0fbf81edb5502.executed/prompt.md\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk proxy /Users/haewonkim/.codex-fabric/bin/fabricctl publish-evidence --help'",
+      "exit_code": 2,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short --branch && rtk git rev-parse HEAD HEAD''^{tree} && rtk git merge-base --is-ancestor fd381d770c91442d2ed441787e8ad9e14c91c79e HEAD'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk proxy python3 tools/generate_release_inventory.py --help'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk json --keys-only src/ephi/release_inventory.json'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk json --keys-only src/ephi/release_locks/index.json'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk json --keys-only evidence/u3/chg-258-u3.1/qualification.json'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy python3 - <<'PY'\nimport json\nfrom pathlib import Path\ninventory=json.loads(Path('src/ephi/release_inventory.json').read_text())\nlocks=json.loads(Path('src/ephi/release_locks/index.json').read_text())\nlock_summary={'build':locks['build'],'installer':locks['installer'],'interpreters':{k:{'runtime':v['runtime'],'postgres':v['optional']['postgres']} for k,v in locks['interpreters'].items()}}\nprint(json.dumps({'schema':inventory['schema'],'distribution':inventory['release']['distribution'],'version':inventory['release']['version'],'release_identity_sha256':inventory['release_identity_sha256'],'python':inventory['python'],'base':{k:inventory['dependencies']['base'][k] for k in ('commit','framework_version','nicegui_version')},'abi':inventory['downstream_abi'],'migrations':{k:inventory['migrations'][k] for k in ('identity_sha256','migration_count')},'lock_index':inventory['dependencies']['lock_index'],'locks':lock_summary},sort_keys=True,separators=(',',':')))\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git log --oneline --reverse c1160fbc5ae14f053d5cfa8926a5604176e40f34..2453a086f62c61544f15067d4f4b3ca9e9bd58c0 && rtk git diff --name-status c1160fbc5ae14f053d5cfa8926a5604176e40f34 2453a086f62c61544f15067d4f4b3ca9e9bd58c0'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk proxy python3 tools/generate_release_inventory.py --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy python3 - <<'PY'\nimport json\nfrom pathlib import Path\nq=json.loads(Path('evidence/u3/chg-258-u3.1/qualification.json').read_text())\nprint(json.dumps({'schema':q['schema'],'project':q['project'],'request':q['request'],'candidate_source':q['candidate_source'],'r1_fabric_job_id':q['executor']['fabric_job_id'],'project_os_artifact_bridge_status':q['project_os_artifact_bridge']['status'],'release_identity_sha256':q['release_identity_sha256'],'release':q['release']},sort_keys=True,separators=(',',':')))\nPY\nrtk git status --short --branch && rtk git rev-parse HEAD HEAD\"'^{tree} && rtk git ls-remote origin refs/heads/codex/ephi-u3-release-install-identity-v1'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git merge-base --is-ancestor fd381d770c91442d2ed441787e8ad9e14c91c79e 2453a086f62c61544f15067d4f4b3ca9e9bd58c0'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git branch --show-current && rtk git rev-parse HEAD HEAD''^{tree} && rtk git status --short && rtk git cat-file -t 8caef5d2c5298f802c842df4d14127931d84e8c6'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git ls-remote origin refs/heads/main refs/heads/codex/ephi-u3-release-install-identity-v1 refs/heads/codex-fabric/evidence/ephi/ephi-u3-release-install-identity-v1'",
+      "exit_code": 0,
+      "type": "command_execution"
+    }
+  ],
+  "codex": {
+    "cli_version": "codex-cli 0.157.0",
+    "configured_model": "gpt-6-luna",
+    "event_count": 108,
+    "provider_reported_model": null,
+    "reasoning_effort": "xhigh",
+    "terminal_type": "turn.completed",
+    "usage": {
+      "cache_hit_percent": 90.38,
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 756480,
+      "fresh_input_tokens": 80495,
+      "input_tokens": 836975,
+      "non_reasoning_output_tokens": 6150,
+      "output_tokens": 24936,
+      "reasoning_output_tokens": 18786,
+      "total_processed_tokens": 861911
+    },
+    "warnings": []
+  },
+  "commits": [
+    {
+      "sha": "2453a086f62c61544f15067d4f4b3ca9e9bd58c0",
+      "subject": "Accept Python 3.14 rejection in preflight safety test"
+    },
+    {
+      "sha": "f145edd2b15c2152fc035fcbc84ab66cd70a88ca",
+      "subject": "Record CHG-258 release install qualification"
+    },
+    {
+      "sha": "c1160fbc5ae14f053d5cfa8926a5604176e40f34",
+      "subject": "Require direct dependencies in immutable locks"
+    },
+    {
+      "sha": "67c76783118c228bfb5258a5922b58b0ee442acd",
+      "subject": "Create release builders with interpreter symlinks"
+    },
+    {
+      "sha": "d2f56c99c6f5a92d8a509239dedbece8695c08d3",
+      "subject": "Sanitize builder environment for supported interpreters"
+    },
+    {
+      "sha": "4d46ab6e5c4e499c26255056dd9a0730abb4ca00",
+      "subject": "Pin builder bootstrap during release preparation"
+    },
+    {
+      "sha": "31635ab86bd1e2865a587acfe7a46e6671e3a987",
+      "subject": "Verify local source wheel artifacts in preflight"
+    },
+    {
+      "sha": "1860de07472c54007418d0ec72e4adf8e22cd693",
+      "subject": "Ignore generated bytecode during release verification"
+    },
+    {
+      "sha": "516bdc483d6a097cb73c3c86d67ceefc9246bb93",
+      "subject": "Normalize installed Python support metadata"
+    },
+    {
+      "sha": "7f98c99fb178f2550594271adfd03a9c4bf6e72c",
+      "subject": "Keep release preparation source isolated"
+    },
+    {
+      "sha": "9ccbfffd08bb59167ee727f8b8d2ba8523aa7664",
+      "subject": "Harden release preflight metadata parsing"
+    },
+    {
+      "sha": "7a73813413e1a518f7dc121cc33ff9e739f1512c",
+      "subject": "Establish EPHI release install identity and preflight"
+    }
+  ],
+  "diff": {
+    "additions": 7585,
+    "changed_files": 26,
+    "commit_count": 12,
+    "deletions": 28
+  },
+  "error_code": null,
+  "evidence_manifest": {
+    "count": 10,
+    "items": [
+      {
+        "bytes": 24296,
+        "path": "13_Package_Review.md",
+        "sha256": "8236c51fd8a0ea739549cd8db1b6816f9ca75a31169a95ce12f655eb0f70766c"
+      },
+      {
+        "bytes": 29723,
+        "path": "README.md",
+        "sha256": "7439ef03140332f6118b53793d8a26b6abca8874c155db1a59e9774dcdefdac1"
+      },
+      {
+        "bytes": 13983,
+        "path": "docs/Downstream_Integration_ABI.md",
+        "sha256": "66fbc87f3604159f146bf75626422598f1aad20707202afcbdea3d9592be9f33"
+      },
+      {
+        "bytes": 6706,
+        "path": "docs/Release_Install_Identity.md",
+        "sha256": "8a6d1a3fa2f4e5fd3ddc0a8b694341d937f874acfb8bf8ff4537d86fd48564c5"
+      },
+      {
+        "bytes": 4322,
+        "path": "evidence/README.md",
+        "sha256": "3d35963ef74d6395598b92d5048f74efd917d3f94abbd633d296c1c6cb0eec2a"
+      },
+      {
+        "bytes": 4066,
+        "path": "evidence/u3/chg-258-u3.1/qualification.json",
+        "sha256": "09d4660ca4229c0152ab45b8567aded91c24df99a4f2dc1634f1125c036b93d5"
+      },
+      {
+        "bytes": 90424,
+        "path": "manifest.json",
+        "sha256": "91c6ce5803830dbc94cb01aef01d69a79e42ad227acbacfa6212875277f35d25"
+      },
+      {
+        "bytes": 2175,
+        "path": "operations/README.md",
+        "sha256": "156d4c225cf74b8e8d75175ef25289305ddd58f3d904d549fba794d94678b58d"
+      },
+      {
+        "bytes": 15293,
+        "path": "src/ephi/release_inventory.json",
+        "sha256": "6257443ea2b8e3c477a8bf4ea9d7708cb9d264921018208f04662867c64f569c"
+      },
+      {
+        "bytes": 8165,
+        "path": "src/ephi/release_locks/index.json",
+        "sha256": "592d7315b43a9af58baf953a81fbd2eea0efa0dbb3040d15f06b1ec1e924c5fe"
+      }
+    ],
+    "version": 1
+  },
+  "evidence_publisher_release": "1.2.5-dashboard-controls-candidate",
+  "fabric_capture": {
+    "applied": false,
+    "paths_before": 0,
+    "transient_untracked_removed": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "fabric_release": "1.2.5-dashboard-controls-candidate",
+  "failure_class": null,
+  "finished_at": "2026-09-26T14:26:55Z",
+  "git": {
+    "base_is_ancestor": true,
+    "base_sha": "fd381d770c91442d2ed441787e8ad9e14c91c79e",
+    "branch": "codex/ephi-u3-release-install-identity-verify1",
+    "detached_verify": false,
+    "head_sha": "2453a086f62c61544f15067d4f4b3ca9e9bd58c0",
+    "remote_exact_head": true,
+    "remote_head_sha": "2453a086f62c61544f15067d4f4b3ca9e9bd58c0",
+    "target_branch": "main",
+    "target_drifted_since_acceptance": false,
+    "target_head_observed_after_execution": "fd381d770c91442d2ed441787e8ad9e14c91c79e",
+    "work_branch": "codex/ephi-u3-release-install-identity-verify1",
+    "worktree_clean": true
+  },
+  "instructions": {
+    "files": [
+      {
+        "bytes": 1458,
+        "path": "AGENTS.md",
+        "sha256": "4349f387a79d886ed1264604ff48c582698e539e08ed8fb2f9d8ab8fbf6f804a"
+      }
+    ],
+    "total_bytes": 1458,
+    "warning": null
+  },
+  "job_id": "CF-863d4ef92401c80364719eb6",
+  "kind": "codex-fabric-audit-evidence",
+  "locator": {
+    "branch": "codex-fabric/evidence/ephi/ephi-u3-release-install-identity-verify1",
+    "path": ".codex-fabric/audit.json",
+    "ref": "refs/heads/codex-fabric/evidence/ephi/ephi-u3-release-install-identity-verify1"
+  },
+  "operation": "VERIFY",
+  "policy": {
+    "environment_policy_sha256": "e077daca74297b3c30bee8989f00f8ca5338f7610b4d016a6c48db524205d064",
+    "fabric_release": "1.2.5-dashboard-controls-candidate",
+    "policy_sha256": "123615bf2f6e57dcac197e49ca98ceac59ada86a55e2c84445ea5d00812c0833",
+    "registry_sha256": "af81b8552f9d6a33847310e3c6bcd2d48401782b963a58efd2993e93570cb4aa"
+  },
+  "project_id": "ephi",
+  "recovery": {
+    "model_rerun_safe": false,
+    "recovery_required": false,
+    "retry_safe": false,
+    "retry_scope": null,
+    "worktree_retained": true
+  },
+  "request": "ephi-u3-release-install-identity-verify1",
+  "schema_version": 1,
+  "started_at": "2026-09-26T14:17:43Z",
+  "status": "EXECUTED_CHANGE",
+  "timing": {
+    "execution_seconds": 552,
+    "queue_seconds": 1,
+    "total_seconds": 553
+  },
+  "transport": {
+    "bytes": 8743,
+    "envelope": "FABRIC/2",
+    "prompt_bytes": 8410,
+    "prompt_sha256": "b1a2df4b67a4503e1f2ce2d347e9d43d3a57e07d2f3017c427ec70ca10ee84af",
+    "sha256": "863d4ef92401c80364719eb609c45d48d024210be4e45299951b2b9e82d41068"
+  }
+}
