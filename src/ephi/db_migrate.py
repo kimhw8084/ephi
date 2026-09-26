@@ -49,8 +49,9 @@ def _migration_facts(identity: dict[str, Any]) -> dict[str, object]:
 
 def _connect(dsn: str):
     import psycopg
+    from psycopg.rows import dict_row
 
-    return psycopg.connect(dsn, autocommit=True)
+    return psycopg.connect(dsn, autocommit=True, row_factory=dict_row)
 
 
 def _verify_database(dsn: str) -> int:

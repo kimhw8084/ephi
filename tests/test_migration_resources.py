@@ -11,8 +11,9 @@ import shutil
 import sys
 import tempfile
 import threading
+from types import ModuleType
 import unittest
-from unittest.mock import patch
+from unittest.mock import Mock, patch
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -156,6 +157,18 @@ class MigrationResourceTests(unittest.TestCase):
 
 
 class MigrationCommandTests(unittest.TestCase):
+    def test_postgresql_connection_uses_named_rows_for_shared_schema_verifier(self):
+        fake_psycopg = ModuleType("psycopg")
+        fake_psycopg.__path__ = []
+        fake_psycopg.connect = Mock(return_value=object())
+        fake_rows = ModuleType("psycopg.rows")
+        fake_rows.dict_row = object()
+        fake_psycopg.rows = fake_rows
+        with patch.dict(sys.modules, {"psycopg": fake_psycopg, "psycopg.rows": fake_rows}):
+            connection = db_migrate._connect("secret-dsn")
+        self.assertIsNotNone(connection)
+        fake_psycopg.connect.assert_called_once_with("secret-dsn", autocommit=True, row_factory=fake_rows.dict_row)
+
     def test_identity_is_offline_and_returns_bounded_installed_plan(self):
         output = io.StringIO()
         with patch.object(db_migrate, "_connect", side_effect=AssertionError("must not connect")), patch.object(

@@ -1831,8 +1831,8 @@
     },
     {
       "path": "src/ephi/db_migrate.py",
-      "bytes": 4442,
-      "sha256": "c79a727a13620119e335067e84aec9b41042a22d90e70a46b388b62d70f9abab"
+      "bytes": 4502,
+      "sha256": "3a6ea2beb701f005864333499ce51afe8b05a19c5d4603b5a5dad154ab20b7ea"
     },
     {
       "path": "src/ephi/downstream/__init__.py",
@@ -1947,7 +1947,7 @@
     {
       "path": "src/ephi/release_inventory.json",
       "bytes": 16437,
-      "sha256": "432ced8fd3bb88da895f38267edd63b4af148805a9f85b71e2c7ed863e3b483d"
+      "sha256": "fae78e0b73a9384e462318be36106974a08b6195229647388e41ccfe9612f199"
     },
     {
       "path": "src/ephi/release_locks/build-py311.txt",
@@ -2101,8 +2101,8 @@
     },
     {
       "path": "tests/test_migration_resources.py",
-      "bytes": 11471,
-      "sha256": "648a6ae6930b2176cdf089b13914e4ba8c235aa3097715a015037f16ac817ba0"
+      "bytes": 12162,
+      "sha256": "86f304a92d8d991d5fca5c70453b968a9d5b11eafbb59c963eb318f4c4f928b3"
     },
     {
       "path": "tests/test_o10_rendered_accessibility.py",
