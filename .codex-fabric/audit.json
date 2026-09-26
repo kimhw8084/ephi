@@ -1,0 +1,445 @@
+{
+  "accepted_at": "2026-09-26T23:06:27Z",
+  "changed_files": [
+    {
+      "additions": 55,
+      "deletions": 0,
+      "path": ".github/workflows/package.yml",
+      "status": "M"
+    },
+    {
+      "additions": 4,
+      "deletions": 2,
+      "path": "README.md",
+      "status": "M"
+    },
+    {
+      "additions": 19,
+      "deletions": 1,
+      "path": "docs/Release_Install_Identity.md",
+      "status": "M"
+    },
+    {
+      "additions": 42,
+      "deletions": 22,
+      "path": "manifest.json",
+      "status": "M"
+    },
+    {
+      "additions": 18,
+      "deletions": 0,
+      "path": "operations/README.md",
+      "status": "M"
+    },
+    {
+      "additions": 6,
+      "deletions": 4,
+      "path": "operations/runbooks/postgresql-outage.md",
+      "status": "M"
+    },
+    {
+      "additions": 1,
+      "deletions": 0,
+      "path": "pyproject.toml",
+      "status": "M"
+    },
+    {
+      "additions": 15,
+      "deletions": 1,
+      "path": "src/ephi/application/operations.py",
+      "status": "M"
+    },
+    {
+      "additions": 139,
+      "deletions": 0,
+      "path": "src/ephi/db_migrate.py",
+      "status": "A"
+    },
+    {
+      "additions": 82,
+      "deletions": 60,
+      "path": "src/ephi/infrastructure/postgresql.py",
+      "status": "M"
+    },
+    {
+      "additions": 87,
+      "deletions": 0,
+      "path": "src/ephi/migration_resources.py",
+      "status": "A"
+    },
+    {
+      "additions": 4,
+      "deletions": 15,
+      "path": "src/ephi/release_identity.py",
+      "status": "M"
+    },
+    {
+      "additions": 1,
+      "deletions": 1,
+      "path": "src/ephi/release_inventory.json",
+      "status": "M"
+    },
+    {
+      "additions": 314,
+      "deletions": 0,
+      "path": "tests/test_migration_resources.py",
+      "status": "A"
+    },
+    {
+      "additions": 21,
+      "deletions": 4,
+      "path": "tests/test_release_identity.py",
+      "status": "M"
+    },
+    {
+      "additions": 354,
+      "deletions": 0,
+      "path": "tools/installed_migration_qualification.py",
+      "status": "A"
+    }
+  ],
+  "checks": [
+    {
+      "command": "/bin/zsh -lc 'cat /Users/haewonkim/.codex/RTK.md && cat /Users/haewonkim/.codex/law.md && cat README.md && cat 13_Package_Review.md'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk rg -n \"validate_required_schema|migration_schema_identity|resolve_migration_resources|SCHEMA_VERIFICATION_FAILED|schema_state|Installed-wheel PostgreSQL|prefix\" src/ephi tests .github tools'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short --branch && rtk git log --oneline --decorate -8 && rtk git branch --show-current && rtk git remote -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg --files src/ephi tests .github/workflows | rtk rg 'migration|postgres|package|release|operations'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git branch -a --contains d44d6ed0c0852bf98788347a57e5302954c75f6b && rtk git log --graph --oneline --all --decorate --max-count=25'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git cat-file -t d44d6ed0c0852bf98788347a57e5302954c75f6b && rtk git show -s --format='%H%n%T%n%P%n%s' d44d6ed0c0852bf98788347a57e5302954c75f6b && rtk git merge-base --is-ancestor 05d557c80d21bb48e4486c3f7b5c30d3581f7ba9 d44d6ed0c0852bf98788347a57e5302954c75f6b; rtk git status --short --branch\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git reset --hard d44d6ed0c0852bf98788347a57e5302954c75f6b && rtk git status --short --branch && rtk git show -s --format='%H%n%T%n%P%n%s' HEAD && rtk git merge-base --is-ancestor 05d557c80d21bb48e4486c3f7b5c30d3581f7ba9 HEAD\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk cat .github/workflows/package.yml && rtk git show --stat --oneline 197ae5e35588e47321bb5b064251292a07739cf0'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git show --stat --oneline d44d6ed0c0852bf98788347a57e5302954c75f6b && rtk rg --files src/ephi | rtk rg -i 'migrat|database|postgres' && rtk rg -n \\\"def validate_required_schema|validate_required_schema\\\\(|MIGRATION_PATHS|ephi-db-migrate|schema_state|SCHEMA_VERIFICATION_FAILED|installed.*PostgreSQL\\\" src tests .github\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy sed -n '1,330p' tools/installed_migration_qualification.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy sed -n '1,220p' src/ephi/infrastructure/postgresql.py && rtk proxy sed -n '540,615p' src/ephi/infrastructure/postgresql.py && rtk proxy sed -n '1,190p' src/ephi/db_migrate.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy sed -n '1,290p' tests/test_migration_resources.py && rtk rg -n \\\"validate_required_schema|schema validation|freshness_age_seconds|source_snapshot\\\" tests/test_postgresql_adapter_lifecycle.py tests/test_o4_source_ingress_postgresql.py tests/test_o9_operations.py tests/test_migration_resources.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy sed -n '1,310p' tools/installed_migration_qualification.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy sed -n '1,230p' tests/test_postgresql_adapter_lifecycle.py && rtk proxy sed -n '280,410p' src/ephi/infrastructure/postgresql.py && rtk proxy sed -n '570,625p' src/ephi/infrastructure/postgresql.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy sed -n '100,150p' migrations/006_o4_source_snapshot_ingress.sql && rtk cat migrations/011_o4_revision_pinned_asset_reads.sql && rtk rg -n \\\"operations_health_facts|migration_ledger_state|validate_existing_schema|validate_required_schema\\\" src/ephi/infrastructure/postgresql.py tests/test_postgresql_adapter_lifecycle.py tests/test_operations_application.py tests/test_o9_operations.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy sed -n '700,750p' src/ephi/infrastructure/postgresql.py && rtk proxy sed -n '920,980p' src/ephi/application/operations.py && rtk proxy sed -n '120,230p' tests/test_migration_resources.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy nl -ba tests/test_migration_resources.py | rtk proxy sed -n '115,270p'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest tests.test_migration_resources -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk rg -n \"ephi-db-migrate|migration CLI|migration verify|schema_state|migrations\" README.md operations docs 13_Package_Review.md | rtk head -150'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk cat operations/README.md && rtk proxy sed -n '138,160p' docs/Release_Install_Identity.md && rtk proxy sed -n '45,65p' README.md && rtk python3 tools/generate_release_inventory.py --help && rtk python3 tools/generate_runtime_configuration_contract.py --help\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/generate_release_inventory.py --write && rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m py_compile src/ephi/infrastructure/postgresql.py tools/installed_migration_qualification.py && rtk git diff --stat && rtk git status --short --branch'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest tests.test_postgresql_adapter_lifecycle tests.test_o4_source_ingress_postgresql tests.test_o2_postgresql -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/generate_runtime_configuration_contract.py --check && rtk python3 tools/generate_release_inventory.py --check && rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest tests.test_o9_operations tests.test_operations_application -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest tests.test_release_identity -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff -- .github/workflows/package.yml operations/README.md src/ephi/infrastructure/postgresql.py tests/test_migration_resources.py tools/installed_migration_qualification.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git diff --quiet 05d557c80d21bb48e4486c3f7b5c30d3581f7ba9 -- migrations src/ephi/release_locks/index.json src/ephi/runtime_configuration_contract.json src/ephi/downstream/contracts.py pyproject.toml; rtk git diff --name-only 05d557c80d21bb48e4486c3f7b5c30d3581f7ba9 -- migrations src/ephi/release_locks/index.json src/ephi/runtime_configuration_contract.json src/ephi/downstream/contracts.py pyproject.toml; rtk python3 -c 'import json; from pathlib import Path; d=json.loads(Path(\\\"src/ephi/release_inventory.json\\\").read_text()); print(json.dumps({\\\"release_identity_sha256\\\":d[\\\"release_identity_sha256\\\"],\\\"migration_count\\\":d[\\\"migrations\\\"][\\\"migration_count\\\"],\\\"migration_identity_sha256\\\":d[\\\"migrations\\\"][\\\"identity_sha256\\\"],\\\"base\\\":d[\\\"dependencies\\\"][\\\"base\\\"],\\\"lock_index\\\":d[\\\"dependencies\\\"][\\\"lock_index\\\"],\\\"downstream_abi\\\":d[\\\"downstream_abi\\\"],\\\"runtime_configuration\\\":d[\\\"runtime_configuration\\\"]},sort_keys=True,separators=(\\\",\\\",\\\":\\\")))'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest discover -s tests -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest && rtk python3 tools/generate_runtime_configuration_contract.py --check && rtk python3 tools/generate_release_inventory.py --check && rtk python3 -m unittest tests.test_migration_resources -v && rtk git diff --check && rtk git diff --quiet d44d6ed0c0852bf98788347a57e5302954c75f6b -- migrations pyproject.toml src/ephi/release_locks/index.json src/ephi/runtime_configuration_contract.json src/ephi/downstream/contracts.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest && rtk python3 tools/generate_runtime_configuration_contract.py --check && rtk python3 tools/generate_release_inventory.py --check && rtk python3 -m unittest tests.test_migration_resources -v && rtk python3 -m py_compile src/ephi/infrastructure/postgresql.py tools/installed_migration_qualification.py && rtk git diff --check && rtk git diff --quiet d44d6ed0c0852bf98788347a57e5302954c75f6b -- migrations pyproject.toml src/ephi/release_locks/index.json src/ephi/runtime_configuration_contract.json src/ephi/downstream/contracts.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest discover -s tests -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git status --short --branch && rtk git diff --stat && rtk git diff --check && rtk git show -s --format='%H%n%T%n%P' d44d6ed0c0852bf98788347a57e5302954c75f6b\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git add .github/workflows/package.yml manifest.json operations/README.md src/ephi/infrastructure/postgresql.py src/ephi/release_inventory.json tests/test_migration_resources.py tools/installed_migration_qualification.py && rtk git commit -m \\\"Fix current PostgreSQL schema verification\\\" && rtk git status --short --branch && rtk git show -s --format='%H%n%T%n%P%n%s' HEAD\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git push -u origin codex/ephi-u3-installed-migration-tooling-fix1'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short --branch && rtk git rev-parse HEAD && rtk git rev-parse HEAD''^{tree} && rtk git merge-base --is-ancestor 05d557c80d21bb48e4486c3f7b5c30d3581f7ba9 HEAD && rtk git merge-base --is-ancestor d44d6ed0c0852bf98788347a57e5302954c75f6b HEAD'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short --branch && rtk git rev-parse HEAD && rtk git rev-parse HEAD''^{tree} && rtk git show -s --format='\"'%P' HEAD && rtk git diff --name-only d44d6ed0c0852bf98788347a57e5302954c75f6b..HEAD && rtk git diff --check HEAD\"'^ HEAD && rtk git diff --quiet 05d557c80d21bb48e4486c3f7b5c30d3581f7ba9 HEAD -- migrations src/ephi/release_locks/index.json src/ephi/runtime_configuration_contract.json src/ephi/downstream/contracts.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git ls-remote origin refs/heads/main refs/heads/codex/ephi-u3-installed-migration-tooling-fix1 && rtk python3 -c 'import json; from pathlib import Path; d=json.loads(Path(\\\"src/ephi/release_inventory.json\\\").read_text()); print(json.dumps({\\\"release_identity_sha256\\\":d[\\\"release_identity_sha256\\\"],\\\"migration_count\\\":d[\\\"migrations\\\"][\\\"migration_count\\\"],\\\"migration_identity_sha256\\\":d[\\\"migrations\\\"][\\\"identity_sha256\\\"],\\\"base_commit\\\":d[\\\"dependencies\\\"][\\\"base\\\"][\\\"commit\\\"],\\\"framework_version\\\":d[\\\"dependencies\\\"][\\\"base\\\"][\\\"framework_version\\\"],\\\"nicegui_version\\\":d[\\\"dependencies\\\"][\\\"base\\\"][\\\"nicegui_version\\\"],\\\"lock_index_sha256\\\":d[\\\"dependencies\\\"][\\\"lock_index\\\"][\\\"sha256\\\"],\\\"downstream_abi\\\":d[\\\"downstream_abi\\\"],\\\"runtime_configuration\\\":d[\\\"runtime_configuration\\\"]},sort_keys=True,separators=(\\\",\\\",\\\":\\\")))'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    }
+  ],
+  "codex": {
+    "cli_version": "codex-cli 0.157.0",
+    "configured_model": "gpt-6-luna",
+    "event_count": 121,
+    "provider_reported_model": null,
+    "reasoning_effort": "xhigh",
+    "terminal_type": "turn.completed",
+    "usage": {
+      "cache_hit_percent": 96.95,
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 6267648,
+      "fresh_input_tokens": 197027,
+      "input_tokens": 6464675,
+      "non_reasoning_output_tokens": 15548,
+      "output_tokens": 48416,
+      "reasoning_output_tokens": 32868,
+      "total_processed_tokens": 6513091
+    },
+    "warnings": []
+  },
+  "commits": [
+    {
+      "sha": "d40719b310c3622d984fc9b557fc396c4cfacfa4",
+      "subject": "Fix current PostgreSQL schema verification"
+    },
+    {
+      "sha": "d44d6ed0c0852bf98788347a57e5302954c75f6b",
+      "subject": "Fix migration CLI schema row handling"
+    },
+    {
+      "sha": "197ae5e35588e47321bb5b064251292a07739cf0",
+      "subject": "CHG-274: installable PostgreSQL migrations"
+    }
+  ],
+  "diff": {
+    "additions": 1162,
+    "changed_files": 16,
+    "commit_count": 3,
+    "deletions": 110
+  },
+  "error_code": null,
+  "evidence_manifest": {
+    "count": 6,
+    "items": [
+      {
+        "bytes": 29852,
+        "path": "README.md",
+        "sha256": "6d00ebdbc7775da349af73ce7876a4938bdbe4afacfaafdf0972e5151286e3e2"
+      },
+      {
+        "bytes": 8696,
+        "path": "docs/Release_Install_Identity.md",
+        "sha256": "f0fd7ab42035f32fc58fd57e197f3351282f7dfa087473cdc6bfdc854c9e453a"
+      },
+      {
+        "bytes": 92506,
+        "path": "manifest.json",
+        "sha256": "72d4ee67c9ca55378840e2bf3901c48431d60d6c683a532bb840bf2a0dbaa17d"
+      },
+      {
+        "bytes": 2999,
+        "path": "operations/README.md",
+        "sha256": "5d6f59de2911bdaccf0170b8d1feac941cbb8926c7fcc65701aff1533f871b83"
+      },
+      {
+        "bytes": 1256,
+        "path": "operations/runbooks/postgresql-outage.md",
+        "sha256": "d1c10bcd1052cc6d0ba334efb8713e1248caa9b9831d2b801cfd396a8fc8e553"
+      },
+      {
+        "bytes": 16437,
+        "path": "src/ephi/release_inventory.json",
+        "sha256": "0d2eddbe069d2cc4217943536c8ef66ca7f5a2a002a8bdb502cf66884ee395ec"
+      }
+    ],
+    "version": 1
+  },
+  "evidence_publisher_release": "1.2.5-dashboard-controls-candidate",
+  "fabric_capture": {
+    "applied": false,
+    "paths_before": 0,
+    "transient_untracked_removed": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "fabric_release": "1.2.5-dashboard-controls-candidate",
+  "failure_class": null,
+  "finished_at": "2026-09-26T23:24:40Z",
+  "git": {
+    "base_is_ancestor": true,
+    "base_sha": "05d557c80d21bb48e4486c3f7b5c30d3581f7ba9",
+    "branch": "codex/ephi-u3-installed-migration-tooling-fix1",
+    "detached_verify": false,
+    "head_sha": "d40719b310c3622d984fc9b557fc396c4cfacfa4",
+    "remote_exact_head": true,
+    "remote_head_sha": "d40719b310c3622d984fc9b557fc396c4cfacfa4",
+    "target_branch": "main",
+    "target_drifted_since_acceptance": false,
+    "target_head_observed_after_execution": "05d557c80d21bb48e4486c3f7b5c30d3581f7ba9",
+    "work_branch": "codex/ephi-u3-installed-migration-tooling-fix1",
+    "worktree_clean": true
+  },
+  "instructions": {
+    "files": [
+      {
+        "bytes": 1458,
+        "path": "AGENTS.md",
+        "sha256": "4349f387a79d886ed1264604ff48c582698e539e08ed8fb2f9d8ab8fbf6f804a"
+      }
+    ],
+    "total_bytes": 1458,
+    "warning": null
+  },
+  "job_id": "CF-d58d658880e8ce81152945de",
+  "kind": "codex-fabric-audit-evidence",
+  "locator": {
+    "branch": "codex-fabric/evidence/ephi/ephi-u3-installed-migration-tooling-fix1",
+    "path": ".codex-fabric/audit.json",
+    "ref": "refs/heads/codex-fabric/evidence/ephi/ephi-u3-installed-migration-tooling-fix1"
+  },
+  "operation": "FIX",
+  "policy": {
+    "environment_policy_sha256": "e077daca74297b3c30bee8989f00f8ca5338f7610b4d016a6c48db524205d064",
+    "fabric_release": "1.2.5-dashboard-controls-candidate",
+    "policy_sha256": "123615bf2f6e57dcac197e49ca98ceac59ada86a55e2c84445ea5d00812c0833",
+    "registry_sha256": "af81b8552f9d6a33847310e3c6bcd2d48401782b963a58efd2993e93570cb4aa"
+  },
+  "project_id": "ephi",
+  "recovery": {
+    "model_rerun_safe": false,
+    "recovery_required": false,
+    "retry_safe": false,
+    "retry_scope": null,
+    "worktree_retained": true
+  },
+  "request": "ephi-u3-installed-migration-tooling-fix1",
+  "schema_version": 1,
+  "started_at": "2026-09-26T23:06:27Z",
+  "status": "EXECUTED_CHANGE",
+  "timing": {
+    "execution_seconds": 1093,
+    "queue_seconds": 0,
+    "total_seconds": 1093
+  },
+  "transport": {
+    "bytes": 10676,
+    "envelope": "FABRIC/2",
+    "prompt_bytes": 10345,
+    "prompt_sha256": "42860cc04a388547191b9d130fee3db1650028e379706a2f8fee1f6a6ac45123",
+    "sha256": "d58d658880e8ce81152945dea8420f555bca0b514952a4ab7e906dbe0ae0cac1"
+  }
+}
