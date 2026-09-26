@@ -12,6 +12,7 @@ from urllib.parse import urlsplit
 from .context import AccessScope
 from .errors import SourceBindingUnavailableError, SourceQuarantineError
 from .source_ingress import MetrologySourceBinding
+from ephi.config import EPHI_POSTGRES_DSN
 
 
 SOURCE_BINDING_ENVIRONMENT = (
@@ -26,10 +27,28 @@ SOURCE_BINDING_ENVIRONMENT = (
     "EPHI_METROLOGY_MAPPING_HASH",
     "EPHI_METROLOGY_UNIT",
 )
+SOURCE_BINDING_OPTIONAL_ENVIRONMENT = (
+    "EPHI_METROLOGY_SITE_ID",
+    "EPHI_METROLOGY_AREA_ID",
+    "EPHI_METROLOGY_REFERENCE_POPULATION_ID",
+    "EPHI_METROLOGY_COMPARABLE_POPULATION_ID",
+)
+SOURCE_CONFIGURATION_ENVIRONMENT = SOURCE_BINDING_ENVIRONMENT + SOURCE_BINDING_OPTIONAL_ENVIRONMENT
 
 
 def _safe_text(value: object) -> str:
     return value if isinstance(value, str) else ""
+
+
+def source_adapter_entrypoint_parts(value: object) -> tuple[str, str]:
+    """Validate and split the direct source adapter entrypoint without loading it."""
+
+    if not isinstance(value, str) or value.count(":") != 1:
+        raise SourceBindingUnavailableError("source adapter must be an explicit module:factory entrypoint")
+    module_name, attribute_name = value.split(":", 1)
+    if not module_name or not attribute_name:
+        raise SourceBindingUnavailableError("source adapter must be an explicit module:factory entrypoint")
+    return module_name, attribute_name
 
 
 def redacted_connection_facts(value: object) -> dict[str, object]:
@@ -152,9 +171,7 @@ class SourceBindingConfiguration:
     def load_adapter(self) -> object:
         if self.missing_required:
             raise SourceBindingUnavailableError("approved real metrology source binding is absent")
-        if not self.adapter_entrypoint or ":" not in self.adapter_entrypoint:
-            raise SourceBindingUnavailableError("source adapter must be an explicit module:factory entrypoint")
-        module_name, attribute_name = self.adapter_entrypoint.split(":", 1)
+        module_name, attribute_name = source_adapter_entrypoint_parts(self.adapter_entrypoint)
         try:
             factory = getattr(importlib.import_module(module_name), attribute_name)
             adapter = factory() if callable(factory) else factory
@@ -235,7 +252,7 @@ def preflight_source_reality(environ: Mapping[str, str] | None = None) -> dict[s
             "reason": "REAL_SOURCE_SNAPSHOT_NOT_PUBLISHED",
         },
         "missing_prerequisites": sorted(set(missing)),
-        "postgresql": redacted_connection_facts(values.get("EPHI_POSTGRES_DSN")),
+        "postgresql": redacted_connection_facts(values.get(EPHI_POSTGRES_DSN)),
         "secret_safety": {
             "credentials_printed": False,
             "raw_rows_printed": False,
@@ -262,8 +279,11 @@ def require_runtime_source_binding(environ: Mapping[str, str] | None = None) -> 
 
 __all__ = [
     "SOURCE_BINDING_ENVIRONMENT",
+    "SOURCE_BINDING_OPTIONAL_ENVIRONMENT",
+    "SOURCE_CONFIGURATION_ENVIRONMENT",
     "SourceBindingConfiguration",
     "preflight_source_reality",
     "redacted_connection_facts",
     "require_runtime_source_binding",
+    "source_adapter_entrypoint_parts",
 ]

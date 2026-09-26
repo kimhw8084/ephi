@@ -1,0 +1,111 @@
+{
+  "candidate_source": {
+    "base_commit": "4d0310c09cd337603496d0de4492d7348861c62d",
+    "branch": "codex/ephi-u3-runtime-config-contract-v1",
+    "commit": "1938fd469b25ffa7132570d751cfb476320d2348",
+    "tree": "474ebdfe71b01d869643339e217c143d71b38326"
+  },
+  "change": "CHG-260 / U3.2",
+  "configuration_contract": {
+    "document_path": "src/ephi/runtime_configuration_contract.json",
+    "document_sha256": "3dba6ba0b06d47cee760944ef8a62bb061f767fd619034c9884069c4e1171642",
+    "schema": "org.ephi.runtime-configuration.v1",
+    "version": "1.0.0",
+    "contract_sha256": "eafd4f1b477d311bf899a80466bb5ef6192f8bd55e76cf7f0791c56c0a9c9695"
+  },
+  "executor": {
+    "fabric_job_id": "NOT_EXPOSED_IN_EXECUTION_CONTEXT",
+    "platform": "macOS arm64",
+    "python": "3.11.7"
+  },
+  "not_run_or_not_claimed": [
+    "PostgreSQL integration; EPHI_TEST_POSTGRES_DSN was not set",
+    "GitHub package CI workflow execution",
+    "private provider composition",
+    "company configuration or secrets",
+    "company identity, source, TLS, ingress, or deployment qualification",
+    "real-family G02/G06",
+    "production-like G10 capacity",
+    "production RPO/RTO",
+    "G12",
+    "Port Gate",
+    "company deployment readiness",
+    "release promotion",
+    "Production",
+    "Project OS acceptance"
+  ],
+  "preflight": {
+    "entrypoint": "ephi-config-preflight",
+    "pass_reason_code": "CONFIG_CONTRACT_PASS",
+    "reason_codes": [
+      "CONFIGURATION_CONTRACT_INVALID",
+      "DEVELOPMENT_CONFIGURATION_INCOMPLETE",
+      "DEVELOPMENT_CONFIGURATION_INVALID",
+      "DEVELOPMENT_SOURCE_BINDING_INVALID",
+      "INVALID_DOWNSTREAM_ENTRYPOINT",
+      "INVALID_RUNTIME_SETTINGS",
+      "LEGACY_COMPOSITION_CONFIGURATION_FORBIDDEN",
+      "MISSING_DOWNSTREAM_ENTRYPOINT",
+      "RUNTIME_SECURITY_CONFIGURATION_INVALID",
+      "RUNTIME_SECURITY_PREFLIGHT_FAILED"
+    ],
+    "provider_load_or_composition": "NOT_RUN",
+    "external_connections": "NOT_ATTEMPTED"
+  },
+  "project": "ephi",
+  "project_os_acceptance": "NOT_CLAIMED",
+  "project_os_artifact_bridge": {
+    "status": "NOT_STAGED",
+    "reason": "No callable qualified Project OS Artifact Bridge tool was exposed in this execution context; no alternate upload convention was used."
+  },
+  "qualification_date": "2026-09-26",
+  "qualification_scope": "generic runtime configuration contract and secret-safe preflight candidate evidence only",
+  "release": {
+    "distribution": "ephi",
+    "downstream_abi": "org.ephi.downstream@1.0.0",
+    "migration_count": 11,
+    "migration_identity_sha256": "c661c7a41eae8cd2b637778998bee77b8ebdec4a2ef78639d3ed7f69b23b1e8b",
+    "nicegui_base_commit": "000298562d6bcbf6df304edbd41b98b30fe4bfcf",
+    "nicegui_base_version": "3.0.0a8",
+    "nicegui_version": "3.15.0",
+    "provider_contract_version": "1.0.0",
+    "python_requires": ">=3.11,<3.14",
+    "release_identity_sha256_before": "db03afc6115e4c3bf88a3e1ab9fb379c241dffb6122e56e166da16a4b1cdd4a6",
+    "release_identity_sha256_after": "9639dd86c5f93f4092b78d36b3abd18b72bfae0d0a199ef6021b04e7794889de",
+    "release_identity_change": "Configuration-contract identity and CHG-260 packaged source/entrypoint facts are bound; dependency locks, Base pin, downstream ABI, provider contracts, and migration identity are unchanged.",
+    "required_provider_categories": [
+      "identity",
+      "source",
+      "artifacts",
+      "notifications",
+      "policy",
+      "runtime"
+    ],
+    "version": "0.1.0"
+  },
+  "repository_qualification": {
+    "adversarial_secret_private_value_projection_tests": "PASS",
+    "config_contract_generator_check": "PASS",
+    "config_preflight_profile_and_negative_controls": "PASS",
+    "focused_regressions": {
+      "ran": 84,
+      "status": "PASS"
+    },
+    "git_diff_check": "PASS",
+    "package_check_refresh_manifest": "PASS",
+    "release_inventory_check": "PASS",
+    "unittest_discover": {
+      "ran": 447,
+      "skipped": 105,
+      "status": "PASS",
+      "postgresql_integration": "NOT_RUN"
+    }
+  },
+  "request": "ephi-u3-runtime-config-contract-v1",
+  "schema": "org.ephi.u3.runtime-configuration-qualification.v1",
+  "sensitivity_classes": [
+    "public_metadata",
+    "private_deployment_configuration",
+    "secret_credential_material"
+  ]
+}

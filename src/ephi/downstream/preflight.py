@@ -6,13 +6,14 @@ import argparse
 import importlib
 import json
 import os
-import re
 from typing import Any
 
+from ephi.config import EPHI_DOWNSTREAM_ENTRYPOINT
 from ephi.identity import ApplicationIdentity
 
 from .boundary import check_synthetic_boundary
 from .composition import compose_downstream
+from .entrypoint import validate_provider_entrypoint
 from .contracts import (
     DownstreamFailure,
     DownstreamReasonCode,
@@ -22,18 +23,9 @@ from .contracts import (
 from .validation import provider_inventory, safe_manifest, safe_manifest_hash, validate_provider_bundle
 
 
-_MODULE = re.compile(r"^[A-Za-z_]\w*(?:\.[A-Za-z_]\w*)*$", re.ASCII)
-_FACTORY = re.compile(r"^[A-Za-z_]\w*$", re.ASCII)
-
-
 def load_provider_bundle(entrypoint: str) -> ProviderBundle:
     """Load one exact ``module:factory`` entrypoint without package scanning."""
-
-    if not isinstance(entrypoint, str) or entrypoint.count(":") != 1:
-        raise DownstreamFailure(DownstreamReasonCode.INVALID_ENTRYPOINT)
-    module_name, factory_name = entrypoint.split(":", 1)
-    if not _MODULE.fullmatch(module_name) or not _FACTORY.fullmatch(factory_name):
-        raise DownstreamFailure(DownstreamReasonCode.INVALID_ENTRYPOINT)
+    module_name, factory_name = validate_provider_entrypoint(entrypoint)
     try:
         module = importlib.import_module(module_name)
         factory = getattr(module, factory_name)
@@ -60,7 +52,7 @@ def preflight(
 ) -> dict[str, Any]:
     """Produce deterministic JSON-ready conformance facts without private data."""
 
-    declared = entrypoint if entrypoint is not None else os.environ.get("EPHI_DOWNSTREAM_ENTRYPOINT", "")
+    declared = entrypoint if entrypoint is not None else os.environ.get(EPHI_DOWNSTREAM_ENTRYPOINT, "")
     bundle: object | None = None
     load_error: DownstreamFailure | None = None
     if declared:
