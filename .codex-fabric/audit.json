@@ -1,0 +1,553 @@
+{
+  "accepted_at": "2026-09-26T15:32:05Z",
+  "changed_files": [
+    {
+      "additions": 12,
+      "deletions": 0,
+      "path": ".github/workflows/package.yml",
+      "status": "M"
+    },
+    {
+      "additions": 2,
+      "deletions": 2,
+      "path": "README.md",
+      "status": "M"
+    },
+    {
+      "additions": 8,
+      "deletions": 6,
+      "path": "docs/Downstream_Integration_ABI.md",
+      "status": "M"
+    },
+    {
+      "additions": 25,
+      "deletions": 3,
+      "path": "docs/Release_Install_Identity.md",
+      "status": "M"
+    },
+    {
+      "additions": 16,
+      "deletions": 0,
+      "path": "evidence/u3/chg-260-u3.2/evidence-handoff-failure.json",
+      "status": "A"
+    },
+    {
+      "additions": 111,
+      "deletions": 0,
+      "path": "evidence/u3/chg-260-u3.2/qualification.json",
+      "status": "A"
+    },
+    {
+      "additions": 68,
+      "deletions": 28,
+      "path": "manifest.json",
+      "status": "M"
+    },
+    {
+      "additions": 2,
+      "deletions": 1,
+      "path": "pyproject.toml",
+      "status": "M"
+    },
+    {
+      "additions": 24,
+      "deletions": 4,
+      "path": "src/ephi/application/source_reality.py",
+      "status": "M"
+    },
+    {
+      "additions": 96,
+      "deletions": 8,
+      "path": "src/ephi/config.py",
+      "status": "M"
+    },
+    {
+      "additions": 208,
+      "deletions": 0,
+      "path": "src/ephi/config_preflight.py",
+      "status": "A"
+    },
+    {
+      "additions": 25,
+      "deletions": 0,
+      "path": "src/ephi/downstream/entrypoint.py",
+      "status": "A"
+    },
+    {
+      "additions": 4,
+      "deletions": 12,
+      "path": "src/ephi/downstream/preflight.py",
+      "status": "M"
+    },
+    {
+      "additions": 22,
+      "deletions": 0,
+      "path": "src/ephi/release_identity.py",
+      "status": "M"
+    },
+    {
+      "additions": 1,
+      "deletions": 1,
+      "path": "src/ephi/release_inventory.json",
+      "status": "M"
+    },
+    {
+      "additions": 1,
+      "deletions": 0,
+      "path": "src/ephi/runtime_configuration_contract.json",
+      "status": "A"
+    },
+    {
+      "additions": 378,
+      "deletions": 0,
+      "path": "src/ephi/runtime_configuration_contract.py",
+      "status": "A"
+    },
+    {
+      "additions": 56,
+      "deletions": 27,
+      "path": "src/ephi/transport.py",
+      "status": "M"
+    },
+    {
+      "additions": 33,
+      "deletions": 45,
+      "path": "src/ephi/ui/app.py",
+      "status": "M"
+    },
+    {
+      "additions": 5,
+      "deletions": 0,
+      "path": "tests/test_release_identity.py",
+      "status": "M"
+    },
+    {
+      "additions": 298,
+      "deletions": 0,
+      "path": "tests/test_runtime_config_preflight.py",
+      "status": "A"
+    },
+    {
+      "additions": 3,
+      "deletions": 1,
+      "path": "tools/check_package.py",
+      "status": "M"
+    },
+    {
+      "additions": 39,
+      "deletions": 0,
+      "path": "tools/generate_runtime_configuration_contract.py",
+      "status": "A"
+    }
+  ],
+  "checks": [
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short --branch'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk cat evidence/u3/chg-258-u3.1/qualification.json'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git add .github/workflows/package.yml README.md docs/Downstream_Integration_ABI.md docs/Release_Install_Identity.md manifest.json pyproject.toml src/ephi/application/source_reality.py src/ephi/config.py src/ephi/config_preflight.py src/ephi/downstream/preflight.py src/ephi/downstream/entrypoint.py src/ephi/release_identity.py src/ephi/release_inventory.json src/ephi/runtime_configuration_contract.json src/ephi/runtime_configuration_contract.py src/ephi/transport.py src/ephi/ui/app.py tests/test_release_identity.py tests/test_runtime_config_preflight.py tools/check_package.py tools/generate_runtime_configuration_contract.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --cached --stat'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git write-tree'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short --branch'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --cached --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git commit -m \"Implement CHG-260 runtime config contract\"'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git rev-parse HEAD'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git rev-parse HEAD''^{tree}'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git rev-parse HEAD''^'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short --branch'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import json; v=json.load(open(\\\"src/ephi/release_inventory.json\\\")); c=json.load(open(\\\"src/ephi/runtime_configuration_contract.json\\\")); print(json.dumps({\\\"release_identity_sha256\\\":v[\\\"release_identity_sha256\\\"],\\\"runtime_configuration\\\":v[\\\"runtime_configuration\\\"],\\\"contract_schema\\\":c[\\\"schema\\\"],\\\"contract_version\\\":c[\\\"version\\\"],\\\"contract_sha256\\\":c[\\\"contract_sha256\\\"]},sort_keys=True))'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n 'skipped=|EPHI_TEST_POSTGRES_DSN|PostgreSQL integration' /tmp/ephi-u3-runtime-config-final-tests.log\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest tests.test_runtime_config_preflight tests.test_release_identity tests.test_downstream_abi tests.test_o8_browser_transport tests.test_o4_source_ingress tests.test_ephi_application -v > /tmp/ephi-u3-runtime-config-focused-tests.log 2>&1'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk tail -n 5 /tmp/ephi-u3-runtime-config-focused-tests.log'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk uname -sm && rtk python3 --version'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk shasum -a 256 evidence/u3/chg-260-u3.2/qualification.json && rtk python3 -c 'import json; json.load(open(\\\"evidence/u3/chg-260-u3.2/qualification.json\\\")); print(\\\"QUALIFICATION_JSON_VALID\\\")'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/generate_runtime_configuration_contract.py --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/generate_release_inventory.py --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest discover -s tests -v > /tmp/ephi-u3-runtime-config-evidence-tests.log 2>&1'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk tail -n 7 /tmp/ephi-u3-runtime-config-evidence-tests.log'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest tests.test_runtime_config_preflight -v > /tmp/ephi-u3-runtime-config-evidence-focused.log 2>&1'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk tail -n 5 /tmp/ephi-u3-runtime-config-evidence-focused.log'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git add manifest.json tests/test_runtime_config_preflight.py evidence/u3/chg-260-u3.2/qualification.json evidence/u3/chg-260-u3.2/evidence-handoff-failure.json'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --cached --stat'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git write-tree'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --cached --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short --branch'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git commit -m \"Record CHG-260 qualification evidence\"'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git rev-parse HEAD'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git rev-parse HEAD''^'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git rev-parse HEAD''^{tree}'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short --branch'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import json; v=json.load(open(\\\"src/ephi/release_inventory.json\\\")); c=json.load(open(\\\"src/ephi/runtime_configuration_contract.json\\\")); print(json.dumps({\\\"release_identity_sha256\\\":v[\\\"release_identity_sha256\\\"],\\\"config_contract\\\":v[\\\"runtime_configuration\\\"],\\\"contract_digest\\\":c[\\\"contract_sha256\\\"]},sort_keys=True))'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git ls-remote --heads origin codex/ephi-u3-runtime-config-contract-v1'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short --branch'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/generate_runtime_configuration_contract.py --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/generate_release_inventory.py --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git push -u origin codex/ephi-u3-runtime-config-contract-v1'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk tail -n 6 /tmp/ephi-u3-runtime-config-evidence-tests.log'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git rev-parse HEAD''^{tree}'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git rev-parse HEAD'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short --branch'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git ls-remote --heads origin codex/ephi-u3-runtime-config-contract-v1'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --name-only 4d0310c09cd337603496d0de4492d7348861c62d..HEAD'",
+      "exit_code": 0,
+      "type": "command_execution"
+    }
+  ],
+  "codex": {
+    "cli_version": "codex-cli 0.157.0",
+    "configured_model": "gpt-6-luna",
+    "event_count": 425,
+    "provider_reported_model": null,
+    "reasoning_effort": "xhigh",
+    "terminal_type": "turn.completed",
+    "usage": {
+      "cache_hit_percent": 98.56,
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 20710400,
+      "fresh_input_tokens": 302799,
+      "input_tokens": 21013199,
+      "non_reasoning_output_tokens": 37024,
+      "output_tokens": 102247,
+      "reasoning_output_tokens": 65223,
+      "total_processed_tokens": 21115446
+    },
+    "warnings": []
+  },
+  "commits": [
+    {
+      "sha": "26198058324fbb2d63ff8dbe3baf3cd1913a42cc",
+      "subject": "Record CHG-260 qualification evidence"
+    },
+    {
+      "sha": "1938fd469b25ffa7132570d751cfb476320d2348",
+      "subject": "Implement CHG-260 runtime config contract"
+    }
+  ],
+  "diff": {
+    "additions": 1437,
+    "changed_files": 23,
+    "commit_count": 2,
+    "deletions": 138
+  },
+  "error_code": null,
+  "evidence_manifest": {
+    "count": 8,
+    "items": [
+      {
+        "bytes": 29754,
+        "path": "README.md",
+        "sha256": "41c3b94e7453ad8bae5b8e5ad33749823ab0215520704179563e4552194307b8"
+      },
+      {
+        "bytes": 14177,
+        "path": "docs/Downstream_Integration_ABI.md",
+        "sha256": "eb0dabfbbfc6afb54c7cbd76f4a0437bf998dafff1de46cca26d3855900b657d"
+      },
+      {
+        "bytes": 7864,
+        "path": "docs/Release_Install_Identity.md",
+        "sha256": "ce0e04ce83d2dbb54a7ce8a4533bd21d1a3f45aa739015af69a44689f8f36e65"
+      },
+      {
+        "bytes": 732,
+        "path": "evidence/u3/chg-260-u3.2/evidence-handoff-failure.json",
+        "sha256": "8d347def17744f63b01442a09f4c15308848d7b7adfc4226abb25b71846aaffb"
+      },
+      {
+        "bytes": 4251,
+        "path": "evidence/u3/chg-260-u3.2/qualification.json",
+        "sha256": "e9473eb39450c4dc136b7cc4c318ae33451cca29974acdc0cc9018804cc4d919"
+      },
+      {
+        "bytes": 91836,
+        "path": "manifest.json",
+        "sha256": "91fdd4445713b21a176e955f1a0fedf6fe9cfcc65df596e6d3fc8d2c35e8221b"
+      },
+      {
+        "bytes": 16133,
+        "path": "src/ephi/release_inventory.json",
+        "sha256": "ca136f37a2deac06afc0a672d3cab315d05c43cf4f277b3ed7976cf10b45b8cd"
+      },
+      {
+        "bytes": 29419,
+        "path": "src/ephi/runtime_configuration_contract.json",
+        "sha256": "3dba6ba0b06d47cee760944ef8a62bb061f767fd619034c9884069c4e1171642"
+      }
+    ],
+    "version": 1
+  },
+  "evidence_publisher_release": "1.2.5-dashboard-controls-candidate",
+  "fabric_capture": {
+    "applied": false,
+    "paths_before": 0,
+    "transient_untracked_removed": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "fabric_release": "1.2.5-dashboard-controls-candidate",
+  "failure_class": null,
+  "finished_at": "2026-09-26T16:09:20Z",
+  "git": {
+    "base_is_ancestor": true,
+    "base_sha": "4d0310c09cd337603496d0de4492d7348861c62d",
+    "branch": "codex/ephi-u3-runtime-config-contract-v1",
+    "detached_verify": false,
+    "head_sha": "26198058324fbb2d63ff8dbe3baf3cd1913a42cc",
+    "remote_exact_head": true,
+    "remote_head_sha": "26198058324fbb2d63ff8dbe3baf3cd1913a42cc",
+    "target_branch": "main",
+    "target_drifted_since_acceptance": false,
+    "target_head_observed_after_execution": "4d0310c09cd337603496d0de4492d7348861c62d",
+    "work_branch": "codex/ephi-u3-runtime-config-contract-v1",
+    "worktree_clean": true
+  },
+  "instructions": {
+    "files": [
+      {
+        "bytes": 1458,
+        "path": "AGENTS.md",
+        "sha256": "4349f387a79d886ed1264604ff48c582698e539e08ed8fb2f9d8ab8fbf6f804a"
+      }
+    ],
+    "total_bytes": 1458,
+    "warning": null
+  },
+  "job_id": "CF-de2c31dc5ba62885b2593afe",
+  "kind": "codex-fabric-audit-evidence",
+  "locator": {
+    "branch": "codex-fabric/evidence/ephi/ephi-u3-runtime-config-contract-v1",
+    "path": ".codex-fabric/audit.json",
+    "ref": "refs/heads/codex-fabric/evidence/ephi/ephi-u3-runtime-config-contract-v1"
+  },
+  "operation": "BUILD",
+  "policy": {
+    "environment_policy_sha256": "e077daca74297b3c30bee8989f00f8ca5338f7610b4d016a6c48db524205d064",
+    "fabric_release": "1.2.5-dashboard-controls-candidate",
+    "policy_sha256": "123615bf2f6e57dcac197e49ca98ceac59ada86a55e2c84445ea5d00812c0833",
+    "registry_sha256": "af81b8552f9d6a33847310e3c6bcd2d48401782b963a58efd2993e93570cb4aa"
+  },
+  "project_id": "ephi",
+  "recovery": {
+    "model_rerun_safe": false,
+    "recovery_required": false,
+    "retry_safe": false,
+    "retry_scope": null,
+    "worktree_retained": true
+  },
+  "request": "ephi-u3-runtime-config-contract-v1",
+  "schema_version": 1,
+  "started_at": "2026-09-26T15:32:05Z",
+  "status": "EXECUTED_CHANGE",
+  "timing": {
+    "execution_seconds": 2235,
+    "queue_seconds": 0,
+    "total_seconds": 2235
+  },
+  "transport": {
+    "bytes": 16497,
+    "envelope": "FABRIC/2",
+    "prompt_bytes": 16176,
+    "prompt_sha256": "6331abf7dd13f4d088a54b44376cb530c1242aa22f74fda41c8a4c43fe1ca107",
+    "sha256": "de2c31dc5ba62885b2593afef5d38aa5ecb950363ba1cea525850b18356e1b27"
+  }
+}
