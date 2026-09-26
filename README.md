@@ -51,8 +51,8 @@ The self-check reports package identity, runtime/config identity, the pinned fra
 
 For restricted downstream installation, prepare the immutable wheel and
 dependency bundle upstream, install it offline, and run
-`ephi-release-preflight` before separately running
-`ephi-downstream-preflight`. The exact transfer and install steps are in the
+`ephi-release-preflight`, then `ephi-config-preflight`, before separately
+running `ephi-downstream-preflight`. The exact transfer and install steps are in the
 [release/install identity guide](docs/Release_Install_Identity.md). Python
 3.14 remains a repository source/package compatibility lane and is outside the
 declared install range.

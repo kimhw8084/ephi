@@ -25,7 +25,9 @@ REQUIRED = {
     "evidence/README.md", "evidence/import/original_manifest.json",
     "evidence/review/package_review.json", "evidence/review/base_reference_check.json",
     "environment/w0_repo_baseline.json", "pyproject.toml", "src/ephi/__init__.py",
-    "tools/check_package.py", "tools/w0_repo_baseline.py", "tests/test_package.py",
+    "src/ephi/config_preflight.py", "src/ephi/runtime_configuration_contract.json",
+    "tools/check_package.py", "tools/generate_runtime_configuration_contract.py",
+    "tools/w0_repo_baseline.py", "tests/test_package.py", "tests/test_runtime_config_preflight.py",
 }
 SECRET_PATTERNS = (
     r"-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----",

@@ -22,12 +22,14 @@ scientific authority. Existing authorization, source-ingress, artifact,
 handoff, planner/recovery, transport, operations and PostgreSQL contracts keep
 their authority.
 
-Before this provider boundary is invoked in a restricted installation,
-`ephi-release-preflight` checks the installed release, dependency/Base pins,
-migration identity and the ABI facts below. It does not load a provider or
-validate a second provider registry. `ephi-downstream-preflight` remains the
-authority for provider discovery, compatibility, safe-manifest generation
-and composition.
+Before this provider boundary is invoked in a restricted installation, run
+`ephi-release-preflight`, then `ephi-config-preflight`, then
+`ephi-downstream-preflight`. The release preflight checks the installed
+release, dependency/Base pins, migration identity, configuration-contract
+identity and the ABI facts below. The configuration preflight checks generic
+runtime settings and O8 policy without importing a provider or connecting to
+a company system. `ephi-downstream-preflight` remains the authority for
+provider discovery, compatibility, safe-manifest generation and composition.
 
 ## Public imports and ABI versioning
 

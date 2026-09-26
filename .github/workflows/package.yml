@@ -26,6 +26,8 @@ jobs:
           python-version: ${{ matrix.python }}
       - name: Validate package and imported evidence
         run: python tools/check_package.py
+      - name: Check generated runtime configuration contract
+        run: python tools/generate_runtime_configuration_contract.py --check
       - name: Check release/install inventory against its authorities
         run: python tools/generate_release_inventory.py --check
       - name: Test checker failure detection
@@ -86,6 +88,16 @@ jobs:
           assert report["provider_composition"]["status"] == "NOT_RUN", report
           print("RELEASE_INSTALL_PREFLIGHT_PASS")
           PY
+      - name: Run configuration preflight without provider composition
+        env:
+          EPHI_ENV: qa
+          EPHI_HOST: 0.0.0.0
+          EPHI_PORT: "8080"
+          EPHI_DOWNSTREAM_ENTRYPOINT: not_installed_private.provider:build_bundle
+          EPHI_ALLOWED_BROWSER_ORIGINS: https://ephi.example.invalid
+          NICEGUI_BASE_STORAGE_SECRET: candidate-config-preflight-placeholder
+          NICEGUI_BASE_SECURE_SESSION_COOKIE: "true"
+        run: "$RUNNER_TEMP/ephi-u3-venv/bin/ephi-config-preflight" --json
 
   canonical-baseline:
     name: Canonical repository baseline

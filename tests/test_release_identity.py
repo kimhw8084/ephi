@@ -41,6 +41,7 @@ from ephi.release_identity import (  # noqa: E402
     main,
     verify_inventory_document,
 )
+from ephi.runtime_configuration_contract import contract_identity as runtime_configuration_contract_identity  # noqa: E402
 import ephi.release_identity as release_identity_module  # noqa: E402
 from tools.prepare_release_inputs import _clean_tool_environment  # noqa: E402
 from tools.o9_operations import _migration_identity  # noqa: E402
@@ -97,6 +98,10 @@ class ReleaseInventoryTests(unittest.TestCase):
             "manifest_schema": MANIFEST_SCHEMA,
             "required_categories": list(REQUIRED_CATEGORIES),
         })
+        self.assertEqual(
+            first["runtime_configuration"],
+            runtime_configuration_contract_identity(ROOT / "src/ephi/runtime_configuration_contract.json"),
+        )
         self.assertEqual(first["migrations"], _migration_identity(ROOT))
         self.assertEqual(first["migrations"]["migration_count"], 11)
 

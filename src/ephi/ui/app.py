@@ -76,7 +76,20 @@ from ephi.application.o10 import (
     state_for_error as _state_for_error_facts,
 )
 from ephi.application.source_reality import require_runtime_source_binding
-from ephi.config import RuntimeSettings, downstream_entrypoint_from_environment
+from ephi.config import (
+    EPHI_DEV_AREA_ID,
+    EPHI_DEV_FAMILY_ID,
+    EPHI_DEV_SCOPE_ID,
+    EPHI_DEV_SITE_ID,
+    EPHI_ENV,
+    EPHI_POSTGRES_DSN,
+    EPHI_TEST_SELECTED_EPISODE_ID,
+    EPHI_W1_EPISODE_ID,
+    DevelopmentIdentitySettings,
+    RuntimeSettings,
+    downstream_entrypoint_from_environment,
+    required_environment_text,
+)
 from ephi.downstream import DownstreamComposition, compose_downstream, load_provider_bundle
 from ephi.infrastructure.postgresql import PostgreSQLReferenceTransactionAdapter
 from ephi.value import EventPeriod, OutcomesQueryResult, OutcomeRecord, OutcomesService, ReviewDecision
@@ -260,10 +273,10 @@ class _DevelopmentIdentityProvider:
 
     def scope(self) -> AccessScope:
         return AccessScope(
-            _required_environment("EPHI_DEV_SCOPE_ID"),
-            site_id=os.environ.get("EPHI_DEV_SITE_ID") or None,
-            area_id=os.environ.get("EPHI_DEV_AREA_ID") or None,
-            family_id=os.environ.get("EPHI_DEV_FAMILY_ID") or None,
+            required_environment_text(os.environ, EPHI_DEV_SCOPE_ID),
+            site_id=os.environ.get(EPHI_DEV_SITE_ID) or None,
+            area_id=os.environ.get(EPHI_DEV_AREA_ID) or None,
+            family_id=os.environ.get(EPHI_DEV_FAMILY_ID) or None,
         )
 
     def principal(self) -> Principal:
@@ -282,27 +295,6 @@ def _stable_command_id(action: str, brief: EpisodeBrief, scope: AccessScope, sub
         "subject": subject,
     }
     return hashlib.sha256(json.dumps(identity, sort_keys=True, separators=(",", ":")).encode("utf-8")).hexdigest()
-
-
-def _identity(value: str, field: str) -> str:
-    if not value or value != value.strip() or "\x00" in value:
-        raise RuntimeError(f"missing or invalid {field} binding")
-    return value
-
-
-def _required_environment(name: str) -> str:
-    return _identity(os.environ.get(name, ""), name)
-
-
-def _int_environment(name: str, default: int) -> int:
-    raw = os.environ.get(name, str(default))
-    try:
-        value = int(raw)
-    except ValueError as exc:
-        raise RuntimeError(f"{name} must be an integer") from exc
-    if value < 0:
-        raise RuntimeError(f"{name} must be non-negative")
-    return value
 
 
 @dataclass(slots=True)
@@ -330,20 +322,16 @@ class EphiUiComposition:
 
 
 def _development_principal_from_environment(scope: AccessScope) -> Principal:
-    environment = os.environ.get("EPHI_ENV", "development").lower()
+    environment = os.environ.get(EPHI_ENV, "development").lower()
     if environment not in {"development", "test"}:
         raise RuntimeError("production identity binding is unavailable; EPHI fails closed")
-    capabilities = tuple(
-        item.strip()
-        for item in _required_environment("EPHI_DEV_IDENTITY_CAPABILITIES").split(",")
-        if item.strip()
-    )
+    settings = DevelopmentIdentitySettings.from_environment()
     return Principal(
-        _required_environment("EPHI_DEV_IDENTITY_SUBJECT"),
-        capabilities,
+        settings.subject,
+        settings.capabilities,
         (scope,),
-        _int_environment("EPHI_DEV_AUTH_SESSION_REVISION", 1),
-        _int_environment("EPHI_DEV_SECURITY_REVISION", 1),
+        settings.auth_session_revision,
+        settings.security_revision,
     )
 
 
@@ -406,7 +394,7 @@ def build_composition_from_environment() -> EphiUiComposition:
             asset_360,
             operations,
         )
-    dsn = _required_environment("EPHI_POSTGRES_DSN")
+    dsn = required_environment_text(os.environ, EPHI_POSTGRES_DSN)
     metrology_source_adapter, metrology_source_binding = require_runtime_source_binding()
     identity = _DevelopmentIdentityProvider()
     principal_provider = identity.principal
@@ -709,7 +697,7 @@ def build_attention_page(composition: EphiUiComposition) -> None:
         "EPHI",
         _navigation(),
         active_route="/",
-        environment=os.environ.get("EPHI_ENV", "development"),
+        environment=os.environ.get(EPHI_ENV, "development"),
         subtitle="Attention → Episode",
         user_name=composition.principal_provider().subject,
         user_role="Engineer",
@@ -1472,17 +1460,17 @@ async def build_episode_page(composition: EphiUiComposition) -> None:
     _install_o10_ui_css()
     workspace = composition.workspace
     episode_id = workspace.state.get(EPISODE_KEY)
-    if not episode_id and os.environ.get("EPHI_ENV", "development").lower() == "test" and composition.downstream is not None:
-        episode_id = os.environ.get("EPHI_TEST_SELECTED_EPISODE_ID")
-    if not episode_id:
+    if not episode_id and os.environ.get(EPHI_ENV, "development").lower() == "test" and composition.downstream is not None:
+        episode_id = os.environ.get(EPHI_TEST_SELECTED_EPISODE_ID)
+    if not episode_id and os.environ.get(EPHI_ENV, "development").strip().lower() in {"development", "test"}:
         # This explicit fixture binding is retained only for the existing O8
         # direct-route qualification. A selected workspace identity always wins.
-        episode_id = os.environ.get("EPHI_W1_EPISODE_ID")
+        episode_id = os.environ.get(EPHI_W1_EPISODE_ID)
     with AppShell(
         "EPHI",
         _navigation(),
         active_route="/episode",
-        environment=os.environ.get("EPHI_ENV", "development"),
+        environment=os.environ.get(EPHI_ENV, "development"),
         subtitle="Attention → Episode",
         user_name=composition.principal_provider().subject,
         user_role="Engineer",
@@ -1822,7 +1810,7 @@ async def build_outcomes_page(composition: EphiUiComposition) -> None:
         "EPHI",
         _navigation(),
         active_route="/ephi/outcomes",
-        environment=os.environ.get("EPHI_ENV", "development"),
+        environment=os.environ.get(EPHI_ENV, "development"),
         subtitle="Outcomes",
         user_name=principal.subject,
         user_role="Value reviewer" if principal.has_capability("value.validate") else "Engineer",
@@ -1854,7 +1842,7 @@ def build_page() -> None:
             "EPHI",
             _navigation(),
             active_route="/",
-            environment=os.environ.get("EPHI_ENV", "development"),
+            environment=os.environ.get(EPHI_ENV, "development"),
             subtitle="Attention → Episode",
             user_name="Unavailable",
             user_role="Unknown",

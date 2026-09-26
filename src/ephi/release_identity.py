@@ -25,6 +25,7 @@ from ephi.downstream.contracts import (
     REQUIRED_CATEGORIES,
 )
 from ephi.identity import ApplicationIdentity
+from ephi.runtime_configuration_contract import contract_identity as runtime_configuration_contract_identity
 
 
 RELEASE_SCHEMA = "org.ephi.release-install.v1"
@@ -380,6 +381,12 @@ def build_release_inventory(repo_root: str | Path) -> dict[str, object]:
         migration_identity = migration_schema_identity(root / "migrations")
     except (OSError, ValueError) as exc:
         raise ReleaseFailure("MIGRATION_IDENTITY_INVALID") from exc
+    try:
+        runtime_configuration_identity = runtime_configuration_contract_identity(
+            root / "src" / "ephi" / "runtime_configuration_contract.json"
+        )
+    except (OSError, UnicodeError, ValueError, TypeError) as exc:
+        raise ReleaseFailure("RUNTIME_CONFIGURATION_CONTRACT_INVALID") from exc
 
     inventory: dict[str, object] = {
         "schema": RELEASE_SCHEMA,
@@ -427,6 +434,7 @@ def build_release_inventory(repo_root: str | Path) -> dict[str, object]:
             "manifest_schema": MANIFEST_SCHEMA,
             "required_categories": list(REQUIRED_CATEGORIES),
         },
+        "runtime_configuration": runtime_configuration_identity,
         "migrations": migration_identity,
         "capabilities": _capability_claims(),
     }
@@ -502,6 +510,17 @@ def _verify_abi(inventory: dict[str, Any]) -> None:
     }
     if current != inventory.get("downstream_abi"):
         raise ReleaseFailure("DOWNSTREAM_ABI_IDENTITY_MISMATCH")
+
+
+def _verify_runtime_configuration(inventory: dict[str, Any]) -> None:
+    try:
+        current = runtime_configuration_contract_identity(
+            Path(__file__).with_name("runtime_configuration_contract.json")
+        )
+    except (OSError, UnicodeError, ValueError, TypeError) as exc:
+        raise ReleaseFailure("RUNTIME_CONFIGURATION_CONTRACT_MISMATCH") from exc
+    if current != inventory.get("runtime_configuration"):
+        raise ReleaseFailure("RUNTIME_CONFIGURATION_CONTRACT_MISMATCH")
 
 
 def _supported_minor(value: str, supported: list[str]) -> str:
@@ -883,6 +902,7 @@ def release_preflight(inputs_dir: str | Path) -> dict[str, Any]:
     lock_index = _verify_installed_lock_assets(inventory)
     _verify_migrations(inventory)
     _verify_abi(inventory)
+    _verify_runtime_configuration(inventory)
     supported = inventory.get("python", {}).get("install_supported_interpreters")
     if not isinstance(supported, list) or not all(isinstance(item, str) for item in supported):
         raise ReleaseFailure("RELEASE_INVENTORY_INVALID")
@@ -912,6 +932,7 @@ def release_preflight(inputs_dir: str | Path) -> dict[str, Any]:
         },
         "dependencies": inventory["dependencies"],
         "downstream_abi": inventory["downstream_abi"],
+        "runtime_configuration": inventory["runtime_configuration"],
         "migrations": {
             "count": inventory["migrations"]["migration_count"],
             "identity_sha256": inventory["migrations"]["identity_sha256"],
@@ -922,6 +943,7 @@ def release_preflight(inputs_dir: str | Path) -> dict[str, Any]:
             "dependency_and_base_identity": "PASS",
             "migration_identity": "PASS",
             "downstream_abi_identity": "PASS",
+            "runtime_configuration_identity": "PASS",
         },
         "provider_composition": {
             "authority": "ephi-downstream-preflight",
