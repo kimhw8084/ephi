@@ -317,6 +317,10 @@ def build_release_inventory(repo_root: str | Path) -> dict[str, object]:
     try:
         framework = runtime["framework"]
         runtime_dependencies = runtime["dependencies"]
+        base_dependencies = [item for item in direct_requirements if item.startswith("nicegui-base @ ")]
+        nicegui_dependencies = [item for item in direct_requirements if item.startswith("nicegui==")]
+        if len(base_dependencies) != 1 or len(nicegui_dependencies) != 1:
+            raise ReleaseFailure("BASE_RUNTIME_CONTRACT_INVALID")
         base_dependency = next(item for item in direct_requirements if item.startswith("nicegui-base @ "))
         nicegui_dependency = next(item for item in direct_requirements if item.startswith("nicegui=="))
         runtime_nicegui_dependency = next(item for item in runtime_dependencies if item.startswith("nicegui=="))
@@ -343,7 +347,17 @@ def build_release_inventory(repo_root: str | Path) -> dict[str, object]:
     _validate_lock_index(root, index, requires_python)
     for minor in python_minors:
         runtime_lock = index["interpreters"][minor]["runtime"]["distributions"]
-        if not any(item["name"] == "nicegui" and item["version"] == nicegui_version for item in runtime_lock):
+        locked_runtime = {item["name"]: item["version"] for item in runtime_lock}
+        for requirement in direct_requirements:
+            if requirement == base_dependency:
+                continue
+            match = re.fullmatch(r"([A-Za-z0-9_.-]+)(?:\[[^]]+\])?==([^;]+)", requirement)
+            if match is None:
+                raise ReleaseFailure("PACKAGE_METADATA_INCONSISTENT")
+            package, version = match.groups()
+            if locked_runtime.get(_normal_name(package)) != version:
+                raise ReleaseFailure("LOCK_INDEX_MISSING_OR_TAMPERED")
+        if locked_runtime.get("nicegui") != nicegui_version:
             raise ReleaseFailure("LOCK_INDEX_MISSING_OR_TAMPERED")
         postgres_lock = index["interpreters"][minor]["optional"]["postgres"]["distributions"]
         for requirement in optional_requirements.get("postgres", []):

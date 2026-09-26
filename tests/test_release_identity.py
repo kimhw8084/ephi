@@ -126,6 +126,22 @@ class ReleaseInventoryTests(unittest.TestCase):
                 build_release_inventory(root)
             self.assertEqual(caught.exception.reason_code, "BASE_RUNTIME_CONTRACT_INVALID")
 
+    def test_unlocked_direct_dependency_blocks_inventory_generation(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            shutil.copy2(ROOT / "pyproject.toml", root / "pyproject.toml")
+            shutil.copytree(ROOT / "environment", root / "environment")
+            shutil.copytree(ROOT / ".github", root / ".github")
+            shutil.copytree(ROOT / "migrations", root / "migrations")
+            shutil.copytree(ROOT / "src/ephi", root / "src/ephi")
+            pyproject = root / "pyproject.toml"
+            source = pyproject.read_text(encoding="utf-8")
+            source = source.replace('  "nicegui==3.15.0",', '  "nicegui==3.15.0",\n  "requests==2.32.4",')
+            pyproject.write_text(source, encoding="utf-8")
+            with self.assertRaises(ReleaseFailure) as caught:
+                build_release_inventory(root)
+            self.assertEqual(caught.exception.reason_code, "LOCK_INDEX_MISSING_OR_TAMPERED")
+
     def test_lock_index_rejects_tampered_immutable_lock(self):
         index, _ = _lock_index(ROOT)
         with tempfile.TemporaryDirectory() as temp:
