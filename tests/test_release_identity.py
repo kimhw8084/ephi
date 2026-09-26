@@ -34,6 +34,7 @@ from ephi.release_identity import (  # noqa: E402
     _verify_abi,
     _verify_migrations,
     _validate_lock_index,
+    _python_requires_signature,
     _wheel_metadata,
     build_release_inventory,
     canonical_json_bytes,
@@ -52,6 +53,12 @@ class ReleaseInventoryTests(unittest.TestCase):
                 archive.writestr("demo-1.0.dist-info/METADATA", "Name: demo\nVersion: 1.0\n")
                 archive.writestr("demo/_vendor/inner-2.0.dist-info/METADATA", "Name: inner\nVersion: 2.0\n")
             self.assertEqual(_wheel_metadata(wheel), ("demo", "1.0"))
+
+    def test_python_metadata_range_order_is_normalized_without_weakening_bounds(self):
+        declared = _python_requires_signature(">=3.11,<3.14")
+        self.assertEqual(declared, _python_requires_signature("<3.14, >=3.11"))
+        self.assertNotEqual(declared, _python_requires_signature(">=3.11,<3.15"))
+        self.assertIsNone(_python_requires_signature("not-a-range"))
 
     def test_inventory_is_canonical_stable_and_bound_to_owner_facts(self):
         first = build_release_inventory(ROOT)

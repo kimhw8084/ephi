@@ -1906,13 +1906,13 @@
     },
     {
       "path": "src/ephi/release_identity.py",
-      "bytes": 43292,
-      "sha256": "ee694ba8687a1b0eaac63f585c4f180679a22c6d67c89ee5b16e82cb1145ed54"
+      "bytes": 43756,
+      "sha256": "71f341d233c877c37afc5d9b5f4c5653e7a345d7b83da52745b91cf5fd445d29"
     },
     {
       "path": "src/ephi/release_inventory.json",
       "bytes": 15293,
-      "sha256": "090afd6f1d523fe76c6d768279e80730d0a698eff891bb7308319fae4627bdac"
+      "sha256": "f4e15f8e31724f88d827ea5bf1069b9502996a640c2a5fff50d0cfefd80ccb6e"
     },
     {
       "path": "src/ephi/release_locks/build-py311.txt",
@@ -2226,8 +2226,8 @@
     },
     {
       "path": "tests/test_release_identity.py",
-      "bytes": 10528,
-      "sha256": "40abe88c3e95333a88a0629461b37486e191020ef4ba1db6054f6b29acd73821"
+      "bytes": 10941,
+      "sha256": "8c1bae115e6b920d302c8548108e67bd15d8803e195772148911037283164f25"
     },
     {
       "path": "tests/test_source_preflight.py",

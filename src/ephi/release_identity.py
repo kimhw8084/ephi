@@ -503,6 +503,15 @@ def _req_signature(value: str) -> str:
     return "".join(value.casefold().split()).replace("'", "").replace('"', "")
 
 
+def _python_requires_signature(value: object) -> tuple[str, ...] | None:
+    if not isinstance(value, str):
+        return None
+    parts = [part.strip() for part in value.split(",")]
+    if not parts or any(not re.fullmatch(r"(?:<=|>=|==|!=|~=|<|>)[0-9][A-Za-z0-9.+-]*", part) for part in parts):
+        return None
+    return tuple(sorted(parts))
+
+
 def _wheel_metadata(path: Path) -> tuple[str, str]:
     try:
         with zipfile.ZipFile(path) as archive:
@@ -786,12 +795,12 @@ def _verify_installed_subject(inventory: dict[str, Any], lock_index: dict[str, A
     base_contract = dependencies["base"]
     if app.version != release["version"] or _normal_name(app.metadata.get("Name", "")) != release["distribution"]:
         raise ReleaseFailure("APPLICATION_RELEASE_IDENTITY_MISMATCH")
-    if app.metadata.get("Requires-Python") != inventory["python"]["requires_python"]:
+    if _python_requires_signature(app.metadata.get("Requires-Python")) != _python_requires_signature(inventory["python"]["requires_python"]):
         raise ReleaseFailure("PYTHON_INSTALL_CONTRACT_INVALID")
     _verify_installed_package_files(app, inventory)
     if base_dist.version != base_contract["framework_version"] or nicegui.version != base_contract["nicegui_version"]:
         raise ReleaseFailure("DIRECT_DEPENDENCY_MISMATCH")
-    if base_dist.metadata.get("Requires-Python") != inventory["python"]["requires_python"]:
+    if _python_requires_signature(base_dist.metadata.get("Requires-Python")) != _python_requires_signature(inventory["python"]["requires_python"]):
         raise ReleaseFailure("DIRECT_DEPENDENCY_MISMATCH")
     if pip.version != lock_index["installer"]["distributions"][0]["version"]:
         raise ReleaseFailure("INSTALLER_IDENTITY_MISMATCH")
