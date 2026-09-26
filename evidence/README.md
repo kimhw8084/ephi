@@ -18,7 +18,8 @@ They describe the **earlier source audit**, not an application run in this repos
 
 Use the commands in [the README](../README.md) for current package checks; consult GitHub Actions for checks on a particular published commit. Do not overwrite these historical results when running a new audit.
 
-New implementation evidence is kept separately under `evidence/u2/`. The
+New implementation evidence is kept separately under `evidence/u2/` and
+`evidence/u3/`. The
 [CHG-234 U2.4 Asset 360 report](u2/chg-234-u2.4-asset-360/qualification.json)
 binds its screenshots and browser inventories to a working-tree candidate
 based on the registered `main@4482233202ff2667262ff0d47ff390e72d398d3c`
@@ -28,6 +29,13 @@ The R2 determinism repair is recorded separately at
 [the CHG-234 review-fix1 continuation](u2/chg-234-u2.4-asset-360/review-fix1/qualification.json);
 it preserves the predecessor report and qualifies cutoff-pinned O4 source
 revisions, unavailable reads, and the refreshed source labels.
+
+The CHG-258 U3.1
+[release/install qualification](u3/chg-258-u3.1/qualification.json) binds the
+offline CPython 3.11–3.13 installation proofs and package identity checks to
+its exact candidate source commit/tree. Its evidence remains packaging-only;
+it leaves provider composition separate and keeps company and Production
+qualification boundaries explicit.
 
 The final generic U2 breadth slice, CHG-252 U2.5/O9.2, has separate
 [candidate-bound Operations evidence](u2/chg-252-u2.5-o9.2/qualification.json)

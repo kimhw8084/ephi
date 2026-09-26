@@ -361,8 +361,8 @@
     },
     {
       "path": "evidence/README.md",
-      "bytes": 3943,
-      "sha256": "c7462b6303761b94a53aa3cd849964a3484bd242567750b2c37421e7dce230ab"
+      "bytes": 4322,
+      "sha256": "3d35963ef74d6395598b92d5048f74efd917d3f94abbd633d296c1c6cb0eec2a"
     },
     {
       "path": "evidence/audit_environment.json",
@@ -1463,6 +1463,11 @@
       "path": "evidence/u2/chg-252-u2.5-o9.2/validation/final-verification.json",
       "bytes": 1752,
       "sha256": "ff4467f5fb109caa08f74f0b9671583c07b2dd162119b0af0ee1319826363fe0"
+    },
+    {
+      "path": "evidence/u3/chg-258-u3.1/qualification.json",
+      "bytes": 4066,
+      "sha256": "09d4660ca4229c0152ab45b8567aded91c24df99a4f2dc1634f1125c036b93d5"
     },
     {
       "path": "examples/__init__.py",
