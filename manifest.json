@@ -1470,6 +1470,16 @@
       "sha256": "09d4660ca4229c0152ab45b8567aded91c24df99a4f2dc1634f1125c036b93d5"
     },
     {
+      "path": "evidence/u3/chg-260-u3.2/evidence-handoff-failure.json",
+      "bytes": 732,
+      "sha256": "8d347def17744f63b01442a09f4c15308848d7b7adfc4226abb25b71846aaffb"
+    },
+    {
+      "path": "evidence/u3/chg-260-u3.2/qualification.json",
+      "bytes": 4251,
+      "sha256": "e9473eb39450c4dc136b7cc4c318ae33451cca29974acdc0cc9018804cc4d919"
+    },
+    {
       "path": "examples/__init__.py",
       "bytes": 61,
       "sha256": "b060d41e6705cac80caacb622fc737209d85f878bc0a4a6d976adc651b26d7f1"
@@ -2256,8 +2266,8 @@
     },
     {
       "path": "tests/test_runtime_config_preflight.py",
-      "bytes": 16440,
-      "sha256": "06779af218e278e742c68432abf4d4b054dc820b3ddb483bf795f7cd59d66040"
+      "bytes": 16583,
+      "sha256": "99a445807ca8cd5676a387f228122abb7df29771802f62510d77706c24eb49a6"
     },
     {
       "path": "tests/test_source_preflight.py",

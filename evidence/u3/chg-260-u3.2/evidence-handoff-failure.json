@@ -1,0 +1,16 @@
+{
+  "artifact": {
+    "path": "evidence/u3/chg-260-u3.2/qualification.json",
+    "sha256": "e9473eb39450c4dc136b7cc4c318ae33451cca29974acdc0cc9018804cc4d919"
+  },
+  "candidate_source": {
+    "commit": "1938fd469b25ffa7132570d751cfb476320d2348",
+    "tree": "474ebdfe71b01d869643339e217c143d71b38326"
+  },
+  "fabric_job_id": "NOT_EXPOSED_IN_EXECUTION_CONTEXT",
+  "failure": "No callable qualified Project OS Artifact Bridge tool was exposed in this execution context, and no Fabric job identifier was provided. The qualification artifact could not be staged through the required bridge.",
+  "project": "ephi",
+  "request": "ephi-u3-runtime-config-contract-v1",
+  "status": "NOT_STAGED",
+  "alternate_upload_convention_used": false
+}

@@ -279,6 +279,8 @@ class ConfigurationPreflightTests(unittest.TestCase):
         for artifact in (
             ROOT / CONFIGURATION_CONTRACT_PATH,
             ROOT / "src/ephi/release_inventory.json",
+            ROOT / "evidence/u3/chg-260-u3.2/qualification.json",
+            ROOT / "evidence/u3/chg-260-u3.2/evidence-handoff-failure.json",
         ):
             content = artifact.read_text(encoding="utf-8")
             for sentinel in sentinels:
