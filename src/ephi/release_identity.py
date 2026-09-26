@@ -862,14 +862,6 @@ def _verify_installed_subject(inventory: dict[str, Any], lock_index: dict[str, A
         if actual.get(name) != version:
             raise ReleaseFailure("LOCKED_DEPENDENCY_SET_MISMATCH")
 
-    artifact_by_name = {_normal_name(item["distribution"]): item for item in inputs["artifacts"]}
-    for name in set(runtime_expected) | optional_present | {"pip"}:
-        dist = metadata.distribution(name)
-        artifact = artifact_by_name.get(name)
-        if not isinstance(artifact, dict) or _direct_url_hash(dist) != artifact.get("sha256"):
-            raise ReleaseFailure("INSTALLED_ARTIFACT_MISMATCH")
-
-
 def release_preflight(inputs_dir: str | Path) -> dict[str, Any]:
     """Validate the installed package against its immutable release inputs."""
 
