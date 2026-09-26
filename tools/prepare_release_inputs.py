@@ -223,13 +223,16 @@ def _prepare(destination: Path) -> dict[str, object]:
 
         builder = work / "builder"
         try:
-            venv.EnvBuilder(with_pip=True, clear=True).create(builder)
+            venv.EnvBuilder(with_pip=False, clear=True).create(builder)
         except (OSError, subprocess.SubprocessError) as exc:
             raise ReleaseFailure("PREPARATION_PREREQUISITE_UNAVAILABLE") from exc
         if os.name == "nt":
             builder_python = builder / "Scripts" / "python.exe"
         else:
             builder_python = builder / "bin" / "python"
+        _run([
+            str(builder_python), "-m", "ensurepip", "--upgrade", "--default-pip",
+        ], cwd=ROOT, env=env)
         for lock_name in ("installer-py311.txt", "build-py311.txt"):
             lock = lock_dir / lock_name
             _run([
