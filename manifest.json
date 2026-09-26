@@ -1906,13 +1906,13 @@
     },
     {
       "path": "src/ephi/release_identity.py",
-      "bytes": 43756,
-      "sha256": "71f341d233c877c37afc5d9b5f4c5653e7a345d7b83da52745b91cf5fd445d29"
+      "bytes": 43882,
+      "sha256": "60d914ff8a053f39648a9896f92910bf41f8a26da7ae4333376d4f0cabaf3d8b"
     },
     {
       "path": "src/ephi/release_inventory.json",
       "bytes": 15293,
-      "sha256": "f4e15f8e31724f88d827ea5bf1069b9502996a640c2a5fff50d0cfefd80ccb6e"
+      "sha256": "ee2e683e4cb166469ed6286d46adedb14fc77f1df1712bd4989b16c4e5242f87"
     },
     {
       "path": "src/ephi/release_locks/build-py311.txt",

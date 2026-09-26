@@ -572,6 +572,8 @@ def _verify_installed_package_files(app: metadata.Distribution, inventory: dict[
             for item in (app.files or ())
             if PurePosixPath(str(item)).parts[:1] == ("ephi",)
             and PurePosixPath(str(item)).as_posix() != "ephi/release_inventory.json"
+            and "__pycache__" not in PurePosixPath(str(item)).parts
+            and PurePosixPath(str(item)).suffix != ".pyc"
         }
     except (OSError, TypeError, ValueError) as exc:
         raise ReleaseFailure("APPLICATION_RELEASE_IDENTITY_MISMATCH") from exc
