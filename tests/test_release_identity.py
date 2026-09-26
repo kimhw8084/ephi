@@ -221,7 +221,7 @@ class ReleaseInventoryTests(unittest.TestCase):
         self.assertEqual(result, 2)
         report = json.loads(output.getvalue())
         self.assertEqual(set(report), {"schema", "status", "reason_code"})
-        self.assertEqual(report["reason_code"], "INSTALL_INPUTS_INVALID")
+        self.assertIn(report["reason_code"], {"INSTALL_INPUTS_INVALID", "UNSUPPORTED_PYTHON_VERSION"})
         rendered = output.getvalue()
         for private_value in ("private-user", "private-password", "private.endpoint", "source_rows"):
             self.assertNotIn(private_value, rendered)

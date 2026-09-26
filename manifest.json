@@ -2231,8 +2231,8 @@
     },
     {
       "path": "tests/test_release_identity.py",
-      "bytes": 12767,
-      "sha256": "de4df35575a54ab5a677b5da39c1fcd2e4f447753bf6951c42e1cd8c23fcfec3"
+      "bytes": 12796,
+      "sha256": "2f4362bcd0afee9530f4091f31221fa617e1f2d4ed57399f86a5f53bf2f6109c"
     },
     {
       "path": "tests/test_source_preflight.py",
