@@ -42,10 +42,26 @@ from ephi.release_identity import (  # noqa: E402
     verify_inventory_document,
 )
 import ephi.release_identity as release_identity_module  # noqa: E402
+from tools.prepare_release_inputs import _clean_tool_environment  # noqa: E402
 from tools.o9_operations import _migration_identity  # noqa: E402
 
 
 class ReleaseInventoryTests(unittest.TestCase):
+    def test_preparation_environment_removes_python_and_resolver_overrides(self):
+        with patch.dict(os.environ, {
+            "CONDA_PREFIX": "/private/conda/path",
+            "PYTHONHOME": "/private/python/path",
+            "PYTHONPATH": "/private/module/path",
+            "PIP_INDEX_URL": "https://private.invalid/simple",
+            "UV_INDEX_URL": "https://private.invalid/uv",
+            "VIRTUAL_ENV": "/private/venv/path",
+        }):
+            env = _clean_tool_environment(123)
+        for key in ("CONDA_PREFIX", "PYTHONHOME", "PYTHONPATH", "UV_INDEX_URL", "VIRTUAL_ENV"):
+            self.assertNotIn(key, env)
+        self.assertEqual(env["PIP_INDEX_URL"], "https://pypi.org/simple")
+        self.assertEqual(env["SOURCE_DATE_EPOCH"], "123")
+
     def test_wheel_metadata_ignores_vendored_dist_info(self):
         with tempfile.TemporaryDirectory() as temp:
             wheel = Path(temp) / "demo-1.0-py3-none-any.whl"

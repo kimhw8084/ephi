@@ -70,7 +70,12 @@ def _git_identity(env: dict[str, str]) -> tuple[str, str, int]:
 
 
 def _clean_tool_environment(epoch: int) -> dict[str, str]:
-    env = {key: value for key, value in os.environ.items() if not key.upper().startswith("PIP_")}
+    env = {
+        key: value
+        for key, value in os.environ.items()
+        if not key.upper().startswith(("PIP_", "PYTHON", "CONDA_", "UV_"))
+        and key not in {"VIRTUAL_ENV", "__PYVENV_LAUNCHER__"}
+    }
     env.update({
         "PIP_CONFIG_FILE": os.devnull,
         "PIP_INDEX_URL": PYPI_INDEX,

@@ -2226,8 +2226,8 @@
     },
     {
       "path": "tests/test_release_identity.py",
-      "bytes": 10941,
-      "sha256": "8c1bae115e6b920d302c8548108e67bd15d8803e195772148911037283164f25"
+      "bytes": 11788,
+      "sha256": "a1d0ffe142ab5eaca9c7e5af47a23031d373d7ee9179c0856863bcc93f130b3e"
     },
     {
       "path": "tests/test_source_preflight.py",
@@ -2306,8 +2306,8 @@
     },
     {
       "path": "tools/prepare_release_inputs.py",
-      "bytes": 16103,
-      "sha256": "a4a66cec6b31c0cbd37d67d774a4d749bf7ce7278660fffa4712f501b3bf0cd5"
+      "bytes": 16224,
+      "sha256": "44031b0c5c94bc45dcff7ed7e2b55eb6ce74bedc880d86caab37db92bb2c4d92"
     },
     {
       "path": "tools/source_preflight.py",
