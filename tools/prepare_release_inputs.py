@@ -228,7 +228,7 @@ def _prepare(destination: Path) -> dict[str, object]:
 
         builder = work / "builder"
         try:
-            venv.EnvBuilder(with_pip=False, clear=True).create(builder)
+            venv.EnvBuilder(with_pip=False, clear=True, symlinks=os.name != "nt").create(builder)
         except (OSError, subprocess.SubprocessError) as exc:
             raise ReleaseFailure("PREPARATION_PREREQUISITE_UNAVAILABLE") from exc
         if os.name == "nt":
