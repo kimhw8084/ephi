@@ -2131,8 +2131,8 @@
     },
     {
       "path": "tests/test_operations_application.py",
-      "bytes": 28872,
-      "sha256": "16103cfc34e418b55cf9b2a3464e8f3bdb17c60779802c716c9ef1506df692cc"
+      "bytes": 31734,
+      "sha256": "a55f88227957afb32062dff8043039cd7c2c81d1518e9655d65f1e5c727676d6"
     },
     {
       "path": "tests/test_operations_postgresql.py",

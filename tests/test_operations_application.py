@@ -1,5 +1,6 @@
 """CHG-252 Operations query, authorization and secret-safety regressions."""
 
+from collections.abc import Mapping, Sequence
 from dataclasses import replace
 from datetime import datetime, timedelta, timezone
 import json
@@ -30,7 +31,14 @@ from ephi.application import (  # noqa: E402
     ValidationFailureError,
 )
 from ephi.application.operations import PostgreSQLHealthFacts, WorkerHealthFacts  # noqa: E402
-from ephi.application.worker import JobRecord, WORKER_JOB_STATUSES  # noqa: E402
+from ephi.application.worker import (  # noqa: E402
+    AppliedEffectReceipt,
+    JobRecord,
+    LocalEffect,
+    WORKER_JOB_STATUSES,
+    WorkerJobPort,
+    WorkerLease,
+)
 
 
 NOW = datetime(2026, 9, 25, 12, 0, tzinfo=timezone.utc)
@@ -77,12 +85,67 @@ class _Workers:
         self.calls = 0
         self.facts_calls = 0
 
-    def __getattr__(self, _name):
-        # The query service depends on inspect plus two additive inspection
-        # methods; WorkerJobPort's other commands are deliberately unused.
-        return lambda *_args, **_kwargs: None
+    def enqueue(
+        self,
+        scope: AccessScope,
+        job_type: str,
+        semantic_key: str,
+        payload: Mapping[str, object],
+        *,
+        available_at: datetime | None = None,
+        priority: int = 0,
+        max_attempts: int = 3,
+    ) -> JobRecord:
+        raise NotImplementedError("Operations query tests do not enqueue worker jobs")
 
-    def inspect(self, scope, *, job_id=None, statuses=None, job_type=None, limit=100):
+    def claim(
+        self,
+        scope: AccessScope,
+        owner: str,
+        *,
+        raise_if_none: bool = False,
+        job_type: str | None = None,
+    ) -> JobRecord | None:
+        raise NotImplementedError("Operations query tests do not claim worker jobs")
+
+    def heartbeat(self, lease: WorkerLease) -> JobRecord:
+        raise NotImplementedError("Operations query tests do not heartbeat worker jobs")
+
+    def complete(self, lease: WorkerLease) -> JobRecord:
+        raise NotImplementedError("Operations query tests do not complete worker jobs")
+
+    def fail(
+        self,
+        lease: WorkerLease,
+        *,
+        retryable: bool,
+        error_code: str,
+        error_message: str,
+        next_available_at: datetime | None = None,
+    ) -> JobRecord:
+        raise NotImplementedError("Operations query tests do not fail worker jobs")
+
+    def defer(self, lease: WorkerLease, available_at: datetime) -> JobRecord:
+        raise NotImplementedError("Operations query tests do not defer worker jobs")
+
+    def cancel(
+        self,
+        scope: AccessScope,
+        job_id: str,
+        *,
+        lease: WorkerLease | None = None,
+    ) -> JobRecord:
+        raise NotImplementedError("Operations query tests do not cancel worker jobs")
+
+    def inspect(
+        self,
+        scope: AccessScope,
+        *,
+        job_id: str | None = None,
+        statuses: Sequence[str] | None = None,
+        job_type: str | None = None,
+        limit: int = 100,
+    ) -> tuple[JobRecord, ...]:
         self.calls += 1
         rows = [item for item in self.jobs if item.scope_key == scope.canonical_key]
         if job_id is not None:
@@ -94,7 +157,7 @@ class _Workers:
         rows.sort(key=lambda item: (-item.priority, item.available_at, item.created_at, item.job_id))
         return tuple(rows[:limit])
 
-    def operations_health_facts(self, scope):
+    def operations_health_facts(self, scope: AccessScope) -> WorkerHealthFacts:
         self.facts_calls += 1
         rows = [item for item in self.jobs if item.scope_key == scope.canonical_key]
         return WorkerHealthFacts(
@@ -106,8 +169,20 @@ class _Workers:
             NOW,
         )
 
-    def has_committed_local_effect(self, scope, job_id):
+    def has_committed_local_effect(self, scope: AccessScope, job_id: str) -> bool:
         return job_id in self.effect_ids
+
+    def commit_local_effect(
+        self,
+        lease: WorkerLease,
+        effect_key: str,
+        input_payload: Mapping[str, object],
+        *,
+        aggregate_type: str,
+        aggregate_id: str,
+        mutation: LocalEffect | None = None,
+    ) -> AppliedEffectReceipt:
+        raise NotImplementedError("Operations query tests do not commit worker effects")
 
 
 class _Source:
@@ -208,6 +283,25 @@ class OperationsApplicationTests(unittest.TestCase):
         }
         arguments.update(changes)
         return OperationsQueryService(**arguments)
+
+    def test_worker_fixture_explicitly_satisfies_worker_job_port(self):
+        self.assertIsInstance(self.workers, WorkerJobPort)
+
+    def test_operations_rejects_worker_missing_a_required_port_member(self):
+        members = (
+            "enqueue",
+            "claim",
+            "heartbeat",
+            "complete",
+            "fail",
+            "cancel",
+            "inspect",
+            "commit_local_effect",
+        )
+        incomplete = SimpleNamespace(**{name: lambda *args, **kwargs: None for name in members})
+        self.assertFalse(isinstance(incomplete, WorkerJobPort))
+        with self.assertRaisesRegex(TypeError, "existing WorkerJobPort"):
+            self._service(worker_jobs=incomplete)
 
     def test_o8_denial_precedes_every_protected_existence_or_count_read(self):
         self.authorization.set_principal(replace(self.principal, capabilities=()))
