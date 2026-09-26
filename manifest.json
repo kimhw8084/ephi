@@ -51,8 +51,8 @@
     },
     {
       "path": ".github/workflows/package.yml",
-      "bytes": 20114,
-      "sha256": "32d870cd97f37d2c2bec07d23b85c8e74c053d6608a805a7dead60dd6f627ac1"
+      "bytes": 20135,
+      "sha256": "d8ad8b50efdc10f7177199bd157981368b4d9b2af91fb8cc4e07068a986d9911"
     },
     {
       "path": ".gitignore",
@@ -1601,8 +1601,8 @@
     },
     {
       "path": "operations/README.md",
-      "bytes": 2880,
-      "sha256": "e3c5ea459f029ff755994dc2a14cc261c2ed585a1e408f750cb2fa089c335fbc"
+      "bytes": 2999,
+      "sha256": "5d6f59de2911bdaccf0170b8d1feac941cbb8926c7fcc65701aff1533f871b83"
     },
     {
       "path": "operations/runbooks/README.md",
@@ -1896,8 +1896,8 @@
     },
     {
       "path": "src/ephi/infrastructure/postgresql.py",
-      "bytes": 41217,
-      "sha256": "3c4efead8b70e8129e7264db923bdde8bc372fea56e23bd7e16c885985a38ec1"
+      "bytes": 42133,
+      "sha256": "230a887f373ece660c23895bfdae6727935fc026c3776de00b0463921bce5cba"
     },
     {
       "path": "src/ephi/infrastructure/postgresql_o3.py",
@@ -1947,7 +1947,7 @@
     {
       "path": "src/ephi/release_inventory.json",
       "bytes": 16437,
-      "sha256": "fae78e0b73a9384e462318be36106974a08b6195229647388e41ccfe9612f199"
+      "sha256": "0d2eddbe069d2cc4217943536c8ef66ca7f5a2a002a8bdb502cf66884ee395ec"
     },
     {
       "path": "src/ephi/release_locks/build-py311.txt",
@@ -2101,8 +2101,8 @@
     },
     {
       "path": "tests/test_migration_resources.py",
-      "bytes": 12162,
-      "sha256": "86f304a92d8d991d5fca5c70453b968a9d5b11eafbb59c963eb318f4c4f928b3"
+      "bytes": 15811,
+      "sha256": "86e758b00539734acd5c8cd92172b6f5f6ce89bd902b4e19779cd1ca7eb454da"
     },
     {
       "path": "tests/test_o10_rendered_accessibility.py",
@@ -2331,8 +2331,8 @@
     },
     {
       "path": "tools/installed_migration_qualification.py",
-      "bytes": 12683,
-      "sha256": "31fad68fbed487014aa700420a4af68fd6583396e2923006709c7f2c76fbaeaa"
+      "bytes": 15564,
+      "sha256": "92222ecb59eef4a93e9f57442f76d4b75816a379e763cb98f0b694a6b81ba703"
     },
     {
       "path": "tools/o10_rendered_accessibility.py",

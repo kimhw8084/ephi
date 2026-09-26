@@ -27,8 +27,10 @@ raw source rows, material identifiers, or private artifact contents.
 
 The installed EPHI release also provides `ephi-db-migrate` for its numbered
 PostgreSQL schema. Run `identity` to inspect the packaged plan without a
-database connection, `verify` to check a current schema without applying SQL,
-and `apply` to apply the idempotent set and verify required tables:
+database connection, `verify` to check all declared current-schema facts
+without applying SQL, and `apply` to apply the idempotent set and verify those
+same requirements. Current requirements include the required tables and
+`source_snapshot.freshness_age_seconds`:
 
 ```bash
 .venv/bin/ephi-db-migrate identity

@@ -156,6 +156,69 @@ class MigrationResourceTests(unittest.TestCase):
         self.assertEqual(facts.migration_ledger_state, "NOT_BOUND_NO_MIGRATION_LEDGER")
 
 
+class SchemaValidationTests(unittest.TestCase):
+    class Connection:
+        def __init__(self, *, tables=None, columns=None):
+            self.tables = set(postgresql._REQUIRED_SCHEMA_TABLES if tables is None else tables)
+            self.columns = set(
+                {("source_snapshot", "freshness_age_seconds")} if columns is None else columns
+            )
+            self.statements = []
+
+        def execute(self, statement, _parameters=None):
+            self.statements.append(statement)
+            if "information_schema.tables" in statement:
+                rows = [{"table_name": name} for name in sorted(self.tables)]
+            else:
+                rows = [
+                    {"table_name": table_name, "column_name": column_name}
+                    for table_name, column_name in sorted(self.columns)
+                ]
+            return self.Cursor(rows)
+
+        class Cursor:
+            def __init__(self, rows):
+                self.rows = rows
+
+            def fetchall(self):
+                return self.rows
+
+    def test_all_required_current_schema_facts_pass(self):
+        connection = self.Connection()
+        self.assertEqual(postgresql.validate_required_schema(connection), 19)
+        self.assertEqual(len(connection.statements), 2)
+        self.assertTrue(all(statement.lstrip().startswith("SELECT") for statement in connection.statements))
+
+    def test_all_required_tables_without_current_source_snapshot_column_fail(self):
+        connection = self.Connection(columns=())
+        with self.assertRaises(postgresql.StorageFailureError):
+            postgresql.validate_required_schema(connection)
+        self.assertEqual(len(connection.statements), 2)
+
+    def test_missing_required_table_still_fails(self):
+        tables = set(postgresql._REQUIRED_SCHEMA_TABLES) - {"outbox_event"}
+        connection = self.Connection(tables=tables)
+        with self.assertRaises(postgresql.StorageFailureError):
+            postgresql.validate_required_schema(connection)
+        self.assertEqual(len(connection.statements), 1)
+
+    def test_reconnect_and_post_apply_paths_use_the_shared_validator(self):
+        connection = object()
+        with patch.object(postgresql, "validate_required_schema", side_effect=postgresql.StorageFailureError("bounded")) as validate:
+            with self.assertRaises(postgresql.StorageFailureError):
+                postgresql.PostgreSQLReferenceTransactionAdapter._validate_existing_schema(connection)
+            validate.assert_called_once_with(connection)
+
+        apply_connection = self.Connection()
+        resources = type("Resources", (), {"paths": (), "identity": {"migration_count": 11}})()
+        with patch.object(postgresql, "resolve_migration_resources", return_value=resources), patch.object(
+            postgresql, "validate_required_schema", side_effect=postgresql.StorageFailureError("bounded")
+        ) as validate:
+            with self.assertRaises(postgresql.StorageFailureError):
+                postgresql.apply_migrations_to_connection(apply_connection)
+        validate.assert_called_once_with(apply_connection)
+
+
 class MigrationCommandTests(unittest.TestCase):
     def test_postgresql_connection_uses_named_rows_for_shared_schema_verifier(self):
         fake_psycopg = ModuleType("psycopg")
@@ -200,29 +263,32 @@ class MigrationCommandTests(unittest.TestCase):
             self.assertNotIn(sentinel, output.getvalue())
 
     def test_verification_helper_executes_only_schema_reads(self):
-        class Cursor:
-            def fetchall(self):
-                return [{"table_name": name} for name in postgresql._REQUIRED_SCHEMA_TABLES]
-
-        class Connection:
-            def __init__(self):
-                self.statements = []
-
+        class Connection(SchemaValidationTests.Connection):
             def __enter__(self):
                 return self
 
             def __exit__(self, *_args):
                 return False
 
-            def execute(self, statement, _parameters=None):
-                self.statements.append(statement)
-                return Cursor()
-
         connection = Connection()
         with patch.object(db_migrate, "_connect", return_value=connection):
             self.assertEqual(db_migrate._verify_database("unused-secret-dsn"), 19)
-        self.assertEqual(len(connection.statements), 1)
-        self.assertTrue(connection.statements[0].lstrip().startswith("SELECT"))
+        self.assertEqual(len(connection.statements), 2)
+        self.assertTrue(all(statement.lstrip().startswith("SELECT") for statement in connection.statements))
+
+    def test_verify_failure_never_echoes_dsn_or_exception_details(self):
+        dsn = "postgresql://private-user:secret-password@private.db.invalid/private_database_name"
+        exception_detail = " ".join(DSN_SENTINELS)
+        output = io.StringIO()
+        with patch.object(db_migrate, "_verify_database", side_effect=RuntimeError(exception_detail)), redirect_stdout(output):
+            result = db_migrate.main(["verify", "--dsn", dsn])
+        self.assertEqual(result, 2)
+        report = json.loads(output.getvalue())
+        self.assertEqual(report["reason_code"], "SCHEMA_VERIFICATION_FAILED")
+        self.assertNotEqual(report.get("status"), "VERIFIED")
+        self.assertNotEqual(report.get("schema_state"), "CURRENT")
+        for sentinel in DSN_SENTINELS:
+            self.assertNotIn(sentinel, output.getvalue())
 
     def test_apply_failure_never_echoes_dsn_or_exception_details(self):
         dsn = "postgresql://private-user:secret-password@private.db.invalid/private_database_name"

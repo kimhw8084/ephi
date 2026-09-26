@@ -146,7 +146,7 @@ jobs:
           "$venv_python" -m pip install --no-index --no-deps \
             "$inputs"/wheelhouse/ephi-*.whl \
             "$inputs"/wheelhouse/nicegui_base-*.whl
-      - name: Prove installed identity, empty initialization, prefix advance, and reapply
+      - name: Prove installed identity, empty initialization, prefix verify rejection and advance, and reapply
         run: |
           mkdir -p "$RUNNER_TEMP/ephi-u3-migration-run"
           "$RUNNER_TEMP/ephi-u3-migration-venv/bin/python" \

@@ -23,7 +23,15 @@ class QualificationFailure(Exception):
         super().__init__(reason_code)
 
 
-def _run_cli(cli: Path, operation: str, *, dsn: str | None = None, cwd: Path) -> dict[str, Any]:
+def _run_cli(
+    cli: Path,
+    operation: str,
+    *,
+    dsn: str | None = None,
+    cwd: Path,
+    expected_failure_reason: str | None = None,
+    sensitive_values: tuple[str, ...] = (),
+) -> dict[str, Any]:
     env = os.environ.copy()
     env.pop("EPHI_TEST_POSTGRES_DSN", None)
     if dsn is None:
@@ -38,20 +46,34 @@ def _run_cli(cli: Path, operation: str, *, dsn: str | None = None, cwd: Path) ->
         text=True,
         check=False,
     )
-    try:
-        report = json.loads(result.stdout)
-    except (UnicodeError, json.JSONDecodeError) as exc:
-        raise QualificationFailure("MIGRATION_COMMAND_OUTPUT_INVALID") from exc
-    if result.returncode != 0 or not isinstance(report, dict):
-        raise QualificationFailure(f"MIGRATION_{operation.upper()}_FAILED")
+    rendered = result.stdout + result.stderr
     if dsn is not None:
         import psycopg
 
         connection_facts = psycopg.conninfo.conninfo_to_dict(dsn)
-        rendered = result.stdout + result.stderr
-        for value in (dsn, *(connection_facts.get(key) for key in ("user", "password", "host", "dbname"))):
-            if value and value in rendered:
-                raise QualificationFailure("MIGRATION_COMMAND_DISCLOSED_CONNECTION_FACT")
+        sensitive = (
+            dsn,
+            *(connection_facts.get(key) for key in ("user", "password", "host", "dbname", "options")),
+            *sensitive_values,
+        )
+        if any(value and value in rendered for value in sensitive):
+            raise QualificationFailure("MIGRATION_COMMAND_DISCLOSED_CONNECTION_FACT")
+    try:
+        report = json.loads(result.stdout)
+    except (UnicodeError, json.JSONDecodeError) as exc:
+        raise QualificationFailure("MIGRATION_COMMAND_OUTPUT_INVALID") from exc
+    if not isinstance(report, dict):
+        raise QualificationFailure(f"MIGRATION_{operation.upper()}_FAILED")
+    if expected_failure_reason is not None:
+        if (
+            result.returncode == 0
+            or report.get("status") != "FAIL"
+            or report.get("reason_code") != expected_failure_reason
+            or report.get("schema_state") == "CURRENT"
+        ):
+            raise QualificationFailure(f"MIGRATION_{operation.upper()}_REJECTION_MISSING")
+    elif result.returncode != 0:
+        raise QualificationFailure(f"MIGRATION_{operation.upper()}_FAILED")
     return report
 
 
@@ -72,6 +94,22 @@ def _table_names(connection: Any) -> set[str]:
         "WHERE table_schema = current_schema() AND table_type = 'BASE TABLE'"
     ).fetchall()
     return {str(row["table_name"] if isinstance(row, dict) else row[0]) for row in rows}
+
+
+def _schema_state(connection: Any) -> tuple[tuple[str, ...], tuple[tuple[str, str], ...]]:
+    tables = tuple(sorted(_table_names(connection)))
+    rows = connection.execute(
+        "SELECT table_name, column_name FROM information_schema.columns "
+        "WHERE table_schema = current_schema()"
+    ).fetchall()
+    columns = tuple(sorted(
+        (
+            str(row["table_name"] if isinstance(row, dict) else row[0]),
+            str(row["column_name"] if isinstance(row, dict) else row[1]),
+        )
+        for row in rows
+    ))
+    return tables, columns
 
 
 def _row_values(row: Any) -> tuple[Any, ...]:
@@ -167,7 +205,11 @@ def _run(args: argparse.Namespace) -> dict[str, object]:
         empty_dsn = _schema_dsn(psycopg, base_dsn, empty_schema)
         empty_apply = _run_cli(cli, "apply", dsn=empty_dsn, cwd=cwd)
         empty_verify = _run_cli(cli, "verify", dsn=empty_dsn, cwd=cwd)
-        if empty_apply.get("status") != "APPLIED" or empty_verify.get("status") != "VERIFIED":
+        if (
+            empty_apply.get("status") != "APPLIED"
+            or empty_verify.get("status") != "VERIFIED"
+            or empty_verify.get("schema_state") != "CURRENT"
+        ):
             raise QualificationFailure("EMPTY_SCHEMA_MIGRATION_FAILED")
         if empty_apply.get("identity_sha256") != EXPECTED_MIGRATION_IDENTITY or empty_verify.get("migration_count") != 11:
             raise QualificationFailure("EMPTY_SCHEMA_IDENTITY_MISMATCH")
@@ -195,27 +237,63 @@ def _run(args: argparse.Namespace) -> dict[str, object]:
                 for statement in _sql_statements(fixture_path.read_text(encoding="utf-8")):
                     connection.execute(statement)
             before_row = _insert_prefix_row(connection)
+            schema_before_verify = _schema_state(connection)
+
+        before_columns = {
+            column
+            for table, column in schema_before_verify[1]
+            if table == "source_snapshot"
+        }
+        if "freshness_age_seconds" in before_columns:
+            raise QualificationFailure("PREFIX_FIXTURE_ALREADY_CURRENT")
+
+        _run_cli(
+            cli,
+            "verify",
+            dsn=prefix_dsn,
+            cwd=cwd,
+            expected_failure_reason="SCHEMA_VERIFICATION_FAILED",
+            sensitive_values=(prefix_schema,),
+        )
+        with psycopg.connect(prefix_dsn, autocommit=True) as connection:
+            schema_after_failed_verify = _schema_state(connection)
+            after_failed_verify_row = _row_values(connection.execute(
+                "SELECT snapshot_id, scope_key, source_revision, manifest_hash, row_count "
+                "FROM source_snapshot WHERE snapshot_id = 'prefix-fixture-snapshot'"
+            ).fetchone())
+        after_failed_verify_columns = {
+            column
+            for table, column in schema_after_failed_verify[1]
+            if table == "source_snapshot"
+        }
+        if "freshness_age_seconds" in after_failed_verify_columns:
+            raise QualificationFailure("FAILED_VERIFY_ADDED_CURRENT_SCHEMA_COLUMN")
+        if schema_before_verify != schema_after_failed_verify or before_row != after_failed_verify_row:
+            raise QualificationFailure("FAILED_VERIFY_MUTATED_SCHEMA_OR_ROW")
 
         prefix_apply = _run_cli(cli, "apply", dsn=prefix_dsn, cwd=cwd)
-        prefix_verify = _run_cli(cli, "verify", dsn=prefix_dsn, cwd=cwd)
-        if prefix_apply.get("status") != "APPLIED" or prefix_verify.get("status") != "VERIFIED":
+        prefix_verify = _run_cli(cli, "verify", dsn=prefix_dsn, cwd=cwd, sensitive_values=(prefix_schema,))
+        if (
+            prefix_apply.get("status") != "APPLIED"
+            or prefix_verify.get("status") != "VERIFIED"
+            or prefix_verify.get("schema_state") != "CURRENT"
+        ):
             raise QualificationFailure("PREFIX_ADVANCE_FAILED")
         if prefix_apply.get("migration_count") != 11 or prefix_apply.get("identity_sha256") != EXPECTED_MIGRATION_IDENTITY:
             raise QualificationFailure("PREFIX_ADVANCE_IDENTITY_MISMATCH")
 
         with psycopg.connect(prefix_dsn, autocommit=True) as connection:
-            columns = {
-                str(row["column_name"] if isinstance(row, dict) else row[0])
-                for row in connection.execute(
-                    "SELECT column_name FROM information_schema.columns "
-                    "WHERE table_schema = current_schema() AND table_name = 'source_snapshot'"
-                ).fetchall()
-            }
+            schema_after_apply = _schema_state(connection)
             after_row = _row_values(connection.execute(
                 "SELECT snapshot_id, scope_key, source_revision, manifest_hash, row_count "
                 "FROM source_snapshot WHERE snapshot_id = 'prefix-fixture-snapshot'"
             ).fetchone())
             tables_before_reapply = _table_names(connection)
+        columns = {
+            column
+            for table, column in schema_after_apply[1]
+            if table == "source_snapshot"
+        }
         if "freshness_age_seconds" not in columns:
             raise QualificationFailure("CURRENT_SOURCE_FRESHNESS_COLUMN_MISSING")
         if before_row != after_row:
@@ -223,7 +301,7 @@ def _run(args: argparse.Namespace) -> dict[str, object]:
         if not set(_REQUIRED_SCHEMA_TABLES).issubset(tables_before_reapply):
             raise QualificationFailure("PREFIX_REQUIRED_TABLES_MISSING")
 
-        reapply = _run_cli(cli, "apply", dsn=prefix_dsn, cwd=cwd)
+        reapply = _run_cli(cli, "apply", dsn=prefix_dsn, cwd=cwd, sensitive_values=(prefix_schema,))
         with psycopg.connect(prefix_dsn, autocommit=True) as connection:
             tables_after_reapply = _table_names(connection)
             after_reapply_row = _row_values(connection.execute(
@@ -240,6 +318,7 @@ def _run(args: argparse.Namespace) -> dict[str, object]:
             "installed_migration_count": 11,
             "migration_identity_sha256": EXPECTED_MIGRATION_IDENTITY,
             "empty_schema_initialize_and_verify": "PASS",
+            "prefix_preapply_verify_rejection": "PASS",
             "prefix_001_010_advance_and_data_preservation": "PASS",
             "prefix_fixture_scope": "SCHEMA_PREFIX_ENGINE_ONLY",
             "n_minus_1_release_compatibility": "NOT_CLAIMED",

@@ -32,27 +32,28 @@ from ephi.migration_resources import MigrationResourceError, resolve_migration_r
 
 
 _TABLES = ("aggregate_state", "command_receipt", "audit_event", "outbox_event")
-_REQUIRED_SCHEMA_TABLES = (
-    "aggregate_state",
-    "command_receipt",
-    "audit_event",
-    "outbox_event",
-    "job",
-    "applied_effect",
-    "read_revision",
-    "read_head",
-    "query_snapshot",
-    "query_snapshot_row",
-    "artifact_catalog",
-    "o3_attention_projection",
-    "source_snapshot",
-    "source_capability",
-    "decision_snapshot",
-    "handoff_intent",
-    "handoff_delivery_status",
-    "handoff_delivery_attempt",
-    "outcome_value_revision",
-)
+_REQUIRED_SCHEMA_FACTS = {
+    "aggregate_state": (),
+    "command_receipt": (),
+    "audit_event": (),
+    "outbox_event": (),
+    "job": (),
+    "applied_effect": (),
+    "read_revision": (),
+    "read_head": (),
+    "query_snapshot": (),
+    "query_snapshot_row": (),
+    "artifact_catalog": (),
+    "o3_attention_projection": (),
+    "source_snapshot": ("freshness_age_seconds",),
+    "source_capability": (),
+    "decision_snapshot": (),
+    "handoff_intent": (),
+    "handoff_delivery_status": (),
+    "handoff_delivery_attempt": (),
+    "outcome_value_revision": (),
+}
+_REQUIRED_SCHEMA_TABLES = tuple(_REQUIRED_SCHEMA_FACTS)
 
 
 def _sql_statements(script: str) -> Iterator[str]:
@@ -126,7 +127,7 @@ def _sql_statements(script: str) -> Iterator[str]:
 
 
 def validate_required_schema(connection: Any) -> int:
-    """Verify the current schema contains every table required by this release."""
+    """Verify the current schema contains every declared table and column fact."""
 
     placeholders = ", ".join("%s" for _ in _REQUIRED_SCHEMA_TABLES)
     rows = connection.execute(
@@ -137,6 +138,24 @@ def validate_required_schema(connection: Any) -> int:
     present = {row["table_name"] for row in rows}
     if set(_REQUIRED_SCHEMA_TABLES) - present:
         raise StorageFailureError("durable PostgreSQL schema validation failed; required tables are missing")
+
+    required_columns = {
+        (table_name, column_name)
+        for table_name, column_names in _REQUIRED_SCHEMA_FACTS.items()
+        for column_name in column_names
+    }
+    if required_columns:
+        column_rows = connection.execute(
+            "SELECT table_name, column_name FROM information_schema.columns "
+            "WHERE table_schema = current_schema() AND table_name IN (" + placeholders + ")",
+            _REQUIRED_SCHEMA_TABLES,
+        ).fetchall()
+        present_columns = {
+            (row["table_name"], row["column_name"])
+            for row in column_rows
+        }
+        if required_columns - present_columns:
+            raise StorageFailureError("durable PostgreSQL schema validation failed; required columns are missing")
     return len(present)
 
 
