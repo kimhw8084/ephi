@@ -371,7 +371,7 @@ def main(argv: list[str] | None = None) -> int:
         report = _prepare(Path(args.output_dir))
     except ReleaseFailure as exc:
         report = {"status": "FAIL", "reason_code": exc.reason_code}
-    except (OSError, ValueError, KeyError, TypeError, subprocess.SubprocessError):
+    except Exception:
         report = {"status": "FAIL", "reason_code": "PREPARATION_FAILED"}
     print(json.dumps(report, sort_keys=True, separators=(",", ":")))
     return 0 if report["status"] == "PASS" else 2

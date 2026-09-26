@@ -183,7 +183,7 @@ def _validate_lock_index(
         if not isinstance(path_value, str) or not isinstance(digest, str) or not _HEX_64.fullmatch(digest):
             raise ReleaseFailure("LOCK_INDEX_MISSING_OR_TAMPERED")
         rel = PurePosixPath(path_value)
-        if rel.is_absolute() or rel.parts[0] != "release_locks" or ".." in rel.parts:
+        if not rel.parts or rel.is_absolute() or rel.parts[0] != "release_locks" or ".." in rel.parts:
             raise ReleaseFailure("LOCK_INDEX_MISSING_OR_TAMPERED")
         path = (package_root or root / "src" / "ephi") / rel
         try:
@@ -506,7 +506,11 @@ def _req_signature(value: str) -> str:
 def _wheel_metadata(path: Path) -> tuple[str, str]:
     try:
         with zipfile.ZipFile(path) as archive:
-            names = [name for name in archive.namelist() if name.endswith(".dist-info/METADATA")]
+            names = [
+                name
+                for name in archive.namelist()
+                if name.endswith(".dist-info/METADATA") and len(PurePosixPath(name).parts) == 2
+            ]
             if len(names) != 1:
                 raise ReleaseFailure("INSTALL_INPUTS_INVALID")
             message = Parser().parsestr(archive.read(names[0]).decode("utf-8"))
@@ -923,6 +927,12 @@ def main(argv: list[str] | None = None) -> int:
             "schema": PREFLIGHT_SCHEMA,
             "status": "FAIL",
             "reason_code": exc.reason_code,
+        }
+    except Exception:
+        report = {
+            "schema": PREFLIGHT_SCHEMA,
+            "status": "FAIL",
+            "reason_code": "PREFLIGHT_INTERNAL_FAILURE",
         }
     print(json.dumps(report, ensure_ascii=False, sort_keys=True, separators=(",", ":")))
     return 0 if report["status"] == "PASS" else 2

@@ -11,6 +11,7 @@ import shutil
 import sys
 import tempfile
 import unittest
+import zipfile
 from contextlib import redirect_stdout
 from unittest.mock import patch
 
@@ -33,15 +34,25 @@ from ephi.release_identity import (  # noqa: E402
     _verify_abi,
     _verify_migrations,
     _validate_lock_index,
+    _wheel_metadata,
     build_release_inventory,
     canonical_json_bytes,
     main,
     verify_inventory_document,
 )
+import ephi.release_identity as release_identity_module  # noqa: E402
 from tools.o9_operations import _migration_identity  # noqa: E402
 
 
 class ReleaseInventoryTests(unittest.TestCase):
+    def test_wheel_metadata_ignores_vendored_dist_info(self):
+        with tempfile.TemporaryDirectory() as temp:
+            wheel = Path(temp) / "demo-1.0-py3-none-any.whl"
+            with zipfile.ZipFile(wheel, "w") as archive:
+                archive.writestr("demo-1.0.dist-info/METADATA", "Name: demo\nVersion: 1.0\n")
+                archive.writestr("demo/_vendor/inner-2.0.dist-info/METADATA", "Name: inner\nVersion: 2.0\n")
+            self.assertEqual(_wheel_metadata(wheel), ("demo", "1.0"))
+
     def test_inventory_is_canonical_stable_and_bound_to_owner_facts(self):
         first = build_release_inventory(ROOT)
         with patch.dict(os.environ, {"EPHI_POSTGRES_DSN": "postgresql://user:password@private.invalid/ephi"}):
@@ -108,6 +119,7 @@ class ReleaseInventoryTests(unittest.TestCase):
     def test_shared_migration_identity_detects_added_removed_and_modified_inputs(self):
         expected = migration_schema_identity(ROOT / "migrations")
         self.assertEqual(expected, _migration_identity(ROOT))
+        inventory = build_release_inventory(ROOT)
         originals = sorted((ROOT / "migrations").glob("*.sql"))
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp) / "migrations"
@@ -115,16 +127,30 @@ class ReleaseInventoryTests(unittest.TestCase):
             for path in originals:
                 shutil.copyfile(path, root / path.name)
             self.assertEqual(migration_schema_identity(root), expected)
+            with patch.object(release_identity_module, "_migration_directory", return_value=root):
+                _verify_migrations(inventory)
             (root / "012_u3_not_a_product_migration.sql").write_text("-- fixture\n", encoding="utf-8")
             self.assertNotEqual(migration_schema_identity(root), expected)
+            with patch.object(release_identity_module, "_migration_directory", return_value=root):
+                with self.assertRaises(ReleaseFailure) as added:
+                    _verify_migrations(inventory)
+                self.assertEqual(added.exception.reason_code, "MIGRATION_IDENTITY_MISMATCH")
             (root / "012_u3_not_a_product_migration.sql").unlink()
             removed = originals.pop()
             (root / removed.name).unlink()
             self.assertNotEqual(migration_schema_identity(root), expected)
+            with patch.object(release_identity_module, "_migration_directory", return_value=root):
+                with self.assertRaises(ReleaseFailure) as missing:
+                    _verify_migrations(inventory)
+                self.assertEqual(missing.exception.reason_code, "MIGRATION_IDENTITY_MISMATCH")
             shutil.copyfile(removed, root / removed.name)
             first = next(root.glob("*.sql"))
             first.write_bytes(first.read_bytes() + b"\n-- modified fixture\n")
             self.assertNotEqual(migration_schema_identity(root), expected)
+            with patch.object(release_identity_module, "_migration_directory", return_value=root):
+                with self.assertRaises(ReleaseFailure) as modified:
+                    _verify_migrations(inventory)
+                self.assertEqual(modified.exception.reason_code, "MIGRATION_IDENTITY_MISMATCH")
 
     def test_preflight_migration_and_abi_mismatches_fail_closed(self):
         inventory = build_release_inventory(ROOT)
@@ -160,6 +186,20 @@ class ReleaseInventoryTests(unittest.TestCase):
         rendered = output.getvalue()
         for private_value in ("private-user", "private-password", "private.endpoint", "source_rows"):
             self.assertNotIn(private_value, rendered)
+
+    def test_unexpected_preflight_errors_are_structurally_sanitized(self):
+        output = io.StringIO()
+        with patch.object(release_identity_module, "release_preflight", side_effect=RuntimeError("postgresql://secret:token@private.host/db")), redirect_stdout(output):
+            result = main(["--inputs-dir", "/private/object/path", "--json"])
+        report = json.loads(output.getvalue())
+        self.assertEqual(result, 2)
+        self.assertEqual(report, {
+            "schema": "org.ephi.release-preflight.v1",
+            "status": "FAIL",
+            "reason_code": "PREFLIGHT_INTERNAL_FAILURE",
+        })
+        self.assertNotIn("private", output.getvalue())
+        self.assertNotIn("secret", output.getvalue())
 
 
 if __name__ == "__main__":
