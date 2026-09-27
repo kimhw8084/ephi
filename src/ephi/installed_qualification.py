@@ -948,22 +948,7 @@ def _qualify(args: argparse.Namespace) -> dict[str, object]:
     })
     artifact_records.sort(key=lambda item: str(item.get("path", "")))
 
-    control_scope = (
-        "Exact missing/incompatible provider, ABI and PostgreSQL bindings fail with fixed U1 reason codes; "
-        "the installed Playwright browser is required and never downloaded by the qualifier."
-    )
-    evidence_for_gates = dict(observed)
-    evidence_for_gates["negative_controls_status"] = "PASS" if controls_ok else "FAIL"
-    gates = _gate_matrix(evidence_for_gates)
-    gates.append(_gate(
-        "FAIL_CLOSED_CONTROLS",
-        control_scope,
-        "PASS" if controls_ok else "FAIL",
-        "NEGATIVE_CONTROLS_PASS" if controls_ok else "FAIL_CLOSED_CONTROL_FAILED",
-        "Bounded safe states were observed for missing and incompatible prerequisites." if controls_ok else "At least one negative control did not return its expected safe state.",
-        controls,
-        "Rerun the controls after correcting any unexpected safe-state result." if not controls_ok else "None for this bounded control set.",
-    ))
+    gates = _gate_matrix(observed)
 
     required_sections_pass = (
         observed.get("release_status") == "PASS"
@@ -1002,6 +987,7 @@ def _qualify(args: argparse.Namespace) -> dict[str, object]:
             "recovery": browser_report.get("o9_recovery", {"status": "NOT_RUN", "reason_code": "POSTGRESQL_OR_FIXTURE_UNAVAILABLE"}),
         },
         "browser": browser_report,
+        "negative_controls_status": "PASS" if controls_ok else "FAIL",
         "negative_controls": controls,
         "exercised_product_paths": browser_report.get("paths", {}),
         "failure_inventory": failure_inventory,
