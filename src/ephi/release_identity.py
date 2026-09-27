@@ -461,6 +461,88 @@ def _installed_inventory() -> dict[str, Any]:
     return verify_inventory_document(value, raw)
 
 
+def installed_release_identity() -> dict[str, str]:
+    """Return the verified, non-Git identity of the running EPHI package.
+
+    The release inventory remains the authority. Package files are checked
+    against its immutable records so callers do not infer identity from a
+    checkout, Git metadata, or an import path.
+    """
+
+    inventory = _installed_inventory()
+    release = inventory.get("release")
+    files = release.get("source_files") if isinstance(release, dict) else None
+    if not isinstance(files, list):
+        raise ReleaseFailure("APPLICATION_RELEASE_IDENTITY_MISMATCH")
+    expected: dict[str, tuple[str, int]] = {}
+    for item in files:
+        if not isinstance(item, dict) or not isinstance(item.get("path"), str):
+            raise ReleaseFailure("APPLICATION_RELEASE_IDENTITY_MISMATCH")
+        source_path = PurePosixPath(item["path"])
+        digest, size = item.get("sha256"), item.get("byte_size")
+        if (
+            source_path.parts[:2] != ("src", "ephi")
+            or ".." in source_path.parts
+            or not isinstance(digest, str)
+            or not _HEX_64.fullmatch(digest)
+            or isinstance(size, bool)
+            or not isinstance(size, int)
+            or size < 0
+        ):
+            raise ReleaseFailure("APPLICATION_RELEASE_IDENTITY_MISMATCH")
+        expected[PurePosixPath(*source_path.parts[2:]).as_posix()] = (digest, size)
+    package_root = Path(__file__).resolve().parent
+    try:
+        packaged = {
+            path.relative_to(package_root).as_posix()
+            for path in package_root.rglob("*")
+            if path.is_file() and "__pycache__" not in path.parts and path.suffix != ".pyc"
+            and path.name != "release_inventory.json"
+        }
+        if packaged != set(expected):
+            raise ReleaseFailure("APPLICATION_RELEASE_IDENTITY_MISMATCH")
+        for relative, (digest, size) in expected.items():
+            path = package_root / relative
+            if path.is_symlink() or not path.is_file():
+                raise ReleaseFailure("APPLICATION_RELEASE_IDENTITY_MISMATCH")
+            raw = path.read_bytes()
+            if len(raw) != size or _sha256_bytes(raw) != digest:
+                raise ReleaseFailure("APPLICATION_RELEASE_IDENTITY_MISMATCH")
+        try:
+            app_distribution = metadata.distribution("ephi")
+        except metadata.PackageNotFoundError:
+            app_distribution = None
+        if app_distribution is not None:
+            installed_module = Path(app_distribution.locate_file("ephi/release_identity.py")).resolve()
+            current_module = Path(__file__).resolve()
+            if package_root.parent.name == "src":
+                # Source-checkout callers use this package's verified inventory;
+                # local build metadata is not an installed-wheel authority.
+                pass
+            elif installed_module == current_module:
+                _verify_installed_package_files(app_distribution, inventory)
+            else:
+                raise ReleaseFailure("APPLICATION_RELEASE_IDENTITY_MISMATCH")
+    except OSError as exc:
+        raise ReleaseFailure("APPLICATION_RELEASE_IDENTITY_MISMATCH") from exc
+
+    distribution = release.get("distribution") if isinstance(release, dict) else None
+    version = release.get("version") if isinstance(release, dict) else None
+    source_authority = release.get("source_authority") if isinstance(release, dict) else None
+    identity = inventory.get("release_identity_sha256")
+    if not all(isinstance(value, str) and value for value in (distribution, version, source_authority)):
+        raise ReleaseFailure("RELEASE_INVENTORY_INVALID")
+    if not isinstance(identity, str) or not _HEX_64.fullmatch(identity):
+        raise ReleaseFailure("RELEASE_INVENTORY_INVALID")
+    return {
+        "schema": str(inventory["schema"]),
+        "distribution": distribution,
+        "version": version,
+        "source_authority": source_authority,
+        "release_identity_sha256": identity,
+    }
+
+
 def _installed_lock_root() -> Path:
     return Path(__file__).with_name("release_locks")
 
@@ -978,6 +1060,7 @@ __all__ = [
     "ReleaseFailure",
     "build_release_inventory",
     "canonical_json_bytes",
+    "installed_release_identity",
     "main",
     "release_preflight",
     "verify_inventory_document",

@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 from datetime import datetime, timedelta, timezone
 import json
+import os
 from pathlib import Path
 import sys
 import time
@@ -13,6 +14,16 @@ import time
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "src"))
+
+
+class _UsageFailure(Exception):
+    pass
+
+
+class _SafeParser(argparse.ArgumentParser):
+    def error(self, _message: str) -> None:
+        raise _UsageFailure
+
 
 from ephi.application import (  # noqa: E402
     AccessScope,
@@ -271,26 +282,30 @@ def verify_application_restart(target_dsn: str, scope: AccessScope, principal: P
 
 
 def run(args: argparse.Namespace) -> dict[str, object]:
+    dsn = os.environ.get("EPHI_POSTGRES_DSN", "").strip()
+    admin_dsn = os.environ.get("EPHI_POSTGRES_ADMIN_DSN", "").strip() or dsn
+    if not dsn or not admin_dsn:
+        raise RuntimeError("PostgreSQL connection settings are unavailable")
     evidence = Path(args.evidence_dir).resolve()
     evidence.mkdir(parents=True, exist_ok=True)
     artifact_root = Path(args.artifact_root).resolve()
-    seed = seed_source(args.dsn, artifact_root)
+    seed = seed_source(dsn, artifact_root)
     scope = seed["scope"]
     principal = seed["principal"]
-    create_backup(dsn=args.dsn, artifact_root=artifact_root, output_dir=args.backup_dir)
+    create_backup(dsn=dsn, artifact_root=artifact_root, output_dir=args.backup_dir)
     backup_manifest_path = Path(args.backup_dir) / "backup_manifest.json"
-    accept_post_cutoff(args.dsn, scope, principal)
-    reconciliation = reconcile(manifest_path=backup_manifest_path, dsn=args.dsn)
-    verify = verify_backup(manifest_path=backup_manifest_path, repo_root=ROOT, backup_root=Path(args.backup_dir) / "artifacts")
+    accept_post_cutoff(dsn, scope, principal)
+    reconciliation = reconcile(manifest_path=backup_manifest_path, dsn=dsn)
+    verify = verify_backup(manifest_path=backup_manifest_path, backup_root=Path(args.backup_dir) / "artifacts")
     restore = restore_rehearsal(
         manifest_path=backup_manifest_path,
-        source_admin_dsn=args.admin_dsn,
+        source_admin_dsn=admin_dsn,
         target_database=args.target_database,
         target_artifact_root=args.target_artifact_root,
     )
-    target_dsn = _dsn_with_database(args.admin_dsn, args.target_database)
+    target_dsn = _dsn_with_database(admin_dsn, args.target_database)
     restart = verify_application_restart(target_dsn, scope, principal, seed["retained_snapshot_id"], seed["stale_lease"])
-    health = operations_status(dsn=args.dsn, artifact_root=artifact_root)
+    health = operations_status(dsn=dsn, artifact_root=artifact_root)
     summary = {
         "schema_version": "o9.1.rehearsal-summary.v1",
         "operation": "CHG-147/O9.1",
@@ -319,20 +334,22 @@ def run(args: argparse.Namespace) -> dict[str, object]:
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--dsn", required=True)
-    parser.add_argument("--admin-dsn", required=True)
+    parser = _SafeParser(description=__doc__)
     parser.add_argument("--artifact-root", required=True)
     parser.add_argument("--backup-dir", required=True)
     parser.add_argument("--target-artifact-root", required=True)
     parser.add_argument("--target-database", required=True)
     parser.add_argument("--evidence-dir", required=True)
-    args = parser.parse_args(argv)
+    try:
+        args = parser.parse_args(argv)
+    except _UsageFailure:
+        print(json.dumps({"status": "VERIFY_FAILED", "reason_code": "INVALID_ARGUMENTS"}, sort_keys=True))
+        return 2
     try:
         print(json.dumps(run(args), ensure_ascii=False, sort_keys=True, indent=2))
         return 0
-    except Exception as exc:
-        print(json.dumps({"status": "VERIFY_FAILED", "reason": str(exc)}, sort_keys=True))
+    except Exception:
+        print(json.dumps({"status": "VERIFY_FAILED", "reason_code": "REHEARSAL_FAILED"}, sort_keys=True))
         return 2
 
 

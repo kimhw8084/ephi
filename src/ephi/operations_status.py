@@ -6,6 +6,7 @@ import argparse
 import json
 import os
 import re
+import sys
 from typing import Any, Sequence
 
 from ephi.application.operations import (
@@ -49,7 +50,6 @@ def _parser() -> argparse.ArgumentParser:
     parser = _Parser(description=__doc__)
     commands = parser.add_subparsers(dest="command", required=True)
     status = commands.add_parser("status")
-    status.add_argument("--dsn", help="PostgreSQL DSN; defaults to EPHI_POSTGRES_DSN.")
     status.add_argument("--artifact-root", help="Explicit immutable artifact root.")
     status.add_argument("--json", action="store_true", help="Emit the JSON status report (the default).")
     return parser
@@ -242,9 +242,14 @@ def _write(value: dict[str, object]) -> None:
 
 
 def main(argv: Sequence[str] | None = None) -> int:
+    arguments = list(sys.argv[1:] if argv is None else argv)
+    if arguments and arguments[0] in {"backup-create", "backup-verify", "restore-rehearsal", "reconcile"}:
+        from ephi.o9_operations import main as recovery_main
+
+        return recovery_main(arguments)
     try:
-        args = _parser().parse_args(argv)
-        dsn = args.dsn if args.dsn is not None else os.environ.get("EPHI_POSTGRES_DSN")
+        args = _parser().parse_args(arguments)
+        dsn = os.environ.get("EPHI_POSTGRES_DSN")
         report = operations_status(
             dsn=dsn.strip() if isinstance(dsn, str) and dsn.strip() else None,
             artifact_root=args.artifact_root,

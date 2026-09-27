@@ -51,8 +51,8 @@
     },
     {
       "path": ".github/workflows/package.yml",
-      "bytes": 20141,
-      "sha256": "01ae6e299e9bd4a95701acfb510f2f344c1479a7f0f66a5df7cc2b8e6b5dbdaa"
+      "bytes": 21716,
+      "sha256": "e6a96ee62b9f0026c68ca74a2be737f83b16fadc6b153384c16358cd327ea2ba"
     },
     {
       "path": ".gitignore",
@@ -156,8 +156,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 29975,
-      "sha256": "2cbac32736e8a7998f5dc6f316bf1f9d8348f58e6d67a3328926e2e8151e8228"
+      "bytes": 30332,
+      "sha256": "5bbed22741f17879be900d4bba04a9fdb0050674c669b82d747b00891a349d31"
     },
     {
       "path": "app.py",
@@ -186,8 +186,8 @@
     },
     {
       "path": "docs/Release_Install_Identity.md",
-      "bytes": 9070,
-      "sha256": "9e456978317b39eef996ff5fe4d722125af318d2d26c82de6cfd31c847d76950"
+      "bytes": 9471,
+      "sha256": "ca1df66aeb91795a0a166aba2db2c5bb784cce88bde618bdd188969bf7759051"
     },
     {
       "path": "docs/nicegui_base/AGENT_WORKFLOW.md",
@@ -1601,8 +1601,8 @@
     },
     {
       "path": "operations/README.md",
-      "bytes": 3723,
-      "sha256": "56bf914a625a22a34bf8c3e391a08111f90c7204e35b942cbb98afbcf90bf2be"
+      "bytes": 4942,
+      "sha256": "30eb5f869e2c60182e3921968b19e296d945cee44e339569e5ad23a816bb4d94"
     },
     {
       "path": "operations/runbooks/README.md",
@@ -1616,8 +1616,8 @@
     },
     {
       "path": "operations/runbooks/isolated-restore-rehearsal.md",
-      "bytes": 1222,
-      "sha256": "c65187264dcf2fbbb1e52e134fc74fe40c87483a7b32d0d1c0f07c3edcaabb24"
+      "bytes": 1686,
+      "sha256": "d64db7bc0803fcbe4cbb2fc6f3867de04064f8da78075dfd8f8c6688a88bcc86"
     },
     {
       "path": "operations/runbooks/postgresql-outage.md",
@@ -1930,9 +1930,14 @@
       "sha256": "042f5c8c1b8a2a31031b7c26932e4b8809ed0df66a92d209c82d2e47f1c46200"
     },
     {
+      "path": "src/ephi/o9_operations.py",
+      "bytes": 49697,
+      "sha256": "0c008694522d37cfe4a9994dfc150a170937859a28f3ab7aff3831f72b9382a1"
+    },
+    {
       "path": "src/ephi/operations_status.py",
-      "bytes": 10187,
-      "sha256": "a786cb95c557cacc30d955ac9cec448bbe2a673dc9e6bda182e3c469af8d06ac"
+      "bytes": 10347,
+      "sha256": "913e8a39008973c339d008b6afaa36bfc59e4b97dbb6b41aa9f1e5ec87d705d2"
     },
     {
       "path": "src/ephi/py.typed",
@@ -1946,13 +1951,13 @@
     },
     {
       "path": "src/ephi/release_identity.py",
-      "bytes": 45117,
-      "sha256": "59b151886cc5c6f3e580c4118202fe77b23e571307a619d82e61e5eec711a313"
+      "bytes": 49160,
+      "sha256": "04f40105b24939643428c4589702f24ea83592f51374567c9353d37c84a59f53"
     },
     {
       "path": "src/ephi/release_inventory.json",
-      "bytes": 16620,
-      "sha256": "ab6210aca795713eab06e1d0d3dbf05e18f9db4ffa4da8db644cb7abd345f5df"
+      "bytes": 16751,
+      "sha256": "334eb4805f2d29688fd7746e9878102436c253dd3631f0e02e24b4764e2c3bc4"
     },
     {
       "path": "src/ephi/release_locks/build-py311.txt",
@@ -2106,8 +2111,8 @@
     },
     {
       "path": "tests/test_installed_operations_status.py",
-      "bytes": 13379,
-      "sha256": "22a1e2f5e09be23cafeddea3f619110c6ea79cc74f05c694f639439d27e8eb18"
+      "bytes": 15654,
+      "sha256": "52b147e40366a673da6dd5664c8e2ac3391abf01ee93e54cc48ed930c8fe87d9"
     },
     {
       "path": "tests/test_migration_resources.py",
@@ -2246,8 +2251,8 @@
     },
     {
       "path": "tests/test_o9_operations.py",
-      "bytes": 23878,
-      "sha256": "6d3c7e2ab7020cfdb0e5e9ad2efd8afa886df71c16aa262f6f8f9a6cb59e2bec"
+      "bytes": 37799,
+      "sha256": "4126c25cf70323ddac04896dcb26a83cde8b2555dd72c66890db52486a735f1f"
     },
     {
       "path": "tests/test_operations_application.py",
@@ -2286,8 +2291,8 @@
     },
     {
       "path": "tests/test_release_identity.py",
-      "bytes": 13791,
-      "sha256": "5c785eff6bff6019822c337e196f358224fcab790187a430bd49d7ece617324e"
+      "bytes": 14348,
+      "sha256": "f16069d7340f249bd68713e7976dbf2ec944df69a810016ff5515b8330f7677e"
     },
     {
       "path": "tests/test_runtime_config_preflight.py",
@@ -2345,6 +2350,11 @@
       "sha256": "723ffd64af0be6579c664daddb0ee23f6305cf56f331d87370eb721cedfd6d06"
     },
     {
+      "path": "tools/installed_o9_recovery_qualification.py",
+      "bytes": 40779,
+      "sha256": "7d923e6c826c838db9c5e3de4111bf1f7685e47bad60ae8992d6b737c3b3e92c"
+    },
+    {
       "path": "tools/o10_rendered_accessibility.py",
       "bytes": 47218,
       "sha256": "1b9ec53edf13bdcc2b3b71234d75304901a8b8b4716f73d51648ae18e3e1da4d"
@@ -2371,13 +2381,13 @@
     },
     {
       "path": "tools/o9_operations.py",
-      "bytes": 33920,
-      "sha256": "c97daf1c5ab817b29179162585f7a178524ab3cb9a328a52fd4da9ca0bd84312"
+      "bytes": 1527,
+      "sha256": "82730fcc79fcee7cec9d86496b06def340bf3e8d74ea3111b71015e427813166"
     },
     {
       "path": "tools/o9_real_rehearsal.py",
-      "bytes": 16303,
-      "sha256": "9023d32d694608d6272289a5b3cc65de49813c6eeb5dc9121e52a31ccf9e50d9"
+      "bytes": 16726,
+      "sha256": "17355c2e68aab7b8cc3ede701b1d896c56158732364f2722f116c48eb5ddf04e"
     },
     {
       "path": "tools/prepare_release_inputs.py",

@@ -7,6 +7,14 @@ Diagnostic evidence: backup manifest, dump SHA-256/size, migration identity,
 server/tool versions, server-time cutoff/high-water, artifact inventory, restore
 report, and post-cutoff reconciliation. Redact connection authority.
 
+Run the workflow from the installed release wheel with
+`ephi-operations backup-create`, `backup-verify`, `restore-rehearsal`, and
+`reconcile`. Inject `EPHI_POSTGRES_DSN` and, when a separate administrative
+connection is required, `EPHI_POSTGRES_ADMIN_DSN` through the approved secret
+boundary. Keep connection settings out of command arguments. The installed
+workflow and its v1 manifest compatibility limit are described in the
+[operations guide](../README.md).
+
 Safe action: create a new temporary PostgreSQL database and distinct artifact
 directory, restore the logical dump and only catalog-referenced immutable
 bytes, then run independent schema/state/artifact/read/workflow/worker checks.

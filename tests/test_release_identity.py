@@ -38,6 +38,7 @@ from ephi.release_identity import (  # noqa: E402
     _wheel_metadata,
     build_release_inventory,
     canonical_json_bytes,
+    installed_release_identity,
     main,
     verify_inventory_document,
 )
@@ -49,6 +50,15 @@ from tools.o9_operations import _migration_identity  # noqa: E402
 
 
 class ReleaseInventoryTests(unittest.TestCase):
+    def test_runtime_release_identity_is_package_bound_and_contains_no_git_facts(self):
+        identity = installed_release_identity()
+        self.assertEqual(identity["release_identity_sha256"], build_release_inventory(ROOT)["release_identity_sha256"])
+        self.assertEqual(identity["distribution"], "ephi")
+        self.assertEqual(identity["version"], "0.1.0")
+        self.assertNotIn("source_sha", identity)
+        self.assertNotIn("source_tree", identity)
+        self.assertNotIn("candidate_branch", identity)
+
     def test_preparation_environment_removes_python_and_resolver_overrides(self):
         with patch.dict(os.environ, {
             "CONDA_PREFIX": "/private/conda/path",
