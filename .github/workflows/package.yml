@@ -276,6 +276,14 @@ jobs:
       - name: Provision Chromium outside restricted qualification
         run: "$RUNNER_TEMP/ephi-u36-venv/bin/python -m playwright install --with-deps chromium"
       - name: Run installed release, configuration, migration, and provider preflights
+        env:
+          EPHI_HOST: 127.0.0.1
+          EPHI_PORT: '8080'
+          EPHI_DOWNSTREAM_ENTRYPOINT: examples.synthetic_downstream.provider:build_bundle
+          EPHI_POSTGRES_DSN: postgresql://ephi_ci:ephi_ci_password@127.0.0.1:5432/ephi_u36
+          EPHI_ALLOWED_BROWSER_ORIGINS: http://127.0.0.1:8080
+          NICEGUI_BASE_STORAGE_SECRET: qualification-preflight-placeholder
+          NICEGUI_BASE_SECURE_SESSION_COOKIE: 'false'
         run: |
           inputs="$RUNNER_TEMP/ephi-u36-inputs"
           venv_bin="$RUNNER_TEMP/ephi-u36-venv/bin"
@@ -599,10 +607,26 @@ jobs:
         env:
           EPHI_TEST_POSTGRES_DSN: postgresql://ephi_ci:ephi_ci_password@127.0.0.1:5432/ephi_ci
         run: python -m unittest tests.test_o2_postgresql -v
+      - name: Run U1 installed-provider PostgreSQL composition regressions
+        env:
+          EPHI_TEST_POSTGRES_DSN: postgresql://ephi_ci:ephi_ci_password@127.0.0.1:5432/ephi_ci
+        run: python -m unittest tests.test_downstream_postgresql -v
+      - name: Run U2 synthetic Family Center PostgreSQL regressions
+        env:
+          EPHI_TEST_POSTGRES_DSN: postgresql://ephi_ci:ephi_ci_password@127.0.0.1:5432/ephi_ci
+        run: python -m unittest tests.test_family_center_postgresql -v
+      - name: Run U2 synthetic Assets PostgreSQL regressions
+        env:
+          EPHI_TEST_POSTGRES_DSN: postgresql://ephi_ci:ephi_ci_password@127.0.0.1:5432/ephi_ci
+        run: python -m unittest tests.test_assets_postgresql -v
       - name: Run PostgreSQL Outcomes restart and concurrency integration tests
         env:
           EPHI_TEST_POSTGRES_DSN: postgresql://ephi_ci:ephi_ci_password@127.0.0.1:5432/ephi_ci
         run: python -m unittest tests.test_outcomes_postgresql -v
+      - name: Run U2 synthetic Operations PostgreSQL regressions
+        env:
+          EPHI_TEST_POSTGRES_DSN: postgresql://ephi_ci:ephi_ci_password@127.0.0.1:5432/ephi_ci
+        run: python -m unittest tests.test_operations_postgresql -v
       - name: Run PostgreSQL worker lease integration tests
         env:
           EPHI_TEST_POSTGRES_DSN: postgresql://ephi_ci:ephi_ci_password@127.0.0.1:5432/ephi_ci

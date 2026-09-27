@@ -557,18 +557,23 @@ def _browser_run(
 
 
 def _browser_executable(argument: str | None) -> tuple[Path | None, str | None]:
+    selected: Path | None = None
     if argument:
         candidate = Path(argument).expanduser()
         if candidate.is_file() and os.access(candidate, os.X_OK):
-            return candidate.resolve(), None
-        return None, "BROWSER_EXECUTABLE_UNAVAILABLE"
+            selected = candidate.resolve()
+        else:
+            return None, "BROWSER_EXECUTABLE_UNAVAILABLE"
     try:
         from playwright.sync_api import sync_playwright
 
         with sync_playwright() as playwright:
-            candidate = Path(playwright.chromium.executable_path)
-        if candidate.is_file() and os.access(candidate, os.X_OK):
-            return None, None
+            options: dict[str, object] = {"headless": True}
+            if selected is not None:
+                options["executable_path"] = str(selected)
+            browser = playwright.chromium.launch(**options)
+            browser.close()
+        return selected, None
     except Exception:
         pass
     return None, "BROWSER_EXECUTABLE_UNAVAILABLE"

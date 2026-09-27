@@ -51,8 +51,8 @@
     },
     {
       "path": ".github/workflows/package.yml",
-      "bytes": 31536,
-      "sha256": "dc137fc98f85f4eb3fb7e3be99dc4335cfe6816a2e92bc694f0c82e87df4d28d"
+      "bytes": 32952,
+      "sha256": "2c584eddee8bc8bbf4310eb82f991786a6fd4c128bf304ea28356d64358420e7"
     },
     {
       "path": ".gitignore",
@@ -1941,8 +1941,8 @@
     },
     {
       "path": "src/ephi/installed_qualification.py",
-      "bytes": 53694,
-      "sha256": "13809855e07cd82a0db4439e7841ccbe7342ce8d6fe74aa3357a1b72afd17ae0"
+      "bytes": 53855,
+      "sha256": "04dc79aa4eabd0657ec3fa4fe6610a22059bc4b4090a370512e8831e093b8c43"
     },
     {
       "path": "src/ephi/migration_resources.py",
@@ -1982,7 +1982,7 @@
     {
       "path": "src/ephi/release_inventory.json",
       "bytes": 17083,
-      "sha256": "673f9e319e0568c2d881b8d2f21e7608d58b2a31dbc6c40a1b9359d4242e232e"
+      "sha256": "5e2a63d6906144e5ae5ef5113025a48509c6c1d9ec7dd334d7facd911502f018"
     },
     {
       "path": "src/ephi/release_locks/build-py311.txt",
