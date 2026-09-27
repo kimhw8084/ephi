@@ -500,6 +500,15 @@ def _browser_run(
                     if "No matching Outcomes" not in body or "This does not mean EPHI created no value" not in body:
                         raise ReleaseFailure("OUTCOMES_EMPTY_STATE_NOT_TRUTHFUL")
                 else:
+                    page.get_by_text(
+                        "READY means only that this application and Operations query path responded",
+                        exact=False,
+                    ).wait_for(timeout=20000)
+                    page.get_by_text(
+                        "No audited OperationsControl capability is bound",
+                        exact=False,
+                    ).wait_for(timeout=20000)
+                    body = page.locator("body").inner_text()
                     if "READY means only that this application and Operations query path responded" not in body:
                         raise ReleaseFailure("OPERATIONS_TRUTH_BOUNDARY_NOT_RENDERED")
                     if "No audited OperationsControl capability is bound" not in body:
