@@ -185,6 +185,73 @@ is introduced.
    the existing U1 composition authority. Unknown or incompatible ABI/provider
    majors remain fail-closed.
 
+## Separate installed synthetic qualification kit (CHG-287 / U3.6)
+
+The restricted preparation bundle has a separate `qualification/` payload for
+the existing U1/U2 synthetic downstream fixture. It contains the standalone
+`ephi-synthetic-downstream-qualification` wheel, the qualification-only
+Playwright dependencies, their exact wheel hashes, the U1 ABI/conformance
+identity, and the candidate SHA/tree. These artifacts are separate from the
+ordinary EPHI runtime wheels and dependency lock. Installing the provider does
+not select it or add it to EPHI's runtime dependencies. It contains synthetic
+fixtures only; it has no company data, private mappings, credentials, or
+endpoints.
+
+Install both payloads into a fresh supported environment. This example is for
+CPython 3.13; use the matching lock suffix and environment for 3.11 or 3.12:
+
+```bash
+INPUTS=/approved/transfer/ephi-install-inputs
+.venv/bin/python -m pip install \
+  --no-index --find-links "$INPUTS/qualification/wheelhouse" --require-hashes \
+  -r "$INPUTS/qualification/locks/qualification-py313.txt"
+.venv/bin/python -m pip install \
+  --no-index --find-links "$INPUTS/wheelhouse" --require-hashes \
+  -r "$INPUTS/locks/postgres-py313.txt"
+.venv/bin/ephi-release-preflight \
+  --inputs-dir "$INPUTS" \
+  --qualification-inputs-dir "$INPUTS/qualification" --json
+```
+
+The optional qualification input makes the release preflight require the exact
+separately installed provider and qualification dependencies. It reports a
+separate qualification-kit identity; the normal EPHI release identity remains
+unchanged in meaning. The standard EPHI wheel still carries no synthetic
+provider and does not auto-enable it.
+
+Before restricted use, provision a qualified Chromium/Chrome binary through
+the approved channel or include an already-installed Playwright browser. The
+installed qualifier never downloads a browser or Python dependency. Set
+`EPHI_ENV=test` and `EPHI_TEST_POSTGRES_DSN` for a fresh disposable PostgreSQL
+18 database, then run it from outside the repository and its import paths:
+
+```bash
+mkdir -p /tmp/ephi-qualification-cwd /approved/job-artifacts/ephi-u36
+cd /tmp/ephi-qualification-cwd
+EPHI_ENV=test EPHI_TEST_POSTGRES_DSN="$QUALIFICATION_DSN" \
+  /path/to/venv/bin/ephi-qualify \
+  --inputs-dir "$INPUTS" \
+  --qualification-inputs-dir "$INPUTS/qualification" \
+  --artifact-dir /approved/job-artifacts/ephi-u36 \
+  --chromium-executable /approved/bin/chromium
+```
+
+Omit `--chromium-executable` only when the matching Playwright Chromium is
+already installed. The command uses the existing release/configuration,
+migration, U1 provider conformance/composition, PostgreSQL, O9 status, and
+application/browser authorities. It writes a canonical `qualification-report.json`,
+minimum path screenshots, and a sanitized browser failure inventory under the
+specified artifact directory. The browser path covers synthetic Attention,
+Episode, Family Center, Assets, Outcomes, and Operations at 1440x900, including
+keyboard reachability and unexpected browser/network errors.
+
+The report records every G00–G12 gate using the governing scopes in
+`09_Delivery_and_Gates.md`. Its bounded synthetic evidence can mark only its
+installed integration subset as partial. Synthetic data cannot satisfy real
+family G02/G06 or audited G11; local browser evidence cannot satisfy G10.
+G12, Port Gate, release promotion, and Production remain pending or not run.
+The report does not emit an aggregate readiness claim.
+
 ## Claim boundary
 
 The synthetic downstream package and U1 conformance tests remain the supported

@@ -58,7 +58,9 @@ or starting the application. The installed status command is read-only and
 reports O9's six independent axes. The exact transfer and install steps are in the
 [release/install identity guide](docs/Release_Install_Identity.md). Python
 3.14 remains a repository source/package compatibility lane and is outside the
-declared install range.
+declared install range. CHG-287 adds a separately installed synthetic-only
+qualification payload and `ephi-qualify`; it is optional, is not selected by
+installation, and does not claim production readiness.
 
 ## Validate the repository offline
 

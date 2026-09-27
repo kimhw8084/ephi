@@ -1,0 +1,14 @@
+[build-system]
+requires = ["setuptools==77.0.3", "wheel==0.45.1"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ephi-synthetic-downstream-qualification"
+version = "1.0.0"
+description = "Synthetic, qualification-only EPHI downstream provider fixture"
+readme = "README.md"
+requires-python = ">=3.11,<3.14"
+
+[tool.setuptools]
+packages = ["examples.synthetic_downstream"]
+package-dir = {"examples.synthetic_downstream" = "."}
