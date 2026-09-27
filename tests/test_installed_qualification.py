@@ -12,7 +12,23 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from ephi.installed_qualification import _browser_executable, _gate_matrix  # noqa: E402
+from ephi.installed_qualification import _browser_executable, _empty_database, _gate_matrix  # noqa: E402
+
+
+class _FakeConnection:
+    def __init__(self, row):
+        self.row = row
+
+    def execute(self, _query):
+        return self
+
+    def fetchone(self):
+        return self.row
+
+
+class _FakeComposition:
+    def __init__(self, row):
+        self.adapter = type("Adapter", (), {"connection": _FakeConnection(row)})()
 
 
 class InstalledQualificationTests(unittest.TestCase):
@@ -44,6 +60,10 @@ class InstalledQualificationTests(unittest.TestCase):
             executable, reason = _browser_executable(str(missing))
         self.assertIsNone(executable)
         self.assertEqual(reason, "BROWSER_EXECUTABLE_UNAVAILABLE")
+
+    def test_empty_database_probe_accepts_mapping_rows_from_installed_postgres_adapter(self):
+        self.assertTrue(_empty_database(_FakeComposition({"exists": False})))
+        self.assertFalse(_empty_database(_FakeComposition({"exists": True})))
 
     def test_provider_and_playwright_remain_separate_from_normal_ephi_dependencies(self):
         project = tomllib.loads((ROOT / "pyproject.toml").read_text(encoding="utf-8"))["project"]

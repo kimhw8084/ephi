@@ -1941,8 +1941,8 @@
     },
     {
       "path": "src/ephi/installed_qualification.py",
-      "bytes": 53855,
-      "sha256": "04dc79aa4eabd0657ec3fa4fe6610a22059bc4b4090a370512e8831e093b8c43"
+      "bytes": 54016,
+      "sha256": "313053d0602eb604085be4453e69a6ae8ddfa79b3d70782cd139b79efc987c6a"
     },
     {
       "path": "src/ephi/migration_resources.py",
@@ -1982,7 +1982,7 @@
     {
       "path": "src/ephi/release_inventory.json",
       "bytes": 17083,
-      "sha256": "5e2a63d6906144e5ae5ef5113025a48509c6c1d9ec7dd334d7facd911502f018"
+      "sha256": "335de4c8768ea081b8813e95483c23f2784e1bf360431d7fb1e3e800b24de168"
     },
     {
       "path": "src/ephi/release_locks/build-py311.txt",
@@ -2141,8 +2141,8 @@
     },
     {
       "path": "tests/test_installed_qualification.py",
-      "bytes": 2599,
-      "sha256": "54990111c07f0484b873966036fe146d197cd0da8331cc1e4b9a73ae3755a71f"
+      "bytes": 3183,
+      "sha256": "d3b96030e5d499c7809505480bc00bcb044a08ccc772f647d1c1c7b1612c1bc1"
     },
     {
       "path": "tests/test_migration_resources.py",

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+from collections.abc import Mapping
 from contextlib import closing
 from dataclasses import replace
 import hashlib
@@ -225,7 +226,10 @@ def _postgres_facts(dsn: str) -> dict[str, object]:
 def _empty_database(composition: Any) -> bool:
     for table in _MIGRATION_TABLES:
         row = composition.adapter.connection.execute(f"SELECT EXISTS (SELECT 1 FROM {table} LIMIT 1)").fetchone()
-        if row is None or bool(row[0]):
+        if row is None:
+            return False
+        values = tuple(row.values()) if isinstance(row, Mapping) else row
+        if not values or bool(values[0]):
             return False
     return True
 
