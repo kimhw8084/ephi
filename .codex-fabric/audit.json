@@ -1,0 +1,497 @@
+{
+  "accepted_at": "2026-09-27T04:43:21Z",
+  "changed_files": [
+    {
+      "additions": 49,
+      "deletions": 27,
+      "path": ".github/workflows/package.yml",
+      "status": "M"
+    },
+    {
+      "additions": 6,
+      "deletions": 0,
+      "path": "README.md",
+      "status": "M"
+    },
+    {
+      "additions": 6,
+      "deletions": 1,
+      "path": "docs/Release_Install_Identity.md",
+      "status": "M"
+    },
+    {
+      "additions": 36,
+      "deletions": 26,
+      "path": "manifest.json",
+      "status": "M"
+    },
+    {
+      "additions": 40,
+      "deletions": 21,
+      "path": "operations/README.md",
+      "status": "M"
+    },
+    {
+      "additions": 8,
+      "deletions": 0,
+      "path": "operations/runbooks/isolated-restore-rehearsal.md",
+      "status": "M"
+    },
+    {
+      "additions": 1126,
+      "deletions": 0,
+      "path": "src/ephi/o9_operations.py",
+      "status": "A"
+    },
+    {
+      "additions": 8,
+      "deletions": 3,
+      "path": "src/ephi/operations_status.py",
+      "status": "M"
+    },
+    {
+      "additions": 83,
+      "deletions": 0,
+      "path": "src/ephi/release_identity.py",
+      "status": "M"
+    },
+    {
+      "additions": 1,
+      "deletions": 1,
+      "path": "src/ephi/release_inventory.json",
+      "status": "M"
+    },
+    {
+      "additions": 51,
+      "deletions": 5,
+      "path": "tests/test_installed_operations_status.py",
+      "status": "M"
+    },
+    {
+      "additions": 285,
+      "deletions": 11,
+      "path": "tests/test_o9_operations.py",
+      "status": "M"
+    },
+    {
+      "additions": 10,
+      "deletions": 0,
+      "path": "tests/test_release_identity.py",
+      "status": "M"
+    },
+    {
+      "additions": 887,
+      "deletions": 0,
+      "path": "tools/installed_o9_recovery_qualification.py",
+      "status": "A"
+    },
+    {
+      "additions": 28,
+      "deletions": 789,
+      "path": "tools/o9_operations.py",
+      "status": "M"
+    },
+    {
+      "additions": 31,
+      "deletions": 14,
+      "path": "tools/o9_real_rehearsal.py",
+      "status": "M"
+    }
+  ],
+  "checks": [
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest discover -s tests -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/generate_runtime_configuration_contract.py --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/generate_release_inventory.py --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk wc -l src/ephi/o9_operations.py tools/installed_o9_recovery_qualification.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n 'git rev-parse|repo_root / \\\"migrations\\\"|ROOT / \\\"src\\\"|sys.path.insert|subprocess.check_output' src/ephi/o9_operations.py\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --stat'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short --branch'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git add .github/workflows/package.yml README.md docs/Release_Install_Identity.md manifest.json operations/README.md operations/runbooks/isolated-restore-rehearsal.md src/ephi/operations_status.py src/ephi/o9_operations.py src/ephi/release_identity.py src/ephi/release_inventory.json tests/test_installed_operations_status.py tests/test_o9_operations.py tests/test_release_identity.py tools/installed_o9_recovery_qualification.py tools/o9_operations.py tools/o9_real_rehearsal.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git log -1 --format='%H %s'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --cached --stat'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --cached --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short --branch'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git add manifest.json && rtk git diff --cached --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest discover -s tests -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short --branch'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --cached --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/generate_release_inventory.py --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git commit -m 'Implement installed O9 recovery operations'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git rev-parse HEAD 'HEAD\"'^{tree}'\"'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short --branch'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m pip wheel --no-deps --wheel-dir /tmp/ephi-o9-u3-qualification/wheelhouse .'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk docker cp /tmp/ephi-o9-u3-qualification/wheelhouse/ephi-0.1.0-py3-none-any.whl ephi-o9-u3-qual-20260927:/tmp/ephi-0.1.0-py3-none-any.whl'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk docker cp tools/installed_o9_recovery_qualification.py ephi-o9-u3-qual-20260927:/tmp/installed_o9_recovery_qualification.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk docker exec ephi-o9-u3-qual-20260927 rm -rf /tmp/ephi-work /tmp/ephi-run'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk docker exec ephi-o9-u3-qual-20260927 /tmp/ephi-venv/bin/pip install --force-reinstall --no-deps /tmp/ephi-0.1.0-py3-none-any.whl'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk docker exec -e EPHI_TEST_POSTGRES_DSN=postgresql://o9_test_user:o9_test_password@127.0.0.1:5432/o9_admin ephi-o9-u3-qual-20260927 sh -lc 'mkdir -p /tmp/ephi-run && cd /tmp/ephi-run && /tmp/ephi-venv/bin/python /tmp/installed_o9_recovery_qualification.py --venv-bin /tmp/ephi-venv/bin --work-dir /tmp/ephi-work --repository-root /worktree-absent --candidate-sha 63b6c0771f3700a57402bff05eff3a8c9bdbd43c --candidate-tree 12c76ee96835c700b2ab20ed34c67fb0a3914210'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk rm -rf build src/ephi.egg-info'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short --branch'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/generate_release_inventory.py --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git push -u origin codex/ephi-u3-installed-backup-restore-v1'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk gh run list --commit 63b6c0771f3700a57402bff05eff3a8c9bdbd43c --workflow package.yml --json databaseId,status,conclusion,headSha,event,displayTitle'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk gh run view 36298917997 --json status,conclusion,headSha,event,jobs'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n -i 'fabric|artifact bridge|project os' /Users/haewonkim/.codex/RTK.md /Users/haewonkim/.codex/law.md\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import json,subprocess; p=subprocess.run([\\\"gh\\\",\\\"run\\\",\\\"view\\\",\\\"36298917997\\\",\\\"--json\\\",\\\"status,conclusion,headSha,jobs\\\"],capture_output=True,text=True,check=True); d=json.loads(p.stdout); print(\\\"run\\\",d[\\\"status\\\"],d.get(\\\"conclusion\\\"),\\\"head\\\",d[\\\"headSha\\\"]); print(\\\"\\\\n\\\".join(f\\\"{j[\\\\\\\"name\\\\\\\"]}: {j[\\\\\\\"status\\\\\\\"]}/{j.get(\\\\\\\"conclusion\\\\\\\")}\\\" for j in d[\\\"jobs\\\"]))'\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import json,subprocess; p=subprocess.run([\\\"gh\\\",\\\"run\\\",\\\"view\\\",\\\"36298917997\\\",\\\"--json\\\",\\\"status,conclusion,headSha,jobs\\\"],capture_output=True,text=True,check=True); d=json.loads(p.stdout); print(\\\"run\\\",d[\\\"status\\\"],d.get(\\\"conclusion\\\"),\\\"head\\\",d[\\\"headSha\\\"]); print(\\\"\\\\n\\\".join(\\\"{}: {}/{}\\\".format(j[\\\"name\\\"],j[\\\"status\\\"],j.get(\\\"conclusion\\\")) for j in d[\\\"jobs\\\"]))'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import json,subprocess; p=subprocess.run([\\\"gh\\\",\\\"run\\\",\\\"view\\\",\\\"36298917997\\\",\\\"--json\\\",\\\"status,conclusion,headSha,jobs\\\"],capture_output=True,text=True,check=True); d=json.loads(p.stdout); print(\\\"run\\\",d[\\\"status\\\"],d.get(\\\"conclusion\\\"),\\\"head\\\",d[\\\"headSha\\\"]); print(\\\"\\\\n\\\".join(\\\"{}: {}/{}\\\".format(j[\\\"name\\\"],j[\\\"status\\\"],j.get(\\\"conclusion\\\")) for j in d[\\\"jobs\\\"]))'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import json,subprocess; d=json.loads(subprocess.run([\\\"gh\\\",\\\"run\\\",\\\"view\\\",\\\"36298917997\\\",\\\"--json\\\",\\\"jobs\\\"],capture_output=True,text=True,check=True).stdout); j=next(j for j in d[\\\"jobs\\\"] if j[\\\"name\\\"].startswith(\\\"Installed-wheel PostgreSQL 18 migration and O9\\\")); print(j[\\\"databaseId\\\"]); print(\\\"\\\\n\\\".join(\\\"{}: {}\\\".format(s[\\\"name\\\"],s[\\\"conclusion\\\"]) for s in j[\\\"steps\\\"]))'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n -i 'fabric job|fabric|artifact bridge|Project OS' README.md operations docs .github tools\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk docker rm -f ephi-o9-u3-qual-20260927'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk rm -rf /tmp/ephi-o9-u3-qualification'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git rev-parse HEAD 'HEAD\"'^{tree}'\"'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short --branch'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk gh run list --commit 63b6c0771f3700a57402bff05eff3a8c9bdbd43c --workflow package.yml --json databaseId,status,conclusion,headSha,event'",
+      "exit_code": 0,
+      "type": "command_execution"
+    }
+  ],
+  "codex": {
+    "cli_version": "codex-cli 0.157.0",
+    "configured_model": "gpt-6-luna",
+    "event_count": 573,
+    "provider_reported_model": null,
+    "reasoning_effort": "xhigh",
+    "terminal_type": "turn.completed",
+    "usage": {
+      "cache_hit_percent": 98.11,
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 34397184,
+      "fresh_input_tokens": 660866,
+      "input_tokens": 35058050,
+      "non_reasoning_output_tokens": 67816,
+      "output_tokens": 197999,
+      "reasoning_output_tokens": 130183,
+      "total_processed_tokens": 35256049
+    },
+    "warnings": []
+  },
+  "commits": [
+    {
+      "sha": "63b6c0771f3700a57402bff05eff3a8c9bdbd43c",
+      "subject": "Implement installed O9 recovery operations"
+    }
+  ],
+  "diff": {
+    "additions": 2655,
+    "changed_files": 16,
+    "commit_count": 1,
+    "deletions": 898
+  },
+  "error_code": null,
+  "evidence_manifest": {
+    "count": 6,
+    "items": [
+      {
+        "bytes": 30332,
+        "path": "README.md",
+        "sha256": "5bbed22741f17879be900d4bba04a9fdb0050674c669b82d747b00891a349d31"
+      },
+      {
+        "bytes": 9471,
+        "path": "docs/Release_Install_Identity.md",
+        "sha256": "ca1df66aeb91795a0a166aba2db2c5bb784cce88bde618bdd188969bf7759051"
+      },
+      {
+        "bytes": 93188,
+        "path": "manifest.json",
+        "sha256": "9c47ffbf1ae2607e04e7e8207fd57e9732604984b3af08688ea47a942be303bc"
+      },
+      {
+        "bytes": 4942,
+        "path": "operations/README.md",
+        "sha256": "30eb5f869e2c60182e3921968b19e296d945cee44e339569e5ad23a816bb4d94"
+      },
+      {
+        "bytes": 1686,
+        "path": "operations/runbooks/isolated-restore-rehearsal.md",
+        "sha256": "d64db7bc0803fcbe4cbb2fc6f3867de04064f8da78075dfd8f8c6688a88bcc86"
+      },
+      {
+        "bytes": 16751,
+        "path": "src/ephi/release_inventory.json",
+        "sha256": "334eb4805f2d29688fd7746e9878102436c253dd3631f0e02e24b4764e2c3bc4"
+      }
+    ],
+    "version": 1
+  },
+  "evidence_publisher_release": "1.2.5-dashboard-controls-candidate",
+  "fabric_capture": {
+    "applied": false,
+    "paths_before": 0,
+    "transient_untracked_removed": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "fabric_release": "1.2.5-dashboard-controls-candidate",
+  "failure_class": null,
+  "finished_at": "2026-09-27T06:06:07Z",
+  "git": {
+    "base_is_ancestor": true,
+    "base_sha": "afdd40fb321cc782f8b90f6a8d661791391fe9e4",
+    "branch": "codex/ephi-u3-installed-backup-restore-v1",
+    "detached_verify": false,
+    "head_sha": "63b6c0771f3700a57402bff05eff3a8c9bdbd43c",
+    "remote_exact_head": true,
+    "remote_head_sha": "63b6c0771f3700a57402bff05eff3a8c9bdbd43c",
+    "target_branch": "main",
+    "target_drifted_since_acceptance": false,
+    "target_head_observed_after_execution": "afdd40fb321cc782f8b90f6a8d661791391fe9e4",
+    "work_branch": "codex/ephi-u3-installed-backup-restore-v1",
+    "worktree_clean": true
+  },
+  "instructions": {
+    "files": [
+      {
+        "bytes": 1458,
+        "path": "AGENTS.md",
+        "sha256": "4349f387a79d886ed1264604ff48c582698e539e08ed8fb2f9d8ab8fbf6f804a"
+      }
+    ],
+    "total_bytes": 1458,
+    "warning": null
+  },
+  "job_id": "CF-2005117b539405b41f5fa55e",
+  "kind": "codex-fabric-audit-evidence",
+  "locator": {
+    "branch": "codex-fabric/evidence/ephi/ephi-u3-installed-backup-restore-v1",
+    "path": ".codex-fabric/audit.json",
+    "ref": "refs/heads/codex-fabric/evidence/ephi/ephi-u3-installed-backup-restore-v1"
+  },
+  "operation": "BUILD",
+  "policy": {
+    "environment_policy_sha256": "e077daca74297b3c30bee8989f00f8ca5338f7610b4d016a6c48db524205d064",
+    "fabric_release": "1.2.5-dashboard-controls-candidate",
+    "policy_sha256": "123615bf2f6e57dcac197e49ca98ceac59ada86a55e2c84445ea5d00812c0833",
+    "registry_sha256": "af81b8552f9d6a33847310e3c6bcd2d48401782b963a58efd2993e93570cb4aa"
+  },
+  "project_id": "ephi",
+  "recovery": {
+    "model_rerun_safe": false,
+    "recovery_required": false,
+    "retry_safe": false,
+    "retry_scope": null,
+    "worktree_retained": true
+  },
+  "request": "ephi-u3-installed-backup-restore-v1",
+  "schema_version": 1,
+  "started_at": "2026-09-27T04:43:21Z",
+  "status": "EXECUTED_CHANGE",
+  "timing": {
+    "execution_seconds": 4966,
+    "queue_seconds": 0,
+    "total_seconds": 4966
+  },
+  "transport": {
+    "bytes": 6547,
+    "envelope": "FABRIC/2",
+    "prompt_bytes": 6225,
+    "prompt_sha256": "60594799dc1c4e7024ff1e1da6be2c0148cb0bd2f6026d24c9513f93794ee498",
+    "sha256": "2005117b539405b41f5fa55e71667d1676262332d88d426bebd3a5f8aa1fc5cd"
+  }
+}
