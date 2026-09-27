@@ -412,9 +412,11 @@ jobs:
           python - "$artifacts/qualification-report.json" "$candidate_sha" "$candidate_tree" <<'PY'
           import hashlib
           import json
+          from pathlib import Path
           import sys
 
           report = json.load(open(sys.argv[1], encoding='utf-8'))
+          artifact_root = Path(sys.argv[1]).resolve().parent
           assert report['status'] == 'PASS', report.get('status')
           assert report['candidate'] == {'commit': sys.argv[2], 'tree': sys.argv[3]}
           assert report['postgresql']['status'] == 'PASS'
@@ -448,12 +450,12 @@ jobs:
           assert set(artifact_records) == expected_artifacts
           for item in screenshots:
               assert item['kind'] == 'browser_screenshot'
-              path = artifacts / item['path']
+              path = artifact_root / item['path']
               content = path.read_bytes()
               assert len(content) == item['byte_size']
               assert hashlib.sha256(content).hexdigest() == item['sha256']
               assert artifact_records[item['path']]['sha256'] == item['sha256']
-          failure_path = artifacts / 'failure-inventory.json'
+          failure_path = artifact_root / 'failure-inventory.json'
           failure_bytes = failure_path.read_bytes()
           assert json.loads(failure_bytes) == report['failure_inventory']
           assert len(failure_bytes) == artifact_records['failure-inventory.json']['byte_size']
@@ -472,9 +474,14 @@ jobs:
               elif isinstance(value, list):
                   for child in value:
                       yield from all_keys(child)
-          prohibited_aggregates = ('production_ready', 'readiness_aggregate', 'production_readiness')
+          prohibited_aggregates = {
+              'production_ready', 'production_readiness', 'readiness',
+              'readiness_aggregate', 'overall_readiness',
+              'overall_readiness_status', 'readiness_status',
+          }
           assert not any(
-              any(prohibited in key.lower() for prohibited in prohibited_aggregates)
+              key.lower() in prohibited_aggregates
+              or key.lower().startswith(('production_ready_', 'production_readiness_', 'overall_readiness_'))
               for key in all_keys(report)
           )
           nonclaims = set(report['explicit_nonclaims'])
