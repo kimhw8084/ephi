@@ -1,0 +1,510 @@
+{
+  "accepted_at": "2026-09-27T15:08:09Z",
+  "changed_files": [
+    {
+      "additions": 214,
+      "deletions": 1,
+      "path": ".github/workflows/package.yml",
+      "status": "M"
+    },
+    {
+      "additions": 3,
+      "deletions": 1,
+      "path": "README.md",
+      "status": "M"
+    },
+    {
+      "additions": 67,
+      "deletions": 0,
+      "path": "docs/Release_Install_Identity.md",
+      "status": "M"
+    },
+    {
+      "additions": 4,
+      "deletions": 0,
+      "path": "environment/qualification-requirements.txt",
+      "status": "A"
+    },
+    {
+      "additions": 16,
+      "deletions": 0,
+      "path": "examples/synthetic_downstream/README.md",
+      "status": "A"
+    },
+    {
+      "additions": 14,
+      "deletions": 0,
+      "path": "examples/synthetic_downstream/pyproject.toml",
+      "status": "A"
+    },
+    {
+      "additions": 46,
+      "deletions": 16,
+      "path": "manifest.json",
+      "status": "M"
+    },
+    {
+      "additions": 1,
+      "deletions": 0,
+      "path": "pyproject.toml",
+      "status": "M"
+    },
+    {
+      "additions": 8,
+      "deletions": 0,
+      "path": "src/ephi/downstream/boundary.py",
+      "status": "M"
+    },
+    {
+      "additions": 1059,
+      "deletions": 0,
+      "path": "src/ephi/installed_qualification.py",
+      "status": "A"
+    },
+    {
+      "additions": 368,
+      "deletions": 0,
+      "path": "src/ephi/qualification_identity.py",
+      "status": "A"
+    },
+    {
+      "additions": 53,
+      "deletions": 5,
+      "path": "src/ephi/release_identity.py",
+      "status": "M"
+    },
+    {
+      "additions": 1,
+      "deletions": 1,
+      "path": "src/ephi/release_inventory.json",
+      "status": "M"
+    },
+    {
+      "additions": 81,
+      "deletions": 0,
+      "path": "tests/test_installed_qualification.py",
+      "status": "A"
+    },
+    {
+      "additions": 185,
+      "deletions": 3,
+      "path": "tools/prepare_release_inputs.py",
+      "status": "M"
+    }
+  ],
+  "checks": [
+    {
+      "command": "/bin/zsh -lc 'rtk env -u PYTHONPATH EPHI_ENV=test /tmp/ephi-u36-venv-550609a/bin/ephi-release-preflight --inputs-dir /tmp/ephi-u36-inputs-550609a --qualification-inputs-dir /tmp/ephi-u36-inputs-550609a/qualification --json > /tmp/ephi-u36-release-preflight-550609a.json'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import json; d=json.load(open(\\\"/tmp/ephi-u36-release-preflight-550609a.json\\\")); assert d[\\\"status\\\"]==\\\"PASS\\\" and d[\\\"candidate_source\\\"][\\\"commit\\\"]==\\\"550609acbb10f23cc6ed25ab0a72fb6998e37325\\\" and d[\\\"qualification_kit\\\"][\\\"conformance\\\"][\\\"status\\\"]==\\\"PASS\\\"; print({\\\"status\\\":d[\\\"status\\\"],\\\"candidate\\\":d[\\\"candidate_source\\\"],\\\"release_identity\\\":d[\\\"release_identity_sha256\\\"],\\\"qualification_identity\\\":d[\\\"qualification_kit\\\"][\\\"qualification_kit_identity_sha256\\\"],\\\"provider_artifact_sha256\\\":d[\\\"qualification_kit\\\"][\\\"provider\\\"][\\\"artifact_sha256\\\"],\\\"manifest_sha256\\\":d[\\\"qualification_kit\\\"][\\\"provider\\\"][\\\"manifest_sha256\\\"]})'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk /tmp/ephi-u36-venv-550609a/bin/python -c 'import psycopg; c=psycopg.connect(\\\"dbname=postgres\\\",autocommit=True); c.execute(\\\"DROP DATABASE IF EXISTS ephi_u36_qualification WITH (FORCE)\\\"); c.execute(\\\"CREATE DATABASE ephi_u36_qualification\\\"); c.close(); print(\\\"final qualification database reset\\\")'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk env -u PYTHONPATH EPHI_ENV=test EPHI_HOST=127.0.0.1 EPHI_PORT=8080 EPHI_DOWNSTREAM_ENTRYPOINT=examples.synthetic_downstream.provider:build_bundle EPHI_POSTGRES_DSN=dbname=ephi_u36_qualification EPHI_ALLOWED_BROWSER_ORIGINS=http://127.0.0.1:8080 NICEGUI_BASE_STORAGE_SECRET=qualification-placeholder NICEGUI_BASE_SECURE_SESSION_COOKIE=false /tmp/ephi-u36-venv-550609a/bin/ephi-config-preflight --json > /tmp/ephi-u36-config-550609a.json'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk env -u PYTHONPATH EPHI_ENV=test EPHI_POSTGRES_DSN=dbname=ephi_u36_qualification /tmp/ephi-u36-venv-550609a/bin/ephi-db-migrate identity > /tmp/ephi-u36-migration-identity-550609a.json'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk env -u PYTHONPATH EPHI_ENV=test EPHI_POSTGRES_DSN=dbname=ephi_u36_qualification /tmp/ephi-u36-venv-550609a/bin/ephi-db-migrate apply > /tmp/ephi-u36-migration-apply-550609a.json'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk env -u PYTHONPATH EPHI_ENV=test EPHI_POSTGRES_DSN=dbname=ephi_u36_qualification /tmp/ephi-u36-venv-550609a/bin/ephi-db-migrate verify > /tmp/ephi-u36-migration-verify-550609a.json'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk env -u PYTHONPATH EPHI_ENV=test EPHI_TEST_POSTGRES_DSN=dbname=ephi_u36_qualification EPHI_POSTGRES_DSN=dbname=ephi_u36_qualification /tmp/ephi-u36-venv-550609a/bin/ephi-downstream-preflight --entrypoint examples.synthetic_downstream.provider:build_bundle --json > /tmp/ephi-u36-downstream-550609a.json'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import json,psycopg; c=psycopg.connect(\\\"dbname=ephi_u36_qualification\\\"); v=c.execute(\\\"show server_version\\\").fetchone()[0]; c.close(); cfg=json.load(open(\\\"/tmp/ephi-u36-config-550609a.json\\\")); a=json.load(open(\\\"/tmp/ephi-u36-migration-apply-550609a.json\\\")); b=json.load(open(\\\"/tmp/ephi-u36-migration-verify-550609a.json\\\")); d=json.load(open(\\\"/tmp/ephi-u36-downstream-550609a.json\\\")); print({\\\"postgresql_major\\\":v.split(\\\".\\\")[0],\\\"config\\\":cfg[\\\"status\\\"],\\\"migration_apply\\\":a[\\\"schema_state\\\"],\\\"migration_verify\\\":b[\\\"schema_state\\\"],\\\"downstream_status\\\":d[\\\"status_code\\\"],\\\"provider_compatibility\\\":d[\\\"compatibility\\\"][\\\"status\\\"],\\\"composition\\\":d[\\\"safe_composition_smoke\\\"][\\\"status\\\"],\\\"abi\\\":d[\\\"downstream_abi\\\"][\\\"id\\\"]+\\\"/\\\"+d[\\\"downstream_abi\\\"][\\\"version\\\"],\\\"manifest_sha256\\\":d[\\\"downstream_abi\\\"][\\\"safe_manifest_hash\\\"]}); assert v.startswith(\\\"18.\\\") and cfg[\\\"status\\\"]==\\\"PASS\\\" and b[\\\"schema_state\\\"]==\\\"CURRENT\\\" and d[\\\"status_code\\\"]==\\\"CONTRACT_PASS\\\" and d[\\\"safe_composition_smoke\\\"][\\\"status\\\"]==\\\"PASS\\\"'\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk /tmp/ephi-u36-venv-550609a/bin/python -c 'import json,psycopg; c=psycopg.connect(\\\"dbname=ephi_u36_qualification\\\"); v=c.execute(\\\"show server_version\\\").fetchone()[0]; c.close(); cfg=json.load(open(\\\"/tmp/ephi-u36-config-550609a.json\\\")); a=json.load(open(\\\"/tmp/ephi-u36-migration-apply-550609a.json\\\")); b=json.load(open(\\\"/tmp/ephi-u36-migration-verify-550609a.json\\\")); d=json.load(open(\\\"/tmp/ephi-u36-downstream-550609a.json\\\")); print({\\\"postgresql_major\\\":v.split(\\\".\\\")[0],\\\"config\\\":cfg[\\\"status\\\"],\\\"migration_apply\\\":a[\\\"schema_state\\\"],\\\"migration_verify\\\":b[\\\"schema_state\\\"],\\\"downstream_status\\\":d[\\\"status_code\\\"],\\\"provider_compatibility\\\":d[\\\"compatibility\\\"][\\\"status\\\"],\\\"composition\\\":d[\\\"safe_composition_smoke\\\"][\\\"status\\\"],\\\"abi\\\":d[\\\"downstream_abi\\\"][\\\"id\\\"]+\\\"/\\\"+d[\\\"downstream_abi\\\"][\\\"version\\\"],\\\"manifest_sha256\\\":d[\\\"downstream_abi\\\"][\\\"safe_manifest_hash\\\"]}); assert v.startswith(\\\"18.\\\") and cfg[\\\"status\\\"]==\\\"PASS\\\" and b[\\\"schema_state\\\"]==\\\"CURRENT\\\" and d[\\\"status_code\\\"]==\\\"CONTRACT_PASS\\\" and d[\\\"safe_composition_smoke\\\"][\\\"status\\\"]==\\\"PASS\\\"'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk env -u PYTHONPATH EPHI_ENV=test EPHI_TEST_POSTGRES_DSN=dbname=ephi_u36_qualification /tmp/ephi-u36-venv-550609a/bin/ephi-qualify --inputs-dir /tmp/ephi-u36-inputs-550609a --qualification-inputs-dir /tmp/ephi-u36-inputs-550609a/qualification --artifact-dir /Users/haewonkim/.codex-fabric/jobs/CF-598b0c70bc17d0ee3abc810a.running/artifact-bridge/ephi-u3-installed-synthetic-qualification-v1 --chromium-executable '/Users/haewonkim/Library/Caches/ms-playwright/chromium-1234/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import json,re; from pathlib import Path; root=Path(\\\"/Users/haewonkim/.codex-fabric/jobs/CF-598b0c70bc17d0ee3abc810a.running/artifact-bridge/ephi-u3-installed-synthetic-qualification-v1\\\"); p=root/\\\"qualification-report.json\\\"; d=json.loads(p.read_text()); b=d[\\\"browser\\\"]; bad=[x for x in (\\\"/Users/\\\",\\\"/tmp/\\\",\\\"postgresql://\\\",\\\"dbname=\\\",\\\"password=\\\",\\\"token=\\\",\\\"cookie=\\\") if x.lower() in p.read_text().lower()]; gates=d[\\\"gates\\\"]; files=[x[\\\"path\\\"] for x in d[\\\"artifacts\\\"] if x[\\\"kind\\\"]==\\\"browser_screenshot\\\"]; print({\\\"status\\\":d[\\\"status\\\"],\\\"candidate\\\":d[\\\"candidate\\\"],\\\"release_identity\\\":d[\\\"ephi_release\\\"][\\\"release_identity_sha256\\\"],\\\"qualification_identity\\\":d[\\\"qualification_kit\\\"][\\\"qualification_kit_identity_sha256\\\"],\\\"browser\\\":b[\\\"browser\\\"],\\\"paths\\\":{k:v.get(\\\"status\\\") for k,v in b.get(\\\"paths\\\",{}).items()},\\\"failure_inventory\\\":d[\\\"failure_inventory\\\"],\\\"gate_count\\\":len(gates),\\\"gate_ids\\\":[g[\\\"gate\\\"] for g in gates],\\\"gate_states\\\":{g[\\\"gate\\\"]:g[\\\"state\\\"] for g in gates},\\\"screenshot_count\\\":len(files),\\\"screenshot_paths\\\":files,\\\"secret_or_root_scan_hits\\\":bad,\\\"has_production_ready_aggregate\\\":any(\\\"production_ready\\\" in k.lower() or \\\"readiness\\\"==k.lower() for k in d)}); assert d[\\\"status\\\"]==\\\"PASS\\\" and len(gates)==13 and not bad and not any(any(d.get(k) is True for k in (\\\"production_ready\\\",\\\"ready\\\")) for _ in [0]); assert all(not values for values in d[\\\"failure_inventory\\\"].values()); assert len(files)==6; assert [g[\\\"gate\\\"] for g in gates]==[f\\\"G{i:02d}\\\" for i in range(13)]'; rtk ls -l /Users/haewonkim/.codex-fabric/jobs/CF-598b0c70bc17d0ee3abc810a.running/artifact-bridge/ephi-u3-installed-synthetic-qualification-v1\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '700,760p' src/ephi/installed_qualification.py && rtk sed -n '990,1010p' src/ephi/installed_qualification.py && rtk rg -n \\\"FAIL_CLOSED_CONTROLS\\\" tests src/ephi/installed_qualification.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk nl -ba src/ephi/installed_qualification.py | rtk sed -n '940,980p' && rtk sed -n '48,100p' tests/test_installed_qualification.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk nl -ba src/ephi/installed_qualification.py | rtk sed -n '977,1010p' && rtk rg -n 'negative_controls_status' src/ephi/installed_qualification.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/generate_release_inventory.py --write'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import psycopg; c=psycopg.connect(\\\"dbname=postgres\\\",autocommit=True); c.execute(\\\"DROP DATABASE IF EXISTS ephi_u36_regression WITH (FORCE)\\\"); c.execute(\\\"CREATE DATABASE ephi_u36_regression\\\"); c.close(); print(\\\"dedicated regression database reset\\\")'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk env EPHI_TEST_POSTGRES_DSN=dbname=ephi_u36_regression python3 -m unittest discover -s tests -v > /tmp/ephi-u36-final-unittest.log 2>&1'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk tail -n 6 /tmp/ephi-u36-final-unittest.log && rtk python3 tools/generate_release_inventory.py --check && rtk git diff --check && rtk python3 -c 'import yaml; yaml.safe_load(open(\\\".github/workflows/package.yml\\\")); print(\\\"workflow YAML parses\\\")'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short && rtk git diff --stat'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git add manifest.json src/ephi/installed_qualification.py src/ephi/release_inventory.json'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git commit -m 'CHG-287 keep checklist limited to G00 through G12'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short && rtk git rev-parse HEAD HEAD''^{tree}'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/prepare_release_inputs.py --output-dir /tmp/ephi-u36-inputs-c73c23a'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m venv /tmp/ephi-u36-venv-c73c23a'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk /tmp/ephi-u36-venv-c73c23a/bin/python -m pip install --no-index --find-links /tmp/ephi-u36-inputs-c73c23a/wheelhouse --require-hashes -r /tmp/ephi-u36-inputs-c73c23a/locks/installer-py311.txt'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk /tmp/ephi-u36-venv-c73c23a/bin/python -m pip uninstall -y setuptools wheel'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk /tmp/ephi-u36-venv-c73c23a/bin/python -m pip install --no-index --find-links /tmp/ephi-u36-inputs-c73c23a/wheelhouse --require-hashes -r /tmp/ephi-u36-inputs-c73c23a/locks/runtime-py311.txt'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk /tmp/ephi-u36-venv-c73c23a/bin/python -m pip install --no-index --find-links /tmp/ephi-u36-inputs-c73c23a/wheelhouse --require-hashes -r /tmp/ephi-u36-inputs-c73c23a/locks/postgres-py311.txt'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk /tmp/ephi-u36-venv-c73c23a/bin/python -m pip install --no-index --no-deps /tmp/ephi-u36-inputs-c73c23a/wheelhouse/ephi-0.1.0-py3-none-any.whl'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk /tmp/ephi-u36-venv-c73c23a/bin/python -m pip install --no-index --no-deps /tmp/ephi-u36-inputs-c73c23a/wheelhouse/nicegui_base-3.0.0a8-py3-none-any.whl'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk /tmp/ephi-u36-venv-c73c23a/bin/python -m pip install --no-index --find-links /tmp/ephi-u36-inputs-c73c23a/qualification/wheelhouse --require-hashes -r /tmp/ephi-u36-inputs-c73c23a/qualification/locks/qualification-py311.txt'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk env -u PYTHONPATH /tmp/ephi-u36-venv-c73c23a/bin/python -c 'import importlib.metadata as m; from pathlib import Path; import ephi, examples.synthetic_downstream.provider as p; app=m.distribution(\\\"ephi\\\"); kit=m.distribution(\\\"ephi-synthetic-downstream-qualification\\\"); assert Path(ephi.__file__).resolve()==Path(app.locate_file(\\\"ephi/__init__.py\\\")).resolve(); assert Path(p.__file__).resolve()==Path(kit.locate_file(\\\"examples/synthetic_downstream/provider.py\\\")).resolve(); assert not any(\\\"synthetic_downstream\\\" in Path(str(f)).as_posix() for f in (app.files or ())); assert not kit.requires; print(\\\"INSTALLED_DISTRIBUTION_BOUNDARIES_PASS\\\")'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk env -u PYTHONPATH EPHI_ENV=test /tmp/ephi-u36-venv-c73c23a/bin/ephi-release-preflight --inputs-dir /tmp/ephi-u36-inputs-c73c23a --qualification-inputs-dir /tmp/ephi-u36-inputs-c73c23a/qualification --json > /tmp/ephi-u36-release-preflight-c73c23a.json'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import json; d=json.load(open(\\\"/tmp/ephi-u36-release-preflight-c73c23a.json\\\")); assert d[\\\"status\\\"]==\\\"PASS\\\" and d[\\\"candidate_source\\\"][\\\"commit\\\"]==\\\"c73c23a697c42db4d25bd90e8a0706250858ccdc\\\" and d[\\\"qualification_kit\\\"][\\\"conformance\\\"][\\\"status\\\"]==\\\"PASS\\\"; print({\\\"status\\\":d[\\\"status\\\"],\\\"candidate\\\":d[\\\"candidate_source\\\"],\\\"release_identity\\\":d[\\\"release_identity_sha256\\\"],\\\"qualification_identity\\\":d[\\\"qualification_kit\\\"][\\\"qualification_kit_identity_sha256\\\"],\\\"provider_manifest_sha256\\\":d[\\\"qualification_kit\\\"][\\\"provider\\\"][\\\"manifest_sha256\\\"]})'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk /tmp/ephi-u36-venv-c73c23a/bin/python -c 'import psycopg; c=psycopg.connect(\\\"dbname=postgres\\\",autocommit=True); c.execute(\\\"DROP DATABASE IF EXISTS ephi_u36_qualification WITH (FORCE)\\\"); c.execute(\\\"CREATE DATABASE ephi_u36_qualification\\\"); c.close(); print(\\\"final qualification database reset\\\")'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk env -u PYTHONPATH EPHI_ENV=test EPHI_TEST_POSTGRES_DSN=dbname=ephi_u36_qualification /tmp/ephi-u36-venv-c73c23a/bin/ephi-qualify --inputs-dir /tmp/ephi-u36-inputs-c73c23a --qualification-inputs-dir /tmp/ephi-u36-inputs-c73c23a/qualification --artifact-dir /Users/haewonkim/.codex-fabric/jobs/CF-598b0c70bc17d0ee3abc810a.running/artifact-bridge/ephi-u3-installed-synthetic-qualification-v1 --chromium-executable '/Users/haewonkim/Library/Caches/ms-playwright/chromium-1234/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import hashlib,json; from pathlib import Path; root=Path(\\\"/Users/haewonkim/.codex-fabric/jobs/CF-598b0c70bc17d0ee3abc810a.running/artifact-bridge/ephi-u3-installed-synthetic-qualification-v1\\\"); p=root/\\\"qualification-report.json\\\"; raw=p.read_bytes(); d=json.loads(raw); gates=d[\\\"gates\\\"]; required={\\\"gate\\\",\\\"declared_scope\\\",\\\"state\\\",\\\"reason_code\\\",\\\"evidence_identity\\\",\\\"remaining_prerequisite\\\"}; failures=d[\\\"failure_inventory\\\"]; inventory=json.loads((root/\\\"failure-inventory.json\\\").read_text()); file_records=d[\\\"artifacts\\\"]; screenshots=[x for x in file_records if x[\\\"kind\\\"]==\\\"browser_screenshot\\\"]; scan=raw.lower(); forbidden=[x for x in (b\\\"/users/\\\",b\\\"/tmp/\\\",b\\\"postgresql://\\\",b\\\"dbname=\\\",b\\\"password=\\\",b\\\"token=\\\",b\\\"cookie=\\\") if x in scan]; assert d[\\\"status\\\"]==\\\"PASS\\\"; assert [g[\\\"gate\\\"] for g in gates]==[f\\\"G{i:02d}\\\" for i in range(13)]; assert all(required<=set(g) for g in gates); assert not any(\\\"production_ready\\\" in k.lower() for k in d); assert {g[\\\"gate\\\"]:g[\\\"state\\\"] for g in gates}[\\\"G02\\\"]==\\\"NOT_RUN\\\" and {g[\\\"gate\\\"]:g[\\\"state\\\"] for g in gates}[\\\"G06\\\"]==\\\"NOT_RUN\\\" and {g[\\\"gate\\\"]:g[\\\"state\\\"] for g in gates}[\\\"G10\\\"]==\\\"NOT_RUN\\\" and {g[\\\"gate\\\"]:g[\\\"state\\\"] for g in gates}[\\\"G11\\\"]==\\\"NOT_RUN\\\" and {g[\\\"gate\\\"]:g[\\\"state\\\"] for g in gates}[\\\"G12\\\"]==\\\"PENDING\\\"; assert d[\\\"negative_controls_status\\\"]==\\\"PASS\\\" and all(x[\\\"status\\\"]==\\\"PASS\\\" for x in d[\\\"negative_controls\\\"]); assert all(not values for values in failures.values()) and inventory==failures; assert len(screenshots)==6; assert all(hashlib.sha256((root/x[\\\"path\\\"]).read_bytes()).hexdigest()==x[\\\"sha256\\\"] for x in screenshots); assert not forbidden; print({\\\"status\\\":d[\\\"status\\\"],\\\"candidate\\\":d[\\\"candidate\\\"],\\\"ephi_release_identity\\\":d[\\\"ephi_release\\\"][\\\"release_identity_sha256\\\"],\\\"qualification_kit_identity\\\":d[\\\"qualification_kit\\\"][\\\"qualification_kit_identity_sha256\\\"],\\\"provider_identity\\\":d[\\\"qualification_kit\\\"][\\\"provider\\\"],\\\"postgresql_major\\\":d[\\\"postgresql\\\"][\\\"major\\\"],\\\"browser\\\":d[\\\"browser\\\"][\\\"browser\\\"],\\\"product_paths\\\":{k:v[\\\"status\\\"] for k,v in d[\\\"exercised_product_paths\\\"].items()},\\\"failure_inventory\\\":failures,\\\"negative_controls_status\\\":d[\\\"negative_controls_status\\\"],\\\"gate_count\\\":len(gates),\\\"gate_states\\\":{g[\\\"gate\\\"]:g[\\\"state\\\"] for g in gates},\\\"screenshot_count\\\":len(screenshots),\\\"report_scan_hits\\\":forbidden})'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk ls -l /opt/homebrew/opt/postgresql@18/bin/pg_dump /opt/homebrew/opt/postgresql@18/bin/pg_restore; rtk ls /opt/homebrew/opt | rtk rg 'postgresql@18|libpq@18'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk rg -n \"def main|def qualify|EPHI_TEST_POSTGRES_DSN|EPHI_POSTGRES_DSN|DATABASE_URL|add_argument|dsn\" tools/installed_o9_recovery_qualification.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '440,490p' tools/installed_o9_recovery_qualification.py && rtk sed -n '850,890p' tools/installed_o9_recovery_qualification.py && rtk /opt/homebrew/opt/postgresql@18/bin/pg_dump --version && rtk /opt/homebrew/opt/postgresql@18/bin/pg_restore --version\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '420,450p' tools/installed_o9_recovery_qualification.py && rtk rg -n \\\"installed_extras\\\" tools/installed_o9_recovery_qualification.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk env -u PYTHONPATH PATH=/opt/homebrew/opt/postgresql@18/bin:/opt/homebrew/bin:/usr/bin:/bin EPHI_ENV=test EPHI_TEST_POSTGRES_DSN=dbname=postgres /tmp/ephi-u36-venv-c73c23a/bin/python /Users/haewonkim/.codex-fabric/worktrees/CF-598b0c70bc17d0ee3abc810a/tools/installed_o9_recovery_qualification.py --venv-bin /tmp/ephi-u36-venv-c73c23a/bin --work-dir /tmp/ephi-u36-o9-recovery-c73c23a --repository-root /Users/haewonkim/.codex-fabric/worktrees/CF-598b0c70bc17d0ee3abc810a --candidate-sha c73c23a697c42db4d25bd90e8a0706250858ccdc --candidate-tree 0166857b9889835138bcf907a8f8b5d7790814fa'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk env EPHI_ENV=test EPHI_TEST_POSTGRES_DSN=dbname=ephi_u36_regression python3 tools/o8_browser_qualification.py --port 18961 --output /tmp/ephi-u36-existing-qual/o8-report-final.json'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk env EPHI_ENV=test EPHI_TEST_POSTGRES_DSN=dbname=ephi_u36_regression python3 tools/o10_rendered_accessibility.py --output /tmp/ephi-u36-existing-qual/o10-report-final.json --artifacts /tmp/ephi-u36-existing-artifacts'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk ls -l /Users/haewonkim/.codex-fabric/jobs/CF-598b0c70bc17d0ee3abc810a.running/artifact-bridge/ephi-u3-installed-synthetic-qualification-v1'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import json; d=json.load(open(\\\"/Users/haewonkim/.codex-fabric/jobs/CF-598b0c70bc17d0ee3abc810a.running/artifact-bridge/ephi-u3-installed-synthetic-qualification-v1/qualification-report.json\\\")); print({\\\"status\\\":d[\\\"status\\\"],\\\"candidate\\\":d[\\\"candidate\\\"],\\\"gates\\\":len(d[\\\"gates\\\"]),\\\"negative_controls_status\\\":d[\\\"negative_controls_status\\\"],\\\"failure_inventory_empty\\\":all(not v for v in d[\\\"failure_inventory\\\"].values())})'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short && rtk git branch --show-current && rtk git rev-parse HEAD HEAD''^{tree} && rtk git show -s --format=%P HEAD && rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git rev-parse main origin/main && rtk git merge-base HEAD main && rtk git status --short'",
+      "exit_code": 0,
+      "type": "command_execution"
+    }
+  ],
+  "codex": {
+    "cli_version": "codex-cli 0.157.0",
+    "configured_model": "gpt-6-luna",
+    "event_count": 856,
+    "provider_reported_model": null,
+    "reasoning_effort": "xhigh",
+    "terminal_type": "turn.completed",
+    "usage": {
+      "cache_hit_percent": 98.39,
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 66910208,
+      "fresh_input_tokens": 1098087,
+      "input_tokens": 68008295,
+      "non_reasoning_output_tokens": 105647,
+      "output_tokens": 256061,
+      "reasoning_output_tokens": 150414,
+      "total_processed_tokens": 68264356
+    },
+    "warnings": []
+  },
+  "commits": [
+    {
+      "sha": "c73c23a697c42db4d25bd90e8a0706250858ccdc",
+      "subject": "CHG-287 keep checklist limited to G00 through G12"
+    },
+    {
+      "sha": "550609acbb10f23cc6ed25ab0a72fb6998e37325",
+      "subject": "CHG-287 wait for Operations truth before capture"
+    },
+    {
+      "sha": "609ea43072be6835a641b54cdeee1bf520bf9ea7",
+      "subject": "CHG-287 qualify Base navigation by keyboard"
+    },
+    {
+      "sha": "af50fd7d8233bee4a7c98c172023b973ac01b8c2",
+      "subject": "CHG-287 support installed Postgres mapping rows"
+    },
+    {
+      "sha": "a4bde6ad11d939c8f533c30dfb6863205d23c64f",
+      "subject": "CHG-287 bind installed wheel provenance"
+    },
+    {
+      "sha": "ca661c641e661814db3d876f543a3fc9fa7a86ce",
+      "subject": "CHG-287 complete installed qualification proof lane"
+    },
+    {
+      "sha": "db4da803259da530455d975bd9bedb0a9f80c346",
+      "subject": "CHG-287 add installed synthetic qualification kit"
+    }
+  ],
+  "diff": {
+    "additions": 2120,
+    "changed_files": 15,
+    "commit_count": 7,
+    "deletions": 27
+  },
+  "error_code": null,
+  "evidence_manifest": {
+    "count": 5,
+    "items": [
+      {
+        "bytes": 30515,
+        "path": "README.md",
+        "sha256": "647e1b80a6dc2ffbf97582099d481e7d93859d4e4da1f0e1a0d1433c3bb33bc9"
+      },
+      {
+        "bytes": 12952,
+        "path": "docs/Release_Install_Identity.md",
+        "sha256": "4b4dd479cd79a50e415b472294e46498100fdc74d890b9c7a0dd381d9944c069"
+      },
+      {
+        "bytes": 817,
+        "path": "examples/synthetic_downstream/README.md",
+        "sha256": "b89ccd6b170cda6dc95fde9eb4d6b82dddce44403ef78458954e01578fbac461"
+      },
+      {
+        "bytes": 94229,
+        "path": "manifest.json",
+        "sha256": "dc51e77a30133a1f616d94c7303721808dcd38fc86dc5f2eba9f7be8fe99bf6a"
+      },
+      {
+        "bytes": 17083,
+        "path": "src/ephi/release_inventory.json",
+        "sha256": "ff1edd9b6af787f554c8435f9c7bf82f771622f617de7e03cf4278a0b3347b73"
+      }
+    ],
+    "version": 1
+  },
+  "evidence_publisher_release": "1.2.5-dashboard-controls-candidate",
+  "fabric_capture": {
+    "applied": false,
+    "paths_before": 0,
+    "transient_untracked_removed": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "fabric_release": "1.2.5-dashboard-controls-candidate",
+  "failure_class": null,
+  "finished_at": "2026-09-27T17:14:17Z",
+  "git": {
+    "base_is_ancestor": true,
+    "base_sha": "fe7f5ee8667a38274f644fa643cb360e4120de2a",
+    "branch": "codex/ephi-u3-installed-synthetic-qualification-v1",
+    "detached_verify": false,
+    "head_sha": "c73c23a697c42db4d25bd90e8a0706250858ccdc",
+    "remote_exact_head": true,
+    "remote_head_sha": "c73c23a697c42db4d25bd90e8a0706250858ccdc",
+    "target_branch": "main",
+    "target_drifted_since_acceptance": false,
+    "target_head_observed_after_execution": "fe7f5ee8667a38274f644fa643cb360e4120de2a",
+    "work_branch": "codex/ephi-u3-installed-synthetic-qualification-v1",
+    "worktree_clean": true
+  },
+  "instructions": {
+    "files": [
+      {
+        "bytes": 1458,
+        "path": "AGENTS.md",
+        "sha256": "4349f387a79d886ed1264604ff48c582698e539e08ed8fb2f9d8ab8fbf6f804a"
+      }
+    ],
+    "total_bytes": 1458,
+    "warning": null
+  },
+  "job_id": "CF-598b0c70bc17d0ee3abc810a",
+  "kind": "codex-fabric-audit-evidence",
+  "locator": {
+    "branch": "codex-fabric/evidence/ephi/ephi-u3-installed-synthetic-qualification-v1",
+    "path": ".codex-fabric/audit.json",
+    "ref": "refs/heads/codex-fabric/evidence/ephi/ephi-u3-installed-synthetic-qualification-v1"
+  },
+  "operation": "BUILD",
+  "policy": {
+    "environment_policy_sha256": "e077daca74297b3c30bee8989f00f8ca5338f7610b4d016a6c48db524205d064",
+    "fabric_release": "1.2.5-dashboard-controls-candidate",
+    "policy_sha256": "123615bf2f6e57dcac197e49ca98ceac59ada86a55e2c84445ea5d00812c0833",
+    "registry_sha256": "af81b8552f9d6a33847310e3c6bcd2d48401782b963a58efd2993e93570cb4aa"
+  },
+  "project_id": "ephi",
+  "recovery": {
+    "model_rerun_safe": false,
+    "recovery_required": false,
+    "retry_safe": false,
+    "retry_scope": null,
+    "worktree_retained": true
+  },
+  "request": "ephi-u3-installed-synthetic-qualification-v1",
+  "schema_version": 1,
+  "started_at": "2026-09-27T15:08:09Z",
+  "status": "EXECUTED_CHANGE",
+  "timing": {
+    "execution_seconds": 7568,
+    "queue_seconds": 0,
+    "total_seconds": 7568
+  },
+  "transport": {
+    "bytes": 10161,
+    "envelope": "FABRIC/2",
+    "prompt_bytes": 9821,
+    "prompt_sha256": "cdd508bccf82f176fd3bcd96d209336cf57fd3b7d24079f294c35b7670941a6d",
+    "sha256": "598b0c70bc17d0ee3abc810a8f8260d7e3d78a7c368d5d104a455099add6a02a"
+  }
+}
