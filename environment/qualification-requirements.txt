@@ -1,0 +1,4 @@
+# Qualification-only browser dependencies; never part of EPHI runtime inputs.
+greenlet==3.5.5
+playwright==1.62.0
+pyee==13.0.1

@@ -201,6 +201,195 @@ jobs:
           print('INSTALLED_WHEEL_POSTGRESQL_18_O9_RECOVERY_PASS')
           PY
 
+  installed-synthetic-qualification:
+    name: Installed synthetic integration-kit qualification (exact candidate)
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    env:
+      EPHI_ENV: test
+      EPHI_TEST_POSTGRES_DSN: postgresql://ephi_ci:ephi_ci_password@127.0.0.1:5432/ephi_u36
+    services:
+      postgres:
+        image: postgres:18.6
+        env:
+          POSTGRES_USER: ephi_ci
+          POSTGRES_PASSWORD: ephi_ci_password
+          POSTGRES_DB: ephi_u36
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U ephi_ci -d ephi_u36"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 20
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.13'
+      - name: Prepare exact candidate EPHI and separate qualification inputs
+        run: python tools/prepare_release_inputs.py --output-dir "$RUNNER_TEMP/ephi-u36-inputs"
+      - name: Install EPHI, Base, PostgreSQL, synthetic provider, and qualification dependencies offline
+        run: |
+          inputs="$RUNNER_TEMP/ephi-u36-inputs"
+          python -m venv "$RUNNER_TEMP/ephi-u36-venv"
+          venv_python="$RUNNER_TEMP/ephi-u36-venv/bin/python"
+          "$venv_python" -m pip install \
+            --no-index --find-links "$inputs/wheelhouse" --require-hashes \
+            -r "$inputs/locks/installer-py311.txt"
+          "$venv_python" -m pip uninstall -y setuptools wheel
+          "$venv_python" -m pip install \
+            --no-index --find-links "$inputs/wheelhouse" --require-hashes \
+            -r "$inputs/locks/runtime-py313.txt"
+          "$venv_python" -m pip install \
+            --no-index --find-links "$inputs/wheelhouse" --require-hashes \
+            -r "$inputs/locks/postgres-py313.txt"
+          "$venv_python" -m pip install --no-index --no-deps \
+            --find-links "$inputs/wheelhouse" 'ephi[postgres]==0.1.0'
+          "$venv_python" -m pip install --no-index --no-deps \
+            "$inputs"/wheelhouse/nicegui_base-*.whl
+          "$venv_python" -m pip install \
+            --no-index --find-links "$inputs/qualification/wheelhouse" --require-hashes \
+            -r "$inputs/qualification/locks/qualification-py313.txt"
+      - name: Prove ordinary EPHI excludes the provider and imports use installed wheels
+        run: |
+          "$RUNNER_TEMP/ephi-u36-venv/bin/python" - <<'PY'
+          import importlib.metadata as metadata
+          from pathlib import Path
+          import ephi
+          import examples.synthetic_downstream.provider as provider
+
+          app = metadata.distribution('ephi')
+          synthetic = metadata.distribution('ephi-synthetic-downstream-qualification')
+          app_files = {Path(str(item)).as_posix() for item in (app.files or ())}
+          assert not any('synthetic_downstream' in item for item in app_files)
+          assert Path(ephi.__file__).resolve() == Path(app.locate_file('ephi/__init__.py')).resolve()
+          assert Path(provider.__file__).resolve() == Path(
+              synthetic.locate_file('examples/synthetic_downstream/provider.py')
+          ).resolve()
+          assert synthetic.requires is None or not synthetic.requires
+          print('INSTALLED_DISTRIBUTION_BOUNDARIES_PASS')
+          PY
+      - name: Provision Chromium outside restricted qualification
+        run: "$RUNNER_TEMP/ephi-u36-venv/bin/python -m playwright install --with-deps chromium"
+      - name: Run installed release, configuration, migration, and provider preflights
+        run: |
+          inputs="$RUNNER_TEMP/ephi-u36-inputs"
+          venv_bin="$RUNNER_TEMP/ephi-u36-venv/bin"
+          "$venv_bin/ephi-release-preflight" \
+            --inputs-dir "$inputs" \
+            --qualification-inputs-dir "$inputs/qualification" --json
+          "$venv_bin/ephi-config-preflight" --json
+          "$venv_bin/ephi-db-migrate" identity
+          "$venv_bin/ephi-db-migrate" apply
+          "$venv_bin/ephi-db-migrate" verify
+          "$venv_bin/ephi-downstream-preflight" \
+            --entrypoint examples.synthetic_downstream.provider:build_bundle --json
+      - name: Prove missing qualification distribution fails closed without fallback
+        run: |
+          inputs="$RUNNER_TEMP/ephi-u36-inputs"
+          python -m venv "$RUNNER_TEMP/ephi-u36-core-only"
+          core_python="$RUNNER_TEMP/ephi-u36-core-only/bin/python"
+          "$core_python" -m pip install \
+            --no-index --find-links "$inputs/wheelhouse" --require-hashes \
+            -r "$inputs/locks/installer-py311.txt"
+          "$core_python" -m pip uninstall -y setuptools wheel
+          "$core_python" -m pip install \
+            --no-index --find-links "$inputs/wheelhouse" --require-hashes \
+            -r "$inputs/locks/runtime-py313.txt"
+          "$core_python" -m pip install \
+            --no-index --find-links "$inputs/wheelhouse" --require-hashes \
+            -r "$inputs/locks/postgres-py313.txt"
+          "$core_python" -m pip install --no-index --no-deps \
+            --find-links "$inputs/wheelhouse" 'ephi[postgres]==0.1.0'
+          "$core_python" -m pip install --no-index --no-deps \
+            "$inputs"/wheelhouse/nicegui_base-*.whl
+          set +e
+          EPHI_ENV=qa EPHI_HOST=0.0.0.0 EPHI_PORT=8080 \
+            EPHI_ALLOWED_BROWSER_ORIGINS=https://qualification.invalid \
+            NICEGUI_BASE_STORAGE_SECRET=qualification-preflight-placeholder \
+            NICEGUI_BASE_SECURE_SESSION_COOKIE=true \
+            "$RUNNER_TEMP/ephi-u36-core-only/bin/ephi-config-preflight" --json \
+            > "$RUNNER_TEMP/ephi-u36-missing-config-provider.json"
+          config_status=$?
+          EPHI_ENV=qa "$RUNNER_TEMP/ephi-u36-core-only/bin/ephi-downstream-preflight" \
+            --contracts-only --json > "$RUNNER_TEMP/ephi-u36-missing-downstream-provider.json"
+          downstream_status=$?
+          "$RUNNER_TEMP/ephi-u36-core-only/bin/ephi-release-preflight" \
+            --inputs-dir "$inputs" \
+            --qualification-inputs-dir "$inputs/qualification" --json \
+            > "$RUNNER_TEMP/ephi-u36-missing-provider.json"
+          preflight_status=$?
+          set -e
+          python - \
+            "$RUNNER_TEMP/ephi-u36-missing-config-provider.json" "$config_status" \
+            "$RUNNER_TEMP/ephi-u36-missing-downstream-provider.json" "$downstream_status" \
+            "$RUNNER_TEMP/ephi-u36-missing-provider.json" "$preflight_status" <<'PY'
+          import json
+          import sys
+
+          config = json.load(open(sys.argv[1], encoding='utf-8'))
+          downstream = json.load(open(sys.argv[3], encoding='utf-8'))
+          release = json.load(open(sys.argv[5], encoding='utf-8'))
+          assert sys.argv[2] == '2'
+          assert config['status'] == 'FAIL'
+          assert 'MISSING_DOWNSTREAM_ENTRYPOINT' in config['reason_codes']
+          assert sys.argv[4] == '2'
+          assert downstream['status_code'] == 'MISSING_REQUIRED_PROVIDER'
+          assert downstream['safe_composition_smoke']['status'] == 'NOT_RUN'
+          assert sys.argv[6] == '2'
+          assert release['status'] == 'FAIL'
+          assert release['reason_code'] == 'QUALIFICATION_PROVIDER_NOT_INSTALLED'
+          print('MISSING_QUALIFICATION_PROVIDER_FAIL_CLOSED')
+          PY
+      - name: Run exact installed browser qualification outside the checkout
+        env:
+          EPHI_ENV: test
+          EPHI_TEST_POSTGRES_DSN: postgresql://ephi_ci:ephi_ci_password@127.0.0.1:5432/ephi_u36
+        run: |
+          inputs="$RUNNER_TEMP/ephi-u36-inputs"
+          artifacts="$RUNNER_TEMP/ephi-u36-artifacts"
+          mkdir -p "$RUNNER_TEMP/ephi-u36-cwd" "$artifacts"
+          candidate_sha="$(git rev-parse HEAD)"
+          candidate_tree="$(git rev-parse 'HEAD^{tree}')"
+          cd "$RUNNER_TEMP/ephi-u36-cwd"
+          "$RUNNER_TEMP/ephi-u36-venv/bin/ephi-qualify" \
+            --inputs-dir "$inputs" \
+            --qualification-inputs-dir "$inputs/qualification" \
+            --artifact-dir "$artifacts"
+          python - "$artifacts/qualification-report.json" "$candidate_sha" "$candidate_tree" <<'PY'
+          import json
+          import sys
+
+          report = json.load(open(sys.argv[1], encoding='utf-8'))
+          assert report['status'] == 'PASS', report.get('status')
+          assert report['candidate'] == {'commit': sys.argv[2], 'tree': sys.argv[3]}
+          assert report['postgresql']['status'] == 'PASS'
+          assert report['postgresql']['major'] == 18
+          assert report['browser']['status'] == 'PASS'
+          assert report['browser']['keyboard_and_action_reachability']
+          assert all(not values for values in report['failure_inventory'].values())
+          assert [gate['gate'] for gate in report['gates']] == [f'G{i:02d}' for i in range(13)]
+          assert report['gates'][2]['state'] == 'NOT_RUN'
+          assert report['gates'][6]['state'] == 'NOT_RUN'
+          assert report['gates'][9]['state'] == 'NOT_RUN'
+          assert report['gates'][11]['state'] == 'NOT_RUN'
+          assert report['gates'][12]['state'] == 'PENDING'
+          assert not any('production_ready' in key for key in report)
+          assert report['explicit_nonclaims']
+          print('INSTALLED_SYNTHETIC_QUALIFICATION_PASS')
+          PY
+      - name: Upload machine qualification report, screenshots, and failure inventory
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ephi-u36-installed-synthetic-qualification
+          path: ${{ runner.temp }}/ephi-u36-artifacts
+          if-no-files-found: error
+
   canonical-baseline:
     name: Canonical repository baseline
     runs-on: ubuntu-latest

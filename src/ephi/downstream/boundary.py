@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import ast
+import importlib.metadata as metadata
 from pathlib import Path
 
 
@@ -22,6 +23,13 @@ def check_synthetic_boundary(root: Path | None = None) -> dict[str, object]:
 
     repository = root or Path(__file__).resolve().parents[3]
     fixture = repository / "examples" / "synthetic_downstream"
+    if root is None and not fixture.is_dir():
+        try:
+            distribution = metadata.distribution("ephi-synthetic-downstream-qualification")
+            fixture = Path(distribution.locate_file("examples/synthetic_downstream"))
+            repository = fixture.parent.parent
+        except metadata.PackageNotFoundError:
+            pass
     files = tuple(sorted(fixture.rglob("*.py"))) if fixture.is_dir() else ()
     forbidden_imports: set[str] = set()
     forbidden_constructs: set[str] = set()
