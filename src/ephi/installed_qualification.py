@@ -351,12 +351,13 @@ def _snapshot(page: Any, artifact_root: Path, name: str) -> dict[str, object]:
 
 
 def _navigate_keyboard(page: Any, href: str, heading: str) -> dict[str, object]:
-    link = page.locator(f'a[href="{href}"]').first
-    link.wait_for(timeout=15000)
-    link.focus()
+    navigation = page.get_by_role("navigation", name="Primary navigation")
+    item = navigation.get_by_role("listitem", name=heading).first
+    item.wait_for(timeout=15000)
+    item.focus()
     page.keyboard.press("Enter")
     page.wait_for_url(f"**{href}", timeout=20000)
-    page.get_by_role("heading", name=heading, exact=True).wait_for(timeout=20000)
+    page.locator("main").get_by_text(heading, exact=True).first.wait_for(timeout=20000)
     return {"action": "Enter", "status": "PASS", "href": href}
 
 
