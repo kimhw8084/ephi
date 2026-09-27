@@ -51,8 +51,8 @@
     },
     {
       "path": ".github/workflows/package.yml",
-      "bytes": 32952,
-      "sha256": "2c584eddee8bc8bbf4310eb82f991786a6fd4c128bf304ea28356d64358420e7"
+      "bytes": 32874,
+      "sha256": "c942cff4ecb70aae4bc3665a235051cad6fc040018a66eadae918a172a18ee97"
     },
     {
       "path": ".gitignore",
