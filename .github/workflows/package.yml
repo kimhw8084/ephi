@@ -259,7 +259,7 @@ jobs:
           boundary_cwd="$RUNNER_TEMP/ephi-u36-installed-boundary"
           mkdir -p "$boundary_cwd"
           cd "$boundary_cwd"
-          env -u PYTHONPATH -u PYTHONHOME -u GITHUB_WORKSPACE \
+          env -u PYTHONPATH -u PYTHONHOME -u GITHUB_WORKSPACE -u OLDPWD \
             "$RUNNER_TEMP/ephi-u36-venv/bin/python" - "$GITHUB_WORKSPACE" <<'PY'
           import importlib.metadata as metadata
           import os
