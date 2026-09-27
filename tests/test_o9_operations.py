@@ -25,22 +25,35 @@ from ephi.application import (  # noqa: E402
 )
 from ephi.application.operations import (  # noqa: E402
     artifact_blob_path,
+    canonical_sha256,
     build_reconciliation_report,
     file_sha256,
     verify_artifact_inventory,
 )
 from ephi.application.source_reality import redacted_connection_facts  # noqa: E402
-from tools.o9_operations import (  # noqa: E402
+from ephi.operations_status import operations_status  # noqa: E402
+from ephi.o9_operations import (  # noqa: E402
+    LEGACY_MANIFEST_SCHEMA,
     MANIFEST_SCHEMA,
     OperationsFailure,
-    ROOT,
     _dsn_with_database,
     _migration_identity,
     _private_libpq_environment,
     _run_dump,
     _run_restore,
-    operations_status,
+    create_backup,
+    reconcile,
+    restore_rehearsal,
     verify_backup,
+)
+from ephi import o9_operations as o9_authority  # noqa: E402
+from ephi.release_identity import installed_release_identity  # noqa: E402
+from tools.o9_operations import (  # noqa: E402
+    ROOT,
+    create_backup as checkout_create_backup,
+    reconcile as checkout_reconcile,
+    restore_rehearsal as checkout_restore_rehearsal,
+    verify_backup as checkout_verify_backup,
 )
 
 
@@ -118,6 +131,15 @@ class O9OperationsContractTests(unittest.TestCase):
             path.write_bytes(b"corrupt")
             self.assertEqual(verify_artifact_inventory(root, inventory)[0]["reason"], "CORRUPT_ARTIFACT_BYTES")
 
+    def test_backup_output_must_not_overlap_active_artifact_root(self):
+        with tempfile.TemporaryDirectory() as directory:
+            active = Path(directory) / "active-artifacts"
+            active.mkdir()
+            before = sorted(active.iterdir())
+            with self.assertRaisesRegex(OperationsFailure, "distinct from the active artifact root"):
+                create_backup(dsn="synthetic-private-dsn", artifact_root=active, output_dir=active / "backup")
+            self.assertEqual(sorted(active.iterdir()), before)
+
     def test_schema_migration_mismatch_fails_closed(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -134,7 +156,7 @@ class O9OperationsContractTests(unittest.TestCase):
             # The deterministic JSON hash used by the tool is not a raw hash
             # of the two bytes; use its canonical identity through a fresh
             # empty inventory check and only mutate the schema identity here.
-            manifest["immutable_artifacts"]["inventory_sha256"] = __import__("tools.o9_operations", fromlist=["canonical_sha256"]).canonical_sha256([])
+            manifest["immutable_artifacts"]["inventory_sha256"] = canonical_sha256([])
             path = root / "backup_manifest.json"
             path.write_text(json.dumps(manifest), encoding="utf-8")
             broken = copy.deepcopy(manifest)
@@ -142,7 +164,7 @@ class O9OperationsContractTests(unittest.TestCase):
             broken_path = root / "broken.json"
             broken_path.write_text(json.dumps(broken), encoding="utf-8")
             with self.assertRaises(RuntimeError):
-                verify_backup(manifest_path=broken_path, repo_root=ROOT, pg_restore_command="/usr/bin/true")
+                verify_backup(manifest_path=broken_path, repo_root=ROOT)
 
     def test_post_snapshot_reconciliation_identifies_later_accepted_writes(self):
         backup = {"command_receipt": {"row_identity_hashes": ["before-receipt"]}}
@@ -253,9 +275,18 @@ class O9OperationsContractTests(unittest.TestCase):
             },
         }
         calls = []
+        service_file_records = []
 
         def fake_run(command, **kwargs):
             calls.append({"argv": list(command), "kwargs": kwargs})
+            if "--dbname=service=o9_restore" in command:
+                service_path = Path(kwargs["env"]["PGSERVICEFILE"])
+                service_file_records.append(
+                    (
+                        service_path.read_text(encoding="utf-8"),
+                        service_path.stat().st_mode & 0o777,
+                    )
+                )
             return SimpleNamespace(returncode=0, stdout=keyword_password.encode(), stderr=uri_password.encode())
 
         def prepared_parser(dsn, *, database=None):
@@ -269,8 +300,8 @@ class O9OperationsContractTests(unittest.TestCase):
             dump_path.write_bytes(b"logical dump fixture")
             stdout = io.StringIO()
             stderr = io.StringIO()
-            with patch("tools.o9_operations._libpq_parameters", side_effect=prepared_parser):
-                with patch("tools.o9_operations.subprocess.run", side_effect=fake_run):
+            with patch("ephi.o9_operations._libpq_parameters", side_effect=prepared_parser):
+                with patch("ephi.o9_operations.subprocess.run", side_effect=fake_run):
                     with redirect_stdout(stdout), redirect_stderr(stderr):
                         _run_dump(["pg_dump"], dsn=uri, snapshot="00000003-1", output=Path(directory) / "new.dump")
                         _run_restore(["pg_restore"], dsn=keyword, dump_path=dump_path)
@@ -280,6 +311,9 @@ class O9OperationsContractTests(unittest.TestCase):
         self.assertNotIn(keyword, repr(calls[1]["argv"]))
         self.assertNotIn(uri_password, repr(calls[0]["argv"]))
         self.assertNotIn(keyword_password, repr(calls[1]["argv"]))
+        for private_value in ("native-user", "db.internal", "ephi"):
+            self.assertNotIn(private_value, repr(calls[0]["argv"]))
+            self.assertNotIn(private_value, repr(calls[1]["argv"]))
         self.assertNotIn(uri_password, stdout.getvalue() + stderr.getvalue())
         self.assertNotIn(keyword_password, stdout.getvalue() + stderr.getvalue())
         self.assertEqual(calls[0]["kwargs"]["env"]["PGPASSWORD"], uri_password)
@@ -290,6 +324,12 @@ class O9OperationsContractTests(unittest.TestCase):
         self.assertEqual(calls[0]["kwargs"]["env"]["PGDATABASE"], "ephi")
         self.assertNotIn("DATABASE_URL", calls[0]["kwargs"]["env"])
         self.assertNotIn("EPHI_POSTGRES_DSN", calls[0]["kwargs"]["env"])
+        self.assertEqual(service_file_records, [("[o9_restore]\n", 0o600)])
+        self.assertEqual(calls[1]["kwargs"]["env"]["PGUSER"], "native-user")
+        self.assertEqual(calls[1]["kwargs"]["env"]["PGHOST"], "db.internal")
+        self.assertEqual(calls[1]["kwargs"]["env"]["PGDATABASE"], "ephi")
+        self.assertEqual(calls[1]["kwargs"]["env"]["PGPASSWORD"], keyword_password)
+        self.assertNotIn(keyword_password, service_file_records[0][0])
 
     def test_private_libpq_environment_is_dependency_free_and_clears_ambient_settings(self):
         secret = "prepared p@ss"
@@ -323,10 +363,10 @@ class O9OperationsContractTests(unittest.TestCase):
             dump_path = Path(directory) / "database.dump"
             dump_path.write_bytes(b"logical dump fixture")
             with patch(
-                "tools.o9_operations._libpq_parameters",
+                "ephi.o9_operations._libpq_parameters",
                 return_value={"host": "db.internal", "user": "native-user", "password": secret, "dbname": "ephi"},
             ):
-                with patch("tools.o9_operations.subprocess.run", side_effect=fake_run):
+                with patch("ephi.o9_operations.subprocess.run", side_effect=fake_run):
                     with redirect_stdout(stdout), redirect_stderr(stderr):
                         with self.assertRaises(OperationsFailure) as raised:
                             _run_restore(
@@ -338,6 +378,240 @@ class O9OperationsContractTests(unittest.TestCase):
         self.assertNotIn(secret, calls[0]["argv"])
         self.assertNotIn(secret, str(raised.exception))
         self.assertNotIn(secret, stdout.getvalue() + stderr.getvalue())
+
+
+class O9InstalledRecoveryAuthorityTests(unittest.TestCase):
+    def _manifest(self, directory: Path, *, with_artifact: bool = False) -> dict[str, object]:
+        class Cursor:
+            def fetchall(self):
+                return []
+
+        class Connection:
+            def execute(self, _query):
+                return Cursor()
+
+        tables = o9_authority._table_inventory(Connection())
+        artifact_inventory = []
+        artifact_content = b"deterministic immutable O9 fixture"
+        if with_artifact:
+            digest = hashlib.sha256(artifact_content).hexdigest()
+            artifact_path = artifact_blob_path(directory / "artifacts", digest)
+            artifact_path.parent.mkdir(parents=True)
+            artifact_path.write_bytes(artifact_content)
+            artifact_inventory.append({
+                "scope_key_sha256": o9_authority.safe_identity_hash("private-scope-sentinel"),
+                "sha256": digest,
+                "byte_size": len(artifact_content),
+                "metadata_sha256": canonical_sha256({
+                    "media_type": "application/octet-stream",
+                    "logical_purpose": "private-material-sentinel",
+                    "producing_job_id": "private-job-sentinel",
+                    "revision_id": None,
+                }),
+            })
+        dump_content = b"deterministic logical dump fixture"
+        (directory / "database.dump").write_bytes(dump_content)
+        return {
+            "schema_version": MANIFEST_SCHEMA,
+            "operation": "CHG-147/O9.1",
+            "release_identity": installed_release_identity(),
+            "migration_schema_identity": _migration_identity(),
+            "postgresql": {
+                "server_version": "18.6",
+                "server_major": 18,
+                "safe_database_identity": {
+                    "database_identity_sha256": o9_authority.safe_identity_hash("private-database-sentinel"),
+                    "schema_identity_sha256": o9_authority.safe_identity_hash("private-schema-sentinel"),
+                    "connection": {"configured": True, "credentials_redacted": True},
+                },
+                "tooling": {"pg_dump_version": "PostgreSQL 18.6", "pg_dump_major": 18},
+            },
+            "backup_cutoff_high_water": {
+                "cutoff_at_server": "2026-09-27T10:00:00.000000Z",
+                "transaction_id": 100,
+                "transaction_snapshot": "100:100:",
+                "snapshot_exported_for_pg_dump": True,
+            },
+            "dump": {
+                "path": "database.dump",
+                "sha256": hashlib.sha256(dump_content).hexdigest(),
+                "byte_size": len(dump_content),
+            },
+            "immutable_artifacts": {
+                "backup_root": "artifacts",
+                "count": len(artifact_inventory),
+                "inventory_sha256": canonical_sha256(artifact_inventory),
+                "inventory": artifact_inventory,
+            },
+            "durable_state": {"tables": tables, "state_sha256": tables["_state"]["content_sha256"]},
+            "verification": {"overall_verification_state": "VERIFIED"},
+        }
+
+    def _verify(self, manifest_path: Path, **patches):
+        with patch.object(o9_authority, "_tool_prefix", return_value=["pg_restore"]), \
+             patch.object(o9_authority, "_tool_version", return_value=("PostgreSQL 18.6", 18)), \
+             patch.object(o9_authority, "_verify_dump_structure"):
+            for name, value in patches.items():
+                patcher = patch.object(o9_authority, name, value)
+                patcher.start()
+                self.addCleanup(patcher.stop)
+            return verify_backup(manifest_path=manifest_path)
+
+    def test_backup_verify_positive_control_binds_release_and_migrations(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            manifest = self._manifest(root, with_artifact=True)
+            path = root / "backup_manifest.json"
+            path.write_text(json.dumps(manifest), encoding="utf-8")
+            result = self._verify(path)
+        self.assertEqual(result["verification_state"], "VERIFIED")
+        self.assertEqual(result["release_identity"], installed_release_identity())
+        self.assertEqual(result["migration_schema_identity"], _migration_identity())
+
+    def test_backup_verify_fails_closed_for_corrupt_dump_and_artifacts(self):
+        for corruption in ("dump", "missing_artifact", "corrupt_artifact"):
+            with self.subTest(corruption=corruption), tempfile.TemporaryDirectory() as temp:
+                root = Path(temp)
+                manifest = self._manifest(root, with_artifact=True)
+                path = root / "backup_manifest.json"
+                path.write_text(json.dumps(manifest), encoding="utf-8")
+                if corruption == "dump":
+                    (root / "database.dump").write_bytes(b"corrupt")
+                else:
+                    digest = manifest["immutable_artifacts"]["inventory"][0]["sha256"]
+                    artifact = artifact_blob_path(root / "artifacts", digest)
+                    if corruption == "missing_artifact":
+                        artifact.unlink()
+                    else:
+                        artifact.write_bytes(b"corrupt")
+                with self.assertRaises(OperationsFailure):
+                    self._verify(path)
+
+    def test_backup_verify_rejects_changed_or_unsupported_identity_and_native_major(self):
+        for identity, expected in (
+            ("release", "packaged release identity mismatch"),
+            ("migration", "migration/schema identity mismatch"),
+            ("schema", "backup manifest schema/version is unsupported"),
+            ("native_major", "pg_restore major version does not match the PostgreSQL server"),
+        ):
+            with self.subTest(identity=identity), tempfile.TemporaryDirectory() as temp:
+                root = Path(temp)
+                manifest = self._manifest(root)
+                if identity == "release":
+                    manifest["release_identity"]["release_identity_sha256"] = "f" * 64
+                elif identity == "migration":
+                    manifest["migration_schema_identity"]["identity_sha256"] = "f" * 64
+                elif identity == "schema":
+                    manifest["schema_version"] = "o9.1.backup.v99"
+                path = root / "backup_manifest.json"
+                path.write_text(json.dumps(manifest), encoding="utf-8")
+                if identity == "native_major":
+                    with patch.object(o9_authority, "_tool_prefix", return_value=["pg_restore"]), \
+                         patch.object(o9_authority, "_tool_version", return_value=("PostgreSQL 17.11", 17)):
+                        with self.assertRaisesRegex(OperationsFailure, expected):
+                            verify_backup(manifest_path=path)
+                else:
+                    with self.assertRaisesRegex(OperationsFailure, expected):
+                        self._verify(path)
+
+    def test_malformed_manifest_and_legacy_v1_fail_with_bounded_reasons(self):
+        secret_path = "../private-path-sentinel"
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            manifest = self._manifest(root)
+            manifest["dump"]["path"] = secret_path
+            path = root / "bad.json"
+            path.write_text(json.dumps(manifest), encoding="utf-8")
+            with self.assertRaises(OperationsFailure) as raised:
+                self._verify(path)
+            self.assertNotIn(secret_path, str(raised.exception))
+            manifest["schema_version"] = LEGACY_MANIFEST_SCHEMA
+            path.write_text(json.dumps(manifest), encoding="utf-8")
+            with self.assertRaisesRegex(OperationsFailure, "legacy backup manifest lacks packaged release identity"):
+                verify_backup(manifest_path=path)
+
+    def test_legacy_reconcile_projects_only_hashed_recovery_facts(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            manifest = self._manifest(root)
+            manifest["schema_version"] = LEGACY_MANIFEST_SCHEMA
+            manifest["repository"] = {"candidate_branch": "o9-private-raw-row-sentinel"}
+            manifest["postgresql"]["server_version"] = "PostgreSQL 18.6 o9-private-exception-sentinel"
+            manifest["postgresql"]["tooling"]["pg_dump_version"] = (
+                "pg_dump (PostgreSQL) 18.6 o9-private-path-sentinel"
+            )
+            manifest["postgresql"]["safe_database_identity"]["database_name"] = (
+                "o9-private-database-sentinel"
+            )
+            tables = manifest["durable_state"]["tables"]
+            audit = tables["audit_event"]
+            audit_row = {
+                "identity_hash": "a" * 64,
+                "row_hash": "b" * 64,
+                "version": "o9-private-raw-row-sentinel",
+            }
+            audit["row_count"] = 1
+            audit["row_identity_hashes"] = [audit_row["identity_hash"]]
+            audit["row_versions"] = [audit_row]
+            audit["content_sha256"] = canonical_sha256([audit_row])
+            tables["private-table-sentinel"] = {"raw": "o9-private-material-identifier-sentinel"}
+            state_rows = sum(tables[table]["row_count"] for table in o9_authority.CRITICAL_TABLES)
+            fingerprints = [
+                {
+                    "table": table,
+                    "row_count": tables[table]["row_count"],
+                    "content_sha256": tables[table]["content_sha256"],
+                }
+                for table in o9_authority.CRITICAL_TABLES
+            ]
+            tables["_state"]["row_count"] = state_rows
+            tables["_state"]["content_sha256"] = canonical_sha256(fingerprints)
+            manifest["durable_state"]["state_sha256"] = tables["_state"]["content_sha256"]
+            path = root / "legacy.json"
+            path.write_text(json.dumps(manifest), encoding="utf-8")
+
+            class Cursor:
+                def fetchone(self):
+                    return {"now": "2026-09-27T10:05:00+00:00"}
+
+            class Connection:
+                def execute(self, _query):
+                    return Cursor()
+
+                def close(self):
+                    return None
+
+            connection = Connection()
+            current = {table: tables[table] for table in o9_authority.CRITICAL_TABLES}
+            with patch.object(o9_authority, "_connect", return_value=connection), \
+                 patch.object(o9_authority, "validate_required_schema"), \
+                 patch.object(o9_authority, "_table_inventory", return_value=current):
+                report = reconcile(manifest_path=path, dsn="private-dsn-sentinel")
+
+        encoded = json.dumps(report, sort_keys=True)
+        self.assertEqual(report["backup_identity_state"], "LEGACY_RELEASE_IDENTITY_UNBOUND")
+        for private_value in (
+            "o9-private-raw-row-sentinel",
+            "o9-private-material-identifier-sentinel",
+            "o9-private-exception-sentinel",
+            "o9-private-path-sentinel",
+            "o9-private-database-sentinel",
+            "private-table-sentinel",
+            "candidate_branch",
+        ):
+            self.assertNotIn(private_value, encoded)
+
+    def test_checkout_wrapper_delegates_all_four_operations_to_package_authority(self):
+        calls = (
+            ("create_backup", checkout_create_backup),
+            ("verify_backup", checkout_verify_backup),
+            ("restore_rehearsal", checkout_restore_rehearsal),
+            ("reconcile", checkout_reconcile),
+        )
+        for name, wrapper in calls:
+            with self.subTest(operation=name), patch.object(o9_authority, name, return_value=name) as delegated:
+                self.assertEqual(wrapper(marker=name), name)
+                delegated.assert_called_once_with(marker=name)
 
 
 try:
@@ -357,7 +631,7 @@ class O9RealLibpqParserQualificationTests(unittest.TestCase):
             + keyword_password
             + "' dbname=ephi sslmode=require"
         )
-        from tools.o9_operations import _libpq_parameters
+        from ephi.o9_operations import _libpq_parameters
 
         uri_parameters = _libpq_parameters(uri)
         keyword_parameters = _libpq_parameters(keyword)
@@ -377,7 +651,7 @@ class O9RealLibpqParserQualificationTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             dump_path = Path(directory) / "database.dump"
             dump_path.write_bytes(b"logical dump fixture")
-            with patch("tools.o9_operations.subprocess.run", side_effect=fake_run):
+            with patch("ephi.o9_operations.subprocess.run", side_effect=fake_run):
                 with redirect_stdout(stdout), redirect_stderr(stderr):
                     _run_dump(["pg_dump"], dsn=uri, snapshot="00000003-1", output=Path(directory) / "new.dump")
                     _run_restore(["pg_restore"], dsn=keyword, dump_path=dump_path)

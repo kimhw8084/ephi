@@ -357,6 +357,12 @@ post-cutoff reconciliation through the existing O2/O3/O4 authorities. Run:
 python3 tools/o9_operations.py status --json
 ```
 
+The installed `ephi-operations` command also provides `backup-create`,
+`backup-verify`, `restore-rehearsal`, and `reconcile` without a source
+checkout. Connection settings come from the approved process environment and
+are not command arguments. The installed workflow and manifest compatibility
+rules are documented in [operations](operations/README.md).
+
 Local rehearsal timing is evidence only. The tooling always records
 `production_disaster_rpo_rto_claim = NOT_ESTABLISHED`; it does not claim the
 E7 target RPO/RTO or authenticate a real source family.

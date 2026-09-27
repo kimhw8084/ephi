@@ -162,7 +162,12 @@ is introduced.
    command. It reports six independent operational axes after the current
    schema check and does not load downstream providers. Review its unavailable
    source and unqualified evidence axes before normal operation or any
-   separate target qualification.
+   separate target qualification. The installed command also provides
+   `backup-create`, `backup-verify`, `restore-rehearsal`, and `reconcile`;
+   set `EPHI_POSTGRES_DSN` (and, when needed, `EPHI_POSTGRES_ADMIN_DSN`) in the
+   approved secret-injection boundary instead of passing connection settings
+   as command arguments. See [the O9 operations guide](../operations/README.md)
+   for the isolated restore and compatibility rules.
 
 7. Run provider conformance and composition separately through the existing
    downstream authority. The release and configuration preflights do not load

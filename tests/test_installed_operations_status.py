@@ -20,6 +20,7 @@ from ephi.operations_status import (  # noqa: E402
     main,
     operations_status,
 )
+from ephi import operations_status as operations_status_module  # noqa: E402
 
 
 AXES = {
@@ -63,6 +64,43 @@ class InstalledOperationsStatusTests(unittest.TestCase):
         for sentinel in (*sentinels.values(), artifact_path):
             self.assertNotIn(sentinel, encoded)
         self.assertEqual(report["axes"]["source_capability_freshness"]["reason"], "BLOCKED_REAL_SOURCE")
+
+    def test_installed_entrypoint_routes_each_o9_recovery_operation(self):
+        operations = ("backup-create", "backup-verify", "restore-rehearsal", "reconcile")
+        for operation in operations:
+            with self.subTest(operation=operation), patch(
+                "ephi.o9_operations.main", return_value=7
+            ) as delegated:
+                self.assertEqual(main([operation]), 7)
+                delegated.assert_called_once_with([operation])
+
+    def test_recovery_cli_rejects_dsn_argv_and_suppresses_private_error_details(self):
+        dsn_values = (
+            "dsn-argv-user-sentinel",
+            "dsn-argv-password-sentinel",
+            "dsn-argv-host-sentinel.invalid",
+            "dsn-argv-database-sentinel",
+        )
+        dsn = f"postgresql://{dsn_values[0]}:{dsn_values[1]}@{dsn_values[2]}:5432/{dsn_values[3]}"
+        physical_path = "/private/o9-manifest-sentinel/backup.json"
+        exception_detail = "exception-source-sentinel " + " ".join(dsn_values) + " " + physical_path
+        output = io.StringIO()
+        with patch.dict(os.environ, {"EPHI_POSTGRES_DSN": dsn}, clear=True), patch(
+            "ephi.o9_operations.verify_backup", side_effect=RuntimeError(exception_detail)
+        ), redirect_stdout(output):
+            status = operations_status_module.main(["backup-verify", "--manifest", physical_path])
+        encoded = output.getvalue()
+        self.assertEqual(status, 2)
+        self.assertIn('"reason_code": "OPERATION_FAILED"', encoded)
+        for sentinel in (*dsn_values, physical_path, "exception-source-sentinel"):
+            self.assertNotIn(sentinel, encoded)
+
+        output = io.StringIO()
+        with redirect_stdout(output):
+            status = operations_status_module.main(["backup-create", "--dsn", dsn])
+        self.assertEqual(status, 2)
+        for sentinel in dsn_values:
+            self.assertNotIn(sentinel, output.getvalue())
 
     def test_dsn_and_arbitrary_connection_exception_details_are_structurally_omitted(self):
         dsn_values = (
@@ -271,19 +309,25 @@ class InstalledOperationsStatusTests(unittest.TestCase):
 
     def test_package_and_checkout_cli_errors_discard_arbitrary_exception_text(self):
         leaked = "arbitrary-status-exception-sentinel"
-        with patch("ephi.operations_status.operations_status", side_effect=RuntimeError(leaked)), redirect_stdout(
+        with patch.dict(os.environ, {"EPHI_POSTGRES_DSN": "dsn-sentinel"}, clear=True), patch(
+            "ephi.operations_status.operations_status", side_effect=RuntimeError(leaked)
+        ), redirect_stdout(
             io.StringIO()
         ) as package_output:
-            self.assertEqual(main(["status", "--dsn", "dsn-sentinel"]), 2)
+            self.assertEqual(main(["status", "--json"]), 2)
         self.assertNotIn(leaked, package_output.getvalue())
         self.assertNotIn("dsn-sentinel", package_output.getvalue())
 
         from tools import o9_operations
 
-        with patch.object(o9_operations, "operations_status", side_effect=RuntimeError(leaked)), redirect_stdout(
+        from ephi import o9_operations as recovery_authority
+
+        with patch.dict(os.environ, {"EPHI_POSTGRES_DSN": "checkout-dsn-sentinel"}, clear=True), patch.object(
+            recovery_authority, "operations_status", side_effect=RuntimeError(leaked)
+        ), redirect_stdout(
             io.StringIO()
         ) as checkout_output:
-            self.assertEqual(o9_operations.main(["status", "--dsn", "checkout-dsn-sentinel", "--json"]), 2)
+            self.assertEqual(o9_operations.main(["status", "--json"]), 2)
         self.assertNotIn(leaked, checkout_output.getvalue())
         self.assertNotIn("checkout-dsn-sentinel", checkout_output.getvalue())
 
@@ -291,7 +335,9 @@ class InstalledOperationsStatusTests(unittest.TestCase):
         from tools import o9_operations
 
         report = {"package_authority": True}
-        with patch.object(o9_operations, "_package_operations_status", return_value=report) as authority:
+        from ephi import o9_operations as recovery_authority
+
+        with patch.object(recovery_authority, "operations_status", return_value=report) as authority:
             self.assertIs(
                 o9_operations.operations_status(dsn="configured-dsn", artifact_root="/artifact-root"),
                 report,
