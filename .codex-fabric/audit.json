@@ -1,0 +1,494 @@
+{
+  "accepted_at": "2026-09-27T19:58:54Z",
+  "changed_files": [
+    {
+      "additions": 318,
+      "deletions": 1,
+      "path": ".github/workflows/package.yml",
+      "status": "M"
+    },
+    {
+      "additions": 3,
+      "deletions": 1,
+      "path": "README.md",
+      "status": "M"
+    },
+    {
+      "additions": 67,
+      "deletions": 0,
+      "path": "docs/Release_Install_Identity.md",
+      "status": "M"
+    },
+    {
+      "additions": 4,
+      "deletions": 0,
+      "path": "environment/qualification-requirements.txt",
+      "status": "A"
+    },
+    {
+      "additions": 16,
+      "deletions": 0,
+      "path": "examples/synthetic_downstream/README.md",
+      "status": "A"
+    },
+    {
+      "additions": 14,
+      "deletions": 0,
+      "path": "examples/synthetic_downstream/pyproject.toml",
+      "status": "A"
+    },
+    {
+      "additions": 46,
+      "deletions": 16,
+      "path": "manifest.json",
+      "status": "M"
+    },
+    {
+      "additions": 1,
+      "deletions": 0,
+      "path": "pyproject.toml",
+      "status": "M"
+    },
+    {
+      "additions": 8,
+      "deletions": 0,
+      "path": "src/ephi/downstream/boundary.py",
+      "status": "M"
+    },
+    {
+      "additions": 1059,
+      "deletions": 0,
+      "path": "src/ephi/installed_qualification.py",
+      "status": "A"
+    },
+    {
+      "additions": 368,
+      "deletions": 0,
+      "path": "src/ephi/qualification_identity.py",
+      "status": "A"
+    },
+    {
+      "additions": 53,
+      "deletions": 5,
+      "path": "src/ephi/release_identity.py",
+      "status": "M"
+    },
+    {
+      "additions": 1,
+      "deletions": 1,
+      "path": "src/ephi/release_inventory.json",
+      "status": "M"
+    },
+    {
+      "additions": 81,
+      "deletions": 0,
+      "path": "tests/test_installed_qualification.py",
+      "status": "A"
+    },
+    {
+      "additions": 185,
+      "deletions": 3,
+      "path": "tools/prepare_release_inputs.py",
+      "status": "M"
+    }
+  ],
+  "checks": [
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 --version && rtk git status --short --branch && rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/generate_release_inventory.py --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest discover -s tests -v'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest && rtk git diff --stat c73c23a697c42db4d25bd90e8a0706250858ccdc && rtk git status --short --branch && rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git add -A && rtk git diff --cached --stat c73c23a697c42db4d25bd90e8a0706250858ccdc && rtk git status --short --branch && rtk git diff --cached --check c73c23a697c42db4d25bd90e8a0706250858ccdc'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk proxy which actionlint'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk proxy git diff c73c23a697c42db4d25bd90e8a0706250858ccdc -- .github/workflows/package.yml manifest.json'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk ruby -e 'require \\\"yaml\\\"; workflow=YAML.load_file(\\\".github/workflows/package.yml\\\"); steps=workflow.dig(\\\"jobs\\\", \\\"installed-synthetic-qualification\\\", \\\"steps\\\"); abort \\\"installed qualification job missing\\\" unless steps && steps.any? { |step| step[\\\"name\\\"] == \\\"Prove ordinary EPHI excludes the provider and imports use installed wheels\\\" }; puts \\\"WORKFLOW_PARSE_PASS\\\"'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git commit -m 'CHG-287 fix installed qualification import boundary' && rtk git show --no-patch --format='commit=%H%nparent=%P%ntree=%T%nsubject=%s' HEAD && rtk git status --short --branch\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest && rtk python3 tools/generate_release_inventory.py --check && rtk git diff --check && rtk git status --short --branch'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest discover -s tests -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/w0_repo_baseline.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk proxy git ls-remote --heads origin codex/ephi-u3-installed-synthetic-qualification-fix2 && rtk proxy which gh && rtk git show --check --oneline --stat HEAD && rtk git status --short --branch'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk proxy git push -u origin codex/ephi-u3-installed-synthetic-qualification-fix2'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk proxy gh run list --repo kimhw8084/ephi --branch codex/ephi-u3-installed-synthetic-qualification-fix2 --commit a1163f84094cca0504d936cdebeb530003cc9c36 --limit 5 --json databaseId,workflowName,status,conclusion,headSha,event,url'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk proxy gh run watch 36347292444 --exit-status'",
+      "exit_code": 130,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk proxy gh run view 36347292444 --repo kimhw8084/ephi --json status,conclusion,headSha,updatedAt,workflowName,url'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy gh run view 36347292444 --repo kimhw8084/ephi --json status,conclusion,headSha,updatedAt,workflowName,url && rtk proxy gh run view 36347292444 --repo kimhw8084/ephi --json jobs --jq '.jobs[] | [.name, .status, .conclusion] | @tsv'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk proxy gh run view --help'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk proxy gh run view --repo kimhw8084/ephi --job 108698837995 --log-failed'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 tools/check_package.py --refresh-manifest && rtk python3 tools/generate_release_inventory.py --check && rtk ruby -e 'require \\\"yaml\\\"; workflow=YAML.load_file(\\\".github/workflows/package.yml\\\"); steps=workflow.dig(\\\"jobs\\\", \\\"installed-synthetic-qualification\\\", \\\"steps\\\"); abort \\\"installed qualification job missing\\\" unless steps && steps.any? { |step| step[\\\"name\\\"] == \\\"Prove ordinary EPHI excludes the provider and imports use installed wheels\\\" }; puts \\\"WORKFLOW_PARSE_PASS\\\"' && rtk git diff --check && rtk git add -A && rtk git diff --cached --stat c73c23a697c42db4d25bd90e8a0706250858ccdc && rtk git commit -m 'CHG-287 clear previous checkout path in boundary probe' && rtk git show --no-patch --format='commit=%H%nparent=%P%ntree=%T' HEAD && rtk git status --short --branch\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk proxy git push origin codex/ephi-u3-installed-synthetic-qualification-fix2 && rtk proxy gh run list --repo kimhw8084/ephi --branch codex/ephi-u3-installed-synthetic-qualification-fix2 --commit 52f2a0700f1514a4ff008cc09a36e3b28d92a78b --limit 5 --json databaseId,workflowName,status,conclusion,headSha,event,url'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk proxy gh run list --repo kimhw8084/ephi --branch codex/ephi-u3-installed-synthetic-qualification-fix2 --commit 52f2a0700f1514a4ff008cc09a36e3b28d92a78b --limit 5 --json databaseId,workflowName,status,conclusion,headSha,event,url'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy gh run view 36347533510 --repo kimhw8084/ephi --json status,conclusion,headSha,updatedAt,jobs,url --jq '{status,conclusion,headSha,url,jobs: [.jobs[] | {name,status,conclusion,databaseId}]}'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest discover -s tests -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/w0_repo_baseline.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy gh run view 36347533510 --repo kimhw8084/ephi --json status,conclusion,headSha,updatedAt,jobs,url --jq '{status,conclusion,headSha,url,jobs: [.jobs[] | select(.status \"'!= \"completed\") | {name,status,conclusion,databaseId}]}'\"'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy gh run view 36347533510 --repo kimhw8084/ephi --json status,conclusion,headSha,jobs,url --jq '{status,conclusion,headSha,url,jobs: [.jobs[] | select(.status \"'!= \"completed\") | {name,status,conclusion,databaseId}]}'\"'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk proxy gh run view --repo kimhw8084/ephi --job 108699635440 --log-failed'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk proxy gh run download 36347533510 --repo kimhw8084/ephi --name ephi-u36-installed-synthetic-qualification --dir /tmp/ephi-u36-report-from-52f2 && rtk rg --files /tmp/ephi-u36-report-from-52f2'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - /tmp/ephi-u36-report-from-52f2/qualification-report.json 52f2a0700f1514a4ff008cc09a36e3b28d92a78b f1128f4b5a18062bfd6c508b5ce5318f943e3199 <<'PY'\nimport hashlib\nimport json\nfrom pathlib import Path\nimport sys\n\nreport_path = Path(sys.argv[1]).resolve()\nartifact_root = report_path.parent\nreport = json.loads(report_path.read_text(encoding='utf-8'))\nassert report['status'] == 'PASS'\nassert report['candidate'] == {'commit': sys.argv[2], 'tree': sys.argv[3]}\nassert report['postgresql']['status'] == 'PASS'\nassert report['postgresql']['major'] == 18\nassert report['browser']['status'] == 'PASS'\nassert report['browser']['keyboard_and_action_reachability'] == {\n    'attention_row_selection': 'Space',\n    'open_episode': 'Enter',\n    'family_center_assets_outcomes_operations_navigation': 'Enter',\n}\nassert report['negative_controls_status'] == 'PASS'\nexpected_paths = {'attention_to_episode', 'family_center', 'assets', 'outcomes', 'operations'}\nassert set(report['exercised_product_paths']) == expected_paths\nassert all(path.get('status') == 'PASS' for path in report['exercised_product_paths'].values())\nassert set(report['failure_inventory']) == {'console_errors', 'page_errors', 'failed_requests', 'http_errors'}\nassert all(not values for values in report['failure_inventory'].values())\nexpected_screenshots = {f'{name}-1440x900.png' for name in ('attention', 'episode', 'family-center', 'assets', 'outcomes', 'operations')}\nscreenshots = report['browser']['screenshots']\nassert len(screenshots) == 6\nassert {item['path'] for item in screenshots} == expected_screenshots\nartifact_records = {item['path']: item for item in report['artifacts']}\nexpected_artifacts = expected_screenshots | {'failure-inventory.json'}\nassert set(artifact_records) == expected_artifacts\nfor item in screenshots:\n    assert item['kind'] == 'browser_screenshot'\n    content = (artifact_root / item['path']).read_bytes()\n    assert len(content) == item['byte_size']\n    assert hashlib.sha256(content).hexdigest() == item['sha256']\n    assert artifact_records[item['path']]['sha256'] == item['sha256']\nfailure_bytes = (artifact_root / 'failure-inventory.json').read_bytes()\nassert json.loads(failure_bytes) == report['failure_inventory']\nassert len(failure_bytes) == artifact_records['failure-inventory.json']['byte_size']\nassert hashlib.sha256(failure_bytes).hexdigest() == artifact_records['failure-inventory.json']['sha256']\nassert [gate['gate'] for gate in report['gates']] == [f'G{i:02d}' for i in range(13)]\ngate_states = {gate['gate']: gate['state'] for gate in report['gates']}\nassert {gate: gate_states[gate] for gate in ('G02', 'G06', 'G10', 'G11', 'G12')} == {'G02': 'NOT_RUN', 'G06': 'NOT_RUN', 'G10': 'NOT_RUN', 'G11': 'NOT_RUN', 'G12': 'PENDING'}\ndef all_keys(value):\n    if isinstance(value, dict):\n        for key, child in value.items():\n            yield key\n            yield from all_keys(child)\n    elif isinstance(value, list):\n        for child in value:\n            yield from all_keys(child)\nassert not any(any(term in key.lower() for term in ('production_ready', 'readiness')) for key in all_keys(report))\nnonclaims = set(report['explicit_nonclaims'])\nassert {\n    'Synthetic data does not satisfy real-family G02 or G06.',\n    'The empty/synthetic Outcomes route does not satisfy real independently audited G11.',\n    'Local synthetic PostgreSQL/browser evidence does not satisfy production-like G10.',\n    'G12, Port Gate, release promotion, company deployment readiness, and Production are not run or claimed.',\n    'No company adapter, identity binding, private source row, mapping, endpoint, credential, or TLS configuration is present.',\n} <= nonclaims\nprint('QUALIFICATION_REPORT_AND_ARTIFACT_ASSERTIONS_PASS')\nPY\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - /tmp/ephi-u36-report-from-52f2/qualification-report.json <<'PY'\nimport json\nfrom pathlib import Path\nimport sys\nreport = json.loads(Path(sys.argv[1]).read_text())\ndef keys(value):\n    if isinstance(value, dict):\n        for key, child in value.items():\n            yield key\n            yield from keys(child)\n    elif isinstance(value, list):\n        for child in value:\n            yield from keys(child)\nprint('readiness_keys=', [key for key in keys(report) if 'production_ready' in key.lower() or 'readiness' in key.lower()])\nprint('nonclaims=')\nfor item in report['explicit_nonclaims']:\n    print(repr(item))\nprint('gates=', [(item['gate'], item['state']) for item in report['gates']])\nprint('paths=', {key: value.get('status') for key, value in report['exercised_product_paths'].items()})\nprint('artifacts=', [(item['path'], item['byte_size'], item['sha256']) for item in report['artifacts']])\nprint('browser_screenshots=', [(item['path'], item['byte_size'], item['sha256']) for item in report['browser']['screenshots']])\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 tools/check_package.py --refresh-manifest && rtk python3 tools/generate_release_inventory.py --check && rtk ruby -e 'require \\\"yaml\\\"; workflow=YAML.load_file(\\\".github/workflows/package.yml\\\"); steps=workflow.dig(\\\"jobs\\\", \\\"installed-synthetic-qualification\\\", \\\"steps\\\"); abort \\\"installed qualification job missing\\\" unless steps && steps.any? { |step| step[\\\"name\\\"] == \\\"Run exact installed browser qualification outside the checkout\\\" }; puts \\\"WORKFLOW_PARSE_PASS\\\"' && rtk git diff --check && rtk git add -A && rtk git diff --cached --stat c73c23a697c42db4d25bd90e8a0706250858ccdc && rtk git commit -m 'CHG-287 verify staged qualification artifact hashes' && rtk git show --no-patch --format='commit=%H%nparent=%P%ntree=%T' HEAD && rtk git status --short --branch\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk proxy git push origin codex/ephi-u3-installed-synthetic-qualification-fix2 && rtk proxy gh run list --repo kimhw8084/ephi --branch codex/ephi-u3-installed-synthetic-qualification-fix2 --commit 5bdfb3f396eb21408cb15207dba64d7718bc55a6 --limit 5 --json databaseId,workflowName,status,conclusion,headSha,event,url'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk proxy gh run list --repo kimhw8084/ephi --branch codex/ephi-u3-installed-synthetic-qualification-fix2 --commit 5bdfb3f396eb21408cb15207dba64d7718bc55a6 --limit 5 --json databaseId,workflowName,status,conclusion,headSha,event,url'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy gh run view 36347849459 --repo kimhw8084/ephi --json status,conclusion,headSha,jobs,url --jq '{status,conclusion,headSha,url,jobs: [.jobs[] | {name,status,conclusion,databaseId}]}'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest discover -s tests -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/w0_repo_baseline.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy gh run view 36347849459 --repo kimhw8084/ephi --json status,conclusion,headSha,jobs,url --jq '{status,conclusion,headSha,url,jobs: [.jobs[] | select(.status \"'!= \"completed\") | {name,status,conclusion,databaseId}]}'\"'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy gh run view 36347849459 --repo kimhw8084/ephi --json status,conclusion,headSha,jobs,url --jq '{status,conclusion,headSha,url,jobs: [.jobs[] | select(.status \"'!= \"completed\") | {name,status,conclusion,databaseId}]}'\"'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy gh run view 36347849459 --repo kimhw8084/ephi --json status,conclusion,headSha,jobs,url --jq '{status,conclusion,headSha,url,jobs: [.jobs[] | select(.status \"'!= \"completed\") | {name,status,conclusion,databaseId}]}'\"'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy gh run view 36347849459 --repo kimhw8084/ephi --json status,conclusion,headSha,jobs,url --jq '{status,conclusion,headSha,url,jobs: [.jobs[] | {name,status,conclusion,databaseId}]}'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk ls -la /Users/haewonkim/.codex-fabric/results/CF-55e8ae48b077024185d9510b'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk proxy mkdir -p /Users/haewonkim/.codex-fabric/results/CF-55e8ae48b077024185d9510b/artifact-root && rtk proxy gh run download 36347849459 --repo kimhw8084/ephi --name ephi-u36-installed-synthetic-qualification --dir /Users/haewonkim/.codex-fabric/results/CF-55e8ae48b077024185d9510b/artifact-root && rtk rg --files /Users/haewonkim/.codex-fabric/results/CF-55e8ae48b077024185d9510b/artifact-root'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - /Users/haewonkim/.codex-fabric/results/CF-55e8ae48b077024185d9510b/artifact-root 5bdfb3f396eb21408cb15207dba64d7718bc55a6 3cb8562898bbbdbcdc58d2cf5877ee9f77c9ded6 <<'PY'\nimport hashlib\nimport json\nfrom pathlib import Path\nimport sys\n\nroot = Path(sys.argv[1]).resolve()\nexpected_sha, expected_tree = sys.argv[2:4]\nexpected_screenshots = {f'{name}-1440x900.png' for name in ('attention', 'episode', 'family-center', 'assets', 'outcomes', 'operations')}\nexpected_files = expected_screenshots | {'qualification-report.json', 'failure-inventory.json'}\nfiles = {item.name for item in root.iterdir()}\nassert files == expected_files, sorted(files)\nassert all((root / name).is_file() and not (root / name).is_symlink() for name in files)\nreport = json.loads((root / 'qualification-report.json').read_text(encoding='utf-8'))\nassert report['status'] == 'PASS'\nassert report['candidate'] == {'commit': expected_sha, 'tree': expected_tree}\nassert report['postgresql']['status'] == 'PASS' and report['postgresql']['major'] == 18\nassert report['browser']['status'] == 'PASS'\nassert report['browser']['keyboard_and_action_reachability'] == {\n    'attention_row_selection': 'Space', 'open_episode': 'Enter',\n    'family_center_assets_outcomes_operations_navigation': 'Enter',\n}\nassert report['negative_controls_status'] == 'PASS'\nexpected_paths = {'attention_to_episode', 'family_center', 'assets', 'outcomes', 'operations'}\nassert set(report['exercised_product_paths']) == expected_paths\nassert all(item.get('status') == 'PASS' for item in report['exercised_product_paths'].values())\nfailures = json.loads((root / 'failure-inventory.json').read_text(encoding='utf-8'))\nassert set(failures) == {'console_errors', 'page_errors', 'failed_requests', 'http_errors'}\nassert failures == report['failure_inventory'] and all(not items for items in failures.values())\nassert len(report['browser']['screenshots']) == 6\nassert {item['path'] for item in report['browser']['screenshots']} == expected_screenshots\nrecords = {item['path']: item for item in report['artifacts']}\nassert set(records) == expected_screenshots | {'failure-inventory.json'}\nverified = {}\nfor name, record in records.items():\n    content = (root / name).read_bytes()\n    digest = hashlib.sha256(content).hexdigest()\n    assert len(content) == record['byte_size'] and digest == record['sha256']\n    verified[name] = digest\nassert [gate['gate'] for gate in report['gates']] == [f'G{i:02d}' for i in range(13)]\ngates = {gate['gate']: gate['state'] for gate in report['gates']}\nassert {key: gates[key] for key in ('G02', 'G06', 'G10', 'G11', 'G12')} == {\n    'G02': 'NOT_RUN', 'G06': 'NOT_RUN', 'G10': 'NOT_RUN', 'G11': 'NOT_RUN', 'G12': 'PENDING',\n}\ndef all_keys(value):\n    if isinstance(value, dict):\n        for key, child in value.items():\n            yield key\n            yield from all_keys(child)\n    elif isinstance(value, list):\n        for child in value:\n            yield from all_keys(child)\nforbidden = {'production_ready', 'production_readiness', 'readiness', 'readiness_aggregate', 'overall_readiness', 'overall_readiness_status', 'readiness_status'}\nassert not any(key.lower() in forbidden or key.lower().startswith(('production_ready_', 'production_readiness_', 'overall_readiness_')) for key in all_keys(report))\nnonclaims = set(report['explicit_nonclaims'])\nassert {\n    'Synthetic data does not satisfy real-family G02 or G06.',\n    'The empty/synthetic Outcomes route does not satisfy real independently audited G11.',\n    'Local synthetic PostgreSQL/browser evidence does not satisfy production-like G10.',\n    'G12, Port Gate, release promotion, company deployment readiness, and Production are not run or claimed.',\n    'No company adapter, identity binding, private source row, mapping, endpoint, credential, or TLS configuration is present.',\n} <= nonclaims\nprint(json.dumps({'status':'PASS','candidate':report['candidate'],'postgresql':report['postgresql']['version'],'browser':report['browser']['status'],'failure_inventory_empty':True,'screenshots_verified':len(verified),'sha256':verified},sort_keys=True))\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk cat /Users/haewonkim/.codex/plugins/cache/openai-curated-remote/plugin-management/0.1.0/skills/plugin-management/SKILL.md'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk proxy rm -rf /tmp/ephi-u36-report-from-52f2'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk ls -la /Users/haewonkim/.codex-fabric/results/CF-55e8ae48b077024185d9510b/artifact-root'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short --branch && rtk git show --check --oneline --stat HEAD && rtk git log -3 --oneline --decorate --parents && rtk proxy git ls-remote origin refs/heads/main'",
+      "exit_code": 0,
+      "type": "command_execution"
+    }
+  ],
+  "codex": {
+    "cli_version": "codex-cli 0.157.0",
+    "configured_model": "gpt-6-luna",
+    "event_count": 225,
+    "provider_reported_model": null,
+    "reasoning_effort": "xhigh",
+    "terminal_type": "turn.completed",
+    "usage": {
+      "cache_hit_percent": 97.99,
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 12481280,
+      "fresh_input_tokens": 256288,
+      "input_tokens": 12737568,
+      "non_reasoning_output_tokens": 21560,
+      "output_tokens": 74163,
+      "reasoning_output_tokens": 52603,
+      "total_processed_tokens": 12811731
+    },
+    "warnings": []
+  },
+  "commits": [
+    {
+      "sha": "5bdfb3f396eb21408cb15207dba64d7718bc55a6",
+      "subject": "CHG-287 verify staged qualification artifact hashes"
+    },
+    {
+      "sha": "52f2a0700f1514a4ff008cc09a36e3b28d92a78b",
+      "subject": "CHG-287 clear previous checkout path in boundary probe"
+    },
+    {
+      "sha": "a1163f84094cca0504d936cdebeb530003cc9c36",
+      "subject": "CHG-287 fix installed qualification import boundary"
+    }
+  ],
+  "diff": {
+    "additions": 2224,
+    "changed_files": 15,
+    "commit_count": 3,
+    "deletions": 27
+  },
+  "error_code": null,
+  "evidence_manifest": {
+    "count": 5,
+    "items": [
+      {
+        "bytes": 30515,
+        "path": "README.md",
+        "sha256": "647e1b80a6dc2ffbf97582099d481e7d93859d4e4da1f0e1a0d1433c3bb33bc9"
+      },
+      {
+        "bytes": 12952,
+        "path": "docs/Release_Install_Identity.md",
+        "sha256": "4b4dd479cd79a50e415b472294e46498100fdc74d890b9c7a0dd381d9944c069"
+      },
+      {
+        "bytes": 817,
+        "path": "examples/synthetic_downstream/README.md",
+        "sha256": "b89ccd6b170cda6dc95fde9eb4d6b82dddce44403ef78458954e01578fbac461"
+      },
+      {
+        "bytes": 94229,
+        "path": "manifest.json",
+        "sha256": "7f7f2051c3bc7efa0e6e90fae157f488524c2ff8dd8acbe2c41f5a2e7ebea59f"
+      },
+      {
+        "bytes": 17083,
+        "path": "src/ephi/release_inventory.json",
+        "sha256": "ff1edd9b6af787f554c8435f9c7bf82f771622f617de7e03cf4278a0b3347b73"
+      }
+    ],
+    "version": 1
+  },
+  "evidence_publisher_release": "1.2.5-dashboard-controls-candidate",
+  "fabric_capture": {
+    "applied": false,
+    "paths_before": 0,
+    "transient_untracked_removed": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "fabric_release": "1.2.5-dashboard-controls-candidate",
+  "failure_class": null,
+  "finished_at": "2026-09-27T20:31:26Z",
+  "git": {
+    "base_is_ancestor": true,
+    "base_sha": "fe7f5ee8667a38274f644fa643cb360e4120de2a",
+    "branch": "codex/ephi-u3-installed-synthetic-qualification-fix2",
+    "detached_verify": false,
+    "head_sha": "5bdfb3f396eb21408cb15207dba64d7718bc55a6",
+    "remote_exact_head": true,
+    "remote_head_sha": "5bdfb3f396eb21408cb15207dba64d7718bc55a6",
+    "target_branch": "main",
+    "target_drifted_since_acceptance": false,
+    "target_head_observed_after_execution": "fe7f5ee8667a38274f644fa643cb360e4120de2a",
+    "work_branch": "codex/ephi-u3-installed-synthetic-qualification-fix2",
+    "worktree_clean": true
+  },
+  "instructions": {
+    "files": [
+      {
+        "bytes": 1458,
+        "path": "AGENTS.md",
+        "sha256": "4349f387a79d886ed1264604ff48c582698e539e08ed8fb2f9d8ab8fbf6f804a"
+      }
+    ],
+    "total_bytes": 1458,
+    "warning": null
+  },
+  "job_id": "CF-55e8ae48b077024185d9510b",
+  "kind": "codex-fabric-audit-evidence",
+  "locator": {
+    "branch": "codex-fabric/evidence/ephi/ephi-u3-installed-synthetic-qualification-fix2",
+    "path": ".codex-fabric/audit.json",
+    "ref": "refs/heads/codex-fabric/evidence/ephi/ephi-u3-installed-synthetic-qualification-fix2"
+  },
+  "operation": "FIX",
+  "policy": {
+    "environment_policy_sha256": "e077daca74297b3c30bee8989f00f8ca5338f7610b4d016a6c48db524205d064",
+    "fabric_release": "1.2.5-dashboard-controls-candidate",
+    "policy_sha256": "123615bf2f6e57dcac197e49ca98ceac59ada86a55e2c84445ea5d00812c0833",
+    "registry_sha256": "af81b8552f9d6a33847310e3c6bcd2d48401782b963a58efd2993e93570cb4aa"
+  },
+  "project_id": "ephi",
+  "recovery": {
+    "model_rerun_safe": false,
+    "recovery_required": false,
+    "retry_safe": false,
+    "retry_scope": null,
+    "worktree_retained": true
+  },
+  "request": "ephi-u3-installed-synthetic-qualification-fix2",
+  "schema_version": 1,
+  "started_at": "2026-09-27T19:58:55Z",
+  "status": "EXECUTED_CHANGE",
+  "timing": {
+    "execution_seconds": 1951,
+    "queue_seconds": 1,
+    "total_seconds": 1952
+  },
+  "transport": {
+    "bytes": 5637,
+    "envelope": "FABRIC/2",
+    "prompt_bytes": 5295,
+    "prompt_sha256": "55ba5c3fb687dd8d82f7359d4aa491c0c411053b860424a9e93b1bfc0cc3f986",
+    "sha256": "55e8ae48b077024185d9510bb6bff3df4c685a43fd86d1c7dfb6dd76c6cfc8d3"
+  }
+}
