@@ -139,6 +139,8 @@ class MigrationResourceTests(unittest.TestCase):
             def execute(self, statement, _parameters=None):
                 if "current_setting('server_version')" in statement:
                     return Cursor(row={"server_version": "18.6", "observed_at": datetime.now(timezone.utc)})
+                if "information_schema.columns" in statement:
+                    return Cursor(rows=[{"table_name": "source_snapshot", "column_name": "freshness_age_seconds"}])
                 return Cursor(rows=[{"table_name": name} for name in postgresql._REQUIRED_SCHEMA_TABLES])
 
         with tempfile.TemporaryDirectory() as temp:

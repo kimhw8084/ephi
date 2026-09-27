@@ -29,7 +29,23 @@ The installed EPHI release also provides `ephi-db-migrate` for its numbered
 PostgreSQL schema. Run `identity` to inspect the packaged plan without a
 database connection, `verify` to check all declared current-schema facts
 without applying SQL, and `apply` to apply the idempotent set and verify those
-same requirements. Current requirements include the required tables and
+same requirements. The installed wheel also provides the same read-only O9
+six-axis status through `ephi-operations`; it requires no repository checkout:
+
+```bash
+.venv/bin/ephi-db-migrate apply
+.venv/bin/ephi-operations status --json
+```
+
+Status does not apply migrations or compose downstream providers. A reachable
+database is READY only when the shared current-schema validator passes,
+including `source_snapshot.freshness_age_seconds`. Missing DSN, artifact-root,
+source binding, and qualification authority remain explicit unavailable or
+unqualified axes. The checkout wrapper `python3 tools/o9_operations.py status
+--json` delegates to this package implementation. Backup, restore, and
+reconciliation remain repository tooling.
+
+Current schema requirements include the required tables and
 `source_snapshot.freshness_age_seconds`:
 
 ```bash

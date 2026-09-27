@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Prove installed-wheel migrations on PostgreSQL 18 using isolated schemas."""
+"""Prove installed-wheel migrations and O9 status on PostgreSQL 18."""
 
 from __future__ import annotations
 
@@ -74,6 +74,86 @@ def _run_cli(
             raise QualificationFailure(f"MIGRATION_{operation.upper()}_REJECTION_MISSING")
     elif result.returncode != 0:
         raise QualificationFailure(f"MIGRATION_{operation.upper()}_FAILED")
+    return report
+
+
+def _run_status_cli(
+    cli: Path,
+    *,
+    dsn: str | None,
+    cwd: Path,
+    artifact_root: Path,
+    sensitive_values: tuple[str, ...] = (),
+    source_sentinels: bool = False,
+) -> dict[str, Any]:
+    env = os.environ.copy()
+    env.pop("EPHI_TEST_POSTGRES_DSN", None)
+    env.pop("PYTHONPATH", None)
+    if dsn is None:
+        env.pop("EPHI_POSTGRES_DSN", None)
+    else:
+        env["EPHI_POSTGRES_DSN"] = dsn
+    sentinels = list(sensitive_values)
+    if source_sentinels:
+        for name in (
+            "EPHI_METROLOGY_SOURCE_ADAPTER",
+            "EPHI_METROLOGY_SOURCE_ID",
+            "EPHI_METROLOGY_PROVIDER_ID",
+            "EPHI_METROLOGY_FAMILY_ID",
+            "EPHI_METROLOGY_CAPABILITY_ID",
+            "EPHI_METROLOGY_SCOPE_ID",
+            "EPHI_METROLOGY_SCHEMA_ID",
+            "EPHI_METROLOGY_MAPPING_VERSION",
+            "EPHI_METROLOGY_MAPPING_HASH",
+            "EPHI_METROLOGY_UNIT",
+            "EPHI_METROLOGY_SITE_ID",
+            "EPHI_METROLOGY_AREA_ID",
+            "EPHI_METROLOGY_REFERENCE_POPULATION_ID",
+            "EPHI_METROLOGY_COMPARABLE_POPULATION_ID",
+        ):
+            value = f"{name.lower()}-private-sentinel"
+            env[name] = value
+            sentinels.append(value)
+        env["EPHI_METROLOGY_SOURCE_ADAPTER"] = "installed_status_private_adapter_sentinel:build"
+        sentinels.append("installed_status_private_adapter_sentinel")
+    artifact_value = str(artifact_root)
+    sentinels.append(artifact_value)
+    result = subprocess.run(
+        [str(cli), "status", "--json", "--artifact-root", artifact_value],
+        cwd=cwd,
+        env=env,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    rendered = result.stdout + result.stderr
+    if any(value and value in rendered for value in sentinels):
+        raise QualificationFailure("OPERATIONS_STATUS_DISCLOSED_PRIVATE_VALUE")
+    if dsn is not None:
+        import psycopg
+
+        connection_facts = psycopg.conninfo.conninfo_to_dict(dsn)
+        connection_values = (dsn, *(connection_facts.get(key) for key in ("user", "password", "host", "dbname", "options")))
+        if any(value and value in rendered for value in connection_values):
+            raise QualificationFailure("OPERATIONS_STATUS_DISCLOSED_CONNECTION_FACT")
+    try:
+        report = json.loads(result.stdout)
+    except (UnicodeError, json.JSONDecodeError) as exc:
+        raise QualificationFailure("OPERATIONS_STATUS_OUTPUT_INVALID") from exc
+    if result.returncode != 0 or not isinstance(report, dict):
+        raise QualificationFailure("OPERATIONS_STATUS_COMMAND_FAILED")
+    expected_axes = {
+        "process_transport",
+        "postgres_readiness_durability",
+        "immutable_artifact_integrity",
+        "source_capability_freshness",
+        "durable_worker_job_state",
+        "evidence_qualification_freshness",
+    }
+    if report.get("schema_version") != "o9.1.v1" or set(report.get("axes", {})) != expected_axes:
+        raise QualificationFailure("OPERATIONS_STATUS_AXIS_CONTRACT_MISMATCH")
+    if {"healthy", "ready", "overall", "status"} & set(report):
+        raise QualificationFailure("OPERATIONS_STATUS_COLLAPSED_HEALTH_FIELD")
     return report
 
 
@@ -185,8 +265,30 @@ def _run(args: argparse.Namespace) -> dict[str, object]:
     cli = Path(sys.executable).with_name("ephi-db-migrate")
     if not cli.is_file():
         raise QualificationFailure("INSTALLED_MIGRATION_COMMAND_MISSING")
+    status_cli = Path(sys.executable).with_name("ephi-operations")
+    if not status_cli.is_file():
+        raise QualificationFailure("INSTALLED_OPERATIONS_COMMAND_MISSING")
     cwd = Path(args.work_dir).resolve()
     cwd.mkdir(parents=True, exist_ok=True)
+    no_dsn_status = _run_status_cli(
+        status_cli,
+        dsn=None,
+        cwd=cwd,
+        artifact_root=cwd / "private_artifact_root_sentinel",
+        source_sentinels=True,
+    )
+    for axis_name in (
+        "postgres_readiness_durability",
+        "immutable_artifact_integrity",
+        "durable_worker_job_state",
+    ):
+        if no_dsn_status["axes"][axis_name]["state"] != "UNAVAILABLE":
+            raise QualificationFailure("NO_DSN_OPERATIONS_STATUS_NOT_UNAVAILABLE")
+    if (
+        no_dsn_status["axes"]["source_capability_freshness"]["state"] != "UNAVAILABLE"
+        or no_dsn_status["axes"]["evidence_qualification_freshness"]["state"] != "NOT_QUALIFIED"
+    ):
+        raise QualificationFailure("NO_DSN_SOURCE_OR_EVIDENCE_STATE_UNTRUTHFUL")
     plan = _run_cli(cli, "identity", cwd=cwd)
     if plan.get("status") != "PLAN" or plan.get("migration_count") != 11 or plan.get("identity_sha256") != EXPECTED_MIGRATION_IDENTITY:
         raise QualificationFailure("INSTALLED_IDENTITY_COMMAND_MISMATCH")
@@ -213,6 +315,21 @@ def _run(args: argparse.Namespace) -> dict[str, object]:
             raise QualificationFailure("EMPTY_SCHEMA_MIGRATION_FAILED")
         if empty_apply.get("identity_sha256") != EXPECTED_MIGRATION_IDENTITY or empty_verify.get("migration_count") != 11:
             raise QualificationFailure("EMPTY_SCHEMA_IDENTITY_MISMATCH")
+        empty_status = _run_status_cli(
+            status_cli,
+            dsn=empty_dsn,
+            cwd=cwd,
+            artifact_root=cwd / "empty_schema_artifact_root",
+        )
+        empty_postgres_axis = empty_status["axes"]["postgres_readiness_durability"]
+        if (
+            empty_postgres_axis.get("state") != "READY"
+            or empty_postgres_axis.get("facts", {}).get("server_version", "").split(".", 1)[0] != "18"
+            or empty_postgres_axis.get("facts", {}).get("migration_count") != 11
+            or empty_postgres_axis.get("facts", {}).get("migration_identity_sha256") != EXPECTED_MIGRATION_IDENTITY
+            or empty_postgres_axis.get("facts", {}).get("migration_ledger_state") != "NOT_BOUND_NO_MIGRATION_LEDGER"
+        ):
+            raise QualificationFailure("CURRENT_SCHEMA_OPERATIONS_STATUS_FAILED")
         with psycopg.connect(empty_dsn, autocommit=True) as connection:
             if not set(_REQUIRED_SCHEMA_TABLES).issubset(_table_names(connection)):
                 raise QualificationFailure("EMPTY_SCHEMA_REQUIRED_TABLES_MISSING")
@@ -246,6 +363,33 @@ def _run(args: argparse.Namespace) -> dict[str, object]:
         }
         if "freshness_age_seconds" in before_columns:
             raise QualificationFailure("PREFIX_FIXTURE_ALREADY_CURRENT")
+
+        prefix_status = _run_status_cli(
+            status_cli,
+            dsn=prefix_dsn,
+            cwd=cwd,
+            artifact_root=cwd / "prefix_artifact_root",
+            sensitive_values=(prefix_schema,),
+        )
+        prefix_postgres_axis = prefix_status["axes"]["postgres_readiness_durability"]
+        if (
+            prefix_postgres_axis.get("state") == "READY"
+            or prefix_postgres_axis.get("reason") != "POSTGRES_SCHEMA_MISMATCH"
+        ):
+            raise QualificationFailure("PRE_011_OPERATIONS_STATUS_ACCEPTED_OLD_SCHEMA")
+        with psycopg.connect(prefix_dsn, autocommit=True) as connection:
+            schema_after_status = _schema_state(connection)
+            after_status_row = _row_values(connection.execute(
+                "SELECT snapshot_id, scope_key, source_revision, manifest_hash, row_count "
+                "FROM source_snapshot WHERE snapshot_id = 'prefix-fixture-snapshot'"
+            ).fetchone())
+        if schema_before_verify != schema_after_status or before_row != after_status_row:
+            raise QualificationFailure("OPERATIONS_STATUS_MUTATED_PREFIX_SCHEMA_OR_ROW")
+        status_columns = {
+            column for table, column in schema_after_status[1] if table == "source_snapshot"
+        }
+        if "freshness_age_seconds" in status_columns:
+            raise QualificationFailure("OPERATIONS_STATUS_APPLIED_MIGRATION_011")
 
         _run_cli(
             cli,
@@ -281,6 +425,16 @@ def _run(args: argparse.Namespace) -> dict[str, object]:
             raise QualificationFailure("PREFIX_ADVANCE_FAILED")
         if prefix_apply.get("migration_count") != 11 or prefix_apply.get("identity_sha256") != EXPECTED_MIGRATION_IDENTITY:
             raise QualificationFailure("PREFIX_ADVANCE_IDENTITY_MISMATCH")
+
+        current_status = _run_status_cli(
+            status_cli,
+            dsn=prefix_dsn,
+            cwd=cwd,
+            artifact_root=cwd / "prefix_artifact_root",
+            sensitive_values=(prefix_schema,),
+        )
+        if current_status["axes"]["postgres_readiness_durability"]["state"] != "READY":
+            raise QualificationFailure("POST_011_OPERATIONS_STATUS_NOT_READY")
 
         with psycopg.connect(prefix_dsn, autocommit=True) as connection:
             schema_after_apply = _schema_state(connection)
@@ -318,6 +472,10 @@ def _run(args: argparse.Namespace) -> dict[str, object]:
             "installed_migration_count": 11,
             "migration_identity_sha256": EXPECTED_MIGRATION_IDENTITY,
             "empty_schema_initialize_and_verify": "PASS",
+            "installed_operations_no_dsn_status": "PASS",
+            "installed_operations_current_postgresql_18_status": "PASS",
+            "installed_operations_pre_011_read_only_rejection": "PASS",
+            "installed_operations_post_011_status": "PASS",
             "prefix_preapply_verify_rejection": "PASS",
             "prefix_001_010_advance_and_data_preservation": "PASS",
             "prefix_fixture_scope": "SCHEMA_PREFIX_ENGINE_ONLY",

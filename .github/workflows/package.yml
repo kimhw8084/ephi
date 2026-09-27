@@ -100,7 +100,7 @@ jobs:
         run: '"$RUNNER_TEMP/ephi-u3-venv/bin/ephi-config-preflight" --json'
 
   installed-wheel-postgresql-migrations:
-    name: Installed-wheel PostgreSQL 18 migration qualification (exact candidate)
+    name: Installed-wheel PostgreSQL 18 migration and O9 status qualification (exact candidate)
     runs-on: ubuntu-latest
     timeout-minutes: 35
     env:
@@ -146,7 +146,7 @@ jobs:
           "$venv_python" -m pip install --no-index --no-deps \
             "$inputs"/wheelhouse/ephi-*.whl \
             "$inputs"/wheelhouse/nicegui_base-*.whl
-      - name: Prove installed identity, empty initialization, prefix verify rejection and advance, and reapply
+      - name: Prove installed identity, O9 status, empty initialization, pre-011 rejection and advance
         run: |
           mkdir -p "$RUNNER_TEMP/ephi-u3-migration-run"
           "$RUNNER_TEMP/ephi-u3-migration-venv/bin/python" \

@@ -4,7 +4,8 @@ Degraded user behavior: show process/transport liveness only; disable durable
 writes and decision-sensitive reads. Do not fall back to memory, SQLite, or
 healthy/zero source data.
 
-Diagnostic evidence: `status --json`, `ephi-db-migrate verify`, PostgreSQL
+Diagnostic evidence: installed `.venv/bin/ephi-operations status --json`,
+`.venv/bin/ephi-db-migrate verify`, PostgreSQL
 connectivity/readiness logs, safe connection facts, and the last verified
 backup manifest. Do not collect a DSN or raw row dump in the incident record.
 
