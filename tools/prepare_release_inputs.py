@@ -14,12 +14,15 @@ import subprocess
 import sys
 import sysconfig
 import tempfile
+import tomllib
+from unittest.mock import patch
 import venv
 
 ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "src"
-if str(SRC) not in sys.path:
-    sys.path.insert(0, str(SRC))
+for _import_root in (str(SRC), str(ROOT)):
+    if _import_root not in sys.path:
+        sys.path.insert(0, _import_root)
 
 from ephi.release_identity import (  # noqa: E402
     INSTALL_INPUTS_SCHEMA,
@@ -31,6 +34,8 @@ from ephi.release_identity import (  # noqa: E402
     canonical_json_bytes,
     verify_inventory_document,
 )
+from ephi.config import EPHI_ENV  # noqa: E402
+from ephi.downstream import preflight as downstream_preflight  # noqa: E402
 
 
 PYPI_INDEX = "https://pypi.org/simple"
@@ -170,6 +175,57 @@ def _wheel_inventory(wheel_dir: Path) -> list[tuple[Path, str, str]]:
     return items
 
 
+def _qualification_requirements() -> dict[str, str]:
+    path = ROOT / "environment" / "qualification-requirements.txt"
+    expected: dict[str, str] = {}
+    try:
+        lines = path.read_text(encoding="utf-8").splitlines()
+    except (OSError, UnicodeError) as exc:
+        raise ReleaseFailure("QUALIFICATION_INPUTS_INVALID") from exc
+    for line in lines:
+        value = line.strip()
+        if not value or value.startswith("#"):
+            continue
+        match = re.fullmatch(r"([A-Za-z0-9_.-]+)==([A-Za-z0-9][A-Za-z0-9.+_-]*)", value)
+        if match is None:
+            raise ReleaseFailure("QUALIFICATION_INPUTS_INVALID")
+        name, version = match.groups()
+        normalized = _normal_name(name)
+        if normalized in expected:
+            raise ReleaseFailure("QUALIFICATION_INPUTS_INVALID")
+        expected[normalized] = version
+    if set(expected) != {"greenlet", "playwright", "pyee"}:
+        raise ReleaseFailure("QUALIFICATION_INPUTS_INVALID")
+    return expected
+
+
+def _qualification_project_identity() -> tuple[str, str]:
+    try:
+        project = tomllib.loads(
+            (ROOT / "examples" / "synthetic_downstream" / "pyproject.toml").read_text(encoding="utf-8")
+        )["project"]
+        name, version = project["name"], project["version"]
+    except (OSError, UnicodeError, KeyError, TypeError, ValueError) as exc:
+        raise ReleaseFailure("QUALIFICATION_INPUTS_INVALID") from exc
+    if not isinstance(name, str) or not isinstance(version, str):
+        raise ReleaseFailure("QUALIFICATION_INPUTS_INVALID")
+    if _normal_name(name) != "ephi-synthetic-downstream-qualification" or version != "1.0.0":
+        raise ReleaseFailure("QUALIFICATION_INPUTS_INVALID")
+    return _normal_name(name), version
+
+
+def _qualification_lock(artifacts: list[dict[str, object]], minor: str) -> bytes:
+    lines = [
+        "# EPHI qualification-only offline inputs. Exact prepared wheel hashes follow.",
+        f"# CPython {minor}; separate from ordinary EPHI runtime dependencies.",
+        "",
+    ]
+    for item in sorted(artifacts, key=lambda record: str(record["distribution"])):
+        lines.append(f'{item["distribution"]}=={item["version"]} \\')
+        lines.append(f'    --hash=sha256:{item["sha256"]}')
+    return ("\n".join(lines) + "\n").encode("utf-8")
+
+
 def _prepare(destination: Path) -> dict[str, object]:
     minor = f"{sys.version_info.major}.{sys.version_info.minor}"
     if platform.python_implementation() != "CPython":
@@ -207,9 +263,23 @@ def _prepare(destination: Path) -> dict[str, object]:
         staged = work / "bundle"
         download_dir = downloaded / "wheelhouse"
         build_dir = built / "wheelhouse"
+        qualification_download_dir = downloaded / "qualification-wheelhouse"
+        qualification_build_dir = built / "qualification-wheelhouse"
         final_wheels = staged / "wheelhouse"
         transfer_locks = staged / "locks"
-        for path in (download_dir, build_dir, final_wheels, transfer_locks):
+        qualification_root = staged / "qualification"
+        qualification_wheels = qualification_root / "wheelhouse"
+        qualification_locks = qualification_root / "locks"
+        for path in (
+            download_dir,
+            build_dir,
+            qualification_download_dir,
+            qualification_build_dir,
+            final_wheels,
+            transfer_locks,
+            qualification_wheels,
+            qualification_locks,
+        ):
             path.mkdir(parents=True)
 
         selected = index["interpreters"][minor]
@@ -280,6 +350,29 @@ def _prepare(destination: Path) -> dict[str, object]:
             str(app_source),
         ], cwd=ROOT, env=env)
 
+        qualification_dependency_versions = _qualification_requirements()
+        qualification_name, qualification_version = _qualification_project_identity()
+        qualification_download_requirements = [
+            f"{name}=={version}" for name, version in sorted(qualification_dependency_versions.items())
+        ]
+        _run([
+            sys.executable, "-m", "pip", "download", "--disable-pip-version-check", "--no-input",
+            "--index-url", PYPI_INDEX, "--only-binary=:all:", "--no-deps", "--dest",
+            str(qualification_download_dir), *qualification_download_requirements,
+        ], cwd=ROOT, env=env)
+        qualification_source = work / "qualification-source"
+        qualification_source.mkdir()
+        fixture_source = ROOT / "examples" / "synthetic_downstream"
+        shutil.copy2(fixture_source / "pyproject.toml", qualification_source / "pyproject.toml")
+        shutil.copy2(fixture_source / "README.md", qualification_source / "README.md")
+        for path in sorted(fixture_source.glob("*.py"), key=lambda item: item.name):
+            shutil.copy2(path, qualification_source / path.name)
+        _run([
+            str(builder_python), "-m", "pip", "wheel", "--disable-pip-version-check", "--no-input",
+            "--no-index", "--no-deps", "--no-build-isolation", "--no-cache-dir", "--wheel-dir",
+            str(qualification_build_dir), str(qualification_source),
+        ], cwd=ROOT, env=env)
+
         expected = _expected_downloads(index, minor, sys.platform)
         expected[_normal_name(str(release["distribution"]))] = str(release["version"])
         expected[_normal_name(str(base_contract["distribution"]))] = str(base_contract["framework_version"])
@@ -324,6 +417,93 @@ def _prepare(destination: Path) -> dict[str, object]:
                 "sha256": _sha256_bytes(raw),
                 "byte_size": len(raw),
             })
+
+        qualification_expected = dict(qualification_dependency_versions)
+        qualification_expected[qualification_name] = qualification_version
+        qualification_candidates = _wheel_inventory(qualification_download_dir) + _wheel_inventory(qualification_build_dir)
+        qualification_selected: dict[str, tuple[Path, str]] = {}
+        for path, name, version in qualification_candidates:
+            if name not in qualification_expected:
+                continue
+            if version != qualification_expected[name] or name in qualification_selected:
+                raise ReleaseFailure("QUALIFICATION_INPUTS_INVALID")
+            qualification_selected[name] = (path, version)
+        if set(qualification_selected) != set(qualification_expected):
+            raise ReleaseFailure("QUALIFICATION_INPUTS_INVALID")
+        if set(qualification_selected) & set(selected_wheels):
+            raise ReleaseFailure("QUALIFICATION_INPUTS_INVALID")
+
+        qualification_artifacts: list[dict[str, object]] = []
+        for name in sorted(qualification_selected):
+            source, version = qualification_selected[name]
+            destination_file = qualification_wheels / source.name
+            shutil.copyfile(source, destination_file)
+            raw = destination_file.read_bytes()
+            qualification_artifacts.append({
+                "kind": "provider" if name == qualification_name else "qualification_dependency",
+                "distribution": name,
+                "version": version,
+                "file": f"wheelhouse/{source.name}",
+                "sha256": _sha256_bytes(raw),
+                "byte_size": len(raw),
+            })
+
+        provider_entrypoint = "examples.synthetic_downstream.provider:build_bundle"
+        with patch.dict(
+            os.environ,
+            {EPHI_ENV: "test"},
+            clear=False,
+        ):
+            conformance = downstream_preflight(provider_entrypoint, compose=False)
+        if conformance.get("status_code") != "CONTRACT_PASS" or conformance.get("compatibility", {}).get("status") != "PASS":
+            raise ReleaseFailure("QUALIFICATION_PROVIDER_INCOMPATIBLE")
+        abi_report = conformance.get("downstream_abi")
+        abi_manifest = abi_report.get("manifest") if isinstance(abi_report, dict) else None
+        if not isinstance(abi_report, dict) or not isinstance(abi_manifest, dict):
+            raise ReleaseFailure("QUALIFICATION_PROVIDER_INCOMPATIBLE")
+        content_files: list[dict[str, object]] = []
+        for path in sorted(fixture_source.glob("*.py"), key=lambda item: item.name):
+            raw = path.read_bytes()
+            content_files.append({
+                "path": f"examples/synthetic_downstream/{path.name}",
+                "byte_size": len(raw),
+                "sha256": _sha256_bytes(raw),
+            })
+        qualification_lock = _qualification_lock(qualification_artifacts, minor)
+        qualification_lock_path = f"qualification-py{suffix}.txt"
+        (qualification_locks / qualification_lock_path).write_bytes(qualification_lock)
+        qualification_inputs: dict[str, object] = {
+            "schema": "org.ephi.qualification-kit-inputs.v1",
+            "ephi_release_identity_sha256": inventory["release_identity_sha256"],
+            "source": {"repository": release["source_authority"], "commit": commit, "tree": tree},
+            "runtime": {
+                "python_minor": minor,
+                "implementation": platform.python_implementation(),
+                "platform": sysconfig.get_platform(),
+            },
+            "provider": {
+                "distribution": qualification_name,
+                "version": qualification_version,
+                "entrypoint": provider_entrypoint,
+                "abi_id": abi_manifest["abi"]["id"],
+                "abi_version": abi_manifest["abi"]["version"],
+                "manifest_sha256": abi_report["safe_manifest_hash"],
+                "artifact_sha256": next(item["sha256"] for item in qualification_artifacts if item["distribution"] == qualification_name),
+                "content_files": content_files,
+            },
+            "requirements_sha256": _sha256_bytes((ROOT / "environment" / "qualification-requirements.txt").read_bytes()),
+            "lock": {
+                "file": f"locks/{qualification_lock_path}",
+                "sha256": _sha256_bytes(qualification_lock),
+            },
+            "artifacts": qualification_artifacts,
+        }
+        qualification_inputs["qualification_kit_identity_sha256"] = _sha256_bytes(canonical_json_bytes(qualification_inputs))
+        (qualification_root / "qualification_inputs.json").write_bytes(canonical_json_bytes(qualification_inputs) + b"\n")
+        shutil.copyfile(
+            ROOT / "environment" / "qualification-requirements.txt",
+            qualification_root / "qualification-requirements.txt",
+        )
 
         lock_identities = {
             "runtime": selected["runtime"],
@@ -374,6 +554,8 @@ def _prepare(destination: Path) -> dict[str, object]:
         "candidate_source": {"commit": commit, "tree": tree},
         "python_minor": minor,
         "artifact_count": len(artifact_entries),
+        "qualification_kit_identity_sha256": qualification_inputs["qualification_kit_identity_sha256"],
+        "qualification_artifact_count": len(qualification_artifacts),
     }
 
 

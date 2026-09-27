@@ -838,10 +838,17 @@ def _input_identity(inputs_dir: Path, inventory: dict[str, Any], minor: str, loc
         root_entries = {item.name for item in inputs_dir.iterdir()}
         children = list(wheel_dir.iterdir())
         lock_dir = inputs_dir / "locks"
-        if root_entries != {"install_inputs.json", "wheelhouse", "locks"} or any(
+        allowed_root_entries = {"install_inputs.json", "wheelhouse", "locks"}
+        if frozenset(root_entries) not in {
+            frozenset(allowed_root_entries), frozenset((*allowed_root_entries, "qualification"))
+        } or any(
             not item.is_file() or item.is_symlink() or item.suffix != ".whl" for item in children
         ):
             raise ReleaseFailure("INSTALL_INPUTS_TAMPERED")
+        if "qualification" in root_entries:
+            qualification_root = inputs_dir / "qualification"
+            if qualification_root.is_symlink() or not qualification_root.is_dir():
+                raise ReleaseFailure("INSTALL_INPUTS_TAMPERED")
         if {item.name for item in lock_dir.iterdir()} != expected_lock_files or any(
             not item.is_file() or item.is_symlink() for item in lock_dir.iterdir()
         ):
@@ -888,7 +895,14 @@ def _input_identity(inputs_dir: Path, inventory: dict[str, Any], minor: str, loc
     return value
 
 
-def _verify_installed_subject(inventory: dict[str, Any], lock_index: dict[str, Any], inputs: dict[str, Any], minor: str) -> None:
+def _verify_installed_subject(
+    inventory: dict[str, Any],
+    lock_index: dict[str, Any],
+    inputs: dict[str, Any],
+    minor: str,
+    *,
+    qualification_expected: dict[str, str] | None = None,
+) -> None:
     try:
         app = metadata.distribution("ephi")
         base_dist = metadata.distribution("nicegui-base")
@@ -951,6 +965,10 @@ def _verify_installed_subject(inventory: dict[str, Any], lock_index: dict[str, A
             actual[_normal_name(name)] = version
     allowed = dict(runtime_expected)
     allowed.update({"ephi": str(release["version"]), "nicegui-base": str(base_contract["framework_version"]), "pip": pip.version})
+    if qualification_expected:
+        if set(allowed) & set(qualification_expected):
+            raise ReleaseFailure("LOCKED_DEPENDENCY_SET_MISMATCH")
+        allowed.update(qualification_expected)
     optional_only = set(optional_expected) - set(runtime_expected)
     optional_present = set(actual) & optional_only
     if optional_present:
@@ -966,7 +984,11 @@ def _verify_installed_subject(inventory: dict[str, Any], lock_index: dict[str, A
         if actual.get(name) != version:
             raise ReleaseFailure("LOCKED_DEPENDENCY_SET_MISMATCH")
 
-def release_preflight(inputs_dir: str | Path) -> dict[str, Any]:
+def release_preflight(
+    inputs_dir: str | Path,
+    *,
+    qualification_inputs_dir: str | Path | None = None,
+) -> dict[str, Any]:
     """Validate the installed package against its immutable release inputs."""
 
     inventory = _installed_inventory()
@@ -979,7 +1001,24 @@ def release_preflight(inputs_dir: str | Path) -> dict[str, Any]:
         raise ReleaseFailure("RELEASE_INVENTORY_INVALID")
     minor = _supported_minor(f"{sys.version_info.major}.{sys.version_info.minor}", supported)
     inputs = _input_identity(Path(inputs_dir), inventory, minor, lock_index)
-    _verify_installed_subject(inventory, lock_index, inputs, minor)
+    qualification_report: dict[str, object] | None = None
+    qualification_expected: dict[str, str] | None = None
+    if qualification_inputs_dir is not None:
+        from ephi.qualification_identity import QualificationFailure, qualification_input_identity
+
+        try:
+            qualification_report, qualification_expected = qualification_input_identity(
+                qualification_inputs_dir, inputs
+            )
+        except QualificationFailure as exc:
+            raise ReleaseFailure(exc.reason_code) from exc
+    _verify_installed_subject(
+        inventory,
+        lock_index,
+        inputs,
+        minor,
+        qualification_expected=qualification_expected,
+    )
 
     claims = inventory["capabilities"]
     report = {
@@ -1022,16 +1061,25 @@ def release_preflight(inputs_dir: str | Path) -> dict[str, Any]:
         },
         "capabilities": claims,
     }
+    if qualification_report is not None:
+        report["qualification_kit"] = qualification_report
     return report
 
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Validate EPHI release/install identity before downstream provider composition.")
     parser.add_argument("--inputs-dir", required=True, help="Prepared immutable install-input bundle directory.")
+    parser.add_argument(
+        "--qualification-inputs-dir",
+        help="Optional separately prepared synthetic qualification-kit payload.",
+    )
     parser.add_argument("--json", action="store_true", help="Emit the secret-safe JSON report.")
     args = parser.parse_args(argv)
     try:
-        report = release_preflight(args.inputs_dir)
+        report = release_preflight(
+            args.inputs_dir,
+            qualification_inputs_dir=args.qualification_inputs_dir,
+        )
     except ReleaseFailure as exc:
         report = {
             "schema": PREFLIGHT_SCHEMA,
