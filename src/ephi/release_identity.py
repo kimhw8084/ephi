@@ -16,7 +16,6 @@ import tomllib
 from typing import Any
 import zipfile
 
-from ephi.application.operations import migration_schema_identity
 from ephi.downstream.contracts import (
     ABI_ID,
     ABI_VERSION,
@@ -25,6 +24,7 @@ from ephi.downstream.contracts import (
     REQUIRED_CATEGORIES,
 )
 from ephi.identity import ApplicationIdentity
+from ephi.migration_resources import MigrationResourceError, resolve_migration_resources
 from ephi.runtime_configuration_contract import contract_identity as runtime_configuration_contract_identity
 
 
@@ -378,7 +378,7 @@ def build_release_inventory(repo_root: str | Path) -> dict[str, object]:
         raise ReleaseFailure("BUILD_CONTRACT_INVALID")
 
     try:
-        migration_identity = migration_schema_identity(root / "migrations")
+        migration_identity = resolve_migration_resources(source_root=root).identity
     except (OSError, ValueError) as exc:
         raise ReleaseFailure("MIGRATION_IDENTITY_INVALID") from exc
     try:
@@ -480,21 +480,10 @@ def _verify_installed_lock_assets(inventory: dict[str, Any]) -> dict[str, Any]:
     return index
 
 
-def _migration_directory() -> Path:
-    source_root = Path(__file__).resolve().parents[2]
-    source_migrations = source_root / "migrations"
-    if source_migrations.is_dir():
-        return source_migrations
-    installed_migrations = Path(sysconfig.get_path("data")) / "share" / "ephi" / "migrations"
-    if installed_migrations.is_dir():
-        return installed_migrations
-    raise ReleaseFailure("MIGRATION_IDENTITY_MISMATCH")
-
-
 def _verify_migrations(inventory: dict[str, Any]) -> None:
     try:
-        current = migration_schema_identity(_migration_directory())
-    except (OSError, ValueError) as exc:
+        current = resolve_migration_resources().identity
+    except (MigrationResourceError, OSError, ValueError) as exc:
         raise ReleaseFailure("MIGRATION_IDENTITY_MISMATCH") from exc
     if current != inventory.get("migrations"):
         raise ReleaseFailure("MIGRATION_IDENTITY_MISMATCH")

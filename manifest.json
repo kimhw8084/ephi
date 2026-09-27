@@ -51,8 +51,8 @@
     },
     {
       "path": ".github/workflows/package.yml",
-      "bytes": 17586,
-      "sha256": "c5b07931b1300b811a38a2b4d16742dd330e0d0baa01c46bea21ab1012a21356"
+      "bytes": 20135,
+      "sha256": "d8ad8b50efdc10f7177199bd157981368b4d9b2af91fb8cc4e07068a986d9911"
     },
     {
       "path": ".gitignore",
@@ -156,8 +156,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 29754,
-      "sha256": "41c3b94e7453ad8bae5b8e5ad33749823ab0215520704179563e4552194307b8"
+      "bytes": 29852,
+      "sha256": "6d00ebdbc7775da349af73ce7876a4938bdbe4afacfaafdf0972e5151286e3e2"
     },
     {
       "path": "app.py",
@@ -186,8 +186,8 @@
     },
     {
       "path": "docs/Release_Install_Identity.md",
-      "bytes": 7864,
-      "sha256": "ce0e04ce83d2dbb54a7ce8a4533bd21d1a3f45aa739015af69a44689f8f36e65"
+      "bytes": 8696,
+      "sha256": "f0fd7ab42035f32fc58fd57e197f3351282f7dfa087473cdc6bfdc854c9e453a"
     },
     {
       "path": "docs/nicegui_base/AGENT_WORKFLOW.md",
@@ -1601,8 +1601,8 @@
     },
     {
       "path": "operations/README.md",
-      "bytes": 2175,
-      "sha256": "156d4c225cf74b8e8d75175ef25289305ddd58f3d904d549fba794d94678b58d"
+      "bytes": 2999,
+      "sha256": "5d6f59de2911bdaccf0170b8d1feac941cbb8926c7fcc65701aff1533f871b83"
     },
     {
       "path": "operations/runbooks/README.md",
@@ -1621,8 +1621,8 @@
     },
     {
       "path": "operations/runbooks/postgresql-outage.md",
-      "bytes": 1049,
-      "sha256": "75820bfa7c26d28b0e96e5e2ca82d031bd404e7e0dfbc50cac01641491f9739e"
+      "bytes": 1256,
+      "sha256": "d1c10bcd1052cc6d0ba334efb8713e1248caa9b9831d2b801cfd396a8fc8e553"
     },
     {
       "path": "operations/runbooks/projection-read-repair.md",
@@ -1646,8 +1646,8 @@
     },
     {
       "path": "pyproject.toml",
-      "bytes": 1021,
-      "sha256": "871a0967a782ae0a4efb69fca2d566bba511dd7b4e1050c957b4ba7f59337377"
+      "bytes": 1062,
+      "sha256": "23ced12e71a73aab354234daa7372549a9cb5a2eb85b7b9bc2a8a6bad25c1dd6"
     },
     {
       "path": "requirements-dev.txt",
@@ -1766,8 +1766,8 @@
     },
     {
       "path": "src/ephi/application/operations.py",
-      "bytes": 44165,
-      "sha256": "229c05688b30f1683e109ba085f9ce85c263aca12e99f6a00306d3c2c58c0cd4"
+      "bytes": 44996,
+      "sha256": "605ff8b4f1c33db6d2bc43de93c556a7d221c4b2790c2d9c3baf246ad4472129"
     },
     {
       "path": "src/ephi/application/planner.py",
@@ -1828,6 +1828,11 @@
       "path": "src/ephi/config_preflight.py",
       "bytes": 8755,
       "sha256": "2f8cbcbfc33955ec6acd44b487402cf51f5e091ad9d409d1e6921553ec4d0bbd"
+    },
+    {
+      "path": "src/ephi/db_migrate.py",
+      "bytes": 4502,
+      "sha256": "3a6ea2beb701f005864333499ce51afe8b05a19c5d4603b5a5dad154ab20b7ea"
     },
     {
       "path": "src/ephi/downstream/__init__.py",
@@ -1891,8 +1896,8 @@
     },
     {
       "path": "src/ephi/infrastructure/postgresql.py",
-      "bytes": 41209,
-      "sha256": "8f2fde895468f84873dcd0176624fba10d221537a20d64cdd6496a84751beea8"
+      "bytes": 42133,
+      "sha256": "230a887f373ece660c23895bfdae6727935fc026c3776de00b0463921bce5cba"
     },
     {
       "path": "src/ephi/infrastructure/postgresql_o3.py",
@@ -1920,6 +1925,11 @@
       "sha256": "f42c05d45198c0c15998905774095f5a676c85d42e22d1f04581039567a4c5e6"
     },
     {
+      "path": "src/ephi/migration_resources.py",
+      "bytes": 3664,
+      "sha256": "042f5c8c1b8a2a31031b7c26932e4b8809ed0df66a92d209c82d2e47f1c46200"
+    },
+    {
       "path": "src/ephi/py.typed",
       "bytes": 0,
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
@@ -1931,13 +1941,13 @@
     },
     {
       "path": "src/ephi/release_identity.py",
-      "bytes": 45508,
-      "sha256": "44878f83cae71545136434395cec8b0f5a60d2d69349a32ae351563ff9f95b9a"
+      "bytes": 45117,
+      "sha256": "59b151886cc5c6f3e580c4118202fe77b23e571307a619d82e61e5eec711a313"
     },
     {
       "path": "src/ephi/release_inventory.json",
-      "bytes": 16133,
-      "sha256": "ca136f37a2deac06afc0a672d3cab315d05c43cf4f277b3ed7976cf10b45b8cd"
+      "bytes": 16437,
+      "sha256": "0d2eddbe069d2cc4217943536c8ef66ca7f5a2a002a8bdb502cf66884ee395ec"
     },
     {
       "path": "src/ephi/release_locks/build-py311.txt",
@@ -2088,6 +2098,11 @@
       "path": "tests/test_family_center_postgresql.py",
       "bytes": 10447,
       "sha256": "940371883cd867e6ea9bff5f60875c6dc313179cc383cea6a5a80861d2f0fbd0"
+    },
+    {
+      "path": "tests/test_migration_resources.py",
+      "bytes": 15811,
+      "sha256": "86e758b00539734acd5c8cd92172b6f5f6ce89bd902b4e19779cd1ca7eb454da"
     },
     {
       "path": "tests/test_o10_rendered_accessibility.py",
@@ -2261,8 +2276,8 @@
     },
     {
       "path": "tests/test_release_identity.py",
-      "bytes": 13107,
-      "sha256": "2d2b8a3f44556bba3374c8c6bcc7d49d1da8bff704abb06c8c1122bb8f6f6b76"
+      "bytes": 13791,
+      "sha256": "5c785eff6bff6019822c337e196f358224fcab790187a430bd49d7ece617324e"
     },
     {
       "path": "tests/test_runtime_config_preflight.py",
@@ -2313,6 +2328,11 @@
       "path": "tools/generate_runtime_configuration_contract.py",
       "bytes": 1411,
       "sha256": "9e223191a495aca69cb8828a8b82fcfc533748f6537c5403f945961aa849ad8b"
+    },
+    {
+      "path": "tools/installed_migration_qualification.py",
+      "bytes": 15564,
+      "sha256": "92222ecb59eef4a93e9f57442f76d4b75816a379e763cb98f0b694a6b81ba703"
     },
     {
       "path": "tools/o10_rendered_accessibility.py",

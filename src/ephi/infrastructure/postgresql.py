@@ -12,14 +12,13 @@ from datetime import datetime, timezone
 from decimal import Decimal, InvalidOperation
 import hashlib
 import json
-from pathlib import Path
 from threading import Lock
 from typing import Any
 
 from ephi.application.context import AccessScope
 from ephi.application.errors import StorageFailureError, ValidationFailureError
 from ephi.application.hashing import canonical_json, normalize_domain_payload
-from ephi.application.operations import PostgreSQLHealthFacts, canonical_sha256
+from ephi.application.operations import PostgreSQLHealthFacts
 from ephi.application.worker import WorkerLeaseConfig
 from ephi.application.storage import (
     AggregateAlreadyExistsError,
@@ -29,35 +28,32 @@ from ephi.application.storage import (
     ReceiptAlreadyExistsError,
     StoredCommandReceipt,
 )
+from ephi.migration_resources import MigrationResourceError, resolve_migration_resources
 
 
-MIGRATION_DIR = Path(__file__).resolve().parents[3] / "migrations"
-MIGRATION_PATHS = tuple(sorted(MIGRATION_DIR.glob("*.sql")))
-# Kept as a compatibility name for callers that identify the command-core
-# migration specifically.  ``apply_migrations`` applies every numbered file.
-MIGRATION_PATH = MIGRATION_DIR / "001_o2_command_core.sql"
 _TABLES = ("aggregate_state", "command_receipt", "audit_event", "outbox_event")
-_REQUIRED_SCHEMA_TABLES = (
-    "aggregate_state",
-    "command_receipt",
-    "audit_event",
-    "outbox_event",
-    "job",
-    "applied_effect",
-    "read_revision",
-    "read_head",
-    "query_snapshot",
-    "query_snapshot_row",
-    "artifact_catalog",
-    "o3_attention_projection",
-    "source_snapshot",
-    "source_capability",
-    "decision_snapshot",
-    "handoff_intent",
-    "handoff_delivery_status",
-    "handoff_delivery_attempt",
-    "outcome_value_revision",
-)
+_REQUIRED_SCHEMA_FACTS = {
+    "aggregate_state": (),
+    "command_receipt": (),
+    "audit_event": (),
+    "outbox_event": (),
+    "job": (),
+    "applied_effect": (),
+    "read_revision": (),
+    "read_head": (),
+    "query_snapshot": (),
+    "query_snapshot_row": (),
+    "artifact_catalog": (),
+    "o3_attention_projection": (),
+    "source_snapshot": ("freshness_age_seconds",),
+    "source_capability": (),
+    "decision_snapshot": (),
+    "handoff_intent": (),
+    "handoff_delivery_status": (),
+    "handoff_delivery_attempt": (),
+    "outcome_value_revision": (),
+}
+_REQUIRED_SCHEMA_TABLES = tuple(_REQUIRED_SCHEMA_FACTS)
 
 
 def _sql_statements(script: str) -> Iterator[str]:
@@ -128,6 +124,58 @@ def _sql_statements(script: str) -> Iterator[str]:
     statement = script[start:].strip()
     if statement:
         yield statement
+
+
+def validate_required_schema(connection: Any) -> int:
+    """Verify the current schema contains every declared table and column fact."""
+
+    placeholders = ", ".join("%s" for _ in _REQUIRED_SCHEMA_TABLES)
+    rows = connection.execute(
+        "SELECT table_name FROM information_schema.tables "
+        "WHERE table_schema = current_schema() AND table_name IN (" + placeholders + ")",
+        _REQUIRED_SCHEMA_TABLES,
+    ).fetchall()
+    present = {row["table_name"] for row in rows}
+    if set(_REQUIRED_SCHEMA_TABLES) - present:
+        raise StorageFailureError("durable PostgreSQL schema validation failed; required tables are missing")
+
+    required_columns = {
+        (table_name, column_name)
+        for table_name, column_names in _REQUIRED_SCHEMA_FACTS.items()
+        for column_name in column_names
+    }
+    if required_columns:
+        column_rows = connection.execute(
+            "SELECT table_name, column_name FROM information_schema.columns "
+            "WHERE table_schema = current_schema() AND table_name IN (" + placeholders + ")",
+            _REQUIRED_SCHEMA_TABLES,
+        ).fetchall()
+        present_columns = {
+            (row["table_name"], row["column_name"])
+            for row in column_rows
+        }
+        if required_columns - present_columns:
+            raise StorageFailureError("durable PostgreSQL schema validation failed; required columns are missing")
+    return len(present)
+
+
+def apply_migrations_to_connection(connection: Any) -> dict[str, object]:
+    """Apply the package-owned ordered migration set and validate its schema."""
+
+    try:
+        resources = resolve_migration_resources()
+        for migration_path in resources.paths:
+            migration = migration_path.read_text(encoding="utf-8")
+            for statement in _sql_statements(migration):
+                connection.execute(statement)
+        validate_required_schema(connection)
+        return resources.identity
+    except (MigrationResourceError, OSError, UnicodeError) as exc:
+        raise StorageFailureError("durable PostgreSQL migration resources are unavailable") from exc
+    except StorageFailureError:
+        raise
+    except Exception as exc:
+        raise StorageFailureError("durable PostgreSQL migration could not be applied") from exc
 
 
 def _validated_identity(value: object, field: str) -> str:
@@ -558,33 +606,14 @@ class PostgreSQLReferenceTransactionAdapter:
 
     @staticmethod
     def _validate_existing_schema(connection: Any) -> None:
-        placeholders = ", ".join("%s" for _ in _REQUIRED_SCHEMA_TABLES)
-        rows = connection.execute(
-            "SELECT table_name FROM information_schema.tables "
-            "WHERE table_schema = current_schema() AND table_name IN (" + placeholders + ")",
-            _REQUIRED_SCHEMA_TABLES,
-        ).fetchall()
-        present = {row["table_name"] for row in rows}
-        missing = sorted(set(_REQUIRED_SCHEMA_TABLES) - present)
-        if missing:
-            raise StorageFailureError(
-                "durable PostgreSQL schema validation failed; missing tables: " + ", ".join(missing)
-            )
+        validate_required_schema(connection)
 
     def apply_migrations(self) -> None:
         with self._connection_lock:
             if self._explicitly_closed or self._connection is None:
                 raise StorageFailureError("durable PostgreSQL storage is closed")
             connection = self._connection
-            try:
-                for migration_path in MIGRATION_PATHS:
-                    migration = migration_path.read_text(encoding="utf-8")
-                    for statement in _sql_statements(migration):
-                        connection.execute(statement)
-            except (OSError, StorageFailureError):
-                raise
-            except Exception as exc:
-                raise StorageFailureError("durable PostgreSQL migration could not be applied") from exc
+            apply_migrations_to_connection(connection)
 
     def worker_store(self, *, config: WorkerLeaseConfig | None = None):
         """Return the generic durable worker adapter on this PostgreSQL connection."""
@@ -711,15 +740,8 @@ class PostgreSQLReferenceTransactionAdapter:
                 (list(_REQUIRED_SCHEMA_TABLES),),
             ).fetchall()
             present = {str(item["table_name"]) for item in present_rows}
-            migrations = []
-            for path in MIGRATION_PATHS:
-                content = path.read_bytes()
-                migrations.append({
-                    "name": path.name,
-                    "sha256": hashlib.sha256(content).hexdigest(),
-                    "byte_size": len(content),
-                })
-            if row is None or not migrations:
+            migration_identity = resolve_migration_resources().identity
+            if row is None:
                 raise ValueError("incomplete bounded health facts")
             missing = len(set(_REQUIRED_SCHEMA_TABLES) - present)
             raw_version = row["server_version"]
@@ -729,8 +751,8 @@ class PostgreSQLReferenceTransactionAdapter:
                 len(present),
                 len(_REQUIRED_SCHEMA_TABLES),
                 missing,
-                len(migrations),
-                canonical_sha256(migrations),
+                int(migration_identity["migration_count"]),
+                str(migration_identity["identity_sha256"]),
                 "NOT_BOUND_NO_MIGRATION_LEDGER",
                 row["observed_at"],
             )

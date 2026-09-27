@@ -945,12 +945,26 @@ def migration_schema_identity(migration_dir: str | os.PathLike[str]) -> dict[str
     """
 
     root = Path(migration_dir)
+    if not root.is_dir() or root.is_symlink():
+        raise ValueError("migration directory is unavailable")
+    try:
+        entries = sorted(root.iterdir(), key=lambda item: item.name)
+    except OSError as exc:
+        raise ValueError("migration directory is unreadable") from exc
+    sql_paths = [path for path in entries if path.suffix.lower() == ".sql"]
     migrations = []
-    for path in sorted(root.glob("*.sql"), key=lambda item: item.name):
+    for path in sql_paths:
+        if path.suffix != ".sql" or not re.fullmatch(r"[0-9]{3}_[A-Za-z0-9][A-Za-z0-9_-]*\.sql", path.name):
+            raise ValueError("unexpected SQL migration resource")
+        if path.is_symlink() or not path.is_file():
+            raise ValueError("migration resource is not a regular file")
         digest, size = file_sha256(path)
         migrations.append({"path": f"migrations/{path.name}", "sha256": digest, "byte_size": size})
     if not migrations:
         raise ValueError("no numbered migrations were found")
+    sequence = [int(str(item["path"]).split("/", 1)[1][:3]) for item in migrations]
+    if sequence != list(range(1, len(sequence) + 1)):
+        raise ValueError("numbered migrations are not a contiguous prefix")
     return {
         "migration_count": len(migrations),
         "files": migrations,

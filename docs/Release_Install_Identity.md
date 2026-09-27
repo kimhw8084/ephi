@@ -139,7 +139,25 @@ is introduced.
    provider, connect to a company system, validate provider-private settings,
    or report private values.
 
-6. Run provider conformance and composition separately through the existing
+6. Before provider composition or normal application startup, inspect and
+   apply the database schema using the installed release's packaged migration
+   authority. The identity command is offline; verification is read-only;
+   application requires an explicit PostgreSQL DSN from the operator's secret
+   injection boundary:
+
+   ```bash
+   .venv/bin/ephi-db-migrate identity
+   .venv/bin/ephi-db-migrate apply
+   .venv/bin/ephi-db-migrate verify
+   ```
+
+   `apply` reads `EPHI_POSTGRES_DSN` or accepts `--dsn`, applies the installed
+   numbered migration set, and verifies the current required schema. Output
+   contains only fixed status/reason codes, migration filenames and hashes;
+   it never prints connection details. The tool does not create a migration
+   ledger, so it does not claim historical per-migration execution.
+
+7. Run provider conformance and composition separately through the existing
    downstream authority. The release and configuration preflights do not load
    providers:
 

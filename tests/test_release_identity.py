@@ -43,6 +43,7 @@ from ephi.release_identity import (  # noqa: E402
 )
 from ephi.runtime_configuration_contract import contract_identity as runtime_configuration_contract_identity  # noqa: E402
 import ephi.release_identity as release_identity_module  # noqa: E402
+import ephi.migration_resources as migration_resources_module  # noqa: E402
 from tools.prepare_release_inputs import _clean_tool_environment  # noqa: E402
 from tools.o9_operations import _migration_identity  # noqa: E402
 
@@ -171,11 +172,19 @@ class ReleaseInventoryTests(unittest.TestCase):
             for path in originals:
                 shutil.copyfile(path, root / path.name)
             self.assertEqual(migration_schema_identity(root), expected)
-            with patch.object(release_identity_module, "_migration_directory", return_value=root):
+            with patch.object(
+                release_identity_module,
+                "resolve_migration_resources",
+                side_effect=lambda: migration_resources_module.resolve_migration_resources(source_root=root.parent),
+            ):
                 _verify_migrations(inventory)
             (root / "012_u3_not_a_product_migration.sql").write_text("-- fixture\n", encoding="utf-8")
             self.assertNotEqual(migration_schema_identity(root), expected)
-            with patch.object(release_identity_module, "_migration_directory", return_value=root):
+            with patch.object(
+                release_identity_module,
+                "resolve_migration_resources",
+                side_effect=lambda: migration_resources_module.resolve_migration_resources(source_root=root.parent),
+            ):
                 with self.assertRaises(ReleaseFailure) as added:
                     _verify_migrations(inventory)
                 self.assertEqual(added.exception.reason_code, "MIGRATION_IDENTITY_MISMATCH")
@@ -183,7 +192,11 @@ class ReleaseInventoryTests(unittest.TestCase):
             removed = originals.pop()
             (root / removed.name).unlink()
             self.assertNotEqual(migration_schema_identity(root), expected)
-            with patch.object(release_identity_module, "_migration_directory", return_value=root):
+            with patch.object(
+                release_identity_module,
+                "resolve_migration_resources",
+                side_effect=lambda: migration_resources_module.resolve_migration_resources(source_root=root.parent),
+            ):
                 with self.assertRaises(ReleaseFailure) as missing:
                     _verify_migrations(inventory)
                 self.assertEqual(missing.exception.reason_code, "MIGRATION_IDENTITY_MISMATCH")
@@ -191,7 +204,11 @@ class ReleaseInventoryTests(unittest.TestCase):
             first = next(root.glob("*.sql"))
             first.write_bytes(first.read_bytes() + b"\n-- modified fixture\n")
             self.assertNotEqual(migration_schema_identity(root), expected)
-            with patch.object(release_identity_module, "_migration_directory", return_value=root):
+            with patch.object(
+                release_identity_module,
+                "resolve_migration_resources",
+                side_effect=lambda: migration_resources_module.resolve_migration_resources(source_root=root.parent),
+            ):
                 with self.assertRaises(ReleaseFailure) as modified:
                     _verify_migrations(inventory)
                 self.assertEqual(modified.exception.reason_code, "MIGRATION_IDENTITY_MISMATCH")
