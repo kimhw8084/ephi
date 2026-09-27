@@ -29,19 +29,17 @@ if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
 from ephi.application.operations import (  # noqa: E402
-    OperationalState,
-    OperationsAxis,
     artifact_blob_path,
     build_reconciliation_report,
     canonical_sha256,
     file_sha256,
     json_bytes,
     migration_schema_identity,
-    operations_health_snapshot,
     safe_identity_hash,
     verify_artifact_inventory,
 )
-from ephi.application.source_reality import preflight_source_reality, redacted_connection_facts  # noqa: E402
+from ephi.application.source_reality import redacted_connection_facts  # noqa: E402
+from ephi.operations_status import operations_status as _package_operations_status  # noqa: E402
 
 
 MANIFEST_SCHEMA = "o9.1.backup.v1"
@@ -419,48 +417,6 @@ def _artifact_inventory(connection: Any) -> list[dict[str, object]]:
     return sorted(inventory, key=lambda item: (str(item["scope_key_sha256"]), str(item["sha256"])))
 
 
-def _durable_worker_health(connection: Any) -> OperationsAxis:
-    """Classify the existing durable job table using PostgreSQL time."""
-
-    try:
-        row = connection.execute(
-            """
-            WITH authoritative_clock AS MATERIALIZED (
-                SELECT clock_timestamp() AS now
-            )
-            SELECT
-                COUNT(*)::int AS job_count,
-                COUNT(*) FILTER (WHERE status = 'FAILED')::int AS failed_count,
-                COUNT(*) FILTER (WHERE status = 'DEAD_LETTER')::int AS dead_letter_count,
-                COUNT(*) FILTER (WHERE status = 'RUNNING')::int AS running_count,
-                COUNT(*) FILTER (
-                    WHERE status = 'RUNNING'
-                      AND (lease_expires_at IS NULL OR lease_expires_at <= authoritative_clock.now)
-                )::int AS expired_running_count
-            FROM job
-            CROSS JOIN authoritative_clock
-            """
-        ).fetchone()
-    except Exception:
-        raise OperationsFailure("durable worker state could not be classified") from None
-    if row is None:
-        raise OperationsFailure("durable worker state classification returned no result")
-    facts = {
-        "job_count": int(row["job_count"]),
-        "failed_count": int(row["failed_count"]),
-        "dead_letter_count": int(row["dead_letter_count"]),
-        "running_count": int(row["running_count"]),
-        "expired_running_count": int(row["expired_running_count"]),
-        "authoritative_clock_used": True,
-    }
-    terminal_failure_count = facts["failed_count"] + facts["dead_letter_count"]
-    if terminal_failure_count:
-        return OperationsAxis.create("ERROR", "DURABLE_WORKER_TERMINAL_FAILURE", facts)
-    if facts["expired_running_count"]:
-        return OperationsAxis.create("STALE", "DURABLE_WORKER_EXPIRED_LEASE", facts)
-    return OperationsAxis.create("READY", "DURABLE_WORKER_STATE_REACHABLE", facts)
-
-
 def _copy_artifacts(source_root: Path, target_root: Path, inventory: Sequence[Mapping[str, object]]) -> None:
     target_root.mkdir(parents=True, exist_ok=True)
     for item in inventory:
@@ -767,65 +723,9 @@ def reconcile(*, manifest_path: str | os.PathLike[str], dsn: str) -> dict[str, o
 
 
 def operations_status(*, dsn: str | None, artifact_root: str | os.PathLike[str] | None) -> dict[str, object]:
-    process = OperationsAxis.create("READY", "PROCESS_ENTRYPOINT_RESPONDED", {"pid_present": True})
-    source = preflight_source_reality().get("capability", {})
-    source_state = str(source.get("state", "UNAVAILABLE"))
-    source_state = {"PARTIAL": "DEGRADED", "INSUFFICIENT": "NOT_QUALIFIED"}.get(source_state, source_state)
-    if source_state not in {item.value for item in OperationalState}:
-        source_state = "UNAVAILABLE"
-    source_axis = OperationsAxis.create(
-        source_state,
-        "BLOCKED_REAL_SOURCE" if source_state == "UNAVAILABLE" else str(source.get("reason", "SOURCE_STATE")),
-        {"freshness_known": source.get("checked_at") is not None},
-    )
-    if not dsn:
-        postgres = OperationsAxis.create("UNAVAILABLE", "POSTGRES_DSN_NOT_CONFIGURED", {"configured": False})
-        artifacts = OperationsAxis.create("UNAVAILABLE", "POSTGRES_REQUIRED_FOR_CATALOG_INTEGRITY", {"configured": False})
-        workers = OperationsAxis.create("UNAVAILABLE", "POSTGRES_REQUIRED_FOR_DURABLE_WORKER_STATE", {"configured": False})
-    else:
-        try:
-            connection = _connect(dsn)
-            try:
-                present = {
-                    row["table_name"]
-                    for row in connection.execute(
-                        "SELECT table_name FROM information_schema.tables WHERE table_schema = current_schema()"
-                    ).fetchall()
-                }
-                missing = sorted(set(CRITICAL_TABLES) - present)
-                if missing:
-                    postgres = OperationsAxis.create("ERROR", "CRITICAL_SCHEMA_MISSING", {"missing_table_count": len(missing)})
-                    artifacts = OperationsAxis.create("ERROR", "CRITICAL_SCHEMA_MISSING", {"missing_table_count": len(missing)})
-                    workers = OperationsAxis.create("ERROR", "CRITICAL_SCHEMA_MISSING", {"missing_table_count": len(missing)})
-                else:
-                    postgres = OperationsAxis.create("READY", "POSTGRES_REACHABLE_AND_SCHEMA_PRESENT", {"critical_table_count": len(CRITICAL_TABLES)})
-                    if artifact_root is None:
-                        artifacts = OperationsAxis.create("UNAVAILABLE", "IMMUTABLE_ARTIFACT_ROOT_NOT_CONFIGURED", {"configured": False})
-                    else:
-                        artifact_inventory = _artifact_inventory(connection)
-                        failures = verify_artifact_inventory(artifact_root, artifact_inventory)
-                        artifacts = OperationsAxis.create(
-                            "ERROR" if failures else "READY",
-                            "IMMUTABLE_ARTIFACT_BYTES_FAILED" if failures else "IMMUTABLE_ARTIFACT_INVENTORY_VERIFIED",
-                            {"artifact_count": len(artifact_inventory), "inventory_known": True},
-                        )
-                    workers = _durable_worker_health(connection)
-            finally:
-                connection.close()
-        except OperationsFailure as exc:
-            postgres = OperationsAxis.create("UNAVAILABLE", "POSTGRES_UNAVAILABLE", {"configured": True})
-            artifacts = OperationsAxis.create("UNAVAILABLE", "POSTGRES_UNAVAILABLE", {"configured": True})
-            workers = OperationsAxis.create("UNAVAILABLE", str(exc), {"configured": True})
-    evidence = OperationsAxis.create("NOT_QUALIFIED", "QUALIFICATION_AUTHORITY_NOT_BOUND", {"freshness_known": False})
-    snapshot = operations_health_snapshot(
-        process_transport=process,
-        postgres=postgres,
-        immutable_artifacts=artifacts,
-        source_capability=source_axis,
-        durable_worker_jobs=workers,
-        evidence_qualification=evidence,
-    )
-    return snapshot.as_dict()
+    """Compatibility wrapper delegated to the installed package authority."""
+
+    return _package_operations_status(dsn=dsn, artifact_root=artifact_root)
 
 
 def _parser() -> argparse.ArgumentParser:
@@ -868,7 +768,14 @@ def main(argv: Sequence[str] | None = None) -> int:
     args = _parser().parse_args(argv)
     try:
         if args.command == "status":
-            result = operations_status(dsn=args.dsn.strip() or None, artifact_root=args.artifact_root)
+            try:
+                result = operations_status(dsn=args.dsn.strip() or None, artifact_root=args.artifact_root)
+            except Exception:
+                print(json.dumps(
+                    {"schema_version": "o9.1.v1", "status": "ERROR", "reason_code": "STATUS_REPORT_FAILED"},
+                    sort_keys=True,
+                ))
+                return 2
         elif args.command == "backup-create":
             result = create_backup(
                 dsn=args.dsn,

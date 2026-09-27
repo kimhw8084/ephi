@@ -52,9 +52,10 @@ The self-check reports package identity, runtime/config identity, the pinned fra
 For restricted downstream installation, prepare the immutable wheel and
 dependency bundle upstream, install it offline, and run
 `ephi-release-preflight`, then `ephi-config-preflight`, and apply/verify the
-installed database schema with `ephi-db-migrate` before separately running
-`ephi-downstream-preflight` or starting the application. The exact transfer
-and install steps are in the
+installed database schema with `ephi-db-migrate` before running
+`ephi-operations status --json`, separately running `ephi-downstream-preflight`,
+or starting the application. The installed status command is read-only and
+reports O9's six independent axes. The exact transfer and install steps are in the
 [release/install identity guide](docs/Release_Install_Identity.md). Python
 3.14 remains a repository source/package compatibility lane and is outside the
 declared install range.

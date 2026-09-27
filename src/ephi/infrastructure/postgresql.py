@@ -56,6 +56,10 @@ _REQUIRED_SCHEMA_FACTS = {
 _REQUIRED_SCHEMA_TABLES = tuple(_REQUIRED_SCHEMA_FACTS)
 
 
+class RequiredSchemaMismatchError(StorageFailureError):
+    """The reachable PostgreSQL schema is missing a current required fact."""
+
+
 def _sql_statements(script: str) -> Iterator[str]:
     """Split numbered migrations without splitting dollar-quoted functions."""
 
@@ -137,7 +141,7 @@ def validate_required_schema(connection: Any) -> int:
     ).fetchall()
     present = {row["table_name"] for row in rows}
     if set(_REQUIRED_SCHEMA_TABLES) - present:
-        raise StorageFailureError("durable PostgreSQL schema validation failed; required tables are missing")
+        raise RequiredSchemaMismatchError("durable PostgreSQL schema validation failed; required tables are missing")
 
     required_columns = {
         (table_name, column_name)
@@ -155,8 +159,37 @@ def validate_required_schema(connection: Any) -> int:
             for row in column_rows
         }
         if required_columns - present_columns:
-            raise StorageFailureError("durable PostgreSQL schema validation failed; required columns are missing")
+            raise RequiredSchemaMismatchError("durable PostgreSQL schema validation failed; required columns are missing")
     return len(present)
+
+
+def operations_health_facts_for_connection(connection: Any) -> PostgreSQLHealthFacts:
+    """Read validated PostgreSQL and installed migration facts without mutation."""
+
+    try:
+        table_count = validate_required_schema(connection)
+        row = connection.execute(
+            "SELECT current_setting('server_version') AS server_version, clock_timestamp() AS observed_at"
+        ).fetchone()
+        migration_identity = resolve_migration_resources().identity
+        if row is None:
+            raise ValueError("incomplete bounded health facts")
+        raw_version = row["server_version"]
+        server_version = raw_version.decode("utf-8", errors="replace") if isinstance(raw_version, bytes) else str(raw_version)
+        return PostgreSQLHealthFacts(
+            server_version,
+            table_count,
+            len(_REQUIRED_SCHEMA_TABLES),
+            0,
+            int(migration_identity["migration_count"]),
+            str(migration_identity["identity_sha256"]),
+            "NOT_BOUND_NO_MIGRATION_LEDGER",
+            row["observed_at"],
+        )
+    except RequiredSchemaMismatchError:
+        raise
+    except Exception as exc:
+        raise StorageFailureError("durable PostgreSQL operations facts are unavailable") from exc
 
 
 def apply_migrations_to_connection(connection: Any) -> dict[str, object]:
@@ -728,36 +761,7 @@ class PostgreSQLReferenceTransactionAdapter:
 
     def operations_health_facts(self) -> PostgreSQLHealthFacts:
         """Return bounded server/schema facts through the bound reference adapter."""
-
-        connection = self.connection
-        try:
-            row = connection.execute(
-                "SELECT current_setting('server_version') AS server_version, clock_timestamp() AS observed_at"
-            ).fetchone()
-            present_rows = connection.execute(
-                "SELECT table_name FROM information_schema.tables "
-                "WHERE table_schema = current_schema() AND table_name = ANY(%s)",
-                (list(_REQUIRED_SCHEMA_TABLES),),
-            ).fetchall()
-            present = {str(item["table_name"]) for item in present_rows}
-            migration_identity = resolve_migration_resources().identity
-            if row is None:
-                raise ValueError("incomplete bounded health facts")
-            missing = len(set(_REQUIRED_SCHEMA_TABLES) - present)
-            raw_version = row["server_version"]
-            server_version = raw_version.decode("utf-8", errors="replace") if isinstance(raw_version, bytes) else str(raw_version)
-            return PostgreSQLHealthFacts(
-                server_version,
-                len(present),
-                len(_REQUIRED_SCHEMA_TABLES),
-                missing,
-                int(migration_identity["migration_count"]),
-                str(migration_identity["identity_sha256"]),
-                "NOT_BOUND_NO_MIGRATION_LEDGER",
-                row["observed_at"],
-            )
-        except Exception as exc:
-            raise StorageFailureError("durable PostgreSQL operations facts are unavailable") from exc
+        return operations_health_facts_for_connection(self.connection)
 
     def seed_aggregate(
         self,
