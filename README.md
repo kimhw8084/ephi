@@ -67,6 +67,10 @@ rollback between separately installed, preflight-verified environments. It
 does not switch traffic, run migrations, restore PostgreSQL, or establish
 cross-release compatibility; see the [installed-release rollback runbook](operations/runbooks/installed-release-slot-rollback.md).
 
+CHG-296 / U4.1 defines the narrow frozen N-1 to N unchanged-provider proof
+and its explicit remaining prerequisites in
+[the provider compatibility qualification](docs/U4.1_N1_Provider_Compatibility.md).
+
 ## Validate the repository offline
 
 No chat attachment, local source artifact, staged-source directory, application credential or network access is required for the normal repository checks:

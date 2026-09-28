@@ -333,3 +333,17 @@ identity/TLS, production-like G10 capacity, production RPO/RTO, G12, Port Gate,
 company deployment readiness, release promotion, and Production as
 `NOT_RUN`/`NOT_CLAIMED`. It does not replace O9 backup/restore, change Product
 schema, or qualify a company deployment.
+
+## CHG-296 / U4.1 frozen provider compatibility
+
+U4.1 qualifies the exact unchanged synthetic provider profile from the frozen
+N-1 integrated identity against the public ABI, conformance, and safe
+composition boundary on frozen N. It is defined by the machine-readable
+[frozen-pair authority](../environment/u4_n1_provider_compatibility_authority.json)
+and the [qualification procedure](U4.1_N1_Provider_Compatibility.md).
+Passing this slice does not qualify database migration/restart, retained
+workflow/read/artifact identities, capability flags, failed-upgrade stop
+conditions, cross-release activation/rollback, full U4, real company
+integration, G10/G11/G12, the Port Gate, release promotion, or Production.
+U3's `ephi-release-slot` mechanism remains a same-release selection authority;
+it does not prove this cross-release provider compatibility.

@@ -1,0 +1,81 @@
+{
+  "schema": "org.ephi.u4-n1-provider-compatibility-authority.v1",
+  "qualification": {
+    "change": "CHG-296",
+    "slice": "U4.1",
+    "repository": "kimhw8084/ephi",
+    "request": "ephi-u4-n1-provider-compatibility-v1",
+    "kind": "unchanged-synthetic-provider-public-abi-cross-release-qualification",
+    "claim_boundary": "The exact unchanged synthetic downstream provider profile from the frozen N-1 integrated release identity still passes the public downstream ABI, conformance, and safe-composition boundary on the frozen N integrated release identity without modifications to upstream EPHI package or migration bytes.",
+    "not_a_semantic_release_tag": true,
+    "not_a_production_release": true,
+    "provider_source_is_the_frozen_n_minus_1_source": true
+  },
+  "releases": {
+    "N-1": {
+      "integrated_commit": "b19e8b6c5c73793a45ad039ee68f452883ef27a1",
+      "integrated_tree": "3cb8562898bbbdbcdc58d2cf5877ee9f77c9ded6",
+      "release_identity_sha256": "214d3ed0a612ed19fd583a252ae06989af9dcff3cbfa139a3575c75cd313b949",
+      "distribution": "ephi",
+      "version": "0.1.0"
+    },
+    "N": {
+      "integrated_commit": "0e073216adbdd717e183575f2a4a813f9fc4c265",
+      "integrated_tree": "0e54783c78fe4b4df7b022f7eccff273877f0e9e",
+      "release_identity_sha256": "c5fcdc4095ec4e7fc55d58379837db9e028ce25af96c106f55928d3f8576c5ef",
+      "distribution": "ephi",
+      "version": "0.1.0"
+    }
+  },
+  "public_downstream_abi": {
+    "abi_id": "org.ephi.downstream",
+    "abi_version": "1.0.0",
+    "provider_contract_version": "1.0.0",
+    "manifest_schema": "org.ephi.downstream.manifest.v1",
+    "required_categories": [
+      "identity",
+      "source",
+      "artifacts",
+      "notifications",
+      "policy",
+      "runtime"
+    ],
+    "entrypoint": "examples.synthetic_downstream.provider:build_bundle"
+  },
+  "nicegui_base": {
+    "distribution": "nicegui-base",
+    "repository": "https://github.com/zauberzeug/nicegui-base.git",
+    "commit": "000298562d6bcbf6df304edbd41b98b30fe4bfcf"
+  },
+  "migrations": {
+    "identity_sha256": "c661c7a41eae8cd2b637778998bee77b8ebdec4a2ef78639d3ed7f69b23b1e8b",
+    "cross_release_git_delta": []
+  },
+  "protected_cross_release_paths": [
+    "examples/synthetic_downstream/",
+    "src/ephi/downstream/",
+    "migrations/"
+  ],
+  "provider_package": {
+    "distribution": "ephi-synthetic-downstream-qualification",
+    "version": "1.0.0",
+    "source_release": "N-1",
+    "source_path": "examples/synthetic_downstream/",
+    "installation_model": "one-wheel-built-from-N-1-and-installed-byte-identically-into-N-1-and-N"
+  },
+  "remaining_u4_prerequisites": {
+    "database_migration_restart_across_N-1_to_N": "NOT_RUN",
+    "retained_workflow_read_artifact_identity_preservation": "NOT_QUALIFIED",
+    "feature_capability_flag_preservation": "NOT_QUALIFIED",
+    "failed_upgrade_stop_before_promotion": "NOT_QUALIFIED",
+    "cross_release_activation_rollback": "NOT_QUALIFIED",
+    "full_U4_exit": "NOT_QUALIFIED",
+    "real_company_integration": "NOT_RUN",
+    "G10": "NOT_RUN",
+    "G11": "NOT_RUN",
+    "G12": "NOT_RUN",
+    "Port_Gate": "NOT_RUN",
+    "release_promotion": "NOT_RUN",
+    "Production": "NOT_RUN"
+  }
+}

@@ -51,8 +51,8 @@
     },
     {
       "path": ".github/workflows/package.yml",
-      "bytes": 45522,
-      "sha256": "06ec781c34f13b3c37e93cd4453eb62150591fb8b203be5b8790dff342f05188"
+      "bytes": 50900,
+      "sha256": "45233677db861fa535cf5d654e569e35e3762394ca2920d5de4f5f0cc82bcfdd"
     },
     {
       "path": ".gitignore",
@@ -156,8 +156,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 30869,
-      "sha256": "52f2b53faad7fe541f8f00d63f67be90a0645486af06b2f0b9ef71894f4365e8"
+      "bytes": 31073,
+      "sha256": "5b27bf93cae2fafdabff5f63da4ae61d27f66ccd1cbec15cd754a4ee0ac5d29b"
     },
     {
       "path": "app.py",
@@ -186,8 +186,13 @@
     },
     {
       "path": "docs/Release_Install_Identity.md",
-      "bytes": 17251,
-      "sha256": "6e21a5f12d0fdb9c294843ff404d257c4152e5ed2d5b031900eb1ad4332a82c6"
+      "bytes": 18105,
+      "sha256": "d6345656cf21e8ca80086dc003ebfb424e8fbb7c848e2d7b60954fcb3aff2006"
+    },
+    {
+      "path": "docs/U4.1_N1_Provider_Compatibility.md",
+      "bytes": 3005,
+      "sha256": "97e2f6e80b65b7e73a1691d5c373abcf48d2e0f24568c60ffc53963d874867eb"
     },
     {
       "path": "docs/nicegui_base/AGENT_WORKFLOW.md",
@@ -358,6 +363,11 @@
       "path": "environment/qualification-requirements.txt",
       "bytes": 126,
       "sha256": "b9bd801a437e03aeab48398050585210f005eb55fd0ff93bd7f481a2ea9f1faf"
+    },
+    {
+      "path": "environment/u4_n1_provider_compatibility_authority.json",
+      "bytes": 3195,
+      "sha256": "33a6c86f7c0bb36d21226eb5316a339e5606bf9c2abb902263b91ef0b04aebac"
     },
     {
       "path": "environment/w0_repo_baseline.json",
@@ -2350,6 +2360,11 @@
       "sha256": "ce6af6dd40c15786c9e945cbee5e08796aede794cedff5f9cc5980df1848e153"
     },
     {
+      "path": "tests/test_u4_provider_compatibility_authority.py",
+      "bytes": 5427,
+      "sha256": "18db8352dbdbdcb1d07009f852f952648edb8a7e2290b56e5eb7ff78ddfda12a"
+    },
+    {
       "path": "tests/test_value_integrity.py",
       "bytes": 10192,
       "sha256": "db8e6f26b8ed66601f678a20a838b47d637516f0c085d84a4a13a0846153ea2d"
@@ -2478,6 +2493,11 @@
       "path": "tools/u2_operations_browser_qualification.py",
       "bytes": 30342,
       "sha256": "bc8ce18b454797a596c3ec879db9190cb597eca136a0fa816f556e059ba1f6f5"
+    },
+    {
+      "path": "tools/u4_n1_provider_compatibility.py",
+      "bytes": 61576,
+      "sha256": "f0f5eda64c7ae109ac221bd4798761eca0e2f0afdbaaf29f15bf062507a61487"
     },
     {
       "path": "tools/w0_baseline.py",
