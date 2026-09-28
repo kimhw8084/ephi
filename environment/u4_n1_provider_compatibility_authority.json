@@ -44,7 +44,7 @@
   },
   "nicegui_base": {
     "distribution": "nicegui-base",
-    "repository": "https://github.com/zauberzeug/nicegui-base.git",
+    "repository": "https://github.com/kimhw8084/nicegui-base.git",
     "commit": "000298562d6bcbf6df304edbd41b98b30fe4bfcf"
   },
   "migrations": {
