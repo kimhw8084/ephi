@@ -366,8 +366,8 @@
     },
     {
       "path": "environment/u4_n1_provider_compatibility_authority.json",
-      "bytes": 3195,
-      "sha256": "33a6c86f7c0bb36d21226eb5316a339e5606bf9c2abb902263b91ef0b04aebac"
+      "bytes": 3194,
+      "sha256": "189059dd90646658111c43e888f0b37827dcc5a4b26e5cab9cfd047318211a2f"
     },
     {
       "path": "environment/w0_repo_baseline.json",
@@ -2361,8 +2361,8 @@
     },
     {
       "path": "tests/test_u4_provider_compatibility_authority.py",
-      "bytes": 5427,
-      "sha256": "18db8352dbdbdcb1d07009f852f952648edb8a7e2290b56e5eb7ff78ddfda12a"
+      "bytes": 5542,
+      "sha256": "d923507e705d38f88e1cb8c0ea8a2ea7b9eeb3ce6db06d5c0b1633a27fb3825a"
     },
     {
       "path": "tests/test_value_integrity.py",

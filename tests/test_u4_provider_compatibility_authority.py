@@ -34,6 +34,7 @@ class U4FrozenAuthorityTests(unittest.TestCase):
         self.assertTrue(authority["qualification"]["not_a_semantic_release_tag"])
         self.assertTrue(authority["qualification"]["not_a_production_release"])
         self.assertEqual(authority["nicegui_base"]["commit"], "000298562d6bcbf6df304edbd41b98b30fe4bfcf")
+        self.assertEqual(authority["nicegui_base"]["repository"], "https://github.com/kimhw8084/nicegui-base.git")
         self.assertEqual(authority["migrations"]["identity_sha256"], "c661c7a41eae8cd2b637778998bee77b8ebdec4a2ef78639d3ed7f69b23b1e8b")
         self.assertEqual(authority["provider_package"]["version"], "1.0.0")
         self.assertEqual(authority["public_downstream_abi"]["abi_version"], "1.0.0")
