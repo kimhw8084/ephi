@@ -1,0 +1,502 @@
+{
+  "accepted_at": "2026-09-28T00:42:44Z",
+  "changed_files": [
+    {
+      "additions": 114,
+      "deletions": 0,
+      "path": ".github/workflows/package.yml",
+      "status": "M"
+    },
+    {
+      "additions": 17,
+      "deletions": 0,
+      "path": "13_Package_Review.md",
+      "status": "M"
+    },
+    {
+      "additions": 5,
+      "deletions": 0,
+      "path": "README.md",
+      "status": "M"
+    },
+    {
+      "additions": 66,
+      "deletions": 0,
+      "path": "docs/Release_Install_Identity.md",
+      "status": "M"
+    },
+    {
+      "additions": 38,
+      "deletions": 18,
+      "path": "manifest.json",
+      "status": "M"
+    },
+    {
+      "additions": 1,
+      "deletions": 0,
+      "path": "operations/runbooks/README.md",
+      "status": "M"
+    },
+    {
+      "additions": 81,
+      "deletions": 0,
+      "path": "operations/runbooks/installed-release-slot-rollback.md",
+      "status": "A"
+    },
+    {
+      "additions": 1,
+      "deletions": 0,
+      "path": "pyproject.toml",
+      "status": "M"
+    },
+    {
+      "additions": 8,
+      "deletions": 0,
+      "path": "src/ephi/release_identity.py",
+      "status": "M"
+    },
+    {
+      "additions": 1,
+      "deletions": 1,
+      "path": "src/ephi/release_inventory.json",
+      "status": "M"
+    },
+    {
+      "additions": 743,
+      "deletions": 0,
+      "path": "src/ephi/release_slots.py",
+      "status": "A"
+    },
+    {
+      "additions": 16,
+      "deletions": 0,
+      "path": "tests/test_release_identity.py",
+      "status": "M"
+    },
+    {
+      "additions": 233,
+      "deletions": 0,
+      "path": "tests/test_release_slots.py",
+      "status": "A"
+    },
+    {
+      "additions": 702,
+      "deletions": 0,
+      "path": "tools/installed_release_slot_qualification.py",
+      "status": "A"
+    }
+  ],
+  "checks": [
+    {
+      "command": "/bin/zsh -lc 'rtk /private/tmp/ephi-u37-chg295-687f3121/slot-a/bin/ephi-release-preflight --inputs-dir /private/tmp/ephi-u37-chg295-687f3121/inputs --json'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk head -n 4 /private/tmp/ephi-u37-chg295-687f3121/slot-a/bin/ephi-release-slot'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk /private/tmp/ephi-u37-chg295-687f3121/slot-a/bin/python -I -c 'import importlib.metadata as m,json,pathlib,sys;r=pathlib.Path(sys.argv[1]).resolve();p=pathlib.Path(m.distribution(\\\"ephi\\\").locate_file(\\\"ephi/release_identity.py\\\")).resolve();q=pathlib.Path(__import__(\\\"ephi\\\").__file__).resolve();ok=pathlib.Path(sys.prefix).resolve()==r and p.is_relative_to(r) and q.is_relative_to(r);print(json.dumps({\\\"installed\\\":bool(ok)},separators=(\\\",\\\",\\\":\\\")))' /private/tmp/ephi-u37-chg295-687f3121/slot-a\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk /private/tmp/ephi-u37-chg295-687f3121/slot-a/bin/ephi-release-slot init --state-file /private/tmp/ephi-u37-chg295-687f3121/work/selection/release-selection.json --slot-id slot-a --slot-root /private/tmp/ephi-u37-chg295-687f3121/slot-a --inputs-dir /private/tmp/ephi-u37-chg295-687f3121/inputs --label primary --change-id CHG-295'",
+      "exit_code": 2,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk ls -la /private/tmp/ephi-u37-chg295-687f3121/work/selection'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk /private/tmp/ephi-u37-chg295-687f3121/slot-a/bin/python -I -c 'import sys;from pathlib import Path;from ephi.release_slots import initialize;print(initialize(sys.argv[1],\\\"slot-a\\\",sys.argv[2],sys.argv[3]))' /private/tmp/ephi-u37-chg295-687f3121/work/selection/test.json /private/tmp/ephi-u37-chg295-687f3121/slot-a /private/tmp/ephi-u37-chg295-687f3121/inputs\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk /private/tmp/ephi-u37-chg295-687f3121/slot-a/bin/python -I -c 'import sys;from ephi.release_slots import _run_preflight;print(_run_preflight(sys.argv[1],sys.argv[2]))' /private/tmp/ephi-u37-chg295-687f3121/slot-a /private/tmp/ephi-u37-chg295-687f3121/inputs\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '105,160p' src/ephi/release_slots.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/generate_release_inventory.py --write && rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/generate_runtime_configuration_contract.py --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/generate_release_inventory.py --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -m py_compile src/ephi/release_slots.py tools/installed_release_slot_qualification.py && rtk ruby -e 'require \\\"yaml\\\"; YAML.parse_file(\\\".github/workflows/package.yml\\\")'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest discover -s tests -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git status --short --branch && rtk git add manifest.json src/ephi/release_inventory.json src/ephi/release_slots.py tests/test_release_slots.py && rtk git commit -m 'Fix installed slot preflight path resolution' && rtk git rev-parse HEAD && rtk git rev-parse 'HEAD\"'^{tree}'\"' && rtk git status --short --branch\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/prepare_release_inputs.py --output-dir /private/tmp/ephi-u37-chg295-99353d3c/inputs'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/w0_repo_baseline.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'set -e\ninputs=/private/tmp/ephi-u37-chg295-99353d3c/inputs\nfor slot_id in a b; do\n  slot_root=\"/private/tmp/ephi-u37-chg295-99353d3c/slot-$slot_id\"\n  rtk python3 -m venv \"$slot_root\"\n  rtk \"$slot_root/bin/python\" -m pip install --no-index --find-links \"$inputs/wheelhouse\" --require-hashes -r \"$inputs/locks/installer-py311.txt\"\n  rtk \"$slot_root/bin/python\" -m pip uninstall -y setuptools wheel\n  rtk \"$slot_root/bin/python\" -m pip install --no-index --find-links \"$inputs/wheelhouse\" --require-hashes -r \"$inputs/locks/runtime-py311.txt\"\n  rtk \"$slot_root/bin/python\" -m pip install --no-index --find-links \"$inputs/wheelhouse\" --require-hashes -r \"$inputs/locks/postgres-py311.txt\"\n  rtk \"$slot_root/bin/python\" -m pip install --no-index --no-deps \"$inputs\"/wheelhouse/ephi-*.whl \"$inputs\"/wheelhouse/nicegui_base-*.whl\ndone'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk env EPHI_TEST_POSTGRES_DSN=postgresql:///postgres /private/tmp/ephi-u37-chg295-99353d3c/slot-a/bin/python tools/installed_release_slot_qualification.py --slot-a-root /private/tmp/ephi-u37-chg295-99353d3c/slot-a --slot-b-root /private/tmp/ephi-u37-chg295-99353d3c/slot-b --inputs-dir /private/tmp/ephi-u37-chg295-99353d3c/inputs --work-dir /private/tmp/ephi-u37-chg295-99353d3c/work --artifact-dir /private/tmp/ephi-u37-chg295-99353d3c/artifact-bridge --repository-root /Users/haewonkim/.codex-fabric/worktrees/CF-67432aa33ff311da98a8287f --candidate-sha 99353d3c952d7aeebf06fee9696519354095290a --candidate-tree 93576142ce261f5d1299f2b40223d9ff35411183'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk mv /private/tmp/ephi-u37-chg295-99353d3c/artifact-bridge /private/tmp/ephi-u37-chg295-99353d3c/local-qualification-evidence'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import json,pathlib; p=pathlib.Path(\\\"/private/tmp/ephi-u37-chg295-99353d3c/local-qualification-evidence\\\"); r=json.loads((p/\\\"release-slot-rehearsal.json\\\").read_text()); assert r[\\\"status\\\"]==\\\"PASS\\\"; assert r[\\\"candidate\\\"]=={\\\"commit\\\":\\\"99353d3c952d7aeebf06fee9696519354095290a\\\",\\\"tree\\\":\\\"93576142ce261f5d1299f2b40223d9ff35411183\\\"}; assert r[\\\"durable_fingerprints\\\"][\\\"all_equal\\\"]; assert len(r[\\\"negative_controls\\\"])==9; assert r[\\\"atomicity\\\"][\\\"one_valid_state_observed_after_each_replace\\\"]; print(json.dumps({\\\"files\\\":sorted(x.name for x in p.iterdir()),\\\"status\\\":r[\\\"status\\\"],\\\"candidate\\\":r[\\\"candidate\\\"],\\\"release_identity_sha256\\\":r[\\\"release_identity_sha256\\\"],\\\"negative_controls\\\":len(r[\\\"negative_controls\\\"]),\\\"durable_fingerprints_equal\\\":r[\\\"durable_fingerprints\\\"][\\\"all_equal\\\"]},sort_keys=True))'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk psql -d postgres -Atc \\\"SELECT count(*) FROM pg_database WHERE datname LIKE 'ephi_o9_slot_%'\\\"\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short --branch && rtk git rev-parse HEAD && rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '325,350p' 13_Package_Review.md && rtk rg -n 'artifact-bridge' .github/workflows/package.yml\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/generate_release_inventory.py --write && rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/generate_runtime_configuration_contract.py --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk ruby -e 'require \\\"yaml\\\"; YAML.parse_file(\\\".github/workflows/package.yml\\\")'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/generate_release_inventory.py --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest discover -s tests -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git status --short --branch && rtk git add .github/workflows/package.yml manifest.json src/ephi/release_inventory.json && rtk git commit -m 'Name workflow rehearsal output accurately' && rtk git rev-parse HEAD && rtk git rev-parse 'HEAD\"'^{tree}'\"' && rtk git status --short --branch\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/prepare_release_inputs.py --output-dir /private/tmp/ephi-u37-final-635ee3a/inputs'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/w0_repo_baseline.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'set -e\ninputs=/private/tmp/ephi-u37-final-635ee3a/inputs\nfor slot_id in a b; do\n  slot_root=\"/private/tmp/ephi-u37-final-635ee3a/slot-$slot_id\"\n  rtk python3 -m venv \"$slot_root\"\n  rtk \"$slot_root/bin/python\" -m pip install --no-index --find-links \"$inputs/wheelhouse\" --require-hashes -r \"$inputs/locks/installer-py311.txt\"\n  rtk \"$slot_root/bin/python\" -m pip uninstall -y setuptools wheel\n  rtk \"$slot_root/bin/python\" -m pip install --no-index --find-links \"$inputs/wheelhouse\" --require-hashes -r \"$inputs/locks/runtime-py311.txt\"\n  rtk \"$slot_root/bin/python\" -m pip install --no-index --find-links \"$inputs/wheelhouse\" --require-hashes -r \"$inputs/locks/postgres-py311.txt\"\n  rtk \"$slot_root/bin/python\" -m pip install --no-index --no-deps \"$inputs\"/wheelhouse/ephi-*.whl \"$inputs\"/wheelhouse/nicegui_base-*.whl\ndone'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk env EPHI_TEST_POSTGRES_DSN=postgresql:///postgres /private/tmp/ephi-u37-final-635ee3a/slot-a/bin/python tools/installed_release_slot_qualification.py --slot-a-root /private/tmp/ephi-u37-final-635ee3a/slot-a --slot-b-root /private/tmp/ephi-u37-final-635ee3a/slot-b --inputs-dir /private/tmp/ephi-u37-final-635ee3a/inputs --work-dir /private/tmp/ephi-u37-final-635ee3a/work --artifact-dir /private/tmp/ephi-u37-final-635ee3a/local-qualification-evidence --repository-root /Users/haewonkim/.codex-fabric/worktrees/CF-67432aa33ff311da98a8287f --candidate-sha 635ee3ace997326a0f96198abfaee595808db8f4 --candidate-tree 81a461cbeecdf7b359212a6eb91566c3d8bbf69d'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/generate_release_inventory.py --write && rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/generate_runtime_configuration_contract.py --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -m py_compile tools/installed_release_slot_qualification.py src/ephi/release_slots.py && rtk ruby -e 'require \\\"yaml\\\"; YAML.parse_file(\\\".github/workflows/package.yml\\\")'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/generate_release_inventory.py --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest discover -s tests -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git status --short --branch && rtk git add .github/workflows/package.yml manifest.json src/ephi/release_inventory.json tools/installed_release_slot_qualification.py && rtk git commit -m 'Record slot state in rehearsal transitions' && rtk git rev-parse HEAD && rtk git rev-parse 'HEAD\"'^{tree}'\"' && rtk git status --short --branch\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/prepare_release_inputs.py --output-dir /private/tmp/ephi-u37-final-b5df72c/inputs'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/w0_repo_baseline.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'set -e\ninputs=/private/tmp/ephi-u37-final-b5df72c/inputs\nfor slot_id in a b; do\n  slot_root=\"/private/tmp/ephi-u37-final-b5df72c/slot-$slot_id\"\n  rtk python3 -m venv \"$slot_root\"\n  rtk \"$slot_root/bin/python\" -m pip install --no-index --find-links \"$inputs/wheelhouse\" --require-hashes -r \"$inputs/locks/installer-py311.txt\"\n  rtk \"$slot_root/bin/python\" -m pip uninstall -y setuptools wheel\n  rtk \"$slot_root/bin/python\" -m pip install --no-index --find-links \"$inputs/wheelhouse\" --require-hashes -r \"$inputs/locks/runtime-py311.txt\"\n  rtk \"$slot_root/bin/python\" -m pip install --no-index --find-links \"$inputs/wheelhouse\" --require-hashes -r \"$inputs/locks/postgres-py311.txt\"\n  rtk \"$slot_root/bin/python\" -m pip install --no-index --no-deps \"$inputs\"/wheelhouse/ephi-*.whl \"$inputs\"/wheelhouse/nicegui_base-*.whl\ndone'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk env EPHI_TEST_POSTGRES_DSN=postgresql:///postgres /private/tmp/ephi-u37-final-b5df72c/slot-a/bin/python tools/installed_release_slot_qualification.py --slot-a-root /private/tmp/ephi-u37-final-b5df72c/slot-a --slot-b-root /private/tmp/ephi-u37-final-b5df72c/slot-b --inputs-dir /private/tmp/ephi-u37-final-b5df72c/inputs --work-dir /private/tmp/ephi-u37-final-b5df72c/work --artifact-dir /private/tmp/ephi-u37-final-b5df72c/local-qualification-evidence --repository-root /Users/haewonkim/.codex-fabric/worktrees/CF-67432aa33ff311da98a8287f --candidate-sha b5df72c5cd7d38dbd4ca4f7d28963fc20c80ef1c --candidate-tree 1dde6059ed788b3be9318869ce0ac7a9b20670a3'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk psql -d postgres -Atc \\\"SELECT count(*) FROM pg_database WHERE datname LIKE 'ephi_o9_slot_%'\\\"\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import json,pathlib; p=pathlib.Path(\\\"/private/tmp/ephi-u37-final-b5df72c/local-qualification-evidence\\\"); r=json.loads((p/\\\"release-slot-rehearsal.json\\\").read_text()); t=r[\\\"transitions\\\"]; assert r[\\\"status\\\"]==\\\"PASS\\\"; assert r[\\\"candidate\\\"]=={\\\"commit\\\":\\\"b5df72c5cd7d38dbd4ca4f7d28963fc20c80ef1c\\\",\\\"tree\\\":\\\"1dde6059ed788b3be9318869ce0ac7a9b20670a3\\\"}; assert [x[\\\"generation\\\"] for x in t]==[0,1,2,3]; assert (t[2][\\\"current_slot_id\\\"],t[2][\\\"previous_slot_id\\\"])==(\\\"slot-b\\\",\\\"slot-a\\\"); assert (t[3][\\\"current_slot_id\\\"],t[3][\\\"previous_slot_id\\\"])==(\\\"slot-a\\\",\\\"slot-b\\\"); assert r[\\\"durable_fingerprints\\\"][\\\"all_equal\\\"]; assert len(r[\\\"negative_controls\\\"])==9; assert r[\\\"atomicity\\\"][\\\"prior_state_byte_identical_and_readable\\\"] and r[\\\"atomicity\\\"][\\\"one_valid_state_observed_after_each_replace\\\"]; print(json.dumps({\\\"files\\\":sorted(f.name for f in p.iterdir()),\\\"status\\\":r[\\\"status\\\"],\\\"transitions\\\":[{k:x[k] for k in (\\\"type\\\",\\\"generation\\\",\\\"current_slot_id\\\",\\\"previous_slot_id\\\")} for x in t],\\\"durable_fingerprints_equal\\\":r[\\\"durable_fingerprints\\\"][\\\"all_equal\\\"],\\\"negative_controls\\\":sorted(r[\\\"negative_controls\\\"]),\\\"nonclaims\\\":r[\\\"nonclaims\\\"]},sort_keys=True))'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short --branch && rtk git rev-parse HEAD && rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    }
+  ],
+  "codex": {
+    "cli_version": "codex-cli 0.157.0",
+    "configured_model": "gpt-6-luna",
+    "event_count": 374,
+    "provider_reported_model": null,
+    "reasoning_effort": "xhigh",
+    "terminal_type": "turn.completed",
+    "usage": {
+      "cache_hit_percent": 97.67,
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 21081088,
+      "fresh_input_tokens": 502677,
+      "input_tokens": 21583765,
+      "non_reasoning_output_tokens": 57124,
+      "output_tokens": 144455,
+      "reasoning_output_tokens": 87331,
+      "total_processed_tokens": 21728220
+    },
+    "warnings": []
+  },
+  "commits": [
+    {
+      "sha": "b5df72c5cd7d38dbd4ca4f7d28963fc20c80ef1c",
+      "subject": "Record slot state in rehearsal transitions"
+    },
+    {
+      "sha": "635ee3ace997326a0f96198abfaee595808db8f4",
+      "subject": "Name workflow rehearsal output accurately"
+    },
+    {
+      "sha": "99353d3c952d7aeebf06fee9696519354095290a",
+      "subject": "Fix installed slot preflight path resolution"
+    },
+    {
+      "sha": "687f3121a921784a1ab716c8c371a41c81117ec4",
+      "subject": "Add same-release installed release slot rollback"
+    }
+  ],
+  "diff": {
+    "additions": 2026,
+    "changed_files": 14,
+    "commit_count": 4,
+    "deletions": 19
+  },
+  "error_code": null,
+  "evidence_manifest": {
+    "count": 7,
+    "items": [
+      {
+        "bytes": 25248,
+        "path": "13_Package_Review.md",
+        "sha256": "22a1d913d34efe1101a9ac69aa5d838cd72618b07389e9b384efa544ed93b5a7"
+      },
+      {
+        "bytes": 30869,
+        "path": "README.md",
+        "sha256": "52f2b53faad7fe541f8f00d63f67be90a0645486af06b2f0b9ef71894f4365e8"
+      },
+      {
+        "bytes": 16739,
+        "path": "docs/Release_Install_Identity.md",
+        "sha256": "8efeb0ed38f8212af8221a8f240be6dbaab7099d1f8e6fbf181c3b5c65a47f66"
+      },
+      {
+        "bytes": 94923,
+        "path": "manifest.json",
+        "sha256": "c0b383a78615d3b063a2a03c61eaff00ba71e523aeab6f97a9cd072cfa24d6e6"
+      },
+      {
+        "bytes": 1446,
+        "path": "operations/runbooks/README.md",
+        "sha256": "91c884b0de44fb01d904128e55b1e3ce7db2675fb4c726554b0fe97376c67e12"
+      },
+      {
+        "bytes": 3747,
+        "path": "operations/runbooks/installed-release-slot-rollback.md",
+        "sha256": "ce68be8da32b7eba378b1b923eba1d1f506477e2b642ded8fd92b8b1aed7ff15"
+      },
+      {
+        "bytes": 17558,
+        "path": "src/ephi/release_inventory.json",
+        "sha256": "6f98937fee9c36dff6c6e361965f642dcd523ac9d4554b4f8337373ab8493a91"
+      }
+    ],
+    "version": 1
+  },
+  "evidence_publisher_release": "1.2.5-dashboard-controls-candidate",
+  "fabric_capture": {
+    "applied": false,
+    "paths_before": 0,
+    "transient_untracked_removed": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "fabric_release": "1.2.5-dashboard-controls-candidate",
+  "failure_class": null,
+  "finished_at": "2026-09-28T01:52:13Z",
+  "git": {
+    "base_is_ancestor": true,
+    "base_sha": "b19e8b6c5c73793a45ad039ee68f452883ef27a1",
+    "branch": "codex/ephi-u3-release-slot-rollback-v1",
+    "detached_verify": false,
+    "head_sha": "b5df72c5cd7d38dbd4ca4f7d28963fc20c80ef1c",
+    "remote_exact_head": true,
+    "remote_head_sha": "b5df72c5cd7d38dbd4ca4f7d28963fc20c80ef1c",
+    "target_branch": "main",
+    "target_drifted_since_acceptance": false,
+    "target_head_observed_after_execution": "b19e8b6c5c73793a45ad039ee68f452883ef27a1",
+    "work_branch": "codex/ephi-u3-release-slot-rollback-v1",
+    "worktree_clean": true
+  },
+  "instructions": {
+    "files": [
+      {
+        "bytes": 1458,
+        "path": "AGENTS.md",
+        "sha256": "4349f387a79d886ed1264604ff48c582698e539e08ed8fb2f9d8ab8fbf6f804a"
+      }
+    ],
+    "total_bytes": 1458,
+    "warning": null
+  },
+  "job_id": "CF-67432aa33ff311da98a8287f",
+  "kind": "codex-fabric-audit-evidence",
+  "locator": {
+    "branch": "codex-fabric/evidence/ephi/ephi-u3-release-slot-rollback-v1",
+    "path": ".codex-fabric/audit.json",
+    "ref": "refs/heads/codex-fabric/evidence/ephi/ephi-u3-release-slot-rollback-v1"
+  },
+  "operation": "BUILD",
+  "policy": {
+    "environment_policy_sha256": "e077daca74297b3c30bee8989f00f8ca5338f7610b4d016a6c48db524205d064",
+    "fabric_release": "1.2.5-dashboard-controls-candidate",
+    "policy_sha256": "123615bf2f6e57dcac197e49ca98ceac59ada86a55e2c84445ea5d00812c0833",
+    "registry_sha256": "af81b8552f9d6a33847310e3c6bcd2d48401782b963a58efd2993e93570cb4aa"
+  },
+  "project_id": "ephi",
+  "recovery": {
+    "model_rerun_safe": false,
+    "recovery_required": false,
+    "retry_safe": false,
+    "retry_scope": null,
+    "worktree_retained": true
+  },
+  "request": "ephi-u3-release-slot-rollback-v1",
+  "schema_version": 1,
+  "started_at": "2026-09-28T00:42:44Z",
+  "status": "EXECUTED_CHANGE",
+  "timing": {
+    "execution_seconds": 4169,
+    "queue_seconds": 0,
+    "total_seconds": 4169
+  },
+  "transport": {
+    "bytes": 8690,
+    "envelope": "FABRIC/2",
+    "prompt_bytes": 8374,
+    "prompt_sha256": "75df71dd24a9c0b36895f085f6c3845103a1c0e14e7e67d8153b64ac125cbf54",
+    "sha256": "67432aa33ff311da98a8287f484e7d15360299903947b2570170520190268f24"
+  }
+}
