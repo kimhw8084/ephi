@@ -1,0 +1,506 @@
+{
+  "accepted_at": "2026-09-28T02:16:20Z",
+  "changed_files": [
+    {
+      "additions": 123,
+      "deletions": 0,
+      "path": ".github/workflows/package.yml",
+      "status": "M"
+    },
+    {
+      "additions": 17,
+      "deletions": 0,
+      "path": "13_Package_Review.md",
+      "status": "M"
+    },
+    {
+      "additions": 5,
+      "deletions": 0,
+      "path": "README.md",
+      "status": "M"
+    },
+    {
+      "additions": 73,
+      "deletions": 0,
+      "path": "docs/Release_Install_Identity.md",
+      "status": "M"
+    },
+    {
+      "additions": 38,
+      "deletions": 18,
+      "path": "manifest.json",
+      "status": "M"
+    },
+    {
+      "additions": 1,
+      "deletions": 0,
+      "path": "operations/runbooks/README.md",
+      "status": "M"
+    },
+    {
+      "additions": 81,
+      "deletions": 0,
+      "path": "operations/runbooks/installed-release-slot-rollback.md",
+      "status": "A"
+    },
+    {
+      "additions": 1,
+      "deletions": 0,
+      "path": "pyproject.toml",
+      "status": "M"
+    },
+    {
+      "additions": 8,
+      "deletions": 0,
+      "path": "src/ephi/release_identity.py",
+      "status": "M"
+    },
+    {
+      "additions": 1,
+      "deletions": 1,
+      "path": "src/ephi/release_inventory.json",
+      "status": "M"
+    },
+    {
+      "additions": 833,
+      "deletions": 0,
+      "path": "src/ephi/release_slots.py",
+      "status": "A"
+    },
+    {
+      "additions": 16,
+      "deletions": 0,
+      "path": "tests/test_release_identity.py",
+      "status": "M"
+    },
+    {
+      "additions": 315,
+      "deletions": 0,
+      "path": "tests/test_release_slots.py",
+      "status": "A"
+    },
+    {
+      "additions": 762,
+      "deletions": 0,
+      "path": "tools/installed_release_slot_qualification.py",
+      "status": "A"
+    }
+  ],
+  "checks": [
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '205,320p' tools/generate_release_inventory.py && rtk cat src/ephi/release_inventory.json\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --help'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/generate_release_inventory.py --help'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/generate_release_inventory.py --write && rtk git status --short'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '331,348p' 13_Package_Review.md\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import os; print(\\\"EPHI_TEST_POSTGRES_DSN_SET=\\\" + str(bool(os.environ.get(\\\"EPHI_TEST_POSTGRES_DSN\\\"))))' && rtk rg -n '\"'^  [a-zA-Z0-9_-]+:'\"' .github/workflows/package.yml\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/generate_release_inventory.py --check && rtk python3 tools/generate_runtime_configuration_contract.py --check'",
+      "exit_code": 2,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk ruby -e 'require \\\"yaml\\\"; YAML.parse_file(\\\".github/workflows/package.yml\\\")' && rtk git diff --check\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest discover -s tests -v'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git checkout -- 13_Package_Review.md && rtk python3 tools/generate_release_inventory.py --write && rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/w0_repo_baseline.py --help'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk ruby -e 'require \\\"yaml\\\"; YAML.parse_file(\\\".github/workflows/package.yml\\\")' && rtk git diff --check\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/generate_release_inventory.py --check && rtk python3 tools/generate_runtime_configuration_contract.py --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff -- src/ephi/release_slots.py tests/test_release_slots.py tools/installed_release_slot_qualification.py .github/workflows/package.yml docs/Release_Install_Identity.md src/ephi/release_inventory.json manifest.json'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest discover -s tests -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short && rtk git diff --name-status && rtk git diff --no-compact -- manifest.json'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git diff --check && rtk git add .github/workflows/package.yml docs/Release_Install_Identity.md manifest.json src/ephi/release_inventory.json src/ephi/release_slots.py tests/test_release_slots.py tools/installed_release_slot_qualification.py && rtk git commit -m 'Fix CHG-295 slot location binding (U3.7 R2)'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git status --short --branch && rtk git rev-parse HEAD && rtk git rev-parse 'HEAD\"'^{tree}'\"' && rtk python3 tools/w0_repo_baseline.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git push -u origin codex/ephi-u3-release-slot-rollback-fix1'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk gh run list --repo kimhw8084/ephi --branch codex/ephi-u3-release-slot-rollback-fix1 --limit 10'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk gh run view 36370174585 --repo kimhw8084/ephi'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk ls -la /Users/haewonkim/.projectos'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk ls -la /Users/haewonkim/.codex-fabric'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg --files --hidden /Users/haewonkim/.codex-fabric -g '*artifact*bridge*' -g '*Artifact*Bridge*' -g '*artifact_stage*' -g '*artifact-stage*'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk ls -1 /Users/haewonkim/.codex-fabric/jobs | rtk rg 'c9e23064|CF-c9e23064b4184a2d2b40431f' && rtk ls -la /Users/haewonkim/.codex-fabric/bin && rtk ls -la /Users/haewonkim/.codex-fabric/libexec && rtk ls -la /Users/haewonkim/.codex-fabric/jobs\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk ls -la /Users/haewonkim/.codex-fabric/jobs/CF-c9e23064b4184a2d2b40431f.running && rtk ls -la /Users/haewonkim/.codex-fabric/artifacts/CF-c9e23064b4184a2d2b40431f && rtk ls -la /Users/haewonkim/.codex-fabric/jobs/CF-c9e23064b4184a2d2b40431f.running/artifact-bridge'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk cat /Users/haewonkim/.codex-fabric/bin/fabricctl && rtk cat /Users/haewonkim/.codex-fabric/bin/projectos-integrate-stdin'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import json,pathlib; p=pathlib.Path(\\\"/Users/haewonkim/.codex-fabric/jobs/CF-c9e23064b4184a2d2b40431f.running/job.json\\\"); d=json.loads(p.read_text()); print(\\\"\\\\n\\\".join(sorted(d)))'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 /Users/haewonkim/.codex-fabric/libexec/projectos_integrate.py --help'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import json,pathlib; d=json.loads(pathlib.Path(\\\"/Users/haewonkim/.codex-fabric/jobs/CF-c9e23064b4184a2d2b40431f.running/job.json\\\").read_text()); print(json.dumps({k:d.get(k) for k in (\\\"job_id\\\",\\\"project_id\\\",\\\"request\\\",\\\"operation\\\",\\\"routes\\\")},indent=2))'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk /Users/haewonkim/.codex-fabric/bin/fabricctl --help'",
+      "exit_code": 2,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg --files --hidden /Users/haewonkim/.projectos -g '*stage*' -g '*bridge*' -g '*artifact*' -g '*qual*'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk ls -la /Users/haewonkim/.projectos/sidecars && rtk ls -la /Users/haewonkim/.projectos/qualifications && rtk ls -la /Users/haewonkim/.projectos/artifact-runs'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n --hidden 'qualified.*Artifact Bridge|Artifact Bridge.*qualified|ephi.*artifact|stage receipt|machine stage receipt' /Users/haewonkim/.projectos /Users/haewonkim/.codex-fabric/config /Users/haewonkim/.codex-fabric/libexec\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk ls -la /Users/haewonkim/.projectos/qualifications/artifact-bridge-ar3-r3 && rtk ls -la /Users/haewonkim/.projectos/qualifications/artifact-bridge-ar3-r3/fabric-candidate && rtk ls -la /Users/haewonkim/.projectos/qualifications/artifact-bridge-ar3-r3/fabric-home'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk cat /Users/haewonkim/.projectos/qualifications/artifact-bridge-ar3-r3/README.md && rtk cat /Users/haewonkim/.projectos/qualifications/artifact-bridge-ar3-r3/execution.toml.qualified'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk cat /Users/haewonkim/.projectos/qualifications/artifact-bridge-ar3-r3/PROJECT_OS_AR3_FINAL_RESULT_REPORT.md'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n 'artifact.stage|stage.*artifact|artifact root|artifact_root|artifact-bridge|AR-3' /Users/haewonkim/.projectos/qualifications/artifact-bridge-ar3-r3/README.md /Users/haewonkim/.projectos/qualifications/artifact-bridge-ar3-r3/PROJECT_OS_AR3_FINAL_RESULT_REPORT.md /Users/haewonkim/.projectos/qualifications/artifact-bridge-ar3-r3/dispatch_r3.py\"",
+      "exit_code": 2,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk cat /Users/haewonkim/.projectos/sidecars/artifact-bridge-v1-ar2-candidate/baseline-qualification.json'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk ls -la /Users/haewonkim/.projectos/sidecars/artifact-bridge-v1-ar2-candidate'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk /Users/haewonkim/.projectos/sidecars/artifact-bridge-v1-ar2-candidate/projectos-artifact-stage --help'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import json,pathlib; d=json.loads(pathlib.Path(\\\"/Users/haewonkim/.codex-fabric/jobs/CF-c9e23064b4184a2d2b40431f.running/job.json\\\").read_text());\nfor section in (\\\"environment_policy\\\",\\\"execution_policy\\\"):\n x=d.get(section,{}); print(section+\\\" keys=\\\"+repr(sorted(x) if isinstance(x,dict) else type(x).__name__));\n if isinstance(x,dict): print(json.dumps({k:v for k,v in x.items() if any(t in k.lower() for t in (\\\"artifact\\\",\\\"bridge\\\",\\\"root\\\",\\\"output\\\"))},indent=2))'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk proxy gh run view 36370174585 --repo kimhw8084/ephi --json status,conclusion,headSha,displayTitle,url,jobs'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk gh run download 36370174585 --repo kimhw8084/ephi --name ephi-u37-installed-release-slot-rehearsal --dir /Users/haewonkim/.codex-fabric/jobs/CF-c9e23064b4184a2d2b40431f.running/artifact-bridge'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk ls -la /Users/haewonkim/.codex-fabric/jobs/CF-c9e23064b4184a2d2b40431f.running/artifact-bridge && rtk python3 -c 'import json,pathlib,re; p=pathlib.Path(\\\"/Users/haewonkim/.codex-fabric/jobs/CF-c9e23064b4184a2d2b40431f.running/artifact-bridge\\\"); files=sorted(p.glob(\\\"*.json\\\")); data={f.name:json.loads(f.read_text()) for f in files}; r=data[\\\"release-slot-rehearsal.json\\\"]; print(json.dumps({\\\"files\\\":[f.name for f in files],\\\"status\\\":r.get(\\\"status\\\"),\\\"reason_code\\\":r.get(\\\"reason_code\\\"),\\\"candidate\\\":r.get(\\\"candidate\\\"),\\\"generations\\\":[x.get(\\\"generation\\\") for x in r.get(\\\"transitions\\\",[])],\\\"transition_bindings\\\":[{k:x.get(k) for k in (\\\"type\\\",\\\"slot_id\\\",\\\"slot_location_id\\\")} for x in r.get(\\\"transitions\\\",[])],\\\"slot_location_ids_distinct\\\":r[\\\"slot_identities\\\"][\\\"slot-a\\\"][\\\"slot_location_id\\\"]\"'!=r[\"slot_identities\"][\"slot-b\"][\"slot_location_id\"],\"swapped_root_controls\":{k:r[\"negative_controls\"][k] for k in (\"select_swapped_slot_root\",\"rollback_swapped_slot_root\")},\"fingerprints_equal\":r[\"durable_fingerprints\"][\"all_equal\"],\"selection_effects\":r[\"selection_effects\"],\"state_summary_generation\":data[\"release-slot-state-summary.json\"].get(\"generation\"),\"absolute_path_strings_present\":any(isinstance(v,str) and (v.startswith(\"/\") or \"/runner/\" in v) for obj in data.values() for v in json.dumps(obj).split())},indent=2))'\"'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n -C 2 'Project OS Artifact Bridge|artifact bridge|artifact_stage|artifact-stage' /Users/haewonkim/.projectos/qualifications/artifact-bridge-ar3-r3/fabric-candidate/fabric.py /Users/haewonkim/.projectos/qualifications/artifact-bridge-ar3-r3/fabric-source/fabric.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n -C 2 'Artifact Bridge|artifact.?bridge|artifact.?stage|stage receipt|artifact-root|publish-evidence' /Users/haewonkim/.codex-fabric/libexec/projectos_integrate.py /Users/haewonkim/.codex-fabric/current/fabric.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git status --short --branch && rtk git rev-parse HEAD && rtk git rev-parse 'HEAD\"'^{tree}'\"' && rtk git rev-parse origin/main && rtk git diff --check HEAD\"'^ HEAD && rtk git diff --name-status b5df72c5cd7d38dbd4ca4f7d28963fc20c80ef1c HEAD && rtk rg -n '\"'def _slot_location_identity|def _validate_state|SLOT_LOCATION_MISMATCH|def _transition' src/ephi/release_slots.py && rtk rg -n 'test_correct_registered|test_duplicate_location|test_verify_and_select_swapped|test_malformed_and_tampered_location' tests/test_release_slots.py && rtk rg -n 'slot_location_id|swapped_slot_root|TRANSITION_LOCATION_BINDING' tools/installed_release_slot_qualification.py .github/workflows/package.yml\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    }
+  ],
+  "codex": {
+    "cli_version": "codex-cli 0.157.0",
+    "configured_model": "gpt-6-luna",
+    "event_count": 209,
+    "provider_reported_model": null,
+    "reasoning_effort": "xhigh",
+    "terminal_type": "turn.completed",
+    "usage": {
+      "cache_hit_percent": 97.53,
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 10995200,
+      "fresh_input_tokens": 278513,
+      "input_tokens": 11273713,
+      "non_reasoning_output_tokens": 21839,
+      "output_tokens": 60680,
+      "reasoning_output_tokens": 38841,
+      "total_processed_tokens": 11334393
+    },
+    "warnings": []
+  },
+  "commits": [
+    {
+      "sha": "62f45b7f72a43fab3413e8ae3870f085b890e969",
+      "subject": "Fix CHG-295 slot location binding (U3.7 R2)"
+    },
+    {
+      "sha": "e0c18337522aabd5b4d10ba3bbe605f906171972",
+      "subject": "Record slot state in rehearsal transitions"
+    },
+    {
+      "sha": "cbd55bac6f650d78cd7bd3448cb030b406fd8f80",
+      "subject": "Name workflow rehearsal output accurately"
+    },
+    {
+      "sha": "27ef95aa23378ad9e383470cc2abde754b7a5bbe",
+      "subject": "Fix installed slot preflight path resolution"
+    },
+    {
+      "sha": "b1453d91f12ae6e577604d61a8b02e83369db2ab",
+      "subject": "Add same-release installed release slot rollback"
+    }
+  ],
+  "diff": {
+    "additions": 2274,
+    "changed_files": 14,
+    "commit_count": 5,
+    "deletions": 19
+  },
+  "error_code": null,
+  "evidence_manifest": {
+    "count": 7,
+    "items": [
+      {
+        "bytes": 25248,
+        "path": "13_Package_Review.md",
+        "sha256": "22a1d913d34efe1101a9ac69aa5d838cd72618b07389e9b384efa544ed93b5a7"
+      },
+      {
+        "bytes": 30869,
+        "path": "README.md",
+        "sha256": "52f2b53faad7fe541f8f00d63f67be90a0645486af06b2f0b9ef71894f4365e8"
+      },
+      {
+        "bytes": 17251,
+        "path": "docs/Release_Install_Identity.md",
+        "sha256": "6e21a5f12d0fdb9c294843ff404d257c4152e5ed2d5b031900eb1ad4332a82c6"
+      },
+      {
+        "bytes": 94923,
+        "path": "manifest.json",
+        "sha256": "8ca459218fb0e2abc15e3c246fe87718e25368314a17dbe9b60ed5e6dac80b92"
+      },
+      {
+        "bytes": 1446,
+        "path": "operations/runbooks/README.md",
+        "sha256": "91c884b0de44fb01d904128e55b1e3ce7db2675fb4c726554b0fe97376c67e12"
+      },
+      {
+        "bytes": 3747,
+        "path": "operations/runbooks/installed-release-slot-rollback.md",
+        "sha256": "ce68be8da32b7eba378b1b923eba1d1f506477e2b642ded8fd92b8b1aed7ff15"
+      },
+      {
+        "bytes": 17558,
+        "path": "src/ephi/release_inventory.json",
+        "sha256": "3791a13b8bb371bdbd6140f9102608a4a137d3ae42217e4cca96056f3d961ab2"
+      }
+    ],
+    "version": 1
+  },
+  "evidence_publisher_release": "1.2.5-dashboard-controls-candidate",
+  "fabric_capture": {
+    "applied": false,
+    "paths_before": 0,
+    "transient_untracked_removed": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "fabric_release": "1.2.5-dashboard-controls-candidate",
+  "failure_class": null,
+  "finished_at": "2026-09-28T02:39:24Z",
+  "git": {
+    "base_is_ancestor": true,
+    "base_sha": "b19e8b6c5c73793a45ad039ee68f452883ef27a1",
+    "branch": "codex/ephi-u3-release-slot-rollback-fix1",
+    "detached_verify": false,
+    "head_sha": "62f45b7f72a43fab3413e8ae3870f085b890e969",
+    "remote_exact_head": true,
+    "remote_head_sha": "62f45b7f72a43fab3413e8ae3870f085b890e969",
+    "target_branch": "main",
+    "target_drifted_since_acceptance": false,
+    "target_head_observed_after_execution": "b19e8b6c5c73793a45ad039ee68f452883ef27a1",
+    "work_branch": "codex/ephi-u3-release-slot-rollback-fix1",
+    "worktree_clean": true
+  },
+  "instructions": {
+    "files": [
+      {
+        "bytes": 1458,
+        "path": "AGENTS.md",
+        "sha256": "4349f387a79d886ed1264604ff48c582698e539e08ed8fb2f9d8ab8fbf6f804a"
+      }
+    ],
+    "total_bytes": 1458,
+    "warning": null
+  },
+  "job_id": "CF-c9e23064b4184a2d2b40431f",
+  "kind": "codex-fabric-audit-evidence",
+  "locator": {
+    "branch": "codex-fabric/evidence/ephi/ephi-u3-release-slot-rollback-fix1",
+    "path": ".codex-fabric/audit.json",
+    "ref": "refs/heads/codex-fabric/evidence/ephi/ephi-u3-release-slot-rollback-fix1"
+  },
+  "operation": "FIX",
+  "policy": {
+    "environment_policy_sha256": "e077daca74297b3c30bee8989f00f8ca5338f7610b4d016a6c48db524205d064",
+    "fabric_release": "1.2.5-dashboard-controls-candidate",
+    "policy_sha256": "123615bf2f6e57dcac197e49ca98ceac59ada86a55e2c84445ea5d00812c0833",
+    "registry_sha256": "af81b8552f9d6a33847310e3c6bcd2d48401782b963a58efd2993e93570cb4aa"
+  },
+  "project_id": "ephi",
+  "recovery": {
+    "model_rerun_safe": false,
+    "recovery_required": false,
+    "retry_safe": false,
+    "retry_scope": null,
+    "worktree_retained": true
+  },
+  "request": "ephi-u3-release-slot-rollback-fix1",
+  "schema_version": 1,
+  "started_at": "2026-09-28T02:16:20Z",
+  "status": "EXECUTED_CHANGE",
+  "timing": {
+    "execution_seconds": 1384,
+    "queue_seconds": 0,
+    "total_seconds": 1384
+  },
+  "transport": {
+    "bytes": 7227,
+    "envelope": "FABRIC/2",
+    "prompt_bytes": 6909,
+    "prompt_sha256": "65b9012d74db7299e807491706efcf3e9862320dac0e62c8b7dea18989a60623",
+    "sha256": "c9e23064b4184a2d2b40431ffe70fb5874e465ab226f88b845a366430c4d34bf"
+  }
+}
