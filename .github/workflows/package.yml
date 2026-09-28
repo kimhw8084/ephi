@@ -890,3 +890,98 @@ jobs:
         env:
           EPHI_TEST_POSTGRES_DSN: postgresql://ephi_ci:ephi_ci_password@127.0.0.1:5432/ephi_ci
         run: python -m unittest tests.test_postgresql_adapter_lifecycle -v
+
+  u4-n1-provider-compatibility:
+    name: Frozen N-1 to N provider compatibility (exact candidate head)
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      EPHI_TEST_POSTGRES_DSN: postgresql://ephi_ci:ephi_ci_password@127.0.0.1:5432/ephi_ci
+      EPHI_U4_EXPECTED_CANDIDATE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+      EPHI_U4_FABRIC_JOB_ID: CF-11c29e79a78473b8ac995e00
+    services:
+      postgres:
+        image: postgres:18.6
+        env:
+          POSTGRES_USER: ephi_ci
+          POSTGRES_PASSWORD: ephi_ci_password
+          POSTGRES_DB: ephi_ci
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U ephi_ci -d ephi_ci"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 20
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.13'
+      - name: Verify exact candidate and frozen release history
+        run: |
+          test "$(git rev-parse HEAD)" = "$EPHI_U4_EXPECTED_CANDIDATE_SHA"
+          test -z "$(git status --porcelain --untracked-files=all)"
+          git cat-file -e b19e8b6c5c73793a45ad039ee68f452883ef27a1^{commit}
+          git cat-file -e 0e073216adbdd717e183575f2a4a813f9fc4c265^{commit}
+      - name: Run frozen-pair installed provider compatibility proof
+        run: |
+          candidate_sha="$(git rev-parse HEAD)"
+          candidate_tree="$(git rev-parse 'HEAD^{tree}')"
+          python tools/u4_n1_provider_compatibility.py \
+            --artifact-root "$RUNNER_TEMP/ephi-u4-artifact-bridge" \
+            --work-root "$RUNNER_TEMP/ephi-u4-work" \
+            --repository-root "$GITHUB_WORKSPACE" \
+            --candidate-sha "$candidate_sha" \
+            --candidate-tree "$candidate_tree" \
+            --job-id "$EPHI_U4_FABRIC_JOB_ID"
+      - name: Assert full compatibility and core-edit report
+        run: |
+          python - "$RUNNER_TEMP/ephi-u4-artifact-bridge/u4-n1-provider-compatibility.json" "$EPHI_U4_EXPECTED_CANDIDATE_SHA" "$(git rev-parse 'HEAD^{tree}')" <<'PY'
+          import json
+          import sys
+
+          path, candidate_sha, candidate_tree = sys.argv[1:]
+          report = json.load(open(path, encoding="utf-8"))
+          assert report["status"] == "PASS", report
+          assert report["qualification"]["candidate"]["commit"] == candidate_sha
+          assert report["qualification"]["candidate"]["tree"] == candidate_tree
+          assert report["provider"]["distribution"] == "ephi-synthetic-downstream-qualification"
+          assert report["provider"]["version"] == "1.0.0"
+          assert report["provider"]["provider_artifact_same_bytes"] is True
+          assert report["provider"]["provider_rebuilt_for_n"] is False
+          assert report["public_abi"]["abi_id"] == "org.ephi.downstream"
+          assert report["public_abi"]["abi_version"] == "1.0.0"
+          assert report["public_abi"]["provider_contract_version"] == "1.0.0"
+          assert report["public_abi"]["safe_manifest_byte_equal"] is True
+          assert report["releases"]["N-1"]["contracts_only"]["status"] == "PASS"
+          assert report["releases"]["N-1"]["safe_composition"]["status"] == "PASS"
+          assert report["releases"]["N"]["contracts_only"]["status"] == "PASS"
+          assert report["releases"]["N"]["safe_composition"]["status"] == "PASS"
+          assert report["releases"]["N-1"]["provider_installation"]["artifact_sha256"] == report["releases"]["N"]["provider_installation"]["artifact_sha256"]
+          assert report["releases"]["N-1"]["installed_ephi"]["before_after_byte_equal"] is True
+          assert report["releases"]["N"]["installed_ephi"]["before_after_byte_equal"] is True
+          assert report["core_edit_prohibition"]["status"] == "PASS"
+          assert report["core_edit_prohibition"]["core_edit_required"] is False
+          assert report["core_edit_prohibition"]["upstream_package_files_modified"] == []
+          assert report["core_edit_prohibition"]["upstream_migration_files_modified"] == []
+          assert report["core_edit_prohibition"]["source_checkout_imports_used"] is False
+          assert report["installed_execution"]["public_index_used_for_installation"] is False
+          assert report["installed_execution"]["checkout_pythonpath_or_sys_path_used"] is False
+          assert report["negative_controls"]["missing_provider"]["reason_code"] == "MISSING_REQUIRED_PROVIDER"
+          assert report["negative_controls"]["build_incompatible_abi"]["reason_code"] == "INCOMPATIBLE_ABI"
+          assert report["negative_controls"]["build_incompatible_provider_contract"]["reason_code"] == "INCOMPATIBLE_PROVIDER_CONTRACT"
+          assert report["remaining_u4_prerequisites"]["full_U4_exit"] == "NOT_QUALIFIED"
+          print("FROZEN_N1_TO_N_PROVIDER_COMPATIBILITY_PASS")
+          PY
+      - name: Upload temporary CI proof material
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ephi-u4-n1-provider-compatibility
+          path: ${{ runner.temp }}/ephi-u4-artifact-bridge
+          if-no-files-found: error
