@@ -287,9 +287,16 @@ jobs:
           assert report["candidate"] == {"commit": sys.argv[2], "tree": sys.argv[3]}
           assert report["slot_identities"]["slot-a"]["release_identity_sha256"] == report["release_identity_sha256"]
           assert report["slot_identities"]["slot-b"]["release_identity_sha256"] == report["release_identity_sha256"]
-          assert report["slot_identities"]["slot-a"]["slot_root_location_id"] != report["slot_identities"]["slot-b"]["slot_root_location_id"]
+          assert report["slot_identities"]["slot-a"]["slot_location_id"] != report["slot_identities"]["slot-b"]["slot_location_id"]
           assert [row["generation"] for row in report["transitions"]] == [0, 1, 2, 3]
           assert [row["type"] for row in report["transitions"]] == ["INITIALIZE", "REGISTER", "SELECT", "ROLLBACK"]
+          assert [row["slot_id"] for row in report["transitions"]] == ["slot-a", "slot-b", "slot-b", "slot-a"]
+          assert [row["slot_location_id"] for row in report["transitions"]] == [
+              report["slot_identities"]["slot-a"]["slot_location_id"],
+              report["slot_identities"]["slot-b"]["slot_location_id"],
+              report["slot_identities"]["slot-b"]["slot_location_id"],
+              report["slot_identities"]["slot-a"]["slot_location_id"],
+          ]
           assert report["transitions"][2]["current_slot_id"] == "slot-b"
           assert report["transitions"][2]["previous_slot_id"] == "slot-a"
           assert report["transitions"][3]["current_slot_id"] == "slot-a"
@@ -304,6 +311,8 @@ jobs:
           assert report["selection_effects"]["provider_auto_selected"] is False
           assert report["negative_controls"]["different_release_identity"]["qualification_state"] == "NOT_QUALIFIED"
           assert report["negative_controls"]["stale_generation"]["status"] == "PASS"
+          assert report["negative_controls"]["select_swapped_slot_root"] == {"status": "PASS", "reason_code": "SLOT_LOCATION_MISMATCH"}
+          assert report["negative_controls"]["rollback_swapped_slot_root"] == {"status": "PASS", "reason_code": "SLOT_LOCATION_MISMATCH"}
           assert report["atomicity"]["prior_state_byte_identical_and_readable"]
           assert report["atomicity"]["one_valid_state_observed_after_each_replace"]
           print("INSTALLED_SAME_RELEASE_SLOT_REHEARSAL_PASS")

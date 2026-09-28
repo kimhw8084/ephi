@@ -20,6 +20,7 @@ from ephi.release_slots import (  # noqa: E402
     ReleaseSlotFailure,
     _finalize_state,
     _slot_environment,
+    _slot_location_identity,
     _state_body,
     initialize,
     main,
@@ -72,23 +73,50 @@ class ReleaseSlotStateTests(unittest.TestCase):
     def test_initialize_register_select_and_rollback_increment_once(self):
         initial = self._initialize()
         self.assertEqual((initial["generation"], initial["current_slot_id"], initial["previous_slot_id"]), (0, "slot-a", None))
+        self.assertRegex(initial["slots"]["slot-a"]["slot_location_id"], r"^[0-9a-f]{64}$")
+        self.assertEqual(initial["slots"]["slot-a"]["slot_location_id"], _slot_location_identity(self.slot_a))
         registered = self._register_b()
         self.assertEqual(registered["generation"], 1)
+        self.assertEqual(registered["slots"]["slot-b"]["slot_location_id"], _slot_location_identity(self.slot_b))
+        self.assertNotEqual(
+            registered["slots"]["slot-a"]["slot_location_id"],
+            registered["slots"]["slot-b"]["slot_location_id"],
+        )
         with patch("ephi.release_slots._run_preflight", return_value=_preflight()):
             selected = select(self.state, 1, "slot-b", self.slot_b, self.root)
         self.assertEqual((selected["generation"], selected["current_slot_id"], selected["previous_slot_id"]), (2, "slot-b", "slot-a"))
+        self.assertEqual(selected["last_transition_slot_id"], "slot-b")
+        self.assertEqual(selected["last_transition_slot_location_id"], registered["slots"]["slot-b"]["slot_location_id"])
+        wrong_rollback_state = self.state.read_bytes()
+        with patch("ephi.release_slots._run_preflight") as preflight:
+            with self.assertRaisesRegex(ReleaseSlotFailure, "SLOT_LOCATION_MISMATCH"):
+                rollback(self.state, 2, self.slot_b, self.root)
+        preflight.assert_not_called()
+        self.assertEqual(self.state.read_bytes(), wrong_rollback_state)
         with patch("ephi.release_slots._run_preflight", return_value=_preflight()):
             rolled_back = rollback(self.state, 2, self.slot_a, self.root)
         self.assertEqual((rolled_back["generation"], rolled_back["current_slot_id"], rolled_back["previous_slot_id"]), (3, "slot-a", "slot-b"))
         self.assertEqual(rolled_back["slots"]["slot-a"]["release_identity_sha256"], IDENTITY_A)
         self.assertEqual(rolled_back["slots"]["slot-b"]["release_identity_sha256"], IDENTITY_A)
         self.assertEqual(rolled_back["last_transition_type"], "ROLLBACK")
+        self.assertEqual(rolled_back["last_transition_slot_id"], "slot-a")
+        self.assertEqual(rolled_back["last_transition_slot_location_id"], initial["slots"]["slot-a"]["slot_location_id"])
         self.assertRegex(rolled_back["last_transition_identity"], r"^[0-9a-f]{64}$")
         self.assertEqual(read_selection(self.state), rolled_back)
         serialized = self.state.read_text(encoding="utf-8")
         self.assertNotIn(str(self.slot_a), serialized)
         self.assertNotIn(str(self.slot_b), serialized)
         self.assertNotIn("postgresql://", serialized)
+        output = io.StringIO()
+        with patch("sys.stdout", output):
+            self.assertEqual(main(["read", "--state-file", str(self.state)]), 0)
+        cli_report = json.loads(output.getvalue())
+        self.assertNotIn(str(self.slot_a), json.dumps(cli_report))
+        self.assertNotIn(str(self.slot_b), json.dumps(cli_report))
+        self.assertEqual(
+            cli_report["slots"]["slot-a"]["slot_location_id"],
+            initial["slots"]["slot-a"]["slot_location_id"],
+        )
 
     def test_competing_writers_with_one_generation_commit_only_one_transition(self):
         self._initialize()
@@ -131,6 +159,60 @@ class ReleaseSlotStateTests(unittest.TestCase):
                 verify(self.state, 0, "slot-a", self.slot_a, self.root)
         self.assertEqual(self.state.read_bytes(), before)
         self.assertEqual(read_selection(self.state)["generation"], 0)
+
+    def test_correct_registered_root_verifies_and_preserves_location_binding(self):
+        self._initialize()
+        self._register_b()
+        with patch("ephi.release_slots._run_preflight", return_value=_preflight()):
+            verified = verify(self.state, 1, "slot-b", self.slot_b, self.root)
+        self.assertEqual(verified["generation"], 2)
+        self.assertEqual(verified["last_transition_slot_id"], "slot-b")
+        self.assertEqual(verified["last_transition_slot_location_id"], _slot_location_identity(self.slot_b))
+
+    def test_duplicate_location_registration_fails_without_mutation(self):
+        self._initialize()
+        before = self.state.read_bytes()
+        with patch("ephi.release_slots._run_preflight") as preflight:
+            with self.assertRaisesRegex(ReleaseSlotFailure, "SLOT_LOCATION_ALREADY_REGISTERED"):
+                register(self.state, 0, "slot-b", self.slot_a, self.root)
+        preflight.assert_not_called()
+        self.assertEqual(self.state.read_bytes(), before)
+
+    def test_verify_and_select_swapped_roots_fail_without_mutation(self):
+        self._initialize()
+        self._register_b()
+        before = self.state.read_bytes()
+        for operation in (verify, select):
+            with self.subTest(operation=operation.__name__):
+                with patch("ephi.release_slots._run_preflight") as preflight:
+                    with self.assertRaisesRegex(ReleaseSlotFailure, "SLOT_LOCATION_MISMATCH"):
+                        operation(self.state, 1, "slot-b", self.slot_a, self.root)
+                preflight.assert_not_called()
+                self.assertEqual(self.state.read_bytes(), before)
+
+    def test_malformed_and_tampered_location_identities_fail_state_validation(self):
+        self._initialize()
+        valid = self.state.read_bytes()
+        malformed = read_selection(self.state)
+        malformed["slots"]["slot-a"]["slot_location_id"] = "not-a-sha256"
+        body = {key: value for key, value in malformed.items() if key != "state_sha256"}
+        self.state.write_text(
+            json.dumps(_finalize_state(body), sort_keys=True, separators=(",", ":")) + "\n",
+            encoding="utf-8",
+        )
+        with self.assertRaisesRegex(ReleaseSlotFailure, "STATE_MALFORMED_OR_TAMPERED"):
+            read_selection(self.state)
+        self.state.write_bytes(valid)
+        tampered = read_selection(self.state)
+        tampered["slots"]["slot-a"]["slot_location_id"] = "f" * 64
+        tampered["last_transition_slot_location_id"] = "f" * 64
+        body = {key: value for key, value in tampered.items() if key != "state_sha256"}
+        self.state.write_text(
+            json.dumps(_finalize_state(body), sort_keys=True, separators=(",", ":")) + "\n",
+            encoding="utf-8",
+        )
+        with self.assertRaisesRegex(ReleaseSlotFailure, "STATE_MALFORMED_OR_TAMPERED"):
+            read_selection(self.state)
 
     def test_malformed_and_tampered_state_fail_closed(self):
         self._initialize()

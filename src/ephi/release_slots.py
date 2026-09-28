@@ -50,6 +50,8 @@ _REASONS = {
     "SLOT_ROOT_INVALID",
     "SLOT_NOT_REGISTERED",
     "SLOT_ALREADY_REGISTERED",
+    "SLOT_LOCATION_ALREADY_REGISTERED",
+    "SLOT_LOCATION_MISMATCH",
     "SLOT_ALREADY_CURRENT",
     "NO_PREVIOUS_SLOT",
     "SLOT_PREFLIGHT_FAILED",
@@ -110,6 +112,23 @@ def _safe_absolute_path(value: str | os.PathLike[str], reason: str, *, must_exis
     return absolute
 
 
+def _safe_slot_root(slot_root: str | os.PathLike[str]) -> Path:
+    root = _safe_absolute_path(slot_root, "SLOT_ROOT_INVALID", must_exist=True)
+    if not root.is_dir():
+        raise ReleaseSlotFailure("SLOT_ROOT_INVALID")
+    return root
+
+
+def _slot_location_identity(slot_root: str | os.PathLike[str]) -> str:
+    root = _safe_slot_root(slot_root)
+    return _digest(
+        {
+            "schema": "org.ephi.release-slot-location.v1",
+            "resolved_slot_root": os.fspath(root),
+        }
+    )
+
+
 def _state_path(value: str | os.PathLike[str], *, allow_missing: bool) -> Path:
     del allow_missing
     path = _safe_absolute_path(value, "STATE_PATH_INVALID", must_exist=False)
@@ -121,9 +140,7 @@ def _state_path(value: str | os.PathLike[str], *, allow_missing: bool) -> Path:
 
 
 def _slot_environment(slot_root: str | os.PathLike[str]) -> tuple[Path, Path, Path]:
-    root = _safe_absolute_path(slot_root, "SLOT_ROOT_INVALID", must_exist=True)
-    if not root.is_dir():
-        raise ReleaseSlotFailure("SLOT_ROOT_INVALID")
+    root = _safe_slot_root(slot_root)
     binary_dir = root / ("Scripts" if os.name == "nt" else "bin")
     python = binary_dir / ("python.exe" if os.name == "nt" else "python")
     if not python.is_file():
@@ -223,8 +240,13 @@ def _run_preflight(slot_root: str | os.PathLike[str], inputs_dir: str | os.PathL
     }
 
 
-def _slot_record(identity: dict[str, str], metadata: dict[str, str | None]) -> dict[str, object]:
+def _slot_record(
+    identity: dict[str, str],
+    metadata: dict[str, str | None],
+    slot_location_id: str,
+) -> dict[str, object]:
     return {
+        "slot_location_id": slot_location_id,
         "release_identity_sha256": identity["release_identity_sha256"],
         "install_inputs_sha256": identity["install_inputs_sha256"],
         "verification_state": "PASS",
@@ -240,6 +262,8 @@ def _state_body(
     slots: dict[str, object],
     transition_type: str,
     transition_identity: str,
+    transition_slot_id: str,
+    transition_slot_location_id: str,
 ) -> dict[str, object]:
     return {
         "schema": STATE_SCHEMA,
@@ -249,6 +273,8 @@ def _state_body(
         "slots": dict(sorted(slots.items())),
         "last_transition_type": transition_type,
         "last_transition_identity": transition_identity,
+        "last_transition_slot_id": transition_slot_id,
+        "last_transition_slot_location_id": transition_slot_location_id,
     }
 
 
@@ -263,6 +289,7 @@ def _transition_identity(
     previous: str | None,
     slot_id: str | None,
     release_identity: str | None,
+    slot_location_id: str,
 ) -> str:
     return _digest(
         {
@@ -272,6 +299,7 @@ def _transition_identity(
             "previous_slot_id": previous,
             "slot_id": slot_id,
             "release_identity_sha256": release_identity,
+            "slot_location_id": slot_location_id,
         }
     )
 
@@ -293,6 +321,8 @@ def _validate_state(value: object, raw: bytes) -> dict[str, Any]:
         "slots",
         "last_transition_type",
         "last_transition_identity",
+        "last_transition_slot_id",
+        "last_transition_slot_location_id",
         "state_sha256",
     }
     if set(value) != expected:
@@ -326,10 +356,21 @@ def _validate_state(value: object, raw: bytes) -> dict[str, Any]:
         raise ReleaseSlotFailure("STATE_MALFORMED_OR_TAMPERED")
     if previous is not None and (not isinstance(previous, str) or previous not in slots or previous == current):
         raise ReleaseSlotFailure("STATE_MALFORMED_OR_TAMPERED")
+    transition_slot_id = value["last_transition_slot_id"]
+    transition_location_id = value["last_transition_slot_location_id"]
+    if (
+        not isinstance(transition_slot_id, str)
+        or transition_slot_id not in slots
+        or not isinstance(transition_location_id, str)
+        or not _HEX_64.fullmatch(transition_location_id)
+    ):
+        raise ReleaseSlotFailure("STATE_MALFORMED_OR_TAMPERED")
+    location_ids: set[str] = set()
     for key, record in slots.items():
         if not isinstance(key, str) or not _SLOT_ID.fullmatch(key) or not isinstance(record, dict):
             raise ReleaseSlotFailure("STATE_MALFORMED_OR_TAMPERED")
         if set(record) != {
+            "slot_location_id",
             "release_identity_sha256",
             "install_inputs_sha256",
             "verification_state",
@@ -337,6 +378,10 @@ def _validate_state(value: object, raw: bytes) -> dict[str, Any]:
             "metadata",
         }:
             raise ReleaseSlotFailure("STATE_MALFORMED_OR_TAMPERED")
+        location_id = record["slot_location_id"]
+        if not isinstance(location_id, str) or not _HEX_64.fullmatch(location_id) or location_id in location_ids:
+            raise ReleaseSlotFailure("STATE_MALFORMED_OR_TAMPERED")
+        location_ids.add(location_id)
         for digest_name in ("release_identity_sha256", "install_inputs_sha256"):
             digest = record[digest_name]
             if digest is not None and (not isinstance(digest, str) or not _HEX_64.fullmatch(digest)):
@@ -349,6 +394,19 @@ def _validate_state(value: object, raw: bytes) -> dict[str, Any]:
         ):
             raise ReleaseSlotFailure("STATE_MALFORMED_OR_TAMPERED")
         _metadata(record["metadata"]["label"], record["metadata"]["change_id"])
+    if slots[transition_slot_id]["slot_location_id"] != transition_location_id:
+        raise ReleaseSlotFailure("STATE_MALFORMED_OR_TAMPERED")
+    expected_transition_identity = _transition_identity(
+        generation,
+        value["last_transition_type"],
+        current,
+        previous,
+        transition_slot_id,
+        slots[transition_slot_id]["release_identity_sha256"],
+        transition_location_id,
+    )
+    if value["last_transition_identity"] != expected_transition_identity:
+        raise ReleaseSlotFailure("STATE_MALFORMED_OR_TAMPERED")
     return value
 
 
@@ -474,6 +532,7 @@ def _transition(
         current = state["current_slot_id"]
         previous = state["previous_slot_id"]
         selected_id = _slot_id(slot_id) if slot_id is not None else None
+        selected_location_id: str | None = None
         if transition_type in {"REGISTER", "VERIFY", "SELECT", "ROLLBACK"}:
             if slot_root is None or inputs_dir is None:
                 raise ReleaseSlotFailure("INVALID_ARGUMENTS")
@@ -490,11 +549,17 @@ def _transition(
                     raise ReleaseSlotFailure("INVALID_ARGUMENTS")
             elif selected_id not in slots:
                 raise ReleaseSlotFailure("SLOT_NOT_REGISTERED")
-            if transition_type == "SELECT" and selected_id == current:
-                raise ReleaseSlotFailure("SLOT_ALREADY_CURRENT")
             if transition_type == "ROLLBACK":
                 assert selected_id is not None
+            selected_location_id = _slot_location_identity(slot_root)
+            if transition_type == "REGISTER":
+                if any(record["slot_location_id"] == selected_location_id for record in slots.values()):
+                    raise ReleaseSlotFailure("SLOT_LOCATION_ALREADY_REGISTERED")
             record = slots.get(selected_id)
+            if record is not None and record["slot_location_id"] != selected_location_id:
+                raise ReleaseSlotFailure("SLOT_LOCATION_MISMATCH")
+            if transition_type == "SELECT" and selected_id == current:
+                raise ReleaseSlotFailure("SLOT_ALREADY_CURRENT")
             current_record = slots.get(current) if current is not None else None
             if transition_type in {"SELECT", "ROLLBACK"} and current_record is not None:
                 if record["release_identity_sha256"] != current_record["release_identity_sha256"]:
@@ -509,9 +574,10 @@ def _transition(
                 slots[selected_id] = _slot_record(
                     identity,
                     metadata if metadata is not None else {"label": None, "change_id": None},
+                    selected_location_id,
                 )
             elif transition_type == "VERIFY":
-                slots[selected_id] = _slot_record(identity, record["metadata"])
+                slots[selected_id] = _slot_record(identity, record["metadata"], selected_location_id)
             if transition_type in {"SELECT", "ROLLBACK"}:
                 previous, current = current, selected_id
             new_generation = expected_generation + 1
@@ -525,8 +591,19 @@ def _transition(
             previous,
             selected_id,
             release_identity,
+            selected_location_id,
         )
-        body = _state_body(new_generation, current, previous, slots, transition_type, transition_id)
+        assert selected_id is not None and selected_location_id is not None
+        body = _state_body(
+            new_generation,
+            current,
+            previous,
+            slots,
+            transition_type,
+            transition_id,
+            selected_id,
+            selected_location_id,
+        )
         updated = _finalize_state(body)
         _atomic_write(path, updated, before_replace=before_replace)
         return updated
@@ -547,10 +624,21 @@ def initialize(
     with _state_lock(path):
         if path.exists() or path.is_symlink():
             raise ReleaseSlotFailure("STATE_MALFORMED_OR_TAMPERED")
+        location_id = _slot_location_identity(slot_root)
         identity = _run_preflight(slot_root, inputs_dir)
-        slots = {selected_id: _slot_record(identity, selected_metadata)}
-        transition_id = _transition_identity(0, "INITIALIZE", selected_id, None, selected_id, identity["release_identity_sha256"])
-        state = _finalize_state(_state_body(0, selected_id, None, slots, "INITIALIZE", transition_id))
+        slots = {selected_id: _slot_record(identity, selected_metadata, location_id)}
+        transition_id = _transition_identity(
+            0,
+            "INITIALIZE",
+            selected_id,
+            None,
+            selected_id,
+            identity["release_identity_sha256"],
+            location_id,
+        )
+        state = _finalize_state(
+            _state_body(0, selected_id, None, slots, "INITIALIZE", transition_id, selected_id, location_id)
+        )
         _atomic_write(path, state)
         return state
 
@@ -654,6 +742,8 @@ def _report(state: dict[str, Any], reason: str) -> dict[str, object]:
         "slots": state["slots"],
         "last_transition_type": state["last_transition_type"],
         "last_transition_identity": state["last_transition_identity"],
+        "last_transition_slot_id": state["last_transition_slot_id"],
+        "last_transition_slot_location_id": state["last_transition_slot_location_id"],
         "state_sha256": state["state_sha256"],
     }
 

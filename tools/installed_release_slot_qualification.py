@@ -23,7 +23,9 @@ from ephi.o9_operations import _artifact_inventory, _table_inventory
 from ephi.release_slots import (
     ReleaseSlotFailure,
     _finalize_state,
+    _slot_location_identity,
     _state_body,
+    _transition_identity,
     read_selection,
     select,
 )
@@ -159,9 +161,9 @@ def _environment_identity(root: Path, repository: Path, cwd: Path) -> dict[str, 
         and report.get("checkout_source") is False
     ):
         raise QualificationFailure("INSTALLED_IMPORT_IDENTITY_FAILED")
-    location_id = hashlib.sha256(os.fsencode(str(root.resolve()))).hexdigest()
+    location_id = _slot_location_identity(root)
     return {
-        "slot_root_location_id": location_id,
+        "slot_location_id": location_id,
         "imports_from_installed_distribution": True,
         "checkout_source_on_import_path": False,
     }
@@ -329,7 +331,7 @@ def run(args: argparse.Namespace) -> dict[str, object]:
         "slot-a": _environment_identity(slot_a, repository, cwd),
         "slot-b": _environment_identity(slot_b, repository, cwd),
     }
-    _require(slot_identity["slot-a"]["slot_root_location_id"] != slot_identity["slot-b"]["slot_root_location_id"], "SLOT_LOCATIONS_NOT_DISTINCT")
+    _require(slot_identity["slot-a"]["slot_location_id"] != slot_identity["slot-b"]["slot_location_id"], "SLOT_LOCATIONS_NOT_DISTINCT")
     preflight_a = _preflight(slot_a, inputs, cwd)
     preflight_b = _preflight(slot_b, inputs, cwd)
     for preflight in (preflight_a, preflight_b):
@@ -388,6 +390,10 @@ def run(args: argparse.Namespace) -> dict[str, object]:
         environment=env,
     )
     _require(init.get("reason_code") == "RELEASE_SLOT_INITIALIZED" and init.get("generation") == 0, "SLOT_INITIALIZATION_FAILED")
+    _require(
+        init["slots"]["slot-a"]["slot_location_id"] == slot_identity["slot-a"]["slot_location_id"],
+        "SLOT_INITIAL_LOCATION_BINDING_FAILED",
+    )
     registered = _invoke(
         cli_a,
         [
@@ -404,6 +410,11 @@ def run(args: argparse.Namespace) -> dict[str, object]:
         environment=env,
     )
     _require(registered.get("generation") == 1 and registered.get("current_slot_id") == "slot-a", "SLOT_REGISTRATION_FAILED")
+    _require(
+        registered["slots"]["slot-b"]["slot_location_id"] == slot_identity["slot-b"]["slot_location_id"]
+        and registered["slots"]["slot-a"]["slot_location_id"] != registered["slots"]["slot-b"]["slot_location_id"],
+        "SLOT_REGISTRATION_LOCATION_BINDING_FAILED",
+    )
 
     negatives: dict[str, object] = {}
     state_before_negative_controls = state_file.read_bytes()
@@ -466,6 +477,15 @@ def run(args: argparse.Namespace) -> dict[str, object]:
     )
     _require(state_file.read_bytes() == state_before_negative_controls, "NEGATIVE_CONTROL_MUTATED_STATE")
 
+    negatives["select_swapped_slot_root"] = _expected_failure(
+        cli_a,
+        ["select", *_slot_args(state_file), "--expected-generation", "1", "--slot-id", "slot-b", "--slot-root", str(slot_a), "--inputs-dir", str(inputs)],
+        cwd=cwd,
+        environment=env,
+        reason="SLOT_LOCATION_MISMATCH",
+    )
+    _require(state_file.read_bytes() == state_before_negative_controls, "SWAPPED_SELECT_ROOT_MUTATED_STATE")
+
     # Resolve the candidate slot's installed package without exposing its path.
     probe = subprocess.run(
         [str(_entry(slot_b, "python")), "-I", "-c", "import pathlib,ephi;print(pathlib.Path(ephi.__file__).resolve().parent)"],
@@ -497,13 +517,24 @@ def run(args: argparse.Namespace) -> dict[str, object]:
     valid_state = read_selection(state_file)
     forged_slots = dict(valid_state["slots"])
     forged_slots["slot-b"] = dict(forged_slots["slot-b"], release_identity_sha256="f" * 64)
+    forged_transition_identity = _transition_identity(
+        valid_state["generation"],
+        valid_state["last_transition_type"],
+        valid_state["current_slot_id"],
+        valid_state["previous_slot_id"],
+        valid_state["last_transition_slot_id"],
+        forged_slots[valid_state["last_transition_slot_id"]]["release_identity_sha256"],
+        valid_state["last_transition_slot_location_id"],
+    )
     body = _state_body(
         valid_state["generation"],
         valid_state["current_slot_id"],
         valid_state["previous_slot_id"],
         forged_slots,
         valid_state["last_transition_type"],
-        valid_state["last_transition_identity"],
+        forged_transition_identity,
+        valid_state["last_transition_slot_id"],
+        valid_state["last_transition_slot_location_id"],
     )
     fake_cross_release.write_bytes(json.dumps(_finalize_state(body), sort_keys=True, separators=(",", ":")).encode() + b"\n")
     cross_before = fake_cross_release.read_bytes()
@@ -547,6 +578,11 @@ def run(args: argparse.Namespace) -> dict[str, object]:
         environment=env,
     )
     _require(select_report.get("generation") == 2 and select_report.get("current_slot_id") == "slot-b" and select_report.get("previous_slot_id") == "slot-a", "SLOT_SELECTION_TRANSITION_FAILED")
+    _require(
+        select_report.get("last_transition_slot_id") == "slot-b"
+        and select_report.get("last_transition_slot_location_id") == slot_identity["slot-b"]["slot_location_id"],
+        "SLOT_SELECTION_LOCATION_BINDING_FAILED",
+    )
     selected_state = _invoke(cli_b, ["read", *_slot_args(state_file)], cwd=cwd, environment=env)
     _require(selected_state.get("state_sha256") == select_report.get("state_sha256"), "ATOMIC_REPLACEMENT_STATE_INVALID")
     observed_selected = read_selection(state_file)
@@ -559,6 +595,16 @@ def run(args: argparse.Namespace) -> dict[str, object]:
     _require(fingerprints_selected == fingerprints_before, "DURABLE_STATE_CHANGED_ON_SELECT")
     status = _status(slot_b, cwd, database_dsn, artifact_root, migration_sentinel)
 
+    selected_before_wrong_rollback = state_file.read_bytes()
+    negatives["rollback_swapped_slot_root"] = _expected_failure(
+        cli_b,
+        ["rollback", *_slot_args(state_file), "--expected-generation", "2", "--slot-root", str(slot_b), "--inputs-dir", str(inputs)],
+        cwd=cwd,
+        environment=env,
+        reason="SLOT_LOCATION_MISMATCH",
+    )
+    _require(state_file.read_bytes() == selected_before_wrong_rollback, "SWAPPED_ROLLBACK_ROOT_MUTATED_STATE")
+
     rollback_report = _invoke(
         cli_b,
         ["rollback", *_slot_args(state_file), "--expected-generation", "2", "--slot-root", str(slot_a), "--inputs-dir", str(inputs)],
@@ -566,6 +612,11 @@ def run(args: argparse.Namespace) -> dict[str, object]:
         environment=env,
     )
     _require(rollback_report.get("generation") == 3 and rollback_report.get("current_slot_id") == "slot-a" and rollback_report.get("previous_slot_id") == "slot-b", "SLOT_ROLLBACK_TRANSITION_FAILED")
+    _require(
+        rollback_report.get("last_transition_slot_id") == "slot-a"
+        and rollback_report.get("last_transition_slot_location_id") == slot_identity["slot-a"]["slot_location_id"],
+        "SLOT_ROLLBACK_LOCATION_BINDING_FAILED",
+    )
     rolled_back_state = _invoke(cli_a, ["read", *_slot_args(state_file)], cwd=cwd, environment=env)
     _require(rolled_back_state.get("state_sha256") == rollback_report.get("state_sha256"), "ATOMIC_REPLACEMENT_STATE_INVALID")
     observed_rollback = read_selection(state_file)
@@ -585,9 +636,18 @@ def run(args: argparse.Namespace) -> dict[str, object]:
             "identity": state["last_transition_identity"],
             "current_slot_id": state["current_slot_id"],
             "previous_slot_id": state["previous_slot_id"],
+            "slot_id": state["last_transition_slot_id"],
+            "slot_location_id": state["last_transition_slot_location_id"],
         }
         for state in (init, registered, select_report, rollback_report)
     ]
+    expected_transition_slots = ("slot-a", "slot-b", "slot-b", "slot-a")
+    for transition, expected_slot_id in zip(transitions, expected_transition_slots, strict=True):
+        _require(
+            transition["slot_id"] == expected_slot_id
+            and transition["slot_location_id"] == slot_identity[expected_slot_id]["slot_location_id"],
+            "TRANSITION_LOCATION_BINDING_FAILED",
+        )
     slots = {
         slot_id: {
             "release_identity_sha256": release_identity,

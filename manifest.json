@@ -51,8 +51,8 @@
     },
     {
       "path": ".github/workflows/package.yml",
-      "bytes": 44770,
-      "sha256": "304779a196d14e1abbc8dfc1939f57318b30e5f31b8632aea9901b1ba7cc95b5"
+      "bytes": 45522,
+      "sha256": "06ec781c34f13b3c37e93cd4453eb62150591fb8b203be5b8790dff342f05188"
     },
     {
       "path": ".gitignore",
@@ -186,8 +186,8 @@
     },
     {
       "path": "docs/Release_Install_Identity.md",
-      "bytes": 16739,
-      "sha256": "8efeb0ed38f8212af8221a8f240be6dbaab7099d1f8e6fbf181c3b5c65a47f66"
+      "bytes": 17251,
+      "sha256": "6e21a5f12d0fdb9c294843ff404d257c4152e5ed2d5b031900eb1ad4332a82c6"
     },
     {
       "path": "docs/nicegui_base/AGENT_WORKFLOW.md",
@@ -1987,7 +1987,7 @@
     {
       "path": "src/ephi/release_inventory.json",
       "bytes": 17558,
-      "sha256": "6f98937fee9c36dff6c6e361965f642dcd523ac9d4554b4f8337373ab8493a91"
+      "sha256": "3791a13b8bb371bdbd6140f9102608a4a137d3ae42217e4cca96056f3d961ab2"
     },
     {
       "path": "src/ephi/release_locks/build-py311.txt",
@@ -2036,8 +2036,8 @@
     },
     {
       "path": "src/ephi/release_slots.py",
-      "bytes": 28364,
-      "sha256": "35ef008426ff867b140d628529c227a92c6f641a8006fba446fed8b765a6d3ce"
+      "bytes": 31770,
+      "sha256": "b050c750de346410a80b3445e43b7f959b8588cbdd22e5bc0d6b4de95767942d"
     },
     {
       "path": "src/ephi/runtime_configuration_contract.json",
@@ -2336,8 +2336,8 @@
     },
     {
       "path": "tests/test_release_slots.py",
-      "bytes": 10564,
-      "sha256": "ebb5c6b5faa6aae5aa094884bc04818096e5c0ee48eb4194632f7c578ef30106"
+      "bytes": 15256,
+      "sha256": "770480394a9d7c03d838b4abc583921878aa22d6b79c96f88bc3de914635d132"
     },
     {
       "path": "tests/test_runtime_config_preflight.py",
@@ -2401,8 +2401,8 @@
     },
     {
       "path": "tools/installed_release_slot_qualification.py",
-      "bytes": 31023,
-      "sha256": "6c7fa3892933345d4560ca25f383c4c1fedb14bdf059c69ad36d2c3eedf29b29"
+      "bytes": 33949,
+      "sha256": "531c55b0f84c0919786f0479741a1609b819cc89ddc1044dc1b07b95b960309e"
     },
     {
       "path": "tools/o10_rendered_accessibility.py",

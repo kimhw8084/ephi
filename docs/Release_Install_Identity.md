@@ -259,19 +259,26 @@ The report does not emit an aggregate readiness claim.
 environment that passes its own `ephi-release-preflight`, bound to the exact
 `release_identity_sha256`. Its optional install-inputs identity and bounded
 operator `label`/`change_id` are recorded with a fixed verification state and
-reason. Slot roots and install-input locations are supplied to each command;
-the state never stores filesystem paths, commands, DSNs, credentials, provider
-settings, source mappings, or file inventories.
+reason. Each slot also records a `slot_location_id`: SHA-256 of a canonical
+projection containing the fully resolved, safety-checked installed slot root.
+This binds a slot ID to one installed environment without storing or emitting
+the private path. Registered location IDs are unique. Slot roots and
+install-input locations are supplied to each command; the state never stores
+filesystem paths, commands, DSNs, credentials, provider settings, source
+mappings, or file inventories.
 
 The state records a monotonic generation, current and previous slot IDs,
-registered slot identities, the last transition type, and a bounded
-transition identity. Canonical JSON plus a state digest detects malformed or
-un-rehashed edits. Mutations take a local state-file lock, require the caller's
-expected generation, and publish one complete file through atomic replacement.
+registered slot identities, the target slot and location identity for the last
+transition, and a bounded transition identity that includes that location.
+Canonical JSON plus a state digest detects malformed or unrehashed edits.
+Mutations take a local state-file lock, require the caller's expected
+generation, and publish one complete file through atomic replacement.
 Initialization starts at generation 0; each successful registration,
-verification, selection, or rollback advances it exactly once. A stale
-generation, failed preflight, invalid identity, malformed state, or failed
-pre-replacement write leaves the previous valid state in place.
+verification, selection, or rollback advances it exactly once. Verification,
+selection, and rollback require the supplied safe root to match the registered
+`slot_location_id` before preflight or state replacement. A stale generation,
+location mismatch, failed preflight, invalid identity, malformed state, or
+failed pre-replacement write leaves the previous valid state in place.
 
 For example, after installing two slots from the same prepared bundle:
 
