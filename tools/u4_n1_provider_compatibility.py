@@ -407,10 +407,10 @@ def _install_release(root: Path, inputs: Path, env_root: Path, external_cwd: Pat
     lock_dir = inputs / "locks"
     wheelhouse = inputs / "wheelhouse"
     commands = [
-        [str(python), "-m", "pip", "install", "--no-index", "--find-links", str(wheelhouse), "--require-hashes", "-r", str(lock_dir / "installer-py311.txt")],
+        [str(python), "-m", "pip", "install", "--no-compile", "--no-index", "--find-links", str(wheelhouse), "--require-hashes", "-r", str(lock_dir / "installer-py311.txt")],
         [str(python), "-m", "pip", "uninstall", "-y", "setuptools", "wheel"],
-        [str(python), "-m", "pip", "install", "--no-index", "--find-links", str(wheelhouse), "--require-hashes", "-r", str(lock_dir / f"runtime-py{suffix}.txt")],
-        [str(python), "-m", "pip", "install", "--no-index", "--find-links", str(wheelhouse), "--require-hashes", "-r", str(lock_dir / f"postgres-py{suffix}.txt")],
+        [str(python), "-m", "pip", "install", "--no-compile", "--no-index", "--find-links", str(wheelhouse), "--require-hashes", "-r", str(lock_dir / f"runtime-py{suffix}.txt")],
+        [str(python), "-m", "pip", "install", "--no-compile", "--no-index", "--find-links", str(wheelhouse), "--require-hashes", "-r", str(lock_dir / f"postgres-py{suffix}.txt")],
     ]
     for command in commands:
         _run(command, cwd=external_cwd, env=install_env, code="OFFLINE_EPHI_INSTALL_FAILED")
@@ -418,7 +418,7 @@ def _install_release(root: Path, inputs: Path, env_root: Path, external_cwd: Pat
     base_wheels = sorted(wheelhouse.glob("nicegui_base-*.whl"))
     if len(app_wheels) != 1 or len(base_wheels) != 1:
         raise QualificationFailure("RESTRICTED_RELEASE_WHEEL_INVALID")
-    _run([str(python), "-m", "pip", "install", "--no-index", "--no-deps", str(app_wheels[0]), str(base_wheels[0])], cwd=external_cwd, env=install_env, code="OFFLINE_EPHI_INSTALL_FAILED")
+    _run([str(python), "-m", "pip", "install", "--no-compile", "--no-index", "--no-deps", str(app_wheels[0]), str(base_wheels[0])], cwd=external_cwd, env=install_env, code="OFFLINE_EPHI_INSTALL_FAILED")
     if "PYTHONPATH" in install_env or "PYTHONHOME" in install_env:
         raise QualificationFailure("INSTALLED_ENVIRONMENT_PATH_CONTAMINATED")
     return bin_dir, install_env
@@ -487,6 +487,8 @@ def _installed_provider_inventory(python: Path, *, cwd: Path, env: dict[str, str
     if inventory.get("distribution") != PROVIDER_NAME or inventory.get("version") != "1.0.0":
         raise QualificationFailure("PROVIDER_DISTRIBUTION_OWNERSHIP_INVALID")
     paths = [str(item["path"]) for item in inventory["files"]]
+    if any(path.endswith(".pyc") or "/__pycache__/" in f"/{path}" for path in paths):
+        raise QualificationFailure("PROVIDER_INSTALL_BYTECODE_PRESENT")
     provider_files = [path for path in paths if "/examples/synthetic_downstream/" in f"/{path}"]
     if not provider_files or any("/ephi/" in f"/{path}" for path in provider_files):
         raise QualificationFailure("PROVIDER_DISTRIBUTION_OWNERSHIP_INVALID")
@@ -677,7 +679,7 @@ def _run_installed_release_qualification(
     provider_dist_before = _installed_distribution_inventory(bin_dir / "python", PROVIDER_NAME, cwd=external_cwd, env=install_env)
     if provider_dist_before is not None:
         raise QualificationFailure("PROVIDER_PREINSTALLED_BEFORE_PROOF")
-    _run([str(bin_dir / "python"), "-m", "pip", "install", "--no-index", "--no-deps", str(provider_wheel)], cwd=external_cwd, env=install_env, code="OFFLINE_PROVIDER_INSTALL_FAILED")
+    _run([str(bin_dir / "python"), "-m", "pip", "install", "--no-compile", "--no-index", "--no-deps", str(provider_wheel)], cwd=external_cwd, env=install_env, code="OFFLINE_PROVIDER_INSTALL_FAILED")
 
     contracts = _parse_cli(
         bin_dir / "ephi-downstream-preflight",
