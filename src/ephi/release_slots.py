@@ -139,7 +139,7 @@ def _slot_environment(slot_root: str | os.PathLike[str]) -> tuple[Path, Path, Pa
         # Standard venvs may link their interpreter to the system runtime.
         # The isolated probe below requires EPHI itself to resolve inside this
         # venv before the release preflight can run.
-        return root, python
+        return root, python, preflight
     try:
         python.resolve(strict=True).relative_to(root)
     except (OSError, ValueError) as exc:
