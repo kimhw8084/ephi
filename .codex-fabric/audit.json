@@ -1,0 +1,450 @@
+{
+  "accepted_at": "2026-09-28T15:50:16Z",
+  "changed_files": [
+    {
+      "additions": 95,
+      "deletions": 0,
+      "path": ".github/workflows/package.yml",
+      "status": "M"
+    },
+    {
+      "additions": 4,
+      "deletions": 0,
+      "path": "README.md",
+      "status": "M"
+    },
+    {
+      "additions": 14,
+      "deletions": 0,
+      "path": "docs/Release_Install_Identity.md",
+      "status": "M"
+    },
+    {
+      "additions": 46,
+      "deletions": 0,
+      "path": "docs/U4.1_N1_Provider_Compatibility.md",
+      "status": "A"
+    },
+    {
+      "additions": 81,
+      "deletions": 0,
+      "path": "environment/u4_n1_provider_compatibility_authority.json",
+      "status": "A"
+    },
+    {
+      "additions": 26,
+      "deletions": 6,
+      "path": "manifest.json",
+      "status": "M"
+    },
+    {
+      "additions": 113,
+      "deletions": 0,
+      "path": "tests/test_u4_provider_compatibility_authority.py",
+      "status": "A"
+    },
+    {
+      "additions": 1175,
+      "deletions": 0,
+      "path": "tools/u4_n1_provider_compatibility.py",
+      "status": "A"
+    }
+  ],
+  "checks": [
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short && rtk git diff --stat && rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git add environment/u4_n1_provider_compatibility_authority.json tests/test_u4_provider_compatibility_authority.py manifest.json && rtk git diff --cached --check && rtk git commit -m \"Correct frozen Base repository authority\"'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git rev-parse HEAD && rtk git rev-parse 'HEAD\"'^{tree}'\"' && rtk git status --porcelain --untracked-files=all\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest discover -s tests -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"EPHI_TEST_POSTGRES_DSN='postgresql://haewonkim@/postgres?host=/tmp' rtk python3 tools/u4_n1_provider_compatibility.py --artifact-root '/Users/haewonkim/.codex-fabric/jobs/CF-11c29e79a78473b8ac995e00.running/artifact-bridge' --work-root '/Users/haewonkim/.codex-fabric/jobs/CF-11c29e79a78473b8ac995e00.running/u4-work' --repository-root '/Users/haewonkim/.codex-fabric/worktrees/CF-11c29e79a78473b8ac995e00' --candidate-sha '4b30bb5823f557353675f8df547d6213e5d4dfbe' --candidate-tree '2e79f15c881387c44c853c2858dc231af6819ae3' --job-id 'CF-11c29e79a78473b8ac995e00'\"",
+      "exit_code": 2,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import json; from pathlib import Path; r=Path(\\\"/Users/haewonkim/.codex-fabric/jobs/CF-11c29e79a78473b8ac995e00.running/artifact-bridge/hashes\\\"); a=json.loads((r/\\\"provider-N-minus-1.json\\\").read_text()); b=json.loads((r/\\\"provider-N.json\\\").read_text()); print(\\\"identities\\\",a[\\\"identity_sha256\\\"],b[\\\"identity_sha256\\\"]); x={i[\\\"path\\\"]:i for i in a[\\\"files\\\"]}; y={i[\\\"path\\\"]:i for i in b[\\\"files\\\"]}; print(\\\"only_nminus1\\\",sorted(x.keys()-y.keys())); print(\\\"only_n\\\",sorted(y.keys()-x.keys())); print(\\\"different\\\",[(k,x[k],y[k]) for k in sorted(x.keys()&y.keys()) if x[k]\"'!=y[k]])'\"' && rtk ls -la '/Users/haewonkim/.codex-fabric/jobs/CF-11c29e79a78473b8ac995e00.running/artifact-bridge/hashes'\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg --files /Users/haewonkim/.codex-fabric/jobs | rtk rg 'u4-n1-provider-compatibility|provider-N|CF-11c29e79|artifact-bridge'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk ls -la '/Users/haewonkim/.codex-fabric/jobs/CF-11c29e79a78473b8ac995e00.running' && rtk ls -la '/Users/haewonkim/.codex-fabric/jobs/CF-11c29e79a78473b8ac995e00.running/artifact-bridge'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg --files '/Users/haewonkim/.codex-fabric/jobs/CF-11c29e79a78473b8ac995e00.running/artifact-bridge' && rtk cat '/Users/haewonkim/.codex-fabric/jobs/CF-11c29e79a78473b8ac995e00.running/artifact-bridge/u4-n1-provider-compatibility.json' && rtk ls -la '/Users/haewonkim/.codex-fabric/jobs/CF-11c29e79a78473b8ac995e00.running/u4-work/environments'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import json; from pathlib import Path; r=Path(\\\"/Users/haewonkim/.codex-fabric/jobs/CF-11c29e79a78473b8ac995e00.running/artifact-bridge/hashes\\\"); a=json.loads((r/\\\"provider-Nminus-1.json\\\").read_text()); b=json.loads((r/\\\"provider-N.json\\\").read_text()); print(\\\"identities\\\",a[\\\"identity_sha256\\\"],b[\\\"identity_sha256\\\"]); x={i[\\\"path\\\"]:i for i in a[\\\"files\\\"]}; y={i[\\\"path\\\"]:i for i in b[\\\"files\\\"]}; print(\\\"only_nminus1\\\",sorted(x.keys()-y.keys())); print(\\\"only_n\\\",sorted(y.keys()-x.keys())); print(\\\"different\\\",[(k,x[k],y[k]) for k in sorted(x.keys()&y.keys()) if x[k]\"'!=y[k]])'\"' \"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk mv '/Users/haewonkim/.codex-fabric/jobs/CF-11c29e79a78473b8ac995e00.running/artifact-bridge' '/Users/haewonkim/.codex-fabric/jobs/CF-11c29e79a78473b8ac995e00.running/u4-attempt-2-report' && rtk mv '/Users/haewonkim/.codex-fabric/jobs/CF-11c29e79a78473b8ac995e00.running/u4-work' '/Users/haewonkim/.codex-fabric/jobs/CF-11c29e79a78473b8ac995e00.running/u4-attempt-2-work'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest discover -s tests -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -m py_compile tools/u4_n1_provider_compatibility.py && rtk ruby -e 'require \\\"yaml\\\"; YAML.parse_file(\\\".github/workflows/package.yml\\\"); puts \\\"WORKFLOW_YAML_PASS\\\"' && rtk git diff --check && rtk git status --short\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git add tools/u4_n1_provider_compatibility.py manifest.json && rtk git diff --cached --check && rtk git commit -m \"Keep installed provider inventories path independent\"'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git rev-parse HEAD && rtk git rev-parse 'HEAD\"'^{tree}'\"' && rtk git status --porcelain --untracked-files=all && rtk git diff --name-only 0e073216adbdd717e183575f2a4a813f9fc4c265 HEAD -- src/ephi migrations examples/synthetic_downstream\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"EPHI_TEST_POSTGRES_DSN='postgresql://haewonkim@/postgres?host=/tmp' rtk python3 tools/u4_n1_provider_compatibility.py --artifact-root '/Users/haewonkim/.codex-fabric/jobs/CF-11c29e79a78473b8ac995e00.running/artifact-bridge' --work-root '/Users/haewonkim/.codex-fabric/jobs/CF-11c29e79a78473b8ac995e00.running/u4-work' --repository-root '/Users/haewonkim/.codex-fabric/worktrees/CF-11c29e79a78473b8ac995e00' --candidate-sha '044dac647d442976f82d41d834f4a784cae26508' --candidate-tree '9eb406f470b18601a66b7d3ff7e1d4d544e1f54a' --job-id 'CF-11c29e79a78473b8ac995e00'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import json; from pathlib import Path; root=Path(\\\"/Users/haewonkim/.codex-fabric/jobs/CF-11c29e79a78473b8ac995e00.running/artifact-bridge\\\"); r=json.loads((root/\\\"u4-n1-provider-compatibility.json\\\").read_text()); m=json.loads((root/\\\"artifact-manifest.json\\\").read_text()); summary={\\\"status\\\":r[\\\"status\\\"],\\\"candidate\\\":r[\\\"qualification\\\"][\\\"candidate\\\"],\\\"core_edit_prohibition\\\":r[\\\"core_edit_prohibition\\\"],\\\"provider\\\":{k:r[\\\"provider\\\"][k] for k in (\\\"distribution\\\",\\\"version\\\",\\\"source_commit\\\",\\\"source_manifest_sha256\\\",\\\"provider_artifact_same_bytes\\\",\\\"provider_rebuilt_for_n\\\",\\\"installed_file_inventory_identity_N-1\\\",\\\"installed_file_inventory_identity_N\\\")},\\\"safe_manifests\\\":r[\\\"public_abi\\\"],\\\"releases\\\":{k:{\\\"release_identity_sha256\\\":v[\\\"release_identity_sha256\\\"],\\\"contracts_only\\\":v[\\\"contracts_only\\\"][\\\"status\\\"],\\\"safe_composition\\\":v[\\\"safe_composition\\\"][\\\"status\\\"],\\\"ephi_before_after\\\":v[\\\"installed_ephi\\\"][\\\"before_after_byte_equal\\\"],\\\"migration_identity\\\":v[\\\"installed_ephi\\\"][\\\"migration_identity_sha256\\\"],\\\"composition_database\\\":v[\\\"composition_database\\\"]} for k,v in r[\\\"releases\\\"].items()},\\\"negative_controls\\\":r[\\\"negative_controls\\\"],\\\"remaining_u4_prerequisites\\\":r[\\\"remaining_u4_prerequisites\\\"],\\\"artifact_manifest_files\\\":len(m[\\\"files\\\"]),\\\"artifact_manifest_binds_report\\\":any(x[\\\"path\\\"]==\\\"u4-n1-provider-compatibility.json\\\" for x in m[\\\"files\\\"])}; print(json.dumps(summary,sort_keys=True))' && rtk git status --short --branch\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import hashlib,json; from pathlib import Path; root=Path(\\\"/Users/haewonkim/.codex-fabric/jobs/CF-11c29e79a78473b8ac995e00.running/artifact-bridge\\\"); m=json.loads((root/\\\"artifact-manifest.json\\\").read_text()); report=json.loads((root/\\\"u4-n1-provider-compatibility.json\\\").read_text()); assert m[\\\"candidate\\\"]==report[\\\"qualification\\\"][\\\"candidate\\\"]; assert all(hashlib.sha256((root/x[\\\"path\\\"]).read_bytes()).hexdigest()==x[\\\"sha256\\\"] and (root/x[\\\"path\\\"]).stat().st_size==x[\\\"byte_size\\\"] for x in m[\\\"files\\\"]); assert report[\\\"status\\\"]==\\\"PASS\\\"; assert report[\\\"provider_artifact_same_bytes\\\"] is True; assert report[\\\"core_edit_required\\\"] is False; assert report[\\\"upstream_package_files_modified\\\"]==[] and report[\\\"upstream_migration_files_modified\\\"]==[]; assert report[\\\"source_checkout_imports_used\\\"] is False; assert all(v[\\\"contracts_only\\\"][\\\"status\\\"]==\\\"PASS\\\" and v[\\\"safe_composition\\\"][\\\"status\\\"]==\\\"PASS\\\" for v in report[\\\"releases\\\"].values()); assert all(v[\\\"installed_ephi\\\"][\\\"before_after_byte_equal\\\"] for v in report[\\\"releases\\\"].values()); raw=b\\\"\\\".join(p.read_bytes() for p in root.rglob(\\\"*\\\") if p.is_file() and p.suffix in {\\\".json\\\",\\\".txt\\\"}).lower(); assert b\\\"postgresql://\\\" not in raw and b\\\"password\\\" not in raw; print(\\\"ARTIFACT_MANIFEST_HASHES_PASS\\\"); print(\\\"SECRET_SCAN_PASS\\\"); print(\\\"REPORT_PASS=\\\"+report[\\\"status\\\"]); print(\\\"MANIFEST_FILE_COUNT=\\\"+str(len(m[\\\"files\\\"])))' && rtk psql -d postgres -X -A -t -c \\\"select datname from pg_database where datname like 'ephi_u4_cf11c29e%'\\\" && rtk git diff --check && rtk git status --short --branch\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git remote get-url origin && rtk git ls-remote --heads origin refs/heads/codex/ephi-u4-n1-provider-compatibility-v1'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git push --set-upstream origin codex/ephi-u4-n1-provider-compatibility-v1'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk command -v gh && rtk git rev-parse HEAD'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk gh run list --repo kimhw8084/ephi --commit 044dac647d442976f82d41d834f4a784cae26508 --limit 10 --json databaseId,workflowName,event,status,conclusion,headSha,createdAt,url'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk ls -la /Users/haewonkim/.codex-fabric'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk ls -la /Users/haewonkim/.codex-fabric/bin && rtk ls -la /Users/haewonkim/.codex-fabric/libexec && rtk ls -la /Users/haewonkim/.codex-fabric/project-os-artifacts'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk cat /Users/haewonkim/.codex-fabric/bin/projectos-integrate-stdin && rtk sed -n '1,260p' /Users/haewonkim/.codex-fabric/libexec/projectos_integrate.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk ls -la /Users/haewonkim/.codex-fabric/project-os-artifacts && rtk ls -la /Users/haewonkim/.codex-fabric/evidence'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk cat /Users/haewonkim/.codex-fabric/bin/fabricctl && rtk ls -la /Users/haewonkim/.codex-fabric/carriers && rtk ls -la /Users/haewonkim/.codex-fabric/config'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk rg --files /Users/haewonkim/.codex-fabric/project-os-artifacts | head -120 && rtk rg --files /Users/haewonkim/.codex-fabric/evidence | head -100'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk cat '/Users/haewonkim/.codex-fabric/jobs/CF-9dd602658e4288c65a5c2a8a.executed/artifact-bridge/artifact-stage-receipt.json' && rtk cat '/Users/haewonkim/.codex-fabric/jobs/CF-9dd602658e4288c65a5c2a8a.executed/artifact-bridge/artifact-carrier.json'\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk du -ah '/Users/haewonkim/.codex-fabric/jobs/CF-11c29e79a78473b8ac995e00.running/artifact-bridge' | tail -30\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import hashlib,json,zipfile; from pathlib import Path; job=Path(\\\"/Users/haewonkim/.codex-fabric/jobs/CF-11c29e79a78473b8ac995e00.running\\\"); root=job/\\\"artifact-bridge\\\"; manifest=json.loads((root/\\\"artifact-manifest.json\\\").read_text()); paths=[\\\"artifact-manifest.json\\\",*[item[\\\"path\\\"] for item in manifest[\\\"files\\\"]]]; bundle=job/\\\"u4-n1-provider-compatibility-bundle.zip\\\"; z=zipfile.ZipFile(bundle,\\\"w\\\",compression=zipfile.ZIP_DEFLATED,compresslevel=9); \nfor rel in sorted(paths):\n data=(root/rel).read_bytes(); info=zipfile.ZipInfo(rel,date_time=(2026,9,28,0,0,0)); info.compress_type=zipfile.ZIP_DEFLATED; info.external_attr=0o100644<<16; z.writestr(info,data)\nz.close(); raw=bundle.read_bytes(); print(json.dumps({\\\"path\\\":str(bundle),\\\"byte_size\\\":len(raw),\\\"sha256\\\":hashlib.sha256(raw).hexdigest(),\\\"member_count\\\":len(paths)},sort_keys=True))'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import json, pathlib; root=pathlib.Path(\\\"/Users/haewonkim/.codex-fabric/jobs/CF-11c29e79a78473b8ac995e00.running/artifact-bridge\\\"); m=json.loads((root/\\\"artifact-manifest.json\\\").read_text()); print(json.dumps({\\\"root\\\":str(root),\\\"manifest\\\":m},separators=(\\\",\\\",\\\":\\\")))'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import json,pathlib; p=pathlib.Path(\\\"/Users/haewonkim/.codex-fabric/jobs/CF-11c29e79a78473b8ac995e00.running/artifact-bridge\\\"); print(json.dumps({\\\"report\\\":(p/\\\"u4-n1-provider-compatibility.json\\\").read_text(),\\\"manifest\\\":(p/\\\"artifact-manifest.json\\\").read_text()}))'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import json,subprocess,sys; print(\\\"READY\\\",flush=True); r=json.loads(sys.stdin.readline()); c=[\\\"curl\\\",\\\"--silent\\\",\\\"--show-error\\\",\\\"--fail-with-body\\\",\\\"-X\\\",\\\"POST\\\",r[\\\"url\\\"],\\\"-H\\\",\\\"authorization: \\\"+r[\\\"headers\\\"][\\\"authorization\\\"],\\\"-F\\\",\\\"file=@/Users/haewonkim/.codex-fabric/jobs/CF-11c29e79a78473b8ac995e00.running/u4-n1-provider-compatibility-bundle.zip\\\"]; p=subprocess.run(c,stdout=subprocess.PIPE,stderr=subprocess.PIPE); print(\\\"UPLOAD_HTTP_OK\\\" if p.returncode==0 else \\\"UPLOAD_HTTP_FAILED\\\",flush=True); sys.exit(p.returncode)'\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import json,subprocess,sys,termios; a=termios.tcgetattr(sys.stdin.fileno()); a[3]=a[3]&~termios.ECHO; termios.tcsetattr(sys.stdin.fileno(),termios.TCSANOW,a); print(\\\"READY\\\",flush=True); r=json.loads(sys.stdin.readline()); c=[\\\"curl\\\",\\\"--silent\\\",\\\"--show-error\\\",\\\"--fail-with-body\\\",\\\"-X\\\",\\\"POST\\\",r[\\\"url\\\"],\\\"-H\\\",\\\"authorization: \\\"+r[\\\"headers\\\"][\\\"authorization\\\"],\\\"-F\\\",\\\"file=@/Users/haewonkim/.codex-fabric/jobs/CF-11c29e79a78473b8ac995e00.running/u4-n1-provider-compatibility-bundle.zip\\\"]; p=subprocess.run(c,stdout=subprocess.PIPE,stderr=subprocess.PIPE); print(\\\"UPLOAD_HTTP_OK\\\" if p.returncode==0 else \\\"UPLOAD_HTTP_FAILED\\\",flush=True); sys.exit(p.returncode)'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "update_properties",
+      "type": "mcp_tool_call"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk shasum -a 256 artifact-bridge/u4-n1-provider-compatibility.json artifact-bridge/artifact-manifest.json u4-n1-provider-compatibility-bundle.zip && rtk git status --short && rtk git diff --check'",
+      "exit_code": 128,
+      "type": "command_execution"
+    },
+    {
+      "command": "update_properties",
+      "type": "mcp_tool_call"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk rg -n \"unittest|Full unit|unit test|discover\" .github/workflows/package.yml'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short && rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,70p' .github/workflows/package.yml\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import hashlib,json,pathlib; p=pathlib.Path(\\\"/Users/haewonkim/.codex-fabric/jobs/CF-11c29e79a78473b8ac995e00.running/artifact-bridge\\\"); names=[\\\"u4-n1-provider-compatibility.json\\\",\\\"artifact-manifest.json\\\"]; print(json.dumps({n:{\\\"bytes\\\":(p/n).stat().st_size,\\\"sha256\\\":hashlib.sha256((p/n).read_bytes()).hexdigest()} for n in names}))' && rtk shasum -a 256 /Users/haewonkim/.codex-fabric/jobs/CF-11c29e79a78473b8ac995e00.running/u4-n1-provider-compatibility-bundle.zip\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import hashlib,json,pathlib; p=pathlib.Path(\\\"/Users/haewonkim/.codex-fabric/jobs/CF-11c29e79a78473b8ac995e00.running/artifact-bridge\\\"); names=[\\\"u4-n1-provider-compatibility.json\\\",\\\"artifact-manifest.json\\\"]; print(json.dumps({n:{\\\"bytes\\\":(p/n).stat().st_size,\\\"sha256\\\":hashlib.sha256((p/n).read_bytes()).hexdigest()} for n in names}))' && rtk shasum -a 256 /Users/haewonkim/.codex-fabric/jobs/CF-11c29e79a78473b8ac995e00.running/u4-n1-provider-compatibility-bundle.zip\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import base64,pathlib,sys; p=pathlib.Path(\\\"/Users/haewonkim/.codex-fabric/jobs/CF-11c29e79a78473b8ac995e00.running/artifact-bridge/artifact-stage-receipt.json\\\"); p.write_bytes(base64.b64decode(sys.argv[1]))' 'ewogICJzY2hlbWEiOiAib3JnLnByb2plY3Rvcy5hcnRpZmFjdC1zdGFnZS1yZWNlaXB0LnYxIiwKICAicmVjZWlwdF9zdGF0dXMiOiAiU1VDQ0VTUyIsCiAgInN0YWdlZF9zdGF0dXMiOiAiU3RhZ2VkIiwKICAiYnJpZGdlIjogewogICAgIm5hbWUiOiAiUHJvamVjdCBPUyBBcnRpZmFjdCBSdW5zIiwKICAgICJtZWNoYW5pc20iOiAiaG9zdC1tYW5hZ2VkIE5vdGlvbiBjb25uZWN0b3I7IGJvdW5kZWQgZGlyZWN0IE5vdGlvbiBBUEkgZmFsbGJhY2siLAogICAgIm1hY2hpbmVfc3RhZ2VfcmVjb3JkZWQiOiB0cnVlCiAgfSwKICAicHJvamVjdCI6ICJlcGhpIiwKICAicmVxdWVzdCI6ICJlcGhpLXU0LW4xLXByb3ZpZGVyLWNvbXBhdGliaWxpdHktdjEiLAogICJvcGVyYXRpb24iOiAiQlVJTEQiLAogICJmYWJyaWNfam9iIjogIkNGLTExYzI5ZTc5YTc4NDczYjhhYzk5NWUwMCIsCiAgInRhcmdldF9icmFuY2giOiAibWFpbiIsCiAgImNhbmRpZGF0ZSI6IHsKICAgICJjb21taXQiOiAiMDQ0ZGFjNjQ3ZDQ0Mjk3NmY4MmQ0MWQ4MzRmNGE3ODRjYWUyNjUwOCIsCiAgICAidHJlZSI6ICI5ZWI0MDZmNDcwYjE4NjAxYTY2YjdkM2ZmN2UxZDRkNTQ0ZTFmNTRhIiwKICAgICJicmFuY2giOiAiY29kZXgvZXBoaS11NC1uMS1wcm92aWRlci1jb21wYXRpYmlsaXR5LXYxIgogIH0sCiAgIm5vdGlvbl9yZWNvcmQiOiB7CiAgICAicnVuX2lkIjogIkFSLTEwNyIsCiAgICAicGFnZV9pZCI6ICIzZTljNTY0Yy04ZDA0LTgxYzgtYWY0Yi1lMjRjYjU5ODFlMmUiLAogICAgInVybCI6ICJodHRwczovL2FwcC5ub3Rpb24uY29tL3AvM2U5YzU2NGM4ZDA0ODFjOGFmNGJlMjRjYjU5ODFlMmUiLAogICAgImxhc3RfcmVhZGJhY2tfYXQiOiAiMjAyNi0wOS0yOFQxNzozNTo1Mi45MjdaIgogIH0sCiAgImFydGlmYWN0cyI6IHsKICAgICJjb3VudCI6IDE4LAogICAgIm1hbmlmZXN0X3NoYTI1NiI6ICI5NmUwMWIyOWJjMGFlMWE1OTdiYjQ2OGEyODg5ODE5NGNiMDg2OWZkNmNhM2I0MzY3ODk0MDAyYTFiZjk4NjcxIiwKICAgICJidW5kbGVfc2hhMjU2IjogImJkZmIwNDAzMmRkOTRjN2RlYWQzNjFkZDk0Mzk3N2RhZDJhNjZmYjFlMDZiN2VjYmRkNzg3NjM5MzQ1Y2U1NTYiLAogICAgImJ1bmRsZV9ieXRlcyI6IG51bGwsCiAgICAidXBsb2FkZWRfYnl0ZXMiOiA5NzE4OSwKICAgICJtYW5pZmVzdF9maWxlIjogImFydGlmYWN0LW1hbmlmZXN0Lmpzb24iLAogICAgInN0YWdlZF9maWxlcyI6IFsKICAgICAgewogICAgICAgICJuYW1lIjogInU0LW4xLXByb3ZpZGVyLWNvbXBhdGliaWxpdHktYnVuZGxlLnppcCIsCiAgICAgICAgImJ5dGVzIjogbnVsbCwKICAgICAgICAic2hhMjU2IjogImJkZmIwNDAzMmRkOTRjN2RlYWQzNjFkZDk0Mzk3N2RhZDJhNjZmYjFlMDZiN2VjYmRkNzg3NjM5MzQ1Y2U1NTYiCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAibmFtZSI6ICJ1NC1uMS1wcm92aWRlci1jb21wYXRpYmlsaXR5Lmpzb24iLAogICAgICAgICJieXRlcyI6IDM4MTY5LAogICAgICAgICJzaGEyNTYiOiAiYmNjYTZjNTg3OTVkNmJkMTJlODkxM2M1ZTcyZDQ1MmRlMDQwNTIxNzNjOTcyNDgwNjlhNGJmZGNhZGM1NzU5YiIKICAgICAgfSwKICAgICAgewogICAgICAgICJuYW1lIjogImFydGlmYWN0LW1hbmlmZXN0Lmpzb24iLAogICAgICAgICJieXRlcyI6IDI3MjEsCiAgICAgICAgInNoYTI1NiI6ICI5NmUwMWIyOWJjMGFlMWE1OTdiYjQ2OGEyODg5ODE5NGNiMDg2OWZkNmNhM2I0MzY3ODk0MDAyYTFiZjk4NjcxIgogICAgICB9CiAgICBdCiAgfSwKICAiZXhhY3RfY2FuZGlkYXRlX2JpbmRpbmdfdmVyaWZpZWQiOiB0cnVlLAogICJyZWFkYmFja19jaGVja3MiOiB7CiAgICAic3RhdHVzIjogdHJ1ZSwKICAgICJwcm9qZWN0IjogdHJ1ZSwKICAgICJyZXF1ZXN0IjogdHJ1ZSwKICAgICJvcGVyYXRpb24iOiB0cnVlLAogICAgImZhYnJpY19qb2IiOiB0cnVlLAogICAgInNvdXJjZV9zaGEiOiB0cnVlLAogICAgInRyZWVfc2hhIjogdHJ1ZSwKICAgICJidW5kbGVfc2hhIjogdHJ1ZSwKICAgICJtYW5pZmVzdF9zaGEiOiB0cnVlLAogICAgImF0dGFjaG1lbnRfbmFtZXMiOiB0cnVlLAogICAgImFsbF93b3JrZmxvd19qb2JzX3N1Y2Nlc3MiOiB0cnVlCiAgfSwKICAid29ya2Zsb3dfcnVuIjogewogICAgImlkIjogMzY0NTczMDMwMDQsCiAgICAidXJsIjogImh0dHBzOi8vZ2l0aHViLmNvbS9raW1odzgwODQvZXBoaS9hY3Rpb25zL3J1bnMvMzY0NTczMDMwMDQiLAogICAgInN0YXR1cyI6ICJjb21wbGV0ZWQiLAogICAgImNvbmNsdXNpb24iOiAic3VjY2VzcyIsCiAgICAiaGVhZF9zaGEiOiAiMDQ0ZGFjNjQ3ZDQ0Mjk3NmY4MmQ0MWQ4MzRmNGE3ODRjYWUyNjUwOCIsCiAgICAiaGVhZF90cmVlIjogIjllYjQwNmY0NzBiMTg2MDFhNjZiN2QzZmY3ZTFkNGQ1NDRlMWY1NGEiLAogICAgImpvYnMiOiBbCiAgICAgIHsKICAgICAgICAibmFtZSI6ICJDYW5vbmljYWwgcmVwb3NpdG9yeSBiYXNlbGluZSIsCiAgICAgICAgInN0YXR1cyI6ICJjb21wbGV0ZWQiLAogICAgICAgICJjb25jbHVzaW9uIjogInN1Y2Nlc3MiCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAibmFtZSI6ICJQYWNrYWdlIGNoZWNrcyAoUHl0aG9uIDMuMTIpIiwKICAgICAgICAic3RhdHVzIjogImNvbXBsZXRlZCIsCiAgICAgICAgImNvbmNsdXNpb24iOiAic3VjY2VzcyIKICAgICAgfSwKICAgICAgewogICAgICAgICJuYW1lIjogIk84LjIgYnJvd3Nlci9zZXNzaW9uIHNlY3VyaXR5IGludGVncmF0aW9uIChQeXRob24gMy4xMykiLAogICAgICAgICJzdGF0dXMiOiAiY29tcGxldGVkIiwKICAgICAgICAiY29uY2x1c2lvbiI6ICJzdWNjZXNzIgogICAgICB9LAogICAgICB7CiAgICAgICAgIm5hbWUiOiAiT2ZmbGluZSByZWxlYXNlL2luc3RhbGwgcHJlZmxpZ2h0IChQeXRob24gMy4xMSkiLAogICAgICAgICJzdGF0dXMiOiAiY29tcGxldGVkIiwKICAgICAgICAiY29uY2x1c2lvbiI6ICJzdWNjZXNzIgogICAgICB9LAogICAgICB7CiAgICAgICAgIm5hbWUiOiAiT2ZmbGluZSByZWxlYXNlL2luc3RhbGwgcHJlZmxpZ2h0IChQeXRob24gMy4xMikiLAogICAgICAgICJzdGF0dXMiOiAiY29tcGxldGVkIiwKICAgICAgICAiY29uY2x1c2lvbiI6ICJzdWNjZXNzIgogICAgICB9LAogICAgICB7CiAgICAgICAgIm5hbWUiOiAiSW5zdGFsbGVkIHNhbWUtcmVsZWFzZSBzbG90IHNlbGVjdGlvbiBhbmQgcm9sbGJhY2sgKGV4YWN0IGNhbmRpZGF0ZSkiLAogICAgICAgICJzdGF0dXMiOiAiY29tcGxldGVkIiwKICAgICAgICAiY29uY2x1c2lvbiI6ICJzdWNjZXNzIgogICAgICB9LAogICAgICB7CiAgICAgICAgIm5hbWUiOiAiUG9zdGdyZVNRTCBjb21tYW5kL3dvcmtlci9yZWFkL2FydGlmYWN0L08zL081L081LjIvTzkgaW50ZWdyYXRpb24gKFB5dGhvbiAzLjEzKSIsCiAgICAgICAgInN0YXR1cyI6ICJjb21wbGV0ZWQiLAogICAgICAgICJjb25jbHVzaW9uIjogInN1Y2Nlc3MiCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAibmFtZSI6ICJPZmZsaW5lIHJlbGVhc2UvaW5zdGFsbCBwcmVmbGlnaHQgKFB5dGhvbiAzLjEzKSIsCiAgICAgICAgInN0YXR1cyI6ICJjb21wbGV0ZWQiLAogICAgICAgICJjb25jbHVzaW9uIjogInN1Y2Nlc3MiCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAibmFtZSI6ICJQYWNrYWdlIGNoZWNrcyAoUHl0aG9uIDMuMTQpIiwKICAgICAgICAic3RhdHVzIjogImNvbXBsZXRlZCIsCiAgICAgICAgImNvbmNsdXNpb24iOiAic3VjY2VzcyIKICAgICAgfSwKICAgICAgewogICAgICAgICJuYW1lIjogIk8xMC4xIHJlbmRlcmVkIGFjY2Vzc2liaWxpdHkgaW50ZWdyYXRpb24gKFB5dGhvbiAzLjEzKSIsCiAgICAgICAgInN0YXR1cyI6ICJjb21wbGV0ZWQiLAogICAgICAgICJjb25jbHVzaW9uIjogInN1Y2Nlc3MiCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAibmFtZSI6ICJJbnN0YWxsZWQgc3ludGhldGljIGludGVncmF0aW9uLWtpdCBxdWFsaWZpY2F0aW9uIChleGFjdCBjYW5kaWRhdGUpIiwKICAgICAgICAic3RhdHVzIjogImNvbXBsZXRlZCIsCiAgICAgICAgImNvbmNsdXNpb24iOiAic3VjY2VzcyIKICAgICAgfSwKICAgICAgewogICAgICAgICJuYW1lIjogIlBhY2thZ2UgY2hlY2tzIChQeXRob24gMy4xMSkiLAogICAgICAgICJzdGF0dXMiOiAiY29tcGxldGVkIiwKICAgICAgICAiY29uY2x1c2lvbiI6ICJzdWNjZXNzIgogICAgICB9LAogICAgICB7CiAgICAgICAgIm5hbWUiOiAiSW5zdGFsbGVkLXdoZWVsIFBvc3RncmVTUUwgMTggbWlncmF0aW9uIGFuZCBPOSByZWNvdmVyeSBxdWFsaWZpY2F0aW9uIChleGFjdCBjYW5kaWRhdGUpIiwKICAgICAgICAic3RhdHVzIjogImNvbXBsZXRlZCIsCiAgICAgICAgImNvbmNsdXNpb24iOiAic3VjY2VzcyIKICAgICAgfSwKICAgICAgewogICAgICAgICJuYW1lIjogIlBhY2thZ2UgY2hlY2tzIChQeXRob24gMy4xMykiLAogICAgICAgICJzdGF0dXMiOiAiY29tcGxldGVkIiwKICAgICAgICAiY29uY2x1c2lvbiI6ICJzdWNjZXNzIgogICAgICB9LAogICAgICB7CiAgICAgICAgIm5hbWUiOiAiRnJvemVuIE4tMSB0byBOIHByb3ZpZGVyIGNvbXBhdGliaWxpdHkgKGV4YWN0IGNhbmRpZGF0ZSBoZWFkKSIsCiAgICAgICAgInN0YXR1cyI6ICJjb21wbGV0ZWQiLAogICAgICAgICJjb25jbHVzaW9uIjogInN1Y2Nlc3MiCiAgICAgIH0KICAgIF0KICB9LAogICJzZWxmX2FjY2VwdGFuY2UiOiBmYWxzZSwKICAiYXVkaXRfYWNjZXB0ZWQiOiBmYWxzZSwKICAicHJvbW90ZWQiOiBmYWxzZSwKICAicHJvZHVjdGlvbiI6IGZhbHNlLAogICJjbGFpbV9ib3VuZGFyeSI6ICJTdGFnaW5nIHJlY2VpcHQgb25seS4gVGhpcyByZWNvcmQgZG9lcyBub3QgYWNjZXB0IGV2aWRlbmNlIG9yIHByb21vdGUgYSByZWxlYXNlLiIKfQo=' && rtk shasum -a 256 '/Users/haewonkim/.codex-fabric/jobs/CF-11c29e79a78473b8ac995e00.running/artifact-bridge/artifact-stage-receipt.json'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git rev-parse HEAD HEAD''^{tree} && rtk git branch --show-current'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import json,pathlib,hashlib,zipfile; r=pathlib.Path(\\\"/Users/haewonkim/.codex-fabric/jobs/CF-11c29e79a78473b8ac995e00.running/artifact-bridge\\\"); m=json.loads((r/\\\"artifact-manifest.json\\\").read_text()); q=json.loads((r/\\\"artifact-stage-receipt.json\\\").read_text()); p=json.loads((r/\\\"u4-n1-provider-compatibility.json\\\").read_text()); bad=[x[\\\"path\\\"] for x in m[\\\"files\\\"] if hashlib.sha256((r/x[\\\"path\\\"]).read_bytes()).hexdigest()\"'!=x[\"sha256\"]]; z=zipfile.ZipFile(\"/Users/haewonkim/.codex-fabric/jobs/CF-11c29e79a78473b8ac995e00.running/u4-n1-provider-compatibility-bundle.zip\"); assert not bad and z.testzip() is None and len(z.namelist())==19; assert q[\"receipt_status\"]==\"SUCCESS\" and q[\"candidate\"][\"commit\"]==m[\"candidate\"][\"commit\"] and q[\"candidate\"][\"tree\"]==m[\"candidate\"][\"tree\"]; print(json.dumps({\"manifest_files\":len(m[\"files\"]),\"file_hash_mismatches\":bad,\"zip_entries\":len(z.namelist()),\"receipt_status\":q[\"receipt_status\"],\"report_keys\":list(p.keys())}))'\"'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import json,pathlib; p=pathlib.Path(\\\"/Users/haewonkim/.codex-fabric/jobs/CF-11c29e79a78473b8ac995e00.running/artifact-bridge/u4-n1-provider-compatibility.json\\\"); d=json.loads(p.read_text()); print(json.dumps({k:d.get(k) for k in [\\\"status\\\",\\\"core_edit_required\\\",\\\"upstream_package_files_modified\\\",\\\"upstream_migration_files_modified\\\",\\\"provider_rebuilt_for_n\\\",\\\"provider_artifact_same_bytes\\\",\\\"source_checkout_imports_used\\\",\\\"claim_boundary\\\",\\\"remaining_u4_prerequisites\\\"]},separators=(\\\",\\\",\\\":\\\")))'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    }
+  ],
+  "codex": {
+    "cli_version": "codex-cli 0.157.0",
+    "configured_model": "gpt-6-luna",
+    "event_count": 566,
+    "provider_reported_model": null,
+    "reasoning_effort": "xhigh",
+    "terminal_type": "turn.completed",
+    "usage": {
+      "cache_hit_percent": 97.86,
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 31331072,
+      "fresh_input_tokens": 684518,
+      "input_tokens": 32015590,
+      "non_reasoning_output_tokens": 72516,
+      "output_tokens": 188380,
+      "reasoning_output_tokens": 115864,
+      "total_processed_tokens": 32203970
+    },
+    "warnings": []
+  },
+  "commits": [
+    {
+      "sha": "044dac647d442976f82d41d834f4a784cae26508",
+      "subject": "Keep installed provider inventories path independent"
+    },
+    {
+      "sha": "4b30bb5823f557353675f8df547d6213e5d4dfbe",
+      "subject": "Correct frozen Base repository authority"
+    },
+    {
+      "sha": "5191e8f34502b44df3c3718687fa744defadc5dd",
+      "subject": "Qualify frozen N-1 provider compatibility"
+    }
+  ],
+  "diff": {
+    "additions": 1554,
+    "changed_files": 8,
+    "commit_count": 3,
+    "deletions": 6
+  },
+  "error_code": null,
+  "evidence_manifest": {
+    "count": 5,
+    "items": [
+      {
+        "bytes": 31073,
+        "path": "README.md",
+        "sha256": "5b27bf93cae2fafdabff5f63da4ae61d27f66ccd1cbec15cd754a4ee0ac5d29b"
+      },
+      {
+        "bytes": 18105,
+        "path": "docs/Release_Install_Identity.md",
+        "sha256": "d6345656cf21e8ca80086dc003ebfb424e8fbb7c848e2d7b60954fcb3aff2006"
+      },
+      {
+        "bytes": 3005,
+        "path": "docs/U4.1_N1_Provider_Compatibility.md",
+        "sha256": "97e2f6e80b65b7e73a1691d5c373abcf48d2e0f24568c60ffc53963d874867eb"
+      },
+      {
+        "bytes": 3194,
+        "path": "environment/u4_n1_provider_compatibility_authority.json",
+        "sha256": "189059dd90646658111c43e888f0b37827dcc5a4b26e5cab9cfd047318211a2f"
+      },
+      {
+        "bytes": 95643,
+        "path": "manifest.json",
+        "sha256": "93acda9dfd5c8137136f08accb0e746d2d5e348855f480353693cc30323d3ea8"
+      }
+    ],
+    "version": 1
+  },
+  "evidence_publisher_release": "1.2.5-dashboard-controls-candidate",
+  "fabric_capture": {
+    "applied": false,
+    "paths_before": 0,
+    "transient_untracked_removed": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "fabric_release": "1.2.5-dashboard-controls-candidate",
+  "failure_class": null,
+  "finished_at": "2026-09-28T17:42:23Z",
+  "git": {
+    "base_is_ancestor": true,
+    "base_sha": "0e073216adbdd717e183575f2a4a813f9fc4c265",
+    "branch": "codex/ephi-u4-n1-provider-compatibility-v1",
+    "detached_verify": false,
+    "head_sha": "044dac647d442976f82d41d834f4a784cae26508",
+    "remote_exact_head": true,
+    "remote_head_sha": "044dac647d442976f82d41d834f4a784cae26508",
+    "target_branch": "main",
+    "target_drifted_since_acceptance": false,
+    "target_head_observed_after_execution": "0e073216adbdd717e183575f2a4a813f9fc4c265",
+    "work_branch": "codex/ephi-u4-n1-provider-compatibility-v1",
+    "worktree_clean": true
+  },
+  "instructions": {
+    "files": [
+      {
+        "bytes": 1458,
+        "path": "AGENTS.md",
+        "sha256": "4349f387a79d886ed1264604ff48c582698e539e08ed8fb2f9d8ab8fbf6f804a"
+      }
+    ],
+    "total_bytes": 1458,
+    "warning": null
+  },
+  "job_id": "CF-11c29e79a78473b8ac995e00",
+  "kind": "codex-fabric-audit-evidence",
+  "locator": {
+    "branch": "codex-fabric/evidence/ephi/ephi-u4-n1-provider-compatibility-v1",
+    "path": ".codex-fabric/audit.json",
+    "ref": "refs/heads/codex-fabric/evidence/ephi/ephi-u4-n1-provider-compatibility-v1"
+  },
+  "operation": "BUILD",
+  "policy": {
+    "environment_policy_sha256": "e077daca74297b3c30bee8989f00f8ca5338f7610b4d016a6c48db524205d064",
+    "fabric_release": "1.2.5-dashboard-controls-candidate",
+    "policy_sha256": "123615bf2f6e57dcac197e49ca98ceac59ada86a55e2c84445ea5d00812c0833",
+    "registry_sha256": "af81b8552f9d6a33847310e3c6bcd2d48401782b963a58efd2993e93570cb4aa"
+  },
+  "project_id": "ephi",
+  "recovery": {
+    "model_rerun_safe": false,
+    "recovery_required": false,
+    "retry_safe": false,
+    "retry_scope": null,
+    "worktree_retained": true
+  },
+  "request": "ephi-u4-n1-provider-compatibility-v1",
+  "schema_version": 1,
+  "started_at": "2026-09-28T15:50:16Z",
+  "status": "EXECUTED_CHANGE",
+  "timing": {
+    "execution_seconds": 6727,
+    "queue_seconds": 0,
+    "total_seconds": 6727
+  },
+  "transport": {
+    "bytes": 9160,
+    "envelope": "FABRIC/2",
+    "prompt_bytes": 8836,
+    "prompt_sha256": "d2ff0e3529138097ba68a85d5a657d7bad8d2da8675de07be22b9c2b267fc816",
+    "sha256": "11c29e79a78473b8ac995e00daaa24f6b2150bdcf44b06bd0901e198e9e44a64"
+  }
+}
