@@ -62,6 +62,11 @@ declared install range. CHG-287 adds a separately installed synthetic-only
 qualification payload and `ephi-qualify`; it is optional, is not selected by
 installation, and does not claim production readiness.
 
+CHG-295 adds `ephi-release-slot` for same-release selection metadata and
+rollback between separately installed, preflight-verified environments. It
+does not switch traffic, run migrations, restore PostgreSQL, or establish
+cross-release compatibility; see the [installed-release rollback runbook](operations/runbooks/installed-release-slot-rollback.md).
+
 ## Validate the repository offline
 
 No chat attachment, local source artifact, staged-source directory, application credential or network access is required for the normal repository checks:

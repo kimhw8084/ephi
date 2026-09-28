@@ -325,3 +325,20 @@ repository compatibility lane only. Candidate qualification is packaging and
 synthetic integration evidence. It does not claim real-family G02/G06, company
 identity/TLS, production-like G10 capacity, production RPO/RTO, G12, Port Gate,
 company deployment readiness, release promotion, or Production.
+
+## CHG-295 / U3.7 same-release slot mechanics
+
+The candidate adds the versioned local `ephi-release-slot` selection contract,
+installed-release rollback runbook, state-generation/CAS and atomic-replace
+regressions, and an exact-candidate installed rehearsal lane. Registration
+and every target verification reuse the installed `ephi-release-preflight`
+authority. The control file stores bounded local identities and operator
+metadata only; it does not persist slot paths or become a deployment,
+promotion, or Product state authority.
+
+The qualification boundary is same-release selection metadata only.
+Cross-release compatibility remains `NOT_QUALIFIED` for U4; this candidate
+does not claim schema downgrade, scientific/model rollback, traffic cutover,
+G12, Port Gate, release promotion, or Production. U3.7 remains an installed
+qualification candidate until the exact-head rehearsal report and required
+Artifact Bridge stage receipt are available.
