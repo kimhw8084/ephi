@@ -261,7 +261,7 @@ jobs:
         run: |
           candidate_sha="$(git rev-parse HEAD)"
           candidate_tree="$(git rev-parse 'HEAD^{tree}')"
-          artifact_root="$RUNNER_TEMP/ephi-u37-artifact-bridge"
+          artifact_root="$RUNNER_TEMP/ephi-u37-rehearsal-evidence"
           work_root="$RUNNER_TEMP/ephi-u37-work"
           mkdir -p "$artifact_root" "$work_root"
           external_cwd="$RUNNER_TEMP/ephi-u37-cwd"
@@ -308,7 +308,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ephi-u37-installed-release-slot-rehearsal
-          path: ${{ runner.temp }}/ephi-u37-artifact-bridge
+          path: ${{ runner.temp }}/ephi-u37-rehearsal-evidence
           if-no-files-found: error
 
   installed-synthetic-qualification:
