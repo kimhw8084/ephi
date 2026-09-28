@@ -252,6 +252,72 @@ family G02/G06 or audited G11; local browser evidence cannot satisfy G10.
 G12, Port Gate, release promotion, and Production remain pending or not run.
 The report does not emit an aggregate readiness claim.
 
+## Same-release installed slot selection (CHG-295 / U3.7)
+
+`ephi-release-slot` manages one small local control file using schema
+`org.ephi.release-slot-selection.v1`. A slot is one separately installed
+environment that passes its own `ephi-release-preflight`, bound to the exact
+`release_identity_sha256`. Its optional install-inputs identity and bounded
+operator `label`/`change_id` are recorded with a fixed verification state and
+reason. Slot roots and install-input locations are supplied to each command;
+the state never stores filesystem paths, commands, DSNs, credentials, provider
+settings, source mappings, or file inventories.
+
+The state records a monotonic generation, current and previous slot IDs,
+registered slot identities, the last transition type, and a bounded
+transition identity. Canonical JSON plus a state digest detects malformed or
+un-rehashed edits. Mutations take a local state-file lock, require the caller's
+expected generation, and publish one complete file through atomic replacement.
+Initialization starts at generation 0; each successful registration,
+verification, selection, or rollback advances it exactly once. A stale
+generation, failed preflight, invalid identity, malformed state, or failed
+pre-replacement write leaves the previous valid state in place.
+
+For example, after installing two slots from the same prepared bundle:
+
+```bash
+ephi-release-slot init \
+  --state-file /var/lib/ephi/release-selection.json \
+  --slot-id slot-a --slot-root /opt/ephi/slot-a --inputs-dir /approved/ephi-inputs \
+  --label primary --change-id CHG-295
+ephi-release-slot register \
+  --state-file /var/lib/ephi/release-selection.json --expected-generation 0 \
+  --slot-id slot-b --slot-root /opt/ephi/slot-b --inputs-dir /approved/ephi-inputs \
+  --label standby --change-id CHG-295
+ephi-release-slot read --state-file /var/lib/ephi/release-selection.json
+ephi-release-slot select \
+  --state-file /var/lib/ephi/release-selection.json --expected-generation 1 \
+  --slot-id slot-b --slot-root /opt/ephi/slot-b --inputs-dir /approved/ephi-inputs
+ephi-release-slot rollback \
+  --state-file /var/lib/ephi/release-selection.json --expected-generation 2 \
+  --slot-root /opt/ephi/slot-a --inputs-dir /approved/ephi-inputs
+```
+
+`verify` re-runs the target slot's installed release preflight and records one
+successful verification transition. `select` also runs target preflight and
+changes only the local selection file; `rollback` targets the recorded
+previous slot and applies the same identity check. Both operations are allowed
+only when the target and current slot have the same exact EPHI release
+identity. A different identity fails with
+`CROSS_RELEASE_COMPATIBILITY_NOT_QUALIFIED`. Other failures return bounded
+fixed reason codes; raw paths and preflight output are not returned.
+
+This metadata contract does not update a traffic router or application
+service, run a migration, restore a database, or change shared PostgreSQL or
+immutable-artifact storage. Accepted commands, receipts, audit events, outbox
+events, evidence, artifacts, source snapshots, value revisions, and workflow
+history remain under their existing authorities. PostgreSQL remains shared
+external state across slots.
+
+This is same-release slot selection mechanics only. It does not prove
+N-1-to-N compatibility, cross-release provider compatibility, schema
+downgrade, scientific/model rollback, or real traffic cutover. U4 owns
+cross-release compatibility and qualification. O9's isolated restore
+rehearsal remains a separate recovery operation; schema rollback remains
+unsupported. Release promotion, G12, Port Gate, target cutover, and Production
+are not supported by this slice. See the
+[installed-release rollback runbook](../operations/runbooks/installed-release-slot-rollback.md).
+
 ## Claim boundary
 
 The synthetic downstream package and U1 conformance tests remain the supported

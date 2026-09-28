@@ -14,6 +14,7 @@ immutable storage is unavailable.
 | [Projection/read inconsistency](projection-read-repair.md) | O2/O3 retained reads and projection repair |
 | [Isolated restore rehearsal](isolated-restore-rehearsal.md) | backup identity, restore, and reconciliation |
 | [O9.1 rollback boundary](rollback-boundary.md) | disabling tooling/evidence publication safely |
+| [Same-release installed release-slot rollback](installed-release-slot-rollback.md) | atomic release-selection metadata rollback with shared durable state |
 
 Qualification summary: generic health, backup identity, artifact verification,
 isolated restore, and reconciliation are the O9.1 scope. Authentic-family

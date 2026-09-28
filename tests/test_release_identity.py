@@ -50,6 +50,22 @@ from tools.o9_operations import _migration_identity  # noqa: E402
 
 
 class ReleaseInventoryTests(unittest.TestCase):
+    def test_u37_slot_claim_is_scoped_and_cross_release_remains_unqualified(self):
+        capabilities = build_release_inventory(ROOT)["capabilities"]
+        supported = {item["id"]: item for item in capabilities["supported"]}
+        unqualified = {item["id"]: item for item in capabilities["not_yet_qualified"]}
+        self.assertEqual(
+            supported["same-release-installed-slot-selection"],
+            {
+                "id": "same-release-installed-slot-selection",
+                "status": "IMPLEMENTED_CANDIDATE_QUALIFICATION_ONLY",
+                "authority": "ephi-release-slot",
+            },
+        )
+        self.assertEqual(unqualified["cross-release-slot-compatibility"]["status"], "NOT_QUALIFIED")
+        self.assertEqual(unqualified["n-1-to-n-compatibility"]["status"], "NOT_RUN")
+        self.assertEqual(unqualified["real-traffic-cutover"]["status"], "NOT_RUN")
+
     def test_runtime_release_identity_is_package_bound_and_contains_no_git_facts(self):
         identity = installed_release_identity()
         self.assertEqual(identity["release_identity_sha256"], build_release_inventory(ROOT)["release_identity_sha256"])
