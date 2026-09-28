@@ -290,6 +290,10 @@ jobs:
           assert report["slot_identities"]["slot-a"]["slot_root_location_id"] != report["slot_identities"]["slot-b"]["slot_root_location_id"]
           assert [row["generation"] for row in report["transitions"]] == [0, 1, 2, 3]
           assert [row["type"] for row in report["transitions"]] == ["INITIALIZE", "REGISTER", "SELECT", "ROLLBACK"]
+          assert report["transitions"][2]["current_slot_id"] == "slot-b"
+          assert report["transitions"][2]["previous_slot_id"] == "slot-a"
+          assert report["transitions"][3]["current_slot_id"] == "slot-a"
+          assert report["transitions"][3]["previous_slot_id"] == "slot-b"
           assert report["durable_fingerprints"]["all_equal"]
           assert report["operations_status_after_selection"]["read_only"]
           assert report["operations_status_after_selection"]["postgres_readiness_durability"] == "READY"
