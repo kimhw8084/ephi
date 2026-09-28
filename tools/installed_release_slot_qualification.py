@@ -583,6 +583,8 @@ def run(args: argparse.Namespace) -> dict[str, object]:
             "type": state["last_transition_type"],
             "generation": state["generation"],
             "identity": state["last_transition_identity"],
+            "current_slot_id": state["current_slot_id"],
+            "previous_slot_id": state["previous_slot_id"],
         }
         for state in (init, registered, select_report, rollback_report)
     ]

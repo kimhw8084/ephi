@@ -51,8 +51,8 @@
     },
     {
       "path": ".github/workflows/package.yml",
-      "bytes": 44476,
-      "sha256": "9e416ba5a92f218df697f66f60cdd114cf2a2f0aa0f93720029070783df79f59"
+      "bytes": 44770,
+      "sha256": "304779a196d14e1abbc8dfc1939f57318b30e5f31b8632aea9901b1ba7cc95b5"
     },
     {
       "path": ".gitignore",
@@ -2401,8 +2401,8 @@
     },
     {
       "path": "tools/installed_release_slot_qualification.py",
-      "bytes": 30907,
-      "sha256": "bd0ca27e3ffcc9aca5bc427f1723af20b8ef52a3b763169efaaef7c417df9cb9"
+      "bytes": 31023,
+      "sha256": "6c7fa3892933345d4560ca25f383c4c1fedb14bdf059c69ad36d2c3eedf29b29"
     },
     {
       "path": "tools/o10_rendered_accessibility.py",
