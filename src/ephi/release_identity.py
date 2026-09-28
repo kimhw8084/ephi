@@ -251,8 +251,16 @@ def _capability_claims() -> dict[str, object]:
                 "status": "IMPLEMENTED_CANDIDATE_QUALIFICATION_ONLY",
                 "authority": "ephi-release-preflight",
             },
+            {
+                "id": "same-release-installed-slot-selection",
+                "status": "IMPLEMENTED_CANDIDATE_QUALIFICATION_ONLY",
+                "authority": "ephi-release-slot",
+            },
         ],
         "not_yet_qualified": [
+            {"id": "cross-release-slot-compatibility", "status": "NOT_QUALIFIED"},
+            {"id": "n-1-to-n-compatibility", "status": "NOT_RUN"},
+            {"id": "real-traffic-cutover", "status": "NOT_RUN"},
             {"id": "real-family-g02-g06", "status": "NOT_RUN"},
             {"id": "company-identity-and-tls", "status": "NOT_RUN"},
             {"id": "production-like-capacity-g10", "status": "NOT_RUN"},

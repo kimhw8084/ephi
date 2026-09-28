@@ -26,6 +26,8 @@ jobs:
           python-version: ${{ matrix.python }}
       - name: Validate package and imported evidence
         run: python tools/check_package.py
+      - name: Parse package workflow YAML
+        run: ruby -e 'require "yaml"; YAML.parse_file(".github/workflows/package.yml")'
       - name: Check generated runtime configuration contract
         run: python tools/generate_runtime_configuration_contract.py --check
       - name: Check release/install inventory against its authorities
@@ -200,6 +202,114 @@ jobs:
           assert report['secret_sentinels_absent'] and report['non_repository_execution']
           print('INSTALLED_WHEEL_POSTGRESQL_18_O9_RECOVERY_PASS')
           PY
+
+  installed-release-slot-rehearsal:
+    name: Installed same-release slot selection and rollback (exact candidate)
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      EPHI_TEST_POSTGRES_DSN: postgresql://ephi_ci:ephi_ci_password@127.0.0.1:5432/ephi_ci
+    services:
+      postgres:
+        image: postgres:18.6
+        env:
+          POSTGRES_USER: ephi_ci
+          POSTGRES_PASSWORD: ephi_ci_password
+          POSTGRES_DB: ephi_ci
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U ephi_ci -d ephi_ci"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 20
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.13'
+      - name: Verify generated release and runtime configuration authorities
+        run: |
+          python tools/generate_release_inventory.py --check
+          python tools/generate_runtime_configuration_contract.py --check
+      - name: Prepare the exact candidate restricted install inputs
+        run: python tools/prepare_release_inputs.py --output-dir "$RUNNER_TEMP/ephi-u37-inputs"
+      - name: Install two isolated EPHI slots from the same immutable payload
+        run: |
+          inputs="$RUNNER_TEMP/ephi-u37-inputs"
+          for slot in slot-a slot-b; do
+            python -m venv "$RUNNER_TEMP/ephi-u37-$slot"
+            venv_python="$RUNNER_TEMP/ephi-u37-$slot/bin/python"
+            "$venv_python" -m pip install \
+              --no-index --find-links "$inputs/wheelhouse" --require-hashes \
+              -r "$inputs/locks/installer-py311.txt"
+            "$venv_python" -m pip uninstall -y setuptools wheel
+            "$venv_python" -m pip install \
+              --no-index --find-links "$inputs/wheelhouse" --require-hashes \
+              -r "$inputs/locks/runtime-py313.txt"
+            "$venv_python" -m pip install \
+              --no-index --find-links "$inputs/wheelhouse" --require-hashes \
+              -r "$inputs/locks/postgres-py313.txt"
+            "$venv_python" -m pip install --no-index --no-deps \
+              "$inputs"/wheelhouse/ephi-*.whl \
+              "$inputs"/wheelhouse/nicegui_base-*.whl
+          done
+      - name: Run decisive installed slot, PostgreSQL 18, and artifact rehearsal
+        run: |
+          candidate_sha="$(git rev-parse HEAD)"
+          candidate_tree="$(git rev-parse 'HEAD^{tree}')"
+          artifact_root="$RUNNER_TEMP/ephi-u37-artifact-bridge"
+          work_root="$RUNNER_TEMP/ephi-u37-work"
+          mkdir -p "$artifact_root" "$work_root"
+          external_cwd="$RUNNER_TEMP/ephi-u37-cwd"
+          mkdir -p "$external_cwd"
+          cd "$external_cwd"
+          "$RUNNER_TEMP/ephi-u37-slot-a/bin/python" \
+            "$GITHUB_WORKSPACE/tools/installed_release_slot_qualification.py" \
+            --slot-a-root "$RUNNER_TEMP/ephi-u37-slot-a" \
+            --slot-b-root "$RUNNER_TEMP/ephi-u37-slot-b" \
+            --inputs-dir "$RUNNER_TEMP/ephi-u37-inputs" \
+            --work-dir "$work_root" \
+            --artifact-dir "$artifact_root" \
+            --repository-root "$GITHUB_WORKSPACE" \
+            --candidate-sha "$candidate_sha" \
+            --candidate-tree "$candidate_tree" \
+            > /dev/null
+          python - "$artifact_root/release-slot-rehearsal.json" "$candidate_sha" "$candidate_tree" <<'PY'
+          import json
+          import sys
+
+          report = json.load(open(sys.argv[1], encoding="utf-8"))
+          assert report["status"] == "PASS", report
+          assert report["candidate"] == {"commit": sys.argv[2], "tree": sys.argv[3]}
+          assert report["slot_identities"]["slot-a"]["release_identity_sha256"] == report["release_identity_sha256"]
+          assert report["slot_identities"]["slot-b"]["release_identity_sha256"] == report["release_identity_sha256"]
+          assert report["slot_identities"]["slot-a"]["slot_root_location_id"] != report["slot_identities"]["slot-b"]["slot_root_location_id"]
+          assert [row["generation"] for row in report["transitions"]] == [0, 1, 2, 3]
+          assert [row["type"] for row in report["transitions"]] == ["INITIALIZE", "REGISTER", "SELECT", "ROLLBACK"]
+          assert report["durable_fingerprints"]["all_equal"]
+          assert report["operations_status_after_selection"]["read_only"]
+          assert report["operations_status_after_selection"]["postgres_readiness_durability"] == "READY"
+          assert report["selection_effects"]["schema_fixture_initialized_before_fingerprints"]
+          assert report["selection_effects"]["migration_command_invocations_during_slot_operations"] == 0
+          assert report["selection_effects"]["restore_invocations_during_slot_operations"] == 0
+          assert report["selection_effects"]["traffic_switched"] is False
+          assert report["selection_effects"]["provider_auto_selected"] is False
+          assert report["negative_controls"]["different_release_identity"]["qualification_state"] == "NOT_QUALIFIED"
+          assert report["negative_controls"]["stale_generation"]["status"] == "PASS"
+          assert report["atomicity"]["prior_state_byte_identical_and_readable"]
+          assert report["atomicity"]["one_valid_state_observed_after_each_replace"]
+          print("INSTALLED_SAME_RELEASE_SLOT_REHEARSAL_PASS")
+          PY
+      - name: Upload secret-safe release-slot rehearsal evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: ephi-u37-installed-release-slot-rehearsal
+          path: ${{ runner.temp }}/ephi-u37-artifact-bridge
+          if-no-files-found: error
 
   installed-synthetic-qualification:
     name: Installed synthetic integration-kit qualification (exact candidate)

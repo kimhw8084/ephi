@@ -51,8 +51,8 @@
     },
     {
       "path": ".github/workflows/package.yml",
-      "bytes": 38504,
-      "sha256": "aaa58aa44b6fb48f70953b60a3557d27be5f479579415fa34fd2a81618f34bc9"
+      "bytes": 44470,
+      "sha256": "69a1ac2a475dbd46610b044878caf8a1b3d572e9567c042cb9161434b7593b34"
     },
     {
       "path": ".gitignore",
@@ -141,8 +141,8 @@
     },
     {
       "path": "13_Package_Review.md",
-      "bytes": 24296,
-      "sha256": "8236c51fd8a0ea739549cd8db1b6816f9ca75a31169a95ce12f655eb0f70766c"
+      "bytes": 25248,
+      "sha256": "22a1d913d34efe1101a9ac69aa5d838cd72618b07389e9b384efa544ed93b5a7"
     },
     {
       "path": "AGENTS.md",
@@ -156,8 +156,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 30515,
-      "sha256": "647e1b80a6dc2ffbf97582099d481e7d93859d4e4da1f0e1a0d1433c3bb33bc9"
+      "bytes": 30869,
+      "sha256": "52f2b53faad7fe541f8f00d63f67be90a0645486af06b2f0b9ef71894f4365e8"
     },
     {
       "path": "app.py",
@@ -186,8 +186,8 @@
     },
     {
       "path": "docs/Release_Install_Identity.md",
-      "bytes": 12952,
-      "sha256": "4b4dd479cd79a50e415b472294e46498100fdc74d890b9c7a0dd381d9944c069"
+      "bytes": 16739,
+      "sha256": "8efeb0ed38f8212af8221a8f240be6dbaab7099d1f8e6fbf181c3b5c65a47f66"
     },
     {
       "path": "docs/nicegui_base/AGENT_WORKFLOW.md",
@@ -1621,13 +1621,18 @@
     },
     {
       "path": "operations/runbooks/README.md",
-      "bytes": 1288,
-      "sha256": "5818f66e177e5712db6d8fff6161889b190af31e083f8f773faf80fce8ae6640"
+      "bytes": 1446,
+      "sha256": "91c884b0de44fb01d904128e55b1e3ce7db2675fb4c726554b0fe97376c67e12"
     },
     {
       "path": "operations/runbooks/immutable-artifact-failure.md",
       "bytes": 976,
       "sha256": "18e25daed615764bd6fde50f22557d90f08c648ce11cedf4ebfe9c1b8a904a53"
+    },
+    {
+      "path": "operations/runbooks/installed-release-slot-rollback.md",
+      "bytes": 3747,
+      "sha256": "ce68be8da32b7eba378b1b923eba1d1f506477e2b642ded8fd92b8b1aed7ff15"
     },
     {
       "path": "operations/runbooks/isolated-restore-rehearsal.md",
@@ -1661,8 +1666,8 @@
     },
     {
       "path": "pyproject.toml",
-      "bytes": 1161,
-      "sha256": "88603d95b62cc1868973986e620ffc4ab13030570687ed78e60240732aa35774"
+      "bytes": 1207,
+      "sha256": "4888f651f359d2bd3ed7f1ca43776d6e88610889c58dbdacd684a4e162f00974"
     },
     {
       "path": "requirements-dev.txt",
@@ -1976,13 +1981,13 @@
     },
     {
       "path": "src/ephi/release_identity.py",
-      "bytes": 50886,
-      "sha256": "431f1ef380eb908dcce1bfeb5be2b32c69b43dec7fddc4eb3b77bce76080ed92"
+      "bytes": 51313,
+      "sha256": "4961478bfa6761eca46a009f7ca2302cd65f3365919ce01a885f8b8824339cbf"
     },
     {
       "path": "src/ephi/release_inventory.json",
-      "bytes": 17083,
-      "sha256": "ff1edd9b6af787f554c8435f9c7bf82f771622f617de7e03cf4278a0b3347b73"
+      "bytes": 17558,
+      "sha256": "0a75d0aeceea8bbb487b74a755d800e68790fbd2970edbb5559af4b402cccd65"
     },
     {
       "path": "src/ephi/release_locks/build-py311.txt",
@@ -2028,6 +2033,11 @@
       "path": "src/ephi/release_locks/runtime-py313.txt",
       "bytes": 136480,
       "sha256": "fb3347b40b8c4a88af5ecf237e746a485aeb8a6900c4336c1c708edc5ce2b43f"
+    },
+    {
+      "path": "src/ephi/release_slots.py",
+      "bytes": 28353,
+      "sha256": "8853acc8c1a32667755ed571fda0db764ca7e12fdf155906f6d68675e05488cf"
     },
     {
       "path": "src/ephi/runtime_configuration_contract.json",
@@ -2321,8 +2331,13 @@
     },
     {
       "path": "tests/test_release_identity.py",
-      "bytes": 14348,
-      "sha256": "f16069d7340f249bd68713e7976dbf2ec944df69a810016ff5515b8330f7677e"
+      "bytes": 15246,
+      "sha256": "dcd13eeeb1ef920fc5df3b79d233a603fdd9e443915e447875f6738e0469ecf4"
+    },
+    {
+      "path": "tests/test_release_slots.py",
+      "bytes": 9982,
+      "sha256": "faf57295e5141d6c17355c9797a1d7a38fc579958749de3e370a2883959f9e79"
     },
     {
       "path": "tests/test_runtime_config_preflight.py",
@@ -2383,6 +2398,11 @@
       "path": "tools/installed_o9_recovery_qualification.py",
       "bytes": 40779,
       "sha256": "7d923e6c826c838db9c5e3de4111bf1f7685e47bad60ae8992d6b737c3b3e92c"
+    },
+    {
+      "path": "tools/installed_release_slot_qualification.py",
+      "bytes": 30907,
+      "sha256": "bd0ca27e3ffcc9aca5bc427f1723af20b8ef52a3b763169efaaef7c417df9cb9"
     },
     {
       "path": "tools/o10_rendered_accessibility.py",
