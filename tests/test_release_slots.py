@@ -19,6 +19,7 @@ sys.path.insert(0, str(ROOT / "src"))
 from ephi.release_slots import (  # noqa: E402
     ReleaseSlotFailure,
     _finalize_state,
+    _slot_environment,
     _state_body,
     initialize,
     main,
@@ -203,6 +204,17 @@ class ReleaseSlotStateTests(unittest.TestCase):
         link.symlink_to(self.slot_a, target_is_directory=True)
         with self.assertRaisesRegex(ReleaseSlotFailure, "SLOT_ROOT_INVALID"):
             verify(self.state, 0, "slot-a", link, self.root)
+
+    def test_venv_interpreter_symlink_keeps_slot_local_preflight_entrypoint(self):
+        environment = self.root / "slot-c"
+        binary = environment / "bin"
+        binary.mkdir()
+        python = binary / "python"
+        python.symlink_to(sys.executable)
+        preflight = binary / "ephi-release-preflight"
+        preflight.write_text("#!/bin/sh\n", encoding="utf-8")
+        root, actual_python, actual_preflight = _slot_environment(environment)
+        self.assertEqual((root, actual_python, actual_preflight), (environment, python, preflight))
 
     def test_cli_failures_emit_fixed_secret_safe_reason_only(self):
         output = io.StringIO()
