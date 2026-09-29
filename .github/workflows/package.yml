@@ -1073,9 +1073,10 @@ jobs:
           assert n["commit"] == provider_authority["releases"]["N"]["integrated_commit"]
           assert n["tree"] == provider_authority["releases"]["N"]["integrated_tree"]
           assert n["release_identity_sha256"] == provider_authority["releases"]["N"]["release_identity_sha256"]
-          assert report["provider_compatibility_input"]["compatibility_wheel_sha256"] == provider_authority["provider_package"]["compatibility_wheel_sha256"]
-          assert report["provider_compatibility_input"]["wheel_sha256_verified_from_frozen_n_minus_1_inputs"] == provider_authority["provider_package"]["compatibility_wheel_sha256"]
-          assert report["provider_compatibility_input"]["provider_rebuilt_for_n_as_compatibility_input"] is False
+          assert report["provider_compatibility_authority"]["compatibility_wheel_sha256"] == provider_authority["provider_package"]["compatibility_wheel_sha256"]
+          assert report["provider_compatibility_authority"]["compatibility_wheel_consumed"] is False
+          assert report["provider_compatibility_authority"]["consumption_reason_code"] == "NO_PROVIDER_COMPOSITION_IN_U4_2"
+          assert report["provider_compatibility_authority"]["provider_rebuilt_for_n_as_compatibility_input"] is False
           assert report["postgres"]["major"] == 18
           assert report["migration"]["identity_sha256"] == provider_authority["migrations"]["identity_sha256"]
           assert report["migration"]["count"] == 11

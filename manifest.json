@@ -51,8 +51,8 @@
     },
     {
       "path": ".github/workflows/package.yml",
-      "bytes": 61719,
-      "sha256": "7bd72c2ede7cacdf13418782a3de60e1620961fb964f9f0d672731668b9fb654"
+      "bytes": 61770,
+      "sha256": "659676aed39ac843c551abdcca3250fed46ff724b5e9e226b9a12420c2acca89"
     },
     {
       "path": ".gitignore",
@@ -196,8 +196,8 @@
     },
     {
       "path": "docs/U4.2_N1_Durable_Upgrade_Restart.md",
-      "bytes": 3685,
-      "sha256": "2bb142fb5f3be4a11fa06d0fdd32f11fd8cfafbbd14b8548d03421692772af06"
+      "bytes": 3789,
+      "sha256": "abc54e2c8139beab536f61686bc92f9c3efd8eba8e0fb69268d349c7b7fb9f14"
     },
     {
       "path": "docs/nicegui_base/AGENT_WORKFLOW.md",
@@ -2511,8 +2511,8 @@
     },
     {
       "path": "tools/u4_n1_durable_upgrade_restart.py",
-      "bytes": 89130,
-      "sha256": "7cb3b49e214c39a21c81b4fa944bada84650ec17c09a4961a4e52fad2c4f875a"
+      "bytes": 87053,
+      "sha256": "0ffbcabc27e18317d46ced41d3e7615c283554207bdc90037767065ac17c437e"
     },
     {
       "path": "tools/u4_n1_provider_compatibility.py",

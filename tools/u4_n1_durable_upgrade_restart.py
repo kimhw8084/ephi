@@ -7,7 +7,7 @@ import argparse
 import hashlib
 import json
 import os
-from pathlib import Path, PurePosixPath
+from pathlib import Path
 import re
 import shutil
 import subprocess
@@ -838,30 +838,6 @@ def _prepare_release(root: Path, output: Path, external_cwd: Path, repository: P
     return report
 
 
-def _prepared_wheel(inputs: Path, distribution: str, expected_sha: str | None = None) -> tuple[Path, dict[str, object]]:
-    metadata = _read_json(inputs / "qualification" / "qualification_inputs.json", "RESTRICTED_INPUTS_INVALID")
-    artifacts = metadata.get("artifacts")
-    if not isinstance(artifacts, list):
-        raise QualificationFailure("RESTRICTED_INPUTS_INVALID")
-    matches = [item for item in artifacts if isinstance(item, dict) and item.get("distribution") == distribution]
-    if len(matches) != 1:
-        raise QualificationFailure("RESTRICTED_WHEEL_IDENTITY_INVALID")
-    item = matches[0]
-    relative = PurePosixPath(str(item.get("file", "")))
-    if relative.is_absolute() or ".." in relative.parts or not relative.as_posix().startswith("wheelhouse/"):
-        raise QualificationFailure("RESTRICTED_WHEEL_IDENTITY_INVALID")
-    wheel = inputs / "qualification" / Path(*relative.parts)
-    if not wheel.is_file() or wheel.is_symlink():
-        raise QualificationFailure("RESTRICTED_WHEEL_IDENTITY_INVALID")
-    raw = wheel.read_bytes()
-    digest = _sha256_bytes(raw)
-    if (len(raw) != item.get("byte_size") or digest != item.get("sha256")
-        or (expected_sha is not None and digest != expected_sha)):
-        raise QualificationFailure("RESTRICTED_WHEEL_IDENTITY_MISMATCH")
-    return wheel, {"distribution": distribution, "version": item.get("version"),
-                   "sha256": digest, "byte_size": len(raw)}
-
-
 def _install_release(inputs: Path, environment: Path, external_cwd: Path) -> tuple[Path, dict[str, str]]:
     if environment.exists():
         raise QualificationFailure("INSTALL_ENVIRONMENT_NOT_FRESH")
@@ -1011,11 +987,6 @@ def _run_qualification(args: argparse.Namespace) -> dict[str, object]:
             if _git(tree, "status", "--porcelain", "--untracked-files=all"):
                 raise QualificationFailure("FROZEN_WORKTREE_DIRTY_AFTER_PREPARATION")
         provider_authority = release_authority["provider_package"]
-        provider_wheel, provider_identity = _prepared_wheel(
-            inputs_root / "n-minus-1", str(provider_authority["distribution"]),
-            str(provider_authority["compatibility_wheel_sha256"]))
-        if provider_identity["version"] != provider_authority["version"]:
-            raise QualificationFailure("FROZEN_PROVIDER_VERSION_MISMATCH")
         installed: dict[str, Path] = {}
         install_envs: dict[str, dict[str, str]] = {}
         preflights: dict[str, dict[str, object]] = {}
@@ -1042,8 +1013,6 @@ def _run_qualification(args: argparse.Namespace) -> dict[str, object]:
             preflights[label] = report
             preflight_pids[label] = pid
             phase_pids[f"{label.lower().replace('-', '_')}_probe"] = probe_pid
-        if provider_wheel.parent != (inputs_root / "n-minus-1" / "qualification" / "wheelhouse"):
-            raise QualificationFailure("FROZEN_PROVIDER_WHEEL_INVALID")
         admin_dsn = os.environ.get("EPHI_U4_ADMIN_DSN", "").strip()
         if not admin_dsn:
             raise QualificationFailure("POSTGRES_ADMIN_DSN_REQUIRED")
@@ -1224,13 +1193,12 @@ def _run_qualification(args: argparse.Namespace) -> dict[str, object]:
         }
         _write_json(artifact_root / "migration_restart_summary.json", migration_summary)
         provider_info = {
-            "distribution": provider_identity["distribution"], "version": provider_identity["version"],
+            "distribution": provider_authority["distribution"], "version": provider_authority["version"],
             "compatibility_wheel_sha256": provider_authority["compatibility_wheel_sha256"],
             "source_release": provider_authority["source_release"],
-            "wheel_sha256_verified_from_frozen_n_minus_1_inputs": provider_identity["sha256"],
-            "installed_for_provider_composition": False,
+            "compatibility_wheel_consumed": False,
+            "consumption_reason_code": "NO_PROVIDER_COMPOSITION_IN_U4_2",
             "provider_rebuilt_for_n_as_compatibility_input": False,
-            "n_source_preparation_provider_wheel_used": False,
         }
         protected_paths = ("src/ephi/", "migrations/", "examples/synthetic_downstream/")
         candidate_protected = _git(repository, "diff", "--name-only", f"{base_commit}..{candidate_sha}", "--", *protected_paths).splitlines()
@@ -1264,7 +1232,7 @@ def _run_qualification(args: argparse.Namespace) -> dict[str, object]:
                       "release_identity_sha256": n["release_identity_sha256"],
                       "release_preflight": preflights["N"]},
             },
-            "provider_compatibility_input": provider_info,
+            "provider_compatibility_authority": provider_info,
             "postgres": {"version": db_identity["postgres_version"], "major": db_identity["postgres_major"],
                          "shared_database_identity_sha256": seed["database_identity_sha256"],
                          "same_database_across_n_minus_1_to_n": True},
