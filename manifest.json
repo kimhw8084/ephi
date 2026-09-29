@@ -51,8 +51,8 @@
     },
     {
       "path": ".github/workflows/package.yml",
-      "bytes": 51575,
-      "sha256": "14ab7e66dfee49bfc06b2cc003a215598b5c4f77bc499e59e86ce8d169db62ea"
+      "bytes": 51973,
+      "sha256": "0e7062b538a4731606d8f41e186e79dd5f904ef93f58e05aa96271d6262e2e83"
     },
     {
       "path": ".gitignore",
@@ -191,8 +191,8 @@
     },
     {
       "path": "docs/U4.1_N1_Provider_Compatibility.md",
-      "bytes": 3507,
-      "sha256": "462b6e142fde3471453e34a98b8eeb2b38d49e9fcd46f6911e1e0a0d408ecbd9"
+      "bytes": 3989,
+      "sha256": "6327c8c1577921ae6b7850eb72fd772fc4f1fa66d2835ffa42ca00a7fcba290d"
     },
     {
       "path": "docs/nicegui_base/AGENT_WORKFLOW.md",
@@ -366,8 +366,8 @@
     },
     {
       "path": "environment/u4_n1_provider_compatibility_authority.json",
-      "bytes": 3196,
-      "sha256": "0b25c6406ceb2c6f16738b1aef9173ac627d68bf2afca32a17cef6a37b0dded2"
+      "bytes": 3298,
+      "sha256": "a7129be0fc0f2aff0299eb4bb2caf690f6692bf0b2ef035c32f693c0c6202ee5"
     },
     {
       "path": "environment/w0_repo_baseline.json",
@@ -2361,8 +2361,8 @@
     },
     {
       "path": "tests/test_u4_provider_compatibility_authority.py",
-      "bytes": 9353,
-      "sha256": "fd3260f52eeb8c385e79b8b665bcd09752351f0c1a21a793d0053af0b3ca86df"
+      "bytes": 10556,
+      "sha256": "d7a494d80988340f442f24a7c5b88e6d9a9dac226824d29c41d304829d5570f4"
     },
     {
       "path": "tests/test_value_integrity.py",
@@ -2496,8 +2496,8 @@
     },
     {
       "path": "tools/u4_n1_provider_compatibility.py",
-      "bytes": 63054,
-      "sha256": "945a0cb559571074205bdff63bb9fd3459abe1757930d5d334da5473a8b1ec2d"
+      "bytes": 65913,
+      "sha256": "329ea8e7d7a4678899aade9bf5cbfb88274a8cedb17fa5d3b32f796e51a779ba"
     },
     {
       "path": "tools/w0_baseline.py",

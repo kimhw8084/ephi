@@ -164,6 +164,17 @@ def _provider_artifact(inputs: Path, expected_sha: str | None = None) -> tuple[P
     return wheel, {**item, "wheel_file": wheel.name, "sha256": _sha256_bytes(raw), "byte_size": len(raw)}, kit
 
 
+def _provided_provider_wheel(path_value: str, expected_name: str, expected_sha: str) -> tuple[Path, int]:
+    supplied = Path(path_value).expanduser()
+    if supplied.is_symlink() or not supplied.is_file() or supplied.name != expected_name:
+        raise QualificationFailure("PROVIDER_ARTIFACT_INVALID")
+    wheel = supplied.resolve()
+    size = wheel.stat().st_size
+    if _sha256_file(wheel) != expected_sha:
+        raise QualificationFailure("PROVIDER_ARTIFACT_IDENTITY_MISMATCH")
+    return wheel, size
+
+
 def _installed_distribution_inventory(
     python: Path,
     distribution: str,
@@ -929,8 +940,29 @@ def run_qualification(args: argparse.Namespace) -> int:
             if prep_reports[name].get("release_identity_sha256") != expected["release_identity_sha256"]:
                 raise QualificationFailure("RELEASE_INPUT_IDENTITY_MISMATCH")
 
-        n1_provider_wheel, provider_artifact, n1_provider_kit = _provider_artifact(input_dirs["N-1"])
+        n1_provider_wheel, n1_provider_artifact, n1_provider_kit = _provider_artifact(input_dirs["N-1"])
         n_provider_wheel, n_provider_artifact, n_provider_kit = _provider_artifact(input_dirs["N"])
+        expected_provider_wheel_sha = authority.get("provider_package", {}).get("compatibility_wheel_sha256")
+        if not isinstance(expected_provider_wheel_sha, str) or not re.fullmatch(r"[0-9a-f]{64}", expected_provider_wheel_sha):
+            raise QualificationFailure("FROZEN_AUTHORITY_INVALID")
+        if args.provider_wheel:
+            compatibility_wheel, compatibility_wheel_size = _provided_provider_wheel(
+                args.provider_wheel, n1_provider_wheel.name, expected_provider_wheel_sha,
+            )
+            compatibility_input_source = "SUPPLIED_PINNED_N_MINUS_1_WHEEL"
+        else:
+            if n1_provider_artifact["sha256"] != expected_provider_wheel_sha:
+                raise QualificationFailure("PROVIDER_ARTIFACT_IDENTITY_MISMATCH")
+            compatibility_wheel = n1_provider_wheel
+            compatibility_wheel_size = int(n1_provider_artifact["byte_size"])
+            compatibility_input_source = "N_MINUS_1_RELEASE_PREPARATION_OUTPUT"
+        provider_artifact = {
+            **n1_provider_artifact,
+            "sha256": expected_provider_wheel_sha,
+            "byte_size": compatibility_wheel_size,
+            "wheel_file": compatibility_wheel.name,
+            "compatibility_input_source": compatibility_input_source,
+        }
         expected_provider_files = [row for row in source_manifest["files"] if str(row["path"]).endswith(".py")]
         for kit, expected in ((n1_provider_kit, releases["N-1"]), (n_provider_kit, releases["N"])):
             provider_facts = kit.get("provider")
@@ -946,17 +978,25 @@ def run_qualification(args: argparse.Namespace) -> int:
                 or provider_facts.get("content_files") != expected_provider_files
             ):
                 raise QualificationFailure("PROVIDER_SOURCE_IDENTITY_INVALID")
-        provider_output = artifact_root / "provider" / n1_provider_wheel.name
-        shutil.copyfile(n1_provider_wheel, provider_output)
-        if _sha256_file(provider_output) != provider_artifact["sha256"]:
+        provider_output = artifact_root / "provider" / compatibility_wheel.name
+        shutil.copyfile(compatibility_wheel, provider_output)
+        if _sha256_file(provider_output) != expected_provider_wheel_sha:
             raise QualificationFailure("PROVIDER_ARTIFACT_IDENTITY_MISMATCH")
         provider_artifact.update({
+            "file": f"provider/{provider_output.name}",
             "artifact_path": f"provider/{provider_output.name}",
             "build_source_release": "N-1",
             "build_source_commit": releases["N-1"]["integrated_commit"],
             "provider_rebuilt_for_n": False,
             "same_artifact_installed_on_both_releases": True,
         })
+        n1_prep_output = {
+            "status": "BUILT_BUT_NOT_USED_AS_COMPATIBILITY_INPUT" if compatibility_input_source == "SUPPLIED_PINNED_N_MINUS_1_WHEEL" else "USED_AS_COMPATIBILITY_INPUT",
+            "artifact_sha256": n1_provider_artifact["sha256"],
+            "artifact_byte_size": n1_provider_artifact["byte_size"],
+            "used_for_compatibility": compatibility_input_source == "N_MINUS_1_RELEASE_PREPARATION_OUTPUT",
+            "installed_as_compatibility_input": compatibility_input_source == "N_MINUS_1_RELEASE_PREPARATION_OUTPUT",
+        }
         unused_n_prep = {
             "status": "BUILT_BY_N_RELEASE_INPUT_TOOL_NOT_INSTALLED",
             "artifact_sha256": n_provider_artifact["sha256"],
@@ -971,6 +1011,7 @@ def run_qualification(args: argparse.Namespace) -> int:
             "version": "1.0.0",
             "entrypoint": PROVIDER_ENTRYPOINT,
             "installed_artifact": provider_artifact,
+            "n_minus_1_release_preparation_tool_output": n1_prep_output,
             "n_release_preparation_tool_output": unused_n_prep,
             "source_manifest_sha256": source_manifest["manifest_sha256"],
         })
@@ -1053,6 +1094,9 @@ def run_qualification(args: argparse.Namespace) -> int:
                 "entrypoint": PROVIDER_ENTRYPOINT,
                 "source_release": "N-1",
                 "source_commit": releases["N-1"]["integrated_commit"],
+                "compatibility_input_source": compatibility_input_source,
+                "compatibility_wheel_sha256": expected_provider_wheel_sha,
+                "n_minus_1_release_preparation_tool_output": n1_prep_output,
                 "source_manifest": source_manifest,
                 "source_manifest_sha256": source_manifest["manifest_sha256"],
                 "cross_release_source_file_manifests_byte_equal": manifests["N-1"]["files"] == manifests["N"]["files"],
@@ -1198,6 +1242,7 @@ def _argument_parser() -> argparse.ArgumentParser:
     parser.add_argument("--candidate-sha", required=True)
     parser.add_argument("--candidate-tree", required=True)
     parser.add_argument("--job-id", help="Live Project OS/Fabric job ID. Omit for generic CI evidence, which is marked UNBOUND_CI.")
+    parser.add_argument("--provider-wheel", help="Optional exact N-1 compatibility wheel; its SHA-256 must match the frozen authority.")
     return parser
 
 

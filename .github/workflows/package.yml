@@ -946,6 +946,8 @@ jobs:
           path, manifest_path, candidate_sha, candidate_tree = sys.argv[1:]
           report = json.load(open(path, encoding="utf-8"))
           manifest = json.load(open(manifest_path, encoding="utf-8"))
+          authority = json.load(open("environment/u4_n1_provider_compatibility_authority.json", encoding="utf-8"))
+          expected_provider_wheel_sha = authority["provider_package"]["compatibility_wheel_sha256"]
           assert report["status"] == "PASS", report
           assert report["compatibility_state"] == "PASS", report
           assert report["fabric_job"] is None, report
@@ -962,6 +964,8 @@ jobs:
           assert report["provider"]["version"] == "1.0.0"
           assert report["provider"]["provider_artifact_same_bytes"] is True
           assert report["provider"]["provider_rebuilt_for_n"] is False
+          assert report["provider"]["compatibility_wheel_sha256"] == expected_provider_wheel_sha
+          assert report["provider"]["wheel"]["sha256"] == expected_provider_wheel_sha
           assert report["public_abi"]["abi_id"] == "org.ephi.downstream"
           assert report["public_abi"]["abi_version"] == "1.0.0"
           assert report["public_abi"]["provider_contract_version"] == "1.0.0"

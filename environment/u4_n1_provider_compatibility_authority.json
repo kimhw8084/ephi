@@ -61,6 +61,7 @@
     "version": "1.0.0",
     "source_release": "N-1",
     "source_path": "examples/synthetic_downstream/",
+    "compatibility_wheel_sha256": "074ee0c1c0a8f224b508ef00151354e93476557c1a5500c7f34dbd7fdb65d5bc",
     "installation_model": "one-wheel-built-from-N-1-and-installed-byte-identically-into-N-1-and-N"
   },
   "remaining_u4_prerequisites": {

@@ -39,10 +39,15 @@ class U4FrozenAuthorityTests(unittest.TestCase):
         )
         self.assertTrue(authority["qualification"]["not_a_semantic_release_tag"])
         self.assertTrue(authority["qualification"]["not_a_production_release"])
+        self.assertEqual(authority["qualification"]["request"], "ephi-u4-n1-provider-compatibility-fix1")
         self.assertEqual(authority["nicegui_base"]["commit"], "000298562d6bcbf6df304edbd41b98b30fe4bfcf")
         self.assertEqual(authority["nicegui_base"]["repository"], "https://github.com/kimhw8084/nicegui-base.git")
         self.assertEqual(authority["migrations"]["identity_sha256"], "c661c7a41eae8cd2b637778998bee77b8ebdec4a2ef78639d3ed7f69b23b1e8b")
         self.assertEqual(authority["provider_package"]["version"], "1.0.0")
+        self.assertEqual(
+            authority["provider_package"]["compatibility_wheel_sha256"],
+            "074ee0c1c0a8f224b508ef00151354e93476557c1a5500c7f34dbd7fdb65d5bc",
+        )
         self.assertEqual(authority["public_downstream_abi"]["abi_version"], "1.0.0")
         self.assertEqual(authority["public_downstream_abi"]["provider_contract_version"], "1.0.0")
 
@@ -124,6 +129,7 @@ class U4EvidenceContractTests(unittest.TestCase):
             "--candidate-tree", "1" * 40,
         ])
         self.assertIsNone(args.job_id)
+        self.assertIsNone(args.provider_wheel)
         identity = u4._qualification_identity(args.job_id, "PASS")
         self.assertEqual(identity, {
             "compatibility_state": "PASS",
@@ -142,6 +148,18 @@ class U4EvidenceContractTests(unittest.TestCase):
         self.assertEqual(manifest["compatibility_state"], "PASS")
         self.assertEqual(manifest["fabric_job"], live_job)
         self.assertEqual(manifest["fabric_binding_state"], "BOUND")
+
+    def test_supplied_provider_wheel_must_match_expected_filename_and_digest(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            wheel = Path(temporary) / "frozen-provider.whl"
+            wheel.write_bytes(b"pinned N-1 provider wheel")
+            digest = u4._sha256_file(wheel)
+            selected, size = u4._provided_provider_wheel(str(wheel), wheel.name, digest)
+            self.assertEqual(selected, wheel.resolve())
+            self.assertEqual(size, len(b"pinned N-1 provider wheel"))
+            with self.assertRaises(u4.QualificationFailure) as caught:
+                u4._provided_provider_wheel(str(wheel), wheel.name, "0" * 64)
+        self.assertEqual(caught.exception.code, "PROVIDER_ARTIFACT_IDENTITY_MISMATCH")
 
     def test_invalid_explicit_job_fails_and_failure_report_is_non_pass(self):
         with tempfile.TemporaryDirectory() as temporary:
@@ -189,6 +207,7 @@ class U4EvidenceContractTests(unittest.TestCase):
         self.assertIn('report["compatibility_state"] == "PASS"', workflow)
         self.assertIn('report["fabric_binding_state"] == "UNBOUND_CI"', workflow)
         self.assertIn('manifest["fabric_binding_state"] == "UNBOUND_CI"', workflow)
+        self.assertIn('report["provider"]["wheel"]["sha256"] == expected_provider_wheel_sha', workflow)
 
 
 if __name__ == "__main__":
