@@ -1,0 +1,460 @@
+{
+  "accepted_at": "2026-09-29T00:53:55Z",
+  "changed_files": [
+    {
+      "additions": 107,
+      "deletions": 0,
+      "path": ".github/workflows/package.yml",
+      "status": "M"
+    },
+    {
+      "additions": 4,
+      "deletions": 0,
+      "path": "README.md",
+      "status": "M"
+    },
+    {
+      "additions": 14,
+      "deletions": 0,
+      "path": "docs/Release_Install_Identity.md",
+      "status": "M"
+    },
+    {
+      "additions": 61,
+      "deletions": 0,
+      "path": "docs/U4.1_N1_Provider_Compatibility.md",
+      "status": "A"
+    },
+    {
+      "additions": 82,
+      "deletions": 0,
+      "path": "environment/u4_n1_provider_compatibility_authority.json",
+      "status": "A"
+    },
+    {
+      "additions": 26,
+      "deletions": 6,
+      "path": "manifest.json",
+      "status": "M"
+    },
+    {
+      "additions": 214,
+      "deletions": 0,
+      "path": "tests/test_u4_provider_compatibility_authority.py",
+      "status": "A"
+    },
+    {
+      "additions": 1250,
+      "deletions": 0,
+      "path": "tools/u4_n1_provider_compatibility.py",
+      "status": "A"
+    }
+  ],
+  "checks": [
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import json,pathlib; p=pathlib.Path(\\\"/Users/haewonkim/.codex-fabric/jobs/CF-50688481b844ab5a15445c9d/artifact-bridge\\\"); r=json.loads((p/\\\"u4-n1-provider-compatibility.json\\\").read_text()); m=json.loads((p/\\\"artifact-manifest.json\\\").read_text()); out={\\\"report\\\":{\\\"status\\\":r.get(\\\"status\\\"),\\\"compatibility_state\\\":r.get(\\\"compatibility_state\\\"),\\\"fabric_job\\\":r.get(\\\"fabric_job\\\"),\\\"fabric_binding_state\\\":r.get(\\\"fabric_binding_state\\\"),\\\"candidate\\\":r.get(\\\"qualification\\\",{}).get(\\\"candidate\\\"),\\\"provider_wheel\\\":{k:r.get(\\\"provider\\\",{}).get(\\\"wheel\\\",{}).get(k) for k in (\\\"sha256\\\",\\\"byte_size\\\")},\\\"source_manifests_equal\\\":r.get(\\\"provider\\\",{}).get(\\\"cross_release_source_file_manifests_byte_equal\\\"),\\\"safe_manifest_identity_N-1\\\":r.get(\\\"public_abi\\\",{}).get(\\\"safe_manifest_identity_N-1\\\"),\\\"safe_manifest_identity_N\\\":r.get(\\\"public_abi\\\",{}).get(\\\"safe_manifest_identity_N\\\"),\\\"installed_provider_identity_N-1\\\":r.get(\\\"provider\\\",{}).get(\\\"installed_file_inventory_identity_N-1\\\"),\\\"installed_provider_identity_N\\\":r.get(\\\"provider\\\",{}).get(\\\"installed_file_inventory_identity_N\\\"),\\\"negative_controls\\\":{k:v.get(\\\"reason_code\\\") for k,v in r.get(\\\"negative_controls\\\",{}).items()},\\\"core_edit_required\\\":r.get(\\\"core_edit_prohibition\\\",{}).get(\\\"core_edit_required\\\"),\\\"checkout_imports_used\\\":r.get(\\\"installed_execution\\\",{}).get(\\\"checkout_pythonpath_or_sys_path_used\\\"),\\\"remaining\\\":r.get(\\\"remaining_u4_prerequisites\\\")},\\\"manifest\\\":{\\\"compatibility_state\\\":m.get(\\\"compatibility_state\\\"),\\\"fabric_job\\\":m.get(\\\"fabric_job\\\"),\\\"fabric_binding_state\\\":m.get(\\\"fabric_binding_state\\\"),\\\"candidate\\\":m.get(\\\"candidate\\\"),\\\"file_count\\\":len(m.get(\\\"files\\\",[]))}}; print(json.dumps(out,indent=2))'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import hashlib,json,pathlib; root=pathlib.Path(\\\"/Users/haewonkim/.codex-fabric/jobs/CF-11c29e79a78473b8ac995e00.executed/artifact-bridge\\\"); wheel=next((root/\\\"provider\\\").glob(\\\"*.whl\\\")); report=json.loads((root/\\\"u4-n1-provider-compatibility.json\\\").read_text()); inv=json.loads((root/\\\"provider/provider-artifact-inventory.json\\\").read_text()); receipt=json.loads((root/\\\"artifact-stage-receipt.json\\\").read_text()); print(json.dumps({\\\"wheel_path\\\":str(wheel),\\\"wheel_sha256\\\":hashlib.sha256(wheel.read_bytes()).hexdigest(),\\\"report_wheel_sha256\\\":report.get(\\\"provider\\\",{}).get(\\\"wheel\\\",{}).get(\\\"sha256\\\"),\\\"inventory_wheel_sha256\\\":inv.get(\\\"installed_artifact\\\",{}).get(\\\"sha256\\\"),\\\"receipt_keys\\\":sorted(receipt),\\\"receipt_status\\\":receipt.get(\\\"status\\\"),\\\"receipt_request\\\":receipt.get(\\\"request\\\"),\\\"receipt_operation\\\":receipt.get(\\\"operation\\\"),\\\"receipt_candidate\\\":receipt.get(\\\"candidate\\\")},indent=2))'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk rg -n \"074ee0c1c0a8f224b508ef00151354e93476557c1a5500c7f34dbd7fdb65d5bc|979a95c4f9237b817bc6fe65083289fa8ba39612901d4f8a73e071351fe5f155\" /Users/haewonkim/.codex-fabric/jobs/CF-11c29e79a78473b8ac995e00.executed/artifact-bridge'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy find /Users/haewonkim/.codex-fabric/jobs /Users/haewonkim/.codex-fabric/artifacts /Users/haewonkim/.codex-fabric/results -type f -name 'ephi_synthetic_downstream_qualification-1.0.0-py3-none-any.whl' -print\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import hashlib,pathlib; root=pathlib.Path(\\\"/Users/haewonkim/.codex-fabric/jobs\\\"); name=\\\"ephi_synthetic_downstream_qualification-1.0.0-py3-none-any.whl\\\"; paths=sorted(root.rglob(name)); print(\\\"\\\\n\\\".join(f\\\"{hashlib.sha256(p.read_bytes()).hexdigest()} {p}\\\" for p in paths))'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy curl --fail --silent --show-error --location --output /tmp/ephi-r1-u4-actions.zip -- 'https://sdmntprsouthcentralus.oaiusercontent.com/files/00000000-cac8-81f7-a752-84a9dda8eab5/raw?se=2026-09-29T01%3A27%3A22Z&sp=r&sv=2026-02-06&sr=b&scid=519d42b7-680f-4e9a-85eb-ebc5fe66309f&skoid=c953efd6-2ae8-41b4-a6d6-34b1475ac07c&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-09-29T01%3A05%3A07Z&ske=2026-09-30T01%3A05%3A07Z&sks=b&skv=2026-02-06&sig=LaJ4fcObblMe2esvX6HMSrm9ojgsp1iAiAgolYxRHx4%3D' && rtk python3 -c 'import hashlib,pathlib,zipfile; z=zipfile.ZipFile(\\\"/tmp/ephi-r1-u4-actions.zip\\\"); p=[n for n in z.namelist() if n.endswith(\\\".whl\\\") and \\\"synthetic_downstream\\\" in n]; print(\\\"provider_wheels=\\\"+str(p)); print(\\\"sha256=\\\"+hashlib.sha256(z.read(p[0])).hexdigest() if len(p)==1 else \\\"provider_wheel_count=\\\"+str(len(p)))'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import json,pathlib; r=json.loads(pathlib.Path(\\\"/Users/haewonkim/.codex-fabric/jobs/CF-50688481b844ab5a15445c9d/artifact-bridge/u4-n1-provider-compatibility.json\\\").read_text()); print(json.dumps(r[\\\"provider\\\"][\\\"wheel\\\"],indent=2)); print(json.dumps({\\\"N1\\\":r[\\\"provider\\\"][\\\"n_release_preparation_tool_output\\\"],\\\"N1_inventory\\\":r[\\\"releases\\\"][\\\"N-1\\\"][\\\"provider_installation\\\"],\\\"N_inventory\\\":r[\\\"releases\\\"][\\\"N\\\"][\\\"provider_installation\\\"]},indent=2))'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '45,80p' environment/u4_n1_provider_compatibility_authority.json\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '860,970p' tools/u4_n1_provider_compatibility.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n \\\"def _provider_artifact|def _provider_installation|_provider_artifact\\\\(\\\" tools/u4_n1_provider_compatibility.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,120p' tests/test_u4_provider_compatibility_authority.py && rtk sed -n '120,230p' tests/test_u4_provider_compatibility_authority.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '125,180p' tools/u4_n1_provider_compatibility.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '112,145p' tests/test_u4_provider_compatibility_authority.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m py_compile tools/u4_n1_provider_compatibility.py tests/test_u4_provider_compatibility_authority.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --name-only -- src/ephi migrations examples/synthetic_downstream && rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest tests.test_u4_provider_compatibility_authority -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest && rtk python3 -m unittest tests.test_u4_provider_compatibility_authority -v && rtk git diff --check && rtk git diff --name-only -- src/ephi migrations examples/synthetic_downstream && rtk git status --short'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git add .github/workflows/package.yml docs/U4.1_N1_Provider_Compatibility.md environment/u4_n1_provider_compatibility_authority.json manifest.json tests/test_u4_provider_compatibility_authority.py tools/u4_n1_provider_compatibility.py && rtk git commit -m \"Pin frozen N-1 provider wheel identity\" && rtk git push origin codex/ephi-u4-n1-provider-compatibility-fix1 && rtk git status --short --branch && rtk git rev-parse HEAD HEAD''^{tree}'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nimport hashlib\nimport os\nfrom pathlib import Path\nimport zipfile\n\njob_root = Path('/Users/haewonkim/.codex-fabric/jobs/CF-50688481b844ab5a15445c9d')\nattempt_root = job_root / 'u4-attempt-rebuilt-wheel'\nartifact_root = job_root / 'artifact-bridge'\nwork_root = job_root / 'u4-work'\nassert not attempt_root.exists()\nattempt_root.mkdir()\nos.rename(artifact_root, attempt_root / 'artifact-bridge')\nos.rename(work_root, attempt_root / 'work')\nprovider_inputs = job_root / 'provider-inputs'\nprovider_inputs.mkdir()\narchive = zipfile.ZipFile('/tmp/ephi-r1-u4-actions.zip')\nmatches = [name for name in archive.namelist() if name.endswith('/ephi_synthetic_downstream_qualification-1.0.0-py3-none-any.whl')]\nassert len(matches) == 1, matches\nwheel_bytes = archive.read(matches[0])\ndigest = hashlib.sha256(wheel_bytes).hexdigest()\nassert digest == '074ee0c1c0a8f224b508ef00151354e93476557c1a5500c7f34dbd7fdb65d5bc', digest\nwheel_path = provider_inputs / Path(matches[0]).name\nwheel_path.write_bytes(wheel_bytes)\nprint(f'PRESERVED_FIRST_LOCAL_ATTEMPT={attempt_root}')\nprint(f'PINNED_N1_PROVIDER_WHEEL={wheel_path}')\nprint(f'PINNED_N1_PROVIDER_SHA256={digest}')\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk gh --version && rtk gh run list --repo kimhw8084/ephi --branch codex/ephi-u4-n1-provider-compatibility-fix1 --limit 5'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --porcelain && rtk git rev-parse HEAD HEAD''^{tree} && rtk proxy env EPHI_TEST_POSTGRES_DSN=postgresql:///postgres python3 tools/u4_n1_provider_compatibility.py --artifact-root /Users/haewonkim/.codex-fabric/jobs/CF-50688481b844ab5a15445c9d/artifact-bridge --work-root /Users/haewonkim/.codex-fabric/jobs/CF-50688481b844ab5a15445c9d/u4-work --repository-root /Users/haewonkim/.codex-fabric/worktrees/CF-50688481b844ab5a15445c9d --candidate-sha 4487475d462d4b4688f8fe5fdadc5a5466fe9111 --candidate-tree 28d14586e3f856f4dce52929de67e6e692c33af5 --job-id CF-50688481b844ab5a15445c9d --provider-wheel /Users/haewonkim/.codex-fabric/jobs/CF-50688481b844ab5a15445c9d/provider-inputs/ephi_synthetic_downstream_qualification-1.0.0-py3-none-any.whl'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nimport hashlib\nimport json\nfrom pathlib import Path\n\nroot = Path('/Users/haewonkim/.codex-fabric/jobs/CF-50688481b844ab5a15445c9d/artifact-bridge')\nreport = json.loads((root / 'u4-n1-provider-compatibility.json').read_text())\nmanifest = json.loads((root / 'artifact-manifest.json').read_text())\nexpected = '074ee0c1c0a8f224b508ef00151354e93476557c1a5500c7f34dbd7fdb65d5bc'\nassert report['status'] == 'PASS' and report['compatibility_state'] == 'PASS'\nassert report['fabric_job'] == 'CF-50688481b844ab5a15445c9d' and report['fabric_binding_state'] == 'BOUND'\nassert report['qualification']['candidate'] == {'commit':'4487475d462d4b4688f8fe5fdadc5a5466fe9111','tree':'28d14586e3f856f4dce52929de67e6e692c33af5'}\nassert report['provider']['wheel']['sha256'] == expected\nassert report['provider']['compatibility_wheel_sha256'] == expected\nassert report['provider']['cross_release_source_file_manifests_byte_equal'] is True\nassert report['provider']['installed_file_inventory_identity_N-1'] == report['provider']['installed_file_inventory_identity_N']\nassert report['public_abi']['safe_manifest_identity_N-1'] == report['public_abi']['safe_manifest_identity_N']\nassert report['frozen_pair']['cross_release_git_delta_under_protected_paths'] == []\nassert report['core_edit_required'] is False and report['upstream_package_files_modified'] == [] and report['upstream_migration_files_modified'] == []\nassert report['releases']['N-1']['installed_ephi']['before_after_byte_equal'] is True\nassert report['releases']['N']['installed_ephi']['before_after_byte_equal'] is True\nassert report['installed_execution']['checkout_pythonpath_or_sys_path_used'] is False\nassert report['negative_controls']['missing_provider']['reason_code'] == 'MISSING_REQUIRED_PROVIDER'\nassert report['negative_controls']['build_incompatible_abi']['reason_code'] == 'INCOMPATIBLE_ABI'\nassert report['negative_controls']['build_incompatible_provider_contract']['reason_code'] == 'INCOMPATIBLE_PROVIDER_CONTRACT'\nassert report['remaining_u4_prerequisites']['full_U4_exit'] == 'NOT_QUALIFIED'\nassert manifest['compatibility_state'] == 'PASS' and manifest['fabric_job'] == report['fabric_job']\nassert manifest['candidate'] == report['qualification']['candidate']\nfor item in manifest['files']:\n    path = root / item['path']\n    raw = path.read_bytes()\n    assert len(raw) == item['byte_size']\n    assert hashlib.sha256(raw).hexdigest() == item['sha256']\nprint(json.dumps({\n  'status': report['status'],\n  'compatibility_state': report['compatibility_state'],\n  'fabric_job': report['fabric_job'],\n  'candidate': manifest['candidate'],\n  'provider_wheel_sha256': report['provider']['wheel']['sha256'],\n  'provider_source_manifest_equal': report['provider']['cross_release_source_file_manifests_byte_equal'],\n  'installed_provider_inventory_identity': report['provider']['installed_file_inventory_identity_N'],\n  'safe_manifest_identity': report['public_abi']['safe_manifest_identity_N'],\n  'cross_release_file_delta_count': len(report['frozen_pair']['cross_release_git_delta_under_protected_paths']),\n  'artifact_manifest_entries_verified': len(manifest['files']),\n  'stage_receipt_present': (root / 'artifact-stage-receipt.json').exists()\n},indent=2))\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk ruby -e 'require \\\"yaml\\\"; YAML.parse_file(\\\".github/workflows/package.yml\\\"); puts \\\"WORKFLOW_YAML_PARSE_PASS\\\"' && rtk python3 tools/generate_runtime_configuration_contract.py --check && rtk python3 tools/generate_release_inventory.py --check && rtk git diff --check\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3.11 tools/check_package.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3.13 tools/check_package.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3.14 tools/check_package.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3.12 tools/check_package.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk gh run list --repo kimhw8084/ephi --branch codex/ephi-u4-n1-provider-compatibility-fix1 --limit 5 --json databaseId,headSha,headBranch,status,conclusion,name,createdAt,htmlUrl'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk gh run list --repo kimhw8084/ephi --branch codex/ephi-u4-n1-provider-compatibility-fix1 --limit 5 --json databaseId,headSha,headBranch,status,conclusion,name,createdAt,url'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk proxy env EPHI_TEST_POSTGRES_DSN=postgresql:///postgres python3 -m unittest discover -s tests -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk gh run view 36508317609 --repo kimhw8084/ephi --json headSha,status,conclusion,jobs | rtk python3 -c 'import json,sys; r=json.load(sys.stdin); jobs=r[\\\"jobs\\\"]; print(json.dumps({\\\"head_sha\\\":r[\\\"headSha\\\"],\\\"status\\\":r[\\\"status\\\"],\\\"conclusion\\\":r[\\\"conclusion\\\"],\\\"job_count\\\":len(jobs),\\\"failed_or_non_success\\\":[{\\\"name\\\":j[\\\"name\\\"],\\\"conclusion\\\":j.get(\\\"conclusion\\\"),\\\"status\\\":j.get(\\\"status\\\")} for j in jobs if j.get(\\\"conclusion\\\")\"'!=\"success\"],\"jobs\":[{\"name\":j[\"name\"],\"conclusion\":j.get(\"conclusion\")} for j in jobs]},indent=2))'\"'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk readlink /Users/haewonkim/.codex-fabric/current && rtk ls -la /Users/haewonkim/.codex-fabric/releases/1.2.5-dashboard-controls-candidate | head -50'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 -c 'import json,pathlib; p=pathlib.Path(\\\"/Users/haewonkim/.codex-fabric/jobs/CF-11c29e79a78473b8ac995e00.executed/artifact-bridge/artifact-stage-receipt.json\\\"); r=json.loads(p.read_text()); print(json.dumps({\\\"schema\\\":r.get(\\\"schema\\\"),\\\"receipt_status\\\":r.get(\\\"receipt_status\\\"),\\\"staged_status\\\":r.get(\\\"staged_status\\\"),\\\"project\\\":r.get(\\\"project\\\"),\\\"request\\\":r.get(\\\"request\\\"),\\\"operation\\\":r.get(\\\"operation\\\"),\\\"fabric_job\\\":r.get(\\\"fabric_job\\\"),\\\"candidate\\\":r.get(\\\"candidate\\\"),\\\"bridge\\\":r.get(\\\"bridge\\\"),\\\"readback_checks\\\":r.get(\\\"readback_checks\\\"),\\\"self_acceptance\\\":r.get(\\\"self_acceptance\\\")},indent=2))'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk rg -n -i \"artifact runs|artifact.bridge|artifact_stage|stage.*artifact|artifact.*stage|readback\" /Users/haewonkim/.codex-fabric/releases/1.2.5-dashboard-controls-candidate/fabric.py'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy find /Users/haewonkim/.projectos /Users/haewonkim/.codex-fabric -maxdepth 6 \\\\( -iname '*artifact-stage*' -o -iname '*artifact-bridge*' \\\\) -print\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk proxy find /Users/haewonkim/.projectos/sidecars/artifact-bridge-v1-ar2-candidate -maxdepth 3 -type f -print'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk ls -la /Users/haewonkim/.projectos/sidecars/artifact-bridge-v1-ar2-candidate && rtk ls -la /Users/haewonkim/.projectos/sidecars/artifact-bridge-v1-ar2-candidate/projectos-artifact-stage'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk rg -n \"ArgumentParser|add_argument|parse_args|def main|artifact-root|project-id|fabric-job|source-sha|tree-sha\" /Users/haewonkim/.projectos/sidecars/artifact-bridge-v1-ar2-candidate/projectos-artifact-stage'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,180p' /Users/haewonkim/.projectos/sidecars/artifact-bridge-v1-ar2-candidate/run-ar2/PROJECT_OS_AR2_RECEIPT.json && rtk sed -n '1,200p' /Users/haewonkim/.projectos/sidecars/artifact-bridge-v1-ar2-candidate/run-ar2/artifact-manifest.json\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nimport hashlib,json\nfrom pathlib import Path\nroot=Path('/Users/haewonkim/.projectos/sidecars/artifact-bridge-v1-ar2-candidate')\np=root/'projectos-artifact-stage'\nfor name in ('baseline-pre.json','baseline-qualification.json'):\n data=json.loads((root/name).read_text())\n print(name, json.dumps({'keys':sorted(data.keys()),'status':data.get('status'),'helper_sha256':data.get('helper_sha256'),'bridge_version':data.get('bridge_version'),'candidate':data.get('candidate')},sort_keys=True))\nprint('helper_sha256',hashlib.sha256(p.read_bytes()).hexdigest())\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk rg -n \"project-os-artifact-bridge|ar2-model-free|source_sha|tree_sha|fabric_job|Request|Project ID|artifact-root|read_text|json.load|environ\" /Users/haewonkim/.projectos/sidecars/artifact-bridge-v1-ar2-candidate/projectos-artifact-stage'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '900,1010p' /Users/haewonkim/.projectos/sidecars/artifact-bridge-v1-ar2-candidate/projectos-artifact-stage\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1,140p' /Users/haewonkim/.projectos/sidecars/artifact-bridge-v1-ar2-candidate/projectos-artifact-stage\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short --branch && rtk git rev-parse HEAD HEAD''^{tree}'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/w0_repo_baseline.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy curl --fail --silent --show-error --location --output /tmp/ephi-r2-u4-actions.zip -- 'https://sdmntprcentralus.oaiusercontent.com/files/00000000-5228-81f5-b5a4-37d47458fe4c/raw?se=2026-09-29T01%3A47%3A36Z&sp=r&sv=2026-02-06&sr=b&scid=9da294c9-b6d5-4055-b1f1-e52806be316c&skoid=c953efd6-2ae8-41b4-a6d6-34b1475ac07c&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-09-29T01%3A39%3A12Z&ske=2026-09-30T01%3A39%3A12Z&sks=b&skv=2026-02-06&sig=tAhR52U1eDuzMYqrbNEbOSZMUGNPENevxFSgoBEz0iY%3D' && rtk python3 - <<'PY'\nimport json\nimport zipfile\narchive=zipfile.ZipFile('/tmp/ephi-r2-u4-actions.zip')\nreport=json.loads(archive.read('u4-n1-provider-compatibility.json'))\nmanifest=json.loads(archive.read('artifact-manifest.json'))\nprint(json.dumps({\n 'candidate':report['qualification']['candidate'],\n 'status':report['status'],\n 'compatibility_state':report['compatibility_state'],\n 'fabric_job':report['fabric_job'],\n 'fabric_binding_state':report['fabric_binding_state'],\n 'manifest_compatibility_state':manifest['compatibility_state'],\n 'manifest_fabric_job':manifest['fabric_job'],\n 'manifest_fabric_binding_state':manifest['fabric_binding_state'],\n 'provider_wheel_sha256':report['provider']['wheel']['sha256']\n},indent=2))\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short --branch && rtk git rev-parse HEAD HEAD''^{tree} origin/main && rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    }
+  ],
+  "codex": {
+    "cli_version": "codex-cli 0.157.0",
+    "configured_model": "gpt-6-luna",
+    "event_count": 307,
+    "provider_reported_model": null,
+    "reasoning_effort": "xhigh",
+    "terminal_type": "turn.completed",
+    "usage": {
+      "cache_hit_percent": 97.42,
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 10217728,
+      "fresh_input_tokens": 270357,
+      "input_tokens": 10488085,
+      "non_reasoning_output_tokens": 26424,
+      "output_tokens": 84875,
+      "reasoning_output_tokens": 58451,
+      "total_processed_tokens": 10572960
+    },
+    "warnings": []
+  },
+  "commits": [
+    {
+      "sha": "4487475d462d4b4688f8fe5fdadc5a5466fe9111",
+      "subject": "Pin frozen N-1 provider wheel identity"
+    },
+    {
+      "sha": "f5205b82264fe4a8eb1f126d2014bb854ad528d7",
+      "subject": "Fix U4.1 evidence binding contract"
+    },
+    {
+      "sha": "9cc1a6651d49593f2bbf695c748ff7d21df3c786",
+      "subject": "Keep installed provider inventories path independent"
+    },
+    {
+      "sha": "c9be30d8b619e5822a3de113cefe4314c9b33b67",
+      "subject": "Correct frozen Base repository authority"
+    },
+    {
+      "sha": "1977a61a42096455a65677d8427a96df9b9d9f8b",
+      "subject": "Qualify frozen N-1 provider compatibility"
+    }
+  ],
+  "diff": {
+    "additions": 1758,
+    "changed_files": 8,
+    "commit_count": 5,
+    "deletions": 6
+  },
+  "error_code": null,
+  "evidence_manifest": {
+    "count": 5,
+    "items": [
+      {
+        "bytes": 31073,
+        "path": "README.md",
+        "sha256": "5b27bf93cae2fafdabff5f63da4ae61d27f66ccd1cbec15cd754a4ee0ac5d29b"
+      },
+      {
+        "bytes": 18105,
+        "path": "docs/Release_Install_Identity.md",
+        "sha256": "d6345656cf21e8ca80086dc003ebfb424e8fbb7c848e2d7b60954fcb3aff2006"
+      },
+      {
+        "bytes": 3989,
+        "path": "docs/U4.1_N1_Provider_Compatibility.md",
+        "sha256": "6327c8c1577921ae6b7850eb72fd772fc4f1fa66d2835ffa42ca00a7fcba290d"
+      },
+      {
+        "bytes": 3298,
+        "path": "environment/u4_n1_provider_compatibility_authority.json",
+        "sha256": "a7129be0fc0f2aff0299eb4bb2caf690f6692bf0b2ef035c32f693c0c6202ee5"
+      },
+      {
+        "bytes": 95644,
+        "path": "manifest.json",
+        "sha256": "5c2bf1d922df7861509efe2e757651062fbca5ccc4a2910a5df4b7c0b0766ade"
+      }
+    ],
+    "version": 1
+  },
+  "evidence_publisher_release": "1.2.5-dashboard-controls-candidate",
+  "fabric_capture": {
+    "applied": false,
+    "paths_before": 0,
+    "transient_untracked_removed": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "fabric_release": "1.2.5-dashboard-controls-candidate",
+  "failure_class": null,
+  "finished_at": "2026-09-29T01:44:15Z",
+  "git": {
+    "base_is_ancestor": true,
+    "base_sha": "0e073216adbdd717e183575f2a4a813f9fc4c265",
+    "branch": "codex/ephi-u4-n1-provider-compatibility-fix1",
+    "detached_verify": false,
+    "head_sha": "4487475d462d4b4688f8fe5fdadc5a5466fe9111",
+    "remote_exact_head": true,
+    "remote_head_sha": "4487475d462d4b4688f8fe5fdadc5a5466fe9111",
+    "target_branch": "main",
+    "target_drifted_since_acceptance": false,
+    "target_head_observed_after_execution": "0e073216adbdd717e183575f2a4a813f9fc4c265",
+    "work_branch": "codex/ephi-u4-n1-provider-compatibility-fix1",
+    "worktree_clean": true
+  },
+  "instructions": {
+    "files": [
+      {
+        "bytes": 1458,
+        "path": "AGENTS.md",
+        "sha256": "4349f387a79d886ed1264604ff48c582698e539e08ed8fb2f9d8ab8fbf6f804a"
+      }
+    ],
+    "total_bytes": 1458,
+    "warning": null
+  },
+  "job_id": "CF-50688481b844ab5a15445c9d",
+  "kind": "codex-fabric-audit-evidence",
+  "locator": {
+    "branch": "codex-fabric/evidence/ephi/ephi-u4-n1-provider-compatibility-fix1",
+    "path": ".codex-fabric/audit.json",
+    "ref": "refs/heads/codex-fabric/evidence/ephi/ephi-u4-n1-provider-compatibility-fix1"
+  },
+  "operation": "FIX",
+  "policy": {
+    "environment_policy_sha256": "e077daca74297b3c30bee8989f00f8ca5338f7610b4d016a6c48db524205d064",
+    "fabric_release": "1.2.5-dashboard-controls-candidate",
+    "policy_sha256": "123615bf2f6e57dcac197e49ca98ceac59ada86a55e2c84445ea5d00812c0833",
+    "registry_sha256": "af81b8552f9d6a33847310e3c6bcd2d48401782b963a58efd2993e93570cb4aa"
+  },
+  "project_id": "ephi",
+  "recovery": {
+    "model_rerun_safe": false,
+    "recovery_required": false,
+    "retry_safe": false,
+    "retry_scope": null,
+    "worktree_retained": true
+  },
+  "request": "ephi-u4-n1-provider-compatibility-fix1",
+  "schema_version": 1,
+  "started_at": "2026-09-29T00:53:55Z",
+  "status": "EXECUTED_CHANGE",
+  "timing": {
+    "execution_seconds": 3020,
+    "queue_seconds": 0,
+    "total_seconds": 3020
+  },
+  "transport": {
+    "bytes": 8906,
+    "envelope": "FABRIC/2",
+    "prompt_bytes": 8580,
+    "prompt_sha256": "dac2359fde49d3dcdaeeb75893fb3b0a42d8be0d26ff5c314292aff9a9eb553c",
+    "sha256": "50688481b844ab5a15445c9dc6b90d19d61930c92b74ea984e427e9b39850424"
+  }
+}
