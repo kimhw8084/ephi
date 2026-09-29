@@ -1109,7 +1109,7 @@ jobs:
           assert report["current_live_read"]["historical_and_current_states_remain_distinct"] is True
           assert report["artifact"]["exact_content_match"] is True
           assert report["artifact"]["restored_shared_root_read"] is True
-          assert report["artifact"]["metadata"]["object_key"] == "sha256/" + report["artifact"]["sha256"]
+          assert report["artifact"]["object_key"] == "sha256/" + report["artifact"]["sha256"]
           assert negatives["missing_or_empty_blob_root"]["status"] == "PASS"
           assert negatives["tampered_copy_only"]["status"] == "PASS"
           assert negatives["separate_incomplete_prefix_database"]["status"] == "PASS"
