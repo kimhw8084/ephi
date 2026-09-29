@@ -997,3 +997,147 @@ jobs:
           name: ephi-u4-n1-provider-compatibility
           path: ${{ runner.temp }}/ephi-u4-artifact-bridge
           if-no-files-found: error
+
+  u4-n1-durable-upgrade-restart:
+    name: Frozen N-1 to N PostgreSQL 18 durable upgrade and restart (exact head)
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      EPHI_U4_ADMIN_DSN: postgresql://ephi_ci:ephi_ci_password@127.0.0.1:5432/ephi_ci
+      EPHI_U4_EXPECTED_CANDIDATE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+    services:
+      postgres:
+        image: postgres:18.6
+        env:
+          POSTGRES_USER: ephi_ci
+          POSTGRES_PASSWORD: ephi_ci_password
+          POSTGRES_DB: ephi_ci
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U ephi_ci -d ephi_ci"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 20
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.13'
+      - name: Verify exact candidate and frozen release history
+        run: |
+          test "$(git rev-parse HEAD)" = "$EPHI_U4_EXPECTED_CANDIDATE_SHA"
+          test -z "$(git status --porcelain --untracked-files=all)"
+          git cat-file -e b19e8b6c5c73793a45ad039ee68f452883ef27a1^{commit}
+          git cat-file -e 0e073216adbdd717e183575f2a4a813f9fc4c265^{commit}
+      - name: Run frozen N-1 to N installed PostgreSQL upgrade and restart proof
+        run: |
+          candidate_sha="$(git rev-parse HEAD)"
+          candidate_tree="$(git rev-parse 'HEAD^{tree}')"
+          mkdir -p "$RUNNER_TEMP/ephi-u42-external-cwd"
+          cd "$RUNNER_TEMP/ephi-u42-external-cwd"
+          python "$GITHUB_WORKSPACE/tools/u4_n1_durable_upgrade_restart.py" \
+            --artifact-root "$RUNNER_TEMP/ephi-u42-artifact-bridge" \
+            --work-root "$RUNNER_TEMP/ephi-u42-work" \
+            --repository-root "$GITHUB_WORKSPACE" \
+            --candidate-sha "$candidate_sha" \
+            --candidate-tree "$candidate_tree"
+      - name: Assert the complete unbound durable-upgrade report
+        run: |
+          python - "$RUNNER_TEMP/ephi-u42-artifact-bridge/u4-n1-durable-upgrade-restart.json" \
+            "$RUNNER_TEMP/ephi-u42-artifact-bridge/artifact-manifest.json" \
+            "$EPHI_U4_EXPECTED_CANDIDATE_SHA" "$(git rev-parse 'HEAD^{tree}')" <<'PY'
+          import json
+          import sys
+
+          report_path, manifest_path, candidate_sha, candidate_tree = sys.argv[1:]
+          report = json.load(open(report_path, encoding="utf-8"))
+          manifest = json.load(open(manifest_path, encoding="utf-8"))
+          provider_authority = json.load(open("environment/u4_n1_provider_compatibility_authority.json", encoding="utf-8"))
+          n1 = report["frozen_releases"]["N-1"]
+          n = report["frozen_releases"]["N"]
+          inventory = report["retained_identity_inventories"]
+          accepted = report["accepted_command_row_invariants"]
+          negatives = report["negative_controls"]
+          assert report["status"] == "PASS" and report["durable_upgrade_state"] == "PASS", report
+          assert report["qualification"]["candidate"] == {"commit": candidate_sha, "tree": candidate_tree}
+          assert report["qualification"]["fabric_job"] is None
+          assert report["qualification"]["fabric_binding_state"] == "UNBOUND_CI"
+          assert n1["commit"] == provider_authority["releases"]["N-1"]["integrated_commit"]
+          assert n1["tree"] == provider_authority["releases"]["N-1"]["integrated_tree"]
+          assert n1["release_identity_sha256"] == provider_authority["releases"]["N-1"]["release_identity_sha256"]
+          assert n["commit"] == provider_authority["releases"]["N"]["integrated_commit"]
+          assert n["tree"] == provider_authority["releases"]["N"]["integrated_tree"]
+          assert n["release_identity_sha256"] == provider_authority["releases"]["N"]["release_identity_sha256"]
+          assert report["provider_compatibility_input"]["compatibility_wheel_sha256"] == provider_authority["provider_package"]["compatibility_wheel_sha256"]
+          assert report["provider_compatibility_input"]["wheel_sha256_verified_from_frozen_n_minus_1_inputs"] == provider_authority["provider_package"]["compatibility_wheel_sha256"]
+          assert report["provider_compatibility_input"]["provider_rebuilt_for_n_as_compatibility_input"] is False
+          assert report["postgres"]["major"] == 18
+          assert report["migration"]["identity_sha256"] == provider_authority["migrations"]["identity_sha256"]
+          assert report["migration"]["count"] == 11
+          assert report["migration"]["cross_release_schema_delta"] == "NONE"
+          assert report["migration"]["frozen_pair_schema_files_delta"] == []
+          assert report["migration"]["pre_n_verify"]["status"] == "VERIFIED"
+          assert report["migration"]["n_idempotent_apply"]["status"] == "APPLIED"
+          assert report["migration"]["post_n_verify"]["status"] == "VERIFIED"
+          assert report["migration"]["idempotent_reapply_is_new_schema_migration"] is False
+          assert report["process_restart"]["n_minus_1_exit_code"] == 0
+          assert report["process_restart"]["n1_n_migration_n_restart_process_ids_distinct"] is True
+          assert report["process_restart"]["n_verification_after_n_minus_1_process_shutdown"] is True
+          assert inventory["before_upgrade"]["canonical_sha256"] == inventory["after_migration"]["canonical_sha256"]
+          assert inventory["before_upgrade"]["canonical_sha256"] == inventory["after_restart"]["canonical_sha256"]
+          assert inventory["equal_across_handoff"] is True
+          assert inventory["permitted_operational_only_differences"] == []
+          assert accepted["counts_and_fingerprints_unchanged"] is True
+          assert accepted["before_upgrade_counts"] == {"command_receipt": 1, "audit_event": 1, "outbox_event": 1}
+          assert accepted["before_upgrade_counts"] == accepted["after_restart_counts"]
+          assert accepted["before_upgrade_fingerprints"] == accepted["after_restart_fingerprints"]
+          assert report["accepted_command"]["same_result_identity"] is True
+          assert report["accepted_command"]["no_duplicate_receipt_audit_outbox"] is True
+          assert report["accepted_command_conflict_negative_control"]["reason_code"] == "IDEMPOTENCY_CONFLICT"
+          assert report["workflow"]["identity_version_state_unchanged"] is True
+          assert report["workflow"]["initial"]["state"]["work_state"] == "OPEN"
+          assert report["workflow"]["after_restart"]["state"]["work_state"] == "CLAIMED"
+          assert report["historical_read"]["identity_revision_vector_workflow_snapshot_unchanged"] is True
+          assert report["historical_read"]["after_restart"]["workflow_snapshot"]["work_state"] == "OPEN"
+          assert report["current_live_read"]["after_restart"]["workflow_snapshot"]["work_state"] == "CLAIMED"
+          assert report["current_live_read"]["historical_and_current_states_remain_distinct"] is True
+          assert report["artifact"]["exact_content_match"] is True
+          assert report["artifact"]["restored_shared_root_read"] is True
+          assert report["artifact"]["metadata"]["object_key"] == "sha256/" + report["artifact"]["sha256"]
+          assert negatives["missing_or_empty_blob_root"]["status"] == "PASS"
+          assert negatives["tampered_copy_only"]["status"] == "PASS"
+          assert negatives["separate_incomplete_prefix_database"]["status"] == "PASS"
+          assert negatives["separate_incomplete_prefix_database"]["prefix_reached_current_only_after_apply"] is True
+          assert report["operations_status_after_restart"]["postgresql"]["state"] == "READY"
+          assert report["operations_status_after_restart"]["postgresql"]["reason"] == "POSTGRES_REACHABLE_AND_SCHEMA_CURRENT"
+          assert report["operations_status_after_restart"]["immutable_artifact_integrity"]["state"] == "READY"
+          assert report["core_edit_prohibition"]["core_edit_required"] is False
+          assert report["core_edit_prohibition"]["candidate_protected_path_modifications"] == []
+          assert report["core_edit_prohibition"]["frozen_pair_protected_path_delta"] == []
+          assert report["core_edit_prohibition"]["frozen_pair_schema_file_delta"] == []
+          assert report["installed_execution"]["public_index_used_for_installation"] is False
+          assert report["installed_execution"]["checkout_pythonpath_or_sys_path_used"] is False
+          assert report["secret_values_emitted"] is False
+          assert report["artifact_bridge_handoff"]["staging_state"] == "NOT_STAGED"
+          assert report["artifact_bridge_handoff"]["readback_state"] == "NOT_RUN"
+          assert manifest["qualification_state"] == "PASS"
+          assert manifest["fabric_job"] is None and manifest["fabric_binding_state"] == "UNBOUND_CI"
+          assert manifest["candidate"] == report["qualification"]["candidate"]
+          assert len(manifest["artifacts"]) == 7
+          blob_entries = [item for item in manifest["artifacts"] if item["file"].startswith("shared-immutable-artifact-blobs/")]
+          assert len(blob_entries) == 1
+          assert blob_entries[0]["sha256"] == report["artifact"]["sha256"]
+          print("FROZEN_N1_TO_N_DURABLE_UPGRADE_RESTART_PASS")
+          PY
+      - name: Upload temporary CI proof material
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ephi-u4-n1-durable-upgrade-restart
+          path: ${{ runner.temp }}/ephi-u42-artifact-bridge
+          if-no-files-found: error

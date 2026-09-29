@@ -71,6 +71,11 @@ CHG-296 / U4.1 defines the narrow frozen N-1 to N unchanged-provider proof
 and its explicit remaining prerequisites in
 [the provider compatibility qualification](docs/U4.1_N1_Provider_Compatibility.md).
 
+CHG-300 / U4.2 defines the frozen N-1 to N PostgreSQL durable upgrade and
+separate-process restart proof, including retained accepted-command, workflow,
+historical/current-read and immutable-artifact identities. Its fixture and
+release references are in [the durable upgrade qualification](docs/U4.2_N1_Durable_Upgrade_Restart.md).
+
 ## Validate the repository offline
 
 No chat attachment, local source artifact, staged-source directory, application credential or network access is required for the normal repository checks:

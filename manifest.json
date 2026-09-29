@@ -51,8 +51,8 @@
     },
     {
       "path": ".github/workflows/package.yml",
-      "bytes": 51973,
-      "sha256": "0e7062b538a4731606d8f41e186e79dd5f904ef93f58e05aa96271d6262e2e83"
+      "bytes": 61719,
+      "sha256": "7bd72c2ede7cacdf13418782a3de60e1620961fb964f9f0d672731668b9fb654"
     },
     {
       "path": ".gitignore",
@@ -156,8 +156,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 31073,
-      "sha256": "5b27bf93cae2fafdabff5f63da4ae61d27f66ccd1cbec15cd754a4ee0ac5d29b"
+      "bytes": 31406,
+      "sha256": "a05eed9e0866a35f2feda1a5576476b36ecc52632613b7bc5ec16cf2d4cc18e6"
     },
     {
       "path": "app.py",
@@ -193,6 +193,11 @@
       "path": "docs/U4.1_N1_Provider_Compatibility.md",
       "bytes": 3989,
       "sha256": "6327c8c1577921ae6b7850eb72fd772fc4f1fa66d2835ffa42ca00a7fcba290d"
+    },
+    {
+      "path": "docs/U4.2_N1_Durable_Upgrade_Restart.md",
+      "bytes": 3685,
+      "sha256": "2bb142fb5f3be4a11fa06d0fdd32f11fd8cfafbbd14b8548d03421692772af06"
     },
     {
       "path": "docs/nicegui_base/AGENT_WORKFLOW.md",
@@ -363,6 +368,11 @@
       "path": "environment/qualification-requirements.txt",
       "bytes": 126,
       "sha256": "b9bd801a437e03aeab48398050585210f005eb55fd0ff93bd7f481a2ea9f1faf"
+    },
+    {
+      "path": "environment/u4_n1_durable_upgrade_restart_authority.json",
+      "bytes": 3000,
+      "sha256": "4523b16f830c97181fdf619cd7f33291dcc28cba03ca667f0c7f1a414c69451a"
     },
     {
       "path": "environment/u4_n1_provider_compatibility_authority.json",
@@ -2360,6 +2370,11 @@
       "sha256": "ce6af6dd40c15786c9e945cbee5e08796aede794cedff5f9cc5980df1848e153"
     },
     {
+      "path": "tests/test_u4_durable_upgrade_restart_authority.py",
+      "bytes": 2488,
+      "sha256": "066ee81601ea79c06e15f2badbe4e9d0dc32f9a28c3c0a97a5432316be4622e9"
+    },
+    {
       "path": "tests/test_u4_provider_compatibility_authority.py",
       "bytes": 10556,
       "sha256": "d7a494d80988340f442f24a7c5b88e6d9a9dac226824d29c41d304829d5570f4"
@@ -2493,6 +2508,11 @@
       "path": "tools/u2_operations_browser_qualification.py",
       "bytes": 30342,
       "sha256": "bc8ce18b454797a596c3ec879db9190cb597eca136a0fa816f556e059ba1f6f5"
+    },
+    {
+      "path": "tools/u4_n1_durable_upgrade_restart.py",
+      "bytes": 89130,
+      "sha256": "7cb3b49e214c39a21c81b4fa944bada84650ec17c09a4961a4e52fad2c4f875a"
     },
     {
       "path": "tools/u4_n1_provider_compatibility.py",

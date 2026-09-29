@@ -1,0 +1,79 @@
+{
+  "schema": "org.ephi.u4-n1-durable-upgrade-restart-authority.v1",
+  "qualification": {
+    "change": "CHG-300",
+    "slice": "U4.2",
+    "repository": "kimhw8084/ephi",
+    "request": "ephi-u4-n1-durable-upgrade-restart-v1",
+    "kind": "frozen-n1-to-n-installed-postgresql-durable-upgrade-restart",
+    "candidate_base_commit": "5fc66e844f162d21f772b31574daf797bd4f3ff1",
+    "release_authority": "environment/u4_n1_provider_compatibility_authority.json",
+    "claim_boundary": "Proves only that the frozen N release opens and verifies the exact PostgreSQL database produced by frozen N-1, applies the existing migration authority idempotently across this zero-schema-delta pair, restarts in a separate installed environment, and preserves the bounded accepted-command, workflow, historical/current-read, and immutable-artifact identities listed by this authority.",
+    "not_a_semantic_release_tag": true,
+    "not_a_production_release": true
+  },
+  "fixture": {
+    "scope": {
+      "scope_id": "u4-u42-synthetic-scope",
+      "site_id": "u4-u42-synthetic-site",
+      "area_id": "u4-u42-synthetic-area"
+    },
+    "principal": {
+      "subject": "u4-u42-synthetic-engineer",
+      "auth_session_revision": 1,
+      "security_revision": 1
+    },
+    "episode_id": "u4-u42-synthetic-episode-0001",
+    "aggregate_type": "episode_workflow",
+    "initial_workflow_state": {
+      "work_state": "OPEN",
+      "owner": null
+    },
+    "command": {
+      "command_id": "u4-u42-claim-command-0001",
+      "command_type": "ClaimEpisode",
+      "expected_workflow_version": 0,
+      "reason": "U4.2 deterministic durable-upgrade fixture"
+    },
+    "read": {
+      "revision_id": "u4-u42-episode-read-revision-0001",
+      "entity_type": "episode",
+      "analysis_revision": "u4-u42-analysis-revision-0001",
+      "exposure_revision": "u4-u42-exposure-revision-0001",
+      "priority_revision": "u4-u42-priority-revision-0001",
+      "qualification_manifest_id": "u4-u42-qualification-manifest-0001",
+      "payload": {
+        "title": "Synthetic U4.2 retained Episode",
+        "analytical_revision": "u4-u42-analysis-revision-0001",
+        "capability_state": {
+          "source": "READY"
+        }
+      }
+    },
+    "artifact": {
+      "content_utf8": "EPHI U4.2 immutable artifact fixture v1\n",
+      "media_type": "application/octet-stream",
+      "logical_purpose": "u4.2-durable-upgrade-fixture",
+      "producing_job_id": "u4-n1-durable-upgrade-restart-v1",
+      "read_capability": "u4.episode.artifact.read",
+      "write_capability": "u4.episode.artifact.write"
+    },
+    "capabilities": [
+      "ephi.episode.read",
+      "ephi.episode.claim",
+      "u4.episode.artifact.read",
+      "u4.episode.artifact.write"
+    ]
+  },
+  "retained_identity_tables": [
+    "aggregate_state",
+    "command_receipt",
+    "audit_event",
+    "outbox_event",
+    "read_revision",
+    "read_head",
+    "artifact_catalog"
+  ],
+  "expected_migration_count": 11,
+  "permitted_operational_differences": []
+}
