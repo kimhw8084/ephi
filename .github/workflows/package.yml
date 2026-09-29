@@ -1136,10 +1136,16 @@ jobs:
           assert manifest["qualification_state"] == "PASS"
           assert manifest["fabric_job"] is None and manifest["fabric_binding_state"] == "UNBOUND_CI"
           assert manifest["candidate"] == report["qualification"]["candidate"]
-          assert len(manifest["artifacts"]) == 7
-          blob_entries = [item for item in manifest["artifacts"] if item["file"].startswith("shared-immutable-artifact-blobs/")]
+          assert len(manifest["artifacts"]) == 8
+          blob_entries = [item for item in manifest["artifacts"] if item["file"].startswith("shared-immutable-artifact-blobs/") and not item["file"].endswith(".artifact-publish.lock")]
           assert len(blob_entries) == 1
           assert blob_entries[0]["sha256"] == report["artifact"]["sha256"]
+          operational_entries = [item for item in manifest["artifacts"] if item.get("classification") == "FILE_ARTIFACT_BLOB_STORE_PUBLISH_LOCK"]
+          assert len(operational_entries) == 1 and operational_entries[0]["byte_size"] == 0
+          blob_inventory = report["artifact_blob_root_inventory"]
+          assert blob_inventory["immutable_blob_count"] == 1
+          assert blob_inventory["immutable_blob_files"][0]["sha256"] == report["artifact"]["sha256"]
+          assert blob_inventory["operational_files"][0]["classification"] == "FILE_ARTIFACT_BLOB_STORE_PUBLISH_LOCK"
           print("FROZEN_N1_TO_N_DURABLE_UPGRADE_RESTART_PASS")
           PY
       - name: Upload temporary CI proof material

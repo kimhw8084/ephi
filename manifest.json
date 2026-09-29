@@ -51,8 +51,8 @@
     },
     {
       "path": ".github/workflows/package.yml",
-      "bytes": 62186,
-      "sha256": "40e9709b4b85abe35239d531db324238a2cf23326668507a7f1a954a6a4e900f"
+      "bytes": 62825,
+      "sha256": "480712dbda1ee63579598fbd79d031acac36e1a734b76b94649fe45afcfaac8c"
     },
     {
       "path": ".gitignore",
@@ -2511,8 +2511,8 @@
     },
     {
       "path": "tools/u4_n1_durable_upgrade_restart.py",
-      "bytes": 88079,
-      "sha256": "f8e9b39d8370b6ae2cbc27e64dad5cf893d9b077255579d95b450bdaad26cd71"
+      "bytes": 89417,
+      "sha256": "5c7f0ee9682aed96a7b8d5e536616fe994069326028761d86729766ed5fb99f2"
     },
     {
       "path": "tools/u4_n1_provider_compatibility.py",

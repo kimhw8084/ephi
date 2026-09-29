@@ -1354,9 +1354,27 @@ def _run_qualification(args: argparse.Namespace) -> dict[str, object]:
             artifact_root / "migration_restart_summary.json",
             artifact_root / "negative_control_summary.json",
         ]
-        blob_objects = sorted(path for path in blob_root.rglob("*") if path.is_file())
-        if len(blob_objects) != 1:
+        blob_files = sorted(path for path in blob_root.rglob("*") if path.is_file())
+        lock_path = blob_root / ".artifact-publish.lock"
+        operational_files = [path for path in blob_files if path == lock_path]
+        blob_objects = [path for path in blob_files if path != lock_path]
+        if (len(blob_objects) != 1 or len(operational_files) != 1 or operational_files[0].stat().st_size != 0
+            or _sha256_file(blob_objects[0]) != restart["artifact"]["sha256"]):
             raise QualificationFailure("SHARED_ARTIFACT_BLOB_INVENTORY_INVALID")
+        report["artifact_blob_root_inventory"] = {
+            "immutable_blob_count": 1,
+            "immutable_blob_files": [{
+                "path": blob_objects[0].relative_to(blob_root).as_posix(),
+                "byte_size": blob_objects[0].stat().st_size,
+                "sha256": _sha256_file(blob_objects[0]),
+            }],
+            "operational_files": [{
+                "path": operational_files[0].relative_to(blob_root).as_posix(),
+                "byte_size": operational_files[0].stat().st_size,
+                "sha256": _sha256_file(operational_files[0]),
+                "classification": "FILE_ARTIFACT_BLOB_STORE_PUBLISH_LOCK",
+            }],
+        }
         report["supporting_evidence"] = [_file_fingerprint(path) for path in evidence_files]
         report_path = artifact_root / "u4-n1-durable-upgrade-restart.json"
         _write_json(report_path, report)
@@ -1372,6 +1390,10 @@ def _run_qualification(args: argparse.Namespace) -> dict[str, object]:
                 {"file": blob_objects[0].relative_to(artifact_root).as_posix(),
                  "byte_size": blob_objects[0].stat().st_size,
                  "sha256": _sha256_file(blob_objects[0])},
+                {"file": operational_files[0].relative_to(artifact_root).as_posix(),
+                 "byte_size": operational_files[0].stat().st_size,
+                 "sha256": _sha256_file(operational_files[0]),
+                 "classification": "FILE_ARTIFACT_BLOB_STORE_PUBLISH_LOCK"},
             ],
             "qualification_state": "PASS",
         }
