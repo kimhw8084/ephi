@@ -1022,6 +1022,7 @@ def _run_qualification(args: argparse.Namespace) -> dict[str, object]:
         n1_python = installed["N-1"]
         admin_env = _worker_env(install_envs["N-1"], database_name=database_name,
                                 prefix_database_name=prefix_database_name)
+        admin_env["EPHI_U4_ADMIN_DSN"] = admin_dsn
         db_identity, create_pid = _worker(n1_python, worker_file, "create-databases", cwd=external_cwd,
                                           env=admin_env,
                                           sensitive=(admin_dsn, str(repository), str(args.work_root), database_name, prefix_database_name))

@@ -2511,8 +2511,8 @@
     },
     {
       "path": "tools/u4_n1_durable_upgrade_restart.py",
-      "bytes": 87217,
-      "sha256": "7f58434bc57ff8ab4f9b5763d38c71d83dd04b9e8c461adac7ecd2f2bbf22fa7"
+      "bytes": 87268,
+      "sha256": "e50e85d46b7b925df89f612f0fec59b327281e54d3bad07034f3de5b8121c954"
     },
     {
       "path": "tools/u4_n1_provider_compatibility.py",
