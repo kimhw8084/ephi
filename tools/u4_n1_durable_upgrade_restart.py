@@ -1006,7 +1006,7 @@ def _run_qualification(args: argparse.Namespace) -> dict[str, object]:
                                      label, external_cwd,
                                      (str(repository), str(input_dir), str(environment), *(str(path) for path in worktrees)))
             if (report["migrations"].get("identity_sha256") != release_authority["migrations"]["identity_sha256"]
-                or report["migrations"].get("migration_count") != authority["expected_migration_count"]):
+                or report["migrations"].get("count") != authority["expected_migration_count"]):
                 raise QualificationFailure("INSTALLED_MIGRATION_IDENTITY_MISMATCH")
             preflights[label] = report
             preflight_pids[label] = pid
