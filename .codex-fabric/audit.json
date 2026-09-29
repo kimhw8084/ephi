@@ -1,0 +1,473 @@
+{
+  "accepted_at": "2026-09-29T02:38:40Z",
+  "changed_files": [
+    {
+      "additions": 158,
+      "deletions": 0,
+      "path": ".github/workflows/package.yml",
+      "status": "M"
+    },
+    {
+      "additions": 5,
+      "deletions": 0,
+      "path": "README.md",
+      "status": "M"
+    },
+    {
+      "additions": 76,
+      "deletions": 0,
+      "path": "docs/U4.2_N1_Durable_Upgrade_Restart.md",
+      "status": "A"
+    },
+    {
+      "additions": 79,
+      "deletions": 0,
+      "path": "environment/u4_n1_durable_upgrade_restart_authority.json",
+      "status": "A"
+    },
+    {
+      "additions": 24,
+      "deletions": 4,
+      "path": "manifest.json",
+      "status": "M"
+    },
+    {
+      "additions": 58,
+      "deletions": 0,
+      "path": "tests/test_u4_durable_upgrade_restart_authority.py",
+      "status": "A"
+    },
+    {
+      "additions": 1474,
+      "deletions": 0,
+      "path": "tools/u4_n1_durable_upgrade_restart.py",
+      "status": "A"
+    }
+  ],
+  "checks": [
+    {
+      "command": "/bin/zsh -lc 'rtk ls -la /tmp/ephi-u42-CF-93ef89dff07e93ef497a9c46/environments'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk ls -la /tmp/ephi-u42-CF-93ef89dff07e93ef497a9c46/environments && rtk ls -la /tmp/ephi-u42-CF-93ef89dff07e93ef497a9c46/inputs/n'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk proxy env EPHI_U4_ADMIN_DSN=postgresql:///postgres python3 tools/u4_n1_durable_upgrade_restart.py --artifact-root /Users/haewonkim/.codex-fabric/artifacts/CF-93ef89dff07e93ef497a9c46/artifact-bridge/material --work-root /tmp/ephi-u42-CF-93ef89dff07e93ef497a9c46 --repository-root /Users/haewonkim/.codex-fabric/worktrees/CF-93ef89dff07e93ef497a9c46 --candidate-sha 9dcec605accc79ae8fa770d335498da4ac1d8bc3 --candidate-tree ea892f197dc6666fd17eb3141234f005baef9555 --job-id CF-93ef89dff07e93ef497a9c46'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk ls -Ra /Users/haewonkim/.codex-fabric/artifacts/CF-93ef89dff07e93ef497a9c46/artifact-bridge/material/shared-immutable-artifact-blobs && rtk ls -la /Users/haewonkim/.codex-fabric/artifacts/CF-93ef89dff07e93ef497a9c46/artifact-bridge/material'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n -C 4 'artifact-publish.lock|publish.lock|lock' src/ephi/infrastructure/artifacts/filesystem.py\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk rg -n -C 7 'blob_objects|artifact-manifest' tools/u4_n1_durable_upgrade_restart.py .github/workflows/package.yml\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk mv /Users/haewonkim/.codex-fabric/artifacts/CF-93ef89dff07e93ef497a9c46/artifact-bridge/material /Users/haewonkim/.codex-fabric/artifacts/CF-93ef89dff07e93ef497a9c46/artifact-bridge/attempts/tenth-run-blob-lock-accounting && rtk mkdir -p /Users/haewonkim/.codex-fabric/artifacts/CF-93ef89dff07e93ef497a9c46/artifact-bridge/material && rtk sed -n '1340,1382p' tools/u4_n1_durable_upgrade_restart.py && rtk sed -n '1140,1152p' .github/workflows/package.yml\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest discover -s tests -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git diff --check && rtk git status --short && rtk git add .github/workflows/package.yml manifest.json tools/u4_n1_durable_upgrade_restart.py && rtk git diff --cached --check && rtk git commit -m 'Account for artifact store operational lock file'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git rev-parse HEAD && rtk git rev-parse 'HEAD\"'^{tree}'\"' && rtk git status --porcelain --untracked-files=all && rtk python3 -c 'from pathlib import Path; print(\\\"work_root_absent=\\\"+str(not Path(\\\"/tmp/ephi-u42-CF-93ef89dff07e93ef497a9c46\\\").exists())); print(\\\"material_empty=\\\"+str(not any(Path(\\\"/Users/haewonkim/.codex-fabric/artifacts/CF-93ef89dff07e93ef497a9c46/artifact-bridge/material\\\").iterdir())))'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk ls -la /tmp/ephi-u42-CF-93ef89dff07e93ef497a9c46/environments && rtk ls -la /tmp/ephi-u42-CF-93ef89dff07e93ef497a9c46/inputs/n'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk ls -la /tmp/ephi-u42-CF-93ef89dff07e93ef497a9c46/inputs/n-minus-1 && rtk ls -la /tmp/ephi-u42-CF-93ef89dff07e93ef497a9c46/inputs/n'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk proxy env EPHI_U4_ADMIN_DSN=postgresql:///postgres python3 tools/u4_n1_durable_upgrade_restart.py --artifact-root /Users/haewonkim/.codex-fabric/artifacts/CF-93ef89dff07e93ef497a9c46/artifact-bridge/material --work-root /tmp/ephi-u42-CF-93ef89dff07e93ef497a9c46 --repository-root /Users/haewonkim/.codex-fabric/worktrees/CF-93ef89dff07e93ef497a9c46 --candidate-sha cd7715ab8d08576b365cb9eadf4d90ee40b6f848 --candidate-tree 82ef2ca7240b89ab3f03249a26cb45b1e07fddf2 --job-id CF-93ef89dff07e93ef497a9c46'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy python3 - <<'PY'\nimport json\nfrom pathlib import Path\nroot=Path('/Users/haewonkim/.codex-fabric/artifacts/CF-93ef89dff07e93ef497a9c46/artifact-bridge/material')\nr=json.loads((root/'u4-n1-durable-upgrade-restart.json').read_text())\nm=json.loads((root/'artifact-manifest.json').read_text())\na=json.loads(Path('environment/u4_n1_provider_compatibility_authority.json').read_text())\nassert r['status']=='PASS' and r['durable_upgrade_state']=='PASS'\nassert r['qualification']['candidate']=={'commit':'cd7715ab8d08576b365cb9eadf4d90ee40b6f848','tree':'82ef2ca7240b89ab3f03249a26cb45b1e07fddf2'}\nassert r['qualification']['fabric_job']=='CF-93ef89dff07e93ef497a9c46' and r['qualification']['fabric_binding_state']=='BOUND'\nfor label in ('N-1','N'):\n    for field in ('integrated_commit','integrated_tree','release_identity_sha256'):\n        assert r['frozen_releases'][label][{'integrated_commit':'commit','integrated_tree':'tree','release_identity_sha256':'release_identity_sha256'}[field]]==a['releases'][label][field]\nassert r['provider_compatibility_authority']['compatibility_wheel_sha256']==a['provider_package']['compatibility_wheel_sha256']\nassert r['postgres']['major']==18 and r['migration']['count']==11\nassert r['migration']['identity_sha256']==a['migrations']['identity_sha256']\nassert r['migration']['cross_release_schema_delta']=='NONE' and r['migration']['frozen_pair_schema_files_delta']==[]\nassert r['migration']['pre_n_verify']['status']=='VERIFIED' and r['migration']['n_idempotent_apply']['status']=='APPLIED' and r['migration']['post_n_verify']['status']=='VERIFIED'\ni=r['retained_identity_inventories']\nassert i['before_upgrade']['canonical_sha256']==i['after_migration']['canonical_sha256']==i['after_restart']['canonical_sha256']\nassert i['equal_across_handoff'] is True and i['permitted_operational_only_differences']==[]\nq=r['accepted_command_row_invariants']\nassert q['counts_and_fingerprints_unchanged'] is True and q['before_upgrade_counts']==q['after_restart_counts']=={'command_receipt':1,'audit_event':1,'outbox_event':1}\nassert q['before_upgrade_fingerprints']==q['after_restart_fingerprints']\nassert r['accepted_command']['same_result_identity'] and r['accepted_command']['no_duplicate_receipt_audit_outbox']\nassert r['accepted_command_conflict_negative_control']['reason_code']=='IDEMPOTENCY_CONFLICT'\nassert r['workflow']['identity_version_state_unchanged'] and r['workflow']['after_restart']['state']['work_state']=='CLAIMED'\nassert r['historical_read']['before_upgrade']==r['historical_read']['after_restart']\nassert r['historical_read']['after_restart']['workflow_snapshot']['work_state']=='OPEN'\nassert r['current_live_read']['after_restart']['workflow_snapshot']['work_state']=='CLAIMED'\nassert r['current_live_read']['historical_and_current_states_remain_distinct']\nassert r['artifact']['exact_content_match'] and r['artifact']['restored_shared_root_read']\nassert r['artifact']['metadata']['object_key']=='sha256/'+r['artifact']['sha256']\nassert r['negative_controls']['missing_or_empty_blob_root']['status']=='PASS'\nassert r['negative_controls']['tampered_copy_only']['status']=='PASS'\nassert r['negative_controls']['separate_incomplete_prefix_database']['status']=='PASS'\nassert r['operations_status_after_restart']['postgresql']['state']=='READY'\nassert r['operations_status_after_restart']['postgresql']['reason']=='POSTGRES_REACHABLE_AND_SCHEMA_CURRENT'\nassert r['core_edit_prohibition']['core_edit_required'] is False\nassert r['core_edit_prohibition']['candidate_protected_path_modifications']==[]\nassert r['core_edit_prohibition']['candidate_protected_path_delta_from_frozen_N']==[]\nassert r['frozen_release_deltas']['n1_to_n_schema_files']==[]\nassert r['frozen_release_deltas']['cross_release_schema_delta']=='NONE'\nassert len(r['frozen_release_deltas']['n1_to_n_product_source_files'])==3\nassert r['artifact_blob_root_inventory']['immutable_blob_count']==1\nassert r['artifact_blob_root_inventory']['immutable_blob_files'][0]['sha256']==r['artifact']['sha256']\nassert r['artifact_blob_root_inventory']['operational_files'][0]['classification']=='FILE_ARTIFACT_BLOB_STORE_PUBLISH_LOCK'\nassert m['qualification_state']=='PASS' and m['fabric_binding_state']=='BOUND'\nassert m['candidate']==r['qualification']['candidate'] and len(m['artifacts'])==8\nblob=[x for x in m['artifacts'] if x['file'].startswith('shared-immutable-artifact-blobs/') and not x['file'].endswith('.artifact-publish.lock')]\nlock=[x for x in m['artifacts'] if x.get('classification')=='FILE_ARTIFACT_BLOB_STORE_PUBLISH_LOCK']\nassert len(blob)==1 and blob[0]['sha256']==r['artifact']['sha256']\nassert len(lock)==1 and lock[0]['byte_size']==0\nassert r['artifact_bridge_handoff']['staging_state']=='NOT_STAGED' and r['artifact_bridge_handoff']['readback_state']=='NOT_RUN'\nfor path in root.rglob('*.json'):\n    raw=path.read_text()\n    assert 'postgresql://' not in raw and '/Users/' not in raw and '/tmp/' not in raw\nprint('BOUND_REPORT_ASSERTIONS_PASS')\nPY\"",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy psql 'postgresql:///postgres' -X -A -t -c \\\"SELECT count(*) FROM pg_database WHERE datname LIKE 'ephi_u42_%'\\\"\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git rev-parse HEAD && rtk git rev-parse main && rtk git status --porcelain --untracked-files=all && rtk ls -la /Users/haewonkim/.codex-fabric/artifacts/CF-93ef89dff07e93ef497a9c46/artifact-bridge/material'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk python3 - <<'PY'\nimport json\nfrom pathlib import Path\np=Path('/Users/haewonkim/.codex-fabric/artifacts/CF-93ef89dff07e93ef497a9c46/artifact-bridge/material/u4-n1-durable-upgrade-restart.json')\nr=json.loads(p.read_text())\nprint('artifact_keys='+','.join(sorted(r['artifact'].keys())))\nprint('metadata_keys='+','.join(sorted(r['artifact']['metadata'].keys())))\nprint('candidate_base='+r['qualification']['candidate_base_commit'])\nprint('fabric_state='+r['qualification']['fabric_binding_state'])\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --name-only 5fc66e844f162d21f772b31574daf797bd4f3ff1..HEAD -- src/ephi migrations examples/synthetic_downstream && rtk git diff --name-only HEAD..main -- src/ephi migrations examples/synthetic_downstream'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git branch --show-current && rtk git show -s --format='%H %s' main && rtk git reflog show -n 5 --format='%H %gs' main && rtk git log --oneline --decorate -4 --all --simplify-by-decoration\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git reflog show -n 3 --date=iso-strict main && rtk git show -s --format='%H%n%P%n%ci%n%s' main && rtk git show -s --format='%H%n%P%n%ci%n%s' origin/main\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy python3 - <<'PY'\nimport json\nfrom pathlib import Path\nroot=Path('/Users/haewonkim/.codex-fabric/artifacts/CF-93ef89dff07e93ef497a9c46/artifact-bridge/material')\nr=json.loads((root/'u4-n1-durable-upgrade-restart.json').read_text()); m=json.loads((root/'artifact-manifest.json').read_text())\na=json.loads(Path('environment/u4_n1_provider_compatibility_authority.json').read_text())\nassert r['status']=='PASS' and r['durable_upgrade_state']=='PASS'\nassert r['qualification']['candidate']=={'commit':'cd7715ab8d08576b365cb9eadf4d90ee40b6f848','tree':'82ef2ca7240b89ab3f03249a26cb45b1e07fddf2'}\nassert r['qualification']['candidate_base_commit']=='5fc66e844f162d21f772b31574daf797bd4f3ff1'\nassert r['qualification']['fabric_job']=='CF-93ef89dff07e93ef497a9c46' and r['qualification']['fabric_binding_state']=='BOUND'\nfor label in ('N-1','N'):\n  for report_key, auth_key in (('commit','integrated_commit'),('tree','integrated_tree'),('release_identity_sha256','release_identity_sha256')):\n    assert r['frozen_releases'][label][report_key]==a['releases'][label][auth_key]\nassert r['provider_compatibility_authority']['compatibility_wheel_sha256']==a['provider_package']['compatibility_wheel_sha256']\nassert r['postgres']['major']==18 and r['migration']['count']==11 and r['migration']['identity_sha256']==a['migrations']['identity_sha256']\nassert r['migration']['cross_release_schema_delta']=='NONE' and r['migration']['frozen_pair_schema_files_delta']==[]\nassert [r['migration'][k]['status'] for k in ('pre_n_verify','n_idempotent_apply','post_n_verify')]==['VERIFIED','APPLIED','VERIFIED']\ni=r['retained_identity_inventories']; assert i['before_upgrade']['canonical_sha256']==i['after_migration']['canonical_sha256']==i['after_restart']['canonical_sha256'] and i['equal_across_handoff']\nq=r['accepted_command_row_invariants']; assert q['counts_and_fingerprints_unchanged'] and q['before_upgrade_counts']==q['after_restart_counts']=={'command_receipt':1,'audit_event':1,'outbox_event':1} and q['before_upgrade_fingerprints']==q['after_restart_fingerprints']\nassert r['accepted_command']['same_result_identity'] and r['accepted_command']['no_duplicate_receipt_audit_outbox']\nassert r['accepted_command_conflict_negative_control']['reason_code']=='IDEMPOTENCY_CONFLICT'\nassert r['workflow']['identity_version_state_unchanged'] and r['workflow']['after_restart']['state']['work_state']=='CLAIMED'\nassert r['historical_read']['before_upgrade']==r['historical_read']['after_restart'] and r['historical_read']['after_restart']['workflow_snapshot']['work_state']=='OPEN'\nassert r['current_live_read']['after_restart']['workflow_snapshot']['work_state']=='CLAIMED' and r['current_live_read']['historical_and_current_states_remain_distinct']\nassert r['artifact']['exact_content_match'] and r['artifact']['restored_shared_root_read'] and r['artifact']['object_key']=='sha256/'+r['artifact']['sha256']\nbefore=json.loads((root/'before_upgrade_identity_inventory.json').read_text())\nassert before['artifact']['metadata']==r['artifact']['metadata'] and before['artifact']['content']['sha256']==r['artifact']['sha256'] and before['artifact']['content']['byte_size']==r['artifact']['byte_size']\nassert all(r['negative_controls'][k]['status']=='PASS' for k in ('missing_or_empty_blob_root','tampered_copy_only','separate_incomplete_prefix_database'))\nassert r['operations_status_after_restart']['postgresql']['state']=='READY' and r['operations_status_after_restart']['postgresql']['reason']=='POSTGRES_REACHABLE_AND_SCHEMA_CURRENT'\nassert r['core_edit_prohibition']['core_edit_required'] is False and r['core_edit_prohibition']['candidate_protected_path_modifications']==[] and r['core_edit_prohibition']['candidate_protected_path_delta_from_frozen_N']==[]\nassert r['frozen_release_deltas']['n1_to_n_schema_files']==[] and r['frozen_release_deltas']['cross_release_schema_delta']=='NONE' and len(r['frozen_release_deltas']['n1_to_n_product_source_files'])==3\nbi=r['artifact_blob_root_inventory']; assert bi['immutable_blob_count']==1 and bi['immutable_blob_files'][0]['sha256']==r['artifact']['sha256'] and bi['operational_files'][0]['classification']=='FILE_ARTIFACT_BLOB_STORE_PUBLISH_LOCK'\nassert m['qualification_state']=='PASS' and m['fabric_binding_state']=='BOUND' and m['candidate']==r['qualification']['candidate'] and len(m['artifacts'])==8\nblob=[x for x in m['artifacts'] if x['file'].startswith('shared-immutable-artifact-blobs/') and not x['file'].endswith('.artifact-publish.lock')]\nlock=[x for x in m['artifacts'] if x.get('classification')=='FILE_ARTIFACT_BLOB_STORE_PUBLISH_LOCK']\nassert len(blob)==1 and blob[0]['sha256']==r['artifact']['sha256'] and len(lock)==1 and lock[0]['byte_size']==0\nassert r['artifact_bridge_handoff']['staging_state']=='NOT_STAGED' and r['artifact_bridge_handoff']['readback_state']=='NOT_RUN'\nfor path in root.rglob('*.json'):\n  raw=path.read_text(); assert 'postgresql://' not in raw and '/Users/' not in raw and '/tmp/' not in raw\nprint('BOUND_REPORT_ASSERTIONS_PASS')\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk sed -n '1050,1165p' .github/workflows/package.yml\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy python3 - <<'PY'\nimport yaml\nfrom pathlib import Path\np=Path('.github/workflows/package.yml')\nd=yaml.safe_load(p.read_text())\nassert 'u4-n1-durable-upgrade-restart' in d['jobs']\nassert d['jobs']['u4-n1-durable-upgrade-restart']['name']=='Frozen N-1 to N PostgreSQL 18 durable upgrade and restart (exact head)'\nprint(f'WORKFLOW_YAML_PASS jobs={len(d[\\\"jobs\\\"])}')\nPY\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 tools/check_package.py --refresh-manifest'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk python3 -m unittest discover -s tests -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git diff --check && rtk git status --short && rtk git add .github/workflows/package.yml manifest.json && rtk git diff --cached --check && rtk git commit -m 'Fix durable upgrade CI artifact identity assertion'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk git rev-parse HEAD && rtk git rev-parse 'HEAD\"'^{tree}'\"' && rtk git rev-parse origin/main && rtk git status --porcelain --untracked-files=all && rtk python3 -c 'from pathlib import Path; p=Path(\\\"/Users/haewonkim/.codex-fabric/artifacts/CF-93ef89dff07e93ef497a9c46/artifact-bridge/material\\\"); print(\\\"material_empty=\\\"+str(not any(p.iterdir())))' \"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk mv /Users/haewonkim/.codex-fabric/artifacts/CF-93ef89dff07e93ef497a9c46/artifact-bridge/material /Users/haewonkim/.codex-fabric/artifacts/CF-93ef89dff07e93ef497a9c46/artifact-bridge/attempts/prior-pass-cd7715-before-ci-assert-fix && rtk mkdir -p /Users/haewonkim/.codex-fabric/artifacts/CF-93ef89dff07e93ef497a9c46/artifact-bridge/material && rtk python3 -c 'from pathlib import Path; print(\\\"material_empty=\\\"+str(not any(Path(\\\"/Users/haewonkim/.codex-fabric/artifacts/CF-93ef89dff07e93ef497a9c46/artifact-bridge/material\\\").iterdir())))'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk proxy pgrep -af u4_n1_durable_upgrade_restart'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk proxy ps -p 10111,10113,12847 -o pid,ppid,etime,command'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk proxy env EPHI_U4_ADMIN_DSN=postgresql:///postgres python3 tools/u4_n1_durable_upgrade_restart.py --artifact-root /Users/haewonkim/.codex-fabric/artifacts/CF-93ef89dff07e93ef497a9c46/artifact-bridge/material --work-root /tmp/ephi-u42-CF-93ef89dff07e93ef497a9c46 --repository-root /Users/haewonkim/.codex-fabric/worktrees/CF-93ef89dff07e93ef497a9c46 --candidate-sha a4bed2b08a6b18ac7e5c4c07259d7c6575843619 --candidate-tree f47c23730afc58da551f25fc1742512e450aef6d --job-id CF-93ef89dff07e93ef497a9c46'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk proxy ps -p 10111,10113 -o pid,etime,stat,command'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk proxy ls -la /Users/haewonkim/.codex-fabric/artifacts/CF-93ef89dff07e93ef497a9c46/artifact-bridge/material'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy python3 -c 'import json; p=\\\"/Users/haewonkim/.codex-fabric/artifacts/CF-93ef89dff07e93ef497a9c46/artifact-bridge/material/u4-n1-durable-upgrade-restart.json\\\"; d=json.load(open(p)); print(json.dumps(d,indent=2))'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy python3 -c 'import json; p=\\\"/Users/haewonkim/.codex-fabric/artifacts/CF-93ef89dff07e93ef497a9c46/artifact-bridge/material/artifact-manifest.json\\\"; print(json.dumps(json.load(open(p)),indent=2))'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk proxy rg -n \"projectos-artifact-stage|qualified.*Artifact Bridge|Artifact Bridge\" tools docs environment'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy python3 -c 'import json, pathlib, hashlib\nroot=pathlib.Path(\\\"/Users/haewonkim/.codex-fabric/artifacts/CF-93ef89dff07e93ef497a9c46/artifact-bridge/material\\\")\nr=json.loads((root/\\\"u4-n1-durable-upgrade-restart.json\\\").read_text())\nm=json.loads((root/\\\"artifact-manifest.json\\\").read_text())\nassert r[\\\"schema\\\"]==\\\"org.ephi.u4-n1-durable-upgrade-restart.v1\\\" and r[\\\"status\\\"]==\\\"PASS\\\" and r[\\\"durable_upgrade_state\\\"]==\\\"PASS\\\"\nassert r[\\\"qualification\\\"][\\\"candidate\\\"]=={\\\"commit\\\":\\\"a4bed2b08a6b18ac7e5c4c07259d7c6575843619\\\",\\\"tree\\\":\\\"f47c23730afc58da551f25fc1742512e450aef6d\\\"}\nassert r[\\\"qualification\\\"][\\\"candidate_base_commit\\\"]==\\\"5fc66e844f162d21f772b31574daf797bd4f3ff1\\\"\nassert r[\\\"qualification\\\"][\\\"fabric_binding_state\\\"]==\\\"BOUND\\\" and r[\\\"qualification\\\"][\\\"fabric_job\\\"]==\\\"CF-93ef89dff07e93ef497a9c46\\\"\nassert r[\\\"migration\\\"][\\\"cross_release_schema_delta\\\"]==\\\"NONE\\\" and not r[\\\"migration\\\"][\\\"frozen_pair_schema_files_delta\\\"] and r[\\\"migration\\\"][\\\"idempotent_reapply_is_new_schema_migration\\\"] is False\nassert r[\\\"migration\\\"][\\\"pre_n_verify\\\"][\\\"schema_state\\\"]==\\\"CURRENT\\\" and r[\\\"migration\\\"][\\\"n_idempotent_apply\\\"][\\\"status\\\"]==\\\"APPLIED\\\" and r[\\\"migration\\\"][\\\"post_n_verify\\\"][\\\"schema_state\\\"]==\\\"CURRENT\\\"\nassert r[\\\"migration\\\"][\\\"identity_sha256\\\"]==\\\"c661c7a41eae8cd2b637778998bee77b8ebdec4a2ef78639d3ed7f69b23b1e8b\\\" and r[\\\"migration\\\"][\\\"count\\\"]==11\nassert r[\\\"postgres\\\"][\\\"major\\\"]==18 and r[\\\"postgres\\\"][\\\"same_database_across_n_minus_1_to_n\\\"] is True\nassert r[\\\"installed_execution\\\"][\\\"separate_virtual_environments\\\"] and r[\\\"installed_execution\\\"][\\\"public_index_used_for_installation\\\"] is False and r[\\\"installed_execution\\\"][\\\"checkout_pythonpath_or_sys_path_used\\\"] is False\nassert r[\\\"process_restart\\\"][\\\"n_minus_1_exit_code\\\"]==0 and r[\\\"process_restart\\\"][\\\"n_minus_1_adapter_closed\\\"] and r[\\\"process_restart\\\"][\\\"n_minus_1_connection_closed\\\"] and r[\\\"process_restart\\\"][\\\"n_verification_after_n_minus_1_process_shutdown\\\"] and r[\\\"process_restart\\\"][\\\"n_restart_in_fresh_process_and_installed_environment\\\"]\nassert r[\\\"retained_identity_inventories\\\"][\\\"equal_across_handoff\\\"] and len({r[\\\"retained_identity_inventories\\\"][k][\\\"canonical_sha256\\\"] for k in (\\\"before_upgrade\\\",\\\"after_migration\\\",\\\"after_restart\\\")})==1\nassert r[\\\"accepted_command\\\"][\\\"status\\\"]==\\\"PASS\\\" and r[\\\"accepted_command\\\"][\\\"same_result_identity\\\"] and r[\\\"accepted_command\\\"][\\\"no_duplicate_receipt_audit_outbox\\\"]\nassert r[\\\"accepted_command_row_invariants\\\"][\\\"counts_and_fingerprints_unchanged\\\"]\nassert r[\\\"workflow\\\"][\\\"identity_version_state_unchanged\\\"] and r[\\\"historical_read\\\"][\\\"identity_revision_vector_workflow_snapshot_unchanged\\\"]\nassert r[\\\"current_live_read\\\"][\\\"historical_and_current_states_remain_distinct\\\"] and r[\\\"current_live_read\\\"][\\\"reflects_durable_workflow_after_restart\\\"]\nassert r[\\\"negative_controls\\\"][\\\"different_semantic_payload_same_command_id\\\"][\\\"status\\\"]==\\\"PASS\\\"\nassert r[\\\"negative_controls\\\"][\\\"missing_or_empty_blob_root\\\"][\\\"status\\\"]==\\\"PASS\\\" and r[\\\"negative_controls\\\"][\\\"tampered_copy_only\\\"][\\\"status\\\"]==\\\"PASS\\\"\nassert r[\\\"negative_controls\\\"][\\\"separate_incomplete_prefix_database\\\"][\\\"status\\\"]==\\\"PASS\\\" and r[\\\"negative_controls\\\"][\\\"separate_incomplete_prefix_database\\\"][\\\"prefix_reached_current_only_after_apply\\\"]\nassert r[\\\"artifact\\\"][\\\"exact_content_match\\\"] and r[\\\"artifact\\\"][\\\"restored_shared_root_read\\\"] and r[\\\"artifact\\\"][\\\"sha256\\\"]==r[\\\"artifact\\\"][\\\"metadata\\\"][\\\"sha256\\\"] and r[\\\"artifact\\\"][\\\"byte_size\\\"]==r[\\\"artifact\\\"][\\\"metadata\\\"][\\\"byte_size\\\"]\nassert r[\\\"operations_status_after_restart\\\"][\\\"postgresql\\\"][\\\"state\\\"]==\\\"READY\\\" and r[\\\"operations_status_after_restart\\\"][\\\"postgresql\\\"][\\\"server_version\\\"].startswith(\\\"18.\\\")\nassert r[\\\"core_edit_prohibition\\\"][\\\"core_edit_required\\\"] is False and not r[\\\"core_edit_prohibition\\\"][\\\"candidate_protected_path_modifications\\\"] and not r[\\\"core_edit_prohibition\\\"][\\\"candidate_protected_path_delta_from_frozen_N\\\"]\nassert r[\\\"artifact_bridge_handoff\\\"][\\\"staging_state\\\"]==\\\"NOT_STAGED\\\" and r[\\\"artifact_bridge_handoff\\\"][\\\"readback_state\\\"]==\\\"NOT_RUN\\\" and not r[\\\"artifact_bridge_handoff\\\"][\\\"canonical_handoff\\\"]\nassert r[\\\"secret_values_emitted\\\"] is False and r[\\\"negative_controls\\\"][\\\"secret_values_emitted\\\"] is False\nfor entry in m[\\\"artifacts\\\"]:\n p=root/entry[\\\"file\\\"]; b=p.read_bytes()\n assert len(b)==entry[\\\"byte_size\\\"] and hashlib.sha256(b).hexdigest()==entry[\\\"sha256\\\"], entry[\\\"file\\\"]\nassert m[\\\"qualification_state\\\"]==\\\"PASS\\\" and m[\\\"candidate\\\"]==r[\\\"qualification\\\"][\\\"candidate\\\"] and m[\\\"fabric_binding_state\\\"]==\\\"BOUND\\\"\nprint(\\\"FINAL_BOUND_REPORT_ASSERTIONS_PASS; STAGING_NOT_RUN\\\")\n'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short --branch && rtk git rev-parse HEAD HEAD''^{tree} origin/main'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --stat origin/main..HEAD'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff origin/main..HEAD -- .github/workflows/package.yml'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy python3 -c 'import yaml; print(yaml.safe_load(open(\\\".github/workflows/package.yml\\\"))[\\\"jobs\\\"].keys())'\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy sed -n '1040,1160p' .github/workflows/package.yml\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk proxy rg -n \"fabric_binding|job_id|UNBOUND_CI|CF-\" tools/u4_n1_durable_upgrade_restart.py'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff origin/main..HEAD --name-only'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk proxy rg -n \"CF-93ef89dff07e93ef497a9c46\" tools tests docs environment README.md .github/workflows/package.yml manifest.json'",
+      "exit_code": 1,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git remote -v'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git diff --check'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc 'rtk git status --short --branch'",
+      "exit_code": 0,
+      "type": "command_execution"
+    },
+    {
+      "command": "/bin/zsh -lc \"rtk proxy psql postgresql:///postgres -Atc \\\"SELECT count(*) FROM pg_database WHERE datname LIKE 'ephi_u42_%'\\\"\"",
+      "exit_code": 0,
+      "type": "command_execution"
+    }
+  ],
+  "codex": {
+    "cli_version": "codex-cli 0.157.0",
+    "configured_model": "gpt-6-luna",
+    "event_count": 554,
+    "provider_reported_model": null,
+    "reasoning_effort": "xhigh",
+    "terminal_type": "turn.completed",
+    "usage": {
+      "cache_hit_percent": 98.72,
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 53180928,
+      "fresh_input_tokens": 690812,
+      "input_tokens": 53871740,
+      "non_reasoning_output_tokens": 93186,
+      "output_tokens": 199179,
+      "reasoning_output_tokens": 105993,
+      "total_processed_tokens": 54070919
+    },
+    "warnings": []
+  },
+  "commits": [
+    {
+      "sha": "a4bed2b08a6b18ac7e5c4c07259d7c6575843619",
+      "subject": "Fix durable upgrade CI artifact identity assertion"
+    },
+    {
+      "sha": "cd7715ab8d08576b365cb9eadf4d90ee40b6f848",
+      "subject": "Account for artifact store operational lock file"
+    },
+    {
+      "sha": "9dcec605accc79ae8fa770d335498da4ac1d8bc3",
+      "subject": "Separate frozen release deltas from candidate edits"
+    },
+    {
+      "sha": "fbfa0ba72a96b3a292fd7748a5d34ab2887d007d",
+      "subject": "Resolve installed migration paths in prefix control"
+    },
+    {
+      "sha": "f9f5c07eecffaba5b343164d9bde6cbb96753dc0",
+      "subject": "Set prefix control row factory for schema fingerprint"
+    },
+    {
+      "sha": "cafec277b64a865eae784eff139adcd607d04fd5",
+      "subject": "Pass admin DSN to database setup worker"
+    },
+    {
+      "sha": "d5bdacc0fb9fbd42f71b58b68b668398bd62f8ae",
+      "subject": "Preserve bounded installed worker failure reasons"
+    },
+    {
+      "sha": "89cc0cbfa391df27d2b0d32d3d7b506fa1174e57",
+      "subject": "Read installed migration count from preflight identity"
+    },
+    {
+      "sha": "e025cc38f1bce3e2e15d906a01915ed8d9940742",
+      "subject": "Keep installer diagnostics inside qualification process"
+    },
+    {
+      "sha": "00de6b2ec4408c21b5243f560fb198e5f79fd1b6",
+      "subject": "Use frozen provider identity without provider composition"
+    },
+    {
+      "sha": "a02266d02e4e07cce244f3793607a887364ae3b8",
+      "subject": "Add U4.2 durable upgrade restart qualification"
+    }
+  ],
+  "diff": {
+    "additions": 1874,
+    "changed_files": 7,
+    "commit_count": 11,
+    "deletions": 4
+  },
+  "error_code": null,
+  "evidence_manifest": {
+    "count": 4,
+    "items": [
+      {
+        "bytes": 31406,
+        "path": "README.md",
+        "sha256": "a05eed9e0866a35f2feda1a5576476b36ecc52632613b7bc5ec16cf2d4cc18e6"
+      },
+      {
+        "bytes": 4102,
+        "path": "docs/U4.2_N1_Durable_Upgrade_Restart.md",
+        "sha256": "dc7435ffae4b462d43b8bdd85756ee28d672cb135157df33bea6c6d08bb5ff39"
+      },
+      {
+        "bytes": 3000,
+        "path": "environment/u4_n1_durable_upgrade_restart_authority.json",
+        "sha256": "4523b16f830c97181fdf619cd7f33291dcc28cba03ca667f0c7f1a414c69451a"
+      },
+      {
+        "bytes": 96368,
+        "path": "manifest.json",
+        "sha256": "2eefc84fba7da6b964be704580f17954b3be374ca4128bd6e809be0f2b1b4bb9"
+      }
+    ],
+    "version": 1
+  },
+  "evidence_publisher_release": "1.2.5-dashboard-controls-candidate",
+  "fabric_capture": {
+    "applied": false,
+    "paths_before": 0,
+    "transient_untracked_removed": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "fabric_release": "1.2.5-dashboard-controls-candidate",
+  "failure_class": null,
+  "finished_at": "2026-09-29T04:00:11Z",
+  "git": {
+    "base_is_ancestor": true,
+    "base_sha": "5fc66e844f162d21f772b31574daf797bd4f3ff1",
+    "branch": "codex/ephi-u4-n1-durable-upgrade-restart-v1",
+    "detached_verify": false,
+    "head_sha": "a4bed2b08a6b18ac7e5c4c07259d7c6575843619",
+    "remote_exact_head": true,
+    "remote_head_sha": "a4bed2b08a6b18ac7e5c4c07259d7c6575843619",
+    "target_branch": "main",
+    "target_drifted_since_acceptance": false,
+    "target_head_observed_after_execution": "5fc66e844f162d21f772b31574daf797bd4f3ff1",
+    "work_branch": "codex/ephi-u4-n1-durable-upgrade-restart-v1",
+    "worktree_clean": true
+  },
+  "instructions": {
+    "files": [
+      {
+        "bytes": 1458,
+        "path": "AGENTS.md",
+        "sha256": "4349f387a79d886ed1264604ff48c582698e539e08ed8fb2f9d8ab8fbf6f804a"
+      }
+    ],
+    "total_bytes": 1458,
+    "warning": null
+  },
+  "job_id": "CF-93ef89dff07e93ef497a9c46",
+  "kind": "codex-fabric-audit-evidence",
+  "locator": {
+    "branch": "codex-fabric/evidence/ephi/ephi-u4-n1-durable-upgrade-restart-v1",
+    "path": ".codex-fabric/audit.json",
+    "ref": "refs/heads/codex-fabric/evidence/ephi/ephi-u4-n1-durable-upgrade-restart-v1"
+  },
+  "operation": "BUILD",
+  "policy": {
+    "environment_policy_sha256": "e077daca74297b3c30bee8989f00f8ca5338f7610b4d016a6c48db524205d064",
+    "fabric_release": "1.2.5-dashboard-controls-candidate",
+    "policy_sha256": "123615bf2f6e57dcac197e49ca98ceac59ada86a55e2c84445ea5d00812c0833",
+    "registry_sha256": "af81b8552f9d6a33847310e3c6bcd2d48401782b963a58efd2993e93570cb4aa"
+  },
+  "project_id": "ephi",
+  "recovery": {
+    "model_rerun_safe": false,
+    "recovery_required": false,
+    "retry_safe": false,
+    "retry_scope": null,
+    "worktree_retained": true
+  },
+  "request": "ephi-u4-n1-durable-upgrade-restart-v1",
+  "schema_version": 1,
+  "started_at": "2026-09-29T02:38:40Z",
+  "status": "EXECUTED_CHANGE",
+  "timing": {
+    "execution_seconds": 4891,
+    "queue_seconds": 0,
+    "total_seconds": 4891
+  },
+  "transport": {
+    "bytes": 13002,
+    "envelope": "FABRIC/2",
+    "prompt_bytes": 12675,
+    "prompt_sha256": "713c774c708b7b998a69cef26f7a603497742f12ddfab161da411da41625ff49",
+    "sha256": "93ef89dff07e93ef497a9c46c41c1a96f0bba721ca4356579b57e35cefdc86fe"
+  }
+}
