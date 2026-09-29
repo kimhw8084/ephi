@@ -683,6 +683,10 @@ def prefix_setup():
 def prefix_control():
     prefix_name = os.environ["EPHI_U4_PREFIX_DATABASE_NAME"]
     import psycopg
+    from ephi.migration_resources import resolve_migration_resources
+    paths = resolve_migration_resources().paths
+    if len(paths) != 11:
+        raise RuntimeError("INSTALLED_MIGRATION_RESOURCE_COUNT_INVALID")
     env = dict(os.environ)
     env.pop("EPHI_TEST_POSTGRES_DSN", None)
     prefix_dsn = database_dsn(prefix_name)
