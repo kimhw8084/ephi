@@ -193,7 +193,7 @@ def _worker_env(
 
 
 _WORKER_SOURCE = r'''from __future__ import annotations
-import hashlib, json, os, shutil, subprocess, sys
+import hashlib, json, os, re, shutil, subprocess, sys
 from datetime import date, datetime
 from decimal import Decimal
 from pathlib import Path
@@ -764,8 +764,13 @@ def main():
         return 0
     except Exception as exc:
         code = str(exc) if str(exc).isupper() and str(exc).replace("_", "").isalnum() else "INSTALLED_QUALIFICATION_OPERATION_FAILED"
+        if code == "INSTALLED_QUALIFICATION_OPERATION_FAILED":
+            mode_code = mode.upper().replace("-", "_")
+            error_code = type(exc).__name__.upper()
+            candidate = f"{mode_code}_{error_code}"
+            code = candidate if re.fullmatch(r"[A-Z0-9_]{1,64}", candidate) else code
         print(json.dumps({"status": "FAIL", "reason_code": code}, sort_keys=True, separators=(",", ":")))
-        return 1
+        return 0
 
 if __name__ == "__main__":
     raise SystemExit(main())
