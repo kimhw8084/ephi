@@ -671,7 +671,8 @@ def prefix_setup():
     paths = resolve_migration_resources().paths
     if len(paths) != 11:
         raise RuntimeError("INSTALLED_MIGRATION_RESOURCE_COUNT_INVALID")
-    with psycopg.connect(database_dsn(os.environ["EPHI_U4_PREFIX_DATABASE_NAME"]), autocommit=True) as connection:
+    with psycopg.connect(database_dsn(os.environ["EPHI_U4_PREFIX_DATABASE_NAME"]), autocommit=True,
+                         row_factory=psycopg.rows.dict_row) as connection:
         for path in paths[:10]:
             for statement in _sql_statements(path.read_text(encoding="utf-8")):
                 connection.execute(statement)
