@@ -1119,8 +1119,15 @@ jobs:
           assert report["operations_status_after_restart"]["immutable_artifact_integrity"]["state"] == "READY"
           assert report["core_edit_prohibition"]["core_edit_required"] is False
           assert report["core_edit_prohibition"]["candidate_protected_path_modifications"] == []
-          assert report["core_edit_prohibition"]["frozen_pair_protected_path_delta"] == []
+          assert report["core_edit_prohibition"]["candidate_protected_path_delta_from_frozen_N"] == []
           assert report["core_edit_prohibition"]["frozen_pair_schema_file_delta"] == []
+          assert report["frozen_release_deltas"]["n1_to_n_product_source_files"] == [
+              "src/ephi/release_identity.py",
+              "src/ephi/release_inventory.json",
+              "src/ephi/release_slots.py",
+          ]
+          assert report["frozen_release_deltas"]["n1_to_n_schema_files"] == []
+          assert report["frozen_release_deltas"]["cross_release_schema_delta"] == "NONE"
           assert report["installed_execution"]["public_index_used_for_installation"] is False
           assert report["installed_execution"]["checkout_pythonpath_or_sys_path_used"] is False
           assert report["secret_values_emitted"] is False

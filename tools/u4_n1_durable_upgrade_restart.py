@@ -1211,9 +1211,12 @@ def _run_qualification(args: argparse.Namespace) -> dict[str, object]:
         }
         protected_paths = ("src/ephi/", "migrations/", "examples/synthetic_downstream/")
         candidate_protected = _git(repository, "diff", "--name-only", f"{base_commit}..{candidate_sha}", "--", *protected_paths).splitlines()
-        frozen_protected = _git(repository, "diff", "--name-only", f"{n1['integrated_commit']}..{n['integrated_commit']}", "--", *protected_paths).splitlines()
+        candidate_from_frozen_n = _git(repository, "diff", "--name-only", f"{n['integrated_commit']}..{candidate_sha}", "--", *protected_paths).splitlines()
+        frozen_product_source_delta = _git(
+            repository, "diff", "--name-only", f"{n1['integrated_commit']}..{n['integrated_commit']}",
+            "--", "src/ephi/", "examples/synthetic_downstream/").splitlines()
         frozen_schema_delta = _git(repository, "diff", "--name-only", f"{n1['integrated_commit']}..{n['integrated_commit']}", "--", "migrations").splitlines()
-        if candidate_protected or frozen_protected or frozen_schema_delta:
+        if candidate_protected or candidate_from_frozen_n or frozen_schema_delta:
             raise QualificationFailure("CORE_EDIT_PROHIBITION_FAILED")
         if (migration["inventory"]["canonical_sha256"] != seed["inventory"]["canonical_sha256"]
             or restart["after_restart_inventory"]["canonical_sha256"] != seed["inventory"]["canonical_sha256"]):
@@ -1240,6 +1243,11 @@ def _run_qualification(args: argparse.Namespace) -> dict[str, object]:
                 "N": {"commit": n["integrated_commit"], "tree": n["integrated_tree"],
                       "release_identity_sha256": n["release_identity_sha256"],
                       "release_preflight": preflights["N"]},
+            },
+            "frozen_release_deltas": {
+                "n1_to_n_product_source_files": frozen_product_source_delta,
+                "n1_to_n_schema_files": frozen_schema_delta,
+                "cross_release_schema_delta": "NONE" if not frozen_schema_delta else "PRESENT",
             },
             "provider_compatibility_authority": provider_info,
             "postgres": {"version": db_identity["postgres_version"], "major": db_identity["postgres_major"],
@@ -1308,7 +1316,7 @@ def _run_qualification(args: argparse.Namespace) -> dict[str, object]:
             "core_edit_prohibition": {
                 "core_edit_required": False,
                 "candidate_protected_path_modifications": candidate_protected,
-                "frozen_pair_protected_path_delta": frozen_protected,
+                "candidate_protected_path_delta_from_frozen_N": candidate_from_frozen_n,
                 "frozen_pair_schema_file_delta": frozen_schema_delta,
             },
             "installed_execution": {
