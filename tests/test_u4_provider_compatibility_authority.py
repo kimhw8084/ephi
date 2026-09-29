@@ -3,6 +3,12 @@
 from __future__ import annotations
 
 import unittest
+from contextlib import redirect_stdout
+import io
+import json
+from pathlib import Path
+import re
+import tempfile
 
 from tools import u4_n1_provider_compatibility as u4
 
@@ -107,6 +113,82 @@ class U4FrozenAuthorityTests(unittest.TestCase):
         with self.assertRaises(u4.QualificationFailure) as caught:
             u4._compatibility_facts(report, authority, composition_expected=True)
         self.assertEqual(caught.exception.code, "DOWNSTREAM_ABI_IDENTITY_MISMATCH")
+
+
+class U4EvidenceContractTests(unittest.TestCase):
+    def test_generic_ci_invocation_is_optional_and_explicitly_unbound(self):
+        args = u4._argument_parser().parse_args([
+            "--artifact-root", "artifacts",
+            "--work-root", "work",
+            "--candidate-sha", "0" * 40,
+            "--candidate-tree", "1" * 40,
+        ])
+        self.assertIsNone(args.job_id)
+        identity = u4._qualification_identity(args.job_id, "PASS")
+        self.assertEqual(identity, {
+            "compatibility_state": "PASS",
+            "fabric_job": None,
+            "fabric_binding_state": "UNBOUND_CI",
+        })
+
+    def test_live_fabric_job_is_preserved_for_report_and_manifest_identity(self):
+        live_job = "CF-" + "a" * 24
+        identity = u4._qualification_identity(live_job, "PASS")
+        report = {"status": "PASS", **identity}
+        manifest = {"schema": "org.ephi.u4-compatibility-artifact-manifest.v1", **identity}
+        self.assertEqual(report["compatibility_state"], "PASS")
+        self.assertEqual(report["fabric_job"], live_job)
+        self.assertEqual(report["fabric_binding_state"], "BOUND")
+        self.assertEqual(manifest["compatibility_state"], "PASS")
+        self.assertEqual(manifest["fabric_job"], live_job)
+        self.assertEqual(manifest["fabric_binding_state"], "BOUND")
+
+    def test_invalid_explicit_job_fails_and_failure_report_is_non_pass(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            artifact_root = root / "artifacts"
+            work_root = root / "work"
+            output = io.StringIO()
+            with redirect_stdout(output):
+                code = u4.main([
+                    "--artifact-root", str(artifact_root),
+                    "--work-root", str(work_root),
+                    "--candidate-sha", "0" * 40,
+                    "--candidate-tree", "1" * 40,
+                    "--job-id", "bad-id",
+                ])
+            report = json.loads((artifact_root / "u4-n1-provider-compatibility.json").read_text())
+        self.assertEqual(code, 2)
+        self.assertEqual(report["status"], "FAIL")
+        self.assertEqual(report["compatibility_state"], "FAIL")
+        self.assertIsNone(report["fabric_job"])
+        self.assertEqual(report["fabric_binding_state"], "INVALID")
+        self.assertEqual(report["failure_reason_code"], "FABRIC_JOB_ID_INVALID")
+        self.assertIn("FABRIC_JOB_ID_INVALID", output.getvalue())
+
+    def test_failure_identity_is_never_compatibility_pass(self):
+        self.assertEqual(
+            u4._failure_qualification_identity(None),
+            {
+                "compatibility_state": "FAIL",
+                "fabric_job": None,
+                "fabric_binding_state": "UNBOUND_CI",
+            },
+        )
+
+    def test_reusable_workflow_and_authorities_contain_no_execution_job_id(self):
+        root = Path(u4.ROOT)
+        job_id_pattern = re.compile(r"\bCF-[0-9a-f]{24}\b")
+        for base in (root / ".github" / "workflows", root / "environment"):
+            for path in base.rglob("*"):
+                if path.is_file():
+                    self.assertNotRegex(path.read_text(encoding="utf-8"), job_id_pattern, str(path))
+        workflow = (root / ".github" / "workflows" / "package.yml").read_text(encoding="utf-8")
+        self.assertNotIn("EPHI_U4_FABRIC_JOB_ID", workflow)
+        self.assertNotIn("--job-id \"$EPHI_U4_FABRIC_JOB_ID\"", workflow)
+        self.assertIn('report["compatibility_state"] == "PASS"', workflow)
+        self.assertIn('report["fabric_binding_state"] == "UNBOUND_CI"', workflow)
+        self.assertIn('manifest["fabric_binding_state"] == "UNBOUND_CI"', workflow)
 
 
 if __name__ == "__main__":

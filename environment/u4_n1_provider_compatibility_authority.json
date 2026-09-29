@@ -4,7 +4,7 @@
     "change": "CHG-296",
     "slice": "U4.1",
     "repository": "kimhw8084/ephi",
-    "request": "ephi-u4-n1-provider-compatibility-v1",
+    "request": "ephi-u4-n1-provider-compatibility-fix1",
     "kind": "unchanged-synthetic-provider-public-abi-cross-release-qualification",
     "claim_boundary": "The exact unchanged synthetic downstream provider profile from the frozen N-1 integrated release identity still passes the public downstream ABI, conformance, and safe-composition boundary on the frozen N integrated release identity without modifications to upstream EPHI package or migration bytes.",
     "not_a_semantic_release_tag": true,

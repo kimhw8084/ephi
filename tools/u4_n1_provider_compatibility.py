@@ -791,10 +791,10 @@ def _run_release_qualification(
     source_roots: list[Path],
     authority: dict[str, object],
     artifact_root: Path,
-    job_id: str,
+    job_id: str | None,
 ) -> dict[str, object]:
     bin_dir, install_env = _install_release(worktree, inputs, env_root, external_cwd, postgres_dsn)
-    job_token = job_id.removeprefix("CF-")[:24]
+    job_token = job_id.removeprefix("CF-")[:24] if job_id else "unbound"
     release_token = "nminus1" if release_name == "N-1" else "n"
     database_name = f"ephi_u4_{job_token}_{release_token}"
     composition_dsn = _create_composition_database(
@@ -825,13 +825,36 @@ def _run_release_qualification(
         )
 
 
-def _candidate_report_identity(repository: Path, candidate: str, candidate_tree: str, job_id: str) -> tuple[dict[str, object], list[str]]:
+def _fabric_binding(job_id: str | None) -> dict[str, object]:
+    if job_id is None:
+        return {"fabric_job": None, "fabric_binding_state": "UNBOUND_CI"}
+    if not _JOB_ID.fullmatch(job_id):
+        raise QualificationFailure("FABRIC_JOB_ID_INVALID")
+    return {"fabric_job": job_id, "fabric_binding_state": "BOUND"}
+
+
+def _qualification_identity(job_id: str | None, compatibility_state: str) -> dict[str, object]:
+    if compatibility_state not in {"PASS", "FAIL"}:
+        raise ValueError("compatibility_state must be PASS or FAIL")
+    return {"compatibility_state": compatibility_state, **_fabric_binding(job_id)}
+
+
+def _failure_qualification_identity(job_id: str | None) -> dict[str, object]:
+    if job_id is not None and not _JOB_ID.fullmatch(job_id):
+        return {
+            "compatibility_state": "FAIL",
+            "fabric_job": None,
+            "fabric_binding_state": "INVALID",
+        }
+    return _qualification_identity(job_id, "FAIL")
+
+
+def _candidate_report_identity(repository: Path, candidate: str, candidate_tree: str, job_id: str | None) -> tuple[dict[str, object], list[str]]:
+    _fabric_binding(job_id)
     if _git(repository, "rev-parse", "HEAD") != candidate or _git(repository, "rev-parse", "HEAD^{tree}") != candidate_tree:
         raise QualificationFailure("CANDIDATE_IDENTITY_MISMATCH")
     if _git(repository, "status", "--porcelain", "--untracked-files=all"):
         raise QualificationFailure("CANDIDATE_WORKTREE_NOT_CLEAN")
-    if not _JOB_ID.fullmatch(job_id):
-        raise QualificationFailure("FABRIC_JOB_ID_INVALID")
     return {"commit": candidate, "tree": candidate_tree}, []
 
 
@@ -993,6 +1016,7 @@ def run_qualification(args: argparse.Namespace) -> int:
         report = {
             "schema": "org.ephi.u4-n1-provider-compatibility.v1",
             "status": "PASS",
+            **_qualification_identity(args.job_id, "PASS"),
             "core_edit_required": False,
             "upstream_package_files_modified": [],
             "upstream_migration_files_modified": [],
@@ -1004,6 +1028,7 @@ def run_qualification(args: argparse.Namespace) -> int:
                 "slice": "U4.1",
                 "kind": "unchanged-provider-public-abi-core-edit-compatibility-only",
                 "fabric_job": args.job_id,
+                "fabric_binding_state": _fabric_binding(args.job_id)["fabric_binding_state"],
                 "candidate": candidate,
                 "static_authority_path": "environment/u4_n1_provider_compatibility_authority.json",
                 "static_authority_sha256": authority_sha,
@@ -1111,7 +1136,7 @@ def run_qualification(args: argparse.Namespace) -> int:
             artifact_rows.append({"path": path.relative_to(artifact_root).as_posix(), "byte_size": path.stat().st_size, "sha256": _sha256_file(path)})
         artifact_manifest = {
             "schema": "org.ephi.u4-compatibility-artifact-manifest.v1",
-            "fabric_job": args.job_id,
+            **_qualification_identity(args.job_id, "PASS"),
             "candidate": candidate,
             "files": artifact_rows,
         }
@@ -1124,13 +1149,7 @@ def run_qualification(args: argparse.Namespace) -> int:
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--artifact-root", required=True, help="Empty job-owned Artifact Bridge material root outside the checkout.")
-    parser.add_argument("--work-root", required=True, help="Empty external root for detached worktrees, builds, and environments.")
-    parser.add_argument("--repository-root", help="Canonical checkout whose Git object database contains both frozen releases.")
-    parser.add_argument("--candidate-sha", required=True)
-    parser.add_argument("--candidate-tree", required=True)
-    parser.add_argument("--job-id", required=True)
+    parser = _argument_parser()
     args = parser.parse_args(argv)
     try:
         code = run_qualification(args)
@@ -1141,8 +1160,8 @@ def main(argv: list[str] | None = None) -> int:
             _write_json(root / "u4-n1-provider-compatibility.json", {
                 "schema": "org.ephi.u4-n1-provider-compatibility.v1",
                 "status": "FAIL",
+                **_failure_qualification_identity(args.job_id),
                 "failure_reason_code": exc.code,
-                "fabric_job": args.job_id if _JOB_ID.fullmatch(args.job_id or "") else None,
                 "candidate": {"commit": args.candidate_sha, "tree": args.candidate_tree},
                 "claim_boundary": "No compatibility claim; the bounded qualification did not satisfy every required proof condition.",
             })
@@ -1158,8 +1177,8 @@ def main(argv: list[str] | None = None) -> int:
             _write_json(root / "u4-n1-provider-compatibility.json", {
                 "schema": "org.ephi.u4-n1-provider-compatibility.v1",
                 "status": "FAIL",
+                **_failure_qualification_identity(args.job_id),
                 "failure_reason_code": code,
-                "fabric_job": args.job_id if _JOB_ID.fullmatch(args.job_id or "") else None,
                 "candidate": {"commit": args.candidate_sha, "tree": args.candidate_tree},
                 "claim_boundary": "No compatibility claim; the bounded qualification did not satisfy every required proof condition.",
             })
@@ -1169,6 +1188,17 @@ def main(argv: list[str] | None = None) -> int:
         return 2
     print(json.dumps({"status": "PASS", "report": "u4-n1-provider-compatibility.json"}, sort_keys=True, separators=(",", ":")))
     return code
+
+
+def _argument_parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--artifact-root", required=True, help="Empty job-owned Artifact Bridge material root outside the checkout.")
+    parser.add_argument("--work-root", required=True, help="Empty external root for detached worktrees, builds, and environments.")
+    parser.add_argument("--repository-root", help="Canonical checkout whose Git object database contains both frozen releases.")
+    parser.add_argument("--candidate-sha", required=True)
+    parser.add_argument("--candidate-tree", required=True)
+    parser.add_argument("--job-id", help="Live Project OS/Fabric job ID. Omit for generic CI evidence, which is marked UNBOUND_CI.")
+    return parser
 
 
 if __name__ == "__main__":
