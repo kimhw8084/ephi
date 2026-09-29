@@ -857,15 +857,13 @@ def _install_release(inputs: Path, environment: Path, external_cwd: Path) -> tup
         [str(python), "-m", "pip", "install", "--no-compile", "--no-index", "--find-links", str(wheelhouse), "--require-hashes", "-r", str(lock_dir / f"postgres-py{python_suffix}.txt")],
     ]
     for command in commands:
-        _command(command, cwd=external_cwd, env=env, code="OFFLINE_EPHI_INSTALL_FAILED",
-                 sensitive=(str(ROOT), str(inputs), str(environment)))
+        _command(command, cwd=external_cwd, env=env, code="OFFLINE_EPHI_INSTALL_FAILED")
     app_wheels = sorted(wheelhouse.glob("ephi-*.whl"))
     base_wheels = sorted(wheelhouse.glob("nicegui_base-*.whl"))
     if len(app_wheels) != 1 or len(base_wheels) != 1:
         raise QualificationFailure("RESTRICTED_RELEASE_WHEEL_INVALID")
     _command([str(python), "-m", "pip", "install", "--no-compile", "--no-index", "--no-deps", str(app_wheels[0]), str(base_wheels[0])],
-             cwd=external_cwd, env=env, code="OFFLINE_EPHI_INSTALL_FAILED",
-             sensitive=(str(ROOT), str(inputs), str(environment)))
+             cwd=external_cwd, env=env, code="OFFLINE_EPHI_INSTALL_FAILED")
     if "PYTHONPATH" in env or "PYTHONHOME" in env or env.get("PIP_NO_INDEX") != "1":
         raise QualificationFailure("INSTALLED_ENVIRONMENT_PATH_CONTAMINATED")
     return python, env
